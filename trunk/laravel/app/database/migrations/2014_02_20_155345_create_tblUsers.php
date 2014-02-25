@@ -56,7 +56,7 @@ class CreateTblUsers extends Migration {
             $table->integer('domainType');
             $table->decimal('orderAmount', 5, 2);
             $table->string('orderTypePay');
-            $table->string('orderStatusPay');
+            $table->integer('orderStatusPay');
             $table->string('orderTime');
             $table->integer('status');
         });
@@ -127,6 +127,8 @@ class CreateTblUsers extends Migration {
         Schema::create('tblCateNews', function($table) {
             $table->increments('id');
             $table->string('catenewsName');
+            $table->string('catenewsDescription');
+            $table->string('catenewsKeywords');
             $table->integer('catenewsParent');
             $table->string('catenewsSlug');
             $table->string('catenewsTime');
@@ -136,11 +138,12 @@ class CreateTblUsers extends Migration {
         Schema::create('tblNews', function($table) {
             $table->increments('id');
             $table->integer('catenewsID');
-            $table->string('newsName');
-            $table->string('newsDescription');
+            $table->string('newsName');//name chi co 70 ky tu
+            $table->string('newsDescription');//description < 150
+            $table->string('newsKeywords');
             $table->string('newsContent');
             $table->string('newsTag');
-            $table->string('newsSlug');
+            $table->string('newsSlug');//check khong trung nhau vi du : tin-tuc , tin-tuc2, count() $slug + 1 -> chuoi tic-tuc+chuoi
             $table->string('newsTime');
             $table->integer('status');
         });
