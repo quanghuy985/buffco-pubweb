@@ -52,6 +52,8 @@ class CreateTblUsers extends Migration {
             $table->increments('id');
             $table->integer('userID');
             $table->integer('productID');
+            $table->string('domain');
+            $table->integer('domainType');
             $table->decimal('orderAmount', 5, 2);
             $table->string('orderTypePay');
             $table->string('orderStatusPay');
