@@ -54,7 +54,7 @@ class TblStatisticModel extends Eloquent {
         }
     }
 
-    public function DeleteStatistic($gname) {
+    public function DeleteStatistic($id) {
         $checkdel = $this->where('id', '=', $id)->update(array('status' => 0));
         if ($checkdel > 0) {
             return TRUE;
@@ -63,7 +63,7 @@ class TblStatisticModel extends Eloquent {
         }
     }
 
-    public function AllGStatistic($per_page) {
+    public function AllStatistic($per_page) {
         $adminarray = $this->paginate($per_page);
         return $adminarray;
     }
