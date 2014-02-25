@@ -96,8 +96,13 @@ class TblUsersModel extends Eloquent {
         }
     }
 
-    public function FindUserRow($keyword) {
-        $adminarray = DB::table('tblusers')->where('userEmail', 'LIKE', '%' . $keyword . '%')->orWhere('userAddress', 'LIKE', '%' . $keyword . '%')->orWhere('userPhone', 'LIKE', '%' . $keyword . '%')->orWhere('userFirstName', 'LIKE', '%' . $keyword . '%')->orWhere('userLastName', 'LIKE', '%' . $keyword . '%')->get();
+    public function FindUserRow($keyword, $per_page) {
+        $adminarray = DB::table('tblusers')->where('userEmail', 'LIKE', '%' . $keyword . '%')->orWhere('userAddress', 'LIKE', '%' . $keyword . '%')->orWhere('userPhone', 'LIKE', '%' . $keyword . '%')->orWhere('userFirstName', 'LIKE', '%' . $keyword . '%')->orWhere('userLastName', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
+        return $adminarray;
+    }
+
+    public function AllUser($per_page) {
+        $adminarray = $this->where('status', '!=', 0)->paginate($per_page);
         return $adminarray;
     }
 
