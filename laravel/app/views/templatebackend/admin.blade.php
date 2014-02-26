@@ -6,6 +6,7 @@
         <title>Trang quản trị site</title>
 
         <link rel="stylesheet" href="{{Asset('adminlib/css/layout.css')}}" type="text/css" media="screen" />
+
         <!--[if lt IE 9]>
         <link rel="stylesheet" href="css/ie.css" type="text/css" media="screen" />
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -14,6 +15,8 @@
         <script src="{{Asset('adminlib/js/hideshow.js')}}" type="text/javascript"></script>
         <script src="{{Asset('adminlib/js/jquery.tablesorter.min.js')}}" type="text/javascript"></script>
         <script type="text/javascript" src="{{Asset('adminlib/js/jquery.equalHeight.js')}}"></script>
+        <script type="text/javascript" src="{{Asset('adminlib/ckeditor/ckeditor.js')}}"></script>
+        <script type="text/javascript" src="{{Asset('adminlib/ckeditor/config.js')}}"></script>
         <script type="text/javascript">
 $(document).ready(function()
 {
@@ -45,15 +48,13 @@ $(document).ready(function() {
             });</script>
 
     </head>
-
-
     <body>
 
         <header id="header">
             <hgroup>
-                <h1 class="site_title"><a href="index.html">Trang quản trị</a></h1>
-                <h2 class="section_title">HỆ THỐNG QUẢN TRỊ SITE</h2>
-                <div class="btn_view_site"><a href="http://www.pubweb.com">Trang chủ</a></div>
+                <h1 class="site_title"><a href="{{Asset('/')}}">Trang quản trị</a></h1>
+                <h2 class="section_title">@yield('titlepage')</h2>
+                <div class="btn_view_site"><a href="http://www.pubweb.com" target="_blank">Trang chủ</a></div>
             </hgroup>
         </header> <!-- end of header bar -->
 
@@ -63,7 +64,7 @@ $(document).ready(function() {
                 <!-- <a class="logout_user" href="#" title="Logout">Logout</a> -->
             </div>
             <div class="breadcrumbs_container">
-                <article class="breadcrumbs"><a href="index.html">Trang chủ</a> <div class="breadcrumb_divider"></div> <a class="current">Bài viết</a></article>
+                <article class="breadcrumbs"><a href="index.html">Trang chủ</a> <div class="breadcrumb_divider"></div> <a class="current">Bài viết</a><div class="breadcrumb_divider"></div> <a class="current">Thêm bài viết mới</a></article>
             </div>
         </section><!-- end of secondary bar -->
 
@@ -97,6 +98,16 @@ $(document).ready(function() {
                 <li class="icn_settings"><a href="#">Đơn hàng sản phẩm</a></li>
                 <li class="icn_security"><a href="#">Đơn hàng dịch vụ</a></li>
             </ul>
+            <h3>Quản lý domain</h3>
+            <ul class="toggle">
+                <li class="icn_settings"><a href="#">Tất cả domain</a></li>
+                <li class="icn_security"><a href="#">Thêm domain</a></li>
+            </ul>
+            <h3>Trình đơn</h3>
+            <ul class="toggle">
+                <li class="icn_folder"><a href="#">Danh sách trình đơn</a></li>
+                <li class="icn_photo"><a href="#">Thêm trình đơn</a></li>
+            </ul>
             <h3>Phản hồi</h3>
             <ul class="toggle">
                 <li class="icn_settings"><a href="#">Tất cả phản hồi</a></li>
@@ -112,6 +123,12 @@ $(document).ready(function() {
                 <li class="icn_settings"><a href="#">Theo ngày</a></li>
                 <li class="icn_settings"><a href="#">Theo tháng</a></li>
                 <li class="icn_settings"><a href="#">Theo năm</a></li>
+            </ul>
+            <h3>Quảng cáo</h3>
+            <ul class="toggle">
+                <li class="icn_settings"><a href="#">Tất cả quảng cáo</a></li>
+                <li class="icn_settings"><a href="#">Thêm quảng cáo</a></li>
+                <li class="icn_settings"><a href="#">Nhóm quảng cáo</a></li>
             </ul>
             <footer>
                 <hr />
