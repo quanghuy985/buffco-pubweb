@@ -63,7 +63,7 @@ class CreateTblUsers extends Migration {
         Schema::create('tblHistory', function($table) {
             $table->increments('id');
             $table->integer('userID');
-            $table->string('historyContent');
+            $table->longtext('historyContent');
             $table->string('historyTime');
             $table->integer('status');
         });
@@ -71,7 +71,7 @@ class CreateTblUsers extends Migration {
         Schema::create('tblServices', function($table) {
             $table->increments('id');
             $table->string('servicesName');
-            $table->string('servicesContent');
+            $table->longtext('servicesContent');
             $table->decimal('servicesPrices', 5, 2);
             $table->decimal('servicesPromotion', 5, 2);
             $table->string('servicesSlug');
@@ -138,12 +138,12 @@ class CreateTblUsers extends Migration {
         Schema::create('tblNews', function($table) {
             $table->increments('id');
             $table->integer('catenewsID');
-            $table->string('newsName');//name chi co 70 ky tu
-            $table->string('newsDescription');//description < 150
+            $table->string('newsName'); //name chi co 70 ky tu
+            $table->string('newsDescription'); //description < 150
             $table->string('newsKeywords');
-            $table->string('newsContent');
+            $table->longtext('newsContent');
             $table->string('newsTag');
-            $table->string('newsSlug');//check khong trung nhau vi du : tin-tuc , tin-tuc2, count() $slug + 1 -> chuoi tic-tuc+chuoi
+            $table->string('newsSlug'); //check khong trung nhau vi du : tin-tuc , tin-tuc2, count() $slug + 1 -> chuoi tic-tuc+chuoi
             $table->string('newsTime');
             $table->integer('status');
         });
