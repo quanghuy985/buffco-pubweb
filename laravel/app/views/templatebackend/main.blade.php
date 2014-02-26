@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html>
     <head>
+        <meta charset="utf-8"/>
         <title>@yield('title')</title>
         <link rel="stylesheet" href="{{Asset('assets/css/bootstrap.css')}}"/>
         <link rel="stylesheet" href="{{Asset('assets/css/style.css')}}"/>
