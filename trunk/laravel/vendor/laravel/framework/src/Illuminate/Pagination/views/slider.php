@@ -31,24 +31,44 @@ $presenter = new Illuminate\Pagination\BootstrapPresenter($paginator);
             }
             if ($lastPage > $showBeforeAndAfter and $currentPage != 1 and $currentPage > 3) {
                 ?>
-                <li><a href="<?php echo $presenter->getUrlPage(1); ?>">Last</a></li>
+                <li><a  style="font-size: 18px;" href="<?php echo $presenter->getUrlPage(1); ?>">«</a></li>
+                <?php
+            } else {
+                ?>
+                <li><a class="disable"  style="font-size: 18px;" href="#">«</a></li>
                 <?php
             }
             if ($lastPage > $showBeforeAndAfter and $currentPage != 1) {
-                echo $presenter->getPrevious('<<');
+                ?>
+                <li><a  style="font-size: 18px;" href="<?php echo $presenter->getUrlPage($currentPage - 1); ?>">‹</a></li>
+                <?php
+            } else {
+                ?>
+                <li><a class="disable"  style="font-size: 18px;" href="#">‹</a></li>
+                <?php
             }
             if ($lastPage != 1) {
                 echo $presenter->getPageRange($start, $end);
             }
             if ($lastPage > $showBeforeAndAfter and $currentPage != $lastPage) {
-                echo $presenter->getNext('>>');
+                ?>
+                <li><a  style="font-size: 18px;" href="<?php echo $presenter->getUrlPage($currentPage + 1); ?>">›</a></li>
+                <?php
+            } else {
+                ?>
+                <li><a class="disable"  style = "font-size: 18px;" href = "#">›</a></li>
+                <?php
             }
             if ($lastPage > $showBeforeAndAfter and $currentPage != $lastPage and $lastPage - $currentPage > 2) {
                 ?>
-                <li><a href="<?php echo $presenter->getUrlPage($lastPage); ?>">Last</a></li>
+                <li><a style="font-size: 18px;" href="<?php echo $presenter->getUrlPage($lastPage); ?>">»</a></li>
+                    <?php
+                }else{
+                    ?>
+                 <li><a class="disable" style="font-size: 18px;" href="#">»</a></li>
                 <?php
-            }
-            ?>
+                }
+                ?>
         </ul>
     </div>
 <?php endif; ?>

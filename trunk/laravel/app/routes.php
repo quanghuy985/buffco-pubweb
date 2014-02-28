@@ -10,23 +10,24 @@
   | and give it the Closure to execute when that URI is requested.
   |
  */
+Route::get('/',  function (){
 
-Route::get('/', function() {
-    // return View::make('backend.admin-home');
-    $func = new TblSupporterGroupModel();
-
-//    $checo = $func->insertGSuppoert('Cave');
-//    var_dump($checo);
-    $photos = $func->FindGSupport('a','2');
-    foreach ($photos as $photo) {
-        echo $photo->supporterGroupName;
+    return View::make('backend.viewproduct');
+});
+//adminlogin
+Route::get('administrator', 'AdminController@getDangNhap');
+Route::filter('checklofinadmin', function() {
+    if (!Session::has('userlogined')) {
+        return Redirect::action('AdminController@getDangNhap');
     }
-    echo $photos->links();
 });
-Route::group(array('prefix' => 'administrator'), function() {
+Route::group(array('before' => 'checklofinadmin'), function() {
+    Route::get('/administrator/home-admin', 'AdminController@getHomeAdmin');
+    Route::controller('home', 'HomeController');
+});
 
-    Route::controller('/', 'AdminController');
-});
+Route::controller('/administrator', 'AdminController');
+
 App::missing(function($exception) {
     return 'day la trang 404';
 });
