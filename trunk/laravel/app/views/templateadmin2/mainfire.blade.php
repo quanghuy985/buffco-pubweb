@@ -10,11 +10,11 @@
         <script type="text/javascript" src="{{Asset('adminlib2/js/plugins/jquery-ui-1.8.16.custom.min.js')}}"></script>
         <script type="text/javascript" src="{{Asset('adminlib2/js/plugins/jquery.cookie.js')}}"></script>
         <script type="text/javascript" src="{{Asset('adminlib2/js/plugins/jquery.uniform.min.js')}}"></script>
-        <script type="text/javascript" src="{{Asset('adminlib2/js/plugins/jquery.flot.min.js')}}"></script>
-        <script type="text/javascript" src="{{Asset('adminlib2/js/plugins/jquery.flot.resize.min.js')}}"></script>
-        <script type="text/javascript" src="{{Asset('adminlib2/js/plugins/jquery.slimscroll.js')}}"></script>
         <script type="text/javascript" src="{{Asset('adminlib2/js/custom/general.js')}}"></script>
-        <script type="text/javascript" src="{{Asset('adminlib2/js/custom/dashboard.js')}}"></script>
+        <script type="text/javascript" src="{{Asset('adminlib2/js/plugins/jquery.dataTables.min.js')}}"></script>
+        <script type="text/javascript" src="{{Asset('adminlib2/js/custom/tables.js')}}"></script>
+        <script type="text/javascript" src="{{Asset('adminlib/ckeditor/ckeditor.js')}}"></script>
+        <script type="text/javascript" src="{{Asset('adminlib/ckeditor/config.js')}}"></script>
         <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/plugins/excanvas.min.js"></script><![endif]-->
         <!--[if IE 9]>
             <link rel="stylesheet" media="screen" href="css/style.ie9.css"/>
