@@ -14,12 +14,16 @@ class TblCateNewsModel extends Eloquent {
         $this->save();
     }
 
-    public function updateCateNews($cateNewsID, $cateNewsName, $cateNewsParent, $cateNewsSlug, $cateNewsStatus) {
+    public function updateCateNews($cateNewsID, $cateNewsName, $cateNewsDescriptions, $cateKeywords, $cateNewsParent, $cateNewsSlug, $cateNewsStatus) {
         // $tableAdmin = new TblAdminModel();
         $tableCateNews = $this->where('id', '=', $cateNewsID);
         $arraysql = array('id' => $cateNewsID);
         if ($cateNewsName != '') {
             $arraysql = array_merge($arraysql, array("catenewsName" => $cateNewsName));
+        }if ($cateNewsDescriptions != '') {
+            $arraysql = array_merge($arraysql, array("cateNewsDescriptions" => $cateNewsDescriptions));
+        }if ($cateKeywords != '') {
+            $arraysql = array_merge($arraysql, array("cateKeywords" => $cateKeywords));
         }
         if ($cateNewsParent != '') {
             $arraysql = array_merge($arraysql, array("catenewsParent" => $cateNewsParent));
