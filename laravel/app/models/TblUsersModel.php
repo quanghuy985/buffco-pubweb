@@ -102,8 +102,13 @@ class TblUsersModel extends Eloquent {
     }
 
     public function AllUser($per_page) {
-        $adminarray = $this->where('status', '!=', 0)->paginate($per_page);
+        $adminarray = DB::table('tblusers')->paginate($per_page);
         return $adminarray;
+    }
+
+    public function getUserByEmail($userEmail) {
+        $objectUser = DB::table('tblusers')->where('userEmail', '=', $userEmail)->get();
+        return $objectUser[0];
     }
 
 }
