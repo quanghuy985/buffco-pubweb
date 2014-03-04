@@ -73,7 +73,7 @@
 #popup_ok, #popup_cancel { padding: 5px 15px; font-size: 12px; display: inline-block; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; }
 #popup_ok, #popup_cancel { 
 	-moz-box-shadow: 1px 1px 2px #eee; -webkit-box-shadow: 1px 1px 2px #eee; box-shadow: 1px 1px 2px #eee; cursor: pointer; 
-	font-family: 'RobotoCondensed', Arial, Helvetica, sans-serif; text-transform: uppercase; 
+	font-family:  Arial, Helvetica, sans-serif; text-transform: uppercase; 
 }
 #popup_ok:hover, #popup_ok:active, #popup_cancel:hover, #popup_cancel:active { background-position: 0 -39px; }
 

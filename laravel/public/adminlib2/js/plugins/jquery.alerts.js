@@ -36,8 +36,8 @@
 		overlayOpacity: .01,                // transparency level of overlay
 		overlayColor: '#FFF',               // base color of overlay
 		draggable: true,                    // make the dialogs draggable (requires UI Draggables plugin)
-		okButton: '&nbsp;OK&nbsp;',         // text for the OK button
-		cancelButton: '&nbsp;Cancel&nbsp;', // text for the Cancel button
+		okButton: '&nbsp;Đồng ý&nbsp;',         // text for the OK button
+		cancelButton: '&nbsp;Hủy&nbsp;', // text for the Cancel button
 		dialogClass: null,                  // if specified, this class will be applied to all dialogs
 		
 		// Public methods
