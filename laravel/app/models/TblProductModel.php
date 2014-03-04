@@ -58,8 +58,8 @@ class TblProductModel extends Eloquent {
         if ($productTimeUpdateVersion != '') {
             $arraysql = array_merge($arraysql, array("productTimeUpdateVersion" => time()));
         }
-        if ($staus != '') {
-            $arraysql = array_merge($arraysql, array("status" => $staus));
+        if ($status != '') {
+            $arraysql = array_merge($arraysql, array("status" => $status));
         }
 
         $checku = $supporter->update($arraysql);
@@ -80,12 +80,22 @@ class TblProductModel extends Eloquent {
     }
 
     public function AllProduct($per_page) {
-        $adminarray = $this->paginate($per_page);
+        $adminarray = DB::table('tblproduct')->join('tblcategoryproduct', 'tblproduct.cateID', '=', 'tblcategoryproduct.id')->select('tblproduct.*', 'tblcategoryproduct.cateName')->orderBy('tblproduct.id', 'desc')->paginate($per_page);
         return $adminarray;
     }
 
     public function SelectProductById($id) {
-        $adminarray = $this->where('id', '=', $id)->get();
+        $adminarray = DB::table('tblproduct')->where('id', '=', $id)->get();
+        return $adminarray[0];
+    }
+
+    public function FindProduct($keyword, $per_page, $orderby, $status) {
+        $adminarray = '';
+        if ($status == '') {
+            $adminarray = DB::table('tblproduct')->join('tblcategoryproduct', 'tblproduct.cateID', '=', 'tblcategoryproduct.id')->select('tblproduct.*', 'tblcategoryproduct.cateName')->where('tblproduct.productName', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);
+        } else {
+            $adminarray = DB::table('tblproduct')->join('tblcategoryproduct', 'tblproduct.cateID', '=', 'tblcategoryproduct.id')->select('tblproduct.*', 'tblcategoryproduct.cateName')->where('tblproduct.productName', 'LIKE', '%' . $keyword . '%')->where('tblproduct.status', '=', $status)->orderBy($orderby, 'desc')->paginate($per_page);
+        }
         return $adminarray;
     }
 
