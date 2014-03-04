@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="vi">
 
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -13,6 +13,7 @@
         <script type="text/javascript" src="{{Asset('adminlib2/js/custom/general.js')}}"></script>
         <script type="text/javascript" src="{{Asset('adminlib2/js/plugins/jquery.dataTables.min.js')}}"></script>
         <script type="text/javascript" src="{{Asset('adminlib2/js/custom/tables.js')}}"></script>
+        <script type="text/javascript" src="{{Asset('adminlib2/js/plugins/jquery.alerts.js')}}"></script>
         <script type="text/javascript" src="{{Asset('adminlib/ckeditor/ckeditor.js')}}"></script>
         <script type="text/javascript" src="{{Asset('adminlib/ckeditor/config.js')}}"></script>
         <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/plugins/excanvas.min.js"></script><![endif]-->
@@ -32,16 +33,8 @@
         <div class="bodywrapper">
             <div class="topheader">
                 <div class="left">
-                    <h1 class="logo">Aman.<span>da</span></h1>
-                    <span class="slogan">admin template</span>
-
-                    <div class="search">
-                        <form action="#" method="post">
-                            <input type="text" name="keyword" id="keyword" value="Enter keyword(s)" />
-                            <button class="submitbutton"></button>
-                        </form>
-                    </div><!--search-->
-
+                    <h1 class="logo">PUBWEB.<span>vn</span></h1>
+                    <span class="slogan">Thiết kế bởi <a href="http://Pubweb.vn" target="_blabk">Pubweb.vn</a></span>
                     <br clear="all" />
 
                 </div><!--left-->
@@ -83,41 +76,28 @@
 
 
             <div class="header">
-                <ul class="headermenu">
-                    <li class="current"><a href="dashboard.html"><span class="icon icon-flatscreen"></span>Dashboard</a></li>
-                    <li><a href="manageblog.html"><span class="icon icon-pencil"></span>Manage Blog</a></li>
-                    <li><a href="messages.html"><span class="icon icon-message"></span>Messages</a></li>
-                    <li><a href="reports.html"><span class="icon icon-chart"></span>Reports</a></li>
-                </ul>
-
-                <div class="headerwidget">
-                    <div class="earnings">
-                        <div class="one_half">
-                            <h4>Today's Earnings</h4>
-                            <h2>$640.01</h2>
-                        </div><!--one_half-->
-                        <div class="one_half last alignright">
-                            <h4>Current Rate</h4>
-                            <h2>53%</h2>
-                        </div><!--one_half last-->
-                    </div><!--earnings-->
-                </div><!--headerwidget-->
 
 
             </div><!--header-->
 
             <div class="vernav2 iconmenu">
                 <ul>
-                    <li><a href="#formsub" class="editor">Forms</a>
+                    <li><a href="#formsub" class="editor">Tin tức</a>
                         <span class="arrow"></span>
                         <ul id="formsub">
-                            <li><a href="forms.html">Basic Form</a></li>
-                            <li><a href="wizard.html">Wizard</a></li>
-                            <li><a href="editor.html">WYSIWYG</a></li>
+                            <li><a href="#">Tất cả tin tức</a></li>
+                            <li><a href="#">Thêm mới tin tức</a></li>
+                            <li><a href="#">Nhóm tin tức</a></li>
                         </ul>
                     </li>
-                    <li><a href="filemanager.html" class="gallery">File Manager</a></li>
-                    <li><a href="elements.html" class="elements">Elements</a></li>
+                    <li><a href="#productsub" class="elements">Sản phẩm</a>
+                        <span class="arrow"></span>
+                        <ul id="productsub">
+                            <li><a href="{{URL::action('ProductController@getView')}}" >Tất cả sản phẩm</a></li>
+                            <li><a href="{{URL::action('ProductController@postAddProduct')}}" >Thêm mới</a></li>
+                            <li><a href="{{URL::action('ProductController@getView')}}">Nhóm sản phẩm</a></li>
+                        </ul>
+                    </li>
                     <li><a href="#widgets" class="widgets">Widgets</a>
                         <span class="arrow"></span>
                         <ul id="widgets">
@@ -165,7 +145,6 @@
 
 
         </div><!--bodywrapper-->
-
     </body>
 
 </html>
