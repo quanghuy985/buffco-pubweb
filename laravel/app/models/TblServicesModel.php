@@ -61,4 +61,9 @@ class TblServicesModel extends Eloquent {
         return $adminarray;
     }
 
+    public function SelectServicesById($id) {
+        $adminarray = DB::table('tblservices')->where('id', '=', $id)->get();
+        return $adminarray[0];
+    }
+
 }
