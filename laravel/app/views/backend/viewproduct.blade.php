@@ -145,7 +145,7 @@
             </thead>
 
             <tbody id="tableproduct">
-                @foreach($data as $item)
+                @foreach($dataproduct as $item)
                 <tr >
                     <td align="center"><input type="checkbox" name="checkboxidfile" value="{{$item->id}}" ></td>
                     <td>{{$item->id}}</td>

@@ -8,7 +8,7 @@ class TblSupporterGroupModel extends Eloquent {
     public function insertGSuppoert($gname) {
         $this->supporterGroupName = $gname;
         $this->supporterGroupTime = time();
-        $this->status = 1;
+        $this->status = 0;
         $this->save();
     }
 
@@ -31,7 +31,7 @@ class TblSupporterGroupModel extends Eloquent {
     }
 
     public function DeleteGSupport($id) {
-        $checkdel = $this->where('id', '=', $id)->update(array('status' => 0));
+        $checkdel = $this->where('id', '=', $id)->update(array('status' => 2));
         if ($checkdel > 0) {
             return TRUE;
         } else {
@@ -45,8 +45,13 @@ class TblSupporterGroupModel extends Eloquent {
     }
 
     public function AllGSupport($per_page) {
-        $adminarray = $this->paginate($per_page);
+        $adminarray = DB::table('tblSupporterGroup')->paginate($per_page);
         return $adminarray;
+    }
+
+    public function findGroupByID($id) {
+        $adminarray = DB::table('tblSupporterGroup')->where('id', '=', $id)->get();
+        return $adminarray[0];
     }
 
 }

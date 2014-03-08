@@ -155,7 +155,7 @@ class CreateTblUsers extends Migration {
             $table->string('feedbackUserEmail');
             $table->string('feedbackUserName');
             $table->string('feedbackSubject');
-            $table->longtext('feedbackContent');
+            $table->string('feedbackContent');
             $table->string('feedbackTime');
             $table->integer('status');
         });

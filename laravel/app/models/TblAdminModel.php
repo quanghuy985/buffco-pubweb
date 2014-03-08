@@ -11,14 +11,14 @@ class TblAdminModel extends Eloquent {
         return $adminEmail;
     }
 
-    public function registerAdmin($username, $password, $nameAdmin) {
+    public function registerAdmin($email, $adminRoles, $password, $nameAdmin, $status) {
         $tableadmin = new TblAdminModel();
-        $tableadmin->adminEmail = $username;
+        $tableadmin->adminEmail = $email;
         $tableadmin->adminName = $nameAdmin;
         $tableadmin->adminPassword = md5(sha1(md5($password)));
-        $tableadmin->adminRoles = 1;
+        $tableadmin->adminRoles = $adminRoles;
         $tableadmin->adminTime = time();
-        $tableadmin->status = 1;
+        $tableadmin->status = $status;
         $tableadmin->save();
     }
 
@@ -86,13 +86,18 @@ class TblAdminModel extends Eloquent {
     }
 
     public function findAdmin($keyword, $per_page) {
-        $adminarray = DB::table('tblAdmin')->where('adminEmail', 'LIKE', '%' . $keyword . '%')->orWhere('adminName', 'LIKE', '%' . $keyword . '%')->orWhere('adminRoles', 'LIKE', '%' . $keyword . '%')->orWhere('status', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
+        $adminarray = DB::table('tblAdmin')->where('adminEmail', 'LIKE', '%' . $keyword . '%')->orWhere('adminName', 'LIKE', '%' . $keyword . '%')->orWhere('adminRoles', 'LIKE', '%' . $keyword . '%')->orWhere('status', 'LIKE', '%' . $keyword . '%')->orderBy('adminRoles')->paginate($per_page);
         return $adminarray;
     }
 
     public function allAdmin($per_page) {
-        $alladmin = $this->paginate($per_page);
+        $alladmin = DB::table('tblAdmin')->where('adminRoles', '!=', '0')->paginate($per_page);
         return $alladmin;
+    }
+
+    public function findAdminbyEmail($adminEmail) {
+        $objAdmin = DB::table('tblAdmin')->where('adminEmail', '=', $adminEmail)->get();
+        return $objAdmin[0];
     }
 
 }

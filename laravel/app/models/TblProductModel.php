@@ -71,7 +71,7 @@ class TblProductModel extends Eloquent {
     }
 
     public function DeleteProduct($id) {
-        $checkdel = $this->where('id', '=', $id)->update(array('status' => 0));
+        $checkdel = $this->where('id', '=', $id)->update(array('status' => 2));
         if ($checkdel > 0) {
             return TRUE;
         } else {

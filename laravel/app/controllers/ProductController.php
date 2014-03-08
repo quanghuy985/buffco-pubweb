@@ -26,17 +26,22 @@ class ProductController extends BaseController {
             "productdes" => "required",
             "productprice" => "required|numeric"
         );
+        $objCateproduct = new TblCategoryProductModel();
+        $data = $objCateproduct->all();
         if (!Validator::make(Input::all(), $rules)->fails()) {
             $objproduct = new TblProductModel();
-            $upload = new UploadModel();
-            $checkup = $upload->postUpload(Input::file('fileupload'));
-            if ($checkup == FALSE) {
-                echo 'khong upload dc';
-            } else {
-                $objproduct->insertProduct(Input::get('categoryproduct'), Input::get('productname'), $checkup, Input::get('productdes'), Input::get('productprice'), Input::get('productprom'), Input::get('producturldemo'), Input::get('productslug'), Input::get('productversion'));
-                $objCateproduct = new TblCategoryProductModel();
-                $data = $objCateproduct->all();
-                return View::make('backend.addproduct')->with('catproduct', $data)->with('thongbao', 'Sản phẩm của bạn đã được thêm vào cơ sở dữ liệu.');
+            if (Input::file('fileupload') == NULL) {
+                return View::make('backend.addproduct')->with('catproduct', $data)->with('thongbao', 'Vui lòng chọn file tải lên .');
+            } ELSE {
+                $upload = new UploadModel();
+                $checkup = $upload->postUpload(Input::file('fileupload'));
+                if ($checkup == FALSE) {
+                    return View::make('backend.addproduct')->with('catproduct', $data)->with('thongbao', 'Kiểm tra lại file tải lên .');
+                } else {
+                    $objproduct->insertProduct(Input::get('categoryproduct'), Input::get('productname'), $checkup, Input::get('productdes'), Input::get('productprice'), Input::get('productprom'), Input::get('producturldemo'), Input::get('productslug'), Input::get('productversion'));
+
+                    return View::make('backend.addproduct')->with('catproduct', $data)->with('thongbao', 'Sản phẩm của bạn đã được thêm vào cơ sở dữ liệu.');
+                }
             }
         }
     }
@@ -88,50 +93,63 @@ class ProductController extends BaseController {
             $objGsp = new TblProductModel();
             $data = $objGsp->FindProduct($keyw[0], 10, 'id', '');
             $link = $data->links();
-            return View::make('backend.viewproduct')->with('data', $data)->with('page', $link);
+            return View::make('backend.viewproduct')->with('dataproduct', $data)->with('page', $link);
         } else {
             Session::forget('keywordsearch');
             $objGsp = new TblProductModel();
             $data = $objGsp->FindProduct('', 10, 'id', '');
             $link = $data->links();
-            return View::make('backend.viewproduct')->with('data', $data)->with('page', $link);
+            return View::make('backend.viewproduct')->with('dataproduct', $data)->with('page', $link);
         }
     }
 
     public function postAjaxsearch() {
         $objGsp = new TblProductModel();
-        $data = $objGsp->FindProduct(Input::get('keywordsearch'), 10, 'id', '');
+        if (Session::has('oderbyoption1')) {
+            $tatus = Session::get('oderbyoption1');
+            $data = $objGsp->FindProduct(Input::get('keywordsearch'), 10, 'id', $tatus[0]);
+        } else {
+            $data = $objGsp->FindProduct(Input::get('keywordsearch'), 10, 'id', '');
+        }
+        //  $data = $objGsp->FindProduct(Input::get('keywordsearch'), 10, 'id', '');
         // $data->setBaseUrl('view');
         $link = $data->links();
         Session::forget('keywordsearch');
         Session::push('keywordsearch', Input::get('keywordsearch'));
-        return View::make('backend.productajaxsearch')->with('data', $data)->with('page', $link);
+        return View::make('backend.productajaxsearch')->with('dataproduct', $data)->with('page', $link);
     }
 
     public function postAjaxpagion() {
         if (Session::has('keywordsearch') && Input::get('page') != '') {
             $keyw = Session::get('keywordsearch');
             $objGsp = new TblProductModel();
-            $data = $objGsp->FindProduct($keyw[0], 10, 'id', '');
+            $data = '';
+            if (Session::has('oderbyoption1')) {
+                $tatus = Session::get('oderbyoption1');
+                $data = $objGsp->FindProduct($keyw[0], 10, 'id', $tatus[0]);
+            } else {
+                $data = $objGsp->FindProduct($keyw[0], 10, 'id', '');
+            }
             $link = $data->links();
-            return View::make('backend.productajaxsearch')->with('data', $data)->with('page', $link);
+            return View::make('backend.productajaxsearch')->with('dataproduct', $data)->with('page', $link);
         } else {
             Session::forget('keywordsearch');
             $objGsp = new TblProductModel();
             $tatus = Session::get('oderbyoption1');
             $data = $objGsp->FindProduct('', 10, 'id', $tatus[0]);
             $link = $data->links();
-            return View::make('backend.productajaxsearch')->with('data', $data)->with('page', $link);
+            return View::make('backend.productajaxsearch')->with('dataproduct', $data)->with('page', $link);
         }
     }
 
     public function postFillterProduct() {
+        Session::forget('keywordsearch');
         $objGsp = new TblProductModel();
         $data = $objGsp->FindProduct('', 10, 'id', Input::get('oderbyoption1'));
         $link = $data->links();
         Session::forget('oderbyoption1');
         Session::push('oderbyoption1', Input::get('oderbyoption1'));
-        return View::make('backend.productajaxsearch')->with('data', $data)->with('page', $link);
+        return View::make('backend.productajaxsearch')->with('dataproduct', $data)->with('page', $link);
     }
 
     public function postDelmulte() {
@@ -145,7 +163,7 @@ class ProductController extends BaseController {
         $objGsp = new TblProductModel();
         $data = $objGsp->FindProduct('', 10, 'id', '');
         $link = $data->links();
-        return View::make('backend.viewproduct')->with('data', $data)->with('page', $link);
+        return View::make('backend.viewproduct')->with('dataproduct', $data)->with('page', $link);
     }
 
     public function postDel() {
@@ -154,7 +172,7 @@ class ProductController extends BaseController {
         $objGsp = new TblProductModel();
         $data = $objGsp->FindProduct('', 10, 'id', '');
         $link = $data->links();
-        return View::make('backend.productajaxsearch')->with('data', $data)->with('page', $link);
+        return View::make('backend.productajaxsearch')->with('dataproduct', $data)->with('page', $link);
     }
 
 //    public function getAjaxsearch() {
@@ -164,12 +182,12 @@ class ProductController extends BaseController {
 //            $objGsp = new TblSupporterGroupModel();
 //            $data = $objGsp->FindGSupport($keyw[0], 10);
 //            $link = $data->links();
-//            return View::make('backend.viewproduct')->with('data', $data)->with('page', $link);
+//            return View::make('backend.viewproduct')->with('dataproduct', $data)->with('page', $link);
 //        } else {
 //            $objGsp = new TblSupporterGroupModel();
 //            $data = $objGsp->AllGSupport(2);
 //            $link = $data->links();
-//            return View::make('backend.viewproduct')->with('data', $data)->with('page', $link);
+//            return View::make('backend.viewproduct')->with('dataproduct', $data)->with('page', $link);
 //        }
 //    }
 

@@ -79,7 +79,7 @@ class TblUsersModel extends Eloquent {
     }
 
     public function DeleteUser($uemailf) {
-        $checkdel = $this->where('userEmail', '=', $uemailf)->update(array('status' => 0));
+        $checkdel = $this->where('userEmail', '=', $uemailf)->update(array('status' => 2));
         if ($checkdel > 0) {
             return TRUE;
         } else {
@@ -109,6 +109,16 @@ class TblUsersModel extends Eloquent {
     public function getUserByEmail($userEmail) {
         $objectUser = DB::table('tblusers')->where('userEmail', '=', $userEmail)->get();
         return $objectUser[0];
+    }
+
+    public function FindUser($keyword, $per_page, $orderby, $status) {
+        $adminarray = '';
+        if ($status == '') {
+            $adminarray = DB::table('tblusers')->select('tblusers.*')->where('tblusers.userEmail', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);
+        } else {
+            $adminarray = DB::table('tblusers')->select('tblusers.*')->where('tblusers.userEmail', 'LIKE', '%' . $keyword . '%')->where('tblusers.status', '=', $status)->orderBy($orderby, 'desc')->paginate($per_page);
+        }
+        return $adminarray;
     }
 
 }

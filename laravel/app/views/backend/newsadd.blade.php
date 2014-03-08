@@ -18,10 +18,20 @@
                 <input type="hidden" name="status" id="status" value="@if(isset($datan)){{$datan->status}}@endif"/>
                 <label>Chọn mục hiển thị bài viết</label>
                 <span class="field">
+
                     <select name="cbCateNews">
-                        @foreach($arrayCate as $item)
-                        <option value="{{$item->id}}" @if(isset($datan))@if($item->id==$datan->catenewsID)selected@endif@endif>{{$item->catenewsName}}</option>
-                        @endforeach
+                        <?php
+                        foreach ($arrayCate as $item) {
+                            if ($item->catenewsParent == 0) {
+                                echo '<option  value="' . $item->id . '">' . $item->catenewsName . '</option>';
+                                foreach ($arrayCate as $item1) {
+                                    if ($item1->catenewsParent == $item->id) {
+                                        echo '<option value="' . $item1->id . '">-- ' . $item1->catenewsName . '</option>';
+                                    }
+                                }
+                            }
+                        }
+                        ?>
                     </select>
                 </span>
             </p>
