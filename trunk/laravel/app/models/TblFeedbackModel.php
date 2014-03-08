@@ -28,11 +28,6 @@ class TblFeedbackModel extends Eloquent {
         }
     }
 
-    public function findFeedback($keyword, $per_page) {
-        $cateArray = DB::table('tblFeedback')->where('feedbackUserEmail', 'LIKE', '%' . $keyword . '%')->orWhere('feedbackUserName', 'LIKE', '%' . $keyword . '%')->orWhere('feedbackSubject', 'LIKE', '%' . $keyword . '%')->orWhere('feedbackContent', 'LIKE', '%' . $keyword . '%')->orWhere('feedbackTime', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
-        return $cateArray;
-    }
-
     public function selectFeedback($sqlfun) {
         $results = DB::select($sqlfun);
         return ($results);
@@ -41,6 +36,16 @@ class TblFeedbackModel extends Eloquent {
     public function allFeedback($per_page) {
         $alladmin = $this->paginate($per_page);
         return $alladmin;
+    }
+
+    public function getFeedbackbyID($feedbackID) {
+        $objectFeedback = DB::table('tblFeedback')->where('id', '=', $feedbackID)->get();
+        return $objectFeedback[0];
+    }
+
+    public function findFeedback($keyword, $per_page, $orderby, $status) {
+        $adminarray = DB::table('tblFeedback')->where('tblFeedback.id', 'LIKE', '%' . $keyword . '%')->orWhere('tblFeedback.feedbackUserEmail', 'LIKE', '%' . $keyword . '%')->orWhere('tblFeedback.feedbackUserName', 'LIKE', '%' . $keyword . '%')->orWhere('tblFeedback.feedbackSubject', 'LIKE', '%' . $keyword . '%')->orWhere('tblFeedback.feedbackContent', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);
+        return $adminarray;
     }
 
 }

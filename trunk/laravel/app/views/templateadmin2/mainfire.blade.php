@@ -82,12 +82,12 @@
 
             <div class="vernav2 iconmenu">
                 <ul>
-                    <li><a href="#formsub" class="editor">Tin tức</a>
+                    <li><a href="#newsSub" class="editor">Tin tức</a>
                         <span class="arrow"></span>
-                        <ul id="formsub">
-                            <li><a href="#">Tất cả tin tức</a></li>
-                            <li><a href="#">Thêm mới tin tức</a></li>
-                            <li><a href="#">Nhóm tin tức</a></li>
+                        <ul id="newsSub">
+                            <li><a href="{{URL::action('NewsController@getNewsView')}}">Tất cả tin tức</a></li>
+                            <li><a href="{{URL::action('NewsController@getAddNews')}}">Thêm mới tin tức</a></li>
+                            <li><a href="{{URL::action('cateNewsController@getCateNewsView')}}">Nhóm tin tức</a></li>
                         </ul>
                     </li>
                     <li><a href="#productsub" class="elements">Sản phẩm</a>
@@ -95,40 +95,47 @@
                         <ul id="productsub">
                             <li><a href="{{URL::action('ProductController@getView')}}" >Tất cả sản phẩm</a></li>
                             <li><a href="{{URL::action('ProductController@postAddProduct')}}" >Thêm mới</a></li>
-                            <li><a href="{{URL::action('ProductController@getView')}}">Nhóm sản phẩm</a></li>
+                            <li><a href="{{URL::action('cateProductController@getCateProductView')}}">Nhóm sản phẩm</a></li>
                         </ul>
                     </li>
-                    <li><a href="#widgets" class="widgets">Widgets</a>
+                    <li><a href="{{URL::action('ServicesController@getServices')}}" class="widgets">Dịch vụ</a>
+                    </li>
+                    <li><a href="#ahshs" class="calendar">Danh sách đơn hàng</a>
                         <span class="arrow"></span>
-                        <ul id="widgets">
-                            <li><a href="notfound.html">Page Not Found</a></li>
-                            <li><a href="forbidden.html">Forbidden Page</a></li>
+                        <ul id="ahshs">
+                            <li><a href="notfound.html">Đơn hàng sản phẩm</a></li>
+                            <li><a href="forbidden.html">Đơn hàng dịch vụ</a></li>
                             <li><a href="internal.html">Internal Server Error</a></li>
                             <li><a href="offline.html">Offline</a></li>
                         </ul>
                     </li>
-                    <li><a href="calendar.html" class="calendar">Calendar</a></li>
-                    <li><a href="support.html" class="support">Customer Support</a></li>
-                    <li><a href="typography.html" class="typo">Typography</a></li>
-                    <li><a href="tables.html" class="tables">Tables</a></li>
-                    <li><a href="buttons.html" class="buttons">Buttons &amp; Icons</a></li>
-                    <li><a href="#error" class="error">Error Pages</a>
+                    <li><a href="#userSub" class="support">Khách hàng</a>
                         <span class="arrow"></span>
-                        <ul id="error">
-                            <li><a href="notfound.html">Page Not Found</a></li>
-                            <li><a href="forbidden.html">Forbidden Page</a></li>
-                            <li><a href="internal.html">Internal Server Error</a></li>
-                            <li><a href="offline.html">Offline</a></li>
+                        <ul id="userSub">
+                            <li><a href="{{URL::action('UserController@getUserView')}}">Tất cả khách hàng</a></li>
+                            <li><a href="{{URL::action('UserController@getAddUser')}}">Thêm mới khách hàng</a></li>
                         </ul>
                     </li>
-                    <li><a href="#addons" class="addons">Addons</a>
+                    <li><a href="#pageSub" class="typo">các trang</a>
                         <span class="arrow"></span>
-                        <ul id="addons">
-                            <li><a href="newsfeed.html">News Feed</a></li>
-                            <li><a href="profile.html">Profile Page</a></li>
-                            <li><a href="productlist.html">Product List</a></li>
-                            <li><a href="photo.html">Photo/Video Sharing</a></li>
+                        <ul id="pageSub">
+                            <li><a href="{{URL::action('PageController@getPageView')}}">Tất cả các trang</a></li>
+                            <li><a href="{{URL::action('PageController@getAddPage')}}">Thêm trang mới</a></li>
                         </ul>
+                    </li>
+                    <li><a href="{{URL::action('FeedbackController@getFeedbackView')}}" class="buttons">phản hồi</a> </li>
+                    <li><a href="#supporterSub" class="tables">Hỗ trợ viên</a>
+                        <span class="arrow"></span>
+                        <ul id="supporterSub">
+                            <li><a href="{{URL::action('SupporterController@getSupporterView')}}">Danh sánh hỗ trợ viên</a></li>
+                            <li><a href="{{URL::action('SupporterGroupController@getSupporterGroupView')}}">Nhóm hỗ trợ viên</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a href="{{URL::action('MenuController@getMenuView')}}" class="error">thanh menu</a>
+                    </li>
+                    <li><a href="{{URL::action('AdminController@getAdminView')}}" class="addons">Admin</a>
+
                     </li>
                 </ul>
                 <a class="togglemenu"></a>

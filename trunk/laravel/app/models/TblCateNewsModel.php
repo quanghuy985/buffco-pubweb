@@ -23,9 +23,9 @@ class TblCateNewsModel extends Eloquent {
         if ($cateNewsName != '') {
             $arraysql = array_merge($arraysql, array("catenewsName" => $cateNewsName));
         }if ($cateNewsDescriptions != '') {
-            $arraysql = array_merge($arraysql, array("cateNewsDescriptions" => $cateNewsDescriptions));
+            $arraysql = array_merge($arraysql, array("cateNewsDescription" => $cateNewsDescriptions));
         }if ($cateKeywords != '') {
-            $arraysql = array_merge($arraysql, array("cateKeywords" => $cateKeywords));
+            $arraysql = array_merge($arraysql, array("catenewsKeywords" => $cateKeywords));
         }
         if ($cateNewsParent != '') {
             $arraysql = array_merge($arraysql, array("catenewsParent" => $cateNewsParent));
@@ -81,6 +81,23 @@ class TblCateNewsModel extends Eloquent {
     public function findCateNewsByID($id) {
         $adminarray = DB::table('tblCateNews')->where('id', '=', $id)->get();
         return $adminarray[0];
+    }
+
+    public function getAllCategoryNew($start, $per_page) {
+        $results = DB::select("select a.catenewsName as N1,a.catenewsName as catenewsName,a.catenewsDescription as catenewsDescription,a.catenewsKeywords as catenewsKeywords,a.catenewsParent as catenewsParent,a.id as id,a.catenewsSlug as catenewsSlug,a.catenewsTime as catenewsTime,a.status as status FROM `tblcatenews` as a where a.catenewsParent=0
+        UNION ALL
+        select a.catenewsName as N1,b.catenewsName as catenewsName,b.catenewsDescription as catenewsDescription,b.catenewsKeywords as catenewsKeywords,b.catenewsParent as catenewsParent,b.id as id,b.catenewsSlug as catenewsSlug ,b.catenewsTime as catenewsTime,b.status as status  FROM `tblcatenews` as a INNER JOIN `tblcatenews` as b On a.id = b.catenewsParent
+        ORDER BY N1,catenewsParent
+        LIMIT ?,?", array($start, $per_page));
+        return $results;
+    }
+
+    public function getAllCategoryNewPagin($per_page) {
+        $results1 = DB::select("select a.catenewsName as N1,a.catenewsName as catenewsName,a.catenewsDescription as catenewsDescription,a.catenewsKeywords as catenewsKeywords,a.catenewsParent as catenewsParent,a.id as id,a.catenewsSlug as catenewsSlug,a.catenewsTime as catenewsTime,a.status as status FROM `tblcatenews` as a where a.catenewsParent=0
+        UNION ALL
+        select a.catenewsName as N1,b.catenewsName as catenewsName,b.catenewsDescription as catenewsDescription,b.catenewsKeywords as catenewsKeywords,b.catenewsParent as catenewsParent,b.id as id,b.catenewsSlug as catenewsSlug ,b.catenewsTime as catenewsTime,b.status as status  FROM `tblcatenews` as a INNER JOIN `tblcatenews` as b On a.id = b.catenewsParent
+        ORDER BY N1,catenewsParent");
+        return Paginator::make($results1, count($results1), $per_page);
     }
 
 }

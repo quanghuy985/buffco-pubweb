@@ -12,7 +12,7 @@ class TblSupporterModel extends Eloquent {
         $this->supporterName = $name;
         $this->supporterPhone = $phone;
         $this->supporterTime = time();
-        $this->status = 1;
+        $this->status = 0;
         $this->save();
     }
 
@@ -46,7 +46,7 @@ class TblSupporterModel extends Eloquent {
     }
 
     public function DeleteSupport($id) {
-        $checkdel = $this->where('id', '=', $id)->update(array('status' => 0));
+        $checkdel = $this->where('id', '=', $id)->update(array('status' => 2));
         if ($checkdel > 0) {
             return TRUE;
         } else {
@@ -60,8 +60,13 @@ class TblSupporterModel extends Eloquent {
     }
 
     public function AllSupport($per_page) {
-        $adminarray = $this->paginate($per_page);
+        $adminarray = DB::table('tblSupporter')->join('tblSupporterGroup', 'tblSupporter.supporterGroupID', '=', 'tblSupporterGroup.id')->select('tblSupporter.id', 'tblSupporterGroup.supporterGroupName', 'tblSupporter.supporterNickYH', 'tblSupporter.supporterNickSkype', 'tblSupporter.supporterName', 'tblSupporter.supporterPhone', 'tblSupporter.supporterTime', 'tblSupporter.status')->orderBy('tblSupporter.id', 'desc')->paginate($per_page);
         return $adminarray;
+    }
+
+    public function SelectServicesById($id) {
+        $adminarray = DB::table('tblSupporter')->where('id', '=', $id)->get();
+        return $adminarray[0];
     }
 
 }
