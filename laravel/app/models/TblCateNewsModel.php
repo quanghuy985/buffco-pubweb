@@ -5,8 +5,10 @@ class TblCateNewsModel extends Eloquent {
     protected $table = 'tblcatenews';
     public $timestamps = false;
 
-    public function addnewCateNews($cateNewsName, $cateNewsParent, $cateNewsSlug) {
+    public function addnewCateNews($cateNewsName, $cateNewsDescription, $catenewsKeywords, $cateNewsParent, $cateNewsSlug) {
         $this->catenewsName = $cateNewsName;
+        $this->catenewsDescription = $cateNewsDescription;
+        $this->catenewsKeywords = $catenewsKeywords;
         $this->catenewsParent = $cateNewsParent;
         $this->catenewsSlug = $cateNewsSlug;
         $this->catenewsTime = time();
@@ -44,7 +46,16 @@ class TblCateNewsModel extends Eloquent {
     }
 
     public function deleteCateNews($cateNewsId) {
-        $checkdel = $this->where('id', '=', $cateNewsId)->update(array('status' => 0));
+        $checkdel = $this->where('id', '=', $cateNewsId)->update(array('status' => 2));
+        if ($checkdel > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
+    public function deleteCateNewsChild($id) {
+        $checkdel = $this->where('cateNewsParent', '=', $id)->update(array('status' => 2));
         if ($checkdel > 0) {
             return TRUE;
         } else {
@@ -63,8 +74,13 @@ class TblCateNewsModel extends Eloquent {
     }
 
     public function allCateNew($per_page) {
-        $alladmin = $this->paginate($per_page);
+        $alladmin = DB::table('tblCateNews')->paginate($per_page);
         return $alladmin;
+    }
+
+    public function findCateNewsByID($id) {
+        $adminarray = DB::table('tblCateNews')->where('id', '=', $id)->get();
+        return $adminarray[0];
     }
 
 }
