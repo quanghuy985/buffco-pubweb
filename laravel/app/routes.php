@@ -10,7 +10,7 @@
   | and give it the Closure to execute when that URI is requested.
   |
  */
-Route::get('/',  function (){
+Route::get('/', function () {
 
     return View::make('backend.viewproduct');
 });
@@ -23,7 +23,19 @@ Route::filter('checklofinadmin', function() {
 });
 Route::group(array('before' => 'checklofinadmin'), function() {
     Route::get('/administrator/home-admin', 'AdminController@getHomeAdmin');
-    Route::controller('home', 'HomeController');
+    Route::controller('product', 'ProductController');
+    Route::controller('upload', 'UploadFile');
+    Route::controller('services', 'ServicesController');
+    Route::controller('order', 'OrderController');
+    Route::controller('news', 'NewsController');
+    Route::controller('catnews', 'cateNewsController');
+    Route::controller('catproduct', 'cateProductController');
+    Route::controller('user', 'UserController');
+    Route::controller('page', 'PageController');
+    Route::controller('feedback', 'FeedbackController');
+    Route::controller('support', 'SupporterController');
+    Route::controller('supportgroup', 'SupporterGroupController');
+    Route::controller('menu', 'MenuController');
 });
 
 Route::controller('/administrator', 'AdminController');
