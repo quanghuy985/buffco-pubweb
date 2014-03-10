@@ -20,7 +20,7 @@ class CreateTblUsers extends Migration {
             $table->string('userAddress');
             $table->string('userPhone');
             $table->string('userIdentify');
-            $table->decimal('userPoint', 5, 2);
+            $table->decimal('userPoint', 20,2);
             $table->string('userTime');
             $table->string('verify');
             $table->integer('status');
@@ -39,8 +39,8 @@ class CreateTblUsers extends Migration {
             $table->string('productName');
             $table->string('productUrlImage');
             $table->string('productDescription');
-            $table->decimal('productPrice', 5, 2);
-            $table->decimal('productPromotion', 5, 2);
+            $table->decimal('productPrice', 20,2);
+            $table->decimal('productPromotion', 20,2);
             $table->string('productUrlDemo');
             $table->string('productSlug');
             $table->string('productVersion');
@@ -54,9 +54,9 @@ class CreateTblUsers extends Migration {
             $table->integer('productID');
             $table->string('domain');
             $table->integer('domainType');
-            $table->decimal('orderAmount', 5, 2);
+            $table->decimal('orderAmount', 20,2);
             $table->string('orderTypePay');
-            $table->decimal('diskStore', 5, 2);
+            $table->decimal('diskStore', 20,2);
             $table->string('orderExp');
             $table->integer('orderStatusPay');
             $table->string('orderTime');
@@ -74,8 +74,8 @@ class CreateTblUsers extends Migration {
             $table->increments('id');
             $table->string('servicesName');
             $table->longtext('servicesContent');
-            $table->decimal('servicesPrices', 5, 2);
-            $table->decimal('servicesPromotion', 5, 2);
+            $table->decimal('servicesPrices', 20,2);
+            $table->decimal('servicesPromotion', 20,2);
             $table->string('servicesSlug');
             $table->string('servicesTime');
             $table->integer('status');
@@ -85,7 +85,7 @@ class CreateTblUsers extends Migration {
             $table->increments('id');
             $table->integer('servicesID');
             $table->integer('orderID');
-            $table->decimal('servicesorderAmount', 5, 2);
+            $table->decimal('servicesorderAmount', 20,2);
             $table->string('servicesSlug');
             $table->string('servicesorderTypePay');
             $table->string('servicesorderStatusPay');
@@ -97,8 +97,8 @@ class CreateTblUsers extends Migration {
             $table->increments('id');
             $table->string('statisticFrom');
             $table->string('statisticTo');
-            $table->decimal('statisticMoneyProduct', 5, 2);
-            $table->decimal('statisticMoneyServices', 5, 2);
+            $table->decimal('statisticMoneyProduct', 20,2);
+            $table->decimal('statisticMoneyServices', 20,2);
             $table->integer('statisticNumberNewUser');
             $table->integer('statisticNumberStopUser');
             $table->integer('statisticNumberTotalUser');

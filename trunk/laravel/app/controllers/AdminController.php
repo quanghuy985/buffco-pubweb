@@ -6,7 +6,67 @@
  * and open the template in the editor.
  */
 
-class AdminController extends Controller {
+class AdminController extends BaseController {
+
+    /**
+     * Setup the layout used by the controller.
+     *
+     * @return void
+     */
+    public function getDangNhap() {
+        if (Session::has('userlogined')) {
+            return Redirect::action('AdminController@getHomeAdmin');
+        } else {
+            return View::make('templateadmin2.loginfire');
+        }
+    }
+
+    public function postDangNhap() {
+        $objadmin = new TblAdminModel();
+        $check = $objadmin->checkLogin(Input::get('username'), Input::get('password'));
+        if (count($check) > 0) {
+            Session::push('userlogined', $check[0]);
+            // var_dump(Session::has('userlogined'));
+            return Redirect::action('AdminController@getHomeAdmin');
+            // return View::make('templateadmin2.loginfire');
+        } else {
+            return View::make('templateadmin2.loginfire')->with('messenge', 'Email hoặc mật khẩu sai !');
+        }
+    }
+
+    public function getForgot() {
+        if (Session::has('userlogined')) {
+            return Redirect::action('AdminController@getHomeAdmin');
+        } else {
+            return View::make('templateadmin2.forgorpass');
+        }
+    }
+
+    public function postForgot() {
+        $objadmin = new TblAdminModel();
+        $check = $objadmin->checkAdminExist(Input::get('username'));
+        if ($check == true) {
+            $pass = str_random(10);
+            Mail::send('emails.auth.reminder', array('password' => $pass), function($message) {
+                $message->from('no-rep@pubweb.vn', 'Pubweb.vn');
+                $message->to(Input::get('username'));
+                $message->subject('Lấy lại mật khẩu');
+            });
+            $check1 = $objadmin->adminForgotPassword(Input::get('username'), $pass);
+            return View::make('templateadmin2.forgorpass')->with('messenge', 'Bạn check email để lấy lại mật khẩu! ');
+        } else {
+            return View::make('templateadmin2.forgorpass')->with('messenge', 'Email không tôn tại trên hệ thống !');
+        }
+    }
+
+    public function getHomeAdmin() {
+
+        return View::make('templateadmin2.admin-home');
+    }
+
+    public function getAlladmin() {
+        echo 'asda';
+    }
 
     public function getAdminView($thongbao = '') {
         $adminModel = new TblAdminModel();
