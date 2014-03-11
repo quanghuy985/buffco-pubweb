@@ -25,10 +25,14 @@ class AdminController extends BaseController {
         $objadmin = new TblAdminModel();
         $check = $objadmin->checkLogin(Input::get('username'), Input::get('password'));
         if (count($check) > 0) {
-            Session::push('userlogined', $check[0]);
-            // var_dump(Session::has('userlogined'));
-            return Redirect::action('AdminController@getHomeAdmin');
-            // return View::make('templateadmin2.loginfire');
+            if ($check->status != 1) {
+                return View::make('templateadmin2.loginfire')->with('messenge', 'Tài khoản của bạn đã bị khóa !');
+            } else {
+                Session::push('userlogined', $check[0]);
+                // var_dump(Session::has('userlogined'));
+                return Redirect::action('AdminController@getHomeAdmin');
+                // return View::make('templateadmin2.loginfire');
+            }
         } else {
             return View::make('templateadmin2.loginfire')->with('messenge', 'Email hoặc mật khẩu sai !');
         }
