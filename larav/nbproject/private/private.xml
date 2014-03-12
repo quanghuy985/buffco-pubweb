@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/views/backend/productajaxsearch.blade.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/views/fontend/index.blade.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/views/templateadmin2/admin-home.blade.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/models/TblServicesModel.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/models/TblHistoryModel.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/views/templateadmin2/mainfire.blade.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/controllers/ProductController.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/controllers/ServicesController.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/views/backend/servicesmanager.blade.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/models/TblSupporterGroupModel.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/controllers/OrderController.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/public/adminlib2/js/plugins/jquery.alerts.js</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/views/backend/viewproduct.blade.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/routes.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/public/fontendlib/css/theme.css</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/public/fontendlib/css/theme-responsive.css</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/vendor/laravel/framework/src/Illuminate/Pagination/views/slider.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/models/TblCateNewsModel.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/views/backend/orderservice.blade.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/views/backend/servicesajax.blade.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/models/TblAdminModel.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/models/TblStatisticModel.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/models/TblCategoryProductModel.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/config/app.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/vendor/laravel/framework/src/Illuminate/Pagination/views/simple.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/public/adminlib2/css/style.default.css</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/views/backend/orderservicesajax.blade.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/models/TblOrderModel.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/models/TblServicesOrderModel.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/models/UploadModel.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/views/templateadmin2/loginfire.blade.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/views/backend/addproduct.blade.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/controllers/NewsController.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/models/TblMenuModel.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/models/TblSupporterModel.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/views/backend/orderservicesedit.blade.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/models/TblUsersModel.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/views/backend/orderproduct.blade.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/models/TblFeedbackModel.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/public/fontendlib/js/theme.js</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/controllers/AdminController.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/views/fontend/hometemplate.blade.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/models/TblPageModel.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/public/adminlib2/js/custom/tables.js</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/models/TblProductModel.php</file>
+            <file>file:/E:/WAMPSERVER/www/laravel/app/models/TblNewsModel.php</file>
+        </group>
+    </open-files>
+</project-private>

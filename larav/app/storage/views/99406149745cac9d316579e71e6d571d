@@ -1,0 +1,32 @@
+<?php foreach($orderdata as $item): ?>
+<tr >
+    <td class="center"><?php echo $item->id; ?></td>
+    <td class="center"><?php echo $item->userEmail; ?>  </td>
+    <td class="center"><a href="<?php echo URL::action('OrderController@getEdit'); ?>/<?php echo $item->orderID; ?>" ><?php echo $item->orderID; ?></a></td>
+    <td class="center"><?php echo $item->servicesName; ?></td>
+    <td class="center"><?php echo $item->servicesorderAmount; ?></td>
+    <td class="center"><?php echo $item->servicesorderTypePay; ?></td>
+    <td class="center"><?php echo $item->servicesorderStatusPay; ?> </td>
+    <td class="center"><?php echo date('d/m/Y',$item->servicesorderTime); ?> </td>
+    <td class="center">
+        <?php if($item->status==0): ?>
+        Chờ
+        <?php endif; ?>
+        <?php if($item->status==1): ?>
+        Đã xong
+        <?php endif; ?> 
+        <?php if($item->status==2): ?>
+        Xóa
+        <?php endif; ?>
+
+    </td>
+    <td class="center"><a href="<?php echo URL::action('OrderController@getOderServicesEdit'); ?>/<?php echo $item->id; ?>" >Chỉnh sửa</a> &nbsp; <a href="javascript: void(0)" onclick="xoasanpham(<?php echo $item->id; ?>)">Xóa</a></td>
+</tr>
+<?php endforeach; ?>
+<?php if($page!=''): ?>
+<tr>
+    <td colspan="11">
+        <?php echo $page; ?>
+    </td>
+</tr>
+<?php endif; ?>
