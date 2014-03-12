@@ -11,12 +11,8 @@
   |
  */
 Route::get('/', function () {
-
-<<<<<<< .mine
-    return View::make('fontend.servicesView');
-=======
     return View::make('fontend.singlenews');
->>>>>>> .r28
+
 });
 App::missing(function($exception) {
     return View::make('fontend.404');
