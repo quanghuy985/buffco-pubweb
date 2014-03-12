@@ -15,38 +15,38 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- Web Fonts  -->
-        <link href="{{Asset('fontendlib/css/css@family=Open+Sans_3A300,400,600,700,800_7CShadows+Into+Light')}}" rel="stylesheet" type="text/css">
+        <link href="<?php echo Asset('fontendlib/css/css@family=Open+Sans_3A300,400,600,700,800_7CShadows+Into+Light'); ?>" rel="stylesheet" type="text/css">
 
         <!-- Libs CSS -->
-        <link rel="stylesheet" href="{{Asset('fontendlib/css/bootstrap.css')}}">
-        <link rel="stylesheet" href="{{Asset('fontendlib/css/fonts/font-awesome/css/font-awesome.css')}}">
-        <link rel="stylesheet" href="{{Asset('fontendlib/vendor/owl-carousel/owl.carousel.css')}}" media="screen">
-        <link rel="stylesheet" href="{{Asset('fontendlib/vendor/owl-carousel/owl.theme.css')}}" media="screen">
-        <link rel="stylesheet" href="{{Asset('fontendlib/vendor/magnific-popup/magnific-popup.css')}}" media="screen">
+        <link rel="stylesheet" href="<?php echo Asset('fontendlib/css/bootstrap.css'); ?>">
+        <link rel="stylesheet" href="<?php echo Asset('fontendlib/css/fonts/font-awesome/css/font-awesome.css'); ?>">
+        <link rel="stylesheet" href="<?php echo Asset('fontendlib/vendor/owl-carousel/owl.carousel.css'); ?>" media="screen">
+        <link rel="stylesheet" href="<?php echo Asset('fontendlib/vendor/owl-carousel/owl.theme.css'); ?>" media="screen">
+        <link rel="stylesheet" href="<?php echo Asset('fontendlib/vendor/magnific-popup/magnific-popup.css'); ?>" media="screen">
 
         <!-- Theme CSS -->
-        <link rel="stylesheet" href="{{Asset('fontendlib/css/theme.css')}}">
-        <link rel="stylesheet" href="{{Asset('fontendlib/css/theme-elements.css')}}">
-        <link rel="stylesheet" href="{{Asset('fontendlib/css/theme-animate.css')}}">
+        <link rel="stylesheet" href="<?php echo Asset('fontendlib/css/theme.css'); ?>">
+        <link rel="stylesheet" href="<?php echo Asset('fontendlib/css/theme-elements.css'); ?>">
+        <link rel="stylesheet" href="<?php echo Asset('fontendlib/css/theme-animate.css'); ?>">
 
         <!-- Current Page Styles -->
-        <link rel="stylesheet" href="{{Asset('fontendlib/vendor/rs-plugin/css/settings.css')}}" media="screen">
-        <link rel="stylesheet" href="{{Asset('fontendlib/vendor/circle-flip-slideshow/css/component.css')}}" media="screen">
+        <link rel="stylesheet" href="<?php echo Asset('fontendlib/vendor/rs-plugin/css/settings.css'); ?>" media="screen">
+        <link rel="stylesheet" href="<?php echo Asset('fontendlib/vendor/circle-flip-slideshow/css/component.css'); ?>" media="screen">
         <!-- Custom CSS -->
-        <link rel="stylesheet" href="{{Asset('fontendlib/css/custom.css')}}">
+        <link rel="stylesheet" href="<?php echo Asset('fontendlib/css/custom.css'); ?>">
 
         <!-- Responsive CSS -->
-        <link rel="stylesheet" href="{{Asset('fontendlib/css/theme-responsive.css')}}" />
+        <link rel="stylesheet" href="<?php echo Asset('fontendlib/css/theme-responsive.css'); ?>" />
 
         <!-- Head Libs -->
-        <script src="{{Asset('fontendlib/vendor/modernizr.js')}}"></script>
+        <script src="<?php echo Asset('fontendlib/vendor/modernizr.js'); ?>"></script>
 
         <!--[if IE]>
-                <link rel="stylesheet" href="{{Asset('fontendlib/css/ie.css')}}">
+                <link rel="stylesheet" href="<?php echo Asset('fontendlib/css/ie.css'); ?>">
         <![endif]-->
 
         <!--[if lte IE 8]>
-                <script src="{{Asset('fontendlib/vendor/respond.js')}}"></script>
+                <script src="<?php echo Asset('fontendlib/vendor/respond.js'); ?>"></script>
         <![endif]-->
 
     </head>
@@ -56,8 +56,8 @@
             <header>
                 <div class="container">
                     <h1 class="logo">
-                        <a href="{{Asset('')}}">
-                            <img alt="Porto" src="{{Asset('fontendlib/img/logo.png')}}">
+                        <a href="<?php echo Asset(''); ?>">
+                            <img alt="Porto" src="<?php echo Asset('fontendlib/img/logo.png'); ?>">
                         </a>
                     </h1>
                     <div class="search">
@@ -266,7 +266,7 @@
 
             <div role="main" class="main">
 
-                @yield("contenthomepage")
+                <?php echo $__env->yieldContent("contenthomepage"); ?>
 
             </div>
 
@@ -329,8 +329,8 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-1">
-                                <a href="{{Asset('')}}" class="logo">
-                                    <img alt="Porto Website Template" class="img-responsive" src="{{Asset('fontendlib/img/logo-footer.png')}}">
+                                <a href="<?php echo Asset(''); ?>" class="logo">
+                                    <img alt="Porto Website Template" class="img-responsive" src="<?php echo Asset('fontendlib/img/logo-footer.png'); ?>">
                                 </a>
                             </div>
                             <div class="col-md-7">
@@ -352,28 +352,28 @@
         </div>
 
         <!-- Libs -->
-        <script src="{{Asset('fontendlib/vendor/jquery.js')}}"></script>
-        <script src="{{Asset('fontendlib/js/plugins.js')}}"></script>
-        <script src="{{Asset('fontendlib/vendor/jquery.easing.js')}}"></script>
-        <script src="{{Asset('fontendlib/vendor/jquery.appear.js')}}"></script>
-        <script src="{{Asset('fontendlib/vendor/jquery.cookie.js')}}"></script>    
-        <script src="{{Asset('fontendlib/vendor/bootstrap.js')}}"></script>
-        <script src="{{Asset('fontendlib/vendor/twitterjs/twitter.js')}}"></script>
-        <script src="{{Asset('fontendlib/vendor/rs-plugin/js/jquery.themepunch.plugins.min.js')}}"></script>
-        <script src="{{Asset('fontendlib/vendor/rs-plugin/js/jquery.themepunch.revolution.js')}}"></script>
-        <script src="{{Asset('fontendlib/vendor/owl-carousel/owl.carousel.js')}}"></script>
-        <script src="{{Asset('fontendlib/vendor/circle-flip-slideshow/js/jquery.flipshow.js')}}"></script>
-        <script src="{{Asset('fontendlib/vendor/magnific-popup/magnific-popup.js')}}"></script>
-        <script src="{{Asset('fontendlib/vendor/jquery.validate.js')}}"></script>
+        <script src="<?php echo Asset('fontendlib/vendor/jquery.js'); ?>"></script>
+        <script src="<?php echo Asset('fontendlib/js/plugins.js'); ?>"></script>
+        <script src="<?php echo Asset('fontendlib/vendor/jquery.easing.js'); ?>"></script>
+        <script src="<?php echo Asset('fontendlib/vendor/jquery.appear.js'); ?>"></script>
+        <script src="<?php echo Asset('fontendlib/vendor/jquery.cookie.js'); ?>"></script>    
+        <script src="<?php echo Asset('fontendlib/vendor/bootstrap.js'); ?>"></script>
+        <script src="<?php echo Asset('fontendlib/vendor/twitterjs/twitter.js'); ?>"></script>
+        <script src="<?php echo Asset('fontendlib/vendor/rs-plugin/js/jquery.themepunch.plugins.min.js'); ?>"></script>
+        <script src="<?php echo Asset('fontendlib/vendor/rs-plugin/js/jquery.themepunch.revolution.js'); ?>"></script>
+        <script src="<?php echo Asset('fontendlib/vendor/owl-carousel/owl.carousel.js'); ?>"></script>
+        <script src="<?php echo Asset('fontendlib/vendor/circle-flip-slideshow/js/jquery.flipshow.js'); ?>"></script>
+        <script src="<?php echo Asset('fontendlib/vendor/magnific-popup/magnific-popup.js'); ?>"></script>
+        <script src="<?php echo Asset('fontendlib/vendor/jquery.validate.js'); ?>"></script>
 
         <!-- Current Page Scripts -->
-        <script src="{{Asset('fontendlib/js/views/view.home.js')}}"></script>
+        <script src="<?php echo Asset('fontendlib/js/views/view.home.js'); ?>"></script>
 
         <!-- Theme Initializer -->
-        <script src="{{Asset('fontendlib/js/theme.js')}}"></script>
+        <script src="<?php echo Asset('fontendlib/js/theme.js'); ?>"></script>
 
         <!-- Custom JS -->
-        <script src="{{Asset('fontendlib/js/custom.js')}}"></script>
+        <script src="<?php echo Asset('fontendlib/js/custom.js'); ?>"></script>
 
 
 

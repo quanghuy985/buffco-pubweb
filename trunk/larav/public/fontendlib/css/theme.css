@@ -2141,7 +2141,7 @@ div.featured-box-secundary h4 {
 }
 
 div.featured-box-secundary div.box-content {
-    border-top-color: #2baab1;
+    border-top-color: #2baab1 !important;
 }
 
 div.pricing-table div.most-popular {
