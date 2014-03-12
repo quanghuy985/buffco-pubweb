@@ -1,20 +1,19 @@
-@extends("fontend.hometemplate")
 
-@section("contenthomepage")
+<?php $__env->startSection("contenthomepage"); ?>
 <div id="content" class="content full">
     <div class="slider-container">
         <div class="slider" id="revolutionSlider">
             <ul>
                 <li data-transition="fade" data-slotamount="13" data-masterspeed="300" >
 
-                    <img src="{{Asset('fontendlib/img/slides/slide-bg.jpg')}}" data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
+                    <img src="<?php echo Asset('fontendlib/img/slides/slide-bg.jpg'); ?>" data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
 
                     <div class="tp-caption sft stb visible-lg"
                          data-x="72"
                          data-y="180"
                          data-speed="300"
                          data-start="1000"
-                         data-easing="easeOutExpo"><img src="{{Asset('fontendlib/img/slides/slide-title-border.png')}}" alt=""></div>
+                         data-easing="easeOutExpo"><img src="<?php echo Asset('fontendlib/img/slides/slide-title-border.png'); ?>" alt=""></div>
 
                     <div class="tp-caption top-label lfl stl"
                          data-x="122"
@@ -28,7 +27,7 @@
                          data-y="180"
                          data-speed="300"
                          data-start="1000"
-                         data-easing="easeOutExpo"><img src="{{Asset('fontendlib/img/slides/slide-title-border.png')}}" alt=""></div>
+                         data-easing="easeOutExpo"><img src="<?php echo Asset('fontendlib/img/slides/slide-title-border.png'); ?>" alt=""></div>
 
                     <div class="tp-caption main-label sft stb"
                          data-x="30"
@@ -49,35 +48,35 @@
                          data-y="248"
                          data-speed="500"
                          data-start="2500"
-                         data-easing="easeOutBack"><img src="{{Asset('fontendlib/img/slides/slide-concept-2-1.png')}}" alt=""></div>
+                         data-easing="easeOutBack"><img src="<?php echo Asset('fontendlib/img/slides/slide-concept-2-1.png'); ?>" alt=""></div>
 
                     <div class="tp-caption sfb"
                          data-x="850"
                          data-y="200"
                          data-speed="400"
                          data-start="3000"
-                         data-easing="easeOutBack"><img src="{{Asset('fontendlib/img/slides/slide-concept-2-2.png')}}" alt=""></div>
+                         data-easing="easeOutBack"><img src="<?php echo Asset('fontendlib/img/slides/slide-concept-2-2.png'); ?>" alt=""></div>
 
                     <div class="tp-caption sfb"
                          data-x="820"
                          data-y="170"
                          data-speed="700"
                          data-start="3150"
-                         data-easing="easeOutBack"><img src="{{Asset('fontendlib/img/slides/slide-concept-2-3.png')}}" alt=""></div>
+                         data-easing="easeOutBack"><img src="<?php echo Asset('fontendlib/img/slides/slide-concept-2-3.png'); ?>" alt=""></div>
 
                     <div class="tp-caption sfb"
                          data-x="770"
                          data-y="130"
                          data-speed="1000"
                          data-start="3250"
-                         data-easing="easeOutBack"><img src="{{Asset('fontendlib/img/slides/slide-concept-2-4.png')}}" alt=""></div>
+                         data-easing="easeOutBack"><img src="<?php echo Asset('fontendlib/img/slides/slide-concept-2-4.png'); ?>" alt=""></div>
 
                     <div class="tp-caption sfb"
                          data-x="500"
                          data-y="80"
                          data-speed="600"
                          data-start="3450"
-                         data-easing="easeOutExpo"><img src="{{Asset('fontendlib/img/slides/slide-concept-2-5.png')}}" alt=""></div>
+                         data-easing="easeOutExpo"><img src="<?php echo Asset('fontendlib/img/slides/slide-concept-2-5.png'); ?>" alt=""></div>
 
                     <div class="tp-caption blackboard-text lfb "
                          data-x="530"
@@ -102,14 +101,14 @@
                 </li>
                 <li data-transition="fade" data-slotamount="5" data-masterspeed="1000" >
 
-                    <img src="{{Asset('fontendlib/img/slides/slide-bg.jpg')}}" data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
+                    <img src="<?php echo Asset('fontendlib/img/slides/slide-bg.jpg'); ?>" data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
 
                     <div class="tp-caption fade"
                          data-x="50"
                          data-y="100"
                          data-speed="1500"
                          data-start="500"
-                         data-easing="easeOutExpo"><img src="{{Asset('fontendlib/img/slides/slide-concept.png')}}" alt=""></div>
+                         data-easing="easeOutExpo"><img src="<?php echo Asset('fontendlib/img/slides/slide-concept.png'); ?>" alt=""></div>
 
                     <div class="tp-caption blackboard-text fade "
                          data-x="180"
@@ -198,19 +197,19 @@
                 <span class="cloud"></span>
                 <div class="col-md-2 col-md-offset-1">
                     <div class="process-image" data-appear-animation="bounceIn">
-                        <img src="{{Asset('fontendlib/img/home-concept-item-1.png')}}" alt="" />
+                        <img src="<?php echo Asset('fontendlib/img/home-concept-item-1.png'); ?>" alt="" />
                         <strong>Strategy</strong>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="process-image" data-appear-animation="bounceIn" data-appear-animation-delay="200">
-                        <img src="{{Asset('fontendlib/img/home-concept-item-2.png')}}" alt="" />
+                        <img src="<?php echo Asset('fontendlib/img/home-concept-item-2.png'); ?>" alt="" />
                         <strong>Planning</strong>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="process-image" data-appear-animation="bounceIn" data-appear-animation-delay="400">
-                        <img src="{{Asset('fontendlib/img/home-concept-item-3.png')}}" alt="" />
+                        <img src="<?php echo Asset('fontendlib/img/home-concept-item-3.png'); ?>" alt="" />
                         <strong>Build</strong>
                     </div>
                 </div>
@@ -218,9 +217,9 @@
                     <div class="project-image">
                         <div id="fcSlideshow" class="fc-slideshow">
                             <ul class="fc-slides">
-                                <li><a href="portfolio-single-project.html"><img class="img-responsive" src="{{Asset('fontendlib/img/projects/project-home-1.jpg')}}" /></a></li>
-                                <li><a href="portfolio-single-project.html"><img class="img-responsive" src="{{Asset('fontendlib/img/projects/project-home-2.jpg')}}" /></a></li>
-                                <li><a href="portfolio-single-project.html"><img class="img-responsive" src="{{Asset('fontendlib/img/projects/project-home-3.jpg')}}" /></a></li>
+                                <li><a href="portfolio-single-project.html"><img class="img-responsive" src="<?php echo Asset('fontendlib/img/projects/project-home-1.jpg'); ?>" /></a></li>
+                                <li><a href="portfolio-single-project.html"><img class="img-responsive" src="<?php echo Asset('fontendlib/img/projects/project-home-2.jpg'); ?>" /></a></li>
+                                <li><a href="portfolio-single-project.html"><img class="img-responsive" src="<?php echo Asset('fontendlib/img/projects/project-home-3.jpg'); ?>" /></a></li>
                             </ul>
                         </div>
                         <strong class="our-work">Our Work</strong>
@@ -543,4 +542,5 @@
         </section>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("fontend.hometemplate", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

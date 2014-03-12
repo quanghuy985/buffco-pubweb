@@ -9902,3 +9902,7 @@ Stack trace:
 #24 E:\WAMPSERVER\www\laravel\vendor\laravel\framework\src\Illuminate\Foundation\Application.php(606): Stack\StackedHttpKernel->handle(Object(Illuminate\Http\Request))
 #25 E:\WAMPSERVER\www\laravel\public\index.php(49): Illuminate\Foundation\Application->run()
 #26 {main} [] []
+[2014-03-12 15:27:31] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'syntax error, unexpected ';'' in E:\WAMPSERVER\www\larav\app\storage\views\c2b1130443a365d8de6bfa44bb8be776:41
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []

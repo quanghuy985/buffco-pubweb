@@ -12,7 +12,7 @@
  */
 Route::get('/', function () {
 
-    return View::make('fontend.index');
+    return View::make('fontend.singlenews');
 });
 App::missing(function($exception) {
     return View::make('fontend.404');
