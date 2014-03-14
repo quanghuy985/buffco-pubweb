@@ -504,19 +504,19 @@ Version: 		2.7.0 - 02-21-2014
 
 			$("div.featured-box").css("height", "auto");
 
-			$("div.featured-boxes").each(function() {
+			//$("div.featured-boxes").each(function() {
 
-				var wrapper = $(this);
-				var minBoxHeight = 0;
+			//	var wrapper = $(this);
+			//	var minBoxHeight = 0;
 
-				$("div.featured-box", wrapper).each(function() {
-					if($(this).height() > minBoxHeight)
-						minBoxHeight = $(this).height();
-				});
+			//	$("div.featured-box", wrapper).each(function() {
+			//		if($(this).height() > minBoxHeight)
+			//			minBoxHeight = $(this).height();
+			//	});
 
-				$("div.featured-box", wrapper).height(minBoxHeight);
+			//	$("div.featured-box", wrapper).height(minBoxHeight);
 
-			});
+			//});
 
 		},
 
