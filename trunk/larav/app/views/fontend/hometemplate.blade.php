@@ -72,14 +72,9 @@
                     </div>
                     <nav>
                         <ul class="nav nav-pills nav-top">
-                            <li>
-                                <a href="about-us.html"><i class="icon icon-angle-right"></i>About Us</a>
-                            </li>
-                            <li>
-                                <a href="contact-us.html"><i class="icon icon-angle-right"></i>Contact Us</a>
-                            </li>
+
                             <li class="phone">
-                                <span><i class="icon icon-phone"></i>(123) 456-7890</span>
+                                <span><i class="icon icon-phone"></i>Hotline : 0989333537</span>
                             </li>
                         </ul>
                     </nav>
@@ -98,49 +93,21 @@
                         </div>
                         <nav class="nav-main mega-menu">
                             <ul class="nav nav-pills nav-main" id="mainMenu">
-                                <li class="dropdown active">
-                                    <a class="dropdown-toggle" href="#">
-                                        Home
-                                        <i class="icon icon-angle-down"></i>
+                                <li class="active">
+                                    <a href="#">
+                                        <i class="icon icon-home" style="font-size: 17px;"></i>
+
                                     </a>
-                                    <ul class="dropdown-menu">
-                                        <li class="dropdown-submenu">
-                                            <a href="#">Sliders</a>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="index.html">Revolution Slider</a></li>
-                                                <li><a href="index-slider-2.html">Nivo Slider</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="index.html">Home - Version 1</a></li>
-                                        <li><a href="index-2.html">Home - Version 2</a></li>
-                                        <li><a href="index-3.html">Home - Version 3</a></li>
-                                        <li><a href="index-one-page.html">One Page Website</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="shortcodes.html">Shortcodes</a>
-                                </li>
-                                <li class="dropdown">
-                                    <a class="dropdown-toggle" href="#">
-                                        About Us
-                                        <i class="icon icon-angle-down"></i>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="about-us.html">About Us</a></li>
-                                        <li><a href="about-us-basic.html">About Us - Basic</a></li>
-                                        <li><a href="about-me.html">About Me</a></li>
-                                    </ul>
                                 </li>
                                 <li class="dropdown mega-menu-item mega-menu-fullwidth">
-                                    <a class="dropdown-toggle" href="#">
-                                        Features
+                                    <a class="dropdown-toggle" href="shortcodes.html">Sản phẩm
                                         <i class="icon icon-angle-down"></i>
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li>
                                             <div class="mega-menu-content">
                                                 <div class="row">
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-2">
                                                         <ul class="sub-menu">
                                                             <li>
                                                                 <span class="mega-menu-sub-title">Main Features</span>
@@ -154,7 +121,7 @@
                                                             </li>
                                                         </ul>
                                                     </div>
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-2">
                                                         <ul class="sub-menu">
                                                             <li>
                                                                 <span class="mega-menu-sub-title">Headers</span>
@@ -171,7 +138,7 @@
                                                             </li>
                                                         </ul>
                                                     </div>
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-2">
                                                         <ul class="sub-menu">
                                                             <li>
                                                                 <span class="mega-menu-sub-title">Footers</span>
@@ -184,7 +151,35 @@
                                                             </li>
                                                         </ul>
                                                     </div>
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-2">
+                                                        <ul class="sub-menu">
+                                                            <li>
+                                                                <span class="mega-menu-sub-title">Blog</span>
+                                                                <ul class="sub-menu">
+                                                                    <li><a href="blog-full-width.html">Blog Full Width</a></li>
+                                                                    <li><a href="blog-large-image.html">Blog Large Image</a></li>
+                                                                    <li><a href="blog-medium-image.html">Blog Medium Image</a></li>
+                                                                    <li><a href="blog-timeline.html">Blog Timeline</a></li>
+                                                                    <li><a href="blog-post.html">Single Post</a></li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <ul class="sub-menu">
+                                                            <li>
+                                                                <span class="mega-menu-sub-title">Blog</span>
+                                                                <ul class="sub-menu">
+                                                                    <li><a href="blog-full-width.html">Blog Full Width</a></li>
+                                                                    <li><a href="blog-large-image.html">Blog Large Image</a></li>
+                                                                    <li><a href="blog-medium-image.html">Blog Medium Image</a></li>
+                                                                    <li><a href="blog-timeline.html">Blog Timeline</a></li>
+                                                                    <li><a href="blog-post.html">Single Post</a></li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-md-2">
                                                         <ul class="sub-menu">
                                                             <li>
                                                                 <span class="mega-menu-sub-title">Blog</span>
@@ -203,28 +198,17 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="dropdown">
-                                    <a class="dropdown-toggle" href="#">
-                                        Portfolio
-                                        <i class="icon icon-angle-down"></i>
+                                <li class="">
+                                    <a href="#">
+                                        Dịch vụ
                                     </a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="portfolio-4-columns.html">4 Columns</a></li>
-                                        <li><a href="portfolio-3-columns.html">3 Columns</a></li>
-                                        <li><a href="portfolio-2-columns.html">2 Columns</a></li>
-                                        <li><a href="portfolio-timeline.html">Portfolio Timeline</a></li>
-                                        <li><a href="portfolio-full-width.html">Portfolio Full Width</a></li>
-                                        <li><a href="portfolio-single-project.html">Single Project</a></li>
-                                    </ul>
                                 </li>
                                 <li class="dropdown">
                                     <a class="dropdown-toggle" href="#">
-                                        Pages
-                                        <i class="icon icon-angle-down"></i>
+                                        Tin tức<i class="icon icon-angle-down"></i>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li class="dropdown-submenu">
-                                            <a href="#">Shop</a>
+                                        <li class="dropdown-submenu"><a href="portfolio-4-columns.html">Tin trong website</a>
                                             <ul class="dropdown-menu">
                                                 <li><a href="shop-full-width.html">Shop - Full Width</a></li>
                                                 <li><a href="shop-sidebar.html">Shop - Sidebar</a></li>
@@ -235,27 +219,30 @@
                                                 <li><a href="shop-checkout.html">Shop - Checkout</a></li>
                                             </ul>
                                         </li>
-                                        <li><a href="page-full-width.html">Full width</a></li>
-                                        <li><a href="page-left-sidebar.html">Left sidebar</a></li>
-                                        <li><a href="page-right-sidebar.html">Right sidebar</a></li>
-                                        <li><a href="page-custom-header.html">Custom Header</a></li>
-                                        <li><a href="page-404.html">404 Error</a></li>
-                                        <li><a href="page-team.html">Team</a></li>
-                                        <li><a href="page-services.html">Services</a></li>
-                                        <li><a href="page-careers.html">Careers</a></li>
-                                        <li><a href="page-faq.html">FAQ</a></li>
-                                        <li><a href="page-login.html">Login / Register</a></li>
-                                        <li><a href="sitemap.html">Sitemap</a></li>
+                                        <li><a href="portfolio-3-columns.html">Tin ngoài website</a></li>                                
                                     </ul>
+                                </li>
+                                <li>
+                                    <a  href="#">
+                                        Giới thiệu                              
+                                    </a>
+
+                                </li>
+                                <li >
+                                    <a href="#">
+                                        Liên hệ         
+                                    </a>
+
                                 </li>
                                 <li class="dropdown">
                                     <a class="dropdown-toggle" href="#">
-                                        Contact Us
+                                        Tài khoản
                                         <i class="icon icon-angle-down"></i>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="contact-us.html">Contact Us - Basic</a></li>
-                                        <li><a href="contact-us-advanced.php">Contact Us - Advanced</a></li>
+                                        <li><a href="contact-us.html">Đăng nhập</a></li>
+                                        <li><a href="contact-us.html">Quên mật khẩu</a></li>
+                                        <li><a href="contact-us-advanced.php">Đăng ký</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -374,8 +361,6 @@
 
         <!-- Custom JS -->
         <script src="{{Asset('fontendlib/js/custom.js')}}"></script>
-
-
 
     </body>
 </html>
