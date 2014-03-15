@@ -74,23 +74,24 @@
                         <ul class="nav nav-pills nav-top">
 
                             <li class="phone">
-                                <span><i class="icon icon-phone"></i>Hotline : 0989333537</span>
+                                <div class="social-icons">
+                                    <ul class="social-icons">
+                                        <li class="facebook"><a href="../../../www.facebook.com/default.htm" target="_blank" title="Facebook">Facebook</a></li>
+                                        <li class="twitter"><a href="../../../www.twitter.com/default.htm" target="_blank" title="Twitter">Twitter</a></li>
+                                        <li class="linkedin"><a href="../../../www.linkedin.com/default.htm" target="_blank" title="Linkedin">Linkedin</a></li>
+                                    </ul>
+                                </div>
                             </li>
                         </ul>
                     </nav>
+
                     <button class="btn btn-responsive-nav btn-inverse" data-toggle="collapse" data-target=".nav-main-collapse">
                         <i class="icon icon-bars"></i>
                     </button>
                 </div>
                 <div class="navbar-collapse nav-main-collapse collapse">
                     <div class="container">
-                        <div class="social-icons">
-                            <ul class="social-icons">
-                                <li class="facebook"><a href="../../../www.facebook.com/default.htm" target="_blank" title="Facebook">Facebook</a></li>
-                                <li class="twitter"><a href="../../../www.twitter.com/default.htm" target="_blank" title="Twitter">Twitter</a></li>
-                                <li class="linkedin"><a href="../../../www.linkedin.com/default.htm" target="_blank" title="Linkedin">Linkedin</a></li>
-                            </ul>
-                        </div>
+
                         <nav class="nav-main mega-menu">
                             <ul class="nav nav-pills nav-main" id="mainMenu">
                                 <li class="active">
@@ -234,15 +235,118 @@
                                     </a>
 
                                 </li>
-                                <li class="dropdown">
-                                    <a class="dropdown-toggle" href="#">
-                                        Tài khoản
+                                <li class="dropdown mega-menu-item mega-menu-signin signin" id="headerAccount">
+                                    <a class="dropdown-toggle" href="page-login.html">
+                                        <i class="icon icon-user"></i> Sign In
                                         <i class="icon icon-angle-down"></i>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="contact-us.html">Đăng nhập</a></li>
-                                        <li><a href="contact-us.html">Quên mật khẩu</a></li>
-                                        <li><a href="contact-us-advanced.php">Đăng ký</a></li>
+                                        <li>
+                                            <div class="mega-menu-content">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+
+                                                        <div class="signin-form">
+
+                                                            <span class="mega-menu-sub-title">Đăng nhập</span>
+
+                                                            <form action="" id="" type="post">
+                                                                <div class="row">
+                                                                    <div class="form-group">
+                                                                        <div class="col-md-12">
+                                                                            <label>Username or E-mail Address</label>
+                                                                            <input type="text" value="" class="form-control">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="form-group">
+                                                                        <div class="col-md-12">
+                                                                            <a class="pull-right" id="headerRecover" href="#">(Lost Password?)</a>
+                                                                            <label>Password</label>
+                                                                            <input type="password" value="" class="form-control">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <span class="remember-box checkbox">
+                                                                            <label for="rememberme">
+                                                                                <input type="checkbox" id="rememberme" name="rememberme">Remember Me
+                                                                            </label>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <input type="submit" value="Login" class="btn btn-primary pull-right push-bottom" data-loading-text="Loading...">
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+
+                                                            <p class="sign-up-info">Don't have an account yet? <a href="#" id="headerSignUp">Sign Up!</a></p>
+
+                                                        </div>
+
+                                                        <div class="signup-form">
+                                                            <span class="mega-menu-sub-title">Create Account</span>
+
+                                                            <form action="" id="" type="post">
+                                                                <div class="row">
+                                                                    <div class="form-group">
+                                                                        <div class="col-md-12">
+                                                                            <label>E-mail Address</label>
+                                                                            <input type="text" value="" class="form-control">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="form-group">
+                                                                        <div class="col-md-6">
+                                                                            <label>Password</label>
+                                                                            <input type="password" value="" class="form-control">
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <label>Re-enter Password</label>
+                                                                            <input type="password" value="" class="form-control">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <input type="submit" value="Create Account" class="btn btn-primary pull-right push-bottom" data-loading-text="Loading...">
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+
+                                                            <p class="log-in-info">Already have an account? <a href="#" id="headerSignIn">Log In!</a></p>
+                                                        </div>
+
+                                                        <div class="recover-form">
+                                                            <span class="mega-menu-sub-title">Reset My Password</span>
+                                                            <p>Complete the form below to receive an email with the authorization code needed to reset your password.</p>
+
+                                                            <form action="" id="" type="post">
+                                                                <div class="row">
+                                                                    <div class="form-group">
+                                                                        <div class="col-md-12">
+                                                                            <label>E-mail Address</label>
+                                                                            <input type="text" value="" class="form-control">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <input type="submit" value="Submit" class="btn btn-primary pull-right push-bottom" data-loading-text="Loading...">
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+
+                                                            <p class="log-in-info">Already have an account? <a href="#" id="headerRecoverCancel">Log In!</a></p>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
                                     </ul>
                                 </li>
                             </ul>
