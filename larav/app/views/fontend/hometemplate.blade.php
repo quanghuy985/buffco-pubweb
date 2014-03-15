@@ -465,6 +465,116 @@
 
         <!-- Custom JS -->
         <script src="{{Asset('fontendlib/js/custom.js')}}"></script>
-
+		<script>
+jQuery("#loginfrom").validate({
+    rules: {
+        userEmail: {
+            required: true,
+            email: true
+        }
+    },
+    messages: {
+        userEmail: {
+            required: '<i style="color:#FF7D8C">Vui lòng nhập Email để đăng nhập</i>',
+            email: '<i style="color:#FF7D8C">Email phải đúng định dạng</i>'
+        }
+    }
+});
+jQuery("#changePasswordForm").validate({
+    rules: {
+        userPassword: {
+            required: true,
+            minlength: 8
+        },
+        ReUserPassword: {
+            equalTo: "#userPassword"
+        }
+    },
+    messages: {
+        userPassword: {
+            required: '<i style="color:#FF7D8C">Password là trường bắt buộc</i>',
+            minlength: '<i style="color:#FF7D8C">Mật khẩu phải có ít nhất 8 ký tự</i>'
+        },
+        ReUserPassword: {
+            equalTo: '<i style="color:#FF7D8C">Mật khẩu không khớp</i>'
+        }
+    }
+});
+jQuery("#registerForm").validate({
+    rules: {
+        userEmail: {
+            required: true,
+            email: true,
+            remote: {
+                url: "{{URL::action('LoginController@postCheckExist')}}",
+                type: "POST"
+            }
+        },
+        userPassword: {
+            required: true,
+            minlength: 8
+        },
+        userRePassword: {
+            equalTo: "#userPassword"
+        },
+        userFirstName: {
+            required: true
+        },
+        userLastName: {
+            required: true
+        },
+        userAddress: {
+            required: true
+        },
+        userPhone: {
+            required: true,
+            number: true,
+            minlength: 10,
+            maxlength: 11
+        },
+        userIdentity: {
+            required: true,
+            number: true,
+            minlength: 9,
+            maxlength: 12
+        }
+    },
+    messages: {
+        userEmail: {
+            required: '<i style="color:#FF7D8C">Email là trường bắt buộc</i>',
+            email: '<i style="color:#FF7D8C">Email phải đúng định dạng</i>',
+            remote: '<i style="color:#FF7D8C">Email đã đăng ký vui lòng chọn email khác</i>'
+        },
+        userPassword: {
+            required: '<i style="color:#FF7D8C">Mật khẩu là trường bắt buộc</i>',
+            minlength: '<i style="color:#FF7D8C">Mật khẩu phải có ít nhất 8 ký tự</i>'
+        },
+        userRePassword: {
+            equalTo: '<i style="color:#FF7D8C">Mật khẩu không khớp</i>'
+        },
+        userFirstName: {
+            required: '<i style="color:#FF7D8C">Vui lòng nhập họ và đệm</i>'
+        },
+        userLastName: {
+            required: '<i style="color:#FF7D8C">Vui lòng nhập tên </i>'
+        },
+        userAddress: {
+            required: '<i style="color:#FF7D8C">Vui lòng nhập địa chỉ</i>'
+        },
+        userPhone: {
+            required: '<i style="color:#FF7D8C">Vui lòng nhập số điện thoại để chúng tôi liên lạc</i>',
+            number: '<i style="color:#FF7D8C">Số điện thoại phải là số</i>',
+            minlength: '<i style="color:#FF7D8C">Số điện thoại không đúng</i>',
+            maxlength: '<i style="color:#FF7D8C">Số điện thoại không đúng</i>'
+        },
+        userIdentity: {
+            required: '<i style="color:#FF7D8C">Vui lòng nhập số CMND</i>',
+            number: '<i style="color:#FF7D8C">CMND không đúng</i>',
+            minlength: '<i style="color:#FF7D8C">CMND không đúng</i>',
+            maxlength: '<i style="color:#FF7D8C">CMND không đúng</i>'
+        }
+    }
+});
+</script>
     </body>
 </html>
