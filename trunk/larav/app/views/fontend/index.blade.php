@@ -21,7 +21,7 @@
                          data-y="180"
                          data-speed="300"
                          data-start="500"
-                         data-easing="easeOutExpo">DO YOU NEED A NEW</div>
+                         data-easing="easeOutExpo">Bạn cần một website</div>
 
                     <div class="tp-caption sft stb visible-lg"
                          data-x="372"
@@ -35,14 +35,14 @@
                          data-y="210"
                          data-speed="300"
                          data-start="1500"
-                         data-easing="easeOutExpo">WEB DESIGN?</div>
+                         data-easing="easeOutExpo">Chuyên nghiệp</div>
 
                     <div class="tp-caption bottom-label sft stb"
                          data-x="80"
                          data-y="280"
                          data-speed="500"
                          data-start="2000"
-                         data-easing="easeOutExpo">Check out our options and features.</div>
+                         data-easing="easeOutExpo">Miễn phí , tối ưu và nhiều hơn thế nữa ...</div>
 
                     <div class="tp-caption randomrotate"
                          data-x="800"
@@ -84,21 +84,21 @@
                          data-y="300"
                          data-speed="500"
                          data-start="3450"
-                         data-easing="easeOutExpo" style="font-size: 37px;">Think</div>
+                         data-easing="easeOutExpo" style="font-size: 37px;">Đột phá</div>
 
                     <div class="tp-caption blackboard-text lfb "
                          data-x="555"
                          data-y="350"
                          data-speed="500"
                          data-start="3650"
-                         data-easing="easeOutExpo" style="font-size: 47px;">Outside</div>
+                         data-easing="easeOutExpo" style="font-size: 47px;">TRONG</div>
 
                     <div class="tp-caption blackboard-text lfb "
                          data-x="580"
                          data-y="400"
                          data-speed="500"
                          data-start="3850"
-                         data-easing="easeOutExpo" style="font-size: 32px;">The box :)</div>
+                         data-easing="easeOutExpo" style="font-size: 32px;">Ý tưởng</div>
                 </li>
                 <li data-transition="fade" data-slotamount="5" data-masterspeed="1000" >
 
@@ -116,28 +116,28 @@
                          data-y="180"
                          data-speed="1500"
                          data-start="1000"
-                         data-easing="easeOutExpo" style="font-size: 30px;">easy to</div>
+                         data-easing="easeOutExpo" style="font-size: 30px;">khởi nghiệp</div>
 
                     <div class="tp-caption blackboard-text fade "
                          data-x="180"
                          data-y="220"
                          data-speed="1500"
                          data-start="1200"
-                         data-easing="easeOutExpo" style="font-size: 40px;">customize!</div>
+                         data-easing="easeOutExpo" style="font-size: 40px;">CÓ TỐN KÉM ?</div>
 
                     <div class="tp-caption main-label sft stb"
                          data-x="580"
                          data-y="190"
                          data-speed="300"
                          data-start="1500"
-                         data-easing="easeOutExpo">DESIGN IT!</div>
+                         data-easing="easeOutExpo">Miễn phí!</div>
 
                     <div class="tp-caption bottom-label sft stb"
                          data-x="580"
-                         data-y="250"
+                         data-y="260"
                          data-speed="500"
                          data-start="2000"
-                         data-easing="easeOutExpo">Create slides with brushes and fonts.</div>
+                         data-easing="easeOutExpo">là điều chúng tối mang đến cho bạn .</div>
 
 
 
@@ -151,14 +151,14 @@
             <div class="row">
                 <div class="col-md-8">
                     <p>
-                        The fastest way to grow your business with the leader in <em>Công nghệ.</em>
-                        <span>Check out our options and features included.</span>
+                        Miễn phí trọn đời sản phẩm và dịch vụ chỉ có thể là <em>Pubweb.vn</em>
+                        <span>Lựa chọn sản phẩm bạn cần và đăng ký ngay .</span>
                     </p>
                 </div>
                 <div class="col-md-4">
                     <div class="get-started">
-                        <a href="#" class="btn btn-lg btn-primary">Get Started Now!</a>
-                        <div class="learn-more">or <a href="index.html">learn more.</a></div>
+                        <a href="#" class="btn btn-lg btn-primary">Đăng ký!</a>
+                        <div class="learn-more">hoặc <a href="index.html">tìm hiểu thêm.</a></div>
                     </div>
                 </div>
             </div>
@@ -241,138 +241,57 @@
     <div class="container">
 
         <div class="row">
-            <div class="col-md-8">
-                <h2>Our <strong>Features</strong></h2>
+            <div class="col-md-12">
+                <h2>Hỗ trợ khách hàng</h2>
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="feature-box">
-                            <div class="feature-box-icon">
-                                <i class="icon icon-group"></i>
-                            </div>
-                            <div class="feature-box-info">
-                                <h4 class="shorter">Customer Support</h4>
-                                <p class="tall">Lorem ipsum dolor sit amet, consectetur adip.</p>
-                            </div>
-                        </div>
-                        <div class="feature-box">
-                            <div class="feature-box-icon">
-                                <i class="icon icon-file"></i>
-                            </div>
-                            <div class="feature-box-info">
-                                <h4 class="shorter">HTML5 / CSS3 / JS</h4>
-                                <p class="tall">Lorem ipsum dolor sit amet, adip.</p>
-                            </div>
-                        </div>
-                        <div class="feature-box">
-                            <div class="feature-box-icon">
-                                <i class="icon icon-google-plus"></i>
-                            </div>
-                            <div class="feature-box-info">
-                                <h4 class="shorter">500+ Google Fonts</h4>
-                                <p class="tall">Lorem ipsum dolor sit amet, consectetur adip.</p>
-                            </div>
-                        </div>
-                        <div class="feature-box">
-                            <div class="feature-box-icon">
-                                <i class="icon icon-adjust"></i>
-                            </div>
-                            <div class="feature-box-info">
-                                <h4 class="shorter">Colors</h4>
-                                <p class="tall">Lorem ipsum dolor sit amet, consectetur adip.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="feature-box">
-                            <div class="feature-box-icon">
-                                <i class="icon icon-film"></i>
-                            </div>
-                            <div class="feature-box-info">
-                                <h4 class="shorter">Sliders</h4>
-                                <p class="tall">Lorem ipsum dolor sit amet, consectetur.</p>
-                            </div>
-                        </div>
+                    <div class="col-md-4">
                         <div class="feature-box">
                             <div class="feature-box-icon">
                                 <i class="image-icon small user"></i>
                             </div>
                             <div class="feature-box-info">
-                                <h4 class="shorter">Icons</h4>
-                                <p class="tall">Lorem ipsum dolor sit amet, consectetur adip.</p>
+                                <h4 class="shorter">Nguyễn Tuấn Anht</h4>
+                                <p class="tall">
+                                    <a href="ymsgr:sendim?tuananhnguyen_1990"><img src="http://opi.yahoo.com/online?u=tuananhnguyen_1990&amp;m=g&amp;t=1" class="yahoo-img"></a>
+                                    <a href="Skype:tuananhnguyen_1990?chat"> <img src="http://mystatus.skype.com/smallclassic/tuananhnguyen_1990" class="skype-img"> </a>
+                                </p>
                             </div>
                         </div>
-                        <div class="feature-box">
-                            <div class="feature-box-icon">
-                                <i class="icon icon-bars"></i>
-                            </div>
-                            <div class="feature-box-info">
-                                <h4 class="shorter">Buttons</h4>
-                                <p class="tall">Lorem ipsum dolor sit, consectetur adip.</p>
-                            </div>
-                        </div>
-                        <div class="feature-box">
-                            <div class="feature-box-icon">
-                                <i class="icon icon-desktop"></i>
-                            </div>
-                            <div class="feature-box-info">
-                                <h4 class="shorter">Lightbox</h4>
-                                <p class="tall">Lorem sit amet, consectetur adip.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <h2>and more...</h2>
 
-                <div class="panel-group" id="accordion">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                    <i class="icon icon-usd"></i>
-                                    Pricing Tables
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="collapseOne" class="accordion-body collapse in">
-                            <div class="panel-body">
-                                Donec tellus massa, tristique sit amet condim vel, facilisis quis sapien. Praesent id enim sit amet odio vulputate eleifend in in tortor.
-                            </div>
-                        </div>
                     </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                                    <i class="icon icon-comment"></i>
-                                    Contact Forms
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="collapseTwo" class="accordion-body collapse">
-                            <div class="panel-body">
-                                Donec tellus massa, tristique sit amet condimentum vel, facilisis quis sapien.
+                    <div class="col-md-4">
+                        <div class="feature-box">
+                            <div class="feature-box-icon">
+                                <i class="image-icon small user"></i>
+                            </div>
+                            <div class="feature-box-info">
+                                <h4 class="shorter">Ngô Quang huy</h4>
+                                <p class="tall">
+                                    <a href="ymsgr:sendim?tuananhnguyen_1990"><img src="http://opi.yahoo.com/online?u=tuananhnguyen_1990&amp;m=g&amp;t=1" class="yahoo-img"></a>
+                                    <a href="Skype:tuananhnguyen_1990?chat"> <img src="http://mystatus.skype.com/smallclassic/tuananhnguyen_1990" class="skype-img"> </a>
+                                </p>
                             </div>
                         </div>
+
                     </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                                    <i class="icon icon-laptop"></i>
-                                    Portfolio Pages
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="collapseThree" class="accordion-body collapse">
-                            <div class="panel-body">
-                                Donec tellus massa, tristique sit amet condimentum vel, facilisis quis sapien.
+                    <div class="col-md-4">
+                        <div class="feature-box">
+                            <div class="feature-box-icon">
+                                <i class="image-icon small user"></i>
+                            </div>
+                            <div class="feature-box-info">
+                                <h4 class="shorter">Hà Ngọc Quân</h4>
+                                <p class="tall">
+                                    <a href="ymsgr:sendim?tuananhnguyen_1990"><img src="http://opi.yahoo.com/online?u=tuananhnguyen_1990&amp;m=g&amp;t=1" class="yahoo-img"></a>
+                                    <a href="Skype:tuananhnguyen_1990?chat"> <img src="http://mystatus.skype.com/smallclassic/tuananhnguyen_1990" class="skype-img"> </a>
+                                </p>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
+
         </div>
 
         <hr class="tall" />
