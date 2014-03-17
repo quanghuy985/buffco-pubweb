@@ -1,43 +1,20 @@
 @extends("fontend.hometemplate")
 @section("contenthomepage")
-<section class="page-top">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <ul class="breadcrumb">
-                    <li><a href="index.html">Home</a></li>
-                    <li class="active">Contact Us</li>
-                </ul>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h2>Contact Us</h2>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Google Maps -->
-<div id="googlemaps" class="google-map hidden-xs">
-
-    <iframe width="100%" height="400px" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=d&amp;source=s_d&amp;saddr=20.994658,105.855006&amp;daddr=&amp;hl=vi&amp;geocode=&amp;sll=20.993977,105.857842&amp;sspn=0.01192,0.021136&amp;mra=mift&amp;mrsp=0&amp;sz=16&amp;ie=UTF8&amp;ll=20.994603,105.855187&amp;spn=0.01192,0.021136&amp;t=m&amp;output=embed"></iframe>
-</div>
-
-<div class="container">
-
+<div class="container">   
     <div class="row">
         <div class="col-md-6">
-
-            <div class="alert alert-success hidden" id="contactSuccess">
+            @if($susscess == '1' )
+            <div class="alert alert-success" id="contactSuccess">
                 <strong>Success!</strong> Your message has been sent to us.
             </div>
-
-            <div class="alert alert-danger hidden" id="contactError">
+            @endif
+            @if($susscess == '2' )
+            <div class="alert alert-danger " id="contactError">
                 <strong>Error!</strong> There was an error sending your message.
             </div>
-
+            @endif
             <h2 class="short"><strong>Contact</strong> Us</h2>
-            <form action="php/contact-form.php" id="contactForm" type="post">
+            <form id="contactForm" method="post" action="{{URL::action('ContactController@postContact')}}" >
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-6">
@@ -101,5 +78,4 @@
     </div>
 
 </div>
-<div class="clear"></div>
 @endsection
