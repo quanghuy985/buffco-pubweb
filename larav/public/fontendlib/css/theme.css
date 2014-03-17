@@ -1,3 +1,8 @@
+@font-face
+{
+    font-family: signatli;
+    src: url(../css/fonts/signatli.ttf);
+}
 html {
     overflow-x: hidden;
     overflow-y: auto;
@@ -1169,7 +1174,7 @@ div.slider-container div.blackboard-text {
     color: #BAB9BE;
     font-size: 46px;
     line-height: 46px;
-    font-family: "Shadows Into Light",cursive;
+    font-family: signatli;
     text-transform: uppercase;
 }
 
@@ -1277,7 +1282,7 @@ div.home-intro p span {
 }
 
 div.home-intro p em {
-    font-family: "Shadows Into Light", cursive;
+    font-family: signatli;
     font-size: 1.6em;
 }
 
@@ -1335,7 +1340,7 @@ div.home-concept div.process-image img {
 
 div.home-concept strong {
     display: block;
-    font-family: "Shadows Into Light", cursive;
+    font-family: signatli;
     font-size: 2.1em;
     font-weight: normal;
     position: relative;
@@ -1497,7 +1502,7 @@ footer div.footer-ribon:before {
 
 footer div.footer-ribon span {
     color: #FFF;
-    font-family: "Shadows Into Light", cursive;
+    font-family: signatli;
     font-size: 1.6em;
 }
 
@@ -2181,4 +2186,12 @@ div.shop ul.products li.product .onsale {
 div.shop .star-rating span,
 div.shop .cart-totals tr.total .amount {
     color: #2baab1;
+}
+.disable:hover{
+    background: none !important;
+    color: #ccc !important;
+    cursor: default;
+}
+.post-medium{
+    margin-bottom: 10px;
 }
