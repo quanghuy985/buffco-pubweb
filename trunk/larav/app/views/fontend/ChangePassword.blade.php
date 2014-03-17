@@ -1,5 +1,6 @@
 @extends("fontend.hometemplate")
 @section("contenthomepage")
+
 <section class="page-top">
     <div class="container">
         <div class="row">
@@ -12,12 +13,17 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <h2>Đăng nhập</h2>
+                <h2>Đổi mật khẩu</h2>
             </div>
         </div>
     </div>
 </section>
-
+@if (isset($thongbao))
+<div class="alert alert-danger center">
+    <strong>Thông báo! </strong>{{$thongbao}}
+</div>
+@endif
+@if (!isset($thongbao))
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -25,51 +31,37 @@
                 <div class="col-md-6">
                     <div class="featured-box featured-box-secundary default info-content">
                         <div class="box-content">
-                            <h4>Đăng nhập khách hàng</h4>
-                            @if(isset($messenge))
-                            <div class="alert alert-warning">
-                                <strong>Thông báo!</strong> {{$messenge}}
-                            </div>
-                            @endif
-                            <form action="{{URL::action('LoginController@postDangNhap')}}" id="loginfrom" method="post">
+                            <h4>Đổi mật khẩu khách hàng</h4>
+                            <form action="{{URL::action('LoginController@postNewPassword')}}" id="changePasswordForm" method="post">
+                                <input type="hidden" value="@if(isset($userEmail)){{$userEmail}}@endif" name="userEmail" placeholder="Nhập Email" class="form-control">
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-12">
-                                            <label>Tài khoản hoặc Email</label>
-                                            <input type="text" value="" name="userEmail" placeholder="Nhập Email" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group">
-                                        <div class="col-md-12">
-                                            <a class="pull-right" href="{{URL::action('LoginController@getForgotPassword')}}">(Quên mật khẩu?)</a>
                                             <label>Mật khẩu</label>
-                                            <input type="password" value="" name="userPassword" placeholder="Nhập mật khẩu" class="form-control">
+                                            <input type="password" value="" name="userPassword" id="userPassword" placeholder="Nhập mật khẩu" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <label>Nhập lại Mật khẩu</label>
+                                            <input type="password" value="" name="ReUserPassword" id="ReUserPassword" placeholder="Nhập lại mật khẩu" class="form-control">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <span class="remember-box checkbox">
-                                            <label for="rememberme">
-                                                <input type="checkbox" id="rememberme" name="rememberme">Nhớ đăng nhập
-                                            </label>
-                                        </span>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input type="submit" value="Đăng nhập" class="btn btn-primary pull-right push-bottom" data-loading-text="Loading...">
+                                        <input type="submit" value="Cập nhật" class="btn btn-primary pull-right push-bottom" data-loading-text="Loading...">
                                     </div>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
     </div>
 </div>
-
+@endif
 @endsection
