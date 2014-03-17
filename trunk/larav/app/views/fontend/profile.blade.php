@@ -104,53 +104,40 @@
                         </form>
                     </div>
                     <div class="tab-pane" id="ChargePass">
+                        <form action="{{URL::action('LoginController@postNewPassword')}}" id="changePasswordForm" method="post">
                         <ul class="simple-post-list">
                             <li>
-                                <div class="post-image">
-                                    <div class="img-thumbnail">
-                                        <a href="blog-post.html">
-                                            <img src="img/blog/blog-thumb-2.jpg" alt="">
-                                        </a>
-                                    </div>
+                                <div class="post-image">                                   
+                                        <p>Mật khẩu cũ: </p>
+                                   
                                 </div>
                                 <div class="post-info">
-                                    <a href="blog-post.html">Vitae Nibh Un Odiosters</a>
-                                    <div class="post-meta">
-                                        Jan 10, 2013
-                                    </div>
+                                    <input type="password" value="" name="oldPassWord" id="oldPassWord" placeholder="Nhập mật khẩu cũ" class="form-control">
                                 </div>
                             </li>
                             <li>
-                                <div class="post-image">
-                                    <div class="img-thumbnail">
-                                        <a href="blog-post.html">
-                                            <img src="img/blog/blog-thumb-3.jpg" alt="">
-                                        </a>
-                                    </div>
+                                <div class="post-image">                                 
+                                        <p>Mật khẩu mới: </p>                                  
                                 </div>
                                 <div class="post-info">
-                                    <a href="blog-post.html">Odiosters Nullam Vitae</a>
-                                    <div class="post-meta">
-                                        Jan 10, 2013
-                                    </div>
+                                     <input type="password" value="" name="newPassWord" id="newPassWord" placeholder="Nhập mật khẩu mới" class="form-control">
                                 </div>
                             </li>
                             <li>
-                                <div class="post-image">
-                                    <div class="img-thumbnail">
-                                        <a href="blog-post.html">
-                                            <img src="img/blog/blog-thumb-1.jpg" alt="">
-                                        </a>
-                                    </div>
+                                <div class="post-image">                                 
+                                        <p>Nhập lại mật khẩu mới</p>                                  
                                 </div>
                                 <div class="post-info">
-                                    <a href="blog-post.html">Nullam Vitae Nibh Un Odiosters</a>
-                                    <div class="post-meta">
-                                        Jan 10, 2013
-                                    </div>
+                                     <input type="password" value="" name="reNewPassWord" id="newPassWord" placeholder="Nhập lại mật khẩu mới" class="form-control">
                                 </div>
                             </li>
+                                <li>
+                                    <div class="post-image">                                  
+                                        <input style=" width: 103px !important;" type="submit" value="Cập nhật" class="btn btn-primary btn-lg" data-loading-text="Loading...">
+                                    </div>
+                                </li>
                         </ul>
+                        </form>
                     </div>
                     <div class="tab-pane" id="history">
                         <ul class="simple-post-list">
