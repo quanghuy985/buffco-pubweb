@@ -14,6 +14,10 @@ Route::get('/', function () {
     return View::make('fontend.singlenews');
 
 });
+Route::controller('page', 'PageController');
+Route::controller('contact', 'ContactController');
+Route::controller('account', 'AccountController');
+Route::controller('login', 'LoginController');
 App::missing(function($exception) {
     return View::make('fontend.404');
 });

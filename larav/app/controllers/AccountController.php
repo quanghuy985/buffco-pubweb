@@ -8,19 +8,19 @@
 
 class AccountController extends Controller {
 
-    public function getProfileView($check='') {
+    public function getProfileView($check = '') {
         $tblUsersModel = new tblUsersModel();
-        $datauser = $tblUsersModel->getUserById(3);             
- return View::make('fontend.profile')->with('datauser', $datauser[0])->with('check', $check);
+        $datauser = $tblUsersModel->getUserByEmail('ngoquanghuyhn@gmail.com');
+        return View::make('fontend.profile')->with('datauser', $datauser)->with('check', $check);
     }
 
     public function postProfile() {
-        $tblUsersModel = new tblUsersModel();       
-        try {            
-            $tblUsersModel->updateUser(Input::get('hEmail'),'', Input::get('fistName'), Input::get('lastName'), Input::get('address'), Input::get('phone'), Input::get('identify'),'','');
-            return Redirect::action('AccountController@getProfileView',$check='1');
+        $tblUsersModel = new tblUsersModel();
+        try {
+            $tblUsersModel->updateUser(Input::get('hEmail'), '', Input::get('fistName'), Input::get('lastName'), Input::get('address'), Input::get('phone'), Input::get('identify'), '', '');
+            return Redirect::action('AccountController@getProfileView', $check = '1');
         } catch (Exception $ex) {
-            return Redirect::action('AccountController@getProfileView',$check='2');
+            return Redirect::action('AccountController@getProfileView', $check = '2');
         }
     }
 
