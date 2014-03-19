@@ -11,7 +11,7 @@
   |
  */
 Route::get('/', function () {
-    return View::make('fontend.singlenews');
+    return View::make('fontend.index');
 
 });
 Route::controller('page', 'PageController');

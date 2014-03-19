@@ -9,9 +9,19 @@
 class AccountController extends Controller {
 
     public function getProfileView($check = '') {
-        $tblUsersModel = new tblUsersModel();
-        $datauser = $tblUsersModel->getUserByEmail('ngoquanghuyhn@gmail.com');
-        return View::make('fontend.profile')->with('datauser', $datauser)->with('check', $check);
+        if (Session::has('userSession')) {
+            $user = Session::get('userSession');
+            // get history by useremail
+//            $tblHistory = new tblHistoryModel();
+//            $objHis = $tblHistory->getHistoryById($user[0]->id);
+//            $link = $objHis->links();
+            
+            //get history order
+            
+            return View::make('fontend.profile')->with('datauser', $user[0])->with('check', $check);
+        } else {
+            return View::make('fontend.login');
+        }
     }
 
     public function postProfile() {
@@ -24,4 +34,34 @@ class AccountController extends Controller {
         }
     }
 
+    public function postChangePassWord() {
+
+        if (Session::has('userSession')) {
+            $user = Session::get('userSession');
+            if ($user[0]->userPassword != md5(sha1(md5(Input::get('oldPass'))))) {
+                return '0';
+            } else {
+                $tblUserModel = new tblUsersModel();
+                $tblUserModel->ChangePass(md5($user[0]->userEmail), Input::get('newPass'));
+                return '1';
+            }
+        } else {
+            return View::make('fontend.login');
+        }
+    }
+    
+    public function postAjaxHistory() {
+          $user = Session::get('userSession');
+        $tblHistory = new tblHistoryModel();
+        $objHis = $tblHistory->getHistoryById($user[0]->id);
+        $link = $objHis->links();
+        return View::make('fontend.historypage')->with('datahis', $objHis)->with('page', $link);
+    }
+ public function postAjaxOrder() {
+          $user = Session::get('userSession');
+        $tblOrder = new tblOrderModel();
+        $objHis = $tblOrder->getOrderByUserId($user[0]->id);
+        $link = $objHis->links();
+        return View::make('fontend.orderpage')->with('dataOrder', $objHis)->with('page', $link);
+    }
 }
