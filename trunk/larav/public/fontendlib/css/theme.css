@@ -2195,3 +2195,14 @@ div.shop .cart-totals tr.total .amount {
 .post-medium{
     margin-bottom: 10px;
 }
+.ajaxloader{
+    background-image: url("../img/ajax-loader.gif");
+    background-repeat: no-repeat;
+    background-position-x: 50%;
+    background-position-y: 20px;
+    width: 100%;
+    position: absolute;
+    height: 100%;
+    opacity: 1;
+    z-index: 10000;
+}
