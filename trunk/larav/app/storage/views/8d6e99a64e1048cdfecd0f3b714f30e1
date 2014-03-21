@@ -1,0 +1,4 @@
+<?php $__env->startSection("contenthomepage"); ?>
+<?php echo $datapage[0]->pageContent; ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("fontend.hometemplate", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

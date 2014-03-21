@@ -17,17 +17,17 @@ jQuery("#contactForm").validate({
     },
     messages: {
         name: {
-            required: "Please enter your name.",
+            required: "Bạn chưa nhập họ tên.",
             minlength: "Phải nhập 3 kí tự trở lên"
         },
         subject:{
-            required: "Please enter the subject.",
+            required: "Bạn chưa nhập tiêu đề.",
         },
           email: {
-            required: "Please enter your email address.",           
+            required: "Bạn chưa nhập email.",           
         },
         message:{
-            required:"Please enter your message.",
+            required:"Bạn chưa nhập nội dung.",
         },
         
     }
@@ -43,7 +43,7 @@ jQuery("#frmProfile").validate({
     },
     messages: {
         name: {
-            required: "Please enter your name.",
+            required: "Bạn chưa nhập tên.",
             minlength: "Phải nhập 3 kí tự trở lên"
         },       
         

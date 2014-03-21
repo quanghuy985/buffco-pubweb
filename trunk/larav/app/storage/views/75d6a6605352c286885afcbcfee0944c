@@ -1,5 +1,4 @@
-@extends("fontend.hometemplate")
-@section("contenthomepage")
+<?php $__env->startSection("contenthomepage"); ?>
 <style type="text/css">
     div.tabs ul.nav-tabs li.active a{        
         background: #FFF !important;
@@ -26,7 +25,7 @@
            return false;
        jQuery('.ajaxloader').css('display', 'block');
         var request = jQuery.ajax({
-            url: "{{URL::action('AccountController@postChangePassWord')}}",
+            url: "<?php echo URL::action('AccountController@postChangePassWord'); ?>",
             type: "POST",
             data: {oldPass: $('#oldPassWord').val(), newPass: $('#newPassWord').val()},
             dataType: "html"
@@ -52,7 +51,7 @@
         jQuery('#divtableOrder').empty();
         jQuery('.ajaxloader').css('display', 'block');
         var request = jQuery.ajax({
-            url: "{{URL::action('AccountController@postAjaxHistory')}}",
+            url: "<?php echo URL::action('AccountController@postAjaxHistory'); ?>",
             type: "POST",
             dataType: "html"
         });
@@ -64,7 +63,7 @@
         jQuery('#divtableHistory').empty();
         jQuery('.ajaxloader').css('display', 'block');
         var request = jQuery.ajax({
-            url: "{{URL::action('AccountController@postAjaxOrder')}}",
+            url: "<?php echo URL::action('AccountController@postAjaxOrder'); ?>",
             type: "POST",
             dataType: "html"
         });
@@ -93,29 +92,29 @@
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="profile">
-                        @if($check == '1' )
+                        <?php if($check == '1' ): ?>
                         <div class="alert alert-success" id="contactSuccess">
                             Cập nhật thành công!
                         </div>
-                        @endif
-                        @if($check == '2' )
+                        <?php endif; ?>
+                        <?php if($check == '2' ): ?>
                         <div class="alert alert-danger " id="contactError">
                             Cập nhật không thành công
                         </div>
-                        @endif
-                        <form id="frmProfile" method="post" action="{{URL::action('AccountController@postProfile')}}" >
+                        <?php endif; ?>
+                        <form id="frmProfile" method="post" action="<?php echo URL::action('AccountController@postProfile'); ?>" >
                               <div class="ajaxloader"  style="display: none;background-position-x: 19% !important;background-position-y: 218px !important;">
 
                         </div>
                             <ul class="simple-post-list">    
                                 <li>
-                                    <input type="hidden" id="hId" name="hId" value="{{$datauser->id}}">
+                                    <input type="hidden" id="hId" name="hId" value="<?php echo $datauser->id; ?>">
                                     <div class="post-image">                                  
                                         <p>Email: </p>                               
                                     </div>
                                     <div class="post-info">
-                                        <input type="hidden" id="hEmail" name="hEmail" value="{{$datauser->userEmail}}">
-                                        <label  id="lblEmail"> {{$datauser->userEmail}}</label>                            
+                                        <input type="hidden" id="hEmail" name="hEmail" value="<?php echo $datauser->userEmail; ?>">
+                                        <label  id="lblEmail"> <?php echo $datauser->userEmail; ?></label>                            
                                     </div>
                                 </li>
                                 <li>
@@ -123,7 +122,7 @@
                                         <p>Họ và đệm: </p>                                   
                                     </div>
                                     <div class="post-info">
-                                        <input type="text" value="{{$datauser->userFirstName}}"  name="firstName" id="firstName">                               
+                                        <input type="text" value="<?php echo $datauser->userFirstName; ?>"  name="firstName" id="firstName">                               
                                     </div>
                                 </li>
                                 <li>
@@ -131,7 +130,7 @@
                                         <p>Tên: </p>                                   
                                     </div>
                                     <div class="post-info">
-                                        <input type="text" value="{{$datauser->userLastName}}"  name="lastName" id="lastName">                               
+                                        <input type="text" value="<?php echo $datauser->userLastName; ?>"  name="lastName" id="lastName">                               
                                     </div>
                                 </li>
                                 <li>
@@ -139,7 +138,7 @@
                                         <p>Điện thoại: </p>                                   
                                     </div>
                                     <div class="post-info">
-                                        <input type="text" value="{{$datauser->userPhone}}"  name="phone" id="phone">                               
+                                        <input type="text" value="<?php echo $datauser->userPhone; ?>"  name="phone" id="phone">                               
                                     </div>
                                 </li>
                                 <li>
@@ -147,7 +146,7 @@
                                         <p>Địa chỉ: </p>                               
                                     </div>
                                     <div class="post-info">
-                                        <textarea maxlength="5000" rows="10"  name="address" id="address" style="height: 90px;">{{$datauser->userAddress}}</textarea>                              
+                                        <textarea maxlength="5000" rows="10"  name="address" id="address" style="height: 90px;"><?php echo $datauser->userAddress; ?></textarea>                              
                                     </div>
                                 </li>
                                 <li>
@@ -155,7 +154,7 @@
                                         <p>Chứng minh nhân dân: </p>                               
                                     </div>
                                     <div class="post-info">
-                                        <input type="text" value="{{$datauser->userIdentify}}" name="identify" id="identify">                               
+                                        <input type="text" value="<?php echo $datauser->userIdentify; ?>" name="identify" id="identify">                               
                                     </div>
                                 </li>             
                                 <li>
@@ -170,7 +169,7 @@
                         <div class="alert " id="changePassSuccess" style="display: none;">
                             Đổi mật khẩu thành công!
                         </div>
-                        <form action="{{URL::action('AccountController@postChangePassWord')}}" id="frmChangePassword" method="post">
+                        <form action="<?php echo URL::action('AccountController@postChangePassWord'); ?>" id="frmChangePassword" method="post">
                           <div class="ajaxloader"  style="display: none;background-position-x: 19% !important;background-position-y: 102px !important;">
 
                         </div>
@@ -226,4 +225,5 @@
 
 
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("fontend.hometemplate", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
