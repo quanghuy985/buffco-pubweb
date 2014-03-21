@@ -31,7 +31,7 @@
                     <div class="featured-box featured-box-secundary default info-content">
                         <div class="box-content">
                             <h4>Đăng ký tài khoản</h4>
-                            <form action="{{URL::action('LoginController@postRegister')}}" id="registerForm" method="post">
+                            <form action="{{URL::action('LoginController@postDangKy')}}" id="registerForm" method="post">
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-12">

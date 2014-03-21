@@ -696,7 +696,7 @@ Version: 		2.7.0 - 02-21-2014
 		toggle: function() {
 
 			var $this = this,
-				previewParClosedHeight = 0;
+				previewParClosedHeight = 25;
 
 			$("section.toggle > label").prepend($("<i />").addClass("icon icon-plus"));
 			$("section.toggle > label").prepend($("<i />").addClass("icon icon-minus"));

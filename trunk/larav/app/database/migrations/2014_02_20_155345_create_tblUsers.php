@@ -11,6 +11,14 @@ class CreateTblUsers extends Migration {
      * @return void
      */
     public function up() {
+        Schema::create('tblDomainlist', function($table) {
+            $table->increments('id');
+            $table->string('extDomain');
+            $table->decimal('setupCash', 20, 2);
+            $table->decimal('maintainCash', 20, 2);
+            $table->string('userTime');
+            $table->integer('status');
+        });
         Schema::create('tblUsers', function($table) {
             $table->increments('id');
             $table->string('userEmail');
@@ -20,7 +28,7 @@ class CreateTblUsers extends Migration {
             $table->string('userAddress');
             $table->string('userPhone');
             $table->string('userIdentify');
-            $table->integer('userPoint', 20);
+            $table->decimal('userPoint', 5, 2);
             $table->string('userTime');
             $table->string('verify');
             $table->integer('status');
@@ -39,8 +47,8 @@ class CreateTblUsers extends Migration {
             $table->string('productName');
             $table->string('productUrlImage');
             $table->string('productDescription');
-            $table->integer('productPrice', 20);
-            $table->integer('productPromotion', 20);
+            $table->decimal('productPrice', 5, 2);
+            $table->decimal('productPromotion', 5, 2);
             $table->string('productUrlDemo');
             $table->string('productSlug');
             $table->string('productVersion');
@@ -52,7 +60,7 @@ class CreateTblUsers extends Migration {
             $table->increments('id');
             $table->integer('userID');
             $table->integer('productID');
-            $table->integer('orderAmount', 20);
+            $table->decimal('orderAmount', 5, 2);
             $table->string('orderTypePay');
             $table->string('orderStatusPay');
             $table->string('orderTime');
@@ -68,29 +76,23 @@ class CreateTblUsers extends Migration {
         //tblServices
         Schema::create('tblServices', function($table) {
             $table->increments('id');
-            $table->string('orderCode');
             $table->string('servicesName');
             $table->string('servicesContent');
-            $table->integer('servicesPrices', 20);
-            $table->integer('servicesPromotion', 20);
+            $table->decimal('servicesPrices', 5, 2);
+            $table->decimal('servicesPromotion', 5, 2);
             $table->string('servicesSlug');
-            $table->integer('servicesType');
-            $table->integer('viewType');
             $table->string('servicesTime');
             $table->integer('status');
         });
         //tblServicesOrder
         Schema::create('tblServicesOrder', function($table) {
             $table->increments('id');
-            $table->string('orderCode');
             $table->integer('servicesID');
-            $table->integer('orderID', null);
-            $table->string('userEmail');
-            $table->string('dateExp');
-            $table->integer('servicesorderAmount', 20);
+            $table->integer('orderID');
+            $table->decimal('servicesorderAmount', 5, 2);
             $table->string('servicesSlug');
-            $table->integer('servicesorderTypePay');
-            $table->integer('servicesorderStatusPay');
+            $table->string('servicesorderTypePay');
+            $table->string('servicesorderStatusPay');
             $table->string('servicesorderTime');
             $table->integer('status');
         });
@@ -99,8 +101,8 @@ class CreateTblUsers extends Migration {
             $table->increments('id');
             $table->string('statisticFrom');
             $table->string('statisticTo');
-            $table->integer('statisticMoneyProduct', 20);
-            $table->integer('statisticMoneyServices', 20);
+            $table->decimal('statisticMoneyProduct', 5, 2);
+            $table->decimal('statisticMoneyServices', 5, 2);
             $table->integer('statisticNumberNewUser');
             $table->integer('statisticNumberStopUser');
             $table->integer('statisticNumberTotalUser');
