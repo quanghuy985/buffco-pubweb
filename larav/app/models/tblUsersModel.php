@@ -131,4 +131,21 @@ class tblUsersModel extends Eloquent {
         return $adminarray;
     }
 
+    public function truPCash($userEmail, $Pcash) {
+        $objUser = $this->getUserByEmail($userEmail);
+
+        $currentPoint = $objUser->userPoint;
+        if ($currentPoint < $Pcash) {
+            return FALSE;
+        } else {
+            $futurePoint = $currentPoint - $Pcash;
+            $check = DB::table('tblusers')->where('userEmail', '=', $userEmail)->update(array('userPoint' => $futurePoint));
+            if ($check > 0) {
+                return TRUE;
+            } else {
+                return FALSE;
+            }
+        }
+    }
+
 }

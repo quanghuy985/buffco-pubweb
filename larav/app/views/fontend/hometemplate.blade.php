@@ -367,40 +367,37 @@
                         <div class="footer-ribon">
                             <span>Get in Touch</span>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-6">
                             <div class="newsletter">
                                 <h4>Newsletter</h4>
-                                <p>Keep up on our always evolving product features and technology. Enter your e-mail and subscribe to our newsletter.</p>
-
-                                <div class="alert alert-success hidden" id="newsletterSuccess">
-                                    <strong>Success!</strong> You've been added to our email list.
-                                </div>
-
-                                <div class="alert alert-danger hidden" id="newsletterError"></div>
-
-                                <form id="newsletterForm" action="php/newsletter-subscribe.php" method="POST">
-                                    <div class="input-group">
-                                        <input class="form-control" placeholder="Email Address" name="email" id="email" type="text">
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-default" type="submit">Go!</button>
-                                        </span>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <h4>Latest Tweet</h4>
-                            <div id="tweet" class="twitter" data-account-id="oklerthemes">
-                                <p>Please wait...</p>
+                                <p>
+                                <div id="fb-root"></div>
+                                <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id))
+        return;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "//connect.facebook.net/vi_VN/all.js#xfbml=1";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+                                </script>
+                                <div class="fb-like-box" data-href="https://www.facebook.com/pubweb.vn" data-width="555" data-height="213" data-colorscheme="light" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true"></div>
+                                <style>                              
+                                    .fb-like-box.fb_iframe_widget iframe {
+                                        background: none repeat scroll 0 0 #FAFAFA;
+                                    }
+                                </style>
+                                </p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="contact-details">
-                                <h4>Contact Us</h4>
+                                <h4>Liên hệ</h4>
                                 <ul class="contact">
-                                    <li><p><i class="icon icon-map-marker"></i> <strong>Address:</strong> 1234 Street Name, City Name, United States</p></li>
-                                    <li><p><i class="icon icon-phone"></i> <strong>Phone:</strong> (123) 456-7890</p></li>
-                                    <li><p><i class="icon icon-envelope"></i> <strong>Email:</strong> <a href="mailto:mail@example.com">mail@example.com</a></p></li>
+                                    <li><p><i class="icon icon-map-marker"></i> <strong>Địa chỉ:</strong> Số 16/11 Ngõ chùa hưng ký, Minh Khai, Hai bà trưng, Hà Nội</p></li>
+                                    <li><p><i class="icon icon-phone"></i> <strong>Hotline :</strong> 0989333537 </p></li>
+                                    <li><p><i class="icon icon-envelope"></i> <strong>Địa chỉ Email :</strong> <a href="mailto:pubweb.vn@gmail.com">pubweb.vn@gmail.com</a></p></li>
                                 </ul>
                             </div>
                         </div>
@@ -465,7 +462,7 @@
 
         <!-- Custom JS -->
         <script src="{{Asset('fontendlib/js/custom.js')}}"></script>
-		<script>
+        <script>
 jQuery("#loginfrom").validate({
     rules: {
         userEmail: {
@@ -575,6 +572,7 @@ jQuery("#registerForm").validate({
         }
     }
 });
-</script>
+        </script>
+
     </body>
 </html>
