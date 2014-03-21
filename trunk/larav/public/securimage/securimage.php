@@ -182,7 +182,7 @@ class Securimage
     const SI_IMAGE_GIF  = 3;
 
     /**
-     * Create a normal alphanumeric captcha
+     * 	aptcha
      * @var int
      */
     const SI_CAPTCHA_STRING     = 0;
@@ -241,7 +241,7 @@ class Securimage
      * The background color of the captcha
      * @var Securimage_Color
      */
-    public $image_bg_color = '#ffffff';
+    public $image_bg_color = '#FAFAFA';
     /**
      * The color of the captcha text
      * @var Securimage_Color

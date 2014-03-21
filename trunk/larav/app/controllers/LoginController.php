@@ -25,16 +25,16 @@ class LoginController extends Controller {
                 Session::forget('userSession');
                 Session::push('userSession', $check[0]);
                 // kiem tra trang goi den de dua ve trang dich 
-                if (Session::has('ServicesOrderURL')) {
+                if (Session::has('urlBack')) {
                     //$objServices = Session::get('ServicesOrderURL');
-                    return Redirect::action("ServicesController@getServicesSignup");
+                    $urlBack = Session::get('urlBack');
+                    //  var_dump($urlBack);
+                    return Redirect::to($urlBack[0]);
+                    Session::forget('urlBack');
                 }
                 // trang goi den tu trang Product -> trang dich trang OrderProduct
-                if (Session::has('ProductOrderURL')) {
-                    $objProduct = Session::get('ProductOrderURL');
-                    return Redirect::action("ProductController@getProductOrder", array('id' => $objProduct->id));
-                } else {
-                    echo "ve trang chu";
+                else {
+                    return Redirect::to(Asset(''));
                 }
             }
         } else {

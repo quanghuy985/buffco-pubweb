@@ -50,6 +50,29 @@ jQuery("#frmProfile").validate({
     }
 })
 
+
+    jQuery('#months').change(function() {
+        check();
+    });
+
+    jQuery('#cbadvertising').change(function() {
+        check();
+    });
+
+    function check() {
+        if (jQuery('#cbadvertising').is(':checked')) {
+            // alert('checked');
+            jQuery('#tongtien').text((parseInt(jQuery('#giasaucung').text()) * parseInt(jQuery('#months').val()) + parseInt(jQuery('#cbadvertising').val())) + ' Pcash');
+        } else {
+            jQuery('#tongtien').text((parseInt(jQuery('#giasaucung').text()) * parseInt(jQuery('#months').val())) + ' Pcash');
+        }
+    }
+//    jQuery('#domain').change(function() {
+//
+//        jQuery('#tongtien').text(parseFloat(jQuery('#subject').val()) * parseFloat(jQuery('#totalpriceinput').val()) + 'K VNĐ');
+//        // alert(jQuery('#subject').val());
+//    });
+});
 // kiểm tra form đổi mật khẩu
 jQuery("#frmChangePassword").validate({
     rules: {

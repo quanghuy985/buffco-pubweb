@@ -1,4 +1,5 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head><title></title><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=320, target-densitydpi=device-dpi">
+<!DOCTYPE html>
+<html><head><title></title><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=320, target-densitydpi=device-dpi">
         <style type="text/css">
             /* Mobile-specific Styles */
             @media only screen and (max-width: 660px) { 
@@ -61,8 +62,8 @@
             }
             #background-table { background-color: #ececec; }
             /* Webkit Elements */
-            .top-bar { border-radius:6px 6px 0px 0px; -moz-border-radius: 6px 6px 0px 0px; -webkit-border-radius:6px 6px 0px 0px; -webkit-font-smoothing: antialiased; background-color: #fafafa !important; color: #2BAAB1; }
-            .top-bar a { font-weight: bold; color: #8481d1; text-decoration: none;}
+            #top-bar { border-radius:6px 6px 0px 0px; -moz-border-radius: 6px 6px 0px 0px; -webkit-border-radius:6px 6px 0px 0px; -webkit-font-smoothing: antialiased; background-color: #fafafa; color: #2BAAB1; }
+            #top-bar a { font-weight: bold; color: #8481d1; text-decoration: none;}
             #footer { border-radius:0px 0px 6px 6px; -moz-border-radius: 0px 0px 6px 6px; -webkit-border-radius:0px 0px 6px 6px; -webkit-font-smoothing: antialiased; }
             /* Fonts and Content */
             body, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; }
@@ -103,12 +104,15 @@
         <![endif]--></head><body><table width="100%" cellpadding="0" cellspacing="0" border="0" id="background-table">
             <tbody><tr>
                     <td align="center" bgcolor="#FFF">
-                        <table class="w640" style="margin:0 10px;background: #FAFAFA;border-radius: 10px 10px 0px 0px;" width="640" cellpadding="0" cellspacing="0" border="0">
+                        <table class="w640" style="margin:0 10px;" width="640" cellpadding="0" cellspacing="0" border="0">
                             <tbody><tr><td class="w640" width="640" height="20"></td></tr>
 
                                 <tr>
-                                    <td class="w640" width="640">
-                                        <table id="top-bar"  class="w640 top-bar" width="640" cellpadding="0" cellspacing="0" border="0">
+                                    <td class="w640" width="640" style="
+                                        background: #FAFAFA;
+                                        border-radius: 10px 10px 0px 0px;
+                                        ">
+                                        <table class="top-bar" width="640" cellpadding="0" cellspacing="0" border="0" bgcolor="">
                                             <tbody><tr>
                                                     <td class="w15" width="15"></td>
                                                     <td class="w325" width="350" valign="middle" align="left">
@@ -131,13 +135,13 @@
                                                         <table cellpadding="0" cellspacing="0" border="0">
                                                             <tbody><tr>
 
-                                                                    <td valign="middle"><fblike><img src="https://img.createsend1.com/img/templatebuilder/like-glyph.png" border="0" width="8" height="14" alt="Facebook icon"=""></fblike></td>
+                                                                    <td valign="middle"><fblike><img src="https://img.createsend1.com/img/templatebuilder/like-glyph.png" border="0" width="8" height="14" alt="Facebook icon" =""=""></fblike></td>
                                                     <td width="3"></td>
                                                     <td valign="middle"><div class="header-content"><fblike><a href="https://www.facebook.com/pubweb.vn" target="_blank">Like</a></fblike></div></td>
 
 
                                                     <td class="w10" width="10"></td>
-                                                    <td valign="middle"><tweet><img src="https://img.createsend1.com/img/templatebuilder/tweet-glyph.png" border="0" width="17" height="13" alt="Twitter icon"=""></tweet></td>
+                                                    <td valign="middle"><tweet><img src="https://img.createsend1.com/img/templatebuilder/tweet-glyph.png" border="0" width="17" height="13" alt="Twitter icon" =""=""></tweet></td>
                                     <td width="3"></td>
                                     <td valign="middle"><div class="header-content"><tweet>Tweet</tweet></div></td>
 
@@ -167,7 +171,7 @@
                                 <strong><a href="http://pubweb.vn"><singleline label="Title">Pubweb.vn</singleline></a></strong>
                             </p>
                             <a href="http://pubweb.vn" target="_blank">
-                                <img src="https://fbcdn-sphotos-e-a.akamaihd.net/hphotos-ak-prn1/t1.0-9/46770_1401145253485863_1164741515_n.jpg" width="640px" />
+                                <img src="https://fbcdn-sphotos-c-a.akamaihd.net/hphotos-ak-prn2/t1.0-9/1972547_1402389816694740_426233851_n.jpg" width="640px">
                             </a>
                         </div>
                     </td>
@@ -199,7 +203,7 @@
                         <tr>
                             <td class="w580" width="580">
                                 <div align="center" class="article-content">
-                                    <multiline label="Description">Vui lòng click vào đường dẫn dưới đây để kích hoạt tài khoản {{$link}}</multiline>
+                                    <multiline label="Description">Vui lòng click vào đường dẫn dưới đây để kích hoạt tài khoản</multiline>
                                 </div>
                             </td>
                         </tr>
@@ -286,4 +290,5 @@
 </tbody></table>
 </td>
 </tr>
-</tbody></table></body></html>
+</tbody></table>
+</body></html>

@@ -1,6 +1,5 @@
 @extends("fontend.hometemplate")
 @section("contenthomepage")
-
 <section class="page-top">
     <div class="container">
         <div class="row">
@@ -27,55 +26,46 @@
             </p>
         </div>
     </div>
-
-    <hr class="tall">
-    <div class="row">
-        <h2>Các gói dịch vụ tăng dung lượng trang web của bạn</h2>
-        <div class="pricing-table">
-            @foreach($arrayServices as $item1)
-            @if ($item1->servicesSlug == 1)
-
-            <div class="col-md-2">
-                <div class="plan">
-                    <h3>{{$item1->servicesName}}<span>{{$item1->servicesPrices - $item1->servicesPromotion }}K</span></h3>
-                    <a class="btn btn-lg btn-primary" href="#">Đăng ký</a>
-                    <ul>
-                        <li> <b> VNĐ/Tháng</b> </li>
-                        <li> Khuyến mại <b>{{$item1->servicesPromotion}}</b> </li>
-                        <li> Tiết kiệm <b>{{number_format($item1->servicesPromotion/$item1->servicesPrices * 100, 2) }}%</b> </li>
-                        <li> Dung lượng <b>{{$item1->servicesPrices/15 * 100}} MB</b> </li>
-                    </ul>
-                </div>
-            </div>
-
-            @endif
-            @endforeach
-        </div>
+    <hr>
+    @if(isset($thongbao))
+    <div class="alert alert-warning" style="text-align: center;">
+        <strong>Thông báo !</strong> {{$thongbao}}.
+<!--        <p>Bấm <a href="{{Asset('')}}"> vào đây </a> để trở lại trang chủ</p>-->
     </div>
-
-    <hr class="tall">
-    <div class="row">
-        <h2>Mua điểm thanh toán trên PUBweb</h2>
-
-        <div class="pricing-table">
-            @foreach($arrayServices as $item)
-            @if ($item->servicesSlug == 2)
-
+    @endif
+    <div class="row featured-boxes" >
+        <form action="{{URL::action('ServicesController@postServicesSignup')}}" method="POST">
+            <div class="col-md-2" style="height: 450px;"></div>
             <div class="col-md-4">
-                <div class="plan">
-                    <h3>{{$item->servicesName}}<span>{{$item->servicesPrices - $item->servicesPromotion }}K</span></h3>
-                    <a class="btn btn-lg btn-primary" href="#">Đăng ký</a>
-                    <ul>
-                        <li> Khuyến mại <b>{{$item->servicesPromotion}}</b> </li>
-                        <li> Tiết kiệm <b>{{$item->servicesPromotion/$item->servicesPrices * 100 }}%</b> </li>
-                        <li> <b>{{$item->servicesContent}}</b> </li>
-                    </ul>
+                <div class="featured-box featured-box-tertiary" style="height: 450px !important;">
+                    <div class="box-content">
+                        <i class="icon-featured icon icon-bookmark"></i>
+                        <h4>Quảng cáo</h4>
+                        <div >
+                            <p class="text-left">
+                                Gỡ bỏ quảng cáo trên site của bạn. Dịch vụ này cung cấp chức năng gỡ bỏ quáng cáo gắn trên site của bạn, khi bạn đăng ký dịch vụ này phần quản lý quảng cáo sẽ do bạn tự quản lý.
+                            </p>
+                            <button type="submit" class="btn btn-success">Đăng ký <i class="icon icon-angle-right"></i></button>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            @endif
-            @endforeach
-        </div>
+            <div class="col-md-4">
+                <div class="featured-box featured-box-secundary" style="height: 450px !important;">
+                    <div class="box-content">
+                        <i class="icon-featured icon icon icon-floppy-o" style=" background-color: #2baab1"></i>
+                        <h4 style="color:#2baab1 ">Dung lượng</h4>
+                        <div>
+                            <p class="text-left">
+                                Dịch vụ này cung cấp giải pháp tăng dung lượng lưu trữ cho site của bạn, theo đó bạn có thể tải lên nhiều hơn nữa các sản phẩm, tin tức, thông tin của mình.
+                            </p>
+                            <button type="submit" class="btn" style="background: #2baab1;color: #FFF;">Đăng ký <i class="icon icon-angle-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2" style="height: 450px;"></div>
+        </form>
     </div>
 </div>
 @endsection
