@@ -1,0 +1,328 @@
+<?php $__env->startSection("contenthomepage"); ?>
+<script>
+    function kiemtratenmien() {
+        jQuery('#hienthongbao').css('display', 'none');
+        jQuery('#ajaxloadimg').css('display', 'block');
+        var request = jQuery.ajax({
+            url: "<?php echo URL::action('DomainController@postDomainCheck'); ?>?tenmien=" + jQuery('#temmiencheck').val() + "&duoi=" + jQuery('#duoitenmien').val(),
+            type: "POST"
+        });
+        request.done(function(msg) {
+            jQuery('#hienthongbao').css('display', 'block');
+            if (msg.length == 0) {
+                jQuery('#hienthongbao').removeClass('alert-success');
+                jQuery('#hienthongbao').addClass('alert-warning');
+                jQuery('.domaincart').html("Miễn Phí");
+                jQuery('.setupdomaincart').html("Miễn Phí");
+                jQuery('.amount').html(parseInt('<?php echo $dataproductsingle->productPrice; ?>') + "K VNĐ");
+                jQuery('#thongbao').html('Tên miền không đúng hoặc đã được đăng ký');
+                jQuery('#ajaxloadimg').css('display', 'none');
+                jQuery('#submitpocced').attr('disabled', 'disabled');
+            } else {
+                var getData = jQuery.parseJSON(msg);
+                jQuery('#hienthongbao').removeClass('alert-warning');
+                jQuery('#hienthongbao').addClass('alert-success');
+                jQuery('#thongbao').html('Tên miền <strong>' + jQuery('#temmiencheck').val() + '.' + getData.extDomain + '</strong> có thể đăng ký');
+                jQuery('.domaincart').html(getData.maintainCash + "K");
+                jQuery('.setupdomaincart').html(getData.setupCash + "K");
+                jQuery('.amount').html(parseInt(getData.maintainCash) + parseInt(getData.setupCash) + parseInt('<?php echo $dataproductsingle->productPrice; ?>') + "K VNĐ");
+                jQuery('#ajaxloadimg').css('display', 'none');
+                jQuery('#submitpocced').removeAttr('disabled');
+            }
+
+        });
+    }
+    function kiemsubtratenmien() {
+        jQuery('#hienthongbao').css('display', 'none');
+        jQuery('#ajaxloadimg').css('display', 'block');
+        var request = jQuery.ajax({
+            url: "<?php echo URL::action('DomainController@postSubDomainCheck'); ?>?subdomain=" + jQuery('#subdomaininput').val(),
+            type: "POST",
+            dataType: 'html'
+        });
+        request.done(function(msg) {
+
+            if (msg != 0) {
+                jQuery('.domaincart').html("Miễn Phí");
+                jQuery('.setupdomaincart').html("Miễn Phí");
+                jQuery('.amount').html(parseInt('<?php echo $dataproductsingle->productPrice; ?>') + "K VNĐ");
+                jQuery('#hienthongbao').css('display', 'block');
+                jQuery('#hienthongbao').removeClass('alert-success');
+                jQuery('#hienthongbao').addClass('alert-warning');
+                jQuery('#thongbao').html('Tên miền không đúng hoặc đã được đăng ký');
+                jQuery('#ajaxloadimg').css('display', 'none');
+                jQuery('#submitpocced').attr('disabled', 'disabled');
+            } else {
+                jQuery('.domaincart').html("Miễn Phí");
+                jQuery('.setupdomaincart').html("Miễn Phí");
+                jQuery('.amount').html(parseInt('<?php echo $dataproductsingle->productPrice; ?>') + "K VNĐ");
+                jQuery('#hienthongbao').css('display', 'block');
+                jQuery('#hienthongbao').removeClass('alert-warning');
+                jQuery('#hienthongbao').addClass('alert-success');
+                jQuery('#thongbao').html('Tên miền <strong>' + jQuery('#subdomaininput').val() + '.pubweb.vn</strong> có thể đăng ký');
+                jQuery('#ajaxloadimg').css('display', 'none');
+                jQuery('#submitpocced').removeAttr('disabled');
+            }
+
+        });
+    }
+    function chondomain() {
+        jQuery('.domaincart').html("Miễn Phí");
+        jQuery('.setupdomaincart').html("Miễn Phí");
+        jQuery('.amount').html(parseInt('<?php echo $dataproductsingle->productPrice; ?>') + "K VNĐ");
+        jQuery('#submitpocced').attr('disabled', 'disabled');
+        jQuery('#domainlance').css('display', 'inline-grid');
+        jQuery('#subdomainlance').css('display', 'none');
+        jQuery('#temmiencheck').removeAttr('disabled');
+        jQuery('#duoitenmien').removeAttr('disabled');
+        jQuery('#domainsubmit').removeAttr('disabled');
+        jQuery('#subdomaininput').attr('disabled', 'disabled');
+        jQuery('#subdomaisubmit').attr('disabled', 'disabled');
+    }
+    function chondubdomain() {
+        jQuery('.domaincart').html("Miễn Phí");
+        jQuery('.setupdomaincart').html("Miễn Phí");
+        jQuery('.amount').html(parseInt('<?php echo $dataproductsingle->productPrice; ?>') + "K VNĐ");
+        jQuery('#submitpocced').attr('disabled', 'disabled');
+        jQuery('#subdomainlance').css('display', 'inline-grid');
+        jQuery('#domainlance').css('display', 'none');
+        jQuery('#subdomaininput').removeAttr('disabled');
+        jQuery('#subdomaisubmit').removeAttr('disabled');
+        jQuery('#temmiencheck').attr('disabled', 'disabled');
+        jQuery('#duoitenmien').attr('disabled', 'disabled');
+        jQuery('#domainsubmit').attr('disabled', 'disabled');
+    }
+    function onchangge() {
+        jQuery('#submitpocced').attr('disabled', 'disabled');
+    }
+</script>
+<link rel="stylesheet" href="<?php echo Asset('fontendlib/css/theme-shop.css'); ?>">
+<section class="page-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumb">
+                    <li><a href="index.html">Home</a></li>
+                    <li class="active">Portfolio</li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Single Project</h2>
+            </div>
+        </div>
+    </div>
+</section>
+<div role="main" class="main shop">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="shorter"><strong>Checkout</strong></h2>
+                <p>Returning customer? <a href="shop-login.html">Click here to login.</a></p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-9">
+                <form action="<?php echo URL::action('ProductController@postDangKyWebsite'); ?>" method="POST">
+                    <div class="panel-group" id="accordion">   
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                        Thông tin đơn đặt hàng
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseOne" class="accordion-body">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div>
+                                                <div class="thumbnail">
+                                                    <img alt="" class="img-responsive" src="<?php echo Asset('timthumb.php'); ?>?src=<?php echo Asset($dataproductsingle->productUrlImage); ?>&w=447&h=447&zc=0&q=100">
+                                                </div>
+                                            </div> 
+                                        </div>
+
+                                        <div class="col-md-7">
+
+                                            <div class="portfolio-info">
+                                                <div class="row">
+                                                    <div class="col-md-12 center">
+                                                        <ul>
+                                                            <li>
+                                                                <i class="icon icon-calendar"></i><?php echo date('d F Y',$dataproductsingle->productTime); ?>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <h4><a href="<?php echo URL::action('ProductController@getChiTiet'); ?>/<?php echo $dataproductsingle->productSlug; ?>" ><?php echo $dataproductsingle->productName; ?></a></h4>
+                                            <p class="taller"></p>
+                                            <a href="<?php echo $dataproductsingle->productUrlDemo; ?>" class="btn btn-primary btn-icon"><i class="icon icon-external-link"></i>Dùng thử</a> <span class="arrow hlb" data-appear-animation="rotateInUpLeft" data-appear-animation-delay="800"></span>
+
+                                            <ul class="portfolio-details">
+                                                <li>
+                                                    <p><strong>Giá :</strong></p>
+                                                    <p><?php if($dataproductsingle->productPrice==0): ?> Miễn phí <?php else: ?> <?php echo number_format($dataproductsingle->productPrice,0); ?> vnđ <?php endif; ?></p>
+                                                </li>
+                                                <li>
+                                                    <p><strong>Skills:</strong></p>
+
+                                                    <ul class="list list-skills icons list-unstyled list-inline">
+                                                        <li><i class="icon icon-check-circle"></i> Thiết kế</li>
+                                                        <li><i class="icon icon-check-circle"></i> HTML5/CSS3</li>
+                                                        <li><i class="icon icon-check-circle"></i> Javascript</li>
+                                                        <br/>
+                                                        <li><i class="icon icon-check-circle"></i> Quản lý</li>
+                                                        <li><i class="icon icon-check-circle"></i> jQuery</li>
+                                                        <li><i class="icon icon-check-circle"></i> PHP</li>  
+                                                    </ul>
+                                                </li>
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                    <h4>Lựa chọn thêm</h4> 
+                                    <div class="col-md-12">
+                                        <div class="col-md-12">
+                                            <img  style="display: none;margin-bottom: 10px" class="center" id="ajaxloadimg" src="<?php echo Asset('fontendlib/img/ajax-loader.gif'); ?>"/>
+                                        </div>
+                                        <div class="alert" id="hienthongbao" style="display: none">
+                                            <strong>Thông báo !</strong> <span id="thongbao"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input  type="radio" name="domaintype" value="domain" onclick="chondomain()" >
+                                        <strong>Domain</strong>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="radio" name="domaintype" value="subdomain" onclick="chondubdomain()" checked="checked" >
+                                        <strong>Subdomain</strong>
+                                    </div>
+
+                                    <table cellspacing="0" class="cart-totals">
+                                        <tbody>
+                                            <tr class="cart-subtotal" id="domainlance" style="display: none">
+                                                <th>
+
+                                                    <strong>Domain</strong>
+                                                </th>
+                                                <td>
+                                                    <div class="col-md-6">
+                                                        <input type="text" value="" class="form-control" name="temmiencheck" id="temmiencheck" onkeypress="onchangge()" disabled>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <select name="duoitenmien" id="duoitenmien" disabled>
+                                                            <?php foreach($domainlist as $domain): ?>
+                                                            <option value="<?php echo $domain->extDomain; ?>" id="<?php echo $domain->extDomain; ?>"><?php echo $domain->extDomain; ?></option>
+                                                            <?php endforeach; ?>
+                                                        </select>
+
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input disabled  type="button" value="Kiểm tra" name="proceed" id="domainsubmit"  class="btn btn-lg btn-primary" onclick="kiemtratenmien()">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr class="shipping" id="subdomainlance">
+                                                <th>
+                                                    <strong>Subdomain</strong>
+                                                </th>
+                                                <td>
+                                                    <div class="col-md-6">
+                                                        <input type="text" name="subdomaininput" id="subdomaininput" value="" onkeypress="onchangge()" class="form-control">
+                                                    </div>
+                                                    <div class="col-md-4" style="line-height: 45px;">
+                                                        <strong>.PUBWEB.VN</strong>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input type="button" value="Kiểm tra" id="subdomaisubmit" name="proceed" class="btn btn-lg btn-primary" onclick="kiemsubtratenmien()">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="actions-continue">
+                        <input type="submit" value="Đăng ký" name="proceed" id="submitpocced" class="btn btn-lg btn-primary push-top" disabled="">
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-3">
+                <h4>Tổng đơn hàng</h4>
+                <table cellspacing="0" class="cart-totals">
+                    <tbody>
+                        <tr class="cart-subtotal">
+                            <th>
+                                <strong>Giao diện</strong>
+                            </th>
+                            <td>
+                                <strong><span class="amountweb"><?php if($dataproductsingle->productPrice==0): ?> Miễn phí <?php else: ?> <?php echo number_format($dataproductsingle->productPrice,0); ?>K VNĐ <?php endif; ?></span></strong>
+                            </td>
+                        </tr>
+                        <tr class="cart-subtotal">
+                            <th>
+                                <strong>Tên miền</strong>
+                            </th>
+                            <td>
+                                <strong><span class="domaincart">Miễn phí</span></strong>
+                            </td>
+                        </tr>
+                        <tr class="cart-subtotal">
+                            <th>
+                                <strong>Cài đặt</strong>
+                            </th>
+                            <td>
+                                <strong><span class="setupdomaincart">Miễn phí</span></strong>
+                            </td>
+                        </tr>
+                        <tr class="shipping">
+                            <th>
+                                Thuế
+                            </th>
+                            <td>
+                                0 VNĐ<input type="hidden" value="free_shipping" id="shipping_method" name="shipping_method">
+                            </td>
+                        </tr>
+                        <tr class="shipping">
+                            <th>
+                                Dung lượng
+                            </th>
+                            <td>
+                                <strong><span>200 MB</span></strong>
+                            </td>
+                        </tr>
+                        <tr class="shipping">
+                            <th>
+                                Băng thông
+                            </th>
+                            <td>
+                                <strong><span>Không giới hạn</span></strong>
+                            </td>
+                        </tr>
+                        <tr class="total">
+                            <th>
+                                <strong>Tổng tiền</strong>
+                            </th>
+                            <td>
+                                <strong><span class="amount"><?php if($dataproductsingle->productPrice==0): ?> Miễn phí <?php else: ?> <?php echo $dataproductsingle->productPrice; ?>K VNĐ <?php endif; ?></span></strong>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("fontend.hometemplate", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

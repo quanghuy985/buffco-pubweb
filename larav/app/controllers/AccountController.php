@@ -11,6 +11,13 @@ class AccountController extends Controller {
     public function getProfileView($check = '') {
         if (Session::has('userSession')) {
             $user = Session::get('userSession');
+            // get history by useremail
+//            $tblHistory = new tblHistoryModel();
+//            $objHis = $tblHistory->getHistoryById($user[0]->id);
+//            $link = $objHis->links();
+            
+            //get history order
+            
             return View::make('fontend.profile')->with('datauser', $user[0])->with('check', $check);
         } else {
             return View::make('fontend.login');
@@ -18,16 +25,12 @@ class AccountController extends Controller {
     }
 
     public function postProfile() {
-        if (Session::has('userSession')) {
-            $tblUsersModel = new tblUsersModel();
-            try {
-                $tblUsersModel->updateUser(Input::get('hEmail'), '', Input::get('fistName'), Input::get('lastName'), Input::get('address'), Input::get('phone'), Input::get('identify'), '', '');
-                return Redirect::action('AccountController@getProfileView', $check = '1');
-            } catch (Exception $ex) {
-                return Redirect::action('AccountController@getProfileView', $check = '2');
-            }
-        } else {
-            return View::make('fontend.login');
+        $tblUsersModel = new tblUsersModel();
+        try {
+            $tblUsersModel->updateUser(Input::get('hEmail'), '', Input::get('fistName'), Input::get('lastName'), Input::get('address'), Input::get('phone'), Input::get('identify'), '', '');
+            return Redirect::action('AccountController@getProfileView', $check = '1');
+        } catch (Exception $ex) {
+            return Redirect::action('AccountController@getProfileView', $check = '2');
         }
     }
 
@@ -46,34 +49,19 @@ class AccountController extends Controller {
             return View::make('fontend.login');
         }
     }
-
+    
     public function postAjaxHistory() {
-        if (Session::has('userSession')) {
-            $user = Session::get('userSession');
-            $tblHistory = new tblHistoryModel();
-            $objHis = $tblHistory->getHistoryById($user[0]->id);
-            $link = $objHis->links();
-            return View::make('fontend.historypage')->with('datahis', $objHis)->with('page', $link);
-        } else {
-            return View::make('fontend.login');
-        }
+          $user = Session::get('userSession');
+        $tblHistory = new tblHistoryModel();
+        $objHis = $tblHistory->getHistoryById($user[0]->id);
+        $link = $objHis->links();
+        return View::make('fontend.historypage')->with('datahis', $objHis)->with('page', $link);
     }
-
-    public function postAjaxOrder() {
-        if (Session::has('userSession')) {
-            $user = Session::get('userSession');
-            $tblOrder = new tblOrderModel();
-            $objHis = $tblOrder->getOrderByUserId($user[0]->id);
-            $link = $objHis->links();
-            return View::make('fontend.orderpage')->with('dataOrder', $objHis)->with('page', $link);
-        } else {
-            return View::make('fontend.login');
-        }
+ public function postAjaxOrder() {
+          $user = Session::get('userSession');
+        $tblOrder = new tblOrderModel();
+        $objHis = $tblOrder->getOrderByUserId($user[0]->id);
+        $link = $objHis->links();
+        return View::make('fontend.orderpage')->with('dataOrder', $objHis)->with('page', $link);
     }
-
-    public function getLogOut() {
-        Session::remove('userSession');
-        return View::make('fontend.login');
-    }
-
 }

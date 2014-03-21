@@ -4,44 +4,47 @@
         <div class="row">
             <div class="col-md-12">
                 <ul class="breadcrumb">
-                    <li><a href="index.html">Home</a></li>
-                    <li class="active">Pages</li>
+                    <li><a href="index.html">Trang chủ</a></li>
+                    <li class="active">Tài khoản</li>
                 </ul>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <h2>Login</h2>
+                <h2>Đăng nhập</h2>
             </div>
         </div>
     </div>
 </section>
 
 <div class="container">
-
     <div class="row">
         <div class="col-md-12">
-
             <div class="row featured-boxes login">
                 <div class="col-md-6">
                     <div class="featured-box featured-box-secundary default info-content">
                         <div class="box-content">
-                            <h4>I'm a Returning Customer</h4>
-                            <form action="" id="" type="post">
+                            <h4>Đăng nhập khách hàng</h4>
+                            <?php if(isset($messenge)): ?>
+                            <div class="alert alert-warning">
+                                <strong>Thông báo!</strong> <?php echo $messenge; ?>
+                            </div>
+                            <?php endif; ?>
+                            <form action="<?php echo URL::action('LoginController@postDangNhap'); ?>" id="loginfrom" method="post">
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-12">
-                                            <label>Username or E-mail Address</label>
-                                            <input type="text" value="" class="form-control">
+                                            <label>Tài khoản hoặc Email</label>
+                                            <input type="text" value="" name="userEmail" placeholder="Nhập Email" class="form-control">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-12">
-                                            <a class="pull-right" href="#">(Lost Password?)</a>
-                                            <label>Password</label>
-                                            <input type="password" value="" class="form-control">
+                                            <a class="pull-right" href="<?php echo URL::action('LoginController@getForgotPassword'); ?>">(Quên mật khẩu?)</a>
+                                            <label>Mật khẩu</label>
+                                            <input type="password" value="" name="userPassword" placeholder="Nhập mật khẩu" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -49,12 +52,12 @@
                                     <div class="col-md-6">
                                         <span class="remember-box checkbox">
                                             <label for="rememberme">
-                                                <input type="checkbox" id="rememberme" name="rememberme">Remember Me
+                                                <input type="checkbox" id="rememberme" name="rememberme">Nhớ đăng nhập
                                             </label>
                                         </span>
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="submit" value="Login" class="btn btn-primary pull-right push-bottom" data-loading-text="Loading...">
+                                        <input type="submit" value="Đăng nhập" class="btn btn-primary pull-right push-bottom" data-loading-text="Loading...">
                                     </div>
                                 </div>
                             </form>
@@ -66,7 +69,6 @@
 
         </div>
     </div>
-
 </div>
 
 <?php $__env->stopSection(); ?>

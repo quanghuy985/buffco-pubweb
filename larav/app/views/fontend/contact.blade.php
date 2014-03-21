@@ -41,28 +41,28 @@
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-6">
-                            <label>Họ và tên *</label>
-                            <input type="text" value=""  class="form-control" name="name" id="name">
+                            <label>Your name *</label>
+                            <input type="text" value="" data-msg-required="Please enter your name." maxlength="100" class="form-control" name="name" id="name">
                         </div>
                         <div class="col-md-6">
-                            <label>Email *</label>
-                            <input type="email" value="" class="form-control" name="email" id="email">
+                            <label>Your email address *</label>
+                            <input type="email" value="" data-msg-required="Please enter your email address." data-msg-email="Please enter a valid email address." maxlength="100" class="form-control" name="email" id="email">
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-12">
-                            <label>Tiêu đề</label>
-                            <input type="text" value="" class="form-control" name="subject" id="subject">
+                            <label>Subject</label>
+                            <input type="text" value="" data-msg-required="Please enter the subject." maxlength="100" class="form-control" name="subject" id="subject">
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-12">
-                            <label>Nội dung *</label>
-                            <textarea maxlength="5000"  rows="10" class="form-control" name="message" id="message"></textarea>
+                            <label>Message *</label>
+                            <textarea maxlength="5000" data-msg-required="Please enter your message." rows="10" class="form-control" name="message" id="message"></textarea>
                         </div>
                     </div>
                 </div>

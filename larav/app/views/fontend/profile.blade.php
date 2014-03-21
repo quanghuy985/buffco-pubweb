@@ -45,9 +45,6 @@
         });
         
     }
-     function divClick() {
-          jQuery('.ajaxloader').css('display', 'none');
-     }
     function divHistoryClick() {
         jQuery('#divtableOrder').empty();
         jQuery('.ajaxloader').css('display', 'block');
@@ -86,8 +83,8 @@
         <div class="col-md-12">
             <div class="tabs">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#profile" data-toggle="tab" onclick="setTimeout(divClick(), 5000)"><i class="icon icon-star"></i> Thông tin cá nhân</a></li>
-                    <li><a href="#ChargePass" data-toggle="tab" onclick="setTimeout(divClick(), 5000)">Đổi mật khẩu</a></li>
+                    <li class="active"><a href="#profile" data-toggle="tab"><i class="icon icon-star"></i> Thông tin cá nhân</a></li>
+                    <li><a href="#ChargePass" data-toggle="tab">Đổi mật khẩu</a></li>
                     <li><a href="#history" data-toggle="tab"  onclick="setTimeout(divHistoryClick(), 5000)">Lịch sử hoạt động</a></li>
                     <li><a href="#order" data-toggle="tab" onclick="setTimeout(divOrderClick(), 5000)">Đơn hàng đã đăng ký</a></li>
                 </ul>

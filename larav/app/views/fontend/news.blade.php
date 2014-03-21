@@ -24,31 +24,43 @@
         <div class="col-md-9">
             <div class="blog-posts">
 
+                <?php
+
+                function catch_that_image($post) {
+                    $first_img = '';
+                    $output = preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $post, $matches);
+
+
+                    if ($matches[1] == NULL || $matches[1] == '') {
+                        $first_img = Asset('') . "/fontendlib/img/defau.jpg";
+                    } else {
+                        $first_img = $matches[1][0];
+                    }
+                    if ($first_img == NULL || $first_img == '') {
+                        $first_img = Asset('') . "/fontendlib/img/defau.jpg";
+                    }
+                    return $first_img;
+                }
+                ?>
+                @foreach($datanews as $item) 
                 <article class="post post-medium">
                     <div class="row">
 
                         <div class="col-md-5">
-                            <div class="post-image">
-                                <div class="owl-carousel" data-plugin-options='{"items":1}'>
-                                    <div>
-                                        <div class="img-thumbnail">
-                                            <img class="img-responsive" src="{{Asset('fontendlib/img/blog/blog-image-1.jpg')}}" alt="">
-                                        </div>
+                            <div class="post-image"> 
+                                <div>
+                                    <div class="img-thumbnail">
+                                        <img title="{{$item->newsName}}" class="img-responsive" src="{{Asset('timthumb.php')}}?src={{catch_that_image($item->newsContent)}}&w=325&h=200&zc=0&q=100" alt="{{$item->newsName}}">
                                     </div>
-                                    <div>
-                                        <div class="img-thumbnail">
-                                            <img class="img-responsive" src="{{Asset('fontendlib/img/blog/blog-image-2.jpg')}}" alt="">
-                                        </div>
-                                    </div>
-                                </div>
+                                </div> 
                             </div>
                         </div>
                         <div class="col-md-7">
 
                             <div class="post-content">
 
-                                <h2><a href="blog-post.html">Class aptent taciti sociosqu ad litora torquent</a></h2>
-                                <p>Euismod atras vulputate iltricies etri elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nulla nunc dui, tristique in semper vel, congue sed ligula. Nam dolor ligula, faucibus id sodales in, auctor fringilla libero. Pellentesque pellentesque tempor tellus eget hendrerit. Morbi id aliquam ligula. Aliquam id dui sem. Proin rhoncus consequat nisl, eu ornare mauris tincidunt vitae. [...]</p>
+                                <h2><a href="{{URL::action('NewsController@getBaiViet')}}/{{$item->newsSlug}}">{{$item->newsName}}</a></h2>
+                                <p>{{str_limit($item->newsDescription, 250, ' [...]')}}</p>
 
                             </div>
                         </div>
@@ -57,23 +69,19 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="post-meta">
-                                <span><i class="icon icon-calendar"></i> January 10, 2013 </span>
-                                <span><i class="icon icon-user"></i> By <a href="#">John Doe</a> </span>
-                                <span><i class="icon icon-tag"></i> <a href="#">Duis</a>, <a href="#">News</a> </span>
-                                <span><i class="icon icon-comments"></i> <a href="#">12 Comments</a></span>
-                                <a href="blog-post.html" class="btn btn-xs btn-primary pull-right">Read more...</a>
+                                <span><i class="icon icon-calendar"></i>{{date(' F d , Y ',$item->newsTime)}}</span>
+                                <span><i class="icon icon-tag"></i>{{$item->newsTag}}</span>                     
+                                <a href="{{URL::action('NewsController@getBaiViet')}}/{{$item->newsSlug}}" class="btn btn-xs btn-primary pull-right">Chi tiết...</a>
                             </div>
                         </div>
                     </div>
 
                 </article>
-                <ul class="pagination pagination-lg pull-right">
-                    <li><a href="#">«</a></li>
-                    <li class="active"><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">»</a></li>
-                </ul>
+                @endforeach
+                @if($pargion!='')
+                {{$pargion}}
+                @endif
+
 
             </div>
         </div>

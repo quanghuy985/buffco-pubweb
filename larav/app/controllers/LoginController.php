@@ -98,11 +98,11 @@ class LoginController extends Controller {
         }
     }
 
-    public function getRegister() {
+    public function getDangKy() {
         return View::make('fontend.register');
     }
 
-    public function postRegister() {
+    public function postDangKy() {
         include_once 'securimage/securimage.php';
         $check = new Securimage();
         if ($check->check(Input::get('makiemtra')) == TRUE) {
