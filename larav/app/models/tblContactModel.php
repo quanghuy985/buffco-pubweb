@@ -10,7 +10,7 @@ class tblContactModel extends Eloquent {
         $this->feedbackUserName = $feedbackUserName;
         $this->feedbackSubject = $feedbackSubject;
         $this->feedbackContent = $feedbackContent;
-        $this->feedbackTime = date('Y-m-d H:i:s');     
+        $this->feedbackTime = time();     
         $this->status = 0;
         $this->save();
     }

@@ -17,8 +17,7 @@ class ContactController extends Controller{
               return View::make('fontend.contact')->with('susscess', '1');    
         } catch (Exception $ex) {
            return View::make('fontend.contact')->with('susscess','2');    
-        }
-      
+        }      
        
     }
 }

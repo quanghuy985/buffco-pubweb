@@ -10,12 +10,11 @@ class tblOrderModel extends Eloquent {
 
     protected $table = 'tblOrder';
     public $timestamps = false;
-
-    public function getOrderByUserID($userID) {
-        $arrayOrder = DB::table('tblOrder')->where('userID', '=', $userID)->where('status', '=', 1)->get();
-        return $arrayOrder;
-    }
-
+ 
+  public function getOrderByUserId($id) {
+        $obj = DB::table('tblorder')->where('userID', '=', $id)->paginate(3);
+        return $obj;
+        }
     public function getOrderByDomain($domain) {
         $objOrder = DB::table('tblOrder')->where('domain', '=', $domain)->get();
         return $objOrder;
