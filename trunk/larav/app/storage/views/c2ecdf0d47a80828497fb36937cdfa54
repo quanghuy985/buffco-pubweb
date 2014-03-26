@@ -1,6 +1,6 @@
 <script>
     function phantrang(page) {
-        jQuery('.ajaxloader').css('display', 'block');
+        jQuery('.loader-ajax').css('display', 'block');
         var request = jQuery.ajax({
             url: "<?php echo URL::action('AccountController@postAjaxOrder'); ?>?page=" + page,
             type: "POST",
@@ -8,7 +8,7 @@
         });
         request.done(function(msg) {
             jQuery('#order').html(msg);
-            jQuery('.ajaxloader').css('display', 'none');
+            jQuery('.loader-ajax').css('display', 'none');
         });
     }
 </script>
@@ -31,16 +31,16 @@
                 <th>
                     Ngày hết hạn
                 </th>    
-                <th>
+<!--                <th>
                     Trạng thái
-                </th>  
+                </th>  -->
             </tr>
         </thead>
         <tbody id="hisTable">   
             <?php
             $i = 1;
             if (Input::get('page') > 1) {
-                $i = 3 * Input::get('page') - 2;
+                $i = 10 * Input::get('page') - 9;
             }
             ?>
             <?php foreach($dataOrder as $item): ?>                                     
@@ -60,9 +60,9 @@
                 <td>
                     <?php echo $item->orderExp; ?>
                 </td>  
-                <td>
+<!--                <td>
                     <?php echo $item->status; ?>
-                </td>  
+                </td>  -->
                 <?php
                 $i++;
                 ?>
@@ -78,6 +78,6 @@
         </tbody>
     </table>
 </div>
-<div class="ajaxloader"  style="display: none;">
+<div class="loader-ajax"  style="display: none;">
 
 </div>
