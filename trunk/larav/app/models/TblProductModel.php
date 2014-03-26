@@ -25,4 +25,14 @@ class TblProductModel extends Eloquent {
         return $datacate;
     }
 
+    public function getMenuCategoryProduct() {
+        $datacate = DB::table('tblcategoryproduct')->where('cateParent', '=', 0)->where('status', '=', '1')->get();
+        return $datacate;
+    }
+
+    public function getMenuChildCategoryProduct() {
+        $datacate = DB::table('tblcategoryproduct')->where('cateParent', '!=', 0)->where('status', '=', '1')->get();
+        return $datacate;
+    }
+
 }
