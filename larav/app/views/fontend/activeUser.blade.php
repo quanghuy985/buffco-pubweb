@@ -1,5 +1,6 @@
 @extends("fontend.hometemplate")
 @section("contenthomepage")
+
 <section class="page-top">
     <div class="container">
         <div class="row">
@@ -17,16 +18,20 @@
         </div>
     </div>
 </section>
-@if(isset($thongbao))
-<div class="alert alert-warning" style="text-align: center;">
-    <strong>Thông báo !</strong> {{$thongbao}}.
-    <p>Bấm <a href="{{Asset('')}}"> vào đây </a> để trở lại trang chủ</p>
+<div class="container">
+    <div class="row">
+        @if(isset($thongbao))
+        <div class="alert alert-warning" style="text-align: center;">
+            <strong>Thông báo !</strong> {{$thongbao}}.
+            <p>Bấm <a href="{{Asset('')}}"> vào đây </a> để trở lại trang chủ</p>
+        </div>
+        @endif
+        @if(isset($chucmung))
+        <div class="alert alert-success">
+            <strong>Cảm ơn bạn đã quan tâm đến dịch vụ của chúng tôi!</strong> {{$chucmung}}.
+            <p>Bấm <a href="{{Asset('')}}"> vào đây </a> để trở lại trang chủ</p>
+        </div>
+        @endif
+    </div>
 </div>
-@endif
-@if(isset($chucmung))
-<div class="alert alert-success">
-    <strong>Cảm ơn bạn đã quan tâm đến dịch vụ của chúng tôi!</strong> {{$chucmung}}.
-    <p>Bấm <a href="{{Asset('')}}"> vào đây </a> để trở lại trang chủ</p>
-</div>
-@endif
 @endsection

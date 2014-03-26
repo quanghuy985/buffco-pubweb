@@ -34,7 +34,7 @@
     </div>
     @endif
     <div class="row featured-boxes" >
-        <form action="{{URL::action('ServicesController@postServicesSignup')}}" method="POST">
+        <form action="{{URL::action('ServicesController@postDangKyDichVu')}}" method="POST">
             <div class="col-md-2" style="height: 450px;"></div>
             <div class="col-md-4">
                 <div class="featured-box featured-box-tertiary" style="height: 450px !important;">

@@ -43,7 +43,7 @@ class NapTienController extends BaseController {
         }
     }
 
-    public function getThongTinThanhToan() {
+    public function getThongTinThanhToanNganLuong() {
         //Lấy thông tin giao dịch
         $transaction_info = Input::get("transaction_info");
         //Lấy mã đơn hàng 
@@ -60,11 +60,38 @@ class NapTienController extends BaseController {
         $secure_code = Input::get("secure_code");
         $nganluong = new CheckoutModel();
         $check = $nganluong->verifyPaymentUrl($transaction_info, $order_code, $price, $payment_id, $payment_type, $error_text, $secure_code);
-        if ($check) {
+        if (!$check) {
             return View::make('fontend.paypcoin3')->with('thongbao', "Quá trình thanh toán không thành công bạn vui lòng thực hiện lại");
         } else {
-            return View::make('fontend.paypcoin3')->with('thongbao', "Giao dịch không thành công");
+            if ($error_text == '') {
+                $tien = 0;
+                if ($price == 425000) {
+                    $tien = 500;
+                }
+                if ($price == 180000) {
+                    $tien = 200;
+                }
+                if ($price == 95000) {
+                    $tien = 100;
+                }
+                if ($price == 50000) {
+                    $tien = 50;
+                }
+                $user = Session::get('userSession');
+                $objUser = new tblUsersModel();
+                $check1 = $objUser->congPCash($order_code,$user[0]->userEmail, $user[0]->userPoint + $tien);
+                if ($check1 == true) {
+                    $objUser->updateStatusUsers();
+                    return View::make('fontend.paypcoin3')->with('thongbao', "Giao dịch thành công");
+                } else {
+                    return View::make('fontend.paypcoin3')->with('thongbao', "Quá trình thanh toán không thành công bạn vui lòng thực hiện lại");
+                }
+            }
         }
+    }
+
+    public function getThongTinThanhToanBaoKim() {
+        
     }
 
     function generateRandomString($length = 10) {
@@ -92,7 +119,7 @@ class NapTienController extends BaseController {
         }
         if (Input::get('hinhthucthanhtoan') == 'nganluong') {
             $nganluong = new CheckoutModel();
-            $return_url = URL::action('NapTienController@getThongTinThanhToan');
+            $return_url = URL::action('NapTienController@getThongTinThanhToanNganLuong');
             $transaction_info = 'Thanh toán nạp tiền vào tài khoản';
             $order_code = 'PUBWEB -' . $this->generateRandomString(4) . rand(10000000, 100000000);
 
@@ -107,9 +134,9 @@ class NapTienController extends BaseController {
             $shipping_fee = 0;
             $tax_fee = 0;
             $order_description = 'Thanh toán nạp tiền vào tài khoản';
-            $url_success = Asset('');
-            $url_cancel = Asset('');
-            $url_detail = Asset('');
+            $url_success = URL::action('NapTienController@getThongTinThanhToanNganLuong');
+            $url_cancel = URL::action('NapTienController@getThongTinThanhToanNganLuong');
+            $url_detail = URL::action('NapTienController@getThongTinThanhToanNganLuong');
             $url = $baokim->createRequestUrl($order_id, $total_amount, $shipping_fee, $tax_fee, $order_description, $url_success, $url_cancel, $url_detail);
             header('Location: ' . $url);
             exit();

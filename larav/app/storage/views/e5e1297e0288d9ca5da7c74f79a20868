@@ -13,7 +13,7 @@
                          data-y="180"
                          data-speed="300"
                          data-start="1000"
-                         data-easing="easeOutExpo"><img src="<?php echo Asset('fontendlib/img/slides/slide-title-border.png'); ?>" alt=""></div>
+                         data-easing="easeOutExpo"><img src="<?php echo Asset('fontendlib/img/slides/slide-title-border.png'); ?>" alt="Ảnh slide"></div>
 
                     <div class="tp-caption top-label lfl stl"
                          data-x="122"
@@ -27,7 +27,7 @@
                          data-y="180"
                          data-speed="300"
                          data-start="1000"
-                         data-easing="easeOutExpo"><img src="<?php echo Asset('fontendlib/img/slides/slide-title-border.png'); ?>" alt=""></div>
+                         data-easing="easeOutExpo"><img src="<?php echo Asset('fontendlib/img/slides/slide-title-border.png'); ?>" alt="Ảnh slide"></div>
 
                     <div class="tp-caption main-label sft stb"
                          data-x="30"
@@ -48,35 +48,35 @@
                          data-y="248"
                          data-speed="500"
                          data-start="2500"
-                         data-easing="easeOutBack"><img src="<?php echo Asset('fontendlib/img/slides/slide-concept-2-1.png'); ?>" alt=""></div>
+                         data-easing="easeOutBack"><img src="<?php echo Asset('fontendlib/img/slides/slide-concept-2-1.png'); ?>" alt="Ảnh slide"></div>
 
                     <div class="tp-caption sfb"
                          data-x="850"
                          data-y="200"
                          data-speed="400"
                          data-start="3000"
-                         data-easing="easeOutBack"><img src="<?php echo Asset('fontendlib/img/slides/slide-concept-2-2.png'); ?>" alt=""></div>
+                         data-easing="easeOutBack"><img src="<?php echo Asset('fontendlib/img/slides/slide-concept-2-2.png'); ?>" alt="Ảnh slide"></div>
 
                     <div class="tp-caption sfb"
                          data-x="820"
                          data-y="170"
                          data-speed="700"
                          data-start="3150"
-                         data-easing="easeOutBack"><img src="<?php echo Asset('fontendlib/img/slides/slide-concept-2-3.png'); ?>" alt=""></div>
+                         data-easing="easeOutBack"><img src="<?php echo Asset('fontendlib/img/slides/slide-concept-2-3.png'); ?>" alt="Ảnh slide"></div>
 
                     <div class="tp-caption sfb"
                          data-x="770"
                          data-y="130"
                          data-speed="1000"
                          data-start="3250"
-                         data-easing="easeOutBack"><img src="<?php echo Asset('fontendlib/img/slides/slide-concept-2-4.png'); ?>" alt=""></div>
+                         data-easing="easeOutBack"><img src="<?php echo Asset('fontendlib/img/slides/slide-concept-2-4.png'); ?>" alt="Ảnh slide"></div>
 
                     <div class="tp-caption sfb"
                          data-x="500"
                          data-y="80"
                          data-speed="600"
                          data-start="3450"
-                         data-easing="easeOutExpo"><img src="<?php echo Asset('fontendlib/img/slides/slide-concept-2-5.png'); ?>" alt=""></div>
+                         data-easing="easeOutExpo"><img src="<?php echo Asset('fontendlib/img/slides/slide-concept-2-5.png'); ?>" alt="Ảnh slide"></div>
 
                     <div class="tp-caption blackboard-text lfb "
                          data-x="530"
@@ -108,7 +108,7 @@
                          data-y="100"
                          data-speed="1500"
                          data-start="500"
-                         data-easing="easeOutExpo"><img src="<?php echo Asset('fontendlib/img/slides/slide-concept.png'); ?>" alt=""></div>
+                         data-easing="easeOutExpo"><img src="<?php echo Asset('fontendlib/img/slides/slide-concept.png'); ?>" alt="Ảnh slide"></div>
 
                     <div class="tp-caption blackboard-text fade "
                          data-x="180"
@@ -179,12 +179,12 @@
                             </span>
                         </span>
                     </strong>
-                     với sự phát triển của bạn.
+                    với sự phát triển của bạn.
                 </h2>
                 <p class="featured lead">
                     Chúng tôi mang tới một khái niệm mới về website thương mại điện tử. Ngày xưa khi nghĩ đến thương mại điện tử nhiều
-									người nghĩ đến sự đầu tư tốn kém , khó sử dụng , nay với phương châm "khách hàng là bạn đồng hành" chúng tôi
-									mang tới cho các bạn dịch vụ tốt nhất , nhanh nhất , dễ sử dụng nhất và đặc biệt giá rẻ nhất.
+                    người nghĩ đến sự đầu tư tốn kém , khó sử dụng , nay với phương châm "khách hàng là bạn đồng hành" chúng tôi
+                    mang tới cho các bạn dịch vụ tốt nhất , nhanh nhất , dễ sử dụng nhất và đặc biệt giá rẻ nhất.
                 </p>
             </div>
         </div>
@@ -350,74 +350,62 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="recent-posts push-bottom">
-                            <h2>Latest <strong>Blog</strong> Posts</h2>
+                            <h2>Tin tức <strong>mới</strong> nhất</h2>
                             <div class="row">
                                 <div class="owl-carousel" data-plugin-options='{"items": 1, "autoHeight": true}'>
                                     <div>
+                                        <?php $biendem = 0; ?>
+                                        <?php foreach($baiviet as $item): ?>
+                                        <?php $biendem ++; ?>
+                                        <?php if($biendem==1 || $biendem==2): ?>
                                         <div class="col-md-6">
                                             <article>
                                                 <div class="date">
-                                                    <span class="day">15</span>
-                                                    <span class="month">Jan</span>
+                                                    <span class="day"><?php echo date('d',$item->newsTime); ?></span>
+                                                    <span class="month"><?php echo date('M',$item->newsTime); ?></span>
                                                 </div>
-                                                <h4><a href="blog-post.html">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</a></h4>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec hendrerit vehicula est, in consequat libero. <a href="../../default.htm" class="read-more">read more <i class="icon icon-angle-right"></i></a></p>
+                                                <h4><a href="<?php echo URL::action('NewsController@getBaiViet'); ?>/<?php echo $item->newsSlug; ?>"><?php echo $item->newsName; ?></a></h4>
+                                                <p><?php echo str_limit($item->newsDescription,150,' ...'); ?><a href="<?php echo URL::action('NewsController@getBaiViet'); ?>/<?php echo $item->newsSlug; ?>" class="read-more">đọc tiếp <i class="icon icon-angle-right"></i></a></p>
                                             </article>
                                         </div>
-                                        <div class="col-md-6">
-                                            <article>
-                                                <div class="date">
-                                                    <span class="day">15</span>
-                                                    <span class="month">Jan</span>
-                                                </div>
-                                                <h4><a href="blog-post.html">Lorem ipsum dolor</a></h4>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec hendrerit vehicula est, in consequat. <a href="../../default.htm" class="read-more">read more <i class="icon icon-angle-right"></i></a></p>
-                                            </article>
-                                        </div>
+                                        <?php endif; ?>
+                                        <?php endforeach; ?>   
                                     </div>
                                     <div>
+                                        <?php $biendem = 0; ?>
+                                        <?php foreach($baiviet as $item): ?>
+                                        <?php $biendem ++; ?>
+                                        <?php if($biendem==3 || $biendem==4): ?>
                                         <div class="col-md-6">
                                             <article>
                                                 <div class="date">
-                                                    <span class="day">12</span>
-                                                    <span class="month">Jan</span>
+                                                    <span class="day"><?php echo date('d',$item->newsTime); ?></span>
+                                                    <span class="month"><?php echo date('M',$item->newsTime); ?></span>
                                                 </div>
-                                                <h4><a href="blog-post.html">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</a></h4>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec hendrerit vehicula est, in consequat libero. <a href="../../default.htm" class="read-more">read more <i class="icon icon-angle-right"></i></a></p>
+                                                <h4><a href="<?php echo URL::action('NewsController@getBaiViet'); ?>/<?php echo $item->newsSlug; ?>"><?php echo $item->newsName; ?></a></h4>
+                                                <p><?php echo str_limit($item->newsDescription,150,' ...'); ?><a href="<?php echo URL::action('NewsController@getBaiViet'); ?>/<?php echo $item->newsSlug; ?>" class="read-more">đọc tiếp <i class="icon icon-angle-right"></i></a></p>
                                             </article>
                                         </div>
-                                        <div class="col-md-6">
-                                            <article>
-                                                <div class="date">
-                                                    <span class="day">11</span>
-                                                    <span class="month">Jan</span>
-                                                </div>
-                                                <h4><a href="blog-post.html">Lorem ipsum dolor</a></h4>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <a href="../../default.htm" class="read-more">read more <i class="icon icon-angle-right"></i></a></p>
-                                            </article>
-                                        </div>
+                                        <?php endif; ?>
+                                        <?php endforeach; ?>   
                                     </div>
-                                    <div>
+                                   <div>
+                                        <?php $biendem = 0; ?>
+                                        <?php foreach($baiviet as $item): ?>
+                                        <?php $biendem ++; ?>
+                                        <?php if($biendem==5 || $biendem==6): ?>
                                         <div class="col-md-6">
                                             <article>
                                                 <div class="date">
-                                                    <span class="day">15</span>
-                                                    <span class="month">Jan</span>
+                                                    <span class="day"><?php echo date('d',$item->newsTime); ?></span>
+                                                    <span class="month"><?php echo date('M',$item->newsTime); ?></span>
                                                 </div>
-                                                <h4><a href="blog-post.html">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</a></h4>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec hendrerit vehicula est, in consequat libero. <a href="../../default.htm" class="read-more">read more <i class="icon icon-angle-right"></i></a></p>
+                                                <h4><a href="<?php echo URL::action('NewsController@getBaiViet'); ?>/<?php echo $item->newsSlug; ?>"><?php echo $item->newsName; ?></a></h4>
+                                                <p><?php echo str_limit($item->newsDescription,150,' ...'); ?><a href="<?php echo URL::action('NewsController@getBaiViet'); ?>/<?php echo $item->newsSlug; ?>" class="read-more">đọc tiếp <i class="icon icon-angle-right"></i></a></p>
                                             </article>
                                         </div>
-                                        <div class="col-md-6">
-                                            <article>
-                                                <div class="date">
-                                                    <span class="day">15</span>
-                                                    <span class="month">Jan</span>
-                                                </div>
-                                                <h4><a href="blog-post.html">Lorem ipsum dolor</a></h4>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec hendrerit vehicula est, in consequat. <a href="../../default.htm" class="read-more">read more <i class="icon icon-angle-right"></i></a></p>
-                                            </article>
-                                        </div>
+                                        <?php endif; ?>
+                                        <?php endforeach; ?>   
                                     </div>
                                 </div>
                             </div>

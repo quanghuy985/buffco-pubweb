@@ -112,7 +112,7 @@
                                                     <div class="col-md-3">
                                                         <ul class="sub-menu">
                                                             <li>
-                                                                <span class="mega-menu-sub-title">{{$item->cateName}}</span>                                                 
+                                                                <a href="{{URL::action('ProductController@getChuyenMuc')}}/{{$item->cateSlug}}"><span class="mega-menu-sub-title">{{$item->cateName}}</span>   </a>                                              
                                                                 @if(isset($menuchild))
                                                                 <ul class="sub-menu">
                                                                     @foreach($menuchild as $item1)
@@ -132,7 +132,7 @@
                                     </ul>
                                 </li>
                                 <li class="">
-                                    <a href="#">
+                                    <a href="{{URL::action('ServicesController@getDichVu')}}">
                                         Dịch vụ
                                     </a>
                                 </li>
@@ -166,17 +166,18 @@
                                     </ul>
                                 </li>
                                 <li>
-                                    <a  href="{{URL::action('PageController@getPageView')}}/4">
+                                    <a  href="#">
                                         Giới thiệu                              
                                     </a>
+
                                 </li>
-                                <li>
-                                    <a href="{{URL::action('ContactController@getContactView')}}">
+                                <li >
+                                    <a href="#">
                                         Liên hệ         
                                     </a>
 
                                 </li>
-                                 @if(!Session::has('userSession'))
+                                @if(!Session::has('userSession'))
                                 <li><a href="{{URL::action('LoginController@getDangNhap')}}">Đăng nhập</a></li>                                    
                                 @endif
                                 @if(Session::has('userSession'))
@@ -185,7 +186,7 @@
                                 ?>
                                 <li class="dropdown mega-menu-item mega-menu-signin signin logged" id="headerAccount">
                                     <a class="dropdown-toggle" href="javascript:void(0);">
-                                        <i class="icon icon-user"> {{ str_limit($user[0]->userLastName,15,'...')}}</i>
+                                        <i class="icon icon-user"> Xin chào, {{ str_limit($user[0]->userLastName,15,'...')}}</i>
                                         <i class="icon icon-angle-down"></i>
                                     </a>
                                     <ul class="dropdown-menu">
@@ -207,121 +208,7 @@
                                         </li>
                                     </ul>
                                 </li>
-                                 @endif
-<!--                                <li class="dropdown mega-menu-item mega-menu-signin signin" id="headerAccount">
-                                    <a class="dropdown-toggle" href="page-login.html">
-                                        <i class="icon icon-user"></i> Sign In
-                                        <i class="icon icon-angle-down"></i>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <div class="mega-menu-content">
-                                                <div class="row">
-                                                    <div class="col-md-12">
-
-                                                        <div class="signin-form">
-
-                                                            <span class="mega-menu-sub-title">Đăng nhập</span>
-
-                                                            <form action="" id="" type="post">
-                                                                <div class="row">
-                                                                    <div class="form-group">
-                                                                        <div class="col-md-12">
-                                                                            <label>Username or E-mail Address</label>
-                                                                            <input type="text" value="" class="form-control">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="form-group">
-                                                                        <div class="col-md-12">
-                                                                            <a class="pull-right" id="headerRecover" href="#">(Lost Password?)</a>
-                                                                            <label>Password</label>
-                                                                            <input type="password" value="" class="form-control">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-md-6">
-                                                                        <span class="remember-box checkbox">
-                                                                            <label for="rememberme">
-                                                                                <input type="checkbox" id="rememberme" name="rememberme">Remember Me
-                                                                            </label>
-                                                                        </span>
-                                                                    </div>
-                                                                    <div class="col-md-6">
-                                                                        <input type="submit" value="Login" class="btn btn-primary pull-right push-bottom" data-loading-text="Loading...">
-                                                                    </div>
-                                                                </div>
-                                                            </form>
-
-                                                            <p class="sign-up-info">Don't have an account yet? <a href="#" id="headerSignUp">Sign Up!</a></p>
-
-                                                        </div>
-
-                                                        <div class="signup-form">
-                                                            <span class="mega-menu-sub-title">Create Account</span>
-
-                                                            <form action="" id="" type="post">
-                                                                <div class="row">
-                                                                    <div class="form-group">
-                                                                        <div class="col-md-12">
-                                                                            <label>E-mail Address</label>
-                                                                            <input type="text" value="" class="form-control">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="form-group">
-                                                                        <div class="col-md-6">
-                                                                            <label>Password</label>
-                                                                            <input type="password" value="" class="form-control">
-                                                                        </div>
-                                                                        <div class="col-md-6">
-                                                                            <label>Re-enter Password</label>
-                                                                            <input type="password" value="" class="form-control">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-md-12">
-                                                                        <input type="submit" value="Create Account" class="btn btn-primary pull-right push-bottom" data-loading-text="Loading...">
-                                                                    </div>
-                                                                </div>
-                                                            </form>
-
-                                                            <p class="log-in-info">Already have an account? <a href="#" id="headerSignIn">Log In!</a></p>
-                                                        </div>
-
-                                                        <div class="recover-form">
-                                                            <span class="mega-menu-sub-title">Reset My Password</span>
-                                                            <p>Complete the form below to receive an email with the authorization code needed to reset your password.</p>
-
-                                                            <form action="" id="" type="post">
-                                                                <div class="row">
-                                                                    <div class="form-group">
-                                                                        <div class="col-md-12">
-                                                                            <label>E-mail Address</label>
-                                                                            <input type="text" value="" class="form-control">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-md-12">
-                                                                        <input type="submit" value="Submit" class="btn btn-primary pull-right push-bottom" data-loading-text="Loading...">
-                                                                    </div>
-                                                                </div>
-                                                            </form>
-
-                                                            <p class="log-in-info">Already have an account? <a href="#" id="headerRecoverCancel">Log In!</a></p>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </li>-->
+                                @endif
                             </ul>
                         </nav>
                     </div>
@@ -400,9 +287,10 @@
                             <div class="col-md-4">
                                 <nav id="sub-menu">
                                     <ul>
-                                        <li><a href="page-faq.html">FAQ's</a></li>
-                                        <li><a href="sitemap.html">Sitemap</a></li>
-                                        <li><a href="contact-us.html">Contact</a></li>
+                                        <li><a href="{{URL::action('PageContronller@getCauHoiThuongGap')}}">FAQ's</a></li>
+                                        <li><a href="{{URL::action('PageContronller@getBaoMat')}}">Bảo mật</a></li>
+                                        <li><a href="{{URL::action('PageContronller@getThoaThuanNguoiDung')}}">Thỏa thuận người dùng</a></li>
+                                        <li><a href="{{URL::action('PageContronller@getThoaThuanNguoiDung')}}">Sitemap</a></li>
                                     </ul>
                                 </nav>
                             </div>

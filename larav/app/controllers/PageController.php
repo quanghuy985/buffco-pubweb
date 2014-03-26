@@ -6,11 +6,12 @@
  * and open the template in the editor.
  */
 
-class PageController extends Controller {
+class PageController extends BaseController {
 
     public function getPageView($id = '') {
         $tblPageModel = new tblPageModel();
         $datapage = $tblPageModel->getPageById($id);
+
         return View::make('fontend.pageclient')->with('datapage', $datapage);
     }
 
