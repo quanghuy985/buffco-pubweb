@@ -12,7 +12,7 @@ class tblHistoryModel extends Eloquent {
     public $timestamps = false;
 
     public function getHistoryById($id) {
-        $obj = DB::table('tblhistory')->where('userID', '=', $id)->paginate(3);
+        $obj = DB::table('tblhistory')->where('userID', '=', $id)->paginate(10);
         return $obj;
     }
 
