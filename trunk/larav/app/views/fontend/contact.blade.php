@@ -1,37 +1,65 @@
 @extends("fontend.hometemplate")
 @section("contenthomepage")
+<script>    
+    function checkValid() {
+        var $form = $('#frmChangePassword');
+        if (!$form.valid())
+            return false;
+    }
+</script>
+<section class="page-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumb">
+                    <li><a href="index.html">Trang chủ</a></li>
+                    <li class="active">Liên hệ</li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Contact Us</h2>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Google Maps -->
+<div id="googlemaps" class="google-map hidden-xs">
+    <iframe width="100%" height="400px" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=d&amp;source=s_d&amp;saddr=20.994658,105.855006&amp;daddr=&amp;hl=vi&amp;geocode=&amp;sll=20.993977,105.857842&amp;sspn=0.01192,0.021136&amp;mra=mift&amp;mrsp=0&amp;sz=16&amp;ie=UTF8&amp;ll=20.994603,105.855187&amp;spn=0.01192,0.021136&amp;t=m&amp;output=embed"></iframe>
+</div>
+
 <div class="container">   
     <div class="row">
         <div class="col-md-6">
             @if($susscess == '1' )
             <div class="alert alert-success" id="contactSuccess">
-                <strong>Success!</strong> Your message has been sent to us.
+                <strong>Thành công!</strong> Câu hỏi của bạn đã được gủi đi.
             </div>
             @endif
             @if($susscess == '2' )
             <div class="alert alert-danger " id="contactError">
-                <strong>Error!</strong> There was an error sending your message.
+                <strong>Lỗi!</strong> Câu hỏi của bạn chưa được gủi đi, vui lòng kiểm tra lại các trường thông tin.
             </div>
-            @endif
-            <h2 class="short"><strong>Contact</strong> Us</h2>
+            @endif            
             <form id="contactForm" method="post" action="{{URL::action('ContactController@postContact')}}" >
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-6">
                             <label>Họ và tên *</label>
-                            <input type="text" value="" data-msg-required="Please enter your name." maxlength="100" class="form-control" name="name" id="name">
+                            <input type="text" value="" class="form-control" name="name" id="name">
                         </div>
                         <div class="col-md-6">
                             <label>Email *</label>
-                            <input type="email" value="" data-msg-required="Please enter your email address." data-msg-email="Please enter a valid email address." maxlength="100" class="form-control" name="email" id="email">
+                            <input type="email" value=""  class="form-control" name="email" id="email">
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-12">
-                            <label>Tiêu đề</label>
-                            <input type="text" value="" data-msg-required="Please enter the subject." maxlength="100" class="form-control" name="subject" id="subject">
+                            <label>Tiêu đề *</label>
+                            <input type="text" value=""  class="form-control" name="subject" id="subject">
                         </div>
                     </div>
                 </div>
@@ -39,13 +67,13 @@
                     <div class="form-group">
                         <div class="col-md-12">
                             <label>Nội dung *</label>
-                            <textarea maxlength="5000" data-msg-required="Please enter your message." rows="10" class="form-control" name="message" id="message"></textarea>
+                            <textarea maxlength="5000"  rows="10" class="form-control" name="message" id="message"></textarea>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <input type="submit" value="Send Message" class="btn btn-primary btn-lg" data-loading-text="Loading...">
+                        <input type="submit" value="Gủi" onclick="" class="btn btn-primary btn-lg" data-loading-text="Loading...">
                     </div>
                 </div>
             </form>
