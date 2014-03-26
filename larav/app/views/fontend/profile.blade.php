@@ -20,11 +20,11 @@
     }
 </style>
 <script>
-    function changePass() {        
-       var $form = $('#frmChangePassword');
-       if(!$form.valid())
-           return false;
-       jQuery('.loader-ajax').css('display', 'block');
+    function changePass() {
+        var $form = $('#frmChangePassword');
+        if (!$form.valid())
+            return false;
+        jQuery('.loader-ajax').css('display', 'block');
         var request = jQuery.ajax({
             url: "{{URL::action('AccountController@postChangePassWord')}}",
             type: "POST",
@@ -43,7 +43,7 @@
                 jQuery('#changePassSuccess').removeClass('alert-success').addClass('alert-danger').css('display', 'block').html("Thay đổi mật khẩu không thành công!");
             }
         });
-        
+
     }
     function divHistoryClick() {
         jQuery('#divtableOrder').empty();
@@ -69,24 +69,57 @@
             jQuery('#order').html(msg);
         });
     }
-    function updateInfo(){
-          var $form = $('#frmProfile');
-       if(!$form.valid())
-           return false;
-         jQuery('.loader-ajax').css('display', 'block');
+       function divOrderServicesClick() {
+        jQuery('#divtableOrderServices').empty();
+        jQuery('.loader-ajax').css('display', 'block');
+        var request = jQuery.ajax({
+            url: "{{URL::action('AccountController@postAjaxOrderServices')}}",
+            type: "POST",
+            dataType: "html"
+        });
+        request.done(function(msg) {
+            jQuery('#orderServices').html(msg);
+        });
+    }
+    function updateInfo() {
+        var $form = $('#frmProfile');
+        if (!$form.valid())
+            return false;
+        jQuery('.loader-ajax').css('display', 'block');
+    }
+    function divClick() {
+        jQuery('.loader-ajax').css('display', 'none');
     }
 </script>
-<hr class="tall">
+<section class="page-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumb">
+                    <li><a href="{{Asset('')}}">Trang chủ</a></li>
+                    <li class="active">Thông tin cá nhân</li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Thông tin cá nhân</h2>
+            </div>
+        </div>
+    </div>
+</section>
+
 <div class="container">
 
     <div class="row">   
         <div class="col-md-12">
             <div class="tabs">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#profile" data-toggle="tab"><i class="icon icon-star"></i> Thông tin cá nhân</a></li>
-                    <li><a href="#ChargePass" data-toggle="tab">Đổi mật khẩu</a></li>
+                    <li class="active"><a href="#profile" data-toggle="tab" onclick="setTimeout(divClick(), 1000)"><i class="icon icon-star"></i> Thông tin cá nhân</a></li>
+                    <li><a href="#ChargePass" data-toggle="tab" onclick="setTimeout(divClick(), 1000)">Đổi mật khẩu</a></li>
                     <li><a href="#history" data-toggle="tab"  onclick="setTimeout(divHistoryClick(), 5000)">Lịch sử hoạt động</a></li>
                     <li><a href="#order" data-toggle="tab" onclick="setTimeout(divOrderClick(), 5000)">Đơn hàng đã đăng ký</a></li>
+                    <li><a href="#orderServices" data-toggle="tab" onclick="setTimeout(divOrderServicesClick(), 5000)">Gói dich vụ đã đăng ký</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="profile">
@@ -101,9 +134,9 @@
                         </div>
                         @endif
                         <form id="frmProfile" method="post" action="{{URL::action('AccountController@postProfile')}}" >
-                              <div class="loader-ajax"  style="display: none;background-position-x: 19% !important;background-position-y: 218px !important;">
+                            <div class="loader-ajax"  style="display: none;background-position-x: 19% !important;background-position-y: 218px !important;">
 
-                        </div>
+                            </div>
                             <ul class="simple-post-list">    
                                 <li>
                                     <input type="hidden" id="hId" name="hId" value="{{$datauser->id}}">
@@ -168,9 +201,9 @@
                             Đổi mật khẩu thành công!
                         </div>
                         <form action="{{URL::action('AccountController@postChangePassWord')}}" id="frmChangePassword" method="post">
-                          <div class="loader-ajax"  style="display: none;background-position-x: 19% !important;background-position-y: 102px !important;">
+                            <div class="loader-ajax"  style="display: none;background-position-x: 19% !important;background-position-y: 102px !important;">
 
-                        </div>
+                            </div>
                             <ul class="simple-post-list">
                                 <li>
                                     <div class="post-image">                                   
@@ -210,6 +243,10 @@
                         </div>
                     </div>
                     <div class="tab-pane" id="order">
+                        <div class="loader-ajax"  style="display: block;">
+                        </div>
+                    </div>
+                     <div class="tab-pane" id="orderServices">
                         <div class="loader-ajax"  style="display: block;">
                         </div>
                     </div>

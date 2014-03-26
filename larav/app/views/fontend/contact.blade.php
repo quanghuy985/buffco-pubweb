@@ -12,14 +12,14 @@
         <div class="row">
             <div class="col-md-12">
                 <ul class="breadcrumb">
-                    <li><a href="index.html">Trang chủ</a></li>
+                  <li><a href="{{Asset('')}}">Trang chủ</a></li>
                     <li class="active">Liên hệ</li>
                 </ul>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <h2>Contact Us</h2>
+                <h2>Liên hệ</h2>
             </div>
         </div>
     </div>
