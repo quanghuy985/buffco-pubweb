@@ -3,7 +3,7 @@ jQuery(document).ready(function(){
 		jQuery('#overviewselect, input:checkbox').uniform();
 		
 		///// DATE PICKER /////
-		jQuery( "#datepickfrom, #datepickto" ).datepicker();
+		
 		
 		///// SLIM SCROLL /////
 		jQuery('#scroll1').slimscroll({

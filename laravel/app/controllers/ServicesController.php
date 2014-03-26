@@ -41,9 +41,10 @@ class ServicesController extends BaseController {
         );
         $objServices = new TblServicesModel();
         if (!Validator::make(Input::all(), $rules)->fails()) {
-
             $objServices->insertServices(Input::get('servicesname'), Input::get('servicesconent'), Input::get('servicesprice'), Input::get('servicesprom'), Input::get('servicesslug'));
             return Redirect::action('ServicesController@getServices', array('thongbao' => 'Thêm mới thành công .'));
+        } else {
+            return Redirect::action('ServicesController@getServices', array('thongbao' => 'Thêm mới không thành công. Bạn vui lòng nhập lại thông tin'));
         }
     }
 
@@ -58,6 +59,13 @@ class ServicesController extends BaseController {
 
             $objServices->updateServices(Input::get('idservices'), Input::get('servicesname'), Input::get('servicesconent'), Input::get('servicesprice'), Input::get('servicesprom'), Input::get('servicesslug'), Input::get('status'));
             return Redirect::action('ServicesController@getServices', array('thongbao' => 'Cập nhật thành công .'));
+        }
+        else {
+         $objGsp = new TblServicesModel();
+        $data = $objGsp->AllSServices(10);
+        $link = $data->links();
+        $dataedit = $objGsp->SelectServicesById(Input::get('idservices'));
+        return View::make('backend.servicesmanager')->with('datasevicesedit', $dataedit)->with('datasevices', $data)->with('page', $link)->with('thongbao','Cập nhật không thành công. Bạn vui lòng kiểm tra lại thông tin');
         }
     }
 

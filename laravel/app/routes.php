@@ -12,12 +12,12 @@
  */
 Route::get('/', function () {
 
-    return View::make('backend.viewproduct');
+    return View::make('backend.index');
 });
 //adminlogin
 Route::get('administrator', 'AdminController@getDangNhap');
 Route::filter('checklofinadmin', function() {
-    if (!Session::has('userlogined')) {
+    if (Session::has('userlogined')) {
         return Redirect::action('AdminController@getDangNhap');
     }
 });
@@ -36,6 +36,7 @@ Route::group(array('before' => 'checklofinadmin'), function() {
     Route::controller('support', 'SupporterController');
     Route::controller('supportgroup', 'SupporterGroupController');
     Route::controller('menu', 'MenuController');
+    Route::controller('statistic', 'StatisticController');
 });
 
 Route::controller('/administrator', 'AdminController');

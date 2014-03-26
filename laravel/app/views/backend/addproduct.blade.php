@@ -68,7 +68,8 @@
             <p>
                 <label>Chi tiết sản phẩm</label>
                 <span class="field">
-                    <textarea class="ckeditor" rows="5" name="productdes" placeholder="Nhập chi tiết sản phẩm">@if(isset($dataedit)){{$dataedit->productDescription}}@endif</textarea>
+                    <textarea class="ckeditor" id="xxx" rows="5" name="productdes" placeholder="Nhập chi tiết sản phẩm">@if(isset($dataedit)){{$dataedit->productDescription}}@endif</textarea>
+                  
                 </span>
             </p>
 

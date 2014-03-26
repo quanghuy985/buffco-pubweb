@@ -72,7 +72,8 @@ class ProductController extends BaseController {
                 $objproduct->updateProduct(Input::get('idpro'), Input::get('categoryproduct'), Input::get('productname'), '', Input::get('productdes'), Input::get('productprice'), Input::get('productprom'), Input::get('producturldemo'), Input::get('productslug'), Input::get('productversion'), time(), Input::get('status'));
                 $objCateproduct = new TblCategoryProductModel();
                 $data = $objCateproduct->all();
-                return View::make('backend.addproduct')->with('catproduct', $data)->with('dataedit', $datap)->with('thongbao', 'Sản phẩm của bạn đã được cập nhật .');
+                 $dataAfter = $objproduct->SelectProductById(Input::get('idpro'));
+                return View::make('backend.addproduct')->with('catproduct', $data)->with('dataedit', $dataAfter)->with('thongbao', 'Sản phẩm của bạn đã được cập nhật .');
             } else {
                 $checkup = $upload->postUpload(Input::file('fileupload'));
                 if ($checkup == FALSE) {

@@ -12,10 +12,11 @@
         <script type="text/javascript" src="{{Asset('adminlib2/js/plugins/jquery.uniform.min.js')}}"></script>
         <script type="text/javascript" src="{{Asset('adminlib2/js/custom/general.js')}}"></script>
         <script type="text/javascript" src="{{Asset('adminlib2/js/plugins/jquery.dataTables.min.js')}}"></script>
-        <script type="text/javascript" src="{{Asset('adminlib2/js/custom/tables.js')}}"></script>
+        <script type="text/javascript" src="{{Asset('adminlib2/js/custom/tables.js')}}"></script>      
         <script type="text/javascript" src="{{Asset('adminlib2/js/plugins/jquery.alerts.js')}}"></script>
         <script type="text/javascript" src="{{Asset('adminlib/ckeditor/ckeditor.js')}}"></script>
         <script type="text/javascript" src="{{Asset('adminlib/ckeditor/config.js')}}"></script>
+        <script type="text/javascript" src="{{Asset('adminlib/ckfinder/ckfinder.js')}}"></script>         
         <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/plugins/excanvas.min.js"></script><![endif]-->
         <!--[if IE 9]>
             <link rel="stylesheet" media="screen" href="css/style.ie9.css"/>
@@ -133,6 +134,13 @@
                     </li>
 
                     <li><a href="{{URL::action('MenuController@getMenuView')}}" class="error">thanh menu</a>
+                    </li>
+                       <li><a href="#Statistic" class="tables">Thống kê</a>
+                        <span class="arrow"></span>
+                        <ul id="Statistic">
+                            <li><a href="{{URL::action('StatisticController@getUserView')}}">Người dùng</a></li>
+                            <li><a href="{{URL::action('StatisticController@getProductView')}}">Sản phẩm</a></li>
+                        </ul>
                     </li>
                     <li><a href="{{URL::action('AdminController@getAdminView')}}" class="addons">Admin</a>
 
