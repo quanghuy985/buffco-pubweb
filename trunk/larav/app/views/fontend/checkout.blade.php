@@ -15,7 +15,7 @@
                 jQuery('#hienthongbao').addClass('alert-warning');
                 jQuery('.domaincart').html("Miễn Phí");
                 jQuery('.setupdomaincart').html("Miễn Phí");
-                jQuery('.amount').html(parseInt('{{$dataproductsingle->productPrice}}') + "K VNĐ");
+                jQuery('.amount').html(parseInt('{{$dataproductsingle->productPrice}}') + " Pcash");
                 jQuery('#thongbao').html('Tên miền không đúng hoặc đã được đăng ký');
                 jQuery('#ajaxloadimg').css('display', 'none');
                 jQuery('#submitpocced').attr('disabled', 'disabled');
@@ -24,9 +24,9 @@
                 jQuery('#hienthongbao').removeClass('alert-warning');
                 jQuery('#hienthongbao').addClass('alert-success');
                 jQuery('#thongbao').html('Tên miền <strong>' + jQuery('#temmiencheck').val() + '.' + getData.extDomain + '</strong> có thể đăng ký');
-                jQuery('.domaincart').html(getData.maintainCash + "K");
-                jQuery('.setupdomaincart').html(getData.setupCash + "K");
-                jQuery('.amount').html(parseInt(getData.maintainCash) + parseInt(getData.setupCash) + parseInt('{{$dataproductsingle->productPrice}}') + "K VNĐ");
+                jQuery('.domaincart').html(getData.maintainCash);
+                jQuery('.setupdomaincart').html(getData.setupCash);
+                jQuery('.amount').html(parseInt(getData.maintainCash) + parseInt(getData.setupCash) + parseInt('{{$dataproductsingle->productPrice}}') + " Pcash");
                 jQuery('#ajaxloadimg').css('display', 'none');
                 jQuery('#submitpocced').removeAttr('disabled');
             }
@@ -46,7 +46,7 @@
             if (msg != 0) {
                 jQuery('.domaincart').html("Miễn Phí");
                 jQuery('.setupdomaincart').html("Miễn Phí");
-                jQuery('.amount').html(parseInt('{{$dataproductsingle->productPrice}}') + "K VNĐ");
+                jQuery('.amount').html(parseInt('{{$dataproductsingle->productPrice}}') + " Pcash");
                 jQuery('#hienthongbao').css('display', 'block');
                 jQuery('#hienthongbao').removeClass('alert-success');
                 jQuery('#hienthongbao').addClass('alert-warning');
@@ -56,7 +56,7 @@
             } else {
                 jQuery('.domaincart').html("Miễn Phí");
                 jQuery('.setupdomaincart').html("Miễn Phí");
-                jQuery('.amount').html(parseInt('{{$dataproductsingle->productPrice}}') + "K VNĐ");
+                jQuery('.amount').html(parseInt('{{$dataproductsingle->productPrice}}') + " Pcash");
                 jQuery('#hienthongbao').css('display', 'block');
                 jQuery('#hienthongbao').removeClass('alert-warning');
                 jQuery('#hienthongbao').addClass('alert-success');
@@ -70,7 +70,7 @@
     function chondomain() {
         jQuery('.domaincart').html("Miễn Phí");
         jQuery('.setupdomaincart').html("Miễn Phí");
-        jQuery('.amount').html(parseInt('{{$dataproductsingle->productPrice}}') + "K VNĐ");
+        jQuery('.amount').html(parseInt('{{$dataproductsingle->productPrice}}') + " Pcash");
         jQuery('#submitpocced').attr('disabled', 'disabled');
         jQuery('#domainlance').css('display', 'inline-grid');
         jQuery('#subdomainlance').css('display', 'none');
@@ -83,7 +83,7 @@
     function chondubdomain() {
         jQuery('.domaincart').html("Miễn Phí");
         jQuery('.setupdomaincart').html("Miễn Phí");
-        jQuery('.amount').html(parseInt('{{$dataproductsingle->productPrice}}') + "K VNĐ");
+        jQuery('.amount').html(parseInt('{{$dataproductsingle->productPrice}}') + " Pcash");
         jQuery('#submitpocced').attr('disabled', 'disabled');
         jQuery('#subdomainlance').css('display', 'inline-grid');
         jQuery('#domainlance').css('display', 'none');
@@ -103,27 +103,20 @@
         <div class="row">
             <div class="col-md-12">
                 <ul class="breadcrumb">
-                    <li><a href="index.html">Home</a></li>
-                    <li class="active">Portfolio</li>
+                    <li><a href="{{Asset('')}}">Trang chủ</a></li>
+                    <li class="active">Giao diện</li>
                 </ul>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <h2>Single Project</h2>
+                <h2>Đăng ký giao diện</h2>
             </div>
         </div>
     </div>
 </section>
 <div role="main" class="main shop">
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h2 class="shorter"><strong>Checkout</strong></h2>
-                <p>Returning customer? <a href="shop-login.html">Click here to login.</a></p>
-            </div>
-        </div>
-
         <div class="row">
             <div class="col-md-9">
                 <form action="{{URL::action('ProductController@postDangKyWebsite')}}" method="POST">
@@ -168,10 +161,10 @@
                                             <ul class="portfolio-details">
                                                 <li>
                                                     <p><strong>Giá :</strong></p>
-                                                    <p>@if($dataproductsingle->productPrice==0) Miễn phí @else {{number_format($dataproductsingle->productPrice,0)}} vnđ @endif</p>
+                                                    <p>@if($dataproductsingle->productPrice==0) Miễn phí @else {{number_format($dataproductsingle->productPrice,0)}} Pcash @endif</p>
                                                 </li>
                                                 <li>
-                                                    <p><strong>Skills:</strong></p>
+                                                    <p><strong>Tính năng tích hợp :</strong></p>
 
                                                     <ul class="list list-skills icons list-unstyled list-inline">
                                                         <li><i class="icon icon-check-circle"></i> Thiết kế</li>
@@ -259,6 +252,7 @@
                     </div>
                 </form>
             </div>
+
             <div class="col-md-3">
                 <h4>Tổng đơn hàng</h4>
                 <table cellspacing="0" class="cart-totals">
@@ -268,7 +262,7 @@
                                 <strong>Giao diện</strong>
                             </th>
                             <td>
-                                <strong><span class="amountweb">@if($dataproductsingle->productPrice==0) Miễn phí @else {{number_format($dataproductsingle->productPrice,0)}}K VNĐ @endif</span></strong>
+                                <strong><span class="amountweb">@if($dataproductsingle->productPrice==0) Miễn phí @else {{number_format($dataproductsingle->productPrice,0)}} Pcash @endif</span></strong>
                             </td>
                         </tr>
                         <tr class="cart-subtotal">
@@ -292,7 +286,7 @@
                                 Thuế
                             </th>
                             <td>
-                                0 VNĐ<input type="hidden" value="free_shipping" id="shipping_method" name="shipping_method">
+                                0 Pcash<input type="hidden" value="free_shipping" id="shipping_method" name="shipping_method">
                             </td>
                         </tr>
                         <tr class="shipping">
@@ -316,7 +310,7 @@
                                 <strong>Tổng tiền</strong>
                             </th>
                             <td>
-                                <strong><span class="amount">@if($dataproductsingle->productPrice==0) Miễn phí @else {{$dataproductsingle->productPrice}}K VNĐ @endif</span></strong>
+                                <strong><span class="amount">@if($dataproductsingle->productPrice==0) Miễn phí @else {{$dataproductsingle->productPrice}} Pcash @endif</span></strong>
                             </td>
                         </tr>
                     </tbody>

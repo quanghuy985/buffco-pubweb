@@ -21,7 +21,12 @@ class TblProductModel extends Eloquent {
     }
 
     public function getProductCatSlug($id) {
-        $datacate = DB::table('tblcategoryproduct')->select('cateSlug')->where('id', '=', $id)->get();
+        $datacate = DB::table('tblcategoryproduct')->select('cateSlug', 'cateName')->where('id', '=', $id)->get();
+        return $datacate;
+    }
+
+    public function getProductCatSlug1($slug) {
+        $datacate = DB::table('tblcategoryproduct')->select('cateSlug', 'cateName')->where('cateSlug', '=', $slug)->get();
         return $datacate;
     }
 

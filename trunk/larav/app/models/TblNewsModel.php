@@ -30,4 +30,9 @@ class TblNewsModel extends Eloquent {
         return $datacatep;
     }
 
+    public function getNewsMoiNHat() {
+        $datanews = DB::table('tblNews')->where('status', '=', 1)->orderBy('newsTime', 'desc')->take(6)->get();
+        return $datanews;
+    }
+
 }

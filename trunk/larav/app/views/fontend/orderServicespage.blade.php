@@ -12,7 +12,7 @@
         });
     }
 </script>
-<div class="col-md-12" id="divtableOrderServices">
+<div id="divtableOrderServices">
     @if(count($dataOrderServices)==0)
     <p> Bạn chưa chọn mua gói dịch vụ nào. Bấm vào <a href="#">đây</a> để tới trang dịch vụ</p>
     @endif
@@ -30,7 +30,7 @@
                     Tên dịch vụ
                 </th>
                 <th>
-                   Tổng Lưu lượng
+                    Tổng Lưu lượng
                 </th>   
                 <th>
                     Ngày hết hạn
@@ -52,7 +52,7 @@
                 <td>
                     {{$item->domain}}
                 </td>
-                 <td>
+                <td>
                     {{$item->servicesName}}
                 </td>  
                 <td>

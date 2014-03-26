@@ -69,7 +69,7 @@
             jQuery('#order').html(msg);
         });
     }
-       function divOrderServicesClick() {
+    function divOrderServicesClick() {
         jQuery('#divtableOrderServices').empty();
         jQuery('.loader-ajax').css('display', 'block');
         var request = jQuery.ajax({
@@ -97,7 +97,7 @@
             <div class="col-md-12">
                 <ul class="breadcrumb">
                     <li><a href="{{Asset('')}}">Trang chủ</a></li>
-                    <li class="active">Thông tin cá nhân</li>
+                    <li class="active">Tài khoản</li>
                 </ul>
             </div>
         </div>
@@ -246,7 +246,7 @@
                         <div class="loader-ajax"  style="display: block;">
                         </div>
                     </div>
-                     <div class="tab-pane" id="orderServices">
+                    <div class="tab-pane" id="orderServices">
                         <div class="loader-ajax"  style="display: block;">
                         </div>
                     </div>
@@ -255,9 +255,6 @@
 
         </div>
     </div>
-
-    <hr class="tall" />
-
 
 </div>
 @endsection

@@ -19,8 +19,12 @@
     </div>
 </section>
 @if (isset($thongbao))
-<div class="alert alert-danger center">
-    <strong>Thông báo! </strong>{{$thongbao}}
+<div class="container">
+    <div class="row">
+        <div class="alert alert-danger center">
+            <strong>Thông báo! </strong>{{$thongbao}}
+        </div>
+    </div>
 </div>
 @endif
 <div class="container">

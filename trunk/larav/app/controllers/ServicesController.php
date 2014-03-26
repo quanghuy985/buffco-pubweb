@@ -8,11 +8,11 @@
 
 class ServicesController extends Controller {
 
-    public function getAllServices() {
+    public function getDichVu() {
         return View::make("fontend.servicesView");
     }
 
-    public function getServicesSignup() {
+    public function getDangKyDichVu() {
         $tblOrderModel = new tblOrderModel();
         $tblServicesModel = new tblServicesModel();
         if (Session::has('userSession')) {
@@ -33,7 +33,7 @@ class ServicesController extends Controller {
         }
     }
 
-    public function postServicesSignup() {
+    public function postDangKyDichVu() {
         $tblServicesModel = new tblServicesModel();
         $tblOrderModel = new tblOrderModel();
         $objServices = '';

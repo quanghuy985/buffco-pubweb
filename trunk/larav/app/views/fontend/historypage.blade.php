@@ -13,7 +13,7 @@
     }
 </script>
 <div class="loader-ajax"  style="display: none;" ></div>
-<div class="col-md-12" id="divtableHistory">			
+<div  id="divtableHistory">			
     <table class="table table-striped">
         <thead>
             <tr>

@@ -17,17 +17,17 @@ jQuery("#contactForm").validate({
     },
     messages: {
         name: {
-            required: "Bạn chưa nhập họ tên.",
+            required: "Please enter your name.",
             minlength: "Phải nhập 3 kí tự trở lên"
         },
         subject: {
-            required: "Bạn chưa nhập tiêu đề.",
+            required: "Please enter the subject.",
         },
         email: {
-            required: "Bạn chưa nhập email.",
+            required: "Please enter your email address.",
         },
         message: {
-            required: "Bạn chưa nhập nội dung.",
+            required: "Please enter your message.",
         },
     }
 })
@@ -42,7 +42,7 @@ jQuery("#frmProfile").validate({
     },
     messages: {
         name: {
-            required: "Bạn chưa nhập tên.",
+            required: "Please enter your name.",
             minlength: "Phải nhập 3 kí tự trở lên"
         },
     }
@@ -70,7 +70,7 @@ function check() {
 //        jQuery('#tongtien').text(parseFloat(jQuery('#subject').val()) * parseFloat(jQuery('#totalpriceinput').val()) + 'K VNĐ');
 //        // alert(jQuery('#subject').val());
 //    });
-
+//});
 // kiểm tra form đổi mật khẩu
 jQuery("#frmChangePassword").validate({
     rules: {

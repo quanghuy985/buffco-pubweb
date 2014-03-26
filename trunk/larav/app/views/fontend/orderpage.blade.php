@@ -12,7 +12,7 @@
         });
     }
 </script>
-<div class="col-md-12" id="divtableOrder">
+<div id="divtableOrder">
       @if(count($dataOrder)==0)
     <p> Bạn chưa chọn mua gói dịch vụ nào. Bấm vào <a href="#">đây</a> để tới trang sản phẩm</p>
     @endif

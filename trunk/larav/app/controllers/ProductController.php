@@ -5,9 +5,10 @@ class ProductController extends BaseController {
     public function getChuyenMuc($catslug = '') {
         $objsanpham = new TblProductModel();
         $datapro = $objsanpham->getAllProductByCategorySlug($catslug, 10);
-        //    var_dump($datapro);
+        $cateback = $objsanpham->getProductCatSlug1($catslug);
+        //     var_dump($cateback);
         $link = $datapro->links();
-        return View::make('fontend.product')->with('productdata', $datapro)->with('pargion', $link)->with('slugcate', $catslug);
+        return View::make('fontend.product')->with('productdata', $datapro)->with('pargion', $link)->with('slugcate', $cateback[0]);
     }
 
     public function postAjaxChuyenMuc() {
@@ -37,7 +38,7 @@ class ProductController extends BaseController {
         $dataproduct = $objsanpham->getAllProductBySlug($catslug);
         $relateproduct = $objsanpham->getAllProductByCatID($dataproduct[0]->cateID);
         $cateback = $objsanpham->getProductCatSlug($dataproduct[0]->cateID);
-        return View::make('fontend.sigleproduct')->with('backcate', $cateback[0]->cateSlug)->with('dataproductsingle', $dataproduct[0])->with('relate', $relateproduct);
+        return View::make('fontend.sigleproduct')->with('backcate', $cateback[0])->with('dataproductsingle', $dataproduct[0])->with('relate', $relateproduct);
     }
 
     public function postDangKyWebsite() {

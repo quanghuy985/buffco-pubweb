@@ -11,9 +11,7 @@
   |
  */
 
-Route::get('/', function () {
-    return View::make('fontend.index');
-});
+Route::get('/', 'HomeController@showWelcome');
 View::composer('fontend.hometemplate', function($view) {
     $objmenu = new TblProductModel();
     $menu = $objmenu->getMenuCategoryProduct();
@@ -31,17 +29,16 @@ Route::filter('kiemtradangnhap', function() {
     }
 });
 Route::group(array('before' => 'kiemtradangnhap'), function() {
-    
+    Route::controller('nap-tien', 'NapTienController');
 });
 Route::controller('tin-tuc', 'NewsController');
-Route::controller('nap-tien', 'NapTienController');
 Route::controller('kiem-tra-ten-mien', 'DomainController');
 Route::controller('san-pham', 'ProductController');
 Route::controller('tai-khoan', 'LoginController');
-Route::controller('page', 'PageController');
-Route::controller('contact', 'ContactController');
-Route::controller('account', 'AccountController');
-Route::controller('login', 'LoginController');
+Route::controller('dich-vu', 'ServicesController');
+Route::controller('thanh-toan', 'ServicesCheckOutController');
+Route::controller('thong-tin', 'PageContronller');
+Route::controller('nguoi-dung', 'AccountController');
 App::missing(function($exception) {
-    return View::make('fontend.404  ');
+    return View::make('fontend.404');
 });
