@@ -1,0 +1,76 @@
+<?php $__env->startSection("contentadmin"); ?>
+<div class="pageheader notab">
+    <h1 class="pagetitle">QUẢN LÝ ĐƠN HÀNG DỊCH VỤ</h1>
+    <span class="pagedesc">Quản lý đơn hàng</span>
+</div>
+<div class="contentwrapper">
+    <div class="subcontent">
+        <div class="contenttitle2">
+            <h3>Chỉnh sửa thông tin đơn hàng dịch vụ</h3>
+        </div>
+        <form class="stdform stdform2" method="post" action="<?php if(isset($orderdataedit)): ?><?php echo URL::action('OrderController@postOderServicesEdit'); ?> <?php endif; ?>" accept-charset="UTF-8">
+            <p>
+                <label>Người mua</label>
+                <span class="field">         
+                    <input type="hidden" name="idedit" placeholder="Nhập trên sản phẩm" class="longinput" value="<?php if(isset($orderdataedit)): ?><?php echo $orderdataedit->id; ?><?php endif; ?>">
+                    <input type="text" name="username" placeholder="Nhập trên sản phẩm" class="longinput" value="<?php if(isset($orderdataedit)): ?><?php echo $orderdataedit->userEmail; ?><?php endif; ?>" disabled>
+                </span>
+            </p>
+            <p>
+                <label>Dịch vụ</label>
+                <span class="field">                      
+                    <input type="text" name="username" placeholder="Nhập trên sản phẩm" class="longinput" value="<?php if(isset($orderdataedit)): ?><?php echo $orderdataedit->servicesName; ?><?php endif; ?>" disabled>
+                </span>
+            </p>
+            <p>
+                <label>Mã đơn hàng sản phẩm</label>
+                <span class="field">         
+                    <a href="<?php echo URL::action('OrderController@getEdit'); ?>/<?php echo $orderdataedit->orderID; ?>" >  <?php if(isset($orderdataedit)): ?><?php echo $orderdataedit->orderID; ?><?php endif; ?></a>
+                </span>
+            </p>
+            <p>
+                <label>Tổng tiền</label>
+                <span class="field">         
+                    <input type="text" name="total" placeholder="Nhập trên sản phẩm" class="longinput" value="<?php if(isset($orderdataedit)): ?><?php echo $orderdataedit->servicesorderAmount; ?><?php endif; ?>" disabled>
+                </span>
+            </p>
+            <p>
+                <label>Hình thức thanh toán</label>
+                <span class="field">         
+                    <input type="text" name="paytype" placeholder="Nhập trên sản phẩm" class="longinput" value="<?php if(isset($orderdataedit)): ?><?php echo $orderdataedit->servicesorderTypePay; ?><?php endif; ?>" disabled>
+                </span>
+            </p>
+            <p>
+                <label>Trạng thái thanh toán</label>
+                <span class="field">         
+                    <input type="text" name="paystatus" placeholder="Nhập trên sản phẩm" class="longinput" value="<?php if(isset($orderdataedit)): ?><?php if($orderdataedit->servicesorderStatusPay==0): ?> Chưa thanh toán <?php else: ?> Đã thanh toán <?php endif; ?><?php endif; ?> " disabled>
+                </span>
+            </p>
+            <p>
+                <label>Thời gian</label>
+                <span class="field">         
+                    <input type="date" style="box-shadow: inset 0 1px 3px #ddd;border: 1px solid #ccc;border-radius: 2px;padding: 8px 5px;background: #fcfcfc;" name="expdate" placeholder="Nhập trên sản phẩm" class="smallinput" value="<?php if(isset($orderdataedit)): ?><?php echo date('Y-m-d',$orderdataedit->servicesorderTime); ?><?php endif; ?>" disabled>
+
+                </span>
+            </p>
+
+            <p>
+                <label>Trạng thái</label>
+                <span class="field">         
+
+                    <select name="status" id="selection2">
+                        <option value="0" <?php if($orderdataedit->status==0): ?>selected <?php endif; ?> >Chờ</option>
+                        <option value="1" <?php if($orderdataedit->status==1): ?>selected <?php endif; ?> >Thành công</option>
+                        <option value="2" <?php if($orderdataedit->status==2): ?>selected <?php endif; ?> >Xóa</option>
+                    </select>
+                </span>
+            </p>
+            <p class="stdformbutton">
+                <button class="submit radius2">Cập nhật</button>
+                <input type="reset" class="reset radius2" value="Làm lại">
+            </p>
+        </form>
+    </div>
+</div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("templateadmin2.mainfire", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

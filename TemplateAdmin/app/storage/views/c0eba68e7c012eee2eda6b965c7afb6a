@@ -1,0 +1,43 @@
+<?php $__env->startSection("contentadmin"); ?>
+<div class="pageheader notab">
+    <h1 class="pagetitle">QUẢN LÝ CÁC TRANG</h1>
+    <span class="pagedesc">Thêm mới trang</span>
+</div>
+<div class="contentwrapper">
+    <div class="subcontent">
+        <div class="contenttitle2">
+            <h3>Mẫu nhập trang</h3>
+        </div>
+        <form class="stdform stdform2" method="post" action="<?php if(isset($pagedata)): ?> <?php echo URL::action('PageController@postUpdatePage'); ?> <?php else: ?> <?php echo URL::action('PageController@postAddPage'); ?><?php endif; ?>">
+
+            <p>
+                <input type="hidden" name="idPage" id="idnews" value="<?php if(isset($pagedata)): ?><?php echo $pagedata->id; ?><?php endif; ?>"/>
+                <input type="hidden" name="status" id="status" value="<?php if(isset($pagedata)): ?><?php echo $pagedata->status; ?><?php endif; ?>"/>
+            </p>
+            <p>
+                <label>Tên trang</label>
+                <span class="field"><input type="text" name="pageName" placeholder="Nhập tên của trang" value="<?php if(isset($pagedata)): ?><?php echo $pagedata->pageName; ?><?php endif; ?>" class="longinput"></span>
+            </p>
+            <p>
+                <label>Nội dung của trang <small>Nhập nội dung trang trong mục</small></label>
+                <span class="field"><textarea cols="80" rows="5" id="location2" class="ckeditor" name="pageContent" placeholder="Nội dung trang"><?php if(isset($pagedata)): ?><?php echo $pagedata->pageContent; ?><?php endif; ?></textarea></span>
+            </p>
+
+            <p>
+                <label>Nhập Tag</label>
+                <span class="field"><input type="text" name="pageTag" placeholder="Ví dụ : about-us, tin tuc, free-site, " value="<?php if(isset($pagedata)): ?><?php echo $pagedata->pageTag; ?><?php endif; ?>" class="longinput"></span>
+            </p>
+            <p>
+                <label>Link ngắn gọn tới trang</label>
+                <span class="field"><input type="text" name="pageSlug" placeholder="Ví dụ: pubweb.vn/about-us ; about-us là từ được nhập" value='<?php if(isset($pagedata)): ?><?php echo $pagedata->pageSlug; ?><?php endif; ?>' class="longinput"></span>
+            </p>
+
+            <p class="stdformbutton">
+                <button class="submit radius2" value="<?php if(isset($pagedata)): ?>Cập nhật <?php else: ?> Thêm mới <?php endif; ?> "><?php if(isset($pagedata)): ?>Cập nhật <?php else: ?> Thêm mới <?php endif; ?> </button>
+                <input type="reset" class="reset radius2" value="Làm mới">
+            </p>
+        </form>
+    </div>
+</div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("templateadmin2.mainfire", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
