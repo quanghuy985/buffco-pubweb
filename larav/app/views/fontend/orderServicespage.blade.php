@@ -12,7 +12,11 @@
         });
     }
 </script>
-<div class="col-md-12" id="divtableOrderServices">			
+<div class="col-md-12" id="divtableOrderServices">
+    @if(count($dataOrderServices)==0)
+    <p> Bạn chưa chọn mua gói dịch vụ nào. Bấm vào <a href="#">đây</a> để tới trang dịch vụ</p>
+    @endif
+    @if(count($dataOrderServices)>0)
     <table class="table table-striped">
         <thead>
             <tr>
@@ -55,7 +59,7 @@
                     {{$item->Tongcong}}
                 </td>                 
                 <td>
-                    {{$item->ngayhethan}}
+                    <?php echo date('d/m/Y h:i:s', $item->ngayhethan); ?>               
                 </td>  
                 <?php
                 $i++;
@@ -71,6 +75,7 @@
             @endif
         </tbody>
     </table>
+    @endif
 </div>
 <div class="loader-ajax"  style="display: none;">
 
