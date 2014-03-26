@@ -1,5 +1,17 @@
 @extends("fontend.hometemplate")
 @section("contenthomepage")
+<script>
+    function phantrang(page) {
+        var request = jQuery.ajax({
+            url: "{{URL::action('ProductController@postAjaxChuyenMuc')}}?slug={{$slugcate}}&page=" + page,
+            type: "POST",
+            dataType: "html"
+        });
+        request.done(function(msg) {
+            jQuery('#hienthisanphams').html(msg);
+        });
+    }
+</script>
 <section class="page-top">
     <div class="container">
         <div class="row">
@@ -17,7 +29,7 @@
         </div>
     </div>
 </section>
-<div class="container">
+<div class="container" id="hienthisanphams">
 
 
     <h2>Portfolio</h2>

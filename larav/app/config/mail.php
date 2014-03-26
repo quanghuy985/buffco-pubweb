@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => null, 'name' => null),
+	'from' => array('address' => 'no-reply@pubweb.vn', 'name' => 'Pubweb.vn'),
 
 	/*
 	|--------------------------------------------------------------------------

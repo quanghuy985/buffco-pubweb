@@ -78,7 +78,7 @@ class NewsController extends BaseController {
         }
     }
 
-    public function postPhantrang() {
+    public function postPhantrang($slug = '') {
         $objNews = new TblNewsModel();
         $datanews = $objNews->getAllPostByCategoryId(Input::get('slug'), 2);
         $pargion = $datanews->links();

@@ -15,4 +15,9 @@ class TblCategoryNewsModel extends Eloquent {
         return $datalistcate;
     }
 
+    public function getAllByCategoryMenu() {
+        $datalistcate = DB::table('tblcatenews')->where('status', '=', 1)->get();
+        return $datalistcate;
+    }
+
 }

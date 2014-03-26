@@ -1,5 +1,17 @@
 @extends("fontend.hometemplate")
 @section("contenthomepage")
+<script>
+    function phantrang(page) {
+        var request = jQuery.ajax({
+            url: "{{URL::action('NewsController@postPhantrang')}}?slug={{$catname->catenewsSlug}}&page=" + page,
+            type: "POST",
+            dataType: "html"
+        });
+        request.done(function(msg) {
+            jQuery('.blog-posts').html(msg);
+        });
+    }
+</script>
 <section class="page-top">
     <div class="container">
         <div class="row">
@@ -12,7 +24,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <h2>Blog</h2>
+                <h2>{{$catname->catenewsName}}</h2>
             </div>
         </div>
     </div>
@@ -88,13 +100,11 @@
 
         <div class="col-md-3">
             <aside class="sidebar">
-                <h4>Categories</h4>
+                <h4>Chuyên mục</h4>
                 <ul class="nav nav-list primary push-bottom">
-                    <li><a href="#">Design</a></li>
-                    <li><a href="#">Photos</a></li>
-                    <li><a href="#">Videos</a></li>
-                    <li><a href="#">Lifestyle</a></li>
-                    <li><a href="#">Technology</a></li>
+                    @foreach($catelist as $itemcate)
+                    <li><a href="{{URL::action('NewsController@getChuyenMuc')}}/{{$itemcate->catenewsSlug}}">{{$itemcate->catenewsName}}</a></li>
+                    @endforeach
                 </ul>
 
                 <div class="tabs">

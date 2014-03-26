@@ -101,99 +101,31 @@
                                     </a>
                                 </li>
                                 <li class="dropdown mega-menu-item mega-menu-fullwidth">
-                                    <a class="dropdown-toggle" href="shortcodes.html">Sản phẩm
+                                    <a class="dropdown-toggle" href="javascript:void(0);">Sản phẩm
                                         <i class="icon icon-angle-down"></i>
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li>
                                             <div class="mega-menu-content">
                                                 <div class="row">
-                                                    <div class="col-md-2">
+                                                    @foreach($menu as $item)
+                                                    <div class="col-md-3">
                                                         <ul class="sub-menu">
                                                             <li>
-                                                                <span class="mega-menu-sub-title">Main Features</span>
+                                                                <span class="mega-menu-sub-title">{{$item->cateName}}</span>                                                 
+                                                                @if(isset($menuchild))
                                                                 <ul class="sub-menu">
-                                                                    <li><a href="feature-pricing-tables.html">Pricing Tables</a></li>
-                                                                    <li><a href="feature-icons.html">Icons</a></li>
-                                                                    <li><a href="feature-animations.html">Animations</a></li>
-                                                                    <li><a href="feature-typograpy.html">Typograpy</a></li>
-                                                                    <li><a href="feature-grid-system.html">Grid System</a></li>
+                                                                    @foreach($menuchild as $item1)
+                                                                    @if($item1->cateParent==$item->id)
+                                                                    <li><a href="{{URL::action('ProductController@getChuyenMuc')}}/{{$item1->cateSlug}}">{{$item1->cateName}}</a></li>
+                                                                    @endif
+                                                                    @endforeach
                                                                 </ul>
+                                                                @endif
                                                             </li>
                                                         </ul>
                                                     </div>
-                                                    <div class="col-md-2">
-                                                        <ul class="sub-menu">
-                                                            <li>
-                                                                <span class="mega-menu-sub-title">Headers</span>
-                                                                <ul class="sub-menu">
-                                                                    <li><a href="index.html">Header Version 1</a></li>
-                                                                    <li><a href="index-header-2.html">Header Version 2</a></li>
-                                                                    <li><a href="index-header-3.html">Header Version 3</a></li>
-                                                                    <li><a href="index-header-4.html">Header Version 4</a></li>
-                                                                    <li><a href="index-header-5.html">Header Version 5</a></li>
-                                                                    <li><a href="index-header-6.html">Header Version 6</a></li>
-                                                                    <li><a href="index-header-7.html">Header - Sign In / Sign Up</a></li>
-                                                                    <li><a href="index-header-8.html">Header - Logged</a></li>
-                                                                </ul>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <ul class="sub-menu">
-                                                            <li>
-                                                                <span class="mega-menu-sub-title">Footers</span>
-                                                                <ul class="sub-menu">
-                                                                    <li><a href="#footer">Footer Version 1</a></li>
-                                                                    <li><a href="index-footer-2.html#footer">Footer Version 2</a></li>
-                                                                    <li><a href="index-footer-3.html#footer">Footer Version 3</a></li>
-                                                                    <li><a href="index-footer-4.html#footer">Footer Version 4</a></li>
-                                                                </ul>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <ul class="sub-menu">
-                                                            <li>
-                                                                <span class="mega-menu-sub-title">Blog</span>
-                                                                <ul class="sub-menu">
-                                                                    <li><a href="blog-full-width.html">Blog Full Width</a></li>
-                                                                    <li><a href="blog-large-image.html">Blog Large Image</a></li>
-                                                                    <li><a href="blog-medium-image.html">Blog Medium Image</a></li>
-                                                                    <li><a href="blog-timeline.html">Blog Timeline</a></li>
-                                                                    <li><a href="blog-post.html">Single Post</a></li>
-                                                                </ul>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <ul class="sub-menu">
-                                                            <li>
-                                                                <span class="mega-menu-sub-title">Blog</span>
-                                                                <ul class="sub-menu">
-                                                                    <li><a href="blog-full-width.html">Blog Full Width</a></li>
-                                                                    <li><a href="blog-large-image.html">Blog Large Image</a></li>
-                                                                    <li><a href="blog-medium-image.html">Blog Medium Image</a></li>
-                                                                    <li><a href="blog-timeline.html">Blog Timeline</a></li>
-                                                                    <li><a href="blog-post.html">Single Post</a></li>
-                                                                </ul>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <ul class="sub-menu">
-                                                            <li>
-                                                                <span class="mega-menu-sub-title">Blog</span>
-                                                                <ul class="sub-menu">
-                                                                    <li><a href="blog-full-width.html">Blog Full Width</a></li>
-                                                                    <li><a href="blog-large-image.html">Blog Large Image</a></li>
-                                                                    <li><a href="blog-medium-image.html">Blog Medium Image</a></li>
-                                                                    <li><a href="blog-timeline.html">Blog Timeline</a></li>
-                                                                    <li><a href="blog-post.html">Single Post</a></li>
-                                                                </ul>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
+                                                    @endforeach
                                                 </div>
                                             </div>
                                         </li>
@@ -209,18 +141,28 @@
                                         Tin tức<i class="icon icon-angle-down"></i>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li class="dropdown-submenu"><a href="portfolio-4-columns.html">Tin trong website</a>
+                                        @foreach($menunew as $newme)
+                                        @if($newme->catenewsParent==0)
+                                        <?php $bien = 0; ?>
+                                        @foreach($menunew as $newme1)
+                                        @if($newme1->catenewsParent==$newme->id && $newme1->catenewsParent!=0)
+                                        <?php $bien++; ?>
+                                        @endif
+                                        @endforeach
+                                        <li @if($bien>0)class="dropdown-submenu" @endif><a href="{{URL::action('NewsController@getChuyenMuc')}}/{{$newme->catenewsSlug}}">{{$newme->catenewsName}}</a>
+                                            @if($bien>0)
                                             <ul class="dropdown-menu">
-                                                <li><a href="shop-full-width.html">Shop - Full Width</a></li>
-                                                <li><a href="shop-sidebar.html">Shop - Sidebar</a></li>
-                                                <li><a href="shop-product-full-width.html">Shop - Product Full Width</a></li>
-                                                <li><a href="shop-product-sidebar.html">Shop - Product Sidebar</a></li>
-                                                <li><a href="shop-cart.html">Shop - Cart</a></li>
-                                                <li><a href="shop-login.html">Shop - Login</a></li>
-                                                <li><a href="shop-checkout.html">Shop - Checkout</a></li>
+                                                @foreach($menunew as $newme1)
+                                                @if($newme1->catenewsParent==$newme->id && $newme1->catenewsParent!=0)
+                                                <li><a href="{{URL::action('NewsController@getChuyenMuc')}}/{{$newme1->catenewsSlug}}">{{$newme1->catenewsName}}</a></li>
+                                                @endif
+                                                @endforeach
                                             </ul>
+                                            @endif
                                         </li>
-                                        <li><a href="portfolio-3-columns.html">Tin ngoài website</a></li>                                
+                                        @endif
+                                        @endforeach
+
                                     </ul>
                                 </li>
                                 <li>

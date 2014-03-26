@@ -1,4 +1,16 @@
 <?php $__env->startSection("contenthomepage"); ?>
+<script>
+    function phantrang(page) {
+        var request = jQuery.ajax({
+            url: "<?php echo URL::action('ProductController@postAjaxChuyenMuc'); ?>?slug=<?php echo $slugcate; ?>&page=" + page,
+            type: "POST",
+            dataType: "html"
+        });
+        request.done(function(msg) {
+            jQuery('#hienthisanphams').html(msg);
+        });
+    }
+</script>
 <section class="page-top">
     <div class="container">
         <div class="row">
@@ -16,7 +28,7 @@
         </div>
     </div>
 </section>
-<div class="container">
+<div class="container" id="hienthisanphams">
 
 
     <h2>Portfolio</h2>
