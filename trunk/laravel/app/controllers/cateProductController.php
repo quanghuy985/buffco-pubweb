@@ -46,10 +46,15 @@ class cateProductController extends Controller {
 
     public function getCateProductEdit() {
         $tblCateProduct = new TblCategoryProductModel();
-        $cateProductData = $tblCateProduct->getAllCategoryProduct(10);
-        $link = $cateProductData->links();
+       $link = $tblCateProduct->getAllCategoryProductPagin(10);
+        $links = $link->links();
+        $start = $link->getCurrentPage() * 10 - 10;
+        if ($start < 0) {
+            $start = 0;
+        }
+        $cateProductData = $tblCateProduct->getAllCategoryProduct($start, 10);
         $dataedit = $tblCateProduct->findCateProductByID(Input::get('id'));
-        return View::make('backend.cateProductManage')->with('cateProductData', $dataedit)->with('arrayCateProduct', $cateProductData)->with('link', $link);
+        return View::make('backend.cateProductManage')->with('cateProductData', $dataedit)->with('arrayCateProduct', $cateProductData)->with('link', $links);
     }
 
     public function postCateProductActive() {

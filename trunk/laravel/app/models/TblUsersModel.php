@@ -120,5 +120,9 @@ class TblUsersModel extends Eloquent {
         }
         return $adminarray;
     }
+    public function getCountUserByStt($stt) {
+         $count = DB::table('tblusers')->where('status', '=', $stt)->count();
+         return $count;
+    }
 
 }

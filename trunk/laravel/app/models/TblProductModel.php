@@ -98,5 +98,14 @@ class TblProductModel extends Eloquent {
         }
         return $adminarray;
     }
-
+    //Thống kê sản phẩm theo trạng thái
+    public function GetProductByStt($status) {
+          $adminarray = DB::table('tblproduct')->where('status', '=', $status)->count();
+          return $adminarray;
+    }
+    //Thống kê sản phẩm được mua nhiều nhất
+    public function getTopTenProduct() {
+         $adminarray = DB::table('tblproduct')->join('tblorder', 'tblproduct.id', '=', 'tblorder.productID')->select('tblproduct.*')->distinct()->orderBy('id', 'desc')->limit(5)->get();
+          return $adminarray;
+    }
 }

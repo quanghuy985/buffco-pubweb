@@ -79,7 +79,7 @@ class TblCategoryProductModel extends Eloquent {
         return $adminarray[0];
     }
 
-    public function getAllCategoryProduct($start, $per_page) {
+    public function getAllCategoryProduct($start, $per_page) {        
         $results = DB::select("select a.cateName as N1,a.cateName as cateName,a.cateParent as cateParent,a.id as id,a.cateSlug as cateSlug,a.cateTime as cateTime,a.status as status FROM tblcategoryproduct as a where a.cateParent=0 UNION select a.cateName as N1,b.cateName as cateName,b.cateParent as cateParent,b.id as id,b.cateSlug as cateSlug ,b.cateTime as cateTime,b.status as status  FROM tblcategoryproduct as a INNER JOIN tblcategoryproduct as b On a.id = b.cateParent ORDER BY N1,cateParent LIMIT ?,?", array($start, $per_page));
         return $results;
     }

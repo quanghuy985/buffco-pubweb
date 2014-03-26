@@ -1,0 +1,125 @@
+<?php $__env->startSection("contentadmin"); ?>
+<div class="pageheader notab">
+    <h1 class="pagetitle">QUẢN LÝ SẢN PHẨM</h1>
+    <span class="pagedesc">Thêm sửa xóa sản phẩm</span>
+</div>
+<div class="contentwrapper">
+    <div class="subcontent">
+        <?php if(isset($thongbao)): ?>
+        <div class="notibar msgsuccess">
+            <a class="close"></a>
+            <p><?php echo $thongbao; ?></p>
+        </div>
+        <?php endif; ?>
+        <div class="contenttitle2">
+            <h3>Thêm mới</h3>
+        </div>
+
+        <form class="stdform stdform2" method="post" action="<?php if(isset($dataedit)): ?><?php echo URL::action('ProductController@postEditProduct'); ?> <?php else: ?> <?php echo URL::action('ProductController@postAddProduct'); ?> <?php endif; ?>" accept-charset="UTF-8" enctype="multipart/form-data">
+
+            <p>
+                <label>Tên sản phẩm</label>
+                <span class="field">
+                    <input type="hidden" name="idpro" value="<?php if(isset($dataedit)): ?><?php echo $dataedit->id; ?><?php endif; ?>"/>
+                    <input type="text" name="productname" placeholder="Nhập trên sản phẩm" class="longinput" value="<?php if(isset($dataedit)): ?><?php echo $dataedit->productName; ?><?php endif; ?>">
+                </span>
+            </p>
+            <p>
+                <label>Nhóm sản phẩm</label>
+                <span class="field">
+                    <select name="categoryproduct" id="selection2">
+                        <?php
+                        foreach ($catproduct as $item) {
+                            if ($item->cateParent == 0) {
+                                $selec = '';
+                                if (isset($dataedit) && $item->id == $dataedit->cateID) {
+                                    $selec = 'selected';
+                                }
+
+                                echo '<option value="' . $item->id . '" ' . $selec . '> ' . $item->cateName . '</option>';
+                                foreach ($catproduct as $item1) {
+                                    if ($item1->cateParent == $item->id) {
+                                        $selec1 = '';
+                                        if (isset($dataedit) && $item1->id == $dataedit->cateID) {
+                                            $selec1 = 'selected';
+                                        }
+                                        echo '<option value="' . $item1->id . '" ' . $selec1 . '>-- ' . $item1->cateName . '</option>';
+                                    }
+                                }
+                            }
+                        }
+                        ?>
+
+                    </select>
+                </span>
+            </p>
+            <p>
+                <label>Ảnh sản phẩm</label>
+                <span class="field">
+                    <input type="file" name="fileupload" id="fileupload" class="longinput" >
+                    <?php if(isset($dataedit)): ?>
+                    <br/>
+                    <img src="<?php echo Asset('timthumb.php'); ?>?src=<?php echo Asset($dataedit->productUrlImage); ?>&w=100&h=100&zc=0&q=70" />
+                    <?php endif; ?>
+                </span>
+            </p>
+
+            <p>
+                <label>Chi tiết sản phẩm</label>
+                <span class="field">
+                    <textarea class="ckeditor" id="xxx" rows="5" name="productdes" placeholder="Nhập chi tiết sản phẩm"><?php if(isset($dataedit)): ?><?php echo $dataedit->productDescription; ?><?php endif; ?></textarea>
+                  
+                </span>
+            </p>
+
+            <p>
+                <label>Giá sản phẩm </label>
+                <span class="field">
+                    <input type="text" name="productprice"  placeholder="Nhập giá sản phẩm" class="smallinput" value="<?php if(isset($dataedit)): ?><?php echo $dataedit->productPrice; ?><?php endif; ?>">
+                </span>
+            </p>
+            <p>
+                <label>Giá khuyến mãi </label>
+                <span class="field">
+                    <input type="text" name="productprom"   placeholder="Nhập giá khuyến mại" class="smallinput" value="<?php if(isset($dataedit)): ?><?php echo $dataedit->productPromotion; ?><?php endif; ?>">
+                </span>
+            </p>
+            <p>
+                <label>Link demo</label>
+                <span class="field">
+                    <input type="text" name="producturldemo" placeholder="Nhập link demo sản phẩm " class="longinput" value="<?php if(isset($dataedit)): ?><?php echo $dataedit->productUrlDemo; ?><?php endif; ?>">
+                </span>
+            </p>
+            <p>
+                <label>Slug</label>
+                <span class="field">
+                    <input type="text" name="productslug" placeholder="Nhập slug sản phẩm" class="smallinput" value="<?php if(isset($dataedit)): ?><?php echo $dataedit->productSlug; ?><?php endif; ?>"> 
+                </span>
+            </p>
+            <p>
+                <label>Version</label>
+                <span class="field">
+                    <input type="text" name="productversion" placeholder="Nhập version sản phẩm" class="smallinput" value="<?php if(isset($dataedit)): ?><?php echo $dataedit->productVersion; ?><?php endif; ?>"> 
+                </span>
+            </p>  
+            <?php if(isset($dataedit)): ?>
+            <p>
+                <label>Trạng thái</label>
+                <span class="field">
+                    <select name="status" id="selection2">
+                        <option value="0" <?php if($dataedit->status==0): ?>selected <?php endif; ?> >Chờ đăng</option>
+                        <option value="1" <?php if($dataedit->status==1): ?>selected <?php endif; ?> >Đã đăng</option>
+                        <option value="2" <?php if($dataedit->status==2): ?>selected <?php endif; ?> >Xóa</option>
+                    </select>
+                </span>
+            </p>
+            <?php endif; ?>
+            <p class="stdformbutton">
+                <button class="submit radius2"><?php if(isset($dataedit)): ?>Cập nhật <?php else: ?> Thêm mới <?php endif; ?></button>
+                <input type="reset" class="reset radius2" value="Làm lại">
+            </p>
+        </form>
+    </div>
+</div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("templateadmin2.mainfire", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
