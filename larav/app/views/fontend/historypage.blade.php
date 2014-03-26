@@ -12,6 +12,7 @@
         });
     }
 </script>
+<div class="loader-ajax"  style="display: none;" ></div>
 <div class="col-md-12" id="divtableHistory">			
     <table class="table table-striped">
         <thead>
@@ -31,7 +32,7 @@
             <?php
             $i = 1;
             if (Input::get('page') > 1) {
-                $i = 3 * Input::get('page') - 2;
+                $i = 10 * Input::get('page') - 9;
             }
             ?>
             @foreach($datahis as $item)                                     
@@ -59,7 +60,4 @@
             @endif
         </tbody>
     </table>
-</div>
-<div class="loader-ajax"  style="display: none;">
-
 </div>

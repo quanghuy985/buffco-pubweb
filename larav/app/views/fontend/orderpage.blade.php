@@ -31,16 +31,16 @@
                 <th>
                     Ngày hết hạn
                 </th>    
-                <th>
+<!--                <th>
                     Trạng thái
-                </th>  
+                </th>  -->
             </tr>
         </thead>
         <tbody id="hisTable">   
             <?php
             $i = 1;
             if (Input::get('page') > 1) {
-                $i = 3 * Input::get('page') - 2;
+                $i = 10 * Input::get('page') - 9;
             }
             ?>
             @foreach($dataOrder as $item)                                     
@@ -60,9 +60,9 @@
                 <td>
                     {{$item->orderExp}}
                 </td>  
-                <td>
+<!--                <td>
                     {{$item->status}}
-                </td>  
+                </td>  -->
                 <?php
                 $i++;
                 ?>
