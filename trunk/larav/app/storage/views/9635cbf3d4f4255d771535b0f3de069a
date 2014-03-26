@@ -101,99 +101,31 @@
                                     </a>
                                 </li>
                                 <li class="dropdown mega-menu-item mega-menu-fullwidth">
-                                    <a class="dropdown-toggle" href="shortcodes.html">Sản phẩm
+                                    <a class="dropdown-toggle" href="javascript:void(0);">Sản phẩm
                                         <i class="icon icon-angle-down"></i>
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li>
                                             <div class="mega-menu-content">
                                                 <div class="row">
-                                                    <div class="col-md-2">
+                                                    <?php foreach($menu as $item): ?>
+                                                    <div class="col-md-3">
                                                         <ul class="sub-menu">
                                                             <li>
-                                                                <span class="mega-menu-sub-title">Main Features</span>
+                                                                <span class="mega-menu-sub-title"><?php echo $item->cateName; ?></span>                                                 
+                                                                <?php if(isset($menuchild)): ?>
                                                                 <ul class="sub-menu">
-                                                                    <li><a href="feature-pricing-tables.html">Pricing Tables</a></li>
-                                                                    <li><a href="feature-icons.html">Icons</a></li>
-                                                                    <li><a href="feature-animations.html">Animations</a></li>
-                                                                    <li><a href="feature-typograpy.html">Typograpy</a></li>
-                                                                    <li><a href="feature-grid-system.html">Grid System</a></li>
+                                                                    <?php foreach($menuchild as $item1): ?>
+                                                                    <?php if($item1->cateParent==$item->id): ?>
+                                                                    <li><a href="<?php echo URL::action('ProductController@getChuyenMuc'); ?>/<?php echo $item1->cateSlug; ?>"><?php echo $item1->cateName; ?></a></li>
+                                                                    <?php endif; ?>
+                                                                    <?php endforeach; ?>
                                                                 </ul>
+                                                                <?php endif; ?>
                                                             </li>
                                                         </ul>
                                                     </div>
-                                                    <div class="col-md-2">
-                                                        <ul class="sub-menu">
-                                                            <li>
-                                                                <span class="mega-menu-sub-title">Headers</span>
-                                                                <ul class="sub-menu">
-                                                                    <li><a href="index.html">Header Version 1</a></li>
-                                                                    <li><a href="index-header-2.html">Header Version 2</a></li>
-                                                                    <li><a href="index-header-3.html">Header Version 3</a></li>
-                                                                    <li><a href="index-header-4.html">Header Version 4</a></li>
-                                                                    <li><a href="index-header-5.html">Header Version 5</a></li>
-                                                                    <li><a href="index-header-6.html">Header Version 6</a></li>
-                                                                    <li><a href="index-header-7.html">Header - Sign In / Sign Up</a></li>
-                                                                    <li><a href="index-header-8.html">Header - Logged</a></li>
-                                                                </ul>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <ul class="sub-menu">
-                                                            <li>
-                                                                <span class="mega-menu-sub-title">Footers</span>
-                                                                <ul class="sub-menu">
-                                                                    <li><a href="#footer">Footer Version 1</a></li>
-                                                                    <li><a href="index-footer-2.html#footer">Footer Version 2</a></li>
-                                                                    <li><a href="index-footer-3.html#footer">Footer Version 3</a></li>
-                                                                    <li><a href="index-footer-4.html#footer">Footer Version 4</a></li>
-                                                                </ul>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <ul class="sub-menu">
-                                                            <li>
-                                                                <span class="mega-menu-sub-title">Blog</span>
-                                                                <ul class="sub-menu">
-                                                                    <li><a href="blog-full-width.html">Blog Full Width</a></li>
-                                                                    <li><a href="blog-large-image.html">Blog Large Image</a></li>
-                                                                    <li><a href="blog-medium-image.html">Blog Medium Image</a></li>
-                                                                    <li><a href="blog-timeline.html">Blog Timeline</a></li>
-                                                                    <li><a href="blog-post.html">Single Post</a></li>
-                                                                </ul>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <ul class="sub-menu">
-                                                            <li>
-                                                                <span class="mega-menu-sub-title">Blog</span>
-                                                                <ul class="sub-menu">
-                                                                    <li><a href="blog-full-width.html">Blog Full Width</a></li>
-                                                                    <li><a href="blog-large-image.html">Blog Large Image</a></li>
-                                                                    <li><a href="blog-medium-image.html">Blog Medium Image</a></li>
-                                                                    <li><a href="blog-timeline.html">Blog Timeline</a></li>
-                                                                    <li><a href="blog-post.html">Single Post</a></li>
-                                                                </ul>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <ul class="sub-menu">
-                                                            <li>
-                                                                <span class="mega-menu-sub-title">Blog</span>
-                                                                <ul class="sub-menu">
-                                                                    <li><a href="blog-full-width.html">Blog Full Width</a></li>
-                                                                    <li><a href="blog-large-image.html">Blog Large Image</a></li>
-                                                                    <li><a href="blog-medium-image.html">Blog Medium Image</a></li>
-                                                                    <li><a href="blog-timeline.html">Blog Timeline</a></li>
-                                                                    <li><a href="blog-post.html">Single Post</a></li>
-                                                                </ul>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
+                                                    <?php endforeach; ?>
                                                 </div>
                                             </div>
                                         </li>
@@ -209,18 +141,28 @@
                                         Tin tức<i class="icon icon-angle-down"></i>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li class="dropdown-submenu"><a href="portfolio-4-columns.html">Tin trong website</a>
+                                        <?php foreach($menunew as $newme): ?>
+                                        <?php if($newme->catenewsParent==0): ?>
+                                        <?php $bien = 0; ?>
+                                        <?php foreach($menunew as $newme1): ?>
+                                        <?php if($newme1->catenewsParent==$newme->id && $newme1->catenewsParent!=0): ?>
+                                        <?php $bien++; ?>
+                                        <?php endif; ?>
+                                        <?php endforeach; ?>
+                                        <li <?php if($bien>0): ?>class="dropdown-submenu" <?php endif; ?>><a href="<?php echo URL::action('NewsController@getChuyenMuc'); ?>/<?php echo $newme->catenewsSlug; ?>"><?php echo $newme->catenewsName; ?></a>
+                                            <?php if($bien>0): ?>
                                             <ul class="dropdown-menu">
-                                                <li><a href="shop-full-width.html">Shop - Full Width</a></li>
-                                                <li><a href="shop-sidebar.html">Shop - Sidebar</a></li>
-                                                <li><a href="shop-product-full-width.html">Shop - Product Full Width</a></li>
-                                                <li><a href="shop-product-sidebar.html">Shop - Product Sidebar</a></li>
-                                                <li><a href="shop-cart.html">Shop - Cart</a></li>
-                                                <li><a href="shop-login.html">Shop - Login</a></li>
-                                                <li><a href="shop-checkout.html">Shop - Checkout</a></li>
+                                                <?php foreach($menunew as $newme1): ?>
+                                                <?php if($newme1->catenewsParent==$newme->id && $newme1->catenewsParent!=0): ?>
+                                                <li><a href="<?php echo URL::action('NewsController@getChuyenMuc'); ?>/<?php echo $newme1->catenewsSlug; ?>"><?php echo $newme1->catenewsName; ?></a></li>
+                                                <?php endif; ?>
+                                                <?php endforeach; ?>
                                             </ul>
+                                            <?php endif; ?>
                                         </li>
-                                        <li><a href="portfolio-3-columns.html">Tin ngoài website</a></li>                                
+                                        <?php endif; ?>
+                                        <?php endforeach; ?>
+
                                     </ul>
                                 </li>
                                 <li>
@@ -235,155 +177,120 @@
                                     </a>
 
                                 </li>
-
-                                <?php if(!Session::has('userSession')): ?>
-                                <li><a href="<?php echo URL::action('LoginController@getDangNhap'); ?>">Đăng nhập</a></li>                                    
-                                <?php endif; ?>
-                                <?php if(Session::has('userSession')): ?>
-                                <?php
-                                $user = Session::get('userSession');
-                                ?>
-                                <li class="dropdown mega-menu-item mega-menu-signin signin logged" id="headerAccount">
-                                    <a class="dropdown-toggle" href="#">
-                                        <i class="icon icon-user"> <?php echo $user[0]->userLastName; ?></i>
+                                <li class="dropdown mega-menu-item mega-menu-signin signin" id="headerAccount">
+                                    <a class="dropdown-toggle" href="page-login.html">
+                                        <i class="icon icon-user"></i> Sign In
                                         <i class="icon icon-angle-down"></i>
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li>
                                             <div class="mega-menu-content">
-                                                <div class="row">													
-                                                    <div class="col-md-6">
-                                                        <ul class="list-account-options">
-                                                            <li>
-                                                                <a href="<?php echo URL::action('AccountController@getProfileView'); ?>">Thông tin cá nhân</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="<?php echo URL::action('AccountController@getLogOut'); ?>">Thoát</a>
-                                                            </li>
-                                                        </ul>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+
+                                                        <div class="signin-form">
+
+                                                            <span class="mega-menu-sub-title">Đăng nhập</span>
+
+                                                            <form action="" id="" type="post">
+                                                                <div class="row">
+                                                                    <div class="form-group">
+                                                                        <div class="col-md-12">
+                                                                            <label>Username or E-mail Address</label>
+                                                                            <input type="text" value="" class="form-control">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="form-group">
+                                                                        <div class="col-md-12">
+                                                                            <a class="pull-right" id="headerRecover" href="#">(Lost Password?)</a>
+                                                                            <label>Password</label>
+                                                                            <input type="password" value="" class="form-control">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <span class="remember-box checkbox">
+                                                                            <label for="rememberme">
+                                                                                <input type="checkbox" id="rememberme" name="rememberme">Remember Me
+                                                                            </label>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <input type="submit" value="Login" class="btn btn-primary pull-right push-bottom" data-loading-text="Loading...">
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+
+                                                            <p class="sign-up-info">Don't have an account yet? <a href="#" id="headerSignUp">Sign Up!</a></p>
+
+                                                        </div>
+
+                                                        <div class="signup-form">
+                                                            <span class="mega-menu-sub-title">Create Account</span>
+
+                                                            <form action="" id="" type="post">
+                                                                <div class="row">
+                                                                    <div class="form-group">
+                                                                        <div class="col-md-12">
+                                                                            <label>E-mail Address</label>
+                                                                            <input type="text" value="" class="form-control">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="form-group">
+                                                                        <div class="col-md-6">
+                                                                            <label>Password</label>
+                                                                            <input type="password" value="" class="form-control">
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <label>Re-enter Password</label>
+                                                                            <input type="password" value="" class="form-control">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <input type="submit" value="Create Account" class="btn btn-primary pull-right push-bottom" data-loading-text="Loading...">
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+
+                                                            <p class="log-in-info">Already have an account? <a href="#" id="headerSignIn">Log In!</a></p>
+                                                        </div>
+
+                                                        <div class="recover-form">
+                                                            <span class="mega-menu-sub-title">Reset My Password</span>
+                                                            <p>Complete the form below to receive an email with the authorization code needed to reset your password.</p>
+
+                                                            <form action="" id="" type="post">
+                                                                <div class="row">
+                                                                    <div class="form-group">
+                                                                        <div class="col-md-12">
+                                                                            <label>E-mail Address</label>
+                                                                            <input type="text" value="" class="form-control">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <input type="submit" value="Submit" class="btn btn-primary pull-right push-bottom" data-loading-text="Loading...">
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+
+                                                            <p class="log-in-info">Already have an account? <a href="#" id="headerRecoverCancel">Log In!</a></p>
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </div>
                                         </li>
                                     </ul>
                                 </li>
-                                <?php endif; ?>
-
-                                <!--                                 <li><a href="<?php echo URL::action('LoginController@getDangNhap'); ?>">Đăng nhập</a></li>-->
-                                <!--                                <li class="dropdown mega-menu-item mega-menu-signin signin" id="headerAccount">
-                                                                    <a class="dropdown-toggle" href="page-login.html">
-                                                                        <i class="icon icon-user"></i> Sign In
-                                                                        <i class="icon icon-angle-down"></i>
-                                                                    </a>
-                                                                    <ul class="dropdown-menu">
-                                                                        <li>
-                                                                            <div class="mega-menu-content">
-                                                                                <div class="row">
-                                                                                    <div class="col-md-12">
-                                
-                                                                                        <div class="signin-form">
-                                
-                                                                                            <span class="mega-menu-sub-title">Đăng nhập</span>
-                                
-                                                                                            <form action="" id="" type="post">
-                                                                                                <div class="row">
-                                                                                                    <div class="form-group">
-                                                                                                        <div class="col-md-12">
-                                                                                                            <label>Username or E-mail Address</label>
-                                                                                                            <input type="text" value="" class="form-control">
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="row">
-                                                                                                    <div class="form-group">
-                                                                                                        <div class="col-md-12">
-                                                                                                            <a class="pull-right" id="headerRecover" href="#">(Lost Password?)</a>
-                                                                                                            <label>Password</label>
-                                                                                                            <input type="password" value="" class="form-control">
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="row">
-                                                                                                    <div class="col-md-6">
-                                                                                                        <span class="remember-box checkbox">
-                                                                                                            <label for="rememberme">
-                                                                                                                <input type="checkbox" id="rememberme" name="rememberme">Remember Me
-                                                                                                            </label>
-                                                                                                        </span>
-                                                                                                    </div>
-                                                                                                    <div class="col-md-6">
-                                                                                                        <input type="submit" value="Login" class="btn btn-primary pull-right push-bottom" data-loading-text="Loading...">
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </form>
-                                
-                                                                                            <p class="sign-up-info">Don't have an account yet? <a href="#" id="headerSignUp">Sign Up!</a></p>
-                                
-                                                                                        </div>
-                                
-                                                                                        <div class="signup-form">
-                                                                                            <span class="mega-menu-sub-title">Create Account</span>
-                                
-                                                                                            <form action="" id="" type="post">
-                                                                                                <div class="row">
-                                                                                                    <div class="form-group">
-                                                                                                        <div class="col-md-12">
-                                                                                                            <label>E-mail Address</label>
-                                                                                                            <input type="text" value="" class="form-control">
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="row">
-                                                                                                    <div class="form-group">
-                                                                                                        <div class="col-md-6">
-                                                                                                            <label>Password</label>
-                                                                                                            <input type="password" value="" class="form-control">
-                                                                                                        </div>
-                                                                                                        <div class="col-md-6">
-                                                                                                            <label>Re-enter Password</label>
-                                                                                                            <input type="password" value="" class="form-control">
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="row">
-                                                                                                    <div class="col-md-12">
-                                                                                                        <input type="submit" value="Create Account" class="btn btn-primary pull-right push-bottom" data-loading-text="Loading...">
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </form>
-                                
-                                                                                            <p class="log-in-info">Already have an account? <a href="#" id="headerSignIn">Log In!</a></p>
-                                                                                        </div>
-                                
-                                                                                        <div class="recover-form">
-                                                                                            <span class="mega-menu-sub-title">Reset My Password</span>
-                                                                                            <p>Complete the form below to receive an email with the authorization code needed to reset your password.</p>
-                                
-                                                                                            <form action="" id="" type="post">
-                                                                                                <div class="row">
-                                                                                                    <div class="form-group">
-                                                                                                        <div class="col-md-12">
-                                                                                                            <label>E-mail Address</label>
-                                                                                                            <input type="text" value="" class="form-control">
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="row">
-                                                                                                    <div class="col-md-12">
-                                                                                                        <input type="submit" value="Submit" class="btn btn-primary pull-right push-bottom" data-loading-text="Loading...">
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </form>
-                                
-                                                                                            <p class="log-in-info">Already have an account? <a href="#" id="headerRecoverCancel">Log In!</a></p>
-                                                                                        </div>
-                                
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </li>
-                                                                    </ul>
-                                                                </li>-->
                             </ul>
                         </nav>
                     </div>
@@ -418,11 +325,12 @@
 }(document, 'script', 'facebook-jssdk'));
                                 </script>
                                 <div class="fb-like-box" data-href="https://www.facebook.com/pubweb.vn" data-width="555" data-height="213" data-colorscheme="light" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true"></div>
-                                <style type="text/css">                              
+                                <style>                              
                                     .fb-like-box.fb_iframe_widget iframe {
                                         background: none repeat scroll 0 0 #FAFAFA;
                                     }
-                                </style>                             
+                                </style>
+                                </p>
                             </div>
                         </div>
                         <div class="col-md-4">

@@ -1,6 +1,6 @@
 <script>
     function phantrang(page) {
-        jQuery('.ajaxloader').css('display', 'block');
+        jQuery('.loader-ajax').css('display', 'block');
         var request = jQuery.ajax({
             url: "{{URL::action('AccountController@postAjaxHistory')}}?page=" + page,
             type: "POST",
@@ -8,7 +8,7 @@
         });
         request.done(function(msg) {
             jQuery('#history').html(msg);
-            jQuery('.ajaxloader').css('display', 'none');
+            jQuery('.loader-ajax').css('display', 'none');
         });
     }
 </script>
@@ -60,6 +60,6 @@
         </tbody>
     </table>
 </div>
-<div class="ajaxloader"  style="display: none;">
+<div class="loader-ajax"  style="display: none;">
 
 </div>
