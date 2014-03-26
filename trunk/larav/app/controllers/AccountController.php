@@ -52,7 +52,7 @@ class AccountController extends Controller {
             $user = Session::get('userSession');
             $tblHistory = new tblHistoryModel();
             $objHis = $tblHistory->getHistoryById($user[0]->id);
-            $link = $objHis->links();           
+            $link = $objHis->links();
             return View::make('fontend.historypage')->with('datahis', $objHis)->with('page', $link);
         } else {
             return View::make('fontend.login');
@@ -69,6 +69,22 @@ class AccountController extends Controller {
         } else {
             return View::make('fontend.login');
         }
+    }
+
+    public function postAjaxOrderServices() {
+        $tblOrder = new tblOrderModel();
+        $user = Session::get('userSession');               
+        $total = $tblOrder->getTotalStoreByServicesAjax($user[0]->userEmail,10);   
+        
+         $links = $total->links();
+        $start = $total->getCurrentPage() * 10 - 10;
+        if ($start < 0) {
+            $start = 0;
+        }
+        $data = $tblOrder->getTotalStoreByServices($user[0]->userEmail,$start, 10);
+        //var_dump($data);
+        return View::make('fontend.orderServicespage')->with('dataOrderServices', $data)->with('link', $links);
+        
     }
 
     public function getLogOut() {

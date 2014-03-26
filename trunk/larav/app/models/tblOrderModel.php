@@ -10,11 +10,12 @@ class tblOrderModel extends Eloquent {
 
     protected $table = 'tblOrder';
     public $timestamps = false;
- 
-  public function getOrderByUserId($id) {
+
+    public function getOrderByUserId($id) {
         $obj = DB::table('tblorder')->where('userID', '=', $id)->paginate(10);
         return $obj;
-        }
+    }
+
     public function getOrderByDomain($domain) {
         $objOrder = DB::table('tblOrder')->where('domain', '=', $domain)->get();
         return $objOrder;
@@ -27,6 +28,31 @@ class tblOrderModel extends Eloquent {
         } else {
             return FALSE;
         }
+    }
+
+    //tính tổng dung lượng của 1 domain đã đăng ký
+    public function getTotalStoreByServices($userEmail, $start, $per_page) {
+        $obj = DB::select('select  tblorder.domain , tblservices.servicesName,SUM(tblservices.servicesPrices)* 100/15 as Tongcong, max(tblservicesorder.dateExp) as ngayhethan 
+            from tblservices
+            INNER JOIN tblservicesorder on tblservicesorder.servicesID = tblservices.id 
+            INNER Join tblorder on tblservicesorder.orderID = tblorder.id
+            inner join tblusers on tblorder.userID = tblusers.id
+            where tblusers.userEmail = ?              
+            group by tblorder.domain 
+            LIMIT ?,?            
+            ', array($userEmail,$start, $per_page));
+        return $obj;
+    }
+      public function getTotalStoreByServicesAjax($userEmail,$per_page) {
+        $obj = DB::select('select  tblorder.domain , tblservices.servicesName,SUM(tblservices.servicesPrices)* 100/15 as Tongcong, max(tblservicesorder.dateExp) as ngayhethan 
+            from tblservices
+            INNER JOIN tblservicesorder on tblservicesorder.servicesID = tblservices.id 
+            INNER Join tblorder on tblservicesorder.orderID = tblorder.id
+            inner join tblusers on tblorder.userID = tblusers.id
+            where tblusers.userEmail = ?              
+            group by tblorder.domain                      
+            ', array($userEmail));
+        return Paginator::make($obj, count($obj), $per_page);
     }
 
 }
