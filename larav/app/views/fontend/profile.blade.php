@@ -24,7 +24,7 @@
        var $form = $('#frmChangePassword');
        if(!$form.valid())
            return false;
-       jQuery('.ajaxloader').css('display', 'block');
+       jQuery('.loader-ajax').css('display', 'block');
         var request = jQuery.ajax({
             url: "{{URL::action('AccountController@postChangePassWord')}}",
             type: "POST",
@@ -32,7 +32,7 @@
             dataType: "html"
         });
         request.done(function(msg) {
-            jQuery('.ajaxloader').css('display', 'none');
+            jQuery('.loader-ajax').css('display', 'none');
             if (msg == '0') {
                 jQuery('#changePassSuccess').removeClass('alert-success').addClass('alert-danger').css('display', 'block').html("Mật khẩu cũ không đúng!");
             }
@@ -47,7 +47,7 @@
     }
     function divHistoryClick() {
         jQuery('#divtableOrder').empty();
-        jQuery('.ajaxloader').css('display', 'block');
+        jQuery('.loader-ajax').css('display', 'block');
         var request = jQuery.ajax({
             url: "{{URL::action('AccountController@postAjaxHistory')}}",
             type: "POST",
@@ -59,7 +59,7 @@
     }
     function divOrderClick() {
         jQuery('#divtableHistory').empty();
-        jQuery('.ajaxloader').css('display', 'block');
+        jQuery('.loader-ajax').css('display', 'block');
         var request = jQuery.ajax({
             url: "{{URL::action('AccountController@postAjaxOrder')}}",
             type: "POST",
@@ -73,7 +73,7 @@
           var $form = $('#frmProfile');
        if(!$form.valid())
            return false;
-         jQuery('.ajaxloader').css('display', 'block');
+         jQuery('.loader-ajax').css('display', 'block');
     }
 </script>
 <hr class="tall">
@@ -101,7 +101,7 @@
                         </div>
                         @endif
                         <form id="frmProfile" method="post" action="{{URL::action('AccountController@postProfile')}}" >
-                              <div class="ajaxloader"  style="display: none;background-position-x: 19% !important;background-position-y: 218px !important;">
+                              <div class="loader-ajax"  style="display: none;background-position-x: 19% !important;background-position-y: 218px !important;">
 
                         </div>
                             <ul class="simple-post-list">    
@@ -168,7 +168,7 @@
                             Đổi mật khẩu thành công!
                         </div>
                         <form action="{{URL::action('AccountController@postChangePassWord')}}" id="frmChangePassword" method="post">
-                          <div class="ajaxloader"  style="display: none;background-position-x: 19% !important;background-position-y: 102px !important;">
+                          <div class="loader-ajax"  style="display: none;background-position-x: 19% !important;background-position-y: 102px !important;">
 
                         </div>
                             <ul class="simple-post-list">
@@ -206,11 +206,11 @@
                         </form>                       
                     </div>
                     <div class="tab-pane" id="history">
-                        <div class="ajaxloader"  style="display: block;">
+                        <div class="loader-ajax"  style="display: block;">
                         </div>
                     </div>
                     <div class="tab-pane" id="order">
-                        <div class="ajaxloader"  style="display: block;">
+                        <div class="loader-ajax"  style="display: block;">
                         </div>
                     </div>
                 </div>
