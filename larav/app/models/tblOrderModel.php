@@ -12,7 +12,7 @@ class tblOrderModel extends Eloquent {
     public $timestamps = false;
  
   public function getOrderByUserId($id) {
-        $obj = DB::table('tblorder')->where('userID', '=', $id)->paginate(3);
+        $obj = DB::table('tblorder')->where('userID', '=', $id)->paginate(10);
         return $obj;
         }
     public function getOrderByDomain($domain) {
