@@ -38,7 +38,10 @@ Route::controller('nap-tien', 'NapTienController');
 Route::controller('kiem-tra-ten-mien', 'DomainController');
 Route::controller('san-pham', 'ProductController');
 Route::controller('tai-khoan', 'LoginController');
-
+Route::controller('page', 'PageController');
+Route::controller('contact', 'ContactController');
+Route::controller('account', 'AccountController');
+Route::controller('login', 'LoginController');
 App::missing(function($exception) {
     return View::make('fontend.404  ');
 });
