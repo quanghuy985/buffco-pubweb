@@ -11,3 +11,7 @@
   |
  */
 
+Route::get('/', function () {
+
+    return View::make('backend.admin-home');
+});
