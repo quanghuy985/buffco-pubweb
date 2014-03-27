@@ -10,7 +10,8 @@ class tblOrderModel extends Eloquent {
         $this->orderCode = $orderCode;
         $this->time = time();
         $this->status = 0;
-        $this->save();
+        $check = $this->save();
+        return $check;
     }
 
     public function updateOrder($oderID, $userID, $orderCode, $orderStatus) {
@@ -37,8 +38,8 @@ class tblOrderModel extends Eloquent {
 
 // Chua lam xong can fai chinh lai de search theo userName, productName, chu k search theo id
     public function findOrder($keyword, $per_page) {
-        $newsArray = DB::table('tblOrder')->where('userID', 'LIKE', '%' . $keyword . '%')->orWhere('orderCode', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
-        return $newsArray;
+        $arrOrder = DB::table('tblOrder')->where('userID', 'LIKE', '%' . $keyword . '%')->orWhere('orderCode', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
+        return $arrOrder;
     }
 
     public function selectOrder($sqlfun) {
@@ -46,7 +47,7 @@ class tblOrderModel extends Eloquent {
         return ($results);
     }
 
-    public function allOrder($per_page) {
+    public function getAllOrder($per_page) {
         $allOrder = DB::table('tblOrder')->join('tblusers', 'tblOrder.userID', '=', 'tblusers.id')->join('tblproduct', 'tblOrder.productID', '=', 'tblproduct.id')->select('tblOrder.*', 'tblusers.userEmail', 'tblproduct.productName')->paginate($per_page);
         return $allOrder;
     }
@@ -62,16 +63,14 @@ class tblOrderModel extends Eloquent {
         } else {
             $allOrder = DB::table('tblOrder')->join('tblusers', 'tblOrder.userID', '=', 'tblusers.id')->join('tblproduct', 'tblOrder.productID', '=', 'tblproduct.id')->select('tblOrder.*', 'tblusers.userEmail', 'tblproduct.productName')->where('tblusers.userEmail', 'LIKE', '%' . $keyword . '%')->where('tblOrder.status', '=', $orderby)->paginate($per_page);
         }
-
         return $allOrder;
     }
 
-    public function getOrderById($id) {
-        $allOrder = DB::table('tblOrder')->join('tblusers', 'tblOrder.userID', '=', 'tblusers.id')->join('tblproduct', 'tblOrder.productID', '=', 'tblproduct.id')->select('tblOrder.*', 'tblusers.userEmail', 'tblproduct.productName')->where('tblOrder.id', '=', $id)->get();
-        return $allOrder[0];
-    }
-
-    public function DeleteOrder($id) {
+    public function getOrderByOrderCode($orderCode) {
+        $allOrder = DB::table('tblOrder')->join('tblproduct', 'tblOrder.productID', '=', 'tblproduct.id')->select('tblOrder.*', 'tblusers.userEmail', 'tblproduct.productName')->where('tblOrder.id', '=', $id)->get();
+        return $allOrder;
+    }    
+    public function deleteOrder($id) {
         $checkdel = $this->where('id', '=', $id)->update(array('status' => 2));
         if ($checkdel > 0) {
             return TRUE;

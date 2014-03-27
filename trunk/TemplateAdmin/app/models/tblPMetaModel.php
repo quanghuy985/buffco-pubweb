@@ -10,7 +10,8 @@ class tblPMetaModel extends Eloquent {
         $this->tagID = $tagID;        
         $this->time = time();
         $this->status = 0;
-        $this->save();
+        $check = $this->save();
+        return $check;
     }
 
     public function updatePMeta($pMetaID,$productID, $tagID, $tagStatus) {
@@ -24,7 +25,7 @@ class tblPMetaModel extends Eloquent {
             $arraysql = array_merge($arraysql, array("tagID" => $tagID));
         }   
         if ($tagStatus != '') {
-            $arraysql = array_merge($arraysql, array("tagStatus" => $tagStatus));
+            $arraysql = array_merge($arraysql, array("status" => $tagStatus));
         }
         $checku = $tablePMeta->update($arraysql);
         if ($checku > 0) {
@@ -50,17 +51,17 @@ class tblPMetaModel extends Eloquent {
 
     public function getPMetaByID($pMetaID) {
         $objPMeta = DB::table('tblpmeta')->where('id', '=', $pMetaID)->get();
-        return $objPMeta[0];
+        return $objPMeta;
     }
     
      public function getProductID($productID) {
         $objPMeta = DB::table('tblpmeta')->where('productID', '=', $productID)->get();
-        return $objPMeta[0];
+        return $objPMeta;
     }
     
       public function getTagID($tagID) {
         $objPMeta = DB::table('tblpmeta')->where('tagID', '=', $tagID)->get();
-        return $objPMeta[0];
+        return $objPMeta;
     }
 
 }

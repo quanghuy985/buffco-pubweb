@@ -1,6 +1,6 @@
 <?php
 
-class tblTagModel extends Eloquent {
+class tblPromotionModel extends Eloquent {
 
     protected $table = 'tblpromotion';
     public $timestamps = false;
@@ -28,7 +28,7 @@ class tblTagModel extends Eloquent {
             $arraysql = array_merge($arraysql, array("promotionAmount" => $promotionAmount));
         }
         if ($promotionStatus != '') {
-            $arraysql = array_merge($arraysql, array("promotionStatus" => $promotionStatus));
+            $arraysql = array_merge($arraysql, array("status" => $promotionStatus));
         }
         $checku = $tablePromotion->update($arraysql);
         if ($checku > 0) {
@@ -54,7 +54,7 @@ class tblTagModel extends Eloquent {
 
     public function getTagByID($promotionID) {
         $objPromotion = DB::table('tblpromotion')->where('id', '=', $promotionID)->get();
-        return $objPromotion[0];
+        return $objPromotion;
     }
 
 }
