@@ -18,6 +18,8 @@ class tblAdminModel extends Eloquent {
         $this->adminRoles = $adminRoles;
         $this->time = time();
         $this->status = 0;
+        $result = $this->save();
+        return $result;
     }
 
     public function updateAdmin($adminEmail, $adminPassword, $adminName, $adminRoles, $status) {

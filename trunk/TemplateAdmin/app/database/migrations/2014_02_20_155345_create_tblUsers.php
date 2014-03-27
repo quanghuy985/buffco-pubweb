@@ -86,6 +86,16 @@ class CreateTblUsers extends Migration {
             $table->string('time');
             $table->integer('status');
         });
+        // Luu so luong san pham
+        Schema::create('tblStore', function($table) {
+            $table->increments('id');
+            $table->integer('productID');
+            $table->string('type');
+            $table->integer('soluongnhap');
+            $table->integer('soluongban');
+            $table->string('time');
+            $table->integer('status');
+        });
         // Luu phien lam viec
         Schema::create('tblOrder', function($table) {
             $table->increments('id');
@@ -253,8 +263,8 @@ class CreateTblUsers extends Migration {
         });
         Schema::create('tblGroupAdminRoles', function($table) {
             $table->increments('id');
-            $table->string('groupadminID');
-            $table->string('rolesID');
+            $table->integer('groupadminID');
+            $table->integer('rolesID');
             $table->string('time');
             $table->integer('status');
         });

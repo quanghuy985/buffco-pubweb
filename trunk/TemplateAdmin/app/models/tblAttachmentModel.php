@@ -17,9 +17,11 @@ class tblAttachmentModel extends Eloquent {
         $this->attachmentURL = $attachmentURL;
         $this->time = time();
         $this->status = 0;
+        $result = $this->save();
+        return $result;
     }
 
-    public function updateAttachment($attachmentID, $destinyID, $attachmentName, $attachmentURL) {
+    public function updateAttachment($attachmentID, $destinyID, $attachmentName, $attachmentURL, $status) {
         $objAttachment = $this->where('id', '=', $attachmentID);
         $arraysql = array('id' => $attachmentID);
         if ($destinyID != '') {
@@ -44,6 +46,29 @@ class tblAttachmentModel extends Eloquent {
 
     public function getAttachmentByDestinyID($destinyID) {
         $arrAttachment = DB::table('tblAttachment')->where('destinyID', '=', $destinyID)->get();
+        return $arrAttachment;
+    }
+
+    public function deleteAttachmentByID($id) {
+        $checkdel = $this->where('id', '=', $id)->update(array('status' => 2));
+        if ($checkdel > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
+    public function deleteAttachmentByDestinyID($id) {
+        $checkdel = $this->where('id', '=', $id)->update(array('status' => 2));
+        if ($checkdel > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
+    public function allAttachmentPanigate($per_page) {
+        $arrAttachment = DB::table('tblAttachment')->paginate($per_page);
         return $arrAttachment;
     }
 

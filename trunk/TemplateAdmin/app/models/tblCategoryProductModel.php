@@ -20,7 +20,8 @@ class tblCategoryProductModel extends Eloquent {
         $this->cateDescription = $cateDescription;
         $this->time = time();
         $this->status = 0;
-        $this->save();
+        $result = $this->save();
+        return $result;
     }
 
     public function updateCateProduct($cateProductID, $cateProductName, $cateProductParent, $cateProductSlug, $cateDescription, $cateProductStatus) {
@@ -74,13 +75,13 @@ class tblCategoryProductModel extends Eloquent {
     }
 
     public function allCateProduct($per_page) {
-        $alladmin = DB::table('tblCategoryProduct')->paginate($per_page);
-        return $alladmin;
+        $arrCateProduct = DB::table('tblCategoryProduct')->paginate($per_page);
+        return $arrCateProduct;
     }
 
     public function findCateProductByID($id) {
-        $adminarray = DB::table('tblCategoryProduct')->where('id', '=', $id)->get();
-        return $adminarray[0];
+        $objCateProduct = DB::table('tblCategoryProduct')->where('id', '=', $id)->get();
+        return $objCateProduct;
     }
 
     public function getAllCategoryProduct($start, $per_page) {
