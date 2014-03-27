@@ -17,7 +17,8 @@ class TblProductModel extends Eloquent {
         $this->manufactureID = $manufactureID;
         $this->time = time();       
         $this->status = 0; 
-        $this->save();
+        $check = $this->save();
+        return $check;
     }
 
     public function updateProduct($id,$cateID, $productName, $productUrlImage, $productDescription, $productPrice, $promotionID, $productTag, $productSlug, $manufactureID, $status) {
@@ -81,7 +82,7 @@ class TblProductModel extends Eloquent {
 
     public function getProductById($productID) {
         $arrProduct = DB::table('tblproduct')->where('id', '=', $productID)->get();
-        return $arrProduct[0];
+        return $arrProduct;
     }
 
     public function FindProduct($keyword, $per_page, $orderby, $status) {

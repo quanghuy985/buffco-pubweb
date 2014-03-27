@@ -11,7 +11,8 @@ class tblTagModel extends Eloquent {
         $this->catetagID = $catetagID;
         $this->time = time();
         $this->status = 0;
-        $this->save();
+        $check = $this->save();
+        return $check;
     }
 
     public function updateTag($tagID, $tagName, $tagDescription, $catetagID, $tagStatus) {
@@ -28,7 +29,7 @@ class tblTagModel extends Eloquent {
             $arraysql = array_merge($arraysql, array("catetagID" => $catetagID));
         }
         if ($tagStatus != '') {
-            $arraysql = array_merge($arraysql, array("tagStatus" => $tagStatus));
+            $arraysql = array_merge($arraysql, array("status" => $tagStatus));
         }
         $checku = $tableTag->update($arraysql);
         if ($checku > 0) {
@@ -54,7 +55,7 @@ class tblTagModel extends Eloquent {
 
     public function getTagByID($tagID) {
         $objTag = DB::table('tbltag')->where('id', '=', $tagID)->get();
-        return $objTag[0];
+        return $objTag;
     }
 
 }

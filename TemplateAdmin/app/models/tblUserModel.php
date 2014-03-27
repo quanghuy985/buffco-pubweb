@@ -22,7 +22,8 @@ class tblUserModel extends Eloquent {
         $this->userTime = time();
         $this->status = 0;
         $this->verify = $verifykey;
-        $this->save();
+        $check = $this->save();
+        return $check;
     }
 
     public function UpdateUser($uemail, $upassword, $ufname, $ulname, $uaddress, $uphone, $uidentify, $upoint, $ustatus) {
@@ -120,9 +121,10 @@ class tblUserModel extends Eloquent {
         }
         return $adminarray;
     }
+
     public function getCountUserByStt($stt) {
-         $count = DB::table('tblusers')->where('status', '=', $stt)->count();
-         return $count;
+        $count = DB::table('tblusers')->where('status', '=', $stt)->count();
+        return $count;
     }
 
 }
