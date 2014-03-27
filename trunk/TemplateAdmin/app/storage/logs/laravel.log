@@ -1865,3 +1865,49 @@ Stack trace:
 #18 E:\wamp\www\laravel\vendor\laravel\framework\src\Illuminate\Foundation\Application.php(606): Stack\StackedHttpKernel->handle(Object(Illuminate\Http\Request))
 #19 E:\wamp\www\laravel\public\index.php(49): Illuminate\Foundation\Application->run()
 #20 {main} [] []
+[2014-03-27 11:53:53] production.ERROR: exception 'ReflectionException' with message 'Class ProductController does not exist' in E:\wamp\www\TemplateAdmin\vendor\laravel\framework\src\Illuminate\Routing\ControllerInspector.php:28
+Stack trace:
+#0 E:\wamp\www\TemplateAdmin\vendor\laravel\framework\src\Illuminate\Routing\ControllerInspector.php(28): ReflectionClass->__construct('ProductControll...')
+#1 E:\wamp\www\TemplateAdmin\vendor\laravel\framework\src\Illuminate\Routing\Router.php(269): Illuminate\Routing\ControllerInspector->getRoutable('ProductControll...', 'product')
+#2 E:\wamp\www\TemplateAdmin\vendor\laravel\framework\src\Illuminate\Support\Facades\Facade.php(211): Illuminate\Routing\Router->controller('product', 'ProductControll...')
+#3 E:\wamp\www\TemplateAdmin\app\routes.php(26): Illuminate\Support\Facades\Facade::__callStatic('controller', Array)
+#4 E:\wamp\www\TemplateAdmin\app\routes.php(26): Illuminate\Support\Facades\Route::controller('product', 'ProductControll...')
+#5 [internal function]: {closure}(Object(Illuminate\Routing\Router))
+#6 E:\wamp\www\TemplateAdmin\vendor\laravel\framework\src\Illuminate\Routing\Router.php(679): call_user_func(Object(Closure), Object(Illuminate\Routing\Router))
+#7 E:\wamp\www\TemplateAdmin\vendor\laravel\framework\src\Illuminate\Support\Facades\Facade.php(211): Illuminate\Routing\Router->group(Array, Object(Closure))
+#8 E:\wamp\www\TemplateAdmin\app\routes.php(39): Illuminate\Support\Facades\Facade::__callStatic('group', Array)
+#9 E:\wamp\www\TemplateAdmin\app\routes.php(39): Illuminate\Support\Facades\Route::group(Array, Object(Closure))
+#10 E:\wamp\www\TemplateAdmin\vendor\laravel\framework\src\Illuminate\Foundation\start.php(269): require('E:\wamp\www\Tem...')
+#11 [internal function]: {closure}(Object(Illuminate\Foundation\Application))
+#12 E:\wamp\www\TemplateAdmin\vendor\laravel\framework\src\Illuminate\Foundation\Application.php(792): call_user_func(Object(Closure), Object(Illuminate\Foundation\Application))
+#13 E:\wamp\www\TemplateAdmin\vendor\laravel\framework\src\Illuminate\Foundation\Application.php(569): Illuminate\Foundation\Application->fireAppCallbacks(Array)
+#14 E:\wamp\www\TemplateAdmin\vendor\laravel\framework\src\Illuminate\Foundation\Application.php(552): Illuminate\Foundation\Application->bootApplication()
+#15 E:\wamp\www\TemplateAdmin\vendor\laravel\framework\src\Illuminate\Console\Application.php(44): Illuminate\Foundation\Application->boot()
+#16 E:\wamp\www\TemplateAdmin\vendor\laravel\framework\src\Illuminate\Console\Application.php(33): Illuminate\Console\Application::make(Object(Illuminate\Foundation\Application))
+#17 E:\wamp\www\TemplateAdmin\artisan(46): Illuminate\Console\Application::start(Object(Illuminate\Foundation\Application))
+#18 {main} [] []
+[2014-03-27 11:53:59] production.ERROR: exception 'ReflectionException' with message 'Class ProductController does not exist' in E:\wamp\www\TemplateAdmin\vendor\laravel\framework\src\Illuminate\Routing\ControllerInspector.php:28
+Stack trace:
+#0 E:\wamp\www\TemplateAdmin\vendor\laravel\framework\src\Illuminate\Routing\ControllerInspector.php(28): ReflectionClass->__construct('ProductControll...')
+#1 E:\wamp\www\TemplateAdmin\vendor\laravel\framework\src\Illuminate\Routing\Router.php(269): Illuminate\Routing\ControllerInspector->getRoutable('ProductControll...', 'product')
+#2 E:\wamp\www\TemplateAdmin\vendor\laravel\framework\src\Illuminate\Support\Facades\Facade.php(211): Illuminate\Routing\Router->controller('product', 'ProductControll...')
+#3 E:\wamp\www\TemplateAdmin\app\routes.php(26): Illuminate\Support\Facades\Facade::__callStatic('controller', Array)
+#4 E:\wamp\www\TemplateAdmin\app\routes.php(26): Illuminate\Support\Facades\Route::controller('product', 'ProductControll...')
+#5 [internal function]: {closure}(Object(Illuminate\Routing\Router))
+#6 E:\wamp\www\TemplateAdmin\vendor\laravel\framework\src\Illuminate\Routing\Router.php(679): call_user_func(Object(Closure), Object(Illuminate\Routing\Router))
+#7 E:\wamp\www\TemplateAdmin\vendor\laravel\framework\src\Illuminate\Support\Facades\Facade.php(211): Illuminate\Routing\Router->group(Array, Object(Closure))
+#8 E:\wamp\www\TemplateAdmin\app\routes.php(39): Illuminate\Support\Facades\Facade::__callStatic('group', Array)
+#9 E:\wamp\www\TemplateAdmin\app\routes.php(39): Illuminate\Support\Facades\Route::group(Array, Object(Closure))
+#10 E:\wamp\www\TemplateAdmin\vendor\laravel\framework\src\Illuminate\Foundation\start.php(269): require('E:\wamp\www\Tem...')
+#11 [internal function]: {closure}(Object(Illuminate\Foundation\Application))
+#12 E:\wamp\www\TemplateAdmin\vendor\laravel\framework\src\Illuminate\Foundation\Application.php(792): call_user_func(Object(Closure), Object(Illuminate\Foundation\Application))
+#13 E:\wamp\www\TemplateAdmin\vendor\laravel\framework\src\Illuminate\Foundation\Application.php(569): Illuminate\Foundation\Application->fireAppCallbacks(Array)
+#14 E:\wamp\www\TemplateAdmin\vendor\laravel\framework\src\Illuminate\Foundation\Application.php(552): Illuminate\Foundation\Application->bootApplication()
+#15 E:\wamp\www\TemplateAdmin\vendor\laravel\framework\src\Illuminate\Console\Application.php(44): Illuminate\Foundation\Application->boot()
+#16 E:\wamp\www\TemplateAdmin\vendor\laravel\framework\src\Illuminate\Console\Application.php(33): Illuminate\Console\Application::make(Object(Illuminate\Foundation\Application))
+#17 E:\wamp\www\TemplateAdmin\artisan(46): Illuminate\Console\Application::start(Object(Illuminate\Foundation\Application))
+#18 {main} [] []
+[2014-03-27 11:54:50] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Call to undefined method Illuminate\Database\Schema\Blueprint::ingeger()' in E:\wamp\www\TemplateAdmin\app\database\migrations\2014_02_20_155345_create_tblUsers.php:171
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []

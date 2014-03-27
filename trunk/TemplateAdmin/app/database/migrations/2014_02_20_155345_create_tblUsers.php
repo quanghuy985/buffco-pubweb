@@ -168,7 +168,7 @@ class CreateTblUsers extends Migration {
             $table->string('to');
             $table->integer('totalProductSold');
             $table->decimal('totalRevenue', 20, 2);
-            $table->ingeger('totalUser');
+            $table->integer('totalUser');
             $table->integer('totalNews');
             $table->string('time');
             $table->integer('status');
