@@ -20,6 +20,8 @@ class tblCategoryNewsModel extends Eloquent {
         $this->catenewsSlug = $cateNewsSlug;
         $this->time = time();
         $this->status = 0;
+        $result = $this->save();
+        return $result;
     }
 
     public function updateCategoryNews($cateNewsID, $cateNewsName, $cateNewsDescription, $cateNewsParent, $cateNewsSlug, $status) {
