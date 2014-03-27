@@ -213,7 +213,7 @@ class CreateTblUsers extends Migration {
             $table->string('adminEmail');
             $table->string('adminPassword');
             $table->string('adminName');
-            $table->integer('adminRoles');
+            $table->integer('groupadminID');
             $table->string('time');
             $table->integer('status');
         });
@@ -233,6 +233,27 @@ class CreateTblUsers extends Migration {
             $table->string('supporterNickYH');
             $table->string('supporterNickSkype');
             $table->string('supporterPhone');
+            $table->string('time');
+            $table->integer('status');
+        });
+        Schema::create('tblGroupAdmin', function($table) {
+            $table->increments('id');
+            $table->string('groupadminName');
+            $table->string('groupadminDescription');
+            $table->string('time');
+            $table->integer('status');
+        });
+        Schema::create('tblRoles', function($table) {
+            $table->increments('id');
+            $table->string('rolesCode');
+            $table->string('rolesDescription');
+            $table->string('time');
+            $table->integer('status');
+        });
+        Schema::create('tblGroupAdminRoles', function($table) {
+            $table->increments('id');
+            $table->string('groupadminID');
+            $table->string('rolesID');
             $table->string('time');
             $table->integer('status');
         });
