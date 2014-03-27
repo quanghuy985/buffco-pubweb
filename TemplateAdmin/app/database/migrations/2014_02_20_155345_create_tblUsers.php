@@ -115,8 +115,8 @@ class CreateTblUsers extends Migration {
         // tblTag dung de luu cac thuoc tinh cua san pham VD : do, xanh, CPU, RAM
         Schema::create('tblTag', function($table) {
             $table->increments('id');
-            $table->string('tagName');
-            $table->string('tagDescription');
+            $table->string('tagKey');
+            $table->string('tagValue');
             $table->integer('catetagID');
             $table->string('time');
             $table->integer('status');
