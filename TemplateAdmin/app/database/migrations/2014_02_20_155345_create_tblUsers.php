@@ -157,6 +157,7 @@ class CreateTblUsers extends Migration {
         Schema::create('tblHistory', function($table) {
             $table->increments('id');
             $table->integer('userID');
+            $table->integer('type'); // = 0 neu userid tu bang tblUser, = 1 neu tu bang tblAdmin
             $table->longtext('historyContent');
             $table->string('time');
             $table->integer('status');
