@@ -43,4 +43,27 @@ class tblCategoryNewsModel extends Eloquent {
         }
     }
 
+    public function deleteCateNews($cateNewsId) {
+        $checkdel = $this->where('id', '=', $cateNewsId)->update(array('status' => 2));
+        if ($checkdel > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
+    public function deleteCateNewsChild($id) {
+        $checkdel = $this->where('cateNewsParent', '=', $id)->update(array('status' => 2));
+        if ($checkdel > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
+    public function findCateNews($keyword, $per_page) {
+        $cateArray = DB::table('tblCateNews')->where('catenewsName', 'LIKE', '%' . $keyword . '%')->orWhere('catenewsSlug', 'LIKE', '%' . $keyword . '%')->orWhere('catenewsTime', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
+        return $cateArray;
+    }
+
 }
