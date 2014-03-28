@@ -5,18 +5,18 @@ class tblManufacturerModel extends Eloquent{
     protected $table = 'tblmanufacturer';
     public $timestamps = false;
     
-    public function addManufacturer($Name,$Description,$Place,$time,$status){
+    public function addManufacturer($Name,$Description,$Place,$status){
         $this->manufacturerName = $Name;
         $this->manufacturerDescription = $Description;
         $this->manufacturerPlace = $Place;
-        $this->time = $time;
+        $this->time = time();
         $this->status = 0;
         $result = $this->save();
         return $result;        
     }
     
     
-    public function updateManufacturer($Id,$Name,$Description,$Place,$time,$status) {
+    public function updateManufacturer($Id,$Name,$Description,$Place,$status) {
     // $tableAdmin = new TblAdminModel();
         $tableManufacturer = $this->where('id', '=', $Id);
         $arraysql = array('id' => $historyId);
@@ -28,9 +28,7 @@ class tblManufacturerModel extends Eloquent{
         }
         if ($Place != '') {
             $arraysql = array_merge($arraysql, array("manufacturerPlace" => $Place));
-        }
-        if ($time != '') {
-            $arraysql = array_merge($arraysql, array("time" => $time));
+               
         }if ($status != '') {
             $arraysql = array_merge($arraysql, array("status" => $status));
         }
@@ -59,13 +57,13 @@ class tblManufacturerModel extends Eloquent{
     }
     
     public function selectAllManufacturer($per_page,$orderby){
-        $allManufacturer = DB::table('tblmanufacturer')->select('tblmanufacturer.id', 'tblmanufacturer.manufacturerName','tblmanufacturer.manufacturerDescription','tblmanufacturer.manufacturerPlace','tblmanufacturer.time','tblmanufacturer.status')->orderBy($orderby, 'desc')->paginate($per_page);
+        $allManufacturer = DB::table('tblmanufacturer')->orderBy($orderby, 'desc')->paginate($per_page);
         return $allManufacturer;
     }
     
     public function getManufacturerById($id){
         $arrManufacturer = DB::table('tblmanufacturer')->where('id','=',$id)->get();
-        return $arrManufacturer;
+        return $arrManufacturer[0];
     }
     
     
