@@ -12,6 +12,11 @@
  */
 
 Route::get('/', function () {
+    return View::make('fontend.index');
+});
 
-    return View::make('backend.admin-home');
+Route::controller('manu', 'ManufacturerController');
+
+App::missing(function($exception) {
+    return View::make('fontend.404');
 });
