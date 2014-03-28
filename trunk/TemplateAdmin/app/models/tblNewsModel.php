@@ -12,7 +12,7 @@ class tblNewsModel extends Eloquent {
         $this->newsKeywords = $newsKeywords;
         $this->newsContent = $newsContent;
         $this->newsTag = $newsTag;
-         $this->newsSlug = $newsSlug;
+        $this->newsSlug = $newsSlug;
         $this->adminID = $adminID;
         $this->time = time();
         $this->status = 0;
@@ -33,7 +33,7 @@ class tblNewsModel extends Eloquent {
         if ($newsDescription != '') {
             $arraysql = array_merge($arraysql, array("newsDescription" => $newsDescription));
         }
-           if ($newsKeywords != '') {
+        if ($newsKeywords != '') {
             $arraysql = array_merge($arraysql, array("newsKeywords" => $newsKeywords));
         }
         if ($newsContent != '') {
@@ -42,7 +42,7 @@ class tblNewsModel extends Eloquent {
         if ($newsTag != '') {
             $arraysql = array_merge($arraysql, array("newsTag" => $newsTag));
         }
-         if ($newsSlug != '') {
+        if ($newsSlug != '') {
             $arraysql = array_merge($arraysql, array("newsSlug" => $newsSlug));
         }
         if ($adminID != '') {
@@ -59,7 +59,7 @@ class tblNewsModel extends Eloquent {
         }
     }
 
-    public function deleteNew($newID) {
+    public function deleteNews($newID) {
         $checkdel = $this->where('id', '=', $newID)->update(array('status' => 2));
         if ($checkdel > 0) {
             return TRUE;
@@ -76,6 +76,26 @@ class tblNewsModel extends Eloquent {
     public function getNewByID($newID) {
         $arrNew = DB::table('tblnews')->where('id', '=', $newID)->get();
         return $arrNew;
+    }
+
+    public function allNews($per_page, $orderby) {
+        $allNews = DB::table('tblNews')->join('tblCateNews', 'tblNews.catenewsID', '=', 'tblCateNews.id')->select('tblNews.id', 'tblCateNews.cateNewsName', 'tblNews.newsName', 'tblNews.newsDescription', 'tblNews.newsKeywords', 'tblNews.newsContent', 'tblNews.newsTag', 'tblNews.newsSlug', 'tblNews.newsTime', 'tblNews.status')->orderBy($orderby, 'desc')->paginate($per_page);
+        return $allNews;
+    }
+
+    public function getNewsByID($newsID) {
+        $objNews = DB::table('tblNews')->where('id', '=', $newsID)->get();
+        return $objNews;
+    }
+
+    public function FindNews($keyword, $per_page, $orderby, $status) {
+        $arrNews = '';
+        if ($status == '') {
+            $arrNews = DB::table('tblNews')->join('tblCateNews', 'tblNews.catenewsID', '=', 'tblCateNews.id')->select('tblNews.*', 'tblCateNews.cateNewsName')->where('tblNews.newsDescription', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);
+        } else {
+            $arrNews = DB::table('tblNews')->join('tblCateNews', 'tblNews.catenewsID', '=', 'tblCateNews.id')->select('tblNews.*', 'tblCateNews.cateNewsName')->where('tblNews.newsDescription', 'LIKE', '%' . $keyword . '%')->where('tblNews.status', '=', $status)->orderBy($orderby, 'desc')->paginate($per_page);
+        }
+        return $arrNews;
     }
 
 }
