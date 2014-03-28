@@ -73,7 +73,7 @@ class tblNewsModel extends Eloquent {
         return $arrNew;
     }
 
-    public function getTagByID($newID) {
+    public function getNewByID($newID) {
         $arrNew = DB::table('tblnews')->where('id', '=', $newID)->get();
         return $arrNew;
     }
