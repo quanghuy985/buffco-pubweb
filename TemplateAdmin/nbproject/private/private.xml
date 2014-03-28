@@ -3,10 +3,21 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/wamp/www/TemplateAdmin/app/models/tblCategoryNewsModel.php</file>
-            <file>file:/E:/wamp/www/TemplateAdmin/app/database/migrations/2014_02_20_155345_create_tblUsers.php</file>
-            <file>file:/E:/wamp/www/TemplateAdmin/app/models/tblAttachmentModel.php</file>
-            <file>file:/E:/wamp/www/TemplateAdmin/app/models/tblAdminModel.php</file>
+            <file>file:/G:/WAMP/www/TemplateAdmin/app/models/tblManufacturerModel.php</file>
+            <file>file:/G:/WAMP/www/TemplateAdmin/app/models/tblOrderModel.php</file>
+            <file>file:/G:/WAMP/www/TemplateAdmin/app/models/tblPMetaModel.php</file>
+            <file>file:/G:/WAMP/www/TemplateAdmin/app/models/tblMenuModel.php</file>
+            <file>file:/G:/WAMP/www/TemplateAdmin/app/models/tblStatisticModel.php</file>
+            <file>file:/G:/WAMP/www/TemplateAdmin/app/models/tblPromotionModel.php</file>
+            <file>file:/G:/WAMP/www/TemplateAdmin/app/models/tblNewsModel.php</file>
+            <file>file:/G:/WAMP/www/TemplateAdmin/app/models/tblUserModel.php</file>
+            <file>file:/G:/WAMP/www/TemplateAdmin/app/models/tblOrderDetailModel.php</file>
+            <file>file:/G:/WAMP/www/TemplateAdmin/app/models/tblTagModel.php</file>
+            <file>file:/G:/WAMP/www/TemplateAdmin/app/models/tblSupporterGroupModel.php</file>
+            <file>file:/G:/WAMP/www/TemplateAdmin/app/models/tblPageModel.php</file>
+            <file>file:/G:/WAMP/www/TemplateAdmin/app/models/tblProductModel.php</file>
+            <file>file:/G:/WAMP/www/TemplateAdmin/app/models/tblSupporterModel.php</file>
+            <file>file:/G:/WAMP/www/TemplateAdmin/app/models/tblProjectModel.php</file>
         </group>
     </open-files>
 </project-private>

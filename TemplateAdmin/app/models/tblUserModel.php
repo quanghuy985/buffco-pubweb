@@ -109,7 +109,7 @@ class tblUserModel extends Eloquent {
 
     public function getUserByEmail($userEmail) {
         $objectUser = DB::table('tblusers')->where('userEmail', '=', $userEmail)->get();
-        return $objectUser[0];
+        return $objectUser;
     }
 
     public function FindUser($keyword, $per_page, $orderby, $status) {
