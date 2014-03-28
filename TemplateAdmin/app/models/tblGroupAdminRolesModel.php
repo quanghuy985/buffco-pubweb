@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-class tblGroupAdminRoles extends Eloquent {
+class tblGroupAdminRolesModel extends Eloquent {
 
     protected $table = 'tblGroupAdminRoles';
     public $timestamps = false;
@@ -39,13 +39,13 @@ class tblGroupAdminRoles extends Eloquent {
     }
 
     public function findGroupAdminRolesByID($id) {
-        $objGroupAdmin = DB::table('tblGroupAdminRoles')->where('id', '=', $id)->get();
-        return $objGroupAdmin;
+        $objGroupAdminRoles = DB::table('tblGroupAdminRoles')->where('id', '=', $id)->get();
+        return $objGroupAdminRoles;
     }
 
     public function allGroupAdminRoles($per_page) {
-        $arrGroupAdmin = DB::table('tblGroupAdminRoles')->paginate($per_page);
-        return $arrGroupAdmin;
+        $arrGroupAdminRoles = DB::table('tblGroupAdminRoles')->paginate($per_page);
+        return $arrGroupAdminRoles;
     }
 
     public function deleteGroupAdminRoles($id) {
