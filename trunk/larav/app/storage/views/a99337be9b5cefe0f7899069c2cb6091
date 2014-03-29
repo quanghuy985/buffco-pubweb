@@ -1,0 +1,88 @@
+<script>
+    function phantrang(page) {
+        jQuery('.loader-ajax').css('display', 'block');
+        var request = jQuery.ajax({
+            url: "<?php echo URL::action('AccountController@postAjaxOrder'); ?>?page=" + page,
+            type: "POST",
+            dataType: "html"
+        });
+        request.done(function(msg) {
+            jQuery('#order').html(msg);
+            jQuery('.loader-ajax').css('display', 'none');
+        });
+    }
+</script>
+<div id="divtableOrder">
+      <?php if(count($dataOrder)==0): ?>
+    <p> Bạn chưa chọn mua gói dịch vụ nào. Bấm vào <a href="#">đây</a> để tới trang sản phẩm</p>
+    <?php endif; ?>
+    <?php if(count($dataOrder)>0): ?>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th style="width: 30px !important;">
+                    STT
+                </th>
+                <th>
+                    Tên miền
+                </th>
+                <th>
+                    Lưu lượng
+                </th>         
+                <th>
+                    Ngày đăng ký
+                </th>     
+                <th>
+                    Ngày hết hạn
+                </th>    
+<!--                <th>
+                    Trạng thái
+                </th>  -->
+            </tr>
+        </thead>
+        <tbody id="hisTable">   
+            <?php
+            $i = 1;
+            if (Input::get('page') > 1) {
+                $i = 10 * Input::get('page') - 9;
+            }
+            ?>
+            <?php foreach($dataOrder as $item): ?>                                     
+            <tr>
+                <td>
+                    <?php echo $i; ?>
+                </td>
+                <td>
+                    <?php echo $item->domain; ?>
+                </td>
+                <td>
+                    <?php echo $item->diskStore; ?>
+                </td>  
+                <td>
+                    <?php echo $item->orderTime; ?>
+                </td>  
+                <td>
+                    <?php echo $item->orderExp; ?>
+                </td>  
+<!--                <td>
+                    <?php echo $item->status; ?>
+                </td>  -->
+                <?php
+                $i++;
+                ?>
+            </tr>
+            <?php endforeach; ?>
+            <?php if($page!=''): ?>
+            <tr>
+                <td colspan="3">
+                    <?php echo $page; ?>
+                </td>
+            </tr>
+            <?php endif; ?>
+        </tbody>
+    </table>
+    <?php endif; ?>
+</div>
+<div class="loader-ajax"  style="display: none;">
+
+</div>

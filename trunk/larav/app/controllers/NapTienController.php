@@ -80,6 +80,8 @@ class NapTienController extends BaseController {
                 $user = Session::get('userSession');
                 $objUser = new tblUsersModel();
                 $check1 = $objUser->congPCash($order_code,$user[0]->userEmail, $user[0]->userPoint + $tien);
+                 $history = new tblHistoryModel();
+                $history->insertHistory($user[0]->id, "Nạp tiền điện tử . Tổng tiền thanh tooán là : " . $tien . " Pcash");
                 if ($check1 == true) {
                     $objUser->updateStatusUsers();
                     return View::make('fontend.paypcoin3')->with('thongbao', "Giao dịch thành công");

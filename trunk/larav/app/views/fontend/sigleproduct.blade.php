@@ -29,7 +29,7 @@
                 <h2 class="shorter">{{$dataproductsingle->productName}}</h2>
             </div>
             <div class="portfolio-nav col-md-2">
-                <button type="button" class="btn btn-primary" onclick="return window.location.href = '{{URL::action('ProductController@getDangKyWebsite')}}/{{$dataproductsingle->productSlug}}';">Đăng ký ngay</button>
+
             </div>
         </div>
     </div>
@@ -65,8 +65,8 @@
             <h4> <strong>Chi tiết giao diện</strong></h4>
             <p class="taller">{{$dataproductsingle->productDescription}}</p>
 
-            <a href="{{$dataproductsingle->productUrlDemo}}" class="btn btn-primary btn-icon"><i class="icon icon-external-link"></i>Dùng thử</a> <span class="arrow hlb" data-appear-animation="rotateInUpLeft" data-appear-animation-delay="800"></span>
-
+            <a href="{{$dataproductsingle->productUrlDemo}}" class="btn btn-primary btn-icon" target="_blank"><i class="icon icon-external-link"></i>Dùng thử</a>
+            <button type="button" class="btn btn-primary" onclick="return window.location.href = '{{URL::action('ProductController@getDangKyWebsite')}}/{{$dataproductsingle->productSlug}}';"><i class="icon icon-mail-forward"></i> Đăng ký ngay</button><span class="arrow hlb" data-appear-animation="rotateInUpLeft" data-appear-animation-delay="800"></span>
             <ul class="portfolio-details">
                 <li>
                     <p><strong>Tích hợp:</strong></p>

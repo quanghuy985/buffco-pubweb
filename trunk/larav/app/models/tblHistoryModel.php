@@ -19,8 +19,9 @@ class tblHistoryModel extends Eloquent {
     public function insertHistory($userID, $historyContent) {
         $this->userID = $userID;
         $this->historyContent = $historyContent;
+        $this->type = 0;
         $this->historyTime = time();
-        $this->status = 0;
+        $this->status = 1;
         $this->save();
     }
 

@@ -390,7 +390,7 @@
                                         @endif
                                         @endforeach   
                                     </div>
-                                   <div>
+                                    <div>
                                         <?php $biendem = 0; ?>
                                         @foreach($baiviet as $item)
                                         <?php $biendem ++; ?>
@@ -413,7 +413,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <h2><strong>What</strong> Client’s Say</h2>
+                        <h2>Khách hàng nói gì ?</h2>
                         <div class="row">
                             <div class="owl-carousel push-bottom" data-plugin-options='{"items": 1, "autoHeight": true}'>
                                 <div>
@@ -424,7 +424,7 @@
                                         <div class="testimonial-arrow-down"></div>
                                         <div class="testimonial-author">
                                             <div class="img-thumbnail img-thumbnail-small">
-                                                <img src="img/clients/client-1.jpg" alt="">
+                                                <img src="{{Asset('fontendlib')}}/img/clients/client-1.jpg" alt="">
                                             </div>
                                             <p><strong>John Smith</strong><span>CEO & Founder - Okler</span></p>
                                         </div>
@@ -438,7 +438,21 @@
                                         <div class="testimonial-arrow-down"></div>
                                         <div class="testimonial-author">
                                             <div class="img-thumbnail img-thumbnail-small">
-                                                <img src="img/clients/client-1.jpg" alt="">
+                                                <img src="{{Asset('fontendlib')}}/img/clients/client-1.jpg" alt="">
+                                            </div>
+                                            <p><strong>John Smith</strong><span>CEO & Founder - Okler</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="col-md-12">
+                                        <blockquote class="testimonial">
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec hendrerit vehicula est, in consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                        </blockquote>
+                                        <div class="testimonial-arrow-down"></div>
+                                        <div class="testimonial-author">
+                                            <div class="img-thumbnail img-thumbnail-small">
+                                                <img src="{{Asset('fontendlib')}}/img/clients/client-1.jpg" alt="">
                                             </div>
                                             <p><strong>John Smith</strong><span>CEO & Founder - Okler</span></p>
                                         </div>
