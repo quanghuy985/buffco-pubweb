@@ -1,0 +1,82 @@
+<script>
+    function phantrang(page) {
+        jQuery('.loader-ajax').css('display', 'block');
+        var request = jQuery.ajax({
+            url: "<?php echo URL::action('AccountController@postAjaxOrderServices'); ?>?page=" + page,
+            type: "POST",
+            dataType: "html"
+        });
+        request.done(function(msg) {
+            jQuery('#orderServices').html(msg);
+            jQuery('.loader-ajax').css('display', 'none');
+        });
+    }
+</script>
+<div id="divtableOrderServices">
+    <?php if(count($dataOrderServices)==0): ?>
+    <p> Bạn chưa chọn mua gói dịch vụ nào. Bấm vào <a href="#">đây</a> để tới trang dịch vụ</p>
+    <?php endif; ?>
+    <?php if(count($dataOrderServices)>0): ?>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th style="width: 30px !important;">
+                    STT
+                </th>
+                <th>
+                    Tên miền
+                </th>
+                <th>
+                    Tên dịch vụ
+                </th>
+                <th>
+                    Tổng Lưu lượng
+                </th>   
+                <th>
+                    Ngày hết hạn
+                </th>   
+            </tr>
+        </thead>
+        <tbody id="hisTable">   
+            <?php
+            $i = 1;
+            if (Input::get('page') > 1) {
+                $i = 10 * Input::get('page') - 9;
+            }
+            ?>
+            <?php foreach($dataOrderServices as $item): ?>                                     
+            <tr>
+                <td>
+                    <?php echo $i; ?>
+                </td>
+                <td>
+                    <?php echo $item->domain; ?>
+                </td>
+                <td>
+                    <?php echo $item->servicesName; ?>
+                </td>  
+                <td>
+                    <?php echo $item->Tongcong; ?>
+                </td>                 
+                <td>
+                    <?php echo date('d/m/Y h:i:s', $item->ngayhethan); ?>               
+                </td>  
+                <?php
+                $i++;
+                ?>
+            </tr>
+            <?php endforeach; ?>
+            <?php if($link!=''): ?>
+            <tr>
+                <td colspan="3">
+                    <?php echo $link; ?>
+                </td>
+            </tr>
+            <?php endif; ?>
+        </tbody>
+    </table>
+    <?php endif; ?>
+</div>
+<div class="loader-ajax"  style="display: none;">
+
+</div>

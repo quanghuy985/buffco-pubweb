@@ -10,7 +10,7 @@
         });
         request.done(function(msg) {
             jQuery('#hienthongbao').css('display', 'block');
-            if (msg.length == 0) {
+            if (msg.length < 2) {
                 jQuery('#hienthongbao').removeClass('alert-success');
                 jQuery('#hienthongbao').addClass('alert-warning');
                 jQuery('.domaincart').html("Miễn Phí");
@@ -115,11 +115,26 @@
         </div>
     </div>
 </section>
+
 <div role="main" class="main shop">
     <div class="container">
         <div class="row">
+
             <div class="col-md-9">
+                @if(isset($thongbao))
+                @if($thongbao!=false)
+                <div class="alert alert-warning">
+                    <strong>Thông báo!</strong> {{$thongbao}}
+                </div>
+                @endif
+                @if($thongbao==false)
+                <div class="alert alert-success">
+                    <strong>Thông báo !</strong> Đăng ký thành công . Vui lòng đợi chúng tôi cấu hình web cho bạn trong thời gian nhanh nhất.
+                </div>
+                @endif
+                @endif
                 <form action="{{URL::action('ProductController@postDangKyWebsite')}}" method="POST">
+                    <input type="hidden" value="{{$dataproductsingle->id}}" name="idproduct" />
                     <div class="panel-group" id="accordion">   
                         <div class="panel panel-default">
                             <div class="panel-heading">

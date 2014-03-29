@@ -186,7 +186,7 @@
                                 ?>
                                 <li class="dropdown mega-menu-item mega-menu-signin signin logged" id="headerAccount">
                                     <a class="dropdown-toggle" href="javascript:void(0);">
-                                        <i class="icon icon-user"> Xin chào, <?php echo str_limit($user[0]->userLastName,15,'...'); ?></i>
+                                        <i class="icon icon-user"></i> Xin chào, <?php echo str_limit($user[0]->userLastName,15,'...'); ?>
                                         <i class="icon icon-angle-down"></i>
                                     </a>
                                     <ul class="dropdown-menu">
@@ -225,7 +225,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="footer-ribon">
-                            <span>Get in Touch</span>
+                            <span>Thông tin</span>
                         </div>
                         <div class="col-md-6">
                             <div class="newsletter">
@@ -262,7 +262,7 @@
                             </div>
                         </div>
                         <div class="col-md-2">
-                            <h4>Follow Us</h4>
+                            <h4>Mạng xã hội</h4>
                             <div class="social-icons">
                                 <ul class="social-icons">
                                     <li class="facebook"><a href="../../../www.facebook.com/default.htm" target="_blank" data-placement="bottom" rel="tooltip" title="Facebook">Facebook</a></li>
@@ -282,7 +282,7 @@
                                 </a>
                             </div>
                             <div class="col-md-7">
-                                <p>© Copyright 2014. All Rights Reserved.</p>
+                                <p>© Bản quyền thuộc về <a href="<?php echo Asset(''); ?>">Pubweb.vn</a></p>
                             </div>
                             <div class="col-md-4">
                                 <nav id="sub-menu">

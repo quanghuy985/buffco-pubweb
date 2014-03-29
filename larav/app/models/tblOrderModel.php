@@ -16,6 +16,19 @@ class tblOrderModel extends Eloquent {
         return $obj;
     }
 
+    public function addNewOrder($userID, $productID, $domain, $domainType, $orderAmount) {
+        $this->userID = $userID;
+        $this->productID = $productID;
+        $this->domain = $domain;
+        $this->domainType = $domainType;
+        $this->orderAmount = $orderAmount;
+        $this->diskStore = 200;
+        $this->advertising = 0;
+        $this->orderTime = time();
+        $this->status = 0;
+        $this->save();
+    }
+
     public function getOrderByDomain($domain) {
         $objOrder = DB::table('tblOrder')->where('domain', '=', $domain)->get();
         return $objOrder;
@@ -40,10 +53,11 @@ class tblOrderModel extends Eloquent {
             where tblusers.userEmail = ?              
             group by tblorder.domain 
             LIMIT ?,?            
-            ', array($userEmail,$start, $per_page));
+            ', array($userEmail, $start, $per_page));
         return $obj;
     }
-      public function getTotalStoreByServicesAjax($userEmail,$per_page) {
+
+    public function getTotalStoreByServicesAjax($userEmail, $per_page) {
         $obj = DB::select('select  tblorder.domain , tblservices.servicesName,SUM(tblservices.servicesPrices)* 100/15 as Tongcong, max(tblservicesorder.dateExp) as ngayhethan 
             from tblservices
             INNER JOIN tblservicesorder on tblservicesorder.servicesID = tblservices.id 

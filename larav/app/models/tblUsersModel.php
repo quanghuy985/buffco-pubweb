@@ -141,11 +141,28 @@ class tblUsersModel extends Eloquent {
             $futurePoint = $currentPoint - $Pcash;
             $check = DB::table('tblusers')->where('userEmail', '=', $userEmail)->update(array('userPoint' => $futurePoint));
             if ($check > 0) {
+                $this->updateStatusUsers();
                 return TRUE;
             } else {
                 return FALSE;
             }
         }
+    }
+
+    public function congPCash($order_code, $userEmail, $Pcash) {
+        $check = DB::table('tblusers')->where('userEmail', '=', $userEmail)->where('keyPayment', '!=', $order_code)->update(array('userPoint' => $Pcash, 'keyPayment' => $order_code));
+        if ($check > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
+    public function updateStatusUsers() {
+        $user = Session::get('userSession');
+        $newuser = $this->getUserByEmail($user[0]->userEmail);
+        Session::forget('userSession');
+        Session::push('userSession', $newuser);
     }
 
 }

@@ -10,4 +10,13 @@ class tblOrderProduct extends Eloquent {
         return $check;
     }
 
+    public function checkExistSubdomain2($subdomain) {
+        $check = $this->where('domain', '=', $subdomain)->count();
+        if ($check == 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
 }
