@@ -5,12 +5,12 @@ class tblHistoryModel extends Eloquent{
     protected $table = 'tblhistory';
     public $timestamps = false;
     
-    public function addHistory($userId,$type,$historyContent,$time){
+    public function addHistory($userId,$type,$historyContent,$status){
         $this->userID = $userId;
         $this->type = $type;
         $this->historyContent = $historyContent;
-        $this->time = $time;
-        $this->status = 0;
+        $this->time = time();
+        $this->status = $status;
         $result = $this->save();
         return $result;        
     }
@@ -45,7 +45,7 @@ class tblHistoryModel extends Eloquent{
     }
     
     public function deleteHistory($historyId) {
-        $checkdel = $this->where('id', '=', $historyId)->update(array('status' => 0));
+        $checkdel = $this->where('id', '=', $historyId)->update(array('status' => 2));
         if ($checkdel > 0) {
             return TRUE;
         } else {
@@ -58,8 +58,18 @@ class tblHistoryModel extends Eloquent{
         return $historyArray;
     }
     
-    public function selectHistory($per_page){
-        $allHistory = DB::table($table)->join($table, 'tblhistory.userID', '=','tblusers.id')->select('tblhistory.*','tblusers.userEmail')->paginate($per_page);
+    public function selectAllHistory($per_page,$orderby){
+        $allHistory = DB::table('tblhistory')->orderBy($orderby, 'desc')->paginate($per_page);
+        
+        return $allHistory;
+    }
+    
+    public function getHistoryType(){
+        
+    }
+    
+    public function selectAll($per_page){
+        $allHistory = DB::table('tblhistory')->paginate($per_page);
         return $allHistory;
     }
     

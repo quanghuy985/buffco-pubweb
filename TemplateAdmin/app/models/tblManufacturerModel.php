@@ -19,7 +19,7 @@ class tblManufacturerModel extends Eloquent{
     public function updateManufacturer($Id,$Name,$Description,$Place,$status) {
     // $tableAdmin = new TblAdminModel();
         $tableManufacturer = $this->where('id', '=', $Id);
-        $arraysql = array('id' => $historyId);
+        $arraysql = array('id' => $Id);
         if ($Name != '') {
             $arraysql = array_merge($arraysql, array("manufacturerName" => $Name));
         }
@@ -35,15 +35,12 @@ class tblManufacturerModel extends Eloquent{
         
 
         $checkupdate = $tableManufacturer->update($arraysql);
-        if ($checkupdate > 0) {
-            return TRUE;
-        } else {
-            return FALSE;
-        }
+        return $checkupdate;
     }
     
     public function deleteManufacturer($manufacturerId) {
-        $checkdel = $this->where('id', '=', $manufacturerId)->update(array('status' => 0));
+        $checkdel = $this->where('id', '=', $manufacturerId)->update(array('status' => 2));
+        
         if ($checkdel > 0) {
             return TRUE;
         } else {
@@ -51,13 +48,24 @@ class tblManufacturerModel extends Eloquent{
         }
     }
     
-    public function findManufacturer($keyword, $per_page) {
-        $manufacturerArray = DB::table('tblmanufacturer')->where('id', 'LIKE', '%' . $keyword . '%')->orWhere('manufacturerName', 'LIKE', '%' . $keyword . '%')->orWhere('manufacturerDescription', 'LIKE', '%' . $keyword . '%')->orWhere('manufacturerPlace', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
-        return $manufacturerArray;
+    public function findManufacturer($keyword, $per_page, $orderby, $status) {
+        $manufarray = '';
+        if ($status == '') {
+            $manufarray = DB::table('tblmanufacturer')->select('tblmanufacturer.*')->where('tblmanufacturer.manufacturerDescription', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);
+        } else {
+            $manufarray = DB::table('tblmanufacturer')->select('tblmanufacturer.*')->where('tblmanufacturer.manufacturerDescription', 'LIKE', '%' . $keyword . '%')->where('tblmanufacturer.status', '=', $status)->orderBy($orderby, 'desc')->paginate($per_page);
+        }
+        return $manufarray;
     }
+    
     
     public function selectAllManufacturer($per_page,$orderby){
         $allManufacturer = DB::table('tblmanufacturer')->orderBy($orderby, 'desc')->paginate($per_page);
+        return $allManufacturer;
+    }
+    
+    public function selectAll($per_page){
+        $allManufacturer = DB::table('tblmanufacturer')->paginate($per_page);
         return $allManufacturer;
     }
     
