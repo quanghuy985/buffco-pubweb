@@ -103,8 +103,8 @@
                     <li><a href="#ahshs" class="calendar">Danh sách đơn hàng</a>
                         <span class="arrow"></span>
                         <ul id="ahshs">
-                            <li><a href="notfound.html">�?ơn hàng sản phẩm</a></li>
-                            <li><a href="forbidden.html">�?ơn hàng dịch vụ</a></li>
+                            <li><a href="notfound.html">�?ơn hàng sản phẩm</a></li>
+                            <li><a href="forbidden.html">�?ơn hàng dịch vụ</a></li>
                             <li><a href="internal.html">Internal Server Error</a></li>
                             <li><a href="offline.html">Offline</a></li>
                         </ul>
@@ -116,11 +116,11 @@
                             <li><a href="">Thêm mới khách hàng</a></li>
                         </ul>
                     </li>
-                    <li><a href="#pageSub" class="typo">các trang</a>
+                    <li><a href="#pageSub" class="typo">Nhà sản xuất</a>
                         <span class="arrow"></span>
                         <ul id="pageSub">
-                            <li><a href="">Tất cả các trang</a></li>
-                            <li><a href="">Thêm trang mới</a></li>
+                            <li><a href="{{URL::action('ManufacturerController@getManufactureView')}}">Tất cả nhà sản xuất</a></li>
+                            <li><a href="{{URL::action('ManufacturerController@getAddManufaturer')}}">Thêm nhà sản xuất</a></li>
                         </ul>
                     </li>
                     <li><a href="" class="buttons">phản hồi</a> </li>

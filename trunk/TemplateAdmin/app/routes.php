@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 Route::controller('manu', 'ManufacturerController');
+Route::controller('history', 'HistoryController');
 
 App::missing(function($exception) {
     return View::make('fontend.404');
