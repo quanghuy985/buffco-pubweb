@@ -48,8 +48,13 @@ class tblRolesModel extends Eloquent {
     }
 
     public function allRoles($per_page) {
-        $arrGroupAdmin = DB::table('tblRoles')->paginate($per_page);
-        return $arrGroupAdmin;
+        $arrRoles = DB::table('tblRoles')->paginate($per_page);
+        return $arrRoles;
+    }
+
+    public function allRolesList() {
+        $arrRoles = DB::table('tblRoles')->join('tblGroupRoles', 'tblRoles.groupRolesID', '=', 'tblGroupRoles.id')->select('tblRoles.*', 'tblGroupRoles.groupRolesName')->orderBy('tblGroupRoles.id')->where('tblRoles.status', '=', 1)->get();
+        return $arrRoles;
     }
 
     public function deleteRolesByID($id) {
@@ -61,4 +66,5 @@ class tblRolesModel extends Eloquent {
         }
     }
 
+  
 }

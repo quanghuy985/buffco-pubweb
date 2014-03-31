@@ -67,7 +67,7 @@ class CreateTblUsers extends Migration {
         Schema::create('tblManufacturer', function($table) {
             $table->increments('id');
             $table->string('manufacturerName');
-            $table->integer('manufacturerDescription');
+            $table->string('manufacturerDescription');
             $table->string('manufacturerPlace');
             $table->string('time');
             $table->integer('status');
@@ -258,6 +258,13 @@ class CreateTblUsers extends Migration {
             $table->increments('id');
             $table->string('rolesCode');
             $table->string('rolesDescription');
+            $table->string('groupRolesID');
+            $table->string('time');
+            $table->integer('status');
+        });
+        Schema::create('tblGroupRoles', function($table) {
+            $table->increments('id');
+            $table->string('groupRolesName');
             $table->string('time');
             $table->integer('status');
         });

@@ -62,4 +62,14 @@ class tblGroupAdminModel extends Eloquent {
         return $arrGroupAdmin;
     }
 
+    public function allGroupAdminList() {
+        $arrGroupAdmin = DB::table('tblGroupAdmin')->get();
+        return $arrGroupAdmin;
+    }
+
+    public function findGroupAdmin($keyword, $per_page) {
+        $adminarray = DB::table('tblGroupAdmin')->where('groupadminName', 'LIKE', '%' . $keyword . '%')->orWhere('groupadminDescription', 'LIKE', '%' . $keyword . '%')->orWhere('status', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
+        return $adminarray;
+    }
+
 }

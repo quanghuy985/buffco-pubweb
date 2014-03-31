@@ -26,6 +26,7 @@
         <!--[if lt IE 9]>
                 <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
         <![endif]-->
+       
     </head>
 
     <body class="withvernav">
@@ -103,8 +104,8 @@
                     <li><a href="#ahshs" class="calendar">Danh sách đơn hàng</a>
                         <span class="arrow"></span>
                         <ul id="ahshs">
-                            <li><a href="notfound.html">�?ơn hàng sản phẩm</a></li>
-                            <li><a href="forbidden.html">�?ơn hàng dịch vụ</a></li>
+                            <li><a href="notfound.html">�?ơn hàng sản phẩm</a></li>
+                            <li><a href="forbidden.html">�?ơn hàng dịch vụ</a></li>
                             <li><a href="internal.html">Internal Server Error</a></li>
                             <li><a href="offline.html">Offline</a></li>
                         </ul>
