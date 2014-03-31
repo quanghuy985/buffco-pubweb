@@ -119,8 +119,7 @@
                     <li><a href="#pageSub" class="typo">Nhà sản xuất</a>
                         <span class="arrow"></span>
                         <ul id="pageSub">
-                            <li><a href="{{URL::action('ManufacturerController@getManufactureView')}}">Tất cả nhà sản xuất</a></li>
-                            <li><a href="{{URL::action('ManufacturerController@getAddManufaturer')}}">Thêm nhà sản xuất</a></li>
+                           
                         </ul>
                     </li>
                     <li><a href="" class="buttons">phản hồi</a> </li>

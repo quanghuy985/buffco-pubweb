@@ -5,12 +5,12 @@ class tblPromotionModel extends Eloquent {
     protected $table = 'tblpromotion';
     public $timestamps = false;
 
-    public function insertPromotion($promotionName, $promotionContent, $promotionAmount) {
+    public function insertPromotion($promotionName, $promotionContent, $promotionAmount,$promotionStatus) {
         $this->promotionName = $promotionName;
         $this->promotionContent = $promotionContent;
         $this->promotionAmount = $promotionAmount;
         $this->time = time();
-        $this->status = 0;
+        $this->status = $promotionStatus;
         $this->save();
     }
 
@@ -52,7 +52,7 @@ class tblPromotionModel extends Eloquent {
         return $allTag;
     }
 
-    public function getTagByID($promotionID) {
+    public function getPromotionByID($promotionID) {
         $objPromotion = DB::table('tblpromotion')->where('id', '=', $promotionID)->get();
         return $objPromotion;
     }

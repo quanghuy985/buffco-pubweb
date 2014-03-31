@@ -12,12 +12,12 @@
  */
 
 Route::get('/', function () {
-    return View::make('fontend.index');
+    return View::make('backend.admin-home');
 });
 
-Route::controller('manu', 'ManufacturerController');
-Route::controller('history', 'HistoryController');
-
+Route::controller('supportergroup', 'SupporterGroupController');
+Route::controller('suppporter', 'SupporterController');
+Route::controller('promotion', 'PromotionController');
 App::missing(function($exception) {
-    return View::make('fontend.404');
+    return $exception;
 });
