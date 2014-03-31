@@ -3,8 +3,14 @@
  * For licensing, see LICENSE.html or http://ckeditor.com/license
  */
 
-CKEDITOR.editorConfig = function( config ) {
-	// Define changes to default configuration here. For example:
-	// config.language = 'fr';
-	// config.uiColor = '#AADC6E';
+CKEDITOR.editorConfig = function(config) {
+    // Define changes to default configuration here. For example:
+    // config.language = 'fr';
+    // config.uiColor = '#AADC6E';
+    config.filebrowserBrowseUrl = 'adminlib2/ckfinder/ckfinder.html';
+    config.filebrowserImageBrowseUrl = 'adminlib2/ckfinder/ckfinder.html?type=Images';
+    config.filebrowserFlashBrowseUrl = 'adminlib2/ckfinder/ckfinder.html?type=Flash';
+    config.filebrowserUploadUrl = 'adminlib2/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files';
+    config.filebrowserImageUploadUrl = 'adminlib2/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images';
+    config.filebrowserFlashUploadUrl = 'adminlib2/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash';
 };
