@@ -57,4 +57,9 @@ class tblGroupAdminRolesModel extends Eloquent {
         }
     }
 
+    public function findRolesByGroupAdmin($groupAdminID) {
+        $arrRoles = DB::table('tblGroupAdminRoles')->join('tblRoles', 'tblGroupAdminRoles.rolesID', '=', 'tblRoles.id')->select('tblRoles.id', 'tblRoles.rolesCode')->where('tblGroupAdminRoles.groupAdminID', '=', $groupAdminID)->where('tblGroupAdminRoles.status', '=', 1);
+        return $arrRoles;
+    }
+
 }

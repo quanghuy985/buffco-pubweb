@@ -12,12 +12,20 @@
  */
 
 Route::get('/', function () {
+
     return View::make('backend.admin-home');
+
 });
+
+
+Route::controller('admin', 'AdminController');
+Route::controller('groupadmin', 'GroupAdminController');
 
 Route::controller('supportergroup', 'SupporterGroupController');
 Route::controller('suppporter', 'SupporterController');
 Route::controller('promotion', 'PromotionController');
+
 App::missing(function($exception) {
-    return $exception;
+
+    return View::make('fontend.404');
 });
