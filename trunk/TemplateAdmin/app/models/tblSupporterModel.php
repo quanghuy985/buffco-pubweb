@@ -5,7 +5,7 @@ class tblSupporterModel extends Eloquent {
     protected $table = 'tblsupporter';
     public $timestamps = false;
 
-    public function insertSupport($supporterGroupID, $supporterName, $supporterNickYH,$supporterNickSkype,$supporterPhone) {
+    public function insertSupport($supporterGroupID, $supporterName, $supporterNickYH, $supporterNickSkype, $supporterPhone) {
         $this->supporterGroupID = $supporterGroupID;
         $this->supporterName = $supporterName;
         $this->supporterNickYH = $supporterNickYH;
@@ -16,7 +16,8 @@ class tblSupporterModel extends Eloquent {
         $check = $this->save();
         return $check;
     }
-    public function updateSupport($suportID, $supporterGroupID, $supporterName, $supporterNickYH,$supporterNickSkype,$supporterPhone, $tagStatus) {
+
+    public function updateSupport($suportID, $supporterGroupID, $supporterName, $supporterNickYH, $supporterNickSkype, $supporterPhone, $tagStatus) {
         // $tableAdmin = new TblAdminModel();
         $tableSupport = $this->where('id', '=', $suportID);
         $arraysql = array('id' => $suportID);
@@ -46,7 +47,7 @@ class tblSupporterModel extends Eloquent {
         }
     }
 
-    public function deleteTag($supportID) {
+    public function deleteSupporter($supportID) {
         $checkdel = $this->where('id', '=', $supportID)->update(array('status' => 2));
         if ($checkdel > 0) {
             return TRUE;
@@ -54,15 +55,15 @@ class tblSupporterModel extends Eloquent {
             return FALSE;
         }
     }
-
-    public function getAllSupport($per_page) {
-        $objSupport = DB::table('tblsupporter')->paginate($per_page);
-        return $objSupport;
+    public function getAllSupporter($per_page) {
+       $arrSupporter = DB::table('tblSupporter')->join('tblSupporterGroup', 'tblSupporter.supporterGroupID', '=', 'tblSupporterGroup.id')->select('tblSupporter.id', 'tblSupporterGroup.supporterGroupName', 'tblSupporter.supporterNickYH', 'tblSupporter.supporterNickSkype', 'tblSupporter.supporterName', 'tblSupporter.supporterPhone', 'tblSupporter.time', 'tblSupporter.status')->orderBy('tblSupporter.id', 'desc')->paginate($per_page);
+        return $arrSupporter;
     }
 
     public function getSupportByID($supportID) {
         $objSupport = DB::table('tblsupporter')->where('id', '=', $supportID)->get();
         return $objSupport;
     }
+
 
 }
