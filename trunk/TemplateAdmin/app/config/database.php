@@ -48,9 +48,9 @@ return array(
         'mysql' => array(
             'driver' => 'mysql',
             'host' => 'localhost',
-            'database' => 'TemplateAdmin',
+            'database' => 'laravel2',
             'username' => 'root',
-            'password' => '',
+            'password' => '123456',
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix' => '',
