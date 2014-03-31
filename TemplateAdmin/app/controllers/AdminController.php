@@ -65,6 +65,7 @@ class AdminController extends BaseController {
 
     public function getHomeAdmin() {
         return View::make('templateadmin2.admin-home');
+        
     }
 
     public function getAlladmin() {

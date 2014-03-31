@@ -3,12 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/G:/WAMP/www/TemplateAdmin/app/views/backend/promotion/promotionAjax.blade.php</file>
-            <file>file:/G:/WAMP/www/TemplateAdmin/app/controllers/SupporterGroupController.php</file>
-            <file>file:/G:/WAMP/www/TemplateAdmin/app/controllers/SupporterController.php</file>
-            <file>file:/G:/WAMP/www/TemplateAdmin/app/models/tblPromotionModel.php</file>
-            <file>file:/G:/WAMP/www/TemplateAdmin/app/controllers/PromotionController.php</file>
-            <file>file:/G:/WAMP/www/TemplateAdmin/app/views/backend/promotion/promotionManage.blade.php</file>
+            <file>file:/C:/wamp/www/larav/app/routes.php</file>
         </group>
     </open-files>
 </project-private>

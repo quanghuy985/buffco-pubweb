@@ -2,57 +2,57 @@
 @section("contentadmin")
 <script>
     function phantrang(page) {
-    var request = jQuery.ajax({
-    url: "{{URL::action('GroupAdminController@postAjaxpagion')}}?link=" + page,
+        var request = jQuery.ajax({
+            url: "{{URL::action('GroupAdminController@postAjaxpagion')}}?link=" + page,
             type: "POST",
             dataType: "html"
-    });
-            request.done(function(msg) {
+        });
+        request.done(function(msg) {
             jQuery('#tableproduct').html(msg);
-            });
+        });
     }
     function xoasanpham(id) {
-    jConfirm('Bạn có chắc chắn muốn xóa ?', 'Thông báo', function(r) {
-    if (r == true) {
-    var request = jQuery.ajax({
-    url: "{{URL::action('GroupAdminController@postDeleteGroupAdmin')}}?id=" + id,
-            type: "POST",
-            dataType: "html"
-    });
-            request.done(function(msg) {
-            jQuery('#tableproduct').html(msg);
-            });
-            return false;
-    } else {
-    return false;
-    }
-    })
+        jConfirm('Bạn có chắc chắn muốn xóa ?', 'Thông báo', function(r) {
+            if (r == true) {
+                var request = jQuery.ajax({
+                    url: "{{URL::action('GroupAdminController@postDeleteGroupAdmin')}}?id=" + id,
+                    type: "POST",
+                    dataType: "html"
+                });
+                request.done(function(msg) {
+                    jQuery('#tableproduct').html(msg);
+                });
+                return false;
+            } else {
+                return false;
+            }
+        })
     }
     function kichhoat(id, stus) {
-    var request = jQuery.ajax({
-    url: "{{URL::action('GroupAdminController@postGroupAdminActive')}}?id=" + id + '&status=' + stus,
+        var request = jQuery.ajax({
+            url: "{{URL::action('GroupAdminController@postGroupAdminActive')}}?id=" + id + '&status=' + stus,
             type: "POST",
             dataType: "html"
-    });
-            request.done(function(msg) {
+        });
+        request.done(function(msg) {
             jQuery('#tableproduct').html(msg);
-            });
-            return true;
+        });
+        return true;
     }
 
     jQuery(document).ready(function() {
-    jQuery("[name='sdkjfhskjdfhkds']").change(function() {
-    if (jQuery("[name='sdkjfhskjdfhkds']").attr('checked')){
-    jQuery('#uniform-checkboktest span').addClass('checked');
-    } else{
-    jQuery('#uniform-checkboktest span').removeClass('checked');
-    }
-    var x = this.checked;
+        jQuery("[name='sdkjfhskjdfhkds']").change(function() {
+            if (jQuery("[name='sdkjfhskjdfhkds']").attr('checked')) {
+                jQuery('#uniform-checkboktest span').addClass('checked');
+            } else {
+                jQuery('#uniform-checkboktest span').removeClass('checked');
+            }
+            var x = this.checked;
             jQuery('[name="checkboktest"]').each(function() {
 
-    this.checked = x;
-    });
-    });
+                this.checked = x;
+            });
+        });
     });</script>
 
 <div class="pageheader notab">
@@ -158,7 +158,7 @@
                 @foreach($arrRoles as $itemRoles)
                 @if($itemRoles->grouprolesID==$itemGroupRoles->id)
                 &nbsp &nbsp &nbsp<input type="checkbox" name="{{$itemRoles->id}}" id="checkboktest" value="1"  >{{$itemRoles->rolesCode}}
-                <br>
+
                 @endif
                 @endforeach
                 <br>
