@@ -16,12 +16,12 @@
         <script type="text/javascript" src="{{Asset('adminlib2/js/plugins/jquery.alerts.js')}}"></script>
         <script type="text/javascript" src="{{Asset('adminlib2/ckeditor/ckeditor.js')}}"></script>
         <script type="text/javascript" src="{{Asset('adminlib2/ckfinder/ckfinder.js')}}"></script>
- <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/plugins/excanvas.min.js"></script><![endif]-->
+ <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="adminlib2/js/plugins/excanvas.min.js"></script><![endif]-->
         <!--[if IE 9]>
-            <link rel="stylesheet" media="screen" href="css/style.ie9.css"/>
+            <link rel="stylesheet" media="screen" href="adminlib2/css/style.ie9.css"/>
         <![endif]-->
         <!--[if IE 8]>
-            <link rel="stylesheet" media="screen" href="css/style.ie8.css"/>
+            <link rel="stylesheet" media="screen" href="adminlib2/css/style.ie8.css"/>
         <![endif]-->
         <!--[if lt IE 9]>
                 <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
@@ -51,7 +51,7 @@
 
                     <div class="userinfodrop">
                         <div class="avatar">
-                            <a href="#"><img src="images/thumbs/avatarbig.png" alt="" /></a>
+                            <a href="#"><img src="adminlib2/images/thumbs/avatarbig.png" alt="" /></a>
                             <div class="changetheme">
                                 Change theme: <br />
                                 <a class="default"></a>
