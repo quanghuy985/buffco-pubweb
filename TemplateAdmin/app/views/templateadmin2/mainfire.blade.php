@@ -5,23 +5,23 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Dashboard | Amanda Admin Template</title>
-        <link rel="stylesheet" href="{{Asset('adminlib2/css/style.default.css')}}" type="text/css" />
-        <script type="text/javascript" src="{{Asset('adminlib2/js/plugins/jquery-1.7.min.js')}}"></script>
-        <script type="text/javascript" src="{{Asset('adminlib2/js/plugins/jquery-ui-1.8.16.custom.min.js')}}"></script>
-        <script type="text/javascript" src="{{Asset('adminlib2/js/plugins/jquery.cookie.js')}}"></script>
-        <script type="text/javascript" src="{{Asset('adminlib2/js/plugins/jquery.uniform.min.js')}}"></script>
-        <script type="text/javascript" src="{{Asset('adminlib2/js/custom/general.js')}}"></script>
-        <script type="text/javascript" src="{{Asset('adminlib2/js/plugins/jquery.dataTables.min.js')}}"></script>
-        <script type="text/javascript" src="{{Asset('adminlib2/js/custom/tables.js')}}"></script>
-        <script type="text/javascript" src="{{Asset('adminlib2/js/plugins/jquery.alerts.js')}}"></script>
-        <script type="text/javascript" src="{{Asset('adminlib2/ckeditor/ckeditor.js')}}"></script>
-        <script type="text/javascript" src="{{Asset('adminlib2/ckfinder/ckfinder.js')}}"></script>
- <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="adminlib2/js/plugins/excanvas.min.js"></script><![endif]-->
+        <link rel="stylesheet" href="{{Asset('adminlib/css/style.default.css')}}" type="text/css" />
+        <script type="text/javascript" src="{{Asset('adminlib/js/plugins/jquery-1.7.min.js')}}"></script>
+        <script type="text/javascript" src="{{Asset('adminlib/js/plugins/jquery-ui-1.8.16.custom.min.js')}}"></script>
+        <script type="text/javascript" src="{{Asset('adminlib/js/plugins/jquery.cookie.js')}}"></script>
+        <script type="text/javascript" src="{{Asset('adminlib/js/plugins/jquery.uniform.min.js')}}"></script>
+        <script type="text/javascript" src="{{Asset('adminlib/js/custom/general.js')}}"></script>
+        <script type="text/javascript" src="{{Asset('adminlib/js/plugins/jquery.dataTables.min.js')}}"></script>
+        <script type="text/javascript" src="{{Asset('adminlib/js/custom/tables.js')}}"></script>
+        <script type="text/javascript" src="{{Asset('adminlib/js/plugins/jquery.alerts.js')}}"></script>
+        <script type="text/javascript" src="{{Asset('adminlib/ckeditor/ckeditor.js')}}"></script>
+        <script type="text/javascript" src="{{Asset('adminlib/ckfinder/ckfinder.js')}}"></script>
+ <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="adminlib/js/plugins/excanvas.min.js"></script><![endif]-->
         <!--[if IE 9]>
-            <link rel="stylesheet" media="screen" href="adminlib2/css/style.ie9.css"/>
+            <link rel="stylesheet" media="screen" href="adminlib/css/style.ie9.css"/>
         <![endif]-->
         <!--[if IE 8]>
-            <link rel="stylesheet" media="screen" href="adminlib2/css/style.ie8.css"/>
+            <link rel="stylesheet" media="screen" href="adminlib/css/style.ie8.css"/>
         <![endif]-->
         <!--[if lt IE 9]>
                 <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
@@ -42,16 +42,16 @@
 
                 <div class="right">
                     <div class="notification">
-                        <a class="count" href="adminlib2/ajax/notifications.html"><span>9</span></a>
+                        <a class="count" href="adminlib/ajax/notifications.html"><span>9</span></a>
                     </div>
                     <div class="userinfo">
-                        <img src="adminlib2/images/thumbs/avatar.png" alt="" />
+                        <img src="adminlib/images/thumbs/avatar.png" alt="" />
                         <span>Juan Dela Cruz</span>
                     </div><!--userinfo-->
 
                     <div class="userinfodrop">
                         <div class="avatar">
-                            <a href="#"><img src="adminlib2/images/thumbs/avatarbig.png" alt="" /></a>
+                            <a href="#"><img src="adminlib/images/thumbs/avatarbig.png" alt="" /></a>
                             <div class="changetheme">
                                 Change theme: <br />
                                 <a class="default"></a>
