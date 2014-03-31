@@ -5,14 +5,5 @@
         <data xmlns="http://www.netbeans.org/ns/php-project/1">
             <name>TemplateAdmin</name>
         </data>
-<<<<<<< .mine
-        <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
-            <word>endforeach</word>
-        </spellchecker-wordlist>
-=======
-        <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
-            <word>promotionData</word>
-        </spellchecker-wordlist>
->>>>>>> .r86
     </configuration>
 </project>
