@@ -2,72 +2,76 @@
 
 class tblProjectModel extends Eloquent {
 
-    protected $table = 'tblstatistic';
+    protected $table = 'tblproject';
     public $timestamps = false;
 
-    public function insertProject($from, $to, $totalProductSold,$totalRevenue,$totalUser,$totalNews) {
+    public function addProject($from,$to,$description,$content,$status){
         $this->from = $from;
         $this->to = $to;
-        $this->totalProductSold = $totalProductSold;
-        $this->totalRevenue = $totalRevenue;
-        $this->totalUser = $totalUser;
-        $this->totalNews = $totalNews;
+        $this->projectDescription = $description;
+        $this->projectContent = $content;
         $this->time = time();
         $this->status = 0;
-        $check= $this->save();
-        return $check;
+        $result = $this->save();
+        return $result;        
     }
-
-    public function updateStatistic($statisticID, $from, $to, $totalProductSold,$totalRevenue,$totalUser,$totalNews, $Status) {
-        // $tableAdmin = new TblAdminModel();
-        $tableSta = $this->where('id', '=', $statisticID);
-        $arraysql = array('id' => $statisticID);
+    
+    
+    public function updateProject($Id,$from,$to,$description,$content,$status) {
+    // $tableAdmin = new TblAdminModel();
+        $tableProject = $this->where('id', '=', $Id);
+        $arraysql = array('id' => $Id);
         if ($from != '') {
             $arraysql = array_merge($arraysql, array("from" => $from));
         }
         if ($to != '') {
             $arraysql = array_merge($arraysql, array("to" => $to));
         }
-        if ($totalProductSold != '') {
-            $arraysql = array_merge($arraysql, array("totalProductSold" => $totalProductSold));
+        if ($description != '') {
+            $arraysql = array_merge($arraysql, array("projectDescription" => $description));               
         }
-          if ($totalRevenue != '') {
-            $arraysql = array_merge($arraysql, array("totalRevenue" => $totalRevenue));
+        if ($content != '') {
+            $arraysql = array_merge($arraysql, array("projectContent" => $content));               
         }
-          if ($totalUser != '') {
-            $arraysql = array_merge($arraysql, array("totalUser" => $totalUser));
+        if ($status != '') {
+            $arraysql = array_merge($arraysql, array("status" => $status));
         }
-          if ($totalNews != '') {
-            $arraysql = array_merge($arraysql, array("totalNews" => $totalNews));
-        }
-        if ($Status != '') {
-            $arraysql = array_merge($arraysql, array("status" => $Status));
-        }
-        $checku = $tableSta->update($arraysql);
-        if ($checku > 0) {
-            return TRUE;
+        
+
+        $checkupdate = $tableProject->update($arraysql);
+        return $checkupdate;
+    }
+    
+    public function deleteProject($projectId) {
+        $checkdel = $this->where('id', '=', $projectId)->update(array('status' => 2));
+        return $checkdel;
+        
+    }
+    
+    public function findProject($keyword, $per_page, $orderby, $status) {
+        $projectfarray = '';
+        if ($status == '') {
+            $projectfarray = DB::table('tblproject')->select('tblproject.*')->where('tblproject.projectDescription', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);
         } else {
-            return FALSE;
+            $projectfarray = DB::table('tblproject')->select('tblproject.*')->where('tblproject.projectDescription', 'LIKE', '%' . $keyword . '%')->where('tblproject.status', '=', $status)->orderBy($orderby, 'desc')->paginate($per_page);
         }
+        return $projectfarray;
     }
-
-    public function deleteStatistic($statisticID) {
-        $checkdel = $this->where('id', '=', $statisticID)->update(array('status' => 2));
-        if ($checkdel > 0) {
-            return TRUE;
-        } else {
-            return FALSE;
-        }
+    
+    
+    public function selectAllProject($per_page,$orderby){
+        $allProject = DB::table('tblproject')->orderBy($orderby, 'desc')->paginate($per_page);
+        return $allProject;
     }
-
-    public function getAllStatistic($per_page) {
-        $arrSta = DB::table('tblstatistic')->paginate($per_page);
-        return $arrSta;
+    
+    public function selectAll($per_page){
+        $allProject = DB::table('tblproject')->paginate($per_page);
+        return $allProject;
     }
-
-    public function getStatisticByID($statisticID) {
-        $arrSta = DB::table('tblstatistic')->where('id', '=', $statisticID)->get();
-        return $arrSta;
+    
+    public function getProjectById($id){
+        $allProject = DB::table('tblproject')->where('id','=',$id)->get();
+        return $allProject[0];
     }
 
 }
