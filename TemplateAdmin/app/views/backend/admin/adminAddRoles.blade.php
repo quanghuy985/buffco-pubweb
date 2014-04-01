@@ -160,7 +160,7 @@
 
                 &nbsp &nbsp &nbsp<input type="checkbox" name="roles[]" @if(isset($arrGroupAdminRolesExist)) @foreach($arrGroupAdminRolesExist as $itemRolesExist)
                                         @if($itemRolesExist->rolesCode == $itemRoles->rolesCode)checked @endif
-                                        @endforeach @endif id="checkboktest" value="{{$itemRoles->id}}"  >{{$itemRoles->rolesCode}} 
+                                        @endforeach @endif id="checkboktest" value="{{$itemRoles->id}}"  >{{$itemRoles->rolesDescription}} 
 
 
 

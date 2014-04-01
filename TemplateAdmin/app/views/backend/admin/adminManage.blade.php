@@ -48,7 +48,7 @@
     <div class="contenttitle2">
         <h3>Bảng Admin</h3>
     </div>
-    
+
     <div class="contentwrapper">
         <div class="subcontent">
             @if(isset($thongbao))
@@ -85,7 +85,7 @@
                         <td><label value="cateMenuer">{{$i++ }}</label></td> 
                         <td><label value="cateMenuer">{{str_limit( $item->adminEmail, 30, '...')}}</label></td>
                         <td><label value="cateMenuer">{{str_limit( $item->adminName, 30, '...')}}</label></td>
-                        <td><label value="cateMenuer">{{str_limit( $item->groupadminName, 30, '...')}} </label>
+                        <td><label value="cateMenuer"><a href="{{URL::action('GroupAdminController@getGroupAdminEdit')}}?id={{$item->groupadminID}}">{{str_limit( $item->groupadminName, 30, '...')}}</a> </label>
 
                         </td>
                         <td><label value="cateMenuer"><?php echo date('d/m/Y h:i:s', $item->time); ?></label></td> 
@@ -154,6 +154,7 @@
                 </option>
                 @endforeach
             </select>
+            <a href="{{URL::action('GroupAdminController@getGroupAdminView')}}" > Thêm mới?</a>
         </span>
     </p>
     <p>

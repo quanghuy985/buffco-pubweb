@@ -4,7 +4,7 @@
     <td><label value="cateNews">{{str_limit( $item->newsName, 30, '...')}}</label></td> 
     <td><label value="cateNews">{{$item->cateNewsName }}</label></td> 
     <td><label value="cateNews">{{str_limit($item->newsDescription, 30, '...')}} </label></td> 
-    <td><label value="cateNews"><?php echo date('d/m/Y h:i:s', $item->newsTime); ?></label></td> 
+    <td><label value="cateNews"><?php echo date('d/m/Y h:i:s', $item->time); ?></label></td> 
     <td><label value="cateNews"><?php
             if ($item->status == 0) {
                 echo "chờ đăng";

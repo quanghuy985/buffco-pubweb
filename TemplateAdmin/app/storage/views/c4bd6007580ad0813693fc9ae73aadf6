@@ -1,0 +1,39 @@
+<?php foreach($arrayNews as $item): ?>
+<tr> 
+    <td><input name="checkboxidfile" type="checkbox" value="<?php echo $item->id; ?>"></td> 
+    <td><label value="cateNews"><?php echo str_limit( $item->newsName, 30, '...'); ?></label></td> 
+    <td><label value="cateNews"><?php echo $item->cateNewsName; ?></label></td> 
+    <td><label value="cateNews"><?php echo str_limit($item->newsDescription, 30, '...'); ?> </label></td> 
+    <td><label value="cateNews"><?php echo date('d/m/Y h:i:s', $item->time); ?></label></td> 
+    <td><label value="cateNews"><?php
+            if ($item->status == 0) {
+                echo "chờ đăng";
+            } else if ($item->status == 1) {
+                echo "đã đăng";
+            } else if ($item->status == 2) {
+                echo "đã xóa";
+            }
+            ?>
+        </label>
+    </td> 
+    <td>
+
+        <a href="<?php echo URL::action('NewsController@getNewsEdit'); ?>?id=<?php echo $item->id; ?>" class="btn btn4 btn_book" title="Sửa"></a>
+        <?php if($item->status=='2'): ?>
+        <a href="javascript: void(0)" onclick="kichhoat(<?php echo $item->id; ?>, 0)" class="btn btn4 btn_flag" title="Kích hoạt"></a>
+        <?php endif; ?>
+        <?php if($item->status=='0'): ?>
+        <a href="javascript: void(0)" onclick="kichhoat(<?php echo $item->id; ?>, 1)" class="btn btn4 btn_world" title="Đăng bài"></a>
+        <?php endif; ?>
+        <?php if($item->status!='2'): ?>
+        <a href="javascript: void(0)" onclick="xoasanpham(<?php echo $item->id; ?>)" class="btn btn4 btn_trash" title="Xóa"></a>
+        <?php endif; ?>
+
+    </td> 
+</tr> 
+<?php endforeach; ?>
+<?php if($link!=''): ?>
+<tr>
+    <td colspan="7"><?php echo $link; ?></td>
+</tr>
+<?php endif; ?>

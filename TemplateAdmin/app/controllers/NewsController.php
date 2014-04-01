@@ -55,14 +55,14 @@ class NewsController extends Controller {
     public function postDeleteNews() {
         $tblNewsModel = new tblNewsModel();
         $tblNewsModel->deleteNews(Input::get('id'));
-        $NewsData = $tblNewsModel->allNews(10);
+        $NewsData = $tblNewsModel->allNews(10,'id');
         $link = $NewsData->links();
         return View::make('backend.tintuc.newsAjax')->with('arrayNews', $NewsData)->with('link', $link);
     }
 
     public function postNewsActive() {
         $tblNewsModel = new tblNewsModel();
-        $tblNewsModel->updateNews(Input::get('id'), '', '', '', '', '', '', '', '', Input::get('status'));
+        $tblNewsModel->updateNew(Input::get('id'), '', '', '', '', '', '', '', '', Input::get('status'));
         $arrNews = $tblNewsModel->allNews(10, 'id');
         $link = $arrNews->links();
         return View::make('backend.tintuc.newsAjax')->with('arrayNews', $arrNews)->with('link', $link);
@@ -70,7 +70,7 @@ class NewsController extends Controller {
 
     public function getNewsPost() {
         $tblNewsModel = new tblNewsModel();
-        $tblNewsModel->updateNews(Input::get('id'), '', '', '', '', '', '', '', '', '1');
+        $tblNewsModel->updateNew(Input::get('id'), '', '', '', '', '', '', '', '', '1');
         return Redirect::action('NewsController@getNewsView');
     }
 
@@ -81,7 +81,6 @@ class NewsController extends Controller {
     }
 
     public function postAddNews() {
-
         $tblNewsModel = new tblNewsModel();
         $rules = array(
             "cbCateNews" => "required|integer",
@@ -130,11 +129,11 @@ class NewsController extends Controller {
             // Kiểm tra roles
             if (Session::has('adminSession')) {
                 $objAdmin = Session::get('adminSession');
-                $groupAdminID = $objAdmin->groupadminID;
+                $groupAdminID = $objAdmin[0]->groupadminID;
                 $tblPhanQuyenModel = new tblPhanQuyenModel();
                 $arrRolesCode = $tblPhanQuyenModel->getRolesCodeByGroupAdmin($groupAdminID);
-                if (in_array('Sua-Bai', $arrRolesCode)) {
-                    $tblNewsModel->updateNews(Input::get('idnews'), Input::get('cbCateNews'), Input::get('newstitle'), Input::get('newsdescription'), Input::get('newsContent'), Input::get('newsKeywords'), Input::get('newstag'), Input::get('newsSlug'), '', Input::get('status'));
+                if (strpos(serialize($arrRolesCode), 'Sua-Bai') != FALSE) {
+                    $tblNewsModel->updateNew(Input::get('idnews'), Input::get('cbCateNews'), Input::get('newstitle'), Input::get('newsdescription'), Input::get('newsKeywords'), Input::get('newsContent'), Input::get('newstag'), Input::get('newsSlug'), '', Input::get('status'));
                     return Redirect::action('NewsController@getNewsView');
                 } else {
                     echo 'Bạn không có quyền sửa bài viết';
@@ -150,10 +149,10 @@ class NewsController extends Controller {
     public function postDelmulte() {
         if (Session::has('adminSession')) {
             $objAdmin = Session::get('adminSession');
-            $groupAdminID = $objAdmin->groupadminID;
+            $groupAdminID = $objAdmin[0]->groupadminID;
             $tblPhanQuyenModel = new tblPhanQuyenModel();
             $arrRolesCode = $tblPhanQuyenModel->getRolesCodeByGroupAdmin($groupAdminID);
-            if (in_array('Go-Bai', $arrRolesCode)) {
+            if (strpos(serialize($arrRolesCode), 'Go-Bai') != FALSE) {
                 $pieces1 = explode(",", Input::get('multiid'));
                 foreach ($pieces1 as $item) {
                     if ($item != '') {
@@ -163,7 +162,7 @@ class NewsController extends Controller {
                 }
                 $tblNewsModel = new tblNewsModel();
                 $arrNews = $tblNewsModel->FindNews('', 10, 'id', '');
-                $link = $data->links();
+                $link = $arrNews->links();
                 return View::make('backend.tintuc.newsManage')->with('arrayNews', $arrNews)->with('link', $link);
             } else {
                 echo 'Bạn không có quyền xóa bài viết';

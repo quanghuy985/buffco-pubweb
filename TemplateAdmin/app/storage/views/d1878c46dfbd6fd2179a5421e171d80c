@@ -159,7 +159,7 @@
 
                 &nbsp &nbsp &nbsp<input type="checkbox" name="roles[]" <?php if(isset($arrGroupAdminRolesExist)): ?> <?php foreach($arrGroupAdminRolesExist as $itemRolesExist): ?>
                                         <?php if($itemRolesExist->rolesCode == $itemRoles->rolesCode): ?>checked <?php endif; ?>
-                                        <?php endforeach; ?> <?php endif; ?> id="checkboktest" value="<?php echo $itemRoles->id; ?>"  ><?php echo $itemRoles->rolesCode; ?> 
+                                        <?php endforeach; ?> <?php endif; ?> id="checkboktest" value="<?php echo $itemRoles->id; ?>"  ><?php echo $itemRoles->rolesDescription; ?> 
 
 
 
