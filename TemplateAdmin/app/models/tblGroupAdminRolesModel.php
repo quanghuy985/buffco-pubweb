@@ -14,6 +14,8 @@ class tblGroupAdminRolesModel extends Eloquent {
     public function addGroupAdminRoles($groupadminID, $rolesID) {
         $this->groupadminID = $groupadminID;
         $this->rolesID = $rolesID;
+        $this->time = time();
+        $this->status = 1;
         $result = $this->save();
         return $result;
     }
@@ -58,8 +60,18 @@ class tblGroupAdminRolesModel extends Eloquent {
     }
 
     public function findRolesByGroupAdmin($groupAdminID) {
-        $arrRoles = DB::table('tblGroupAdminRoles')->join('tblRoles', 'tblGroupAdminRoles.rolesID', '=', 'tblRoles.id')->select('tblRoles.id', 'tblRoles.rolesCode')->where('tblGroupAdminRoles.groupAdminID', '=', $groupAdminID)->where('tblGroupAdminRoles.status', '=', 1);
+        $arrRoles = DB::table('tblGroupAdminRoles')->join('tblRoles', 'tblGroupAdminRoles.rolesID', '=', 'tblRoles.id')->select('tblRoles.id', 'tblRoles.rolesCode')->where('tblGroupAdminRoles.groupAdminID', '=', $groupAdminID)->where('tblGroupAdminRoles.status', '=', 1)->get();
         return $arrRoles;
+    }
+
+    public function checkRolesExist($groupAdminID, $rolesID) {
+        $check = $this->where('groupadminID', '=', $groupAdminID)->where('rolesID', '=', $rolesID)->count();
+        return $check;
+    }
+
+    public function rolesDelete($groupAdminID) {
+        $check = $this->where('groupadminID', '=', $groupAdminID)->delete();
+        return $check;
     }
 
 }

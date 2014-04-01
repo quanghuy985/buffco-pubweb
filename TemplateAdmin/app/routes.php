@@ -22,6 +22,8 @@ Route::controller('groupadmin', 'GroupAdminController');
 Route::controller('supportergroup', 'SupporterGroupController');
 Route::controller('suppporter', 'SupporterController');
 Route::controller('promotion', 'PromotionController');
+Route::controller('news', 'NewsController');
+Route::controller('catenews', 'cateNewsController');
 
 App::missing(function($exception) {
 

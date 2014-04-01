@@ -77,6 +77,10 @@ class tblCategoryNewsModel extends Eloquent {
         $arrCateNews = DB::table('tblCateNews')->paginate($per_page);
         return $arrCateNews;
     }
+     public function allCateNewList() {
+        $arrCateNews = DB::table('tblCateNews')->get();
+        return $arrCateNews;
+    }
 
     public function findCateNewsByID($id) {
         $objCateNews = DB::table('tblCateNews')->where('id', '=', $id)->get();
@@ -100,5 +104,6 @@ class tblCategoryNewsModel extends Eloquent {
        ");
         return Paginator::make($results, count($results), $per_page);
     }
+    
 
 }

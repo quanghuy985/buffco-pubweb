@@ -65,7 +65,6 @@ class AdminController extends BaseController {
 
     public function getHomeAdmin() {
         return View::make('templateadmin2.admin-home');
-        
     }
 
     public function getAlladmin() {
@@ -77,7 +76,7 @@ class AdminController extends BaseController {
         $arrAdmin = $tblAdminModel->allAdmin(10);
         $link = $arrAdmin->links();
         $tblGroupAdminModel = new tblGroupAdminModel();
-        $arrGroupAdmin = $tblGroupAdminModel->allGroupAdmin(100);
+        $arrGroupAdmin = $tblGroupAdminModel->allAdminByStatus(1);
         if ($thongbao != '') {
             return View::make('backend.admin.adminManage')->with('arrayAdmin', $arrAdmin)->with('link', $link)->with('thongbao', $thongbao)->with('arrGroupAdmin', $arrGroupAdmin);
         } else {
@@ -115,7 +114,7 @@ class AdminController extends BaseController {
         $objAdmin = $tblAdminModel->findAdminByAdminEmail(Input::get('id'));
         //lay ve cac nhom admin
         $tblGroupAdminModel = new tblGroupAdminModel();
-        $arrGroupAdmin = $tblGroupAdminModel->allGroupAdminList();
+        $arrGroupAdmin = $tblGroupAdminModel->allAdminByStatus(1);
 
         return View::make('backend.admin.adminManage')->with('AdminData', $objAdmin[0])->with('arrayAdmin', $arrAdmin)->with('link', $link)->with('arrGroupAdmin', $arrGroupAdmin);
     }

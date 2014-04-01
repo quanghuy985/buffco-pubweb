@@ -160,9 +160,9 @@
         <label>Trạng thái</label>
         <span class="field">
             <select name="status">
-                <option value="0" @if(isset($AdminData)&& $AdminData->status==0)selected@endif >Chờ kích hoạt</option>
-                <option value="1" @if(isset($AdminData)&& $AdminData->status==1)selected@endif>Kích hoạt</option>
-                <option value="2" @if(isset($AdminData)&& $AdminData->status==2)selected@endif>Xóa</option>
+                <option value="0" @if(isset($AdminData)&& $AdminData->status==0)selected @endif >Chờ kích hoạt</option>
+                <option value="1" @if(isset($AdminData)&& $AdminData->status==1)selected @endif>Kích hoạt</option>
+                <option value="2" @if(isset($AdminData)&& $AdminData->status==2)selected @endif>Xóa</option>
             </select>
         </span>
     </p>

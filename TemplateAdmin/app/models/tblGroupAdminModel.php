@@ -22,6 +22,11 @@ class tblGroupAdminModel extends Eloquent {
         return $result;
     }
 
+    public function insertGroupAdminGetLastID($groupadminName, $groupadminDescription, $status) {
+        $id = DB::table('tblGroupAdmin')->insertGetId(array('groupadminName' => $groupadminName, 'groupadminDescription' => $groupadminDescription, 'time' => time(), 'status' => $status));
+        return $id;
+    }
+
     public function updateGroupAdmin($id, $groupadminName, $groupadminDescription, $status) {
         // $tableAdmin = new TblAdminModel();
         $objGroupAdmin = $this->where('id', '=', $id);
@@ -59,6 +64,11 @@ class tblGroupAdminModel extends Eloquent {
 
     public function allGroupAdmin($per_page) {
         $arrGroupAdmin = DB::table('tblGroupAdmin')->paginate($per_page);
+        return $arrGroupAdmin;
+    }
+
+    public function allAdminByStatus($status) {
+        $arrGroupAdmin = DB::table('tblGroupAdmin')->where('status', '=', $status)->get();
         return $arrGroupAdmin;
     }
 

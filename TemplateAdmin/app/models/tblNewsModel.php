@@ -72,6 +72,10 @@ class tblNewsModel extends Eloquent {
         $arrNew = DB::table('tblnews')->paginate($per_page);
         return $arrNew;
     }
+     public function getAllNewsList() {
+        $arrNew = DB::table('tblnews')->get();
+        return $arrNew;
+    }
 
     public function getNewByID($newID) {
         $arrNew = DB::table('tblnews')->where('id', '=', $newID)->get();
@@ -79,7 +83,7 @@ class tblNewsModel extends Eloquent {
     }
 
     public function allNews($per_page, $orderby) {
-        $allNews = DB::table('tblNews')->join('tblCateNews', 'tblNews.catenewsID', '=', 'tblCateNews.id')->select('tblNews.id', 'tblCateNews.cateNewsName', 'tblNews.newsName', 'tblNews.newsDescription', 'tblNews.newsKeywords', 'tblNews.newsContent', 'tblNews.newsTag', 'tblNews.newsSlug', 'tblNews.newsTime', 'tblNews.status')->orderBy($orderby, 'desc')->paginate($per_page);
+        $allNews = DB::table('tblNews')->join('tblCateNews', 'tblNews.catenewsID', '=', 'tblCateNews.id')->select('tblNews.id', 'tblCateNews.cateNewsName', 'tblNews.newsName', 'tblNews.newsDescription', 'tblNews.newsKeywords', 'tblNews.newsContent', 'tblNews.newsTag', 'tblNews.newsSlug', 'tblNews.time', 'tblNews.status')->orderBy($orderby, 'desc')->paginate($per_page);
         return $allNews;
     }
 
