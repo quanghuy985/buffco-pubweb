@@ -96,6 +96,7 @@
     </div>
     <div class="contentwrapper">
         <div class="subcontent">
+            
             @if(isset($thongbao))
             <div class="notibar msgalert">
                 <a class="close"></a>

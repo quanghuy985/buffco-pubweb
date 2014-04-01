@@ -38,7 +38,8 @@ class GroupAdminController extends Controller {
         $arrGroupAdminRolesExist = $tblGroupAdminRoles->findRolesByGroupAdmin($objGroupAdmin[0]->id);
         return View::make('backend.admin.adminAddRoles')->with('objGroupAdmin', $objGroupAdmin[0])->with('arrGroupRoles', $arrGroupRoles)->with('arrGroupAdmin', $arrGroupAdmin)->with('link', $link)->with('arrRoles', $arrRoles)->with('arrGroupAdminRolesExist', $arrGroupAdminRolesExist);
     }
-
+    
+   
     public function postUpdateGroupAdmin() {
         $tblGroupAdminModel = new tblGroupAdminModel();
         $rules = array(
