@@ -3,13 +3,7 @@
     <type>org.netbeans.modules.php.project</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/php-project/1">
-            <name>laravel</name>
+            <name>larav</name>
         </data>
-<<<<<<< .mine
-        <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
-            <word>endif</word>
-        </spellchecker-wordlist>
-=======
->>>>>>> .r92
     </configuration>
 </project>

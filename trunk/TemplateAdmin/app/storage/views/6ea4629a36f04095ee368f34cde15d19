@@ -1,5 +1,4 @@
-@extends("templateadmin2.mainfire")
-@section("contentadmin")
+<?php $__env->startSection("contentadmin"); ?>
 <script>
     jQuery(document).ready(function() {
 
@@ -14,8 +13,8 @@
     if (addon != '') {
     jConfirm('Bạn có chắc chắn muốn xóa ?', 'Thông báo', function(r) {
     if (r == true) {
-    jQuery.post("{{URL::action('NewsController@postDelmulte')}}", {multiid: addon}).done(function(data) {
-    window.location = '{{URL::action('NewsController@getNewsView')}}';
+    jQuery.post("<?php echo URL::action('NewsController@postDelmulte'); ?>", {multiid: addon}).done(function(data) {
+    window.location = '<?php echo URL::action('NewsController@getNewsView'); ?>';
     });
             return false;
     } else {
@@ -30,7 +29,7 @@
     // Enter pressed?
     if (e.which == 10 || e.which == 13) {
     var request = jQuery.ajax({
-    url: "{{URL::action('NewsController@postAjaxsearch')}}?keywordsearch=" + jQuery('#searchblur').val(),
+    url: "<?php echo URL::action('NewsController@postAjaxsearch'); ?>?keywordsearch=" + jQuery('#searchblur').val(),
             type: "POST",
             dataType: "html"
     });
@@ -44,7 +43,7 @@
     });
             jQuery("#loctheotieuchi").click(function() {
     var request = jQuery.ajax({
-    url: "{{URL::action('NewsController@postFillterNews')}}",
+    url: "<?php echo URL::action('NewsController@postFillterNews'); ?>",
             data: {selectoptionnum: jQuery('#selectoptionnum').val(), oderbyoption: jQuery('#oderbyoption').val(), oderbyoption1: jQuery('#oderbyoption1').val()},
             type: "POST",
             dataType: "html"
@@ -56,7 +55,7 @@
     });
             function phantrang(page) {
             var request = jQuery.ajax({
-            url: "{{URL::action('NewsController@postAjaxpagion')}}?link=" + page,
+            url: "<?php echo URL::action('NewsController@postAjaxpagion'); ?>?link=" + page,
                     type: "POST",
                     dataType: "html"
             });
@@ -68,7 +67,7 @@
     jConfirm('Bạn có chắc chắn muốn xóa ?', 'Thông báo', function(r) {
     if (r == true) {
     var request = jQuery.ajax({
-    url: "{{URL::action('NewsController@postDeleteNews')}}?id=" + id,
+    url: "<?php echo URL::action('NewsController@postDeleteNews'); ?>?id=" + id,
             type: "POST",
             dataType: "html"
     });
@@ -83,7 +82,7 @@
     }
     function kichhoat(id, stus) {
     var request = jQuery.ajax({
-    url: "{{URL::action('NewsController@postNewsActive')}}?id=" + id + '&status=' + stus,
+    url: "<?php echo URL::action('NewsController@postNewsActive'); ?>?id=" + id + '&status=' + stus,
             type: "POST",
             dataType: "html"
     });
@@ -138,12 +137,12 @@
             </thead>
 
             <tbody id="tableproduct">
-                @foreach($arrayNews as $item)
+                <?php foreach($arrayNews as $item): ?>
                 <tr> 
-                    <td><input name="checkboxidfile" type="checkbox" value="{{$item->id}}"></td> 
-                    <td><label value="cateNews">{{str_limit( $item->newsName, 30, '...')}}</label></td> 
-                    <td><label value="cateNews">{{$item->cateNewsName }}</label></td> 
-                    <td><label value="cateNews">{{str_limit($item->newsDescription, 30, '...')}} </label></td> 
+                    <td><input name="checkboxidfile" type="checkbox" value="<?php echo $item->id; ?>"></td> 
+                    <td><label value="cateNews"><?php echo str_limit( $item->newsName, 30, '...'); ?></label></td> 
+                    <td><label value="cateNews"><?php echo $item->cateNewsName; ?></label></td> 
+                    <td><label value="cateNews"><?php echo str_limit($item->newsDescription, 30, '...'); ?> </label></td> 
                     <td><label value="cateNews"><?php echo date('d/m/Y h:i:s', $item->time); ?></label></td> 
                     <td><label value="cateNews"><?php
                             if ($item->status == 0) {
@@ -157,26 +156,28 @@
                         </label>
                     </td> 
                     <td>
-                        <a href="{{URL::action('NewsController@getNewsEdit')}}?id={{$item->id}}" class="btn btn4 btn_book" title="Sửa"></a>
-                        @if($item->status=='2')
-                        <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 0)" class="btn btn4 btn_flag" title="Kích hoạt"></a>
-                        @endif
-                        @if($item->status=='0')
-                        <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 1)" class="btn btn4 btn_world" title="Đăng bài"></a>
-                        @endif
-                        @if($item->status!='2')
-                        <a href="javascript: void(0)" onclick="xoasanpham({{$item->id}})" class="btn btn4 btn_trash" title="Xóa"></a>
-                        @endif
+                        <a href="<?php echo URL::action('NewsController@getNewsEdit'); ?>?id=<?php echo $item->id; ?>" class="btn btn4 btn_book" title="Sửa"></a>
+                        <?php if($item->status=='2'): ?>
+                        <a href="javascript: void(0)" onclick="kichhoat(<?php echo $item->id; ?>, 0)" class="btn btn4 btn_flag" title="Kích hoạt"></a>
+                        <?php endif; ?>
+                        <?php if($item->status=='0'): ?>
+                        <a href="javascript: void(0)" onclick="kichhoat(<?php echo $item->id; ?>, 1)" class="btn btn4 btn_world" title="Đăng bài"></a>
+                        <?php endif; ?>
+                        <?php if($item->status!='2'): ?>
+                        <a href="javascript: void(0)" onclick="xoasanpham(<?php echo $item->id; ?>)" class="btn btn4 btn_trash" title="Xóa"></a>
+                        <?php endif; ?>
                     </td> 
                 </tr> 
-                @endforeach
-                @if($link!='')
+                <?php endforeach; ?>
+                <?php if($link!=''): ?>
                 <tr>
-                    <td colspan="7">{{$link}}</td>
+                    <td colspan="7"><?php echo $link; ?></td>
                 </tr>
-                @endif
+                <?php endif; ?>
             </tbody>
         </table>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make("templateadmin2.mainfire", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

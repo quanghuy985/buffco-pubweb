@@ -2,57 +2,57 @@
 @section("contentadmin")
 <script>
     function phantrang(page) {
-        var request = jQuery.ajax({
-            url: "{{URL::action('GroupAdminController@postAjaxpagion')}}?link=" + page,
+    var request = jQuery.ajax({
+    url: "{{URL::action('GroupAdminController@postAjaxpagion')}}?link=" + page,
             type: "POST",
             dataType: "html"
-        });
-        request.done(function(msg) {
+    });
+            request.done(function(msg) {
             jQuery('#tableproduct').html(msg);
-        });
+            });
     }
     function xoasanpham(id) {
-        jConfirm('Bạn có chắc chắn muốn xóa ?', 'Thông báo', function(r) {
-            if (r == true) {
-                var request = jQuery.ajax({
-                    url: "{{URL::action('GroupAdminController@postDeleteGroupAdmin')}}?id=" + id,
-                    type: "POST",
-                    dataType: "html"
-                });
-                request.done(function(msg) {
-                    jQuery('#tableproduct').html(msg);
-                });
-                return false;
-            } else {
-                return false;
-            }
-        })
-    }
-    function kichhoat(id, stus) {
-        var request = jQuery.ajax({
-            url: "{{URL::action('GroupAdminController@postGroupAdminActive')}}?id=" + id + '&status=' + stus,
+    jConfirm('Bạn có chắc chắn muốn xóa ?', 'Thông báo', function(r) {
+    if (r == true) {
+    var request = jQuery.ajax({
+    url: "{{URL::action('GroupAdminController@postDeleteGroupAdmin')}}?id=" + id,
             type: "POST",
             dataType: "html"
-        });
-        request.done(function(msg) {
+    });
+            request.done(function(msg) {
             jQuery('#tableproduct').html(msg);
-        });
-        return true;
+            });
+            return false;
+    } else {
+    return false;
+    }
+    })
+    }
+    function kichhoat(id, stus) {
+    var request = jQuery.ajax({
+    url: "{{URL::action('GroupAdminController@postGroupAdminActive')}}?id=" + id + '&status=' + stus,
+            type: "POST",
+            dataType: "html"
+    });
+            request.done(function(msg) {
+            jQuery('#tableproduct').html(msg);
+            });
+            return true;
     }
 
     jQuery(document).ready(function() {
-        jQuery("[name='sdkjfhskjdfhkds']").change(function() {
-            if (jQuery("[name='sdkjfhskjdfhkds']").attr('checked')) {
-                jQuery('#uniform-checkboktest span').addClass('checked');
-            } else {
-                jQuery('#uniform-checkboktest span').removeClass('checked');
-            }
-            var x = this.checked;
+    jQuery("[name='sdkjfhskjdfhkds']").change(function() {
+    if (jQuery("[name='sdkjfhskjdfhkds']").attr('checked')) {
+    jQuery('#uniform-checkboktest span').addClass('checked');
+    } else {
+    jQuery('#uniform-checkboktest span').removeClass('checked');
+    }
+    var x = this.checked;
             jQuery('[name="checkboktest"]').each(function() {
 
-                this.checked = x;
-            });
-        });
+    this.checked = x;
+    });
+    });
     });</script>
 
 <div class="pageheader notab">
@@ -100,7 +100,7 @@
                         <td><label value="cateMenuer"><?php echo date('d/m/Y h:i:s', $item->time); ?></label></td> 
                         <td><label value="cateMenuer"><?php
                                 if ($item->status == 0) {
-                                    echo "chờ kích hoạt";
+                                    echo "ch�? kích hoạt";
                                 } else if ($item->status == 1) {
                                     echo "đã kích hoạt";
                                 } else if ($item->status == 2) {
@@ -138,7 +138,7 @@
     <div class="contenttitle2">
         <h3>Bảng thêm và chỉnh sửa</h3>
     </div>
-    <form class="stdform stdform2" method="post" action="@if(isset($AdminData)) {{URL::action('GroupAdminController@postUpdateGroupAdmin')}} @else {{URL::action('GroupAdminController@postAddGroupAdmin')}}@endif">
+    <form class="stdform stdform2" method="post" action="@if(isset($objGroupAdmin)) {{URL::action('GroupAdminController@postUpdateGroupAdmin')}} @else {{URL::action('GroupAdminController@postAddGroupAdmin')}}@endif">
         <p>
             <input type="hidden" name="id" id="idnews" value="@if(isset($objGroupAdmin)){{$objGroupAdmin->id}}@endif"/>
             <label>Tên Nhóm</label>
@@ -157,11 +157,17 @@
                 <br>
                 @foreach($arrRoles as $itemRoles)
                 @if($itemRoles->grouprolesID==$itemGroupRoles->id)
-                &nbsp &nbsp &nbsp<input type="checkbox" name="{{$itemRoles->id}}" id="checkboktest" value="1"  >{{$itemRoles->rolesCode}}
 
-                @endif
-                @endforeach
-                <br>
+                &nbsp &nbsp &nbsp<input type="checkbox" name="roles[]" @if(isset($arrGroupAdminRolesExist)) @foreach($arrGroupAdminRolesExist as $itemRolesExist)
+                                        @if($itemRolesExist->rolesCode == $itemRoles->rolesCode)checked @endif
+                                        @endforeach @endif id="checkboktest" value="{{$itemRoles->id}}"  >{{$itemRoles->rolesCode}} 
+
+
+
+
+                                        @endif
+                                        @endforeach
+                                        <br>
                 @endforeach
             </span>
         </p>

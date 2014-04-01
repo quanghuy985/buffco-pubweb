@@ -41,9 +41,9 @@
 
     jQuery(document).ready(function() {
     jQuery("[name='sdkjfhskjdfhkds']").change(function() {
-    if (jQuery("[name='sdkjfhskjdfhkds']").attr('checked')){
+    if (jQuery("[name='sdkjfhskjdfhkds']").attr('checked')) {
     jQuery('#uniform-checkboktest span').addClass('checked');
-    } else{
+    } else {
     jQuery('#uniform-checkboktest span').removeClass('checked');
     }
     var x = this.checked;
@@ -99,7 +99,7 @@
                         <td><label value="cateMenuer"><?php echo date('d/m/Y h:i:s', $item->time); ?></label></td> 
                         <td><label value="cateMenuer"><?php
                                 if ($item->status == 0) {
-                                    echo "chờ kích hoạt";
+                                    echo "ch�? kích hoạt";
                                 } else if ($item->status == 1) {
                                     echo "đã kích hoạt";
                                 } else if ($item->status == 2) {
@@ -137,7 +137,7 @@
     <div class="contenttitle2">
         <h3>Bảng thêm và chỉnh sửa</h3>
     </div>
-    <form class="stdform stdform2" method="post" action="<?php if(isset($AdminData)): ?> <?php echo URL::action('GroupAdminController@postUpdateGroupAdmin'); ?> <?php else: ?> <?php echo URL::action('GroupAdminController@postAddGroupAdmin'); ?><?php endif; ?>">
+    <form class="stdform stdform2" method="post" action="<?php if(isset($objGroupAdmin)): ?> <?php echo URL::action('GroupAdminController@postUpdateGroupAdmin'); ?> <?php else: ?> <?php echo URL::action('GroupAdminController@postAddGroupAdmin'); ?><?php endif; ?>">
         <p>
             <input type="hidden" name="id" id="idnews" value="<?php if(isset($objGroupAdmin)): ?><?php echo $objGroupAdmin->id; ?><?php endif; ?>"/>
             <label>Tên Nhóm</label>
@@ -156,11 +156,17 @@
                 <br>
                 <?php foreach($arrRoles as $itemRoles): ?>
                 <?php if($itemRoles->grouprolesID==$itemGroupRoles->id): ?>
-                &nbsp &nbsp &nbsp<input type="checkbox" name="<?php echo $itemRoles->id; ?>" id="checkboktest" value="1"  ><?php echo $itemRoles->rolesCode; ?>
-                
-                <?php endif; ?>
-                <?php endforeach; ?>
-                <br>
+
+                &nbsp &nbsp &nbsp<input type="checkbox" name="roles[]" <?php if(isset($arrGroupAdminRolesExist)): ?> <?php foreach($arrGroupAdminRolesExist as $itemRolesExist): ?>
+                                        <?php if($itemRolesExist->rolesCode == $itemRoles->rolesCode): ?>checked <?php endif; ?>
+                                        <?php endforeach; ?> <?php endif; ?> id="checkboktest" value="<?php echo $itemRoles->id; ?>"  ><?php echo $itemRoles->rolesCode; ?> 
+
+
+
+
+                                        <?php endif; ?>
+                                        <?php endforeach; ?>
+                                        <br>
                 <?php endforeach; ?>
             </span>
         </p>

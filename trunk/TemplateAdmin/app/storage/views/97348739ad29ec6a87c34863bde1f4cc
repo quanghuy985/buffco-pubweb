@@ -1,5 +1,4 @@
-@extends("templateadmin2.mainfire")
-@section("contentadmin")
+<?php $__env->startSection("contentadmin"); ?>
 <script>
      function locdau() {
         var str = (document.getElementById("newstitle").value); // lấy chuỗi dữ liệu nhập vào
@@ -36,7 +35,7 @@
         str = str.replace(/-+-/g, "-"); //thay thế 2- thành 1-
         str = str.replace(/^\-+|\-+$/g, ""); //cắt bỏ ký tự - ở đầu và cuối chuỗi
                 var request = jQuery.ajax({
-                    url: "{{URL::action('NewsController@postCheckSlug')}}?slug=" + str,
+                    url: "<?php echo URL::action('NewsController@postCheckSlug'); ?>?slug=" + str,
                     type: "POST"
                 });
         request.done(function(msg) {
@@ -59,11 +58,11 @@
         <div class="contenttitle2">
             <h3>Mẫu nhập tin tức</h3>
         </div>
-        <form class="stdform stdform2" method="post" action="@if(isset($objNews)) {{URL::action('NewsController@postUpdateNews')}} @else {{URL::action('NewsController@postAddNews')}}@endif">
+        <form class="stdform stdform2" method="post" action="<?php if(isset($objNews)): ?> <?php echo URL::action('NewsController@postUpdateNews'); ?> <?php else: ?> <?php echo URL::action('NewsController@postAddNews'); ?><?php endif; ?>">
 
             <p>
-                <input type="hidden" name="idnews" id="idnews" value="@if(isset($objNews)){{$objNews->id}}@endif"/>
-                <input type="hidden" name="status" id="status" value="@if(isset($objNews)){{$objNews->status}}@endif"/>
+                <input type="hidden" name="idnews" id="idnews" value="<?php if(isset($objNews)): ?><?php echo $objNews->id; ?><?php endif; ?>"/>
+                <input type="hidden" name="status" id="status" value="<?php if(isset($objNews)): ?><?php echo $objNews->status; ?><?php endif; ?>"/>
                 <label>Chọn mục hiển thị bài viết</label>
                 <span class="field">
 
@@ -85,43 +84,45 @@
             </p>
             <p>
                 <label>Tiêu đề bài viết</label>
-                <span class="field"><input type="text" name="newstitle" id="newstitle" onkeyup="locdau()" onchange="getCheckSlug()" placeholder="Nhập tiêu đề bài viết" value="@if(isset($objNews)){{$objNews->newsName}}@endif" class="longinput"></span>
+                <span class="field"><input type="text" name="newstitle" id="newstitle" onkeyup="locdau()" onchange="getCheckSlug()" placeholder="Nhập tiêu đề bài viết" value="<?php if(isset($objNews)): ?><?php echo $objNews->newsName; ?><?php endif; ?>" class="longinput"></span>
             </p>
 
             <p>
                 <label>Miêu tả tin tức</label>
-                <span class="field"><input type="text" name="newsdescription" placeholder="Nhập 1 đoạn miêu tả ngắn gọn bài viết" value="@if(isset($objNews)){{$objNews->newsDescription}}@endif" class="longinput"></span>
+                <span class="field"><input type="text" name="newsdescription" placeholder="Nhập 1 đoạn miêu tả ngắn gọn bài viết" value="<?php if(isset($objNews)): ?><?php echo $objNews->newsDescription; ?><?php endif; ?>" class="longinput"></span>
             </p>
 
             <p>
                 <label>Nội dung bài viết <small>Nhập nội dung bài viết trong mục</small></label>
-                <span class="field"><textarea cols="80" rows="5" id="location2" class="ckeditor" name="newsContent" placeholder="Nội dung bài viết">@if(isset($objNews)){{$objNews->newsContent}}@endif</textarea></span>
+                <span class="field"><textarea cols="80" rows="5" id="location2" class="ckeditor" name="newsContent" placeholder="Nội dung bài viết"><?php if(isset($objNews)): ?><?php echo $objNews->newsContent; ?><?php endif; ?></textarea></span>
             </p>
 
             <p>
                 <label>Nhập từ khóa</label>
                 <span class="field"> 
-                    <input name="newsKeywords" id="tags" class="longinput" value="@if(isset($objNews)){{$objNews->newsKeywords}}@endif" />
+                    <input name="newsKeywords" id="tags" class="longinput" value="<?php if(isset($objNews)): ?><?php echo $objNews->newsKeywords; ?><?php endif; ?>" />
                 </span>
             </p>
 
             <p>
                 <label>Nhập Tag</label>
                 <span class="field"> 
-                    <input name="newstag" id="tags1" class="longinput" value="@if(isset($objNews)){{$objNews->newsTag}}@endif" />
+                    <input name="newstag" id="tags1" class="longinput" value="<?php if(isset($objNews)): ?><?php echo $objNews->newsTag; ?><?php endif; ?>" />
                 </span>
 
             </p>
             <p>
                 <label>Link tới bài viết</label>
-                <span class="field"><input type="text" name="newsSlug" id="newsSlug" placeholder="Ví dụ: pubweb.vn/tinngoaiweb/vu-an-hinh-su ; vu-an-hinh-su là từ được nhập" value='@if(isset($objNews)){{$objNews->newsSlug}}@endif' class="longinput"></span>
+                <span class="field"><input type="text" name="newsSlug" id="newsSlug" placeholder="Ví dụ: pubweb.vn/tinngoaiweb/vu-an-hinh-su ; vu-an-hinh-su là từ được nhập" value='<?php if(isset($objNews)): ?><?php echo $objNews->newsSlug; ?><?php endif; ?>' class="longinput"></span>
             </p>
 
             <p class="stdformbutton">
-                <button class="submit radius2" value="@if(isset($objNews))Cập nhật @else Thêm mới @endif ">@if(isset($objNews))Cập nhật @else Thêm mới @endif </button>
+                <button class="submit radius2" value="<?php if(isset($objNews)): ?>Cập nhật <?php else: ?> Thêm mới <?php endif; ?> "><?php if(isset($objNews)): ?>Cập nhật <?php else: ?> Thêm mới <?php endif; ?> </button>
                 <input type="reset" class="reset radius2" value="Làm mới">
             </p>
         </form>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make("templateadmin2.mainfire", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
