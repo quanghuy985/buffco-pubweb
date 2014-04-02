@@ -101,6 +101,45 @@
             return true;
     }
 </script>
+
+<script>
+    jQuery(document).ready(function(){
+    jQuery("#addManufacture").validate({
+    rules: {
+            manufName: {
+                required: true
+                
+            },
+            manufDescription: {
+                required: true
+                
+            },
+            manufPlace: {
+                required: true
+            }
+            
+
+            },
+    messages: {
+            manufName: {
+                required: 'Tên là trường bắt buộc'
+                
+            },
+            manufDescription: {
+                required: 'Mô tả là trường bắt buộc'
+                
+            },
+            manufPlace: {
+                required: 'Nơi sản xuất là bắt buộc'
+            },
+            userLastName: {
+                required: 'Vui lòng nhập tên'
+            }
+            
+        }
+        });
+    });
+</script>
 <div class="pageheader notab">
     <h1 class="pagetitle">Nhà sản xuất</h1>
     <span class="pagedesc">Quản lý nhà sản xuất</span>
@@ -202,7 +241,7 @@
         <div class="contenttitle2" id="editManuf">
             <h3>Thêm/Sửa nhà sản xuất</h3>
         </div>
-        <form class="stdform stdform2" method="post" action="@if(isset($arrayManuf)) {{URL::action('ManufacturerController@postUpdateManufacturer')}} @else {{URL::action('ManufacturerController@postAddManufaturer')}}@endif">
+        <form class="stdform stdform2" id="addManufacture" method="post" action="@if(isset($arrayManuf)) {{URL::action('ManufacturerController@postUpdateManufacturer')}} @else {{URL::action('ManufacturerController@postAddManufaturer')}}@endif">
 
             <p>
                 <input type="hidden" name="idmanuf" id="idmanuf" value="@if(isset($arrayManuf)){{$arrayManuf->id}}@endif"/>
