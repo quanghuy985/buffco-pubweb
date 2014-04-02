@@ -80,7 +80,7 @@ class tblCategoryProductModel extends Eloquent {
     }
 
     public function findCateProductByID($id) {
-        $objCateProduct = DB::table('tblCategoryProduct')->where('id', '=', $id)->get();
+        $objCateProduct = DB::table('tblcategoryproduct')->where('id', '=', $id)->get();
         return $objCateProduct;
     }
 

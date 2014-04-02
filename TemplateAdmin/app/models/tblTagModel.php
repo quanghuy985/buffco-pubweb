@@ -5,16 +5,15 @@ class tblTagModel extends Eloquent {
     protected $table = 'tbltag';
     public $timestamps = false;
 
-    public function insertTag($tagName, $tagDescription, $catetagID) {
-        $this->tagName = $tagName;
-        $this->tagDescription = $tagDescription;
+    public function insertTag($tagKey, $tagValue, $catetagID) {
+        $this->tagKey = $tagKey;
+        $this->tagValue = $tagValue;
         $this->catetagID = $catetagID;
         $this->time = time();
         $this->status = 0;
         $check = $this->save();
         return $check;
-    }
-
+    }  
     public function updateTag($tagID, $tagName, $tagDescription, $catetagID, $tagStatus) {
         // $tableAdmin = new TblAdminModel();
         $tableTag = $this->where('id', '=', $tagID);
@@ -56,6 +55,10 @@ class tblTagModel extends Eloquent {
     public function getTagByID($tagID) {
         $objTag = DB::table('tbltag')->where('id', '=', $tagID)->get();
         return $objTag;
+    }
+    public function getTagByCateID($cateID) {
+        $arrTag = DB::table('tbltag')->where('catetagID', '=', $cateID)->get();
+        return $arrTag;
     }
 
 }
