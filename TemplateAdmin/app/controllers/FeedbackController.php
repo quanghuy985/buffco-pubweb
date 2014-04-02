@@ -58,7 +58,7 @@ class FeedbackController extends BaseController {
         $contentFeedback = Input::get('feedbackContent');
         $contentReply = Input::get('feedbackReplyContent');
         $tblFeedbackModel = new tblFeedbackModel();
-        $tblFeedbackModel->updateFeedback(Input::get('feedbackID'), '1');
+        $tblFeedbackModel->updateFeedback(Input::get('feedbackID'), 1);
         Mail::send('emails.feedback.feedback', array('noidung' => $contentFeedback, 'traloi' => $contentReply), function($message) {
             $message->from('no-rep@pubweb.vn', 'Pubweb.vn');
             $message->to(Input::get('userEmail'));
@@ -67,8 +67,12 @@ class FeedbackController extends BaseController {
         return Redirect::action('FeedbackController@getPhanHoi');
     }
 
-    public function getXoa() {
-        
+    public function postXoaPhanHoi() {
+        $tblFeedbackModel = new tblFeedbackModel();
+        $tblFeedbackModel->updateFeedback(Input::get('id'), '2');
+        $arrFeedback = $tblFeedbackModel->allFeedback(1);
+        $link = $arrFeedback->links();
+        return View::make('backend.feedback.AjaxFeedbackManage')->with('arrayFeedback', $arrFeedback)->with('links', $link);
     }
 
 }

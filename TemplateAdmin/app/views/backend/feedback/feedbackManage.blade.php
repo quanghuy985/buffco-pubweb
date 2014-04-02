@@ -20,7 +20,6 @@
             jQuery("#jGrowl").remove();
             jQuery.jGrowl("Đã tải dữ liệu thành công ...");
             jQuery('#tablefeedback').html(msg);
-
         });
     }
     function locdulieu() {
@@ -36,7 +35,6 @@
             jQuery("#jGrowl").remove();
             jQuery.jGrowl("Đã tải dữ liệu thành công ...");
             jQuery('#tablefeedback').html(msg);
-
         });
     }
     function timkiem() {
@@ -53,19 +51,15 @@
             jQuery("#jGrowl").remove();
             jQuery.jGrowl("Đã tải dữ liệu thành công ...");
             jQuery('#tablefeedback').html(msg);
-
         });
     }
-    jQuery(document).ready(function() {
-
-        jQuery('#searchblur').keypress(function(e) {
-            if (e.which == 10 || e.which == 13) {
-                jQuery('#datepicker').val('')
-                jQuery('#datepicker1').val('')
+    function xoasanpham(id) {
+        jConfirm('Bạn có chắc chắn muốn xóa ?', 'Thông báo', function(r) {
+            if (r == true) {
                 jQuery("#jGrowl").remove();
                 jQuery.jGrowl("Đang tải dữ liệu ...");
                 var request = jQuery.ajax({
-                    url: "{{URL::action('FeedbackController@postAjaxSearchPhanHoi')}}?keyword=" + jQuery('#searchblur').val(),
+                    url: "{{URL::action('FeedbackController@postXoaPhanHoi')}}?id=" + id,
                     type: "POST",
                     dataType: "html"
                 });
@@ -73,14 +67,34 @@
                     jQuery("#jGrowl").remove();
                     jQuery.jGrowl("Đã tải dữ liệu thành công ...");
                     jQuery('#tablefeedback').html(msg);
-
                 });
+                return false;
+            } else {
+                return false;
             }
-        });
+        })
+    }
+    jQuery(document).ready(function() {
 
+        jQuery('#searchblur').keypress(function(e) {
+            if (e.which == 10 || e.which == 13) {
+            jQuery('#datepicker').val('')
+                    jQuery('#datepicker1').val('')
+                    jQuery("#jGrowl").remove();
+                    jQuery.jGrowl("Đang tải dữ liệu ...");
+                    var request = jQuery.ajax({
+                    url: "{{URL::action('FeedbackController@postAjaxSearchPhanHoi')}}?keyword=" + jQuery('#searchblur').val(),
+                            type: "POST",
+                            dataType: "html"
+                    });
+                    request.done(function(msg) {
+                    jQuery("#jGrowl").remove();
+                    jQuery.jGrowl("Đã tải dữ liệu thành công ...");
+                    jQuery('#tablefeedback').html(msg);
+                });
+        }
     });
-
-</script>
+    });</script>
 <div class="pageheader notab">
     <h1 class="pagetitle">QUẢN LÝ PHẢN HỒI</h1>
     <span class="pagedesc">Quản lý các phản hồi</span>
@@ -127,6 +141,7 @@
                 </tr>  
             </thead>
             <tbody id="tablefeedback">
+
                 <?php $i = 1 ?>
                 @foreach($arrayFeedback as $item)
                 <tr> 
@@ -150,7 +165,7 @@
                     <td>
                         <a href="{{URL::action('FeedbackController@getTraLoi')}}?id={{$item->id}}" class="btn btn4 btn_mail" title="Trả lời"></a>
                         @if($item->status!='2')
-                        <a href="{{URL::action('FeedbackController@getXoa')}}?id={{$item->id}}" class="btn btn4 btn_trash" title="Xóa"></a>
+                        <a href="javascript:void(0)" onclick="xoasanpham({{$item->id}})" class="btn btn4 btn_trash" title="Xóa"></a>
                         @endif
 
                     </td> 
@@ -159,6 +174,11 @@
                 @if($links!='')
                 <tr>
                     <td colspan="8">{{$links}}</td>
+                </tr>
+                @endif
+                @if(count($arrayFeedback)==0)
+                <tr>
+                    <td colspan="8">Không có dữ liệu trả về .</td>
                 </tr>
                 @endif
             </tbody>

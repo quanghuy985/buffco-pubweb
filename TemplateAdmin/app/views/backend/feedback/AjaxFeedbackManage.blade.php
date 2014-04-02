@@ -1,4 +1,4 @@
-<?php $i = 1 ?>
+<?php $i = ($arrayFeedback->getCurrentPage() - 1) * 1 + 1; ?>
 @foreach($arrayFeedback as $item)
 <tr> 
     <td><label value="cateNews">{{$i++ }}</label></td> 
@@ -21,7 +21,7 @@
     <td>
         <a href="{{URL::action('FeedbackController@getTraLoi')}}?id={{$item->id}}" class="btn btn4 btn_mail" title="Trả lời"></a>
         @if($item->status!='2')
-        <a href="{{URL::action('FeedbackController@getXoa')}}?id={{$item->id}}" class="btn btn4 btn_trash" title="Xóa"></a>
+        <a href="javascript:void(0)" onclick="xoasanpham({{$item->id}})" class="btn btn4 btn_trash" title="Xóa"></a>
         @endif
 
     </td> 
@@ -30,5 +30,10 @@
 @if($links!='')
 <tr>
     <td colspan="8">{{$links}}</td>
+</tr>
+@endif
+@if(count($arrayFeedback)==0)
+<tr>
+    <td colspan="8" style="text-align: center;"><span class="center">Không có dữ liệu trả về .</span></td>
 </tr>
 @endif
