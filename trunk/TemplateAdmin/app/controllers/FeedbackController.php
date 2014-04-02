@@ -53,9 +53,20 @@ class FeedbackController extends BaseController {
         $feedbackData = $tblFeedbackModel->getFeedbackbyID(Input::get('id'));
         return View::make('backend.feedback.repFeedback')->with('feedbackdata', $feedbackData[0]);
     }
+
     public function postTraLoi() {
-        
+        $contentFeedback = Input::get('feedbackContent');
+        $contentReply = Input::get('feedbackReplyContent');
+        $tblFeedbackModel = new tblFeedbackModel();
+        $tblFeedbackModel->updateFeedback(Input::get('feedbackID'), '1');
+        Mail::send('emails.feedback.feedback', array('noidung' => $contentFeedback, 'traloi' => $contentReply), function($message) {
+            $message->from('no-rep@pubweb.vn', 'Pubweb.vn');
+            $message->to(Input::get('userEmail'));
+            $message->subject(Input::get('feedbackSubject') . ' - ' . Input::get('feedbackTime'));
+        });
+        return Redirect::action('FeedbackController@getPhanHoi');
     }
+
     public function getXoa() {
         
     }
