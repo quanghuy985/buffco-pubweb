@@ -18,16 +18,13 @@ Route::get('/', function () {
 Route::controller('supportergroup', 'SupporterGroupController');
 Route::controller('suppporter', 'SupporterController');
 Route::controller('promotion', 'PromotionController');
-<<<<<<< .mine
 Route::controller('news', 'NewsController');
 Route::controller('catenews', 'cateNewsController');
 Route::controller('order', 'OrderController');
-
-=======
 Route::controller('categoryproduct', 'CategoryProductController');
 Route::controller('product', 'ProductController');
 Route::controller('tag', 'TagController');
->>>>>>> .r108
+
 App::missing(function($exception) {
     return $exception;
 });

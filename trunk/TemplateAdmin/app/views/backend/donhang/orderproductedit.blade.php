@@ -1,8 +1,5 @@
 @extends("templateadmin2.mainfire")
 @section("contentadmin")
-<script>
-
-</script>
 <div class="pageheader notab">
     <h1 class="pagetitle">QUẢN LÝ ĐƠN HÀNG</h1>
     <span class="pagedesc">Quản lý đơn hàng</span>
@@ -12,7 +9,7 @@
     <div class="contenttitle2">
         <h3>Thông tin đơn hàng</h3>
     </div>
-    <form class="stdform" method="post" action="#" accept-charset="UTF-8">
+    <form class="stdform" accept-charset="UTF-8">
         <p>
             <label>Người mua :</label>
             <span class="field">         
@@ -21,13 +18,13 @@
             </span>
         </p>
         <p>
-            <label>Mã Đơn Hàng</label>
+            <label>Mã Đơn Hàng :</label>
             <span class="field">         
                 <input type="text" name="orderCode" placeholder="Nhập tên sản phẩm" class="longinput" value="@if(isset($objOrder)){{$objOrder[0]->orderCode}}@endif" disabled>
             </span>
         </p>
         <p>
-            <label>Họ và tên</label>
+            <label>Họ và tên :</label>
             <span class="field">         
                 <input type="text" name="orderCode" placeholder="Nhập tên sản phẩm" class="longinput" value="@if(isset($objOrder)){{$objOrder[0]->userFirstName.' '.$objOrder[0]->userLastName}}@endif" disabled>
             </span>
@@ -35,8 +32,6 @@
         <div class="contenttitle2">
             <h3>Thông tin sản phẩm</h3>
         </div>
-
-
     </form>
     <table cellpadding="0" cellspacing="0" border="0"  class="stdtable">
         <colgroup>
@@ -88,7 +83,7 @@
             </tr>
         </tbody>
     </table>
-    <form action="" method="">
+    <form action="POST" method="{{URL::action('OrderController@postUpdateOrder')}}">
         <p>
             <label>Trạng thái :</label>
             <span class="field">         
