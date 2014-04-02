@@ -14,9 +14,17 @@
         <script type="text/javascript" src="<?php echo Asset('adminlib/js/plugins/jquery.dataTables.min.js'); ?>"></script>
         <script type="text/javascript" src="<?php echo Asset('adminlib/js/custom/tables.js'); ?>"></script>
         <script type="text/javascript" src="<?php echo Asset('adminlib/js/plugins/jquery.alerts.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo Asset('adminlib'); ?>/js/plugins/colorpicker.js"></script>
+        <script type="text/javascript" src="<?php echo Asset('adminlib'); ?>/js/plugins/jquery.jgrowl.js"></script>
+        <script type="text/javascript" src="<?php echo Asset('adminlib/js/custom/elements.js'); ?>"></script>
         <script type="text/javascript" src="<?php echo Asset('adminlib/ckeditor/ckeditor.js'); ?>"></script>
         <script type="text/javascript" src="<?php echo Asset('adminlib/ckfinder/ckfinder.js'); ?>"></script>
- <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="adminlib/js/plugins/excanvas.min.js"></script><![endif]-->
+        <script type="text/javascript" src="<?php echo Asset('adminlib'); ?>/js/plugins/jquery.validate.min.js"></script>
+        <script type="text/javascript" src="<?php echo Asset('adminlib'); ?>/js/plugins/jquery.tagsinput.min.js"></script>
+        <script type="text/javascript" src="<?php echo Asset('adminlib'); ?>/js/plugins/charCount.js"></script>
+        <script type="text/javascript" src="<?php echo Asset('adminlib'); ?>/js/plugins/ui.spinner.min.js"></script>
+        <script type="text/javascript" src="<?php echo Asset('adminlib'); ?>/js/custom/forms.js"></script>
+         <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="adminlib/js/plugins/excanvas.min.js"></script><![endif]-->
         <!--[if IE 9]>
             <link rel="stylesheet" media="screen" href="adminlib/css/style.ie9.css"/>
         <![endif]-->
@@ -83,6 +91,8 @@
 
             <div class="vernav2 iconmenu">
                 <ul>
+                    <li><a href="#newsSub" class="gallery">Quản lý tập tin</a>  
+                    </li>
                     <li><a href="#newsSub" class="editor">Tin tức</a>
                         <span class="arrow"></span>
                         <ul id="newsSub">
@@ -104,8 +114,8 @@
                     <li><a href="#ahshs" class="calendar">Danh sách đơn hàng</a>
                         <span class="arrow"></span>
                         <ul id="ahshs">
-                            <li><a href="notfound.html">�?ơn hàng sản phẩm</a></li>
-                            <li><a href="forbidden.html">�?ơn hàng dịch vụ</a></li>
+                            <li><a href="notfound.html">Đơn hàng sản phẩm</a></li>
+                            <li><a href="forbidden.html">Đơn hàng dịch vụ</a></li>
                             <li><a href="internal.html">Internal Server Error</a></li>
                             <li><a href="offline.html">Offline</a></li>
                         </ul>
