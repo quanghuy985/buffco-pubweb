@@ -24,7 +24,7 @@ class tblOrderModel extends Eloquent {
         }
         if ($orderCode != '') {
             $arraysql = array_merge($arraysql, array("orderCode" => $orderCode));
-        }    
+        }
         if ($orderStatus != '') {
             $arraysql = array_merge($arraysql, array("status" => $orderStatus));
         }
@@ -48,7 +48,7 @@ class tblOrderModel extends Eloquent {
     }
 
     public function getAllOrder($per_page) {
-        $allOrder = DB::table('tblOrder')->join('tblusers', 'tblOrder.userID', '=', 'tblusers.id')->join('tblproduct', 'tblOrder.productID', '=', 'tblproduct.id')->select('tblOrder.*', 'tblusers.userEmail', 'tblproduct.productName')->paginate($per_page);
+        $allOrder = DB::table('tblOrder')->join('tblUsers', 'tblOrder.userID', '=', 'tblUsers.id')->select('tblOrder.*', 'tblusers.userEmail', 'tblusers.userFirstName', 'tblusers.userLastName')->paginate($per_page);
         return $allOrder;
     }
 
@@ -67,9 +67,10 @@ class tblOrderModel extends Eloquent {
     }
 
     public function getOrderByOrderCode($orderCode) {
-        $allOrder = DB::table('tblOrder')->join('tblproduct', 'tblOrder.productID', '=', 'tblproduct.id')->select('tblOrder.*', 'tblusers.userEmail', 'tblproduct.productName')->where('tblOrder.id', '=', $id)->get();
-        return $allOrder;
-    }    
+        $allOrderDetail = DB::table('tblOrderDetail')->join('tblproduct', 'tblOrderDetail.productID', '=', 'tblproduct.id')->join('tblPromotion', 'tblproduct.promotionID', '=', 'tblPromotion.id')->join('tblOrder', 'tblOrderDetail.orderCode', '=', 'tblOrder.orderCode')->join('tblUsers', 'tblOrder.userID', '=', 'tblUsers.id')->select('tblOrderDetail.*', 'tblusers.userEmail', 'tblusers.userFirstName', 'tblusers.userLastName', 'tblproduct.productCode', 'tblproduct.productName', 'tblproduct.productPrice', 'tblPromotion.promotionName', 'tblPromotion.promotionAmount', 'tblPromotion.id as promotionID')->orderBy('tblOrderDetail.orderCode')->where('tblOrderDetail.orderCode', '=', $orderCode)->get();
+        return $allOrderDetail;
+    }
+
     public function deleteOrder($id) {
         $checkdel = $this->where('id', '=', $id)->update(array('status' => 2));
         if ($checkdel > 0) {
