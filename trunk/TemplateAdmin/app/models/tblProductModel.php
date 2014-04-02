@@ -5,10 +5,9 @@ class TblProductModel extends Eloquent {
     protected $table = 'tblproduct';
     public $timestamps = false;
 
-    public function insertProduct($cateID, $productName, $productUrlImage, $productDescription, $productPrice, $promotionID, $productTag, $productSlug, $manufactureID) {
+    public function insertProduct($cateID, $productName, $productDescription, $productPrice, $promotionID,$productSlug, $productTag, $manufactureID,$status) {
         $this->cateID = $cateID;
-        $this->productName = $productName;
-        $this->productUrlImage = $productUrlImage;
+        $this->productName = $productName;       
         $this->productDescription = $productDescription;
         $this->productPrice = $productPrice;
         $this->promotionID = $promotionID;       
@@ -16,12 +15,12 @@ class TblProductModel extends Eloquent {
         $this->productTag = $productTag;
         $this->manufactureID = $manufactureID;
         $this->time = time();       
-        $this->status = 0; 
+        $this->status = $status; 
         $check = $this->save();
         return $check;
     }
 
-    public function updateProduct($id,$cateID, $productName, $productUrlImage, $productDescription, $productPrice, $promotionID, $productTag, $productSlug, $manufactureID, $status) {
+    public function updateProduct($id,$cateID, $productName, $productDescription, $productPrice, $promotionID,$productSlug, $productTag, $manufactureID, $status) {
         $supporter = $this->where('id', '=', $id);
         $arraysql = array('id' => $id);
         if ($cateID != '') {
@@ -29,10 +28,7 @@ class TblProductModel extends Eloquent {
         }
         if ($productName != '') {
             $arraysql = array_merge($arraysql, array("productName" => $productName));
-        }
-        if ($productUrlImage != '') {
-            $arraysql = array_merge($arraysql, array("productUrlImage" => $productUrlImage));
-        }
+        }       
         if ($productDescription != '') {
             $arraysql = array_merge($arraysql, array("productDescription" => $productDescription));
         }
@@ -76,7 +72,7 @@ class TblProductModel extends Eloquent {
     }
 
     public function getAllProduct($per_page) {
-        $arrProduct = DB::table('tblproduct')->join('tblcategoryproduct', 'tblproduct.cateID', '=', 'tblcategoryproduct.id')->select('tblproduct.*', 'tblcategoryproduct.cateName')->orderBy('tblproduct.id', 'desc')->paginate($per_page);
+        $arrProduct = DB::table('tblproduct')->join('tblcategoryproduct', 'tblproduct.cateID', '=', 'tblcategoryproduct.id')->join('tblpromotion','tblproduct.promotionID','=','tblpromotion.id')->select('tblproduct.*', 'tblcategoryproduct.cateName','tblpromotion.promotionName')->orderBy('tblproduct.id', 'desc')->paginate($per_page);
         return $arrProduct;
     }
 
@@ -88,9 +84,9 @@ class TblProductModel extends Eloquent {
     public function FindProduct($keyword, $per_page, $orderby, $status) {
         $arrProduct = '';
         if ($status == '') {
-            $arrProduct = DB::table('tblproduct')->join('tblcategoryproduct', 'tblproduct.cateID', '=', 'tblcategoryproduct.id')->select('tblproduct.*', 'tblcategoryproduct.cateName')->where('tblproduct.productName', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);
+            $arrProduct = DB::table('tblproduct')->join('tblcategoryproduct', 'tblproduct.cateID', '=', 'tblcategoryproduct.id')->join('tblpromotion','tblproduct.promotionID','=','tblpromotion.id')->select('tblproduct.*', 'tblcategoryproduct.cateName','tblpromotion.promotionName')->where('tblproduct.productName', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);
         } else {
-            $arrProduct = DB::table('tblproduct')->join('tblcategoryproduct', 'tblproduct.cateID', '=', 'tblcategoryproduct.id')->select('tblproduct.*', 'tblcategoryproduct.cateName')->where('tblproduct.productName', 'LIKE', '%' . $keyword . '%')->where('tblproduct.status', '=', $status)->orderBy($orderby, 'desc')->paginate($per_page);
+            $arrProduct = DB::table('tblproduct')->join('tblcategoryproduct', 'tblproduct.cateID', '=', 'tblcategoryproduct.id')->join('tblpromotion','tblproduct.promotionID','=','tblpromotion.id')->select('tblproduct.*', 'tblcategoryproduct.cateName','tblpromotion.promotionName')->where('tblproduct.productName', 'LIKE', '%' . $keyword . '%')->where('tblproduct.status', '=', $status)->orderBy($orderby, 'desc')->paginate($per_page);
         }
         return $arrProduct;
     }

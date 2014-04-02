@@ -7,14 +7,14 @@ class tblPMetaModel extends Eloquent {
 
     public function insertPMeta($productID, $tagID) {
         $this->productID = $productID;
-        $this->tagID = $tagID;        
+        $this->tagID = $tagID;
         $this->time = time();
         $this->status = 0;
         $check = $this->save();
         return $check;
     }
 
-    public function updatePMeta($pMetaID,$productID, $tagID, $tagStatus) {
+    public function updatePMeta($pMetaID, $productID, $tagID, $tagStatus) {
         // $tableAdmin = new TblAdminModel();
         $tablePMeta = $this->where('id', '=', $pMetaID);
         $arraysql = array('id' => $pMetaID);
@@ -23,7 +23,7 @@ class tblPMetaModel extends Eloquent {
         }
         if ($tagID != '') {
             $arraysql = array_merge($arraysql, array("tagID" => $tagID));
-        }   
+        }
         if ($tagStatus != '') {
             $arraysql = array_merge($arraysql, array("status" => $tagStatus));
         }
@@ -44,8 +44,17 @@ class tblPMetaModel extends Eloquent {
         }
     }
 
+    public function deletePMetaByPId($pID) {
+        $checkdel = $this->where('productID', '=', $pID)->delete();
+        if ($checkdel > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
     public function getAllPMeta($per_page) {
-        $allPMeta= DB::table('tblpmeta')->paginate($per_page);
+        $allPMeta = DB::table('tblpmeta')->paginate($per_page);
         return $allPMeta;
     }
 
@@ -53,13 +62,18 @@ class tblPMetaModel extends Eloquent {
         $objPMeta = DB::table('tblpmeta')->where('id', '=', $pMetaID)->get();
         return $objPMeta;
     }
-    
-     public function getProductID($productID) {
+
+    public function getMetaByProductID($productID) {
         $objPMeta = DB::table('tblpmeta')->where('productID', '=', $productID)->get();
         return $objPMeta;
     }
-    
-      public function getTagID($tagID) {
+
+    public function getTagByProductID($productID) {
+        $objTag = DB::table('tblpmeta')->where('productID', '=', $productID)->select('tagID')->get();
+        return $objTag;
+    }
+
+    public function getTagID($tagID) {
         $objPMeta = DB::table('tblpmeta')->where('tagID', '=', $tagID)->get();
         return $objPMeta;
     }
