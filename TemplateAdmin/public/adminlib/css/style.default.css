@@ -2357,3 +2357,8 @@ blockquote.bq2 {
     .photopreview a img { width: 300px; }
 
 }
+
+.loader{
+    background: url(../images/loaders/loader10.gif)  no-repeat;
+    background-position: 50% 50%;
+}

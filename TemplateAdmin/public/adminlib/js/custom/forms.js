@@ -69,6 +69,7 @@ jQuery(document).ready(function() {
 
     jQuery('#tags').tagsInput();
     jQuery('#tags1').tagsInput();
+    jQuery('#tags2').tagsInput();
 
     ///// SPINNER /////
 

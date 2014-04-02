@@ -40,8 +40,18 @@ class tblFeedbackModel extends Eloquent {
     }
 
     public function allFeedback($per_page) {
-        $arrFeedback = $this->paginate($per_page);
-        return $alladmin;
+        $arrFeedback = $this->orderBy('time', 'desc')->paginate($per_page);
+        return $arrFeedback;
+    }
+
+    public function fillterFeedback($per_page, $from, $to) {
+        $arrFeedback = $this->orderBy('time', 'desc')->whereBetween('time', array($from, $to))->paginate($per_page);
+        return $arrFeedback;
+    }
+
+    public function searchFeedback($per_page, $keyword) {
+        $arrFeedback = $this->orderBy('time', 'desc')->where('feedbackUserEmail', 'LIKE', '%' . $keyword . '%')->orWhere('feedbackUserName', 'LIKE', '%' . $keyword . '%')->orWhere('feedbackSubject', 'LIKE', '%' . $keyword . '%')->orWhere('feedbackContent', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
+        return $arrFeedback;
     }
 
     public function getFeedbackbyID($feedbackID) {
