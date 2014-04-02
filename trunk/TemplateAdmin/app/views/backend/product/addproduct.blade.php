@@ -7,6 +7,9 @@
         font-weight: normal;
         color: #555555;
     }
+    .stdform small.desc {
+        margin: 5px 0 0 2px !important;
+    }
 </style>
 <script>
     jQuery(document).ready(function() {
@@ -80,10 +83,10 @@
                 return;
             }
             else {
-                
+
                 jQuery('#cateTagID').val(jQuery('#cateProductSelect').val());
-            jQuery("#ui-dialog-title-wTag").html('Thêm tag cho danh mục: '+jQuery('#cateProductSelect option:selected').text() ) ;   
-            jQuery("#wTag").dialog("open");
+                jQuery("#ui-dialog-title-wTag").html('Thêm tag cho danh mục: ' + jQuery('#cateProductSelect option:selected').text());
+                jQuery("#wTag").dialog("open");
             }
 
         });
@@ -272,7 +275,7 @@
             <p class="stdformbutton">
                 <button class="submit radius2">@if(isset($dataedit))Cập nhật @else Thêm mới @endif</button>
                 <input type="reset" class="reset radius2" value="Làm lại">
-                <button type="button" onclick="window.location.href='{{URL::action('ProductController@getView')}}';" class="submit radius2">Quay lại danh sách sản phẩm</button>
+                <button type="button" onclick="window.location.href ='{{URL::action('ProductController@getView')}}';" class="submit radius2">Quay lại danh sách sản phẩm</button>
             </p>           
         </form>
         <div id="wPromotion" title="Thêm khuyến mại">

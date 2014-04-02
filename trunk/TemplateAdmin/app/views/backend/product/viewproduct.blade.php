@@ -1,5 +1,6 @@
 @extends("templateadmin2.mainfire")
 @section("contentadmin")
+
 <script>
     jQuery(document).ready(function() {
     jQuery('.deletepromulti').click(function() {
