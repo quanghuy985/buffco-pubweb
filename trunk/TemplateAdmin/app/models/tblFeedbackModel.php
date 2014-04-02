@@ -8,10 +8,8 @@
 
 class tblFeedbackModel extends Eloquent {
 
-    protected $guarded = array();
-    protected $table = 'tblFeedback';
+    protected $table = 'tblfeedback';
     public $timestamps = false;
-    public static $rules = array();
 
     public function addFeedback($feedbackUserEmail, $feedbackUserName, $feedbackSubject, $feedbackContent) {
         $this->feedbackUserEmail = $feedbackUserEmail;
