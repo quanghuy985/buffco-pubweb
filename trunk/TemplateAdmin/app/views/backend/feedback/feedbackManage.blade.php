@@ -4,8 +4,15 @@
     function phantrang(page) {
         jQuery("#jGrowl").remove();
         jQuery.jGrowl("Đang tải dữ liệu ...");
+        var urlpost = "{{URL::action('FeedbackController@postAjaxPhanHoi')}}?page=" + page
+        if (jQuery('#datepicker').val() != '' && jQuery('#datepicker1').val() != '') {
+            urlpost = "{{URL::action('FeedbackController@postAjaxLocPhanHoi')}}?fromtime=" + jQuery('#datepicker').val() + "&totime=" + jQuery('#datepicker1').val() + "&page=" + page;
+        }
+        if (jQuery('#searchblur').val() != '') {
+            urlpost = "{{URL::action('FeedbackController@postAjaxSearchPhanHoi')}}?keyword=" + jQuery('#searchblur').val() + "&page=" + page;
+        }
         var request = jQuery.ajax({
-            url: "{{URL::action('FeedbackController@postAjaxPhanHoi')}}?page=" + page,
+            url: urlpost,
             type: "POST",
             dataType: "html"
         });
@@ -17,6 +24,7 @@
         });
     }
     function locdulieu() {
+        jQuery('#searchblur').val("");
         jQuery("#jGrowl").remove();
         jQuery.jGrowl("Đang tải dữ liệu ...");
         var request = jQuery.ajax({
@@ -32,6 +40,8 @@
         });
     }
     function timkiem() {
+        jQuery('#datepicker').val('')
+        jQuery('#datepicker1').val('')
         jQuery("#jGrowl").remove();
         jQuery.jGrowl("Đang tải dữ liệu ...");
         var request = jQuery.ajax({
@@ -50,6 +60,8 @@
 
         jQuery('#searchblur').keypress(function(e) {
             if (e.which == 10 || e.which == 13) {
+                jQuery('#datepicker').val('')
+                jQuery('#datepicker1').val('')
                 jQuery("#jGrowl").remove();
                 jQuery.jGrowl("Đang tải dữ liệu ...");
                 var request = jQuery.ajax({
@@ -82,7 +94,7 @@
             <form class="stdform stdform2" action="javascript:void(0)" method="post">
                 Từ : <input id="datepicker" name="timeform" type="text" class="longinput" /> 
                 &nbsp;   Đến : <input id="datepicker1"  name="timeto" type="text" class="datepicker"  /> 
-                &nbsp; &nbsp; <button class="radius3" id="loctheotieuchi" onclick="locdulieu()">Lọc theo tiêu chí</button>
+                &nbsp; &nbsp; <button class="radius3" id="loctheotieuchi" onclick="locdulieu()">Lọc dữ liệu</button>
 
             </form>
             <div class="dataTables_filter" id="searchformfile">
