@@ -25,7 +25,7 @@ class tblUserModel extends Eloquent {
         return $check;
     }
 
-    public function UpdateUser($id, $upassword, $ufname, $ulname,$uDOB, $uaddress, $uphone, $verify,$ustatus) {
+    public function UpdateUser($id, $upassword, $ufname, $ulname,$uDOB, $uaddress, $uphone,$ustatus) {
         $user = $this->where('id', '=', $id);
         $arraysql = array('id' => $id);
         if ($upassword != '') {
@@ -46,9 +46,7 @@ class tblUserModel extends Eloquent {
         if ($uphone != '') {
             $arraysql = array_merge($arraysql, array("userPhone" => $uphone));
         }
-        if ($verify != '') {
-            $arraysql = array_merge($arraysql, array("verify" => $verify));
-        }
+        
         if ($ustatus != '') {
             $arraysql = array_merge($arraysql, array("status" => $ustatus));
         }
@@ -76,6 +74,11 @@ class tblUserModel extends Eloquent {
     public function SelectUser($sqlfun) {
         $results = DB::select($sqlfun);
         return ($results);
+    }
+    
+    public function kichhoat($uemailf, $verify) {
+        $test = DB::update('update tblusers set status = 1 where md5(userEmail) = ? and md5(verify)=?', array($uemailf, $verify));
+        return $test;
     }
 
     public function DeleteUserByEmail($uemailf) {
