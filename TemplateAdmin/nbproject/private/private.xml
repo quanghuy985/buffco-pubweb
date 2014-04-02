@@ -3,7 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp/www/larav/app/routes.php</file>
+            <file>file:/G:/WAMP/www/TemplateAdmin/app/views/templateadmin2/mainfire.blade.php</file>
+            <file>file:/G:/WAMP/www/TemplateAdmin/app/views/backend/product/viewproduct.blade.php</file>
+            <file>file:/G:/WAMP/www/TemplateAdmin/app/views/backend/product/addproduct.blade.php</file>
+            <file>file:/G:/WAMP/www/TemplateAdmin/server.php</file>
         </group>
     </open-files>
 </project-private>
