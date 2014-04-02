@@ -1,5 +1,4 @@
-@extends("templateadmin2.mainfire")
-@section("contentadmin")
+<?php $__env->startSection("contentadmin"); ?>
 <style type="text/css">
     .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
         border: 1px solid #d3d3d3;
@@ -11,12 +10,12 @@
         margin: 5px 0 0 2px !important;
     }
     input:required:invalid, input:focus:invalid {
-        background-image: url({{Asset('adminlib/images/invalid.png')}});
+        background-image: url(<?php echo Asset('adminlib/images/invalid.png'); ?>);
         background-position: right top;
         background-repeat: no-repeat;
         }
         input:required:valid {
-            background-image: url({{Asset('adminlib/images/valid.png')}});
+            background-image: url(<?php echo Asset('adminlib/images/valid.png'); ?>);
             background-position: right top;
             background-repeat: no-repeat;
             }
@@ -44,7 +43,7 @@
                     jQuery('#addTag').prop("disabled", false)
                     var productID = jQuery('#idpro').val();
                     var request = jQuery.ajax({
-                        url: "{{URL::action('ProductController@postTagByCateID')}}",
+                        url: "<?php echo URL::action('ProductController@postTagByCateID'); ?>",
                         data: {cateID: cateID, productID: productID},
                         type: "POST",
                         dataType: "html"
@@ -155,23 +154,23 @@
         </div>
         <div class="contentwrapper">
             <div class="subcontent">
-                @if(isset($thongbao))
+                <?php if(isset($thongbao)): ?>
                 <div class="notibar msgsuccess">
                     <a class="close"></a>
-                    <p>{{$thongbao}}</p>
+                    <p><?php echo $thongbao; ?></p>
                 </div>
-                @endif
+                <?php endif; ?>
                 <div class="contenttitle2">
                     <h3>Thêm mới</h3>
                 </div>
 
-                <form id="frmProduct" class="stdform stdform2" method="post" action="@if(isset($dataedit)){{URL::action('ProductController@postEditProduct')}} @else {{URL::action('ProductController@postAddProduct')}} @endif" accept-charset="UTF-8" enctype="multipart/form-data">
+                <form id="frmProduct" class="stdform stdform2" method="post" action="<?php if(isset($dataedit)): ?><?php echo URL::action('ProductController@postEditProduct'); ?> <?php else: ?> <?php echo URL::action('ProductController@postAddProduct'); ?> <?php endif; ?>" accept-charset="UTF-8" enctype="multipart/form-data">
 
                     <p>
                         <label>Tên sản phẩm</label>
                         <span class="field">
-                            <input type="hidden" name="idpro" id="idpro" value="@if(isset($dataedit)){{$dataedit->id}}@endif"/>
-                            <input type="text" id="productName"  name="productName" placeholder="Nhập trên sản phẩm" class="longinput" value="@if(isset($dataedit)){{$dataedit->productName}}@endif">
+                            <input type="hidden" name="idpro" id="idpro" value="<?php if(isset($dataedit)): ?><?php echo $dataedit->id; ?><?php endif; ?>"/>
+                            <input type="text" id="productName"  name="productName" placeholder="Nhập trên sản phẩm" class="longinput" value="<?php if(isset($dataedit)): ?><?php echo $dataedit->productName; ?><?php endif; ?>">
                         </span>
                     </p>
                     <p>
@@ -231,7 +230,7 @@
                     <p>
                         <label>Chi tiết sản phẩm</label>
                         <span class="field">
-                            <textarea class="ckeditor" id="xxx" rows="5" name="productDescription" placeholder="Nhập chi tiết sản phẩm">@if(isset($dataedit)){{$dataedit->productDescription}}@endif</textarea>
+                            <textarea class="ckeditor" id="xxx" rows="5" name="productDescription" placeholder="Nhập chi tiết sản phẩm"><?php if(isset($dataedit)): ?><?php echo $dataedit->productDescription; ?><?php endif; ?></textarea>
 
                         </span>
                     </p>
@@ -239,7 +238,7 @@
                     <p>
                         <label>Giá sản phẩm </label>
                         <span class="field">
-                            <input type="text" name="productPrice"  placeholder="Nhập giá sản phẩm" class="smallinput" value="@if(isset($dataedit)){{$dataedit->productPrice}}@endif">
+                            <input type="text" name="productPrice"  placeholder="Nhập giá sản phẩm" class="smallinput" value="<?php if(isset($dataedit)): ?><?php echo $dataedit->productPrice; ?><?php endif; ?>">
                         </span>
                     </p>
                     <p>
@@ -247,9 +246,9 @@
                         <span class="field" id="sPromotion"> 
                             <select name="promotionID" id="promotionSelect">
                                 <option value="">---Chọn khuyến mại---</option>
-                                @foreach($arrPromotion as $item)
-                                <option value="{{$item->id}}" @if(isset($dataedit) && $dataedit->promotionID == $item->id) selected @endif >{{$item->promotionName}}</option>
-                                @endforeach
+                                <?php foreach($arrPromotion as $item): ?>
+                                <option value="<?php echo $item->id; ?>" <?php if(isset($dataedit) && $dataedit->promotionID == $item->id): ?> selected <?php endif; ?> ><?php echo $item->promotionName; ?></option>
+                                <?php endforeach; ?>
                             </select>
                             <button type="button"  class="submit radius2" id="addPromotion">Thêm khuyến mại</button>
                         </span>
@@ -257,7 +256,7 @@
                     <p>
                         <label>Từ khóa seo</label>
                         <span class="field">
-                            <input type="text" name="productTag" placeholder="Nhập từ khóa seo " id="tags" class="smallinput" value="@if(isset($dataedit)){{$dataedit->productTag}}@endif">
+                            <input type="text" name="productTag" placeholder="Nhập từ khóa seo " id="tags" class="smallinput" value="<?php if(isset($dataedit)): ?><?php echo $dataedit->productTag; ?><?php endif; ?>">
                             <small class="desc">Ấn phím enter hoắc dấu "," sau mỗi lần nhập từ khóa</small>
                         </span>
 
@@ -265,7 +264,7 @@
                     <p>
                         <label>Slug</label>
                         <span class="field">
-                            <input type="text" name="productSlug" placeholder="Nhập slug sản phẩm" class="smallinput" value="@if(isset($dataedit)){{$dataedit->productSlug}}@endif"> 
+                            <input type="text" name="productSlug" placeholder="Nhập slug sản phẩm" class="smallinput" value="<?php if(isset($dataedit)): ?><?php echo $dataedit->productSlug; ?><?php endif; ?>"> 
                         </span>
                     </p>   
                     <p>
@@ -273,9 +272,9 @@
                         <span class="field" id="sPromotion"> 
                             <select name="manufactureID" id="manufactureSelect">
                                 <option value="">---Chọn nhà sản xuất---</option>
-                                @foreach($arrManu as $item)
-                                <option value="{{$item->id}}" @if(isset($dataedit) && $dataedit->manufactureID == $item->id) selected @endif >{{$item->manufacturerName}}</option>
-                                @endforeach
+                                <?php foreach($arrManu as $item): ?>
+                                <option value="<?php echo $item->id; ?>" <?php if(isset($dataedit) && $dataedit->manufactureID == $item->id): ?> selected <?php endif; ?> ><?php echo $item->manufacturerName; ?></option>
+                                <?php endforeach; ?>
                             </select>
                             <button type="button"  class="submit radius2" id="addManu">Thêm nhà sản xuất</button>
                         </span>
@@ -284,26 +283,26 @@
                         <label>Trạng thái</label>
                         <span class="field">
                             <select name="status" id="selection2">
-                                <option value="0" @if(isset($dataedit)&& $dataedit->status==0)selected @endif >Chờ đăng</option>
-                                <option value="1" @if(isset($dataedit)&&$dataedit->status==1)selected @endif >Đã đăng</option>
-                                <option value="2" @if(isset($dataedit)&&$dataedit->status==2)selected @endif >Xóa</option>
+                                <option value="0" <?php if(isset($dataedit)&& $dataedit->status==0): ?>selected <?php endif; ?> >Chờ đăng</option>
+                                <option value="1" <?php if(isset($dataedit)&&$dataedit->status==1): ?>selected <?php endif; ?> >Đã đăng</option>
+                                <option value="2" <?php if(isset($dataedit)&&$dataedit->status==2): ?>selected <?php endif; ?> >Xóa</option>
                             </select>
                         </span>
                     </p>
 
                     <p class="stdformbutton">
-                        <button  class="submit radius2">@if(isset($dataedit))Cập nhật @else Thêm mới @endif</button>
+                        <button  class="submit radius2"><?php if(isset($dataedit)): ?>Cập nhật <?php else: ?> Thêm mới <?php endif; ?></button>
                         <input type="reset" class="reset radius2" value="Làm lại">
                         <input type="submit" class="reset radius2" value="Làm lại">
-                        <button type="button" onclick="window.location.href ='{{URL::action('ProductController@getView')}}';" class="submit radius2">Quay lại danh sách sản phẩm</button>
+                        <button type="button" onclick="window.location.href ='<?php echo URL::action('ProductController@getView'); ?>';" class="submit radius2">Quay lại danh sách sản phẩm</button>
                     </p>           
                 </form>
                 <div id="wPromotion" title="Thêm khuyến mại">
-                    <form class="stdform stdform2" method="post" id="frmPromotion" action="{{URL::action('PromotionController@postAddPromotionAjax')}}">
+                    <form class="stdform stdform2" method="post" id="frmPromotion" action="<?php echo URL::action('PromotionController@postAddPromotionAjax'); ?>">
                         <p>                  
                             <label>Tên khuyến mại</label>
                             <span class="field">
-                                <input type="hidden" name="promotionID" value="@if(isset($dataedit)){{$dataedit->promotionID}}@endif"/>
+                                <input type="hidden" name="promotionID" value="<?php if(isset($dataedit)): ?><?php echo $dataedit->promotionID; ?><?php endif; ?>"/>
                                 <input type="text" name="promotionName" placeholder="Nhập tên nhóm hỗ trợ viên" value="" class="smallinput"></span>
                         </p>
                         <p>           
@@ -323,12 +322,12 @@
                     </form>
                 </div>
                 <div id="wTag" title="Thêm tag">
-                    <form class="stdform stdform2" method="post" id="frmTag" action="{{URL::action('TagController@postAddTagAjax')}}">
+                    <form class="stdform stdform2" method="post" id="frmTag" action="<?php echo URL::action('TagController@postAddTagAjax'); ?>">
                         <p>                  
                             <label>Key</label>
                             <span class="field">
                                 <input type="hidden" name="cateTagID" id="cateTagID" value=""/>
-                                <input type="hidden" name="productID" id="productID" value="@if(isset($dataedit)){{$dataedit->id}}@endif"/>
+                                <input type="hidden" name="productID" id="productID" value="<?php if(isset($dataedit)): ?><?php echo $dataedit->id; ?><?php endif; ?>"/>
                                 <input type="text" name="tagKey" placeholder="Tên Tag" value="" class="longinput"></span>
                         </p>
                         <p>           
@@ -385,4 +384,5 @@
                         	<button class="submit radius2">Submit Button</button>
                         </p>
                     </form>
-        @endsection
+        <?php $__env->stopSection(); ?>
+<?php echo $__env->make("templateadmin2.mainfire", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
