@@ -3,10 +3,20 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/G:/WAMP/www/TemplateAdmin/app/views/templateadmin2/mainfire.blade.php</file>
-            <file>file:/G:/WAMP/www/TemplateAdmin/app/views/backend/product/viewproduct.blade.php</file>
-            <file>file:/G:/WAMP/www/TemplateAdmin/app/views/backend/product/addproduct.blade.php</file>
-            <file>file:/G:/WAMP/www/TemplateAdmin/server.php</file>
+            <file>file:/C:/wamp/www/TemplateAdmin/app/routes.php</file>
+            <file>file:/C:/wamp/www/TemplateAdmin/app/controllers/OrderController.php</file>
+            <file>file:/C:/wamp/www/TemplateAdmin/app/views/backend/admin/adminManage.blade.php</file>
+            <file>file:/C:/wamp/www/TemplateAdmin/app/models/tblPromotionModel.php</file>
+            <file>file:/C:/wamp/www/TemplateAdmin/app/controllers/AdminController.php</file>
+            <file>file:/C:/wamp/www/TemplateAdmin/app/views/backend/donhang/orderproduct.blade.php</file>
+            <file>file:/C:/wamp/www/TemplateAdmin/app/models/tblOrderModel.php</file>
+            <file>file:/C:/wamp/www/TemplateAdmin/app/views/backend/donhang/orderproductedit.blade.php</file>
+            <file>file:/C:/wamp/www/TemplateAdmin/app/controllers/GroupAdminController.php</file>
+            <file>file:/C:/wamp/www/TemplateAdmin/public/adminlib/ckfinder/config.php</file>
+            <file>file:/C:/wamp/www/TemplateAdmin/public/adminlib/css/style.default.css</file>
+            <file>file:/C:/wamp/www/TemplateAdmin/app/views/backend/tintuc/newsManage.blade.php</file>
+            <file>file:/C:/wamp/www/TemplateAdmin/app/models/tblGroupAdminModel.php</file>
+            <file>file:/C:/wamp/www/TemplateAdmin/app/database/migrations/2014_02_20_155345_create_tblUsers.php</file>
         </group>
     </open-files>
 </project-private>

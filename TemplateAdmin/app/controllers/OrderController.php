@@ -28,27 +28,12 @@ class OrderController extends BaseController {
     public function getEdit($orderCode) {
         $tblOderModel = new tblOrderModel();
         $objOrder = $tblOderModel->getOrderByOrderCode($orderCode);
-       // var_dump($objOrder);
+        // var_dump($objOrder);
         return View::make('backend.donhang.orderproductedit')->with('objOrder', $objOrder);
     }
 
     public function postOrderActive($orderCode) {
         
-    }
-
-    public function postEdit() {
-        $rules = array(
-            "domain" => "required",
-            "diskspace" => "required|numeric",
-            "expdate" => "required"
-        );
-        if (!Validator::make(Input::all(), $rules)->fails()) {
-            $tblOderModel = new tblOrderModel();
-            $check = $tblOderModel->updateOrder(Input::get('idedit'), Input::get('domaintype'), Input::get('domain'), Input::get('diskspace'), strtotime(Input::get('expdate')), Input::get('status'));
-            return Redirect::action('OrderController@getViewAll', array('thongbao' => 'Cập nhật thành công'));
-        } else {
-            return Redirect::action('OrderController@getViewAll', array('thongbao' => 'Cập lỗi ! Bạn vui lòng cập nhật lại .'));
-        }
     }
 
     public function postPagin() {
@@ -80,6 +65,13 @@ class OrderController extends BaseController {
         $orderdata = $objGsp->allOrder(10);
         $page = $orderdata->links();
         return View::make('backend.orderproductajax')->with('orderdata', $orderdata)->with('page', $page);
+    }
+
+    public function postUpdateOrder() {
+        $orderCode = Input::get('idOrderCode');
+        $tblOderModel = new tblOrderModel();
+        $arrOrder = $tblOderModel->getOrderByOrderCode($orderCode);
+        var_dump($arrOrder);
     }
 
 }
