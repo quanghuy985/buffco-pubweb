@@ -374,7 +374,7 @@
 
         <!-- Custom JS -->
         <script src="{{Asset('fontendlib/js/custom.js')}}"></script>
-
+        
 
 
     </body>
