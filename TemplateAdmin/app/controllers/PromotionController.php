@@ -8,9 +8,8 @@
 
 class PromotionController extends Controller {
 
-    public function getPromotionView($thongbao='') {
-    
-        $tblPromotion = new tblPromotionModel();        
+    public function getPromotionView($thongbao = '') {
+        $tblPromotion = new tblPromotionModel();
         $objPromotion = $tblPromotion->getAllPromotion(10);
         $link = $objPromotion->links();
         if ($thongbao != '') {
@@ -45,7 +44,7 @@ class PromotionController extends Controller {
 
     public function postPromotionActive() {
         $tblPromotion = new tblPromotionModel();
-        $tblPromotion->updatePromotion(Input::get('id'), '','','', Input::get('status'));      
+        $tblPromotion->updatePromotion(Input::get('id'), '', '', '', Input::get('status'));
         $arrPromotion = $tblPromotion->getAllPromotion(10);
         $link = $arrPromotion->links();
         return View::make('backend.promotion.promotionAjax')->with('arrPromotion', $arrPromotion)->with('link', $link);
@@ -55,7 +54,7 @@ class PromotionController extends Controller {
         $rules = array(
             "promotionName" => "required",
             "promotionContent" => "required",
-            "promotionAmount" => "required"        
+            "promotionAmount" => "required"
         );
         $tblPromotion = new tblPromotionModel();
         if (!Validator::make(Input::all(), $rules)->fails()) {
@@ -70,15 +69,42 @@ class PromotionController extends Controller {
         $rules = array(
             "promotionName" => "required",
             "promotionContent" => "required",
-            "promotionAmount" => "required"            
+            "promotionAmount" => "required"
         );
         $tblPromotion = new tblPromotionModel();
         if (!Validator::make(Input::all(), $rules)->fails()) {
-            $tblPromotion->insertPromotion(Input::get('promotionName'),Input::get('promotionContent'),Input::get('promotionAmount'),Input::get('status'));
+            $tblPromotion->insertPromotion(Input::get('promotionName'), Input::get('promotionContent'), Input::get('promotionAmount'), Input::get('status'));
             return Redirect::action('PromotionController@getPromotionView', array('thongbao' => 'Thêm mới thành công .'));
         } else {
             return Redirect::action('PromotionController@getPromotionView', array('thongbao' => 'Thêm mới thất bại .'));
         }
+    }
+
+    public function postAddPromotionAjax() {
+        $rules = array(
+            "promotionName" => "required",
+            "promotionContent" => "required",
+            "promotionAmount" => "required"
+        );
+        $tblPromotion = new tblPromotionModel();
+        if (!Validator::make(Input::all(), $rules)->fails()) {
+            $tblPromotion->insertPromotion(Input::get('promotionName'), Input::get('promotionContent'), Input::get('promotionAmount'), Input::get('status'));
+            $arrPromotion = $tblPromotion->getAllPromotion(1000);
+            $selectPromotion = '';          
+            foreach ($arrPromotion as $item) {
+                if (Input::get('promotionID')!='' && Input::get('promotionID') == $item->id) {
+                    $selectPromotion.=" <option value='".$item->id."' selected >" . $item->promotionName . "</option>";
+                } else {
+                    $selectPromotion.=" <option value=".$item->id.">" . $item->promotionName . "</option>";
+                }
+                }           
+            return $selectPromotion;
+        } else {
+            return 'FALSE';
+        }
+    }
+    public function postAddTagAjax() {
+        
     }
 
 }

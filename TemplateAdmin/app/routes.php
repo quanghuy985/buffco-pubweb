@@ -15,17 +15,12 @@ Route::get('/', function () {
     return View::make('backend.admin-home');
 });
 
-
-Route::controller('admin', 'AdminController');
-Route::controller('groupadmin', 'GroupAdminController');
-
 Route::controller('supportergroup', 'SupporterGroupController');
 Route::controller('suppporter', 'SupporterController');
 Route::controller('promotion', 'PromotionController');
-Route::controller('news', 'NewsController');
-Route::controller('catenews', 'cateNewsController');
-
+Route::controller('categoryproduct', 'CategoryProductController');
+Route::controller('product', 'ProductController');
+Route::controller('tag', 'TagController');
 App::missing(function($exception) {
-
-    return View::make('fontend.404');
+    return $exception;
 });
