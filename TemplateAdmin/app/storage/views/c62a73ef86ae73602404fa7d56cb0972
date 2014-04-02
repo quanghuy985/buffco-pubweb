@@ -5,6 +5,10 @@
     <h1 class="pagetitle">File Manager</h1>
     <span class="pagedesc">To select an item, just click the thumbnail.</span>
 </div>
+ <textarea cols="80" rows="5" id="feedbackReplyContent" name="feedbackReplyContent" placeholder="Nội dung trả lời"></textarea>
+                    <script>
+                        CKEDITOR.replace('feedbackReplyContent');
+                    </script>
 <div id="contentwrapper" class="contentwrapper nopadding">
     <script type="text/javascript">
 
