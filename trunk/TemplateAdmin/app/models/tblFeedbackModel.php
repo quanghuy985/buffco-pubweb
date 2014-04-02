@@ -54,6 +54,11 @@ class tblFeedbackModel extends Eloquent {
         return $arrFeedback;
     }
 
+    public function searchFillterFeedback($per_page, $keyword, $from, $to) {
+        $arrFeedback = $this->orderBy('time', 'desc')->where('feedbackUserEmail', 'LIKE', '%' . $keyword . '%')->orWhere('feedbackUserName', 'LIKE', '%' . $keyword . '%')->orWhere('feedbackSubject', 'LIKE', '%' . $keyword . '%')->orWhere('feedbackContent', 'LIKE', '%' . $keyword . '%')->whereBetween('time', array($from, $to))->paginate($per_page);
+        return $arrFeedback;
+    }
+
     public function getFeedbackbyID($feedbackID) {
         $objectFeedback = DB::table('tblFeedback')->where('id', '=', $feedbackID)->get();
         return $objectFeedback;

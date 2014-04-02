@@ -38,10 +38,24 @@ class FeedbackController extends BaseController {
         return View::make('backend.feedback.AjaxFeedbackManage')->with('arrayFeedback', $arrFeedback)->with('links', $link);
     }
 
-    public function getTraLoi() {
-        
+    public function postAjaxSearchLocPhanHoi() {
+        $keyword = trim(Input::get('keyword'));
+        $from = strtotime(Input::get('fromtime'));
+        $to = strtotime(Input::get('totime'));
+        $tblFeedbackModel = new tblFeedbackModel();
+        $arrFeedback = $tblFeedbackModel->searchFillterFeedback(1, $keyword, $from, $to);
+        $link = $arrFeedback->links();
+        return View::make('backend.feedback.AjaxFeedbackManage')->with('arrayFeedback', $arrFeedback)->with('links', $link);
     }
 
+    public function getTraLoi() {
+        $tblFeedbackModel = new tblFeedbackModel();
+        $feedbackData = $tblFeedbackModel->getFeedbackbyID(Input::get('id'));
+        return View::make('backend.feedback.repFeedback')->with('feedbackdata', $feedbackData[0]);
+    }
+    public function postTraLoi() {
+        
+    }
     public function getXoa() {
         
     }

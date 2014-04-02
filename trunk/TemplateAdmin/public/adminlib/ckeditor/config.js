@@ -34,11 +34,10 @@ CKEDITOR.editorConfig = function(config) {
     // Make dialogs simpler.
     config.removeDialogTabs = 'image:advanced;link:advanced';
 
-      config.filebrowserBrowseUrl = 'http://localhost/TemplateAdmin/public/adminlib/ckfinder/ckfinder.html';
+    config.filebrowserBrowseUrl = 'http://localhost/TemplateAdmin/public/adminlib/ckfinder/ckfinder.html';
     config.filebrowserImageBrowseUrl = 'http://localhost/TemplateAdmin/public/adminlib/ckfinder/ckfinder.html?type=Images';
     config.filebrowserFlashBrowseUrl = 'http://localhost/TemplateAdmin/public/adminlib/ckfinder/ckfinder.html?type=Flash';
     config.filebrowserUploadUrl = 'http://localhost/TemplateAdmin/public/adminlib/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files';
     config.filebrowserImageUploadUrl = 'http://localhost/TemplateAdmin/public/adminlib/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images';
     config.filebrowserFlashUploadUrl = 'http://localhost/TemplateAdmin/public/adminlib/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash';
-
 };

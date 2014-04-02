@@ -19,6 +19,22 @@
  *
  * @return boolean
  */
+require __DIR__ . '/../../../bootstrap/autoload.php';
+
+/*
+  |--------------------------------------------------------------------------
+  | Turn On The Lights
+  |--------------------------------------------------------------------------
+  |
+  | We need to illuminate PHP development, so let's turn on the lights.
+  | This bootstraps the framework and gets it ready for use, then it
+  | will load up this application so that we can run it and send
+  | the responses back to the browser and delight these users.
+  |
+ */
+
+$app = require_once __DIR__ . '/../../../bootstrap/start.php';
+
 function CheckAuthentication() {
     // WARNING : DO NOT simply return "true". By doing so, you are allowing
     // "anyone" to upload and list the files in your server. You must implement
@@ -199,20 +215,20 @@ $config['ResourceType'][] = Array(
     'deniedExtensions' => '');
 
 $config['ResourceType'][] = Array(
-    'name' => 'Hình ảnh',
+    'name' => 'Images',
     'url' => $baseUrl . 'images',
     'directory' => $baseDir . 'images',
     'maxSize' => 0,
     'allowedExtensions' => 'bmp,gif,jpeg,jpg,png',
     'deniedExtensions' => '');
 
-//$config['ResourceType'][] = Array(
-//    'name' => 'Flash',
-//    'url' => $baseUrl . 'flash',
-//    'directory' => $baseDir . 'flash',
-//    'maxSize' => 0,
-//    'allowedExtensions' => 'swf,flv',
-//    'deniedExtensions' => '');
+$config['ResourceType'][] = Array(
+    'name' => 'Flash',
+    'url' => $baseUrl . 'flash',
+    'directory' => $baseDir . 'flash',
+    'maxSize' => 0,
+    'allowedExtensions' => 'swf,flv',
+    'deniedExtensions' => '');
 
 /*
   Due to security issues with Apache modules, it is recommended to leave the
