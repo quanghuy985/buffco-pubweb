@@ -57,7 +57,7 @@ class CreateTblUsers extends Migration {
             $table->string('cateName');
             $table->integer('cateParent');
             $table->string('cateSlug');
-            $table->string('cateDescription');
+            $table->longtext('cateDescription');
             $table->string('time');
             $table->integer('status');
         });
@@ -65,7 +65,7 @@ class CreateTblUsers extends Migration {
         Schema::create('tblPromotion', function($table) {
             $table->increments('id');
             $table->string('promotionName');
-            $table->integer('promotionContent');
+            $table->longtext('promotionContent');
             $table->string('promotionAmount');
             $table->string('time');
             $table->integer('status');
@@ -82,11 +82,12 @@ class CreateTblUsers extends Migration {
         //tblProduct
         Schema::create('tblProduct', function($table) {
             $table->increments('id');
+            $table->string('productCode');
             $table->integer('cateID');
             $table->string('productName');
-            $table->string('productDescription');
+            $table->longtext('productDescription');
             $table->decimal('productPrice', 20, 2);
-            $table->integer('promotionID');
+            $table->integer('promotionID')->nullable();
             $table->string('productSlug');
             $table->string('productTag');
             $table->integer('manufactureID');
@@ -150,7 +151,7 @@ class CreateTblUsers extends Migration {
         Schema::create('tblCateNews', function($table) {
             $table->increments('id');
             $table->string('catenewsName');
-            $table->string('catenewsDescription');
+            $table->longtext('catenewsDescription');
             $table->integer('catenewsParent');
             $table->string('catenewsSlug');
             $table->string('time');
@@ -206,7 +207,7 @@ class CreateTblUsers extends Migration {
         Schema::create('tblPage', function($table) {
             $table->increments('id');
             $table->string('pageName');
-            $table->string('pageContent');
+            $table->longtext('pageContent');
             $table->string('pageKeywords');
             $table->string('pageTag');
             $table->string('pageSlug');
@@ -218,7 +219,7 @@ class CreateTblUsers extends Migration {
             $table->increments('id');
             $table->string('from');
             $table->string('to');
-            $table->string('projectDescription');
+            $table->longtext('projectDescription');
             $table->longtext('projectContent');
             $table->string('time');
             $table->integer('status');
@@ -257,14 +258,14 @@ class CreateTblUsers extends Migration {
         Schema::create('tblGroupAdmin', function($table) {
             $table->increments('id');
             $table->string('groupadminName');
-            $table->string('groupadminDescription');
+            $table->longtext('groupadminDescription');
             $table->string('time');
             $table->integer('status');
         });
         Schema::create('tblRoles', function($table) {
             $table->increments('id');
             $table->string('rolesCode');
-            $table->string('rolesDescription');
+            $table->longtext('rolesDescription');
             $table->string('groupRolesID');
             $table->string('time');
             $table->integer('status');

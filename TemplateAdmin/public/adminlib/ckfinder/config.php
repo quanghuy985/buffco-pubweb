@@ -74,9 +74,9 @@ $config['LicenseKey'] = 'BNHY-MFK1-P111-X7B9-MVFK-UL5A-11XH';
 
   ATTENTION: The trailing slash is required.
  */
-session_start();
-$userfolder = $_SESSION['urlfolderupload'];
-$baseUrl = '/TemplateAdmin/public/uploadimg/' . $userfolder . '/';
+//session_start();
+//$userfolder = $_SESSION['urlfolderupload'];
+$baseUrl = '/TemplateAdmin/public/uploadimg/';
 
 /*
   $baseDir : the path to the local directory (in the server) which points to the

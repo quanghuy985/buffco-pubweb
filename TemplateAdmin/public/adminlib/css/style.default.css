@@ -2362,3 +2362,6 @@ blockquote.bq2 {
     background: url(../images/loaders/loader10.gif)  no-repeat;
     background-position: 50% 50%;
 }
+a.btn_orderdetail{
+   background-position: -10px -190px;
+}
