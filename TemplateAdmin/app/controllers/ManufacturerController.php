@@ -70,6 +70,31 @@ class ManufacturerController extends Controller {
         }
     }
     
+        public function postAddManufaturerAjax() {
+        $rules = array(
+            "manufacturerName" => "required",
+            "manufacturerDescription" => "required",
+            "manufacturerPlace" => "required"           
+        );
+        $objManufactuer = new tblManufacturerModel();
+        
+        if (!Validator::make(Input::all(), $rules)->fails()) {
+            $objManufactuer->addManufacturer(Input::get('manufacturerName'), Input::get('manufacturerDescription'), Input::get('manufacturerPlace'), 1);      
+            $arrManu= $objManufactuer->selectAll(1000);
+             $selectManu = '<option value="0">---Chọn nhà sản xuất---</option>';           
+            foreach ($arrManu as $item) {
+                if (Input::get('manuID')!='' && Input::get('manuID') == $item->id) {
+                    $selectManu.=" <option value='".$item->id."' selected >" . $item->promotionName . "</option>";
+                } else {
+                    $selectManu.=" <option value=".$item->id.">" . $item->manufacturerName . "</option>";
+                }
+                }           
+            return $selectManu;
+        } else {
+            return Redirect::action('ManufacturerController@getManufactureView',array('msg'=>'them moi that bai'));
+        }
+    }
+    
     public function postDelmulte() {
         $pieces1 = explode(",", Input::get('multiid'));
         foreach ($pieces1 as $item) {

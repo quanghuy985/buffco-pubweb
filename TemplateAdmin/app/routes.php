@@ -24,7 +24,7 @@ Route::controller('order', 'OrderController');
 Route::controller('categoryproduct', 'CategoryProductController');
 Route::controller('product', 'ProductController');
 Route::controller('tag', 'TagController');
-
+Route::controller('manu', 'ManufacturerController');
 App::missing(function($exception) {
     return $exception;
 });

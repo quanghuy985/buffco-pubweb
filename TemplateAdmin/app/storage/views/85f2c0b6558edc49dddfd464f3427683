@@ -25,18 +25,95 @@
             jQuery(document).ready(function() {
                 jQuery("#frmProduct").validate({
                     rules: {
-                        productName: "required",
+                        productName: {
+                            required: true
+                        },
+                        cateProductSelect: {
+                            required: true,
+                            min: 1
+                        },
+                        productDescription: {
+                            required: true
+                        },
+                        productPrice: {
+                            required: true
+                        },
+                        productTag: {
+                            required: true
+                        },
+                        productSlug: {
+                            required: true
+                        },
+                        manufactureSelect: {
+                            required: true,
+                            min: 1
+                        },
                     },
                     messages: {
-                        productName: "fsddgfgdfg"
+                        productName: "Tên sản phẩm không được để trống",
+                        cateProductSelect: "Danh mục sản phẩm không được để trống",
+                        productDescription: "Mô tả sản phẩm không được để trống",
+                        productPrice: "Giá sản phẩm không được để trống",
+                        productTag: "Tag không được để trống",
+                        productSlug: "Đường dẫn không được để trống",
+                        manufactureSelect: "Nhà sản xuất không được để trống"
                     }
                 });
-                    
+                jQuery("#frmPromotion").validate({
+                    rules: {
+                        promotionContent: {
+                            required: true
+                        },
+                        promotionName: {
+                            required: true
+                        },
+                        promotionAmount: {
+                            required: true
+                        },
+                    },
+                    messages: {
+                        promotionContent: "Nội dung khuyến mại không được để trống",
+                        promotionName: "Tên khuyến mại không được để trống",
+                        promotionAmount: "Giá trị khuyến mại không được để trống"
+                    }
+                });
+                jQuery("#frmTag").validate({
+                    rules: {
+                        tagKey: {
+                            required: true
+                        },
+                        tagValue: {
+                            required: true
+                        },
+                    },
+                    messages: {
+                        tagKey: "Key không được để trống",
+                        tagValue: "Value không được để trống"
+                    }
+                });
+                jQuery("#frmManu").validate({
+                    rules: {
+                        manufacturerName: {
+                            required: true
+                        },
+                        manufacturerDescription: {
+                            required: true
+                        },
+                        manufacturerPlace: {
+                            required: true
+                        },
+                    },
+                    messages: {
+                        manufacturerName: "Tên nhà sản xuất không được để trống",
+                        manufacturerDescription: "Mô tả không được để trống",
+                        manufacturerPlace: "Xuất xứ không được để trống"
+                    }
+                });
             });
             function getCateTag() {
                 jQuery.jGrowl("Đang tải dữ liệu!");
                 var cateID = jQuery('#cateProductSelect').val();
-                if (cateID == 0) {
+                if (cateID == '') {
                     jQuery('#addTag').prop("disabled", true);
                     jQuery("#spanTag").empty();
                 } else {
@@ -66,14 +143,6 @@
                     width: 800,
                     height: 'auto',
                     modal: true,
-        //            buttons: {
-        //                "Set": function() {
-        //                    jQuery(this).dialog("close");
-        //                },
-        //                "Đóng": function() {
-        //                    jQuery(this).dialog("close");
-        //                }
-        //            }
                 });
                 jQuery("#wTag").dialog({
                     autoOpen: false,
@@ -81,14 +150,17 @@
                     width: 600,
                     height: 'auto',
                     modal: true,
-        //            buttons: {
-        //                "Set": function() {
-        //                    jQuery(this).dialog("close");
-        //                },
-        //                "Đóng": function() {
-        //                    jQuery(this).dialog("close");
-        //                }
-        //            }
+                });
+                jQuery("#wManu").dialog({
+                    autoOpen: false,
+                    resizable: false,
+                    width: 600,
+                    height: 'auto',
+                    modal: true,
+                });
+                //bật của sổ thêm nhà sản xuất
+                jQuery("#addManu").button().click(function() {
+                    jQuery("#wManu").dialog("open");
                 });
                 //bật của sổ thêm khuyến mại
                 jQuery("#addPromotion").button().click(function() {
@@ -97,11 +169,10 @@
                 //bật của sổ thêm tag cho danh mục sản phẩm
                 jQuery("#addTag").button().click(function() {
                     var cateID = jQuery('#cateProductSelect').val();
-                    if (cateID == 0) {
+                    if (cateID == '') {
                         return;
                     }
                     else {
-
                         jQuery('#cateTagID').val(jQuery('#cateProductSelect').val());
                         jQuery("#ui-dialog-title-wTag").html('Thêm tag cho danh mục: ' + jQuery('#cateProductSelect option:selected').text());
                         jQuery("#wTag").dialog("open");
@@ -110,8 +181,10 @@
                 });
                 jQuery("#submitAddPromotion").button().click(function() {
                     CKupdate();
-                    jQuery.jGrowl("Đang thêm mới khuyến mại!");
                     var form = jQuery('#frmPromotion');
+                    if (!form.valid())
+                        return false;
+                    jQuery.jGrowl("Đang thêm mới khuyến mại!");
                     var request = jQuery.ajax({
                         url: form.attr('action'),
                         data: form.serialize(),
@@ -130,6 +203,8 @@
                 jQuery("#submitAddTag").button().click(function() {
                     jQuery.jGrowl("Đang thêm mới tag!");
                     var form = jQuery('#frmTag');
+                    if (!form.valid())
+                        return false;
                     var request = jQuery.ajax({
                         url: form.attr('action'),
                         data: form.serialize(),
@@ -145,9 +220,27 @@
                         //jQuery.jGrowl("Thêm mới khuyến mại thành công!");
                     });
                 });
-            });
+                jQuery("#submitAddManu").button().click(function() {
+                    var form = jQuery('#frmManu');
+                    if (!form.valid())
+                        return false;
+                    jQuery.jGrowl("Đang thêm mới nhà sản xuất!");
+                    var request = jQuery.ajax({
+                        url: form.attr('action'),
+                        data: form.serialize(),
+                        type: "POST",
+                        dataType: "html"
+                    });
+                    request.done(function(msg) {
+                        jQuery("#wManu").dialog("close");
+                        if (msg != 'FALSE') {
+                            jQuery("#manufactureSelect").empty().html(msg);
+                            jQuery.jGrowl("Thêm mới nhà sản xuất thành công!");
+                        }
 
-        </script>
+                    });
+                });
+            });</script>
         <div class="pageheader notab">
             <h1 class="pagetitle">QUẢN LÝ SẢN PHẨM</h1>
             <span class="pagedesc">Thêm sửa xóa sản phẩm</span>
@@ -177,7 +270,7 @@
                         <label>Nhóm sản phẩm</label>
                         <span class="field">
                             <select name="cateID" id="cateProductSelect" onchange="getCateTag()">
-                                <option value="0" >---Chọn danh mục---</option>
+                                <option value="" >---Chọn danh mục---</option>
                                 <?php
                                 foreach ($catproduct as $item) {
                                     if ($item->cateParent == 0) {
@@ -204,7 +297,6 @@
                         </span>  
                         <label>Tag</label>
                         <span class="formwrapper" id="spanTag" style="overflow: auto;width: 548px; height: 200px;border: 1;BORDER-RIGHT: blue 1px solid;BORDER-TOP: blue 1px solid; BORDER-LEFT: blue 1px solid;BORDER-BOTTOM: blue 1px solid;BACKGROUND-COLOR: White;">
-
                             <?php
                             if (isset($arrTag)) {
                                 foreach ($arrTag as $itemTag) {
@@ -230,7 +322,7 @@
                     <p>
                         <label>Chi tiết sản phẩm</label>
                         <span class="field">
-                            <textarea class="ckeditor" id="xxx" rows="5" name="productDescription" placeholder="Nhập chi tiết sản phẩm"><?php if(isset($dataedit)): ?><?php echo $dataedit->productDescription; ?><?php endif; ?></textarea>
+                            <textarea class="ckeditor" id="productDescription" rows="5" name="productDescription" placeholder="Nhập chi tiết sản phẩm"><?php if(isset($dataedit)): ?><?php echo $dataedit->productDescription; ?><?php endif; ?></textarea>
 
                         </span>
                     </p>
@@ -245,7 +337,7 @@
                         <label>Chọn khuyến mại </label>
                         <span class="field" id="sPromotion"> 
                             <select name="promotionID" id="promotionSelect">
-                                <option value="">---Chọn khuyến mại---</option>
+                                <option value="0">---Chọn khuyến mại---</option>
                                 <?php foreach($arrPromotion as $item): ?>
                                 <option value="<?php echo $item->id; ?>" <?php if(isset($dataedit) && $dataedit->promotionID == $item->id): ?> selected <?php endif; ?> ><?php echo $item->promotionName; ?></option>
                                 <?php endforeach; ?>
@@ -253,7 +345,7 @@
                             <button type="button"  class="submit radius2" id="addPromotion">Thêm khuyến mại</button>
                         </span>
                     </p>
-                    <p>
+                    <p> 
                         <label>Từ khóa seo</label>
                         <span class="field">
                             <input type="text" name="productTag" placeholder="Nhập từ khóa seo " id="tags" class="smallinput" value="<?php if(isset($dataedit)): ?><?php echo $dataedit->productTag; ?><?php endif; ?>">
@@ -264,18 +356,18 @@
                     <p>
                         <label>Slug</label>
                         <span class="field">
-                            <input type="text" name="productSlug" placeholder="Nhập slug sản phẩm" class="smallinput" value="<?php if(isset($dataedit)): ?><?php echo $dataedit->productSlug; ?><?php endif; ?>"> 
+                            <input type="text" name="productSlug" id="productSlug" placeholder="Nhập slug sản phẩm" class="smallinput" value="<?php if(isset($dataedit)): ?><?php echo $dataedit->productSlug; ?><?php endif; ?>"> 
                         </span>
                     </p>   
                     <p>
-                        <label>Chọn khuyến mại </label>
+                        <label>Chọn nhà sản xuất </label>
                         <span class="field" id="sPromotion"> 
                             <select name="manufactureID" id="manufactureSelect">
                                 <option value="">---Chọn nhà sản xuất---</option>
                                 <?php foreach($arrManu as $item): ?>
                                 <option value="<?php echo $item->id; ?>" <?php if(isset($dataedit) && $dataedit->manufactureID == $item->id): ?> selected <?php endif; ?> ><?php echo $item->manufacturerName; ?></option>
                                 <?php endforeach; ?>
-                            </select>
+                            </select>           
                             <button type="button"  class="submit radius2" id="addManu">Thêm nhà sản xuất</button>
                         </span>
                     </p>
@@ -293,7 +385,6 @@
                     <p class="stdformbutton">
                         <button  class="submit radius2"><?php if(isset($dataedit)): ?>Cập nhật <?php else: ?> Thêm mới <?php endif; ?></button>
                         <input type="reset" class="reset radius2" value="Làm lại">
-                        <input type="submit" class="reset radius2" value="Làm lại">
                         <button type="button" onclick="window.location.href ='<?php echo URL::action('ProductController@getView'); ?>';" class="submit radius2">Quay lại danh sách sản phẩm</button>
                     </p>           
                 </form>
@@ -302,18 +393,18 @@
                         <p>                  
                             <label>Tên khuyến mại</label>
                             <span class="field">
-                                <input type="hidden" name="promotionID" value="<?php if(isset($dataedit)): ?><?php echo $dataedit->promotionID; ?><?php endif; ?>"/>
-                                <input type="text" name="promotionName" placeholder="Nhập tên nhóm hỗ trợ viên" value="" class="smallinput"></span>
+                                <input type="hidden" name="promoID" value="<?php if(isset($dataedit)): ?><?php echo $dataedit->promotionID; ?><?php endif; ?>"/>
+                                <input type="text" id="promotionName" name="promotionName" placeholder="Nhập tên nhóm hỗ trợ viên" value="" class="smallinput"></span>
                         </p>
                         <p>           
                             <label>Nội dung</label>
                             <span class="field">                    
-                                <textarea class="ckeditor" rows="5" name="promotionContent" placeholder="Nhập nội dung khuyến mại"></textarea>
+                                <textarea class="ckeditor" rows="5" name="promotionContent" id="promotionContent" placeholder="Nhập nội dung khuyến mại"></textarea>
                             </span>
                         </p>
                         <p>         
                             <label>Giá trị</label>
-                            <span class="field"><input type="text" name="promotionAmount" placeholder="Nhập giá trị khuyến mại" value="" class="smallinput"></span>
+                            <span class="field"><input type="text" id="promotionAmount" name="promotionAmount" placeholder="Nhập giá trị khuyến mại" value="" class="smallinput"></span>
                         </p>               
                         <p class="stdformbutton">
                             <button class="submit radius2" type="button" id="submitAddPromotion" value="Thêm mới">Thêm mới </button>
@@ -328,12 +419,12 @@
                             <span class="field">
                                 <input type="hidden" name="cateTagID" id="cateTagID" value=""/>
                                 <input type="hidden" name="productID" id="productID" value="<?php if(isset($dataedit)): ?><?php echo $dataedit->id; ?><?php endif; ?>"/>
-                                <input type="text" name="tagKey" placeholder="Tên Tag" value="" class="longinput"></span>
+                                <input type="text" name="tagKey" id="tagKey" placeholder="Tên Tag" value="" class="longinput"></span>
                         </p>
                         <p>           
                             <label>Value</label>
                             <span class="field">                    
-                                <input type="text" name="tagValue" placeholder="Giá trị của Tag" value="" class="longinput">
+                                <input type="text" name="tagValue" id="tagValue" placeholder="Giá trị của Tag" value="" class="longinput">
                             </span>                 
                         </p>                        
                         <p class="stdformbutton">
@@ -342,47 +433,282 @@
                         </p>
                     </form>
                 </div>
-            </div>
-        </div>
-        <form id="form1" class="stdform" method="post" action="#">
-                    	<p>
-                        	<label>First Name</label>
-                            <span class="field"><input type="text" name="firstname" id="firstname" class="longinput" /></span>
+                <div id="wManu" title="Thêm nhà sản xuất">
+                    <form class="stdform stdform2" method="post" id="frmManu" action="<?php echo URL::action('ManufacturerController@postAddManufaturerAjax'); ?>">
+                        <p>                  
+                            <label>Tên nhà sản xuất</label>
+                            <span class="field">          
+                                 <input type="hidden" name="manuID" value="<?php if(isset($dataedit)): ?><?php echo $dataedit->manufactureID; ?><?php endif; ?>"/>
+                                <input type="text" name="manufacturerName" id="manufacturerName" placeholder="Tên nhà sản xuất" value="" class="longinput"></span>
                         </p>
-                        
-                        <p>
-                        	<label>Last Name</label>
-                            <span class="field"><input type="text" name="lastname" id="lastname" class="longinput" /></span>
-                        </p>
-                        
-                        <p>
-                        	<label>Email</label>
-                            <span class="field"><input type="text" name="email" id="email" class="longinput" /></span>
-                        </p>
-                        
-                        <p>
-                        	<label>Location</label>
-                            <span class="field"><textarea cols="80" rows="5" name="location" class="mediuminput" id="location"></textarea></span> 
-                        </p>
-                        
-                        <p>
-                        	<label>Select</label>
-                            <span class="field">
-                            <select name="selection" id="selection">
-                            	<option value="">Choose One</option>
-                                <option value="1">Selection One</option>
-                                <option value="2">Selection Two</option>
-                                <option value="3">Selection Three</option>
-                                <option value="4">Selection Four</option>
-                            </select>
-                            </span>
-                        </p>
-                        
-                        <br />
-                        
+                        <p>           
+                            <label>Mô tả</label>
+                            <span class="field">                    
+                                <textarea class="longinput" rows="5" name="manufacturerDescription" id="manufacturerDescription" placeholder="Mô tả nhà sản xuất"></textarea>
+                            </span>                 
+                        </p>      
+                        <p>           
+                            <label>Xuất xứ</label>
+                            <span class="field">        
+                                <select name="manufacturerPlace" id="manufacturerPlace">
+                                    <option value="">Country...</option>
+                                    <option value="Afganistan">Afghanistan</option>
+                                    <option value="Albania">Albania</option>
+                                    <option value="Algeria">Algeria</option>
+                                    <option value="American Samoa">American Samoa</option>
+                                    <option value="Andorra">Andorra</option>
+                                    <option value="Angola">Angola</option>
+                                    <option value="Anguilla">Anguilla</option>
+                                    <option value="Antigua &amp; Barbuda">Antigua &amp; Barbuda</option>
+                                    <option value="Argentina">Argentina</option>
+                                    <option value="Armenia">Armenia</option>
+                                    <option value="Aruba">Aruba</option>
+                                    <option value="Australia">Australia</option>
+                                    <option value="Austria">Austria</option>
+                                    <option value="Azerbaijan">Azerbaijan</option>
+                                    <option value="Bahamas">Bahamas</option>
+                                    <option value="Bahrain">Bahrain</option>
+                                    <option value="Bangladesh">Bangladesh</option>
+                                    <option value="Barbados">Barbados</option>
+                                    <option value="Belarus">Belarus</option>
+                                    <option value="Belgium">Belgium</option>
+                                    <option value="Belize">Belize</option>
+                                    <option value="Benin">Benin</option>
+                                    <option value="Bermuda">Bermuda</option>
+                                    <option value="Bhutan">Bhutan</option>
+                                    <option value="Bolivia">Bolivia</option>
+                                    <option value="Bonaire">Bonaire</option>
+                                    <option value="Bosnia &amp; Herzegovina">Bosnia &amp; Herzegovina</option>
+                                    <option value="Botswana">Botswana</option>
+                                    <option value="Brazil">Brazil</option>
+                                    <option value="British Indian Ocean Ter">British Indian Ocean Ter</option>
+                                    <option value="Brunei">Brunei</option>
+                                    <option value="Bulgaria">Bulgaria</option>
+                                    <option value="Burkina Faso">Burkina Faso</option>
+                                    <option value="Burundi">Burundi</option>
+                                    <option value="Cambodia">Cambodia</option>
+                                    <option value="Cameroon">Cameroon</option>
+                                    <option value="Canada">Canada</option>
+                                    <option value="Canary Islands">Canary Islands</option>
+                                    <option value="Cape Verde">Cape Verde</option>
+                                    <option value="Cayman Islands">Cayman Islands</option>
+                                    <option value="Central African Republic">Central African Republic</option>
+                                    <option value="Chad">Chad</option>
+                                    <option value="Channel Islands">Channel Islands</option>
+                                    <option value="Chile">Chile</option>
+                                    <option value="China">China</option>
+                                    <option value="Christmas Island">Christmas Island</option>
+                                    <option value="Cocos Island">Cocos Island</option>
+                                    <option value="Colombia">Colombia</option>
+                                    <option value="Comoros">Comoros</option>
+                                    <option value="Congo">Congo</option>
+                                    <option value="Cook Islands">Cook Islands</option>
+                                    <option value="Costa Rica">Costa Rica</option>
+                                    <option value="Cote DIvoire">Cote D'Ivoire</option>
+                                    <option value="Croatia">Croatia</option>
+                                    <option value="Cuba">Cuba</option>
+                                    <option value="Curaco">Curacao</option>
+                                    <option value="Cyprus">Cyprus</option>
+                                    <option value="Czech Republic">Czech Republic</option>
+                                    <option value="Denmark">Denmark</option>
+                                    <option value="Djibouti">Djibouti</option>
+                                    <option value="Dominica">Dominica</option>
+                                    <option value="Dominican Republic">Dominican Republic</option>
+                                    <option value="East Timor">East Timor</option>
+                                    <option value="Ecuador">Ecuador</option>
+                                    <option value="Egypt">Egypt</option>
+                                    <option value="El Salvador">El Salvador</option>
+                                    <option value="Equatorial Guinea">Equatorial Guinea</option>
+                                    <option value="Eritrea">Eritrea</option>
+                                    <option value="Estonia">Estonia</option>
+                                    <option value="Ethiopia">Ethiopia</option>
+                                    <option value="Falkland Islands">Falkland Islands</option>
+                                    <option value="Faroe Islands">Faroe Islands</option>
+                                    <option value="Fiji">Fiji</option>
+                                    <option value="Finland">Finland</option>
+                                    <option value="France">France</option>
+                                    <option value="French Guiana">French Guiana</option>
+                                    <option value="French Polynesia">French Polynesia</option>
+                                    <option value="French Southern Ter">French Southern Ter</option>
+                                    <option value="Gabon">Gabon</option>
+                                    <option value="Gambia">Gambia</option>
+                                    <option value="Georgia">Georgia</option>
+                                    <option value="Germany">Germany</option>
+                                    <option value="Ghana">Ghana</option>
+                                    <option value="Gibraltar">Gibraltar</option>
+                                    <option value="Great Britain">Great Britain</option>
+                                    <option value="Greece">Greece</option>
+                                    <option value="Greenland">Greenland</option>
+                                    <option value="Grenada">Grenada</option>
+                                    <option value="Guadeloupe">Guadeloupe</option>
+                                    <option value="Guam">Guam</option>
+                                    <option value="Guatemala">Guatemala</option>
+                                    <option value="Guinea">Guinea</option>
+                                    <option value="Guyana">Guyana</option>
+                                    <option value="Haiti">Haiti</option>
+                                    <option value="Hawaii">Hawaii</option>
+                                    <option value="Honduras">Honduras</option>
+                                    <option value="Hong Kong">Hong Kong</option>
+                                    <option value="Hungary">Hungary</option>
+                                    <option value="Iceland">Iceland</option>
+                                    <option value="India">India</option>
+                                    <option value="Indonesia">Indonesia</option>
+                                    <option value="Iran">Iran</option>
+                                    <option value="Iraq">Iraq</option>
+                                    <option value="Ireland">Ireland</option>
+                                    <option value="Isle of Man">Isle of Man</option>
+                                    <option value="Israel">Israel</option>
+                                    <option value="Italy">Italy</option>
+                                    <option value="Jamaica">Jamaica</option>
+                                    <option value="Japan">Japan</option>
+                                    <option value="Jordan">Jordan</option>
+                                    <option value="Kazakhstan">Kazakhstan</option>
+                                    <option value="Kenya">Kenya</option>
+                                    <option value="Kiribati">Kiribati</option>
+                                    <option value="Korea North">Korea North</option>
+                                    <option value="Korea Sout">Korea South</option>
+                                    <option value="Kuwait">Kuwait</option>
+                                    <option value="Kyrgyzstan">Kyrgyzstan</option>
+                                    <option value="Laos">Laos</option>
+                                    <option value="Latvia">Latvia</option>
+                                    <option value="Lebanon">Lebanon</option>
+                                    <option value="Lesotho">Lesotho</option>
+                                    <option value="Liberia">Liberia</option>
+                                    <option value="Libya">Libya</option>
+                                    <option value="Liechtenstein">Liechtenstein</option>
+                                    <option value="Lithuania">Lithuania</option>
+                                    <option value="Luxembourg">Luxembourg</option>
+                                    <option value="Macau">Macau</option>
+                                    <option value="Macedonia">Macedonia</option>
+                                    <option value="Madagascar">Madagascar</option>
+                                    <option value="Malaysia">Malaysia</option>
+                                    <option value="Malawi">Malawi</option>
+                                    <option value="Maldives">Maldives</option>
+                                    <option value="Mali">Mali</option>
+                                    <option value="Malta">Malta</option>
+                                    <option value="Marshall Islands">Marshall Islands</option>
+                                    <option value="Martinique">Martinique</option>
+                                    <option value="Mauritania">Mauritania</option>
+                                    <option value="Mauritius">Mauritius</option>
+                                    <option value="Mayotte">Mayotte</option>
+                                    <option value="Mexico">Mexico</option>
+                                    <option value="Midway Islands">Midway Islands</option>
+                                    <option value="Moldova">Moldova</option>
+                                    <option value="Monaco">Monaco</option>
+                                    <option value="Mongolia">Mongolia</option>
+                                    <option value="Montserrat">Montserrat</option>
+                                    <option value="Morocco">Morocco</option>
+                                    <option value="Mozambique">Mozambique</option>
+                                    <option value="Myanmar">Myanmar</option>
+                                    <option value="Nambia">Nambia</option>
+                                    <option value="Nauru">Nauru</option>
+                                    <option value="Nepal">Nepal</option>
+                                    <option value="Netherland Antilles">Netherland Antilles</option>
+                                    <option value="Netherlands">Netherlands (Holland, Europe)</option>
+                                    <option value="Nevis">Nevis</option>
+                                    <option value="New Caledonia">New Caledonia</option>
+                                    <option value="New Zealand">New Zealand</option>
+                                    <option value="Nicaragua">Nicaragua</option>
+                                    <option value="Niger">Niger</option>
+                                    <option value="Nigeria">Nigeria</option>
+                                    <option value="Niue">Niue</option>
+                                    <option value="Norfolk Island">Norfolk Island</option>
+                                    <option value="Norway">Norway</option>
+                                    <option value="Oman">Oman</option>
+                                    <option value="Pakistan">Pakistan</option>
+                                    <option value="Palau Island">Palau Island</option>
+                                    <option value="Palestine">Palestine</option>
+                                    <option value="Panama">Panama</option>
+                                    <option value="Papua New Guinea">Papua New Guinea</option>
+                                    <option value="Paraguay">Paraguay</option>
+                                    <option value="Peru">Peru</option>
+                                    <option value="Phillipines">Philippines</option>
+                                    <option value="Pitcairn Island">Pitcairn Island</option>
+                                    <option value="Poland">Poland</option>
+                                    <option value="Portugal">Portugal</option>
+                                    <option value="Puerto Rico">Puerto Rico</option>
+                                    <option value="Qatar">Qatar</option>
+                                    <option value="Republic of Montenegro">Republic of Montenegro</option>
+                                    <option value="Republic of Serbia">Republic of Serbia</option>
+                                    <option value="Reunion">Reunion</option>
+                                    <option value="Romania">Romania</option>
+                                    <option value="Russia">Russia</option>
+                                    <option value="Rwanda">Rwanda</option>
+                                    <option value="St Barthelemy">St Barthelemy</option>
+                                    <option value="St Eustatius">St Eustatius</option>
+                                    <option value="St Helena">St Helena</option>
+                                    <option value="St Kitts-Nevis">St Kitts-Nevis</option>
+                                    <option value="St Lucia">St Lucia</option>
+                                    <option value="St Maarten">St Maarten</option>
+                                    <option value="St Pierre &amp; Miquelon">St Pierre &amp; Miquelon</option>
+                                    <option value="St Vincent &amp; Grenadines">St Vincent &amp; Grenadines</option>
+                                    <option value="Saipan">Saipan</option>
+                                    <option value="Samoa">Samoa</option>
+                                    <option value="Samoa American">Samoa American</option>
+                                    <option value="San Marino">San Marino</option>
+                                    <option value="Sao Tome &amp; Principe">Sao Tome &amp; Principe</option>
+                                    <option value="Saudi Arabia">Saudi Arabia</option>
+                                    <option value="Senegal">Senegal</option>
+                                    <option value="Serbia">Serbia</option>
+                                    <option value="Seychelles">Seychelles</option>
+                                    <option value="Sierra Leone">Sierra Leone</option>
+                                    <option value="Singapore">Singapore</option>
+                                    <option value="Slovakia">Slovakia</option>
+                                    <option value="Slovenia">Slovenia</option>
+                                    <option value="Solomon Islands">Solomon Islands</option>
+                                    <option value="Somalia">Somalia</option>
+                                    <option value="South Africa">South Africa</option>
+                                    <option value="Spain">Spain</option>
+                                    <option value="Sri Lanka">Sri Lanka</option>
+                                    <option value="Sudan">Sudan</option>
+                                    <option value="Suriname">Suriname</option>
+                                    <option value="Swaziland">Swaziland</option>
+                                    <option value="Sweden">Sweden</option>
+                                    <option value="Switzerland">Switzerland</option>
+                                    <option value="Syria">Syria</option>
+                                    <option value="Tahiti">Tahiti</option>
+                                    <option value="Taiwan">Taiwan</option>
+                                    <option value="Tajikistan">Tajikistan</option>
+                                    <option value="Tanzania">Tanzania</option>
+                                    <option value="Thailand">Thailand</option>
+                                    <option value="Togo">Togo</option>
+                                    <option value="Tokelau">Tokelau</option>
+                                    <option value="Tonga">Tonga</option>
+                                    <option value="Trinidad &amp; Tobago">Trinidad &amp; Tobago</option>
+                                    <option value="Tunisia">Tunisia</option>
+                                    <option value="Turkey">Turkey</option>
+                                    <option value="Turkmenistan">Turkmenistan</option>
+                                    <option value="Turks &amp; Caicos Is">Turks &amp; Caicos Is</option>
+                                    <option value="Tuvalu">Tuvalu</option>
+                                    <option value="Uganda">Uganda</option>
+                                    <option value="Ukraine">Ukraine</option>
+                                    <option value="United Arab Erimates">United Arab Emirates</option>
+                                    <option value="United Kingdom">United Kingdom</option>
+                                    <option value="United States of America">United States of America</option>
+                                    <option value="Uraguay">Uruguay</option>
+                                    <option value="Uzbekistan">Uzbekistan</option>
+                                    <option value="Vanuatu">Vanuatu</option>
+                                    <option value="Vatican City State">Vatican City State</option>
+                                    <option value="Venezuela">Venezuela</option>
+                                    <option selected value="Vietnam">Việt Nam</option>
+                                    <option value="Virgin Islands (Brit)">Virgin Islands (Brit)</option>
+                                    <option value="Virgin Islands (USA)">Virgin Islands (USA)</option>
+                                    <option value="Wake Island">Wake Island</option>
+                                    <option value="Wallis &amp; Futana Is">Wallis &amp; Futana Is</option>
+                                    <option value="Yemen">Yemen</option>
+                                    <option value="Zaire">Zaire</option>
+                                    <option value="Zambia">Zambia</option>
+                                    <option value="Zimbabwe">Zimbabwe</option>                                   
+                                </select>
+                            </span>                 
+                        </p>   
                         <p class="stdformbutton">
-                        	<button class="submit radius2">Submit Button</button>
+                            <button class="submit radius2" type="button" id="submitAddManu" value="Thêm mới">Thêm mới </button>
+                            <input type="reset" class="reset radius2" value="Làm mới">
                         </p>
                     </form>
+                </div>
+            </div>
+        </div>      
         <?php $__env->stopSection(); ?>
 <?php echo $__env->make("templateadmin2.mainfire", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
