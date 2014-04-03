@@ -55,6 +55,8 @@ class tblStoreModel extends Eloquent {
         return $objStore;
     }
 
+ 
+
     public function findStoreByProductIDAndType($id, $type) {
         $objStore = DB::table('tblStore')->where('productID', '=', $id)->where('type', '=', $type)->get();
         return $objStore;

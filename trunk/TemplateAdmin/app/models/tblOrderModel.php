@@ -80,4 +80,13 @@ class tblOrderModel extends Eloquent {
         }
     }
 
+    public function updateStatusOrderByOrderCode($orderCode, $status) {
+        $checkdel = $this->where('orderCode', '=', $orderCode)->update(array('status' => $status));
+        if ($checkdel > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
 }

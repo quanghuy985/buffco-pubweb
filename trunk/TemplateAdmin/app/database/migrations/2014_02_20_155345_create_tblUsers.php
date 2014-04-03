@@ -87,6 +87,22 @@ class CreateTblUsers extends Migration {
             $table->string('time');
             $table->integer('status');
         });
+        Schema::create('tblSize', function($table) {
+            $table->increments('id');
+            $table->string('sizeName');
+            $table->string('sizeDescription');
+            $table->string('sizeValue');
+            $table->string('time');
+            $table->integer('status');
+        });
+        Schema::create('tblColor', function($table) {
+            $table->increments('id');
+            $table->string('colorName');
+            $table->string('colorValue');
+            $table->string('colorCode');
+            $table->string('time');
+            $table->integer('status');
+        });
         // Luu so luong san pham
         Schema::create('tblStore', function($table) {
             $table->increments('id');
@@ -110,6 +126,7 @@ class CreateTblUsers extends Migration {
             $table->increments('id');
             $table->string('orderCode');
             $table->integer('productID');
+            $table->string('type');
             $table->integer('amount');
             $table->decimal('total', 20, 2);
             $table->string('time');
