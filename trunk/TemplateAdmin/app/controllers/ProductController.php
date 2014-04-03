@@ -66,6 +66,9 @@ class ProductController extends Controller {
             $arrManu = $tblManu->selectAll(1000);
             return View::make('backend.product.addproduct')->with('catproduct', $data)->with('dataedit', $datap[0])->with('arrPromotion', $objPromotion)->with('arrTag', $arrTag)->with('arrTaged', $arrTaged)->with('arrManu',$arrManu)->with('thongbao', 'Sản phẩm đã được cập nhật thành công');
         }
+        else{
+            
+        }
     }
 
     public function getEditProduct() {
