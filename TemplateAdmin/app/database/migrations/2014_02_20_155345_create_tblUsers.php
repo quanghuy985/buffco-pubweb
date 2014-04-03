@@ -185,14 +185,14 @@ class CreateTblUsers extends Migration {
         //Luu lai lich su giao dich
         Schema::create('tblHistory', function($table) {
             $table->increments('id');
-            $table->integer('userID');// = 0 neu userid tu bang tblUser, = 1 neu tu bang tblAdmin
+            $table->integer('userID');
             $table->longtext('historyContent');
             $table->string('time');
             $table->integer('status');
         });
          Schema::create('tblAdminHistory', function($table) {
             $table->increments('id');
-            $table->integer('adminID');//= 0 neu userid tu bang tblUser, = 1 neu tu bang tblAdmin
+            $table->integer('userID');
             $table->longtext('historyContent');
             $table->string('time');
             $table->integer('status');
