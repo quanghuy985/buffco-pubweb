@@ -107,7 +107,8 @@ class CreateTblUsers extends Migration {
         Schema::create('tblStore', function($table) {
             $table->increments('id');
             $table->string('productID');
-            $table->string('type');
+            $table->string('sizeID');
+            $table->string('colorID');
             $table->integer('soluongnhap');
             $table->integer('soluongban');
             $table->string('time');
