@@ -432,7 +432,7 @@ For licensing, see license.txt or http://cksource.com/ckfinder/license
                     o = window.open(n, 'CKFinderpopup', m, true);
                 if (!o) return false;
                 s.width = s.height = '100%';
-                var p = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"><html><head><title>CKFinder 2</title><style type="text/css">body, html, iframe, #ckfinder { margin: 0; padding: 0; border: 0; width: 100%; height: 100%; overflow: hidden; }</style></head><body></body></html>',
+                var p = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"><html><head><title>Hệ thống quản lý tập tin pubweb.vn</title><style type="text/css">body, html, iframe, #ckfinder { margin: 0; padding: 0; border: 0; width: 100%; height: 100%; overflow: hidden; }</style></head><body></body></html>',
                     q = new a.dom.document(o.document);
                 q.$.open();
                 if (a.env.isCustomDomain()) q.$.domain = window.document.domain;

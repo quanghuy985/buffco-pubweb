@@ -11,13 +11,6 @@ class CreateTblUsers extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('tblSetting', function($table) {
-            $table->increments('id');
-            $table->string('settingKey');
-            $table->string('settingValue');
-            $table->string('time');
-            $table->integer('status');
-        });
         Schema::create('tblUsers', function($table) {
             $table->increments('id');
             $table->string('userEmail');
@@ -280,6 +273,13 @@ class CreateTblUsers extends Migration {
             $table->increments('id');
             $table->integer('groupadminID');
             $table->integer('rolesID');
+            $table->string('time');
+            $table->integer('status');
+        });
+        Schema::create('tblSetting', function($table) {
+            $table->increments('id');
+            $table->string('settingKey');
+            $table->string('settingValue');
             $table->string('time');
             $table->integer('status');
         });
