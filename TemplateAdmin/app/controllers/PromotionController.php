@@ -92,7 +92,7 @@ class PromotionController extends Controller {
             $arrPromotion = $tblPromotion->getAllPromotion(1000);
             $selectPromotion = '<option value="0">---Chọn khuyến mại---</option>';           
             foreach ($arrPromotion as $item) {
-                if (Input::get('promotionID')!='' && Input::get('promotionID') == $item->id) {
+                if (Input::get('promoID')!='' && Input::get('promoID') == $item->id) {
                     $selectPromotion.=" <option value='".$item->id."' selected >" . $item->promotionName . "</option>";
                 } else {
                     $selectPromotion.=" <option value=".$item->id.">" . $item->promotionName . "</option>";
