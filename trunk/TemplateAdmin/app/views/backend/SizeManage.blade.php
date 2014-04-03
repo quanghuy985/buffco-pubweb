@@ -14,8 +14,8 @@
     if (addon != '') {
     jConfirm('Bạn có chắc chắn muốn xóa ?', 'Thông báo', function(r) {
     if (r == true) {
-    jQuery.post("{{URL::action('ManufacturerController@postDelmulte')}}", {multiid: addon}).done(function(data) {
-    window.location = '{{URL::action('ManufacturerController@getManufactureView')}}';
+    jQuery.post("{{URL::action('SizeController@postDelmulte')}}", {multiid: addon}).done(function(data) {
+    window.location = '{{URL::action('SizeController@getSizeView')}}';
     });
             return false;
     } else {
@@ -31,7 +31,7 @@
     // Enter pressed?
     if (e.which == 10 || e.which == 13) {
     var request = jQuery.ajax({
-    url: "{{URL::action('ManufacturerController@postAjaxsearch')}}?keywordsearch=" + jQuery('#searchblur').val(),
+    url: "{{URL::action('SizeController@postAjaxsearch')}}?keywordsearch=" + jQuery('#searchblur').val(),
             type: "POST",
             dataType: "html"
     });
@@ -45,7 +45,7 @@
     });
             jQuery("#loctheotieuchi").click(function() {
     var request = jQuery.ajax({
-    url: "{{URL::action('ManufacturerController@postFillterManufacturer')}}",
+    url: "{{URL::action('SizeController@postFillterSize')}}",
             data: {selectoptionnum: jQuery('#selectoptionnum').val(), oderbyoption: jQuery('#oderbyoption').val(), oderbyoption1: jQuery('#oderbyoption1').val()},
             type: "POST",
             dataType: "html"
@@ -59,7 +59,7 @@
     
     function phantrang(page) {
             var request = jQuery.ajax({
-            url: "{{URL::action('ManufacturerController@postAjaxpagion')}}?page=" + page,
+            url: "{{URL::action('SizeController@postAjaxpagion')}}?page=" + page,
                     type: "POST",
                     dataType: "html"
             });
@@ -75,7 +75,7 @@
     jConfirm('Bạn có chắc chắn muốn xóa ?', 'Thông báo', function(r) {
     if (r == true) {
     var request = jQuery.ajax({
-    url: "{{URL::action('ManufacturerController@postDeleteManufacturer')}}?id=" + id,
+    url: "{{URL::action('SizeController@postDeleteSize')}}?id=" + id,
             type: "POST",
             dataType: "html"
     });
@@ -91,7 +91,7 @@
     
     function kichhoat(id, stus) {
     var request = jQuery.ajax({
-    url: "{{URL::action('ManufacturerController@postManufacturerActive')}}?id=" + id + '&status=' + stus,
+    url: "{{URL::action('SizeController@postSizeActive')}}?id=" + id + '&status=' + stus,
             type: "POST",
             dataType: "html"
     });
@@ -104,45 +104,40 @@
 
 <script>
     jQuery(document).ready(function(){
-    jQuery("#addManufacture").validate({
+    jQuery("#addSize").validate({
     rules: {
-            manufName: {
+            sizeName: {
                 required: true
                 
             },
-            manufDescription: {
+            sizeDescription: {
                 required: true
                 
             },
-            manufPlace: {
+            sizeValue: {
                 required: true
             }
-            
 
             },
     messages: {
-            manufName: {
+            sizeName: {
                 required: 'Tên là trường bắt buộc'
                 
             },
-            manufDescription: {
+            sizeDescription: {
                 required: 'Mô tả là trường bắt buộc'
-                
+               
             },
-            manufPlace: {
-                required: 'Nơi sản xuất là bắt buộc'
-            },
-            userLastName: {
-                required: 'Vui lòng nhập tên'
+            sizeValue: {
+                required: 'Vui lòng nhập giá trị'
             }
-            
         }
         });
     });
 </script>
 <div class="pageheader notab">
-    <h1 class="pagetitle">Nhà sản xuất</h1>
-    <span class="pagedesc">Quản lý nhà sản xuất</span>
+    <h1 class="pagetitle">Quản lý kích cỡ</h1>
+    <span class="pagedesc">Quản lý các kích cỡ</span>
 </div>
 
 <div class="contentwrapper">
@@ -151,19 +146,18 @@
                 <a class="close"></a>
                 <p>{{$msg}}</p>
             </div>
-            @endif 
+            @endif
     <div class="subcontent">
-        
         <div class="contenttitle2">
-            <h3>Bảng nhà sản xuất</h3>
+            <h3>Bảng quản lý kích cỡ</h3>
         </div>
-               
+            
         <div class="tableoptions">
             <button class="deletepromulti" title="table1">Xóa đã chọn</button> &nbsp;
             <select class="radius3" name="oderbyoption1" id="oderbyoption1">
                 <option value="">Tất cả</option>
-                <option value="0">Chờ đăng</option>
-                <option value="1">Đã đăng</option>
+                <option value="0">Chờ kích hoạt</option>
+                <option value="1">Đã kích hoạt</option>
                 <option value="2">Xóa</option>
             </select>&nbsp;
             <button class="radius3" id="loctheotieuchi">Lọc theo tiêu chí</button>
@@ -172,19 +166,19 @@
         <table cellpadding="0" cellspacing="0" border="0" id="table2" class="stdtable stdtablecb">
             <colgroup>
                 <col class="con0" style="width: 3%">
-                <col class="con1" style="width: 20%">
-                <col class="con0" style="width: 14%">
-                <col class="con1" style="width: 20%">
-                <col class="con0" style="width: 15%">
+                <col class="con1" style="width: 15%">
+                <col class="con0" style="width: 10%">
                 <col class="con1" style="width: 10%">
-                
+                <col class="con0" style="width: 10%">                
+                <col class="con1" style="width: 15%">
+                <col class="con1" style="width: 15%">
             </colgroup>
             <thead>
                 <tr>
                     <th class="head0"><input type="checkbox" class="checkall" name="checkall" ></th> 
-                    <th class="head1">Tên nhà sản xuất</th>
-                    <th class="head0">Miêu tả</th>
-                    <th class="head1">Nơi sản xuất</th>
+                    <th class="head1">Tên </th>
+                    <th class="head1">Mô tả</th>
+                    <th class="head1">Giá trị</th>
                     <th class="head0">Khởi tạo</th>
                     <th class="head1">Tình trạng</th>
                     <th class="head1">Chức năng</th>
@@ -194,20 +188,21 @@
             <tbody id="tableproduct"> 
                 
                 
-                @if(isset($arrayManufacturer))
-                @foreach($arrayManufacturer as $item)
+                @if(isset($arrSize))
+                @foreach($arrSize as $item)
                 <tr> 
                     <td><input name="checkboxidfile" type="checkbox" value="{{$item->id}}"></td> 
-                    <td><label value="manuf">{{str_limit( $item->manufacturerName, 30, '...')}}</label></td> 
-                    <td><label value="manuf">{{str_limit( $item->manufacturerDescription, 30, '...')}}</label></td> 
-                    <td><label value="manuf">{{str_limit($item->manufacturerPlace, 30, '...')}} </label></td> 
-                    <td><label value="manuf"></label><?php echo date('d/m/Y h:i:s', $item->time); ?></td> 
-                    <td><label value="manuf">
+                    <td><label value="page">{{str_limit( $item->sizeName, 30, '...')}}</label></td> 
+                    <td><label value="page">{{str_limit($item->sizeDescription, 30, '...')}} </label></td> 
+                    <td><label value="page">{{str_limit($item->sizeValue, 30, '...')}} </label></td> 
+                    
+                    <td><label value="page"></label><?php echo date('d/m/Y h:i:s', $item->time); ?></td> 
+                    <td><label value="page">
                             <?php
                             if ($item->status == 0) {
-                                echo "chờ đăng";
+                                echo "chờ kích hoạt";
                             } else if ($item->status == 1) {
-                                echo "đã đăng";
+                                echo "đã kích hoạt";
                             } else if ($item->status == 2) {
                                 echo "đã xóa";
                             }
@@ -215,12 +210,12 @@
                         </label>
                     </td> 
                     <td>
-                        <a href="{{URL::action('ManufacturerController@getManufacturerEdit')}}?id={{$item->id}}" class="btn btn4 btn_book" title="Sửa"></a>
+                        <a href="{{URL::action('SizeController@getSizeEdit')}}?id={{$item->id}}" class="btn btn4 btn_book" title="Sửa"></a>
                         @if($item->status=='2')
-                        <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 0)" class="btn btn4 btn_flag" title="Kích hoạt"></a>
+                        <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 0)" class="btn btn4 btn_world" title="Chờ kích hoạt"></a>
                         @endif
                         @if($item->status=='0')
-                        <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 1)" class="btn btn4 btn_world" title="Đăng bài"></a>
+                        <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 1)" class="btn btn4 btn_flag" title="Kích hoạt"></a>
                         @endif
                         @if($item->status!='2')
                         <a href="javascript: void(0)" onclick="xoasanpham({{$item->id}})" class="btn btn4 btn_trash" title="Xóa"></a>
@@ -238,47 +233,45 @@
             </tbody>
         </table>
         
-        <div class="contenttitle2" id="editManuf">
-            <h3>Thêm/Sửa nhà sản xuất</h3>
+        <div class="contenttitle2" id="editPage">
+            <h3>Thêm/Sửa kích cỡ</h3>
         </div>
-        <form class="stdform stdform2" id="addManufacture" method="post" action="@if(isset($arrayManuf)) {{URL::action('ManufacturerController@postUpdateManufacturer')}} @else {{URL::action('ManufacturerController@postAddManufaturer')}}@endif">
+        <form class="stdform stdform2" id="addSize" method="post" action="@if(isset($arraySize)) {{URL::action('SizeController@postUpdateSize')}} @else {{URL::action('SizeController@postAddSize')}}@endif">
 
             <p>
-                <input type="hidden" name="idmanuf" id="idmanuf" value="@if(isset($arrayManuf)){{$arrayManuf->id}}@endif"/>
-                <input type="hidden" name="status" id="status" value="@if(isset($arrayManuf)){{$arrayManuf->status}}@endif"/>
+                <input type="hidden" name="idsize" id="idsize" value="@if(isset($arraySize)){{$arraySize->id}}@endif"/>
+                <input type="hidden" name="status" id="status" value="@if(isset($arraySize)){{$arraySize->status}}@endif"/>
                 
             </p>
             <p>
-                <label>Tên nhà sản xuất</label>
-                <span class="field"><input type="text" name="manufName" placeholder="Nhập tên nhà sản xuất" value="@if(isset($arrayManuf)){{$arrayManuf->manufacturerName}}@endif" class="longinput"></span>
+                <label>Tên</label>
+                <span class="field"><input type="text" name="sizeName" placeholder="Nhập tên " value="@if(isset($arraySize)){{$arraySize->sizeName}}@endif" class="longinput"></span>
             </p>
 
             <p>
                 <label>Mô tả</label>
-                <span class="field"><input type="text" name="manufDescription" placeholder="Nhập 1 đoạn miêu tả ngắn gọn " value="@if(isset($arrayManuf)){{$arrayManuf->manufacturerDescription}}@endif" class="longinput"></span>
+                <span class="field"><textarea cols="80" rows="5" id="location2" class="ckeditor" name="sizeDescription" placeholder="Mô tả">@if(isset($arraySize)){{$arraySize->sizeDescription}}@endif</textarea></span>
             </p>
             
             <p>
-                <label>Nơi sản xuất</label>
-                <span class="field">
-                    <input type="text" name="manufPlace" placeholder="Nhập địa chỉ" value="@if(isset($arrayManuf)){{$arrayManuf->manufacturerPlace}}@endif" class="longinput">
-                    
-                </span>
+                <label>Giá trị</label>
+                <span class="field"><input type="text" name="sizeValue" placeholder="Nhập giá trị" value="@if(isset($arraySize)){{$arraySize->sizeValue}}@endif" class="longinput"></span>
             </p> 
+            
 
             <p>
                 <label>Trạng thái</label>
                 <span class="field">
                     <select name="status">
-                        <option value="0" @if(isset($arrayManuf)&& $arrayManuf->status==0)selected@endif >Chờ kích hoạt</option>
-                        <option value="1" @if(isset($arrayManuf)&& $arrayManuf->status==1)selected@endif>Kích hoạt</option>
-                        <option value="2" @if(isset($arrayManuf)&& $arrayManuf->status==2)selected@endif>Xóa</option>
+                        <option value="0" @if(isset($arraySize)&& $arraySize->status==0)selected@endif >Chờ kích hoạt</option>
+                        <option value="1" @if(isset($arraySize)&& $arraySize->status==1)selected@endif>Kích hoạt</option>
+                        <option value="2" @if(isset($arraySize)&& $arraySize->status==2)selected@endif>Xóa</option>
                     </select>
                 </span>
             </p>
             
             <p class="stdformbutton">
-                <button class="submit radius2">@if(isset($arrayManuf))Cập nhật @else Thêm mới @endif</button>
+                <button class="submit radius2">@if(isset($arraySize))Cập nhật @else Thêm mới @endif</button>
                 <input type="reset" class="reset radius2" value="Làm lại">
             </p>
         </form>
