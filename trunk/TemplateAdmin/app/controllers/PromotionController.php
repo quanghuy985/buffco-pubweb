@@ -88,9 +88,9 @@ class PromotionController extends Controller {
         );
         $tblPromotion = new tblPromotionModel();
         if (!Validator::make(Input::all(), $rules)->fails()) {
-            $tblPromotion->insertPromotion(Input::get('promotionName'), Input::get('promotionContent'), Input::get('promotionAmount'), Input::get('status'));
+            $tblPromotion->insertPromotion(Input::get('promotionName'), Input::get('promotionContent'), Input::get('promotionAmount'),1);
             $arrPromotion = $tblPromotion->getAllPromotion(1000);
-            $selectPromotion = '';          
+            $selectPromotion = '<option value="0">---Chọn khuyến mại---</option>';           
             foreach ($arrPromotion as $item) {
                 if (Input::get('promotionID')!='' && Input::get('promotionID') == $item->id) {
                     $selectPromotion.=" <option value='".$item->id."' selected >" . $item->promotionName . "</option>";
