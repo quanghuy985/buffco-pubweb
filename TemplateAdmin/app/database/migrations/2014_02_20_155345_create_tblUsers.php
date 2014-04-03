@@ -97,7 +97,7 @@ class CreateTblUsers extends Migration {
         // Luu so luong san pham
         Schema::create('tblStore', function($table) {
             $table->increments('id');
-            $table->integer('productID');
+            $table->string('productID');
             $table->string('type');
             $table->integer('soluongnhap');
             $table->integer('soluongban');

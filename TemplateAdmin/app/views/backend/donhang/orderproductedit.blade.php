@@ -9,7 +9,7 @@
     <div class="contenttitle2">
         <h3>Thông tin đơn hàng</h3>
     </div>
-    <form class="stdform" accept-charset="UTF-8">
+    <form class="stdform" accept-charset="UTF-8" action="#" method="post">
         <p>
             <label>Người mua :</label>
             <span class="field">         
@@ -60,7 +60,7 @@
         <tbody id="tableproduct">
             <?php $i = 1; ?>
             @foreach($objOrder as $item)
-            <tr> 
+            <tr>   
                 <td><label value="cateNews"> {{$i++}} </label></td> 
                 <td><label value="cateNews">{{str_limit( $item->productCode, 30, '...')}}</label></td> 
                 <td><label value="cateNews">{{str_limit( $item->productName, 30, '...')}}</label></td> 
@@ -83,7 +83,7 @@
             </tr>
         </tbody>
     </table>
-    <form action="POST" method="{{URL::action('OrderController@postUpdateOrder')}}">
+    <form  id="fdgfdkjghdkf" method="post" action="{{URL::action('OrderController@postUpdateOrder')}}">
         <p>
             <label>Trạng thái :</label>
             <span class="field">         
@@ -97,8 +97,8 @@
                 </span>
             </span>
         </p>
-        <p class="stdformbutton">
-            <button class="submit radius2">Cập nhật</button>
+        <p>
+            <input type="submit" class="btn" value="Cập nhật">
             <input type="reset" class="reset radius2" value="Làm lại">
         </p>
     </form>

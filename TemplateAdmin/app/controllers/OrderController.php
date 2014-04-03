@@ -69,9 +69,15 @@ class OrderController extends BaseController {
 
     public function postUpdateOrder() {
         $orderCode = Input::get('idOrderCode');
+        $status = Input::get('status');
         $tblOderModel = new tblOrderModel();
         $arrOrder = $tblOderModel->getOrderByOrderCode($orderCode);
-        var_dump($arrOrder);
+        //var_dump($arrOrder);
+        foreach ($arrOrder as $item) {
+            $productID = $item->productID;
+            $tblStoreModel = new tblStoreModel();
+            $store = $tblStoreModel->findStoreByProductID($productID);
+        }
     }
 
 }
