@@ -28,7 +28,6 @@ class OrderController extends BaseController {
     public function getEdit($orderCode) {
         $tblOderModel = new tblOrderModel();
         $objOrder = $tblOderModel->getOrderByOrderCode($orderCode);
-        // var_dump($objOrder);
         return View::make('backend.donhang.orderproductedit')->with('objOrder', $objOrder);
     }
 
@@ -72,11 +71,26 @@ class OrderController extends BaseController {
         $status = Input::get('status');
         $tblOderModel = new tblOrderModel();
         $arrOrder = $tblOderModel->getOrderByOrderCode($orderCode);
-        //var_dump($arrOrder);
+
         foreach ($arrOrder as $item) {
             $productID = $item->productID;
+            $type = $item->type;
+            $amount = $item->amount;
+
             $tblStoreModel = new tblStoreModel();
-            $store = $tblStoreModel->findStoreByProductID($productID);
+            $store = $tblStoreModel->findStoreByProductIDAndType($productID, $type);
+
+            $soluongton = $store[0]->soluongnhap - $store[0]->soluongban;
+
+            if ($amount > $soluongton) {
+                $objOrder = $tblOderModel->getOrderByOrderCode($orderCode);
+                return View::make('backend.donhang.orderproductedit')->with('objOrder', $objOrder)->with('thongbao', 'Số lượng hàng trong kho không đủ để thực hiện đơn hàng này!');
+            } else {
+                $newAmount = $store[0]->soluongban + $amount;
+                $tblStoreModel->updateStore($store[0]->id, '', '', '', $newAmount, '');
+                $tblOderModel->updateStatusOrderByOrderCode($orderCode, $status);
+                Redirect::action('OrderController@getViewAll')->with('thongbao', 'Đã xử lý đơn đặt hàng thành công!');
+            }
         }
     }
 
