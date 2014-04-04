@@ -245,6 +245,7 @@ class ProductController extends Controller {
 
     public function getLo() {
         echo 'adas';
+        
     }
 
 }
