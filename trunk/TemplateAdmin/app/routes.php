@@ -25,6 +25,9 @@ Route::controller('categoryproduct', 'CategoryProductController');
 Route::controller('product', 'ProductController');
 Route::controller('tag', 'TagController');
 Route::controller('manu', 'ManufacturerController');
+Route::controller('size', 'SizeController');
+Route::controller('color', 'ColorController');
+Route::controller('store', 'StoreController');
 App::missing(function($exception) {
     return $exception;
 });
