@@ -1351,6 +1351,7 @@ a.btn4 { width: 34px; height: 32px; -moz-border-radius: 50px; -webkit-border-rad
 
 a.btn_search { background-position: -10px -12px; }
 a.btn_trash { background-position: -47px -12px; }
+a.btn_edit { background-position: -154px -262px;}
 a.btn_flag { background-position: -82px -12px; }
 a.btn_home { background-position: -119px -12px; }
 a.btn_link { background-position: -154px -12px; }
