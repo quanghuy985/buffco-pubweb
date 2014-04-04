@@ -1,7 +1,0 @@
-<?php $__env->startSection("contentadmin"); ?>
-<textarea id="editor1" class="ckeditor" name="editor1" rows="10" cols="80"></textarea>
-<script type="text/javascript">
-    var editor = CKEDITOR.replace('editor1');
-</script>
-<?php $__env->stopSection(); ?>
-<?php echo $__env->make("templateadmin2.mainfire", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

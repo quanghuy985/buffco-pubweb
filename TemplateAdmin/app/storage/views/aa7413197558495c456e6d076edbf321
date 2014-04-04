@@ -1,4 +1,0 @@
-<?php $__env->startSection("contentadmin"); ?>
-asdsad
-<?php $__env->stopSection(); ?>
-<?php echo $__env->make("templateadmin2.mainfire", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

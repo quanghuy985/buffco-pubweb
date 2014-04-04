@@ -1,5 +1,0 @@
-Nội dung phản ánh : 
-<?php echo $noidung; ?>
-
-Trả lời của chúng tôi :
-<?php echo $traloi; ?>
