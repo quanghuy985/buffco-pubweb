@@ -20,7 +20,12 @@ jQuery(document).ready(function() {
         },
         onBeforeShow: function() {
             jQuery(this).ColorPickerSetColor(this.value);
+        },
+        onChange: function(hsb, hex, rgb) {
+            jQuery('#colorSelector span').css('backgroundColor', '#' + hex);
+            jQuery('#colorpicker').val('#' + hex);
         }
+
     })
             .bind('keyup', function() {
                 jQuery(this).ColorPickerSetColor(this.value);
@@ -40,6 +45,7 @@ jQuery(document).ready(function() {
         onChange: function(hsb, hex, rgb) {
             jQuery('#colorSelector span').css('backgroundColor', '#' + hex);
             jQuery('#colorpicker2').val('#' + hex);
+            jQuery('#colorpicker').val('#' + hex);
         }
     });
 
