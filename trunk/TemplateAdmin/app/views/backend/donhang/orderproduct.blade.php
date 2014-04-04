@@ -2,69 +2,96 @@
 @section("contentadmin")
 <script type="text/javascript">
     function phantrang(page) {
+        jQuery("#jGrowl").remove();
+        jQuery.jGrowl("Đang tải dữ liệu ...");
+        var urlpost = "{{URL::action('OrderController@postAjaxOrder')}}?page=" + page
+        if (jQuery('#datepicker').val() != '' && jQuery('#datepicker1').val() != '') {
+            urlpost = "{{URL::action('OrderController@postAjaxOrderFilter')}}?fromtime=" + jQuery('#datepicker').val() + "&totime=" + jQuery('#datepicker1').val() + "&status=" + jQuery('#status').val() + "&page=" + page;
+        }
+        if (jQuery('#searchblur').val() != '') {
+            urlpost = "{{URL::action('OrderController@postAjaxSearchOrder')}}?keyword=" + jQuery('#searchblur').val() + "&page=" + page;
+        }
         var request = jQuery.ajax({
-            url: "{{URL::action('OrderController@postPagin')}}?page=" + page,
+            url: urlpost,
             type: "POST",
             dataType: "html"
         });
         request.done(function(msg) {
+            jQuery("#jGrowl").remove();
+            jQuery.jGrowl("Đã tải dữ liệu thành công ...");
             jQuery('#tableproduct').html(msg);
         });
     }
-    function kichhoat(id, stus) {
+    function locdulieu() {
+        jQuery('#searchblur').val("");
+        jQuery("#jGrowl").remove();
+        jQuery.jGrowl("Đang tải dữ liệu ...");
         var request = jQuery.ajax({
-            url: "{{URL::action('OrderController@postOrderActive')}}?id=" + id + '&status=' + stus,
+            url: "{{URL::action('OrderController@postAjaxOrderFilter')}}?fromtime=" + jQuery('#datepicker').val() + "&totime=" + jQuery('#datepicker1').val() + "&status=" + jQuery('#status').val(),
             type: "POST",
             dataType: "html"
         });
         request.done(function(msg) {
+            jQuery("#jGrowl").remove();
+            jQuery.jGrowl("Đã tải dữ liệu thành công ...");
             jQuery('#tableproduct').html(msg);
         });
-        return true;
     }
-    function xoasanpham(id) {
-        jConfirm('Bạn có chắc chắn muốn xóa ?', 'Thông báo', function(r) {
-            if (r == true) {
+    function timkiem() {
+        jQuery('#datepicker').val('')
+        jQuery('#datepicker1').val('')
+        jQuery("#jGrowl").remove();
+        jQuery.jGrowl("Đang tải dữ liệu ...");
+        var request = jQuery.ajax({
+            url: "{{URL::action('OrderController@postAjaxSearchOrder')}}?keyword=" + jQuery('#searchblur').val(),
+            type: "POST",
+            dataType: "html"
+        });
+        request.done(function(msg) {
+            jQuery("#jGrowl").remove();
+            jQuery.jGrowl("Đã tải dữ liệu thành công ...");
+            jQuery('#tableproduct').html(msg);
+        });
+    }
+    jQuery(document).ready(function() {
+
+        jQuery('#searchblur').keypress(function(e) {
+            if (e.which == 10 || e.which == 13) {
+                jQuery('#datepicker').val('')
+                jQuery('#datepicker1').val('')
+                jQuery("#jGrowl").remove();
+                jQuery.jGrowl("Đang tải dữ liệu ...");
                 var request = jQuery.ajax({
-                    url: "{{URL::action('OrderController@postDel')}}?id=" + id,
+                    url: "{{URL::action('OrderController@postAjaxSearchOrder')}}?keyword=" + jQuery('#searchblur').val(),
                     type: "POST",
                     dataType: "html"
                 });
                 request.done(function(msg) {
+                    jQuery("#jGrowl").remove();
+                    jQuery.jGrowl("Đã tải dữ liệu thành công ...");
                     jQuery('#tableproduct').html(msg);
                 });
-                return false;
-            } else {
-                return false;
             }
-        })
-    }
-    jQuery(document).ready(function() {
-        jQuery("#loctheotieuchi").click(function() {
-        var request = jQuery.ajax({
-            url: "{{URL::action('OrderController@postFillterOrder')}}",
-            data: {oderbyoption1: jQuery('#oderbyoption1').val()},
+        });
+    });
+    function xoasanpham(id) {
+    jConfirm('Bạn có chắc chắn muốn xóa ?', 'Thông báo', function(r) {
+    if (r == true) {
+    var request = jQuery.ajax({
+    url: "{{URL::action('OrderController@postDel')}}?id=" + id,
             type: "POST",
             dataType: "html"
-        });
-        request.done(function(msg) {
-            jQuery('#tableproduct').html(msg);
-        });
     });
-    jQuery('#searchblur').keypress(function(e) {
-        // Enter pressed?
-        if (e.which == 10 || e.which == 13) {
-            var request = jQuery.ajax({
-                url: "{{URL::action('OrderController@postSearchOrder')}}?keyword=" + jQuery('#searchblur').val(),
-                type: "POST",
-                dataType: "html"
-            });
             request.done(function(msg) {
-                jQuery('#tableproduct').html(msg);
+            jQuery('#tableproduct').html(msg);
             });
-        }
-    });
-    });</script>
+            return false;
+    } else {
+    return false;
+    }
+    })
+    }
+</script>
 <div class="pageheader notab">
     <h1 class="pagetitle">QUẢN LÝ ĐƠN HÀNG</h1>
     <span class="pagedesc">Quản lý đơn hàng</span>
@@ -82,14 +109,23 @@
             <h3>Quản lý đơn đặt hàng</h3>
         </div>
         <div class="tableoptions"> 
-            <select class="radius3" name="oderbyoption1" id="oderbyoption1">
-                <option value="">Tất cả</option>
-                <option value="0">Chờ</option>
-                <option value="1">Thành công</option>
-                <option value="2">Xóa</option>
-            </select>&nbsp;
-            <button class="radius3" id="loctheotieuchi">Lọc theo tiêu chí</button>
-            <div class="dataTables_filter" id="searchformfile"><label>Search: <input id="searchblur" name="searchblur" style="border: 1px solid #ddd;padding: 7px 5px 8px 5px;width: 200px;background: #fff;" type="text"></label></div>
+            <form class="stdform stdform2" action="javascript:void(0)" method="post">
+                Từ : <input id="datepicker" name="timeform" type="text" class="longinput" /> 
+                &nbsp;   Đến : <input id="datepicker1"  name="timeto" type="text" class="datepicker"  /> 
+                &nbsp; <select name="status" id="status">
+                     <option value="3">Tất cả</option>
+                     <option value="0" selected>Chờ xử lý</option>
+                    <option value="1">Đã xử lý</option>
+                    <option value="2">Đã xóa</option>
+                </select>
+                &nbsp; &nbsp; <button class="radius3" id="loctheotieuchi" onclick="locdulieu()">Lọc dữ liệu</button>
+
+            </form>
+            <div class="dataTables_filter1" id="searchformfile">
+                <label>Search: 
+                    <input class="longinput" id="searchblur"  name="searchblur" style="-moz-border-radius: 2px;-webkit-border-radius: 2px;border-radius: 2px;border: 1px solid #ddd;padding: 7px 5px 8px 5px;width: 200px;background: #fcfcfc;color: #666;-moz-box-shadow: inset 0 1px 3px #ddd;-webkit-box-shadow: inset 0 1px 3px #ddd;box-shadow: inset 0 1px 3px #ddd;" type="text"><a href="javascript:void(0)" class="btn btn4 btn_search" onclick="timkiem()" style=" float: right;    height: 30px;   margin-left: 10px;"></a>
+                </label>
+            </div>
         </div>
         <table cellpadding="0" cellspacing="0" border="0"  class="stdtable stdtablecb">
             <colgroup>

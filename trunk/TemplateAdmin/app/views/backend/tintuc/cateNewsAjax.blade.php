@@ -1,10 +1,8 @@
 @foreach($arrayCateNews as $item)    
 <tr> 
-
-    <td><label value="cateMenuer">{{$item->id }}</label></td> 
-    <td><label value="cateMenuer">@if($item->catenewsParent !=0) ---- @endif {{str_limit( $item->catenewsName, 30, '...')}}</label></td>
+    <td>@if($item->catenewsParent ==0) <strong> @endif <label value="cateMenuer">@if($item->catenewsParent !=0) &nbsp;-&nbsp; @endif {{str_limit( $item->catenewsName, 30, '...')}}</label>@if($item->catenewsParent ==0) </strong> @endif</td>
     <td><label value="cateMenuer">{{str_limit( $item->catenewsDescription, 30, '...')}}</label></td>
-    <td><label value="cateMenuer">{{str_limit($item->catenewsParent , 30, '...')}}</label></td>
+    <td><label value="cateMenuer">@if ($item->catenewsParent == 0 ) {{ 'Cha' }} @else {{str_limit($item->catenewsParentName , 30, '...')}} @endif</label></td>
     <td><label value="cateMenuer">{{str_limit($item->catenewsSlug , 30, '...')}}</label></td> 
     <td><label value="cateMenuer"><?php echo date('d/m/Y h:i:s', $item->time); ?></label></td> 
     <td><label value="cateMenuer"><?php
@@ -36,6 +34,6 @@
 @endforeach
 @if($link!='')
 <tr>
-    <td colspan="8">{{$link}}</td>
+    <td colspan="7">{{$link}}</td>
 </tr>
 @endif

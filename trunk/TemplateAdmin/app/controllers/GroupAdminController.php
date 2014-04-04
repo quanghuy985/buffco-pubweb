@@ -81,20 +81,13 @@ class GroupAdminController extends Controller {
                 $result = $tblGroupAdmin->addGroupAdminRoles($id, $item);
             }
             if ($result) {
-                return Redirect::action('GroupAdminController@getGroupAdminView', array('thongbao' => 'Cập nhật thành công .'));
+                return Redirect::action('GroupAdminController@getGroupAdminView', array('thongbao' => 'Thêm mới thành công .'));
             } else {
-                return Redirect::action('GroupAdminController@getGroupAdminView', array('thongbao' => 'Cập nhật thất bại .'));
+                return Redirect::action('GroupAdminController@getGroupAdminView', array('thongbao' => 'Thêm mới thất bại .'));
             }
         } else {
-            return Redirect::action('GroupAdminController@getGroupAdminView', array('thongbao' => 'Cập nhật thất bại .'));
+            return Redirect::action('GroupAdminController@getGroupAdminView', array('thongbao' => 'Thêm mới thất bại .'));
         }
-    }
-
-    public function postAjaxpagion() {
-        $tblGroupAdminModel = new tblGroupAdminModel();
-        $arrGroupAdmin = $tblGroupAdminModel->findGroupAdmin('', 10);
-        $link = $arrGroupAdmin->links();
-        return View::make('backend.admin.groupadminAjax')->with('arrGroupAdmin', $arrGroupAdmin)->with('link', $link);
     }
 
     public function postDeleteGroupAdmin() {

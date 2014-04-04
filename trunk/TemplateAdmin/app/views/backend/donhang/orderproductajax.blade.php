@@ -1,27 +1,34 @@
-@foreach($orderdata as $item)
-<tr >
-    <td class="center">{{$item->id}}</td>
-    <td class="center">{{$item->userEmail}}  </td>
-    <td class="center">{{$item->productName}}</td>
-    <td class="center">{{$item->orderAmount}}</td>
-    <td class="center">{{$item->orderTypePay}}</td>
-    <td class="center">{{date('d/m/Y',$item->orderTime)}} </td>
-    <td class="center">{{$item->domain}} </td>
-    <td class="center">{{round($item->diskStore/1024/1024,2).'MB'}} </td>
-    <td class="center">{{date('d/m/Y',$item->orderExp)}} </td>
+<?php $i = 1 ?>
+@foreach($arrOrder as $item)
+<tr>
+    <td class="center">{{$i++}}</td>
+    <td class="center">{{$item->userEmail}}</td>
+    <td class="center">{{$item->userFirstName}}</td>
+    <td class="center">{{$item->userLastName}}  </td> 
+    <td class="center"><a href="{{URL::action('OrderController@getEdit')}}/{{$item->orderCode}}">{{$item->orderCode}}</a></td>
+    <td class="center">{{date('d/m/Y',$item->time)}} </td>
     <td class="center">
         @if($item->status==0)
-        Chờ
+        Chờ xử lý
         @endif
         @if($item->status==1)
-        Đã xong
+        Đã xử lý
         @endif 
         @if($item->status==2)
         Xóa
         @endif
 
     </td>
-    <td class="center"><a href="{{URL::action('OrderController@getEdit')}}/{{$item->id}}" >Chỉnh sửa</a> &nbsp; <a href="javascript: void(0)" onclick="xoasanpham({{$item->id}})">Xóa</a></td>
+    <td class="center">
+        <a href="{{URL::action('OrderController@getEdit')}}/{{$item->orderCode}}" class="btn btn4 btn_orderdetail" title="Chi tiết đơn hàng"></a>
+        &nbsp; 
+        @if($item->status=='0')
+        <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 1)"  title="Đăng bài"> <img src="{{Asset('adminlib/images/icons/active.png')}}" width="35px"></img></a>
+        @endif
+        @if($item->status!='2')
+        <a href="javascript: void(0)" onclick="xoasanpham({{$item->id}})" class="btn btn4 btn_trash" title="Xóa"></a>
+        @endif
+    </td>
 </tr>
 @endforeach
 @if($page!='')

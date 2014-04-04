@@ -136,12 +136,16 @@
             @foreach($objOrder as $item)
             @foreach($arrayStore as $itemStore)
             @if ($itemStore->productID == $item->productID && $itemStore->sizeID == $item->sizeID && $itemStore->colorID == $item->colorID)
-            @if (($itemStore->soluongnhap - $itemStore->soluongban) < $item->amount) $check == TRUE 
+            @if (($itemStore->soluongnhap - $itemStore->soluongban) < $item->amount) <?php $check = TRUE; ?> 
             @endif 
             @endif 
             @endforeach
             @endforeach
-            <input type = "submit" class = "btn" value = "Cập nhật" @if ($check) disabled @endif >
+            @if($check==True) 
+               <a href = "#" class = "stdbtn btn_red">Hết hàng</a>
+            @else
+            <input type = "submit" class = "btn" value = "Cập nhật"  >
+            @endif
                    <a href = "{{URL::action('OrderController@getViewAll')}}" class = "stdbtn">Quay lại</a>
             @else
             <a href = "{{URL::action('OrderController@getViewAll')}}" class = "stdbtn">Quay lại</a>

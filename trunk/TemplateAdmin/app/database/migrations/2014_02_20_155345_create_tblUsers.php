@@ -291,7 +291,7 @@ class CreateTblUsers extends Migration {
         });
         Schema::create('tblGroupRoles', function($table) {
             $table->increments('id');
-            $table->string('groupRolesName');
+            $table->string('grouprolesName');
             $table->string('time');
             $table->integer('status');
         });

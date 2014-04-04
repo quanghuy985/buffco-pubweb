@@ -99,8 +99,13 @@ class AdminController extends BaseController {
             "adminPassword" => "required|min:6"
         );
         if (!Validator::make(Input::all(), $rules)->fails()) {
-            $tblAdminModel->createAdmin(Input::get('adminEmail'), Input::get('adminPassword'), Input::get('adminName'), Input::get('adminRoles'));
-            return Redirect::action('AdminController@getAdminView', array('thongbao' => 'Thêm mới thành công .'));
+            $check = $tblAdminModel->checkAdminExist(Input::get('adminEmail'));
+            if ($check) {
+                return Redirect::action('AdminController@getAdminView', array('thongbao' => 'Tài khoản đã tồn tại!'));
+            } else {
+                $tblAdminModel->createAdmin(Input::get('adminEmail'), md5(sha1(md5(Input::get('adminPassword')))), Input::get('adminName'), Input::get('adminRoles'));
+                return Redirect::action('AdminController@getAdminView', array('thongbao' => 'Thêm mới thành công .'));
+            }
         } else {
 
             return Redirect::action('AdminController@getAdminView', array('thongbao' => 'Thêm mới thất bại .'));
