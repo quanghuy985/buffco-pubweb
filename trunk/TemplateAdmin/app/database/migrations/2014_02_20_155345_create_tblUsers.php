@@ -98,7 +98,6 @@ class CreateTblUsers extends Migration {
         Schema::create('tblColor', function($table) {
             $table->increments('id');
             $table->string('colorName');
-            $table->string('colorValue');
             $table->string('colorCode');
             $table->string('time');
             $table->integer('status');
@@ -119,6 +118,8 @@ class CreateTblUsers extends Migration {
             $table->increments('id');
             $table->string('orderCode');
             $table->integer('userID');
+            $table->string('receiverName');
+            $table->string('orderAddress');
             $table->string('time');
             $table->integer('status');
         });
@@ -127,7 +128,8 @@ class CreateTblUsers extends Migration {
             $table->increments('id');
             $table->string('orderCode');
             $table->integer('productID');
-            $table->string('type');
+            $table->string('sizeID');
+            $table->string('colorID');
             $table->integer('amount');
             $table->decimal('total', 20, 2);
             $table->string('time');
@@ -185,14 +187,14 @@ class CreateTblUsers extends Migration {
         //Luu lai lich su giao dich
         Schema::create('tblHistory', function($table) {
             $table->increments('id');
-            $table->integer('userID');
+            $table->integer('userID'); // = 0 neu userid tu bang tblUser, = 1 neu tu bang tblAdmin
             $table->longtext('historyContent');
             $table->string('time');
             $table->integer('status');
         });
-         Schema::create('tblAdminHistory', function($table) {
+        Schema::create('tblAdminHistory', function($table) {
             $table->increments('id');
-            $table->integer('userID');
+            $table->integer('adminID'); //= 0 neu userid tu bang tblUser, = 1 neu tu bang tblAdmin
             $table->longtext('historyContent');
             $table->string('time');
             $table->integer('status');
