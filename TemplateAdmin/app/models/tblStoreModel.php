@@ -13,13 +13,13 @@ class tblStoreModel extends Eloquent {
     public $timestamps = false;
     public static $rules = array();
 
-    public function addStore($productID, $type, $soluongnhap, $soluongban) {
+    public function addStore($productID, $sizeID, $colorID, $soluongnhap,$status) {
         $this->productID = $productID;
-        $this->type = $type;
+        $this->sizeID = $sizeID;
+        $this->colorID = $colorID;
         $this->soluongnhap = $soluongnhap;
-        $this->soluongban = $soluongban;
         $this->time = time();
-        $this->status = 0;
+        $this->status = $status;
         $result = $this->save();
         return $result;
     }
