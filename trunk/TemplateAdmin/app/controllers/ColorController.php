@@ -31,6 +31,8 @@ class ColorController extends BaseController {
 
     public function postEditColor() {
         $tblColorModel = new tblColorModel();
+        $check = $tblColorModel->editColor(Input::get('idcolor'), Input::get('colorname'), Input::get('colorpicker'), 1);
+        return Redirect::action('ColorController@getAddColor');
     }
 
 }
