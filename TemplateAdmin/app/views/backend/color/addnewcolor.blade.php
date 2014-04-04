@@ -41,7 +41,9 @@
                 <tr>
                     <td>{{$i}}</td>
                     <td>{{$item->colorName}}</td>
-                    <td>{{$item->colorCode}}</td>
+                    <td>{{$item->colorCode}}<span class="colorselector">
+                            <span style="background: {{$item->colorCode}}"></span>
+                        </span></td>
                     <td>{{date('d/m/Y h:i:s',$item->time)}}</td>
                     <td>
                         <a href="{{URL::action("ColorController@getEditColor")}}/{{$item->id}}" class="btn btn4 btn_edit " title="Chỉnh sửa"></a>
@@ -76,7 +78,7 @@
                 </span>
             </p>
             <p class="stdformbutton">
-                <button class="submit radius2" value=" Thêm mới  "> Thêm mới  </button>
+                <button class="submit radius2" value=" Thêm mới  ">@if(isset($coloredit)) Cập nhật @else Thêm mới @endif </button>
                 <input type="reset" class="reset radius2" value="Làm mới">
             </p>
         </form>

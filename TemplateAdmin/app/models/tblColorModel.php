@@ -39,9 +39,9 @@ class tblColorModel extends Eloquent {
         if ($colorCode != '') {
             $arraysql = array_merge($arraysql, array("colorCode" => $colorCode));
         }
-        if ($time != '') {
-            $arraysql = array_merge($arraysql, array("time" => $time));
-        }if ($status != '') {
+
+        $arraysql = array_merge($arraysql, array("time" => time()));
+        if ($status != '') {
             $arraysql = array_merge($arraysql, array("status" => $status));
         }
 
