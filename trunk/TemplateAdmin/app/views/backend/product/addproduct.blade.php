@@ -404,7 +404,9 @@
 
                     </select>      
                     <button type="button"   class="submit radius2" id="addTag">Thêm tag cho danh mục sản phẩm</button>
-                </span>  
+                </span>
+            </p>
+            <p>
                 <label>Tag</label>
                 <span class="formwrapper" id="spanTag" style="overflow: auto;width: 548px; height: 200px;border: 1;BORDER-RIGHT: blue 1px solid;BORDER-TOP: blue 1px solid; BORDER-LEFT: blue 1px solid;BORDER-BOTTOM: blue 1px solid;BACKGROUND-COLOR: White;">
                     <?php
