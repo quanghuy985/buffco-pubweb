@@ -1,7 +1,7 @@
 @extends("templateadmin2.mainfire")
 @section("contentadmin")
 <script>
-     function locdau() {
+    function locdau() {
         var str = (document.getElementById("newstitle").value); // lấy chuỗi dữ liệu nhập vào
         str = str.toLowerCase(); // chuyển chuỗi sang chữ thường để xử lý
         /* tìm kiếm và thay thế tất cả các nguyên âm có dấu sang không dấu*/
@@ -35,20 +35,20 @@
         /* tìm và thay thế các kí tự đặc biệt trong chuỗi sang kí tự - */
         str = str.replace(/-+-/g, "-"); //thay thế 2- thành 1-
         str = str.replace(/^\-+|\-+$/g, ""); //cắt bỏ ký tự - ở đầu và cuối chuỗi
-                var request = jQuery.ajax({
-                    url: "{{URL::action('NewsController@postCheckSlug')}}?slug=" + str,
-                    type: "POST"
-                });
+        var request = jQuery.ajax({
+            url: "{{URL::action('NewsController@postCheckSlug')}}?slug=" + str,
+            type: "POST"
+        });
         request.done(function(msg) {
             if (msg != 1) {
                 document.getElementById("newsSlug").value = str + '-' + msg;
-            return false;
-        }else{
-               document.getElementById("newsSlug").value = str;
-            return false;
-        }
+                return false;
+            } else {
+                document.getElementById("newsSlug").value = str;
+                return false;
+            }
         });
-    }F
+    }
 </script>
 <div class="pageheader notab">
     <h1 class="pagetitle">TIN TỨC</h1>

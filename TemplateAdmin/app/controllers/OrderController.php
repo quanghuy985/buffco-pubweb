@@ -16,7 +16,7 @@ class OrderController extends BaseController {
 
     public function getViewAll($thongbao = '') {
         $tblOderModel = new tblOrderModel();
-        $orderdata = $tblOderModel->getAllOrder(10);
+        $orderdata = $tblOderModel->allOrder(10, 'time');
         $page = $orderdata->links();
         if ($thongbao == '') {
             return View::make('backend.donhang.orderproduct')->with('arrOrder', $orderdata)->with('page', $page);
@@ -47,35 +47,39 @@ class OrderController extends BaseController {
         
     }
 
-    public function postPagin() {
+    public function postAjaxOrder() {
         $tblOderModel = new tblOrderModel();
-        $orderby = Session::get('orderfillter');
-        $orderdata = $tblOderModel->fillterOrder('', 10, $orderby);
+        $orderdata = $tblOderModel->allOrder(10, 'time');
         $page = $orderdata->links();
-        return View::make('backend.orderproductajax')->with('orderdata', $orderdata)->with('page', $page);
+        return View::make('backend.donhang.orderproduct')->with('arrOrder', $orderdata)->with('page', $page);
     }
 
-    public function postFillterOrder() {
-        Session::put('orderfillter', Input::get('oderbyoption1'));
+    public function postAjaxSearchOrder() {
         $tblOderModel = new tblOrderModel();
-        $orderdata = $tblOderModel->fillterOrder('', 10, Input::get('oderbyoption1'));
-        $page = $orderdata->links();
-        return View::make('backend.orderproductajax')->with('orderdata', $orderdata)->with('page', $page);
+        $orderdata = $tblOderModel->searchOrders(10, trim(Input::get('keyword')));
+        $link = $orderdata->links();
+        return View::make('backend.donhang.orderproductajax')->with('arrOrder', $orderdata)->with('page', $link);
     }
 
-    public function postSearchOrder() {
+    public function postAjaxOrderFilter() {
+        $from = strtotime(Input::get('fromtime'));
+        $to = strtotime(Input::get('totime'));
+        $status = Input::get('status');
+        
         $tblOderModel = new tblOrderModel();
-        $orderdata = $tblOderModel->fillterOrder(Input::get('keyword'), 10, '');
-        $page = $orderdata->links();
-        return View::make('backend.orderproductajax')->with('orderdata', $orderdata)->with('page', $page);
+        $arrOrder = $tblOderModel->fillterOrders(10, $from, $to, $status);
+        // var_dump($arrNews);
+        $link = $arrOrder->links();
+        return View::make('backend.donhang.orderproductajax')->with('arrOrder', $arrOrder)->with('page', $link);
     }
 
     public function postDel() {
         $objGsp = new tblOrderModel();
         $data = $objGsp->DeleteOrder(Input::get('id'));
-        $orderdata = $objGsp->allOrder(10);
+        $orderdata = $objGsp->allOrder(10, 'time');
+      
         $page = $orderdata->links();
-        return View::make('backend.orderproductajax')->with('orderdata', $orderdata)->with('page', $page);
+        return View::make('backend.donhang.orderproductajax')->with('arrOrder', $orderdata)->with('page', $page);
     }
 
     public function postUpdateOrder() {

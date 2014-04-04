@@ -72,7 +72,8 @@ class tblNewsModel extends Eloquent {
         $arrNew = DB::table('tblnews')->paginate($per_page);
         return $arrNew;
     }
-     public function getAllNewsList() {
+
+    public function getAllNewsList() {
         $arrNew = DB::table('tblnews')->get();
         return $arrNew;
     }
@@ -83,7 +84,7 @@ class tblNewsModel extends Eloquent {
     }
 
     public function allNews($per_page, $orderby) {
-        $allNews = DB::table('tblNews')->join('tblCateNews', 'tblNews.catenewsID', '=', 'tblCateNews.id')->select('tblNews.id', 'tblCateNews.cateNewsName', 'tblNews.newsName', 'tblNews.newsDescription', 'tblNews.newsKeywords', 'tblNews.newsContent', 'tblNews.newsTag', 'tblNews.newsSlug', 'tblNews.time', 'tblNews.status')->orderBy($orderby, 'desc')->paginate($per_page);
+        $allNews = DB::table('tblNews')->join('tblCateNews', 'tblNews.catenewsID', '=', 'tblCateNews.id')->join('tblAdmin', 'tblNews.adminID', '=', 'tblAdmin.id')->select('tblNews.id', 'tblCateNews.cateNewsName', 'tblNews.newsName', 'tblNews.newsDescription', 'tblNews.newsKeywords', 'tblNews.newsContent', 'tblNews.newsTag', 'tblNews.newsSlug', 'tblNews.time', 'tblNews.status', 'tblAdmin.adminName')->orderBy($orderby, 'desc')->paginate($per_page);
         return $allNews;
     }
 
@@ -99,6 +100,16 @@ class tblNewsModel extends Eloquent {
         } else {
             $arrNews = DB::table('tblNews')->join('tblCateNews', 'tblNews.catenewsID', '=', 'tblCateNews.id')->select('tblNews.*', 'tblCateNews.cateNewsName')->where('tblNews.newsDescription', 'LIKE', '%' . $keyword . '%')->where('tblNews.status', '=', $status)->orderBy($orderby, 'desc')->paginate($per_page);
         }
+        return $arrNews;
+    }
+
+    public function searchNews($per_page, $keyword) {
+        $arrNews = DB::table('tblNews')->join('tblCateNews', 'tblNews.catenewsID', '=', 'tblCateNews.id')->join('tblAdmin', 'tblNews.adminID', '=', 'tblAdmin.id')->select('tblNews.*', 'tblCateNews.cateNewsName', 'tblAdmin.adminName')->orderBy('status')->orderBy('time', 'desc')->where('newsName', 'LIKE', '%' . $keyword . '%')->orWhere('newsDescription', 'LIKE', '%' . $keyword . '%')->orWhere('newsKeywords', 'LIKE', '%' . $keyword . '%')->orWhere('newsContent', 'LIKE', '%' . $keyword . '%')->orWhere('newsTag', 'LIKE', '%' . $keyword . '%')->orWhere('newsSlug', 'LIKE', '%' . $keyword . '%')->orWhere('cateNewsName', 'LIKE', '%' . $keyword . '%')->orWhere('adminName', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
+        return $arrNews;
+    }
+
+    public function fillterNews($per_page, $from, $to, $status) {
+        $arrNews = DB::table('tblNews')->join('tblCateNews', 'tblNews.catenewsID', '=', 'tblCateNews.id')->join('tblAdmin', 'tblNews.adminID', '=', 'tblAdmin.id')->select('tblNews.id', 'tblCateNews.cateNewsName', 'tblNews.newsName', 'tblNews.newsDescription', 'tblNews.newsKeywords', 'tblNews.newsContent', 'tblNews.newsTag', 'tblNews.newsSlug', 'tblNews.time', 'tblNews.status', 'tblAdmin.adminName')->orderBy('tblNews.status')->orderBy('tblNews.time', 'desc')->where('tblNews.status', '=', $status)->whereBetween('tblNews.time', array($from, $to))->paginate($per_page);
         return $arrNews;
     }
 

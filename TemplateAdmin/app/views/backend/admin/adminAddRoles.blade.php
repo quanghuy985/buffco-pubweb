@@ -1,16 +1,7 @@
 @extends("templateadmin2.mainfire")
 @section("contentadmin")
 <script>
-    function phantrang(page) {
-    var request = jQuery.ajax({
-    url: "{{URL::action('GroupAdminController@postAjaxpagion')}}?link=" + page,
-            type: "POST",
-            dataType: "html"
-    });
-            request.done(function(msg) {
-            jQuery('#tableproduct').html(msg);
-            });
-    }
+   
     function xoasanpham(id) {
     jConfirm('Bạn có chắc chắn muốn xóa ?', 'Thông báo', function(r) {
     if (r == true) {
@@ -40,20 +31,7 @@
             return true;
     }
 
-    jQuery(document).ready(function() {
-    jQuery("[name='sdkjfhskjdfhkds']").change(function() {
-    if (jQuery("[name='sdkjfhskjdfhkds']").attr('checked')) {
-    jQuery('#uniform-checkboktest span').addClass('checked');
-    } else {
-    jQuery('#uniform-checkboktest span').removeClass('checked');
-    }
-    var x = this.checked;
-            jQuery('[name="checkboktest"]').each(function() {
-
-    this.checked = x;
-    });
-    });
-    });</script>
+    </script>
 
 <div class="pageheader notab">
     <h1 class="pagetitle">QUẢN LÝ QUYỀN ADMIN</h1>
@@ -71,7 +49,7 @@
                 <p>{{$thongbao}}</p>
             </div>
             @endif
-            <table cellpadding="0" cellspacing="0" border="0" id="table2" class="stdtable stdtablecb">
+            <table  cellpadding="0" cellspacing="0" border="0" class="stdtable" id="dyntable">
                 <colgroup>
                     <col class="con1" style="width: 5%">
                     <col class="con0" style="width: 15%">
@@ -82,12 +60,12 @@
                 </colgroup>
                 <thead>
                     <tr>
-                        <th class="head1">STT</th>
+                        <th class="head1 nosort">STT</th>
                         <th class="head0">Tên Nhóm</th>
                         <th class="head1">Miêu tả</th>
                         <th class="head1">Khởi tạo</th>
                         <th class="head0">Tình trạng</th>
-                        <th class="head1">Chức năng</th>
+                        <th class="head1 nosort">Chức năng</th>
                     </tr>  
                 </thead>
                 <?php $i = 1 ?>
@@ -160,15 +138,11 @@
 
                 &nbsp &nbsp &nbsp<input type="checkbox" name="roles[]" @if(isset($arrGroupAdminRolesExist)) @foreach($arrGroupAdminRolesExist as $itemRolesExist)
                                         @if($itemRolesExist->rolesCode == $itemRoles->rolesCode)checked @endif
-                                        @endforeach @endif id="checkboktest" value="{{$itemRoles->id}}"  >{{$itemRoles->rolesDescription}} 
-
-
-
-
+                                        @endforeach @endif id="checkboktest" value="{{$itemRoles->id}}"  \>{{$itemRoles->rolesDescription}} 
                                         @endif
                                         @endforeach
-                                        <br>
-                @endforeach
+<br>
+                                        @endforeach
             </span>
         </p>
 

@@ -80,8 +80,8 @@
         request.done(function(msg) {
             if (msg != '') {
                 document.getElementById("catenewsSlug").value = str + '-' + msg;
-            return false;
-        }
+                return false;
+            }
         });
     }
 </script>
@@ -96,7 +96,7 @@
     </div>
     <div class="contentwrapper">
         <div class="subcontent">
-            
+
             @if(isset($thongbao))
             <div class="notibar msgalert">
                 <a class="close"></a>
@@ -105,10 +105,9 @@
             @endif
             <table cellpadding="0" cellspacing="0" border="0" id="table2" class="stdtable stdtablecb">
                 <colgroup>
-                    <col class="con1" style="width: 5%">
                     <col class="con0" style="width: 15%">
-                    <col class="con1" style="width: 25%">
-                    <col class="con0" style="width: 5%">
+                    <col class="con1" style="width: 20%">
+                    <col class="con0" style="width: 10%">
                     <col class="con1" style="width: 10%">
                     <col class="con0" style="width: 10%">
                     <col class="con1" style="width: 10%">
@@ -116,7 +115,7 @@
                 </colgroup>
                 <thead>
                     <tr>
-                        <th class="head1">ID</th>
+
                         <th class="head0">Tên danh mục</th>
                         <th class="head1">Miêu tả</th>
                         <th class="head0">Parent</th>
@@ -130,11 +129,9 @@
                 <tbody id="tableproduct">
                     @foreach($arrayCateNews as $item)    
                     <tr> 
-
-                        <td><label value="cateMenuer">{{$item->id }}</label></td> 
-                        <td><label value="cateMenuer">@if($item->catenewsParent !=0) ---- @endif {{str_limit( $item->catenewsName, 30, '...')}}</label></td>
+                        <td>@if($item->catenewsParent ==0) <strong> @endif <label value="cateMenuer">@if($item->catenewsParent !=0) &nbsp;-&nbsp; @endif {{str_limit( $item->catenewsName, 30, '...')}}</label>@if($item->catenewsParent ==0) </strong> @endif</td>
                         <td><label value="cateMenuer">{{str_limit( $item->catenewsDescription, 30, '...')}}</label></td>
-                        <td><label value="cateMenuer">{{str_limit($item->catenewsParent , 30, '...')}}</label></td>
+                        <td><label value="cateMenuer">@if ($item->catenewsParent == 0 ) {{ 'Cha' }} @else {{str_limit($item->catenewsParentName , 30, '...')}} @endif</label></td>
                         <td><label value="cateMenuer">{{str_limit($item->catenewsSlug , 30, '...')}}</label></td> 
                         <td><label value="cateMenuer"><?php echo date('d/m/Y h:i:s', $item->time); ?></label></td> 
                         <td><label value="cateMenuer"><?php
@@ -166,7 +163,7 @@
                     @endforeach
                     @if($link!='')
                     <tr>
-                        <td colspan="9">{{$link}}</td>
+                        <td colspan="7">{{$link}}</td>
                     </tr>
                     @endif
                 </tbody>

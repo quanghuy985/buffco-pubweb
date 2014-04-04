@@ -1,86 +1,96 @@
 @extends("templateadmin2.mainfire")
 @section("contentadmin")
 <script>
+    function phantrang(page) {
+    jQuery("#jGrowl").remove();
+            jQuery.jGrowl("Đang tải dữ liệu ...");
+            var urlpost = "{{URL::action('NewsController@postAjaxNews')}}?page=" + page
+            if (jQuery('#datepicker').val() != '' && jQuery('#datepicker1').val() != '') {
+    urlpost = "{{URL::action('NewsController@postAjaxNewsFilter')}}?fromtime=" + jQuery('#datepicker').val() + "&totime=" + jQuery('#datepicker1').val() + "&status=" + jQuery('#status').val() + "&page=" + page;
+    }
+    if (jQuery('#searchblur').val() != '') {
+    urlpost = "{{URL::action('NewsController@postAjaxSearchNews')}}?keyword=" + jQuery('#searchblur').val() + "&page=" + page;
+    }
+    var request = jQuery.ajax({
+    url: urlpost,
+            type: "POST",
+            dataType: "html"
+    });
+            request.done(function(msg) {
+            jQuery("#jGrowl").remove();
+                    jQuery.jGrowl("Đã tải dữ liệu thành công ...");
+                    jQuery('#tableproduct').html(msg);
+            });
+    }
+    function locdulieu() {
+    jQuery('#searchblur').val("");
+            jQuery("#jGrowl").remove();
+            jQuery.jGrowl("Đang tải dữ liệu ...");
+            var request = jQuery.ajax({
+            url: "{{URL::action('NewsController@postAjaxNewsFilter')}}?fromtime=" + jQuery('#datepicker').val() + "&totime=" + jQuery('#datepicker1').val() + "&status=" + jQuery('#status').val(),
+                    type: "POST",
+                    dataType: "html"
+            });
+            request.done(function(msg) {
+            jQuery("#jGrowl").remove();
+                    jQuery.jGrowl("Đã tải dữ liệu thành công ...");
+                    jQuery('#tableproduct').html(msg);
+            });
+    }
+    function timkiem() {
+    jQuery('#datepicker').val('')
+            jQuery('#datepicker1').val('')
+            jQuery("#jGrowl").remove();
+            jQuery.jGrowl("Đang tải dữ liệu ...");
+            var request = jQuery.ajax({
+            url: "{{URL::action('NewsController@postAjaxSearchNews')}}?keyword=" + jQuery('#searchblur').val(),
+                    type: "POST",
+                    dataType: "html"
+            });
+            request.done(function(msg) {
+            jQuery("#jGrowl").remove();
+                    jQuery.jGrowl("Đã tải dữ liệu thành công ...");
+                    jQuery('#tableproduct').html(msg);
+            });
+    }
     jQuery(document).ready(function() {
 
-    jQuery('.deletepromulti').click(function() {
-    var addon = '';
-            av = document.getElementsByName("checkboxidfile");
-            for (e = 0; e < av.length; e++) {
-    if (av[e].checked == true) {
-    addon += av[e].value + ',';
-    }
-    }
-    if (addon != '') {
-    jConfirm('Bạn có chắc chắn muốn xóa ?', 'Thông báo', function(r) {
-    if (r == true) {
-    jQuery.post("{{URL::action('NewsController@postDelmulte')}}", {multiid: addon}).done(function(data) {
-    window.location = '{{URL::action('NewsController@getNewsView')}}';
-    });
-            return false;
-    } else {
-    return false;
-    }
-    });
-    } else {
-    jAlert('Bạn chưa chọn giá trị', 'Thông báo');
-    }
-    });
-            jQuery('#searchblur').keypress(function(e) {
-    // Enter pressed?
+    jQuery('#searchblur').keypress(function(e) {
     if (e.which == 10 || e.which == 13) {
-    var request = jQuery.ajax({
-    url: "{{URL::action('NewsController@postAjaxsearch')}}?keywordsearch=" + jQuery('#searchblur').val(),
-            type: "POST",
-            dataType: "html"
-    });
+    jQuery('#datepicker').val('')
+            jQuery('#datepicker1').val('')
+            jQuery("#jGrowl").remove();
+            jQuery.jGrowl("Đang tải dữ liệu ...");
+            var request = jQuery.ajax({
+            url: "{{URL::action('NewsController@postAjaxSearchNews')}}?keyword=" + jQuery('#searchblur').val(),
+                    type: "POST",
+                    dataType: "html"
+            });
             request.done(function(msg) {
-            jQuery('#tableproduct').html(msg);
+            jQuery("#jGrowl").remove();
+                    jQuery.jGrowl("Đã tải dữ liệu thành công ...");
+                    jQuery('#tableproduct').html(msg);
             });
     }
     });
-            jQuery("#fillterfunction").click(function() {
-    alert(jQuery('#oderbyoption').val());
     });
-            jQuery("#loctheotieuchi").click(function() {
-    var request = jQuery.ajax({
-    url: "{{URL::action('NewsController@postFillterNews')}}",
-            data: {selectoptionnum: jQuery('#selectoptionnum').val(), oderbyoption: jQuery('#oderbyoption').val(), oderbyoption1: jQuery('#oderbyoption1').val()},
-            type: "POST",
-            dataType: "html"
-    });
-            request.done(function(msg) {
-            jQuery('#tableproduct').html(msg);
-            });
-    });
-    });
-            function phantrang(page) {
+            function xoasanpham(id) {
+            jConfirm('Bạn có chắc chắn muốn xóa ?', 'Thông báo', function(r) {
+            if (r == true) {
             var request = jQuery.ajax({
-            url: "{{URL::action('NewsController@postAjaxpagion')}}?link=" + page,
+            url: "{{URL::action('NewsController@postDeleteNews')}}?id=" + id,
                     type: "POST",
                     dataType: "html"
             });
                     request.done(function(msg) {
                     jQuery('#tableproduct').html(msg);
                     });
-            }
-    function xoasanpham(id) {
-    jConfirm('Bạn có chắc chắn muốn xóa ?', 'Thông báo', function(r) {
-    if (r == true) {
-    var request = jQuery.ajax({
-    url: "{{URL::action('NewsController@postDeleteNews')}}?id=" + id,
-            type: "POST",
-            dataType: "html"
-    });
-            request.done(function(msg) {
-            jQuery('#tableproduct').html(msg);
-            });
+                    return false;
+            } else {
             return false;
-    } else {
-    return false;
-    }
-    })
-    }
+            }
+            })
+            }
     function kichhoat(id, stus) {
     var request = jQuery.ajax({
     url: "{{URL::action('NewsController@postNewsActive')}}?id=" + id + '&status=' + stus,
@@ -109,45 +119,52 @@
         </div>
 
         <div class="tableoptions">
-            <button class="deletepromulti" title="table1">Xóa đã chọn</button> &nbsp;
-            <select class="radius3" name="oderbyoption1" id="oderbyoption1">
-                <option value="">Tất cả</option>
-                <option value="0">Chờ đăng</option>
-                <option value="1">Đã đăng</option>
-                <option value="2">Xóa</option>
-            </select>&nbsp;
-            <button class="radius3" id="loctheotieuchi">Lọc theo tiêu chí</button>
-            <div class="dataTables_filter" id="searchformfile"><label>Search: <input id="searchblur" name="searchblur" style="border: 1px solid #ddd;padding: 7px 5px 8px 5px;width: 200px;background: #fff;" type="text"></label></div>
-        </div>
+            <form class="stdform stdform2" action="javascript:void(0)" method="post">
+                Từ : <input id="datepicker" name="timeform" type="text" class="longinput" /> 
+                &nbsp;   Đến : <input id="datepicker1"  name="timeto" type="text" class="datepicker"  /> 
+                &nbsp; <select name="status" id="status">
+                    <option value="0">Chờ đăng</option>
+                    <option value="1">Đã đăng</option>
+                    <option value="2">Đã xóa</option>
+                </select>
+                &nbsp; &nbsp; <button class="radius3" id="loctheotieuchi" onclick="locdulieu()">Lọc dữ liệu</button>
+
+            </form>
+            <div class="dataTables_filter1" id="searchformfile">
+                <label>Search: 
+                    <input class="longinput" id="searchblur"  name="searchblur" style="-moz-border-radius: 2px;-webkit-border-radius: 2px;border-radius: 2px;border: 1px solid #ddd;padding: 7px 5px 8px 5px;width: 200px;background: #fcfcfc;color: #666;-moz-box-shadow: inset 0 1px 3px #ddd;-webkit-box-shadow: inset 0 1px 3px #ddd;box-shadow: inset 0 1px 3px #ddd;" type="text"><a href="javascript:void(0)" class="btn btn4 btn_search" onclick="timkiem()" style=" float: right;    height: 30px;   margin-left: 10px;"></a>
+                </label>
+            </div>
+        </div> 
         <table cellpadding="0" cellspacing="0" border="0" id="table2" class="stdtable stdtablecb">
             <colgroup>
-                <col class="con0" style="width: 3%">
-                <col class="con1" style="width: 20%">
-                <col class="con0" style="width: 14%">
-                <col class="con1" style="width: 20%">
+                <col class="con1" style="width: 15%">
+                <col class="con0" style="width: 15%">
+                <col class="con1" style="width: 15%">
+                <col class="con0" style="width: 15%">
                 <col class="con0" style="width: 15%">
                 <col class="con1" style="width: 10%">
                 <col class="con0" style="width: 15%">
             </colgroup>
             <thead>
                 <tr>
-                    <th class="head0"><input type="checkbox" class="checkall" name="checkall" ></th> 
                     <th class="head1">Tiêu đề</th>
                     <th class="head0">Nhóm tin tức</th>
                     <th class="head1">Miêu tả</th>
                     <th class="head0">Khởi tạo</th>
-                    <th class="head1">Tình trạng</th>
-                    <th class="head0">Chức năng</th>
+                    <th class="head1">Tác giả</th>
+                    <th class="head0">Tình trạng</th>
+                    <th class="head1">Chức năng</th>
                 </tr>  
             </thead>
 
             <tbody id="tableproduct">
                 @foreach($arrayNews as $item)
                 <tr> 
-                    <td><input name="checkboxidfile" type="checkbox" value="{{$item->id}}"></td> 
                     <td><label value="cateNews">{{str_limit( $item->newsName, 30, '...')}}</label></td> 
                     <td><label value="cateNews">{{$item->cateNewsName }}</label></td> 
-                    <td><label value="cateNews">{{str_limit($item->newsDescription, 30, '...')}} </label></td> 
+                    <td><label value="cateNews">{{str_limit($item->newsDescription, 30, '...')}} </label></td>
+                    <td><label value="cateNews">{{str_limit($item->adminName, 30, '...')}} </label></td> 
                     <td><label value="cateNews"><?php echo date('d/m/Y h:i:s', $item->time); ?></label></td> 
                     <td><label value="cateNews"><?php
                             if ($item->status == 0) {

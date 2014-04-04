@@ -89,4 +89,30 @@ class tblOrderModel extends Eloquent {
         }
     }
 
+    public function allOrder($per_page, $orderby) {
+        $arrOrder = DB::table('tblOrder')->join('tblUsers', 'tblOrder.userID', '=', 'tblUsers.id')->select('tblOrder.*', 'tblusers.userEmail', 'tblusers.userFirstName', 'tblusers.userLastName')->where('tblOrder.status', '=', '0')->orderBy($orderby, 'desc')->paginate($per_page);
+        return $arrOrder;
+    }
+
+    public function searchOrders($per_page, $keyword) {
+        $arrOrder = DB::table('tblOrder')->join('tblUsers', 'tblOrder.userID', '=', 'tblUsers.id')->select('tblOrder.*', 'tblusers.userEmail', 'tblusers.userFirstName', 'tblusers.userLastName')->orderBy('status')->orderBy('time', 'desc')->where('tblOrder.orderCode', 'LIKE', '%' . $keyword . '%')->orWhere('tblusers.userEmail', 'LIKE', '%' . $keyword . '%')->orWhere('tblusers.userFirstName', 'LIKE', '%' . $keyword . '%')->orWhere('tblusers.userLastName', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
+        return $arrOrder;
+    }
+
+    public function fillterOrders($per_page, $from, $to, $status) {
+        if ($status == 3 && $from != '' && $to != '') {
+            $arrOrder = DB::table('tblOrder')->join('tblUsers', 'tblOrder.userID', '=', 'tblUsers.id')->select('tblOrder.*', 'tblusers.userEmail', 'tblusers.userFirstName', 'tblusers.userLastName')->orderBy('status')->orderBy('time', 'desc')->whereBetween('tblOrder.time', array($from, $to))->paginate($per_page);
+        } else {
+            $arrOrder = DB::table('tblOrder')->join('tblUsers', 'tblOrder.userID', '=', 'tblUsers.id')->select('tblOrder.*', 'tblusers.userEmail', 'tblusers.userFirstName', 'tblusers.userLastName')->orderBy('status')->orderBy('time', 'desc')->where('tblOrder.status', '=', $status)->whereBetween('tblOrder.time', array($from, $to))->paginate($per_page);
+        }
+        if ($from == '' || $to == '') {
+            if ($status == 3) {
+                $arrOrder = DB::table('tblOrder')->join('tblUsers', 'tblOrder.userID', '=', 'tblUsers.id')->select('tblOrder.*', 'tblusers.userEmail', 'tblusers.userFirstName', 'tblusers.userLastName')->orderBy('status')->orderBy('time', 'desc')->paginate($per_page);
+            } else {
+                $arrOrder = DB::table('tblOrder')->join('tblUsers', 'tblOrder.userID', '=', 'tblUsers.id')->select('tblOrder.*', 'tblusers.userEmail', 'tblusers.userFirstName', 'tblusers.userLastName')->orderBy('status')->orderBy('time', 'desc')->where('tblOrder.status', '=', $status)->paginate($per_page);
+            }
+        }
+        return $arrOrder;
+    }
+
 }

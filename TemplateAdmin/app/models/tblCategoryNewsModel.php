@@ -84,9 +84,9 @@ class tblCategoryNewsModel extends Eloquent {
     }
 
     public function getAllCategoryNew($start, $per_page) {
-        $results = DB::select("select a.catenewsName as N1,a.catenewsName as catenewsName,a.catenewsDescription as catenewsDescription,a.catenewsParent as catenewsParent,a.id as id,a.catenewsSlug as catenewsSlug,a.time as time,a.status as status FROM `tblcatenews` as a where a.catenewsParent=0
+        $results = DB::select("select a.catenewsName as N1,a.catenewsName as catenewsName,a.catenewsDescription as catenewsDescription,a.catenewsParent as catenewsParent,a.catenewsName as catenewsParentName,a.id as id,a.catenewsSlug as catenewsSlug,a.time as time,a.status as status FROM `tblcatenews` as a where a.catenewsParent=0
         UNION ALL
-        select a.catenewsName as N1,b.catenewsName as catenewsName,b.catenewsDescription as catenewsDescription,b.catenewsParent as catenewsParent,b.id as id,b.catenewsSlug as catenewsSlug ,b.time as time,b.status as status  FROM `tblcatenews` as a INNER JOIN `tblcatenews` as b On a.id = b.catenewsParent
+        select a.catenewsName as N1,b.catenewsName as catenewsName,b.catenewsDescription as catenewsDescription,b.catenewsParent as catenewsParent,a.catenewsName as catenewsParentName,b.id as id,b.catenewsSlug as catenewsSlug ,b.time as time,b.status as status  FROM `tblcatenews` as a INNER JOIN `tblcatenews` as b On a.id = b.catenewsParent
         ORDER BY N1,catenewsParent
         LIMIT ?,?", array($start, $per_page));
         return $results;

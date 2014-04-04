@@ -55,7 +55,7 @@ class NewsController extends Controller {
     public function postDeleteNews() {
         $tblNewsModel = new tblNewsModel();
         $tblNewsModel->deleteNews(Input::get('id'));
-        $NewsData = $tblNewsModel->allNews(10,'id');
+        $NewsData = $tblNewsModel->allNews(15, 'id');
         $link = $NewsData->links();
         return View::make('backend.tintuc.newsAjax')->with('arrayNews', $NewsData)->with('link', $link);
     }
@@ -63,7 +63,7 @@ class NewsController extends Controller {
     public function postNewsActive() {
         $tblNewsModel = new tblNewsModel();
         $tblNewsModel->updateNew(Input::get('id'), '', '', '', '', '', '', '', '', Input::get('status'));
-        $arrNews = $tblNewsModel->allNews(10, 'id');
+        $arrNews = $tblNewsModel->allNews(15, 'id');
         $link = $arrNews->links();
         return View::make('backend.tintuc.newsAjax')->with('arrayNews', $arrNews)->with('link', $link);
     }
@@ -146,76 +146,88 @@ class NewsController extends Controller {
         }
     }
 
-    public function postDelmulte() {
-        if (Session::has('adminSession')) {
-            $objAdmin = Session::get('adminSession');
-            $groupAdminID = $objAdmin[0]->groupadminID;
-            $tblPhanQuyenModel = new tblPhanQuyenModel();
-            $arrRolesCode = $tblPhanQuyenModel->getRolesCodeByGroupAdmin($groupAdminID);
-            if (strpos(serialize($arrRolesCode), 'Go-Bai') != FALSE) {
-                $pieces1 = explode(",", Input::get('multiid'));
-                foreach ($pieces1 as $item) {
-                    if ($item != '') {
-                        $tblNewsModel = new tblNewsModel();
-                        $tblNewsModel->deleteNews($item);
-                    }
-                }
-                $tblNewsModel = new tblNewsModel();
-                $arrNews = $tblNewsModel->FindNews('', 10, 'id', '');
-                $link = $arrNews->links();
-                return View::make('backend.tintuc.newsManage')->with('arrayNews', $arrNews)->with('link', $link);
-            } else {
-                echo 'Bạn không có quyền xóa bài viết';
-            }
-        } else {
-            echo 'Cho trang đăng nhập vào đây';
-        }
-    }
-
-    public function postAjaxsearch() {
+//    public function postDelmulte() {
+//        if (Session::has('adminSession')) {
+//            $objAdmin = Session::get('adminSession');
+//            $groupAdminID = $objAdmin[0]->groupadminID;
+//            $tblPhanQuyenModel = new tblPhanQuyenModel();
+//            $arrRolesCode = $tblPhanQuyenModel->getRolesCodeByGroupAdmin($groupAdminID);
+//            if (strpos(serialize($arrRolesCode), 'Go-Bai') != FALSE) {
+//                $pieces1 = explode(",", Input::get('multiid'));
+//                foreach ($pieces1 as $item) {
+//                    if ($item != '') {
+//                        $tblNewsModel = new tblNewsModel();
+//                        $tblNewsModel->deleteNews($item);
+//                    }
+//                }
+//                $tblNewsModel = new tblNewsModel();
+//                $arrNews = $tblNewsModel->FindNews('', 10, 'id', '');
+//                $link = $arrNews->links();
+//                return View::make('backend.tintuc.newsManage')->with('arrayNews', $arrNews)->with('link', $link);
+//            } else {
+//                echo 'Bạn không có quyền xóa bài viết';
+//            }
+//        } else {
+//            echo 'Cho trang đăng nhập vào đây';
+//        }
+//    }
+//    public function postAjaxsearch() {
+//        $tblNewsModel = new tblNewsModel();
+//        if (Session::has('oderbyoption1')) {
+//            $tatus = Session::get('oderbyoption1');
+//            $arrNews = $tblNewsModel->FindNews(Input::get('keywordsearch'), 10, 'id', $tatus[0]);
+//        } else {
+//            $arrNews = $tblNewsModel->FindNews(Input::get('keywordsearch'), 10, 'id', '');
+//        }
+//        $link = $arrNews->links();
+//        Session::forget('keywordsearch');
+//        Session::push('keywordsearch', Input::get('keywordsearch'));
+//        return View::make('backend.tintuc.newsAjax')->with('arrayNews', $arrNews)->with('link', $link);
+//    }
+//
+//    public function postFillterNews() {
+//        $tblNewsModel = new tblNewsModel();
+//        $arrNews = $tblNewsModel->FindNews('', 10, 'id', Input::get('oderbyoption1'));
+//        $link = $arrNews->links();
+//        Session::forget('oderbyoption1');
+//        Session::push('oderbyoption1', Input::get('oderbyoption1'));
+//        return View::make('backend.tintuc.newsAjax')->with('arrayNews', $arrNews)->with('link', $link);
+//    }
+//
+//    public function postAjaxpagion() {
+//        if (Session::has('keywordsearch') && Input::get('link') != '') {
+//            $keyw = Session::get('keywordsearch');
+//            $tblNewsModel = new tblNewsModel();
+//            $arrNews = '';
+//            if (Session::has('oderbyoption1')) {
+//                $tatus = Session::get('oderbyoption1');
+//                $arrNews = $tblNewsModel->FindNews($keyw[0], 10, 'id', $tatus[0]);
+//            } else {
+//                $arrNews = $tblNewsModel->FindNews($keyw[0], 10, 'id', '');
+//            }
+//            $link = $arrNews->links();
+//            return View::make('backend.tintuc.newsAjax')->with('arrayNews', $arrNews)->with('link', $link);
+//        } else {
+//            Session::forget('keywordsearch');
+//            $tblNewsModel = new tblNewsModel();
+//            $tatus = Session::get('oderbyoption1');
+//            $arrNews = $tblNewsModel->FindNews('', 10, 'id', $tatus[0]);
+//            $link = $arrNews->links();
+//            return View::make('backend.tintuc.newsAjax')->with('arrayNews', $arrNews)->with('link', $link);
+//        }
+//    }
+    public function postAjaxNews() {
         $tblNewsModel = new tblNewsModel();
-        if (Session::has('oderbyoption1')) {
-            $tatus = Session::get('oderbyoption1');
-            $arrNews = $tblNewsModel->FindNews(Input::get('keywordsearch'), 10, 'id', $tatus[0]);
-        } else {
-            $arrNews = $tblNewsModel->FindNews(Input::get('keywordsearch'), 10, 'id', '');
-        }
+        $arrNews = $tblNewsModel->allNews(15, 'time');
         $link = $arrNews->links();
-        Session::forget('keywordsearch');
-        Session::push('keywordsearch', Input::get('keywordsearch'));
         return View::make('backend.tintuc.newsAjax')->with('arrayNews', $arrNews)->with('link', $link);
     }
 
-    public function postFillterNews() {
+    public function postAjaxSearchNews() {
         $tblNewsModel = new tblNewsModel();
-        $arrNews = $tblNewsModel->FindNews('', 10, 'id', Input::get('oderbyoption1'));
+        $arrNews = $tblNewsModel->searchNews(15, trim(Input::get('keyword')));
         $link = $arrNews->links();
-        Session::forget('oderbyoption1');
-        Session::push('oderbyoption1', Input::get('oderbyoption1'));
         return View::make('backend.tintuc.newsAjax')->with('arrayNews', $arrNews)->with('link', $link);
-    }
-
-    public function postAjaxpagion() {
-        if (Session::has('keywordsearch') && Input::get('link') != '') {
-            $keyw = Session::get('keywordsearch');
-            $tblNewsModel = new tblNewsModel();
-            $arrNews = '';
-            if (Session::has('oderbyoption1')) {
-                $tatus = Session::get('oderbyoption1');
-                $arrNews = $tblNewsModel->FindNews($keyw[0], 10, 'id', $tatus[0]);
-            } else {
-                $arrNews = $tblNewsModel->FindNews($keyw[0], 10, 'id', '');
-            }
-            $link = $arrNews->links();
-            return View::make('backend.tintuc.newsAjax')->with('arrayNews', $arrNews)->with('link', $link);
-        } else {
-            Session::forget('keywordsearch');
-            $tblNewsModel = new tblNewsModel();
-            $tatus = Session::get('oderbyoption1');
-            $arrNews = $tblNewsModel->FindNews('', 10, 'id', $tatus[0]);
-            $link = $arrNews->links();
-            return View::make('backend.tintuc.newsAjax')->with('arrayNews', $arrNews)->with('link', $link);
-        }
     }
 
     public function postCheckSlug() {
@@ -228,6 +240,17 @@ class NewsController extends Controller {
             }
         }
         return $count + 1;
+    }
+
+    public function postAjaxNewsFilter() {
+        $from = strtotime(Input::get('fromtime'));
+        $to = strtotime(Input::get('totime'));
+        $status = Input::get('status');
+        $tblNewsModel = new tblNewsModel();
+        $arrNews = $tblNewsModel->fillterNews(1, $from, $to, $status);
+        // var_dump($arrNews);
+        $link = $arrNews->links();
+        return View::make('backend.tintuc.newsAjax')->with('arrayNews', $arrNews)->with('link', $link);
     }
 
 }
