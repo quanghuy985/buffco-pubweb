@@ -12,7 +12,6 @@ class ColorController extends BaseController {
         $tblColorModel = new tblColorModel();
         $arrColor = $tblColorModel->selectAll();
         return View::make('backend.color.addnewcolor')->with('datacolor', $arrColor);
-        
     }
 
     public function postAddColor() {
@@ -21,6 +20,17 @@ class ColorController extends BaseController {
         $tblColorModel = new tblColorModel();
         $arrColor = $tblColorModel->selectAll(10);
         return Redirect::action('ColorController@getAddColor');
+    }
+
+    public function getEditColor($id) {
+        $tblColorModel = new tblColorModel();
+        $editColor = $tblColorModel->selectColorbyId($id);
+        $arrColor = $tblColorModel->selectAll();
+        return View::make('backend.color.addnewcolor')->with('datacolor', $arrColor)->with('coloredit', $editColor[0]);
+    }
+
+    public function postEditColor() {
+        $tblColorModel = new tblColorModel();
     }
 
 }

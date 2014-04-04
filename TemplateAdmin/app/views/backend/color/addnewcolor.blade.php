@@ -12,10 +12,10 @@
         <table cellpadding="0" cellspacing="0" border="0" class="stdtable" id="dyntable">
             <colgroup>
                 <col class="con0" style="width: 3%">
-                <col class="con1" style="width: 24%">
-                <col class="con0" style="width: 24%">
-                <col class="con1" style="width: 24%">
-                <col class="con0" style="width: 25%">
+                <col class="con1" style="width: 30%">
+                <col class="con0" style="width: 30%">
+                <col class="con1" style="width: 27%">
+                <col class="con0" style="width: 10%">
             </colgroup>
             <thead>
                 <tr>
@@ -42,8 +42,12 @@
                     <td>{{$i}}</td>
                     <td>{{$item->colorName}}</td>
                     <td>{{$item->colorCode}}</td>
-                    <td>{{$item->time}}</td>
-                    <td>A</td>
+                    <td>{{date('d/m/Y h:i:s',$item->time)}}</td>
+                    <td>
+                        <a href="{{URL::action("ColorController@getEditColor")}}/{{$item->id}}" class="btn btn4 btn_edit " title="Chỉnh sửa"></a>
+
+                        <a href="javascript:void(0)" onclick="xoasanpham(5)" class="btn btn4 btn_trash" title="Xóa"></a>
+                    </td>
                 </tr>
                 <?php $i ++; ?>
                 @endforeach
@@ -52,32 +56,23 @@
 
 
         <div class="contenttitle2">
-            <h3>Thêm mới</h3>
+            <h3>@if(isset($coloredit)) Chỉnh sửa @else Thêm mới @endif</h3>
         </div>
-        <form class="stdform stdform2" method="post" action="{{URL::action("ColorController@postAddColor")}}">
+        <form class="stdform stdform2" method="post" action="@if(isset($coloredit)){{URL::action("ColorController@postEditColor")}}@else{{URL::action("ColorController@postAddColor")}}@endif">
 
             <p>
+                <input type="hidden" value="@if(isset($coloredit)){{$coloredit->id}}@endif" name="idcolor"/>
                 <label>Tên màu</label>
                 <span class="field">
-                    <input type="text" name="colorname" id="colorname" placeholder="Nhập tên màu" value="" class="longinput"></span>
+                    <input type="text" name="colorname" id="colorname" placeholder="Nhập tên màu" value="@if(isset($coloredit)){{$coloredit->colorName}}@endif" class="longinput"></span>
             </p>
             <p>
                 <label>Mã màu</label>
                 <span class="field">
-                    <input type="text" name="colorpicker" class="width100" id="colorpicker">
+                    <input type="text" name="colorpicker" class="width100" id="colorpicker" value="@if(isset($coloredit)){{$coloredit->colorCode}}@endif">
                     <span id="colorSelector" class="colorselector">
-                        <span></span>
+                        <span style="background: @if(isset($coloredit)){{$coloredit->colorCode}}@endif;"></span>
                     </span>
-                </span>
-            </p>
-            <p>
-                <label>Trạng thái</label>
-                <span class="field">
-                    <select name="status">
-                        <option value="0">Chờ kích hoạt</option>
-                        <option value="1">Kích hoạt</option>
-                        <option value="2">Xóa</option>
-                    </select>
                 </span>
             </p>
             <p class="stdformbutton">
