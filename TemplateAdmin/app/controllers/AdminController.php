@@ -13,6 +13,58 @@ class AdminController extends BaseController {
      *
      * @return void
      */
+    
+    public function getLogOut(){
+        Session::remove('adminSession');
+        return View::make('templateadmin2.loginfire');
+    }
+    
+    public function getHistoryAdmin(){
+        if(Session::has('adminSession')){
+            $objadmin = Session::get('adminSession');
+            //var_dump($objadmin);
+            $id = $objadmin[0]->id;
+            //echo $id;
+            $tblAdminModel = new tblAdminModel();
+            $data = $tblAdminModel->selectHistoryAdmin($id,10);
+            //echo $data[0]->historyContent;
+            //var_dump($data);
+            $link = $data->links();
+            return View::make('backend.admin.adminHistory')->with('arrHistory',$data)->with('link',$link);
+        }else{
+            return View::make('fontend.404')->with('thongbao','Ko co lich su');
+        }
+    }
+    
+    
+    public function getProfileAdmin(){
+        if(Session::has('adminSession')){
+            $objadmin = Session::get('adminSession');
+            //var_dump($objadmin);
+            $email = $objadmin[0]->adminEmail;
+            $tblAdminModel = new tblAdminModel();
+            $data = $tblAdminModel->findAdminByEmail($email);
+            return View::make('backend.admin.adminEditProfile')->with('dataProfile',$data);
+        }else{
+            return View::make('backend.admin.adminManage')->with('thongbao', 'Co loi xay ra');
+        }
+    }
+    
+    public function postProfileAdmin(){
+        $tblAdminModel = new tblAdminModel();
+        $rules = array(            
+            "adminName" => "required"
+        );
+        if (!Validator::make(Input::all(), $rules)->fails()) {
+            
+            $tblAdminModel->updateAdmin(Input::get('adminEmail'), Input::get('adminPassword'), Input::get('adminName'), '', '');
+            return Redirect::action('AdminController@getHomeAdmin', array('thongbao' => 'Cập nhật thành công .'));
+        } else {
+            return Redirect::action('AdminController@getHomeAdmin', array('thongbao' => 'Cập nhật thất bại .'));
+        }
+    }
+    
+    
     public function getDangNhap() {
         if (Session::has('adminSession')) {
             return Redirect::action('AdminController@getHomeAdmin');
@@ -99,6 +151,10 @@ class AdminController extends BaseController {
             "adminPassword" => "required|min:6"
         );
         if (!Validator::make(Input::all(), $rules)->fails()) {
+
+            $tblAdminModel->createAdmin(Input::get('adminEmail'),  md5(sha1(md5(Input::get('adminPassword')))) , Input::get('adminName'), Input::get('adminRoles'));
+            return Redirect::action('AdminController@getAdminView', array('thongbao' => 'Thêm mới thành công .'));
+
             $check = $tblAdminModel->checkAdminExist(Input::get('adminEmail'));
             if ($check) {
                 return Redirect::action('AdminController@getAdminView', array('thongbao' => 'Tài khoản đã tồn tại!'));
@@ -106,6 +162,7 @@ class AdminController extends BaseController {
                 $tblAdminModel->createAdmin(Input::get('adminEmail'), md5(sha1(md5(Input::get('adminPassword')))), Input::get('adminName'), Input::get('adminRoles'));
                 return Redirect::action('AdminController@getAdminView', array('thongbao' => 'Thêm mới thành công .'));
             }
+
         } else {
 
             return Redirect::action('AdminController@getAdminView', array('thongbao' => 'Thêm mới thất bại .'));
