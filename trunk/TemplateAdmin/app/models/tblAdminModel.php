@@ -44,6 +44,17 @@ class tblAdminModel extends Eloquent {
             return FALSE;
         }
     }
+    
+    public function selectHistoryAdmin($id,$perPage){
+        $objAdmin = DB::table('tbladmin')->join('tbladminhistory','tbladmin.id','=','tbladminhistory.userID')->select('tbladminhistory.id','tbladminhistory.historyContent','tbladminhistory.time','tbladmin.adminEmail','tbladmin.adminName')->where('tbladmin.id','=',$id)->paginate($perPage);
+        return $objAdmin;
+    }
+    
+    public function findAdminByEmail($email){
+        $objadmin = DB::table('tbladmin')->where('tbladmin.adminEmail','=',$email)->get();
+        return $objadmin[0];
+    }
+    
 
     public function findAdminByAdminEmail($adminEmail) {
         $objAdmin = DB::table('tblAdmin')->join('tblGroupAdmin', 'tblAdmin.groupadminID', '=', 'tblGroupAdmin.id')->select('tblAdmin.*', 'tblGroupAdmin.groupadminName')->where('adminEmail', '=', $adminEmail)->get();
