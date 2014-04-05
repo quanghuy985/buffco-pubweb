@@ -1,7 +1,7 @@
 @extends("templateadmin2.mainfire")
 @section("contentadmin")
 <script>
-   
+
     function xoasanpham(id) {
     jConfirm('Bạn có chắc chắn muốn xóa ?', 'Thông báo', function(r) {
     if (r == true) {
@@ -31,7 +31,7 @@
             return true;
     }
 
-    </script>
+</script>
 
 <div class="pageheader notab">
     <h1 class="pagetitle">QUẢN LÝ QUYỀN ADMIN</h1>
@@ -130,19 +130,12 @@
         <p>
             <label>Quyền nhóm</label>
             <span class="field">
-                @foreach($arrGroupRoles as $itemGroupRoles)
-                <strong>{{$itemGroupRoles->grouprolesName}}</strong>
-                <br>
                 @foreach($arrRoles as $itemRoles)
-                @if($itemRoles->grouprolesID==$itemGroupRoles->id)
-
-                &nbsp &nbsp &nbsp<input type="checkbox" name="roles[]" @if(isset($arrGroupAdminRolesExist)) @foreach($arrGroupAdminRolesExist as $itemRolesExist)
+                &nbsp &nbsp &nbsp<input style="float: left;width: 100px;" type="checkbox" name="roles[]" @if(isset($arrGroupAdminRolesExist)) @foreach($arrGroupAdminRolesExist as $itemRolesExist)
                                         @if($itemRolesExist->rolesCode == $itemRoles->rolesCode)checked @endif
-                                        @endforeach @endif id="checkboktest" value="{{$itemRoles->id}}"  \>{{$itemRoles->rolesDescription}} 
-                                        @endif
-                                        @endforeach
-<br>
-                                        @endforeach
+                                        @endforeach @endif id="checkboktest" value="{{$itemRoles->id}}"  \>{{$itemRoles->rolesDescription}}
+                @endforeach
+                <br>
             </span>
         </p>
 

@@ -279,13 +279,6 @@ class CreateTblUsers extends Migration {
             $table->increments('id');
             $table->string('rolesCode');
             $table->longtext('rolesDescription');
-            $table->string('groupRolesID');
-            $table->string('time');
-            $table->integer('status');
-        });
-        Schema::create('tblGroupRoles', function($table) {
-            $table->increments('id');
-            $table->string('grouprolesName');
             $table->string('time');
             $table->integer('status');
         });

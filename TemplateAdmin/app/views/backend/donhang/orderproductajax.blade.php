@@ -25,7 +25,7 @@
         @if($item->status=='0')
         <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 1)"  title="Đăng bài"> <img src="{{Asset('adminlib/images/icons/active.png')}}" width="35px"></img></a>
         @endif
-        @if($item->status!='2')
+       @if($item->status !='2' && $item->status != '1' )
         <a href="javascript: void(0)" onclick="xoasanpham({{$item->id}})" class="btn btn4 btn_trash" title="Xóa"></a>
         @endif
     </td>

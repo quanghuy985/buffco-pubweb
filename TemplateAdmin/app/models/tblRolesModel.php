@@ -53,7 +53,7 @@ class tblRolesModel extends Eloquent {
     }
 
     public function allRolesList() {
-        $arrRoles = DB::table('tblRoles')->join('tblGroupRoles', 'tblRoles.groupRolesID', '=', 'tblGroupRoles.id')->select('tblRoles.*', 'tblGroupRoles.groupRolesName')->orderBy('tblGroupRoles.id')->where('tblRoles.status', '=', 1)->get();
+        $arrRoles = DB::table('tblRoles')->select('tblRoles.*')->where('tblRoles.status', '=', 1)->get();
         return $arrRoles;
     }
 

@@ -18,7 +18,7 @@ class OrderController extends BaseController {
         $tblOderModel = new tblOrderModel();
         $orderdata = $tblOderModel->allOrder(10, 'time');
         $page = $orderdata->links();
-        
+
         if ($thongbao == '') {
             return View::make('backend.donhang.orderproduct')->with('arrOrder', $orderdata)->with('page', $page);
         } else {
@@ -41,13 +41,10 @@ class OrderController extends BaseController {
 
             array_push($arrayStore, $store[0]);
         }
-       // var_dump($objOrder);
+        // var_dump($objOrder);
         return View::make('backend.donhang.orderproductedit')->with('objOrder', $objOrder)->with('arrayStore', $arrayStore);
     }
 
-    public function postOrderActive($orderCode) {
-        
-    }
 
     public function postAjaxOrder() {
         $tblOderModel = new tblOrderModel();
@@ -67,7 +64,7 @@ class OrderController extends BaseController {
         $from = strtotime(Input::get('fromtime'));
         $to = strtotime(Input::get('totime'));
         $status = Input::get('status');
-        
+
         $tblOderModel = new tblOrderModel();
         $arrOrder = $tblOderModel->fillterOrders(10, $from, $to, $status);
         // var_dump($arrNews);
@@ -79,7 +76,7 @@ class OrderController extends BaseController {
         $objGsp = new tblOrderModel();
         $data = $objGsp->DeleteOrder(Input::get('id'));
         $orderdata = $objGsp->allOrder(10, 'time');
-      
+
         $page = $orderdata->links();
         return View::make('backend.donhang.orderproductajax')->with('arrOrder', $orderdata)->with('page', $page);
     }
@@ -94,7 +91,7 @@ class OrderController extends BaseController {
         }
         if ($status == 1) {
             $arrOrder = $tblOderModel->getOrderByOrderCode($orderCode);
-            if ($arrOrder[0]->orderStatus == 0) {
+            if ($arrOrder[0]->orderStatus == 0 || $arrOrder[0]->orderStatus == 2) {
                 // Kiem tra xem tat ca san pham trong don hang co con hang hay khong
                 $check = False;
                 foreach ($arrOrder as $item) {
