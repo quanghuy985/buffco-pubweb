@@ -21,7 +21,9 @@
         <script type="text/javascript" src="{{Asset('adminlib/ckfinder/ckfinder.js')}}"></script>
         <script type="text/javascript" src="{{Asset('adminlib')}}/js/plugins/jquery.validate.min.js"></script>
         <script type="text/javascript" src="{{Asset('adminlib')}}/js/plugins/jquery.tagsinput.min.js"></script>
-        <script type="text/javascript" src="{{Asset('adminlib')}}/js/plugins/charCount.js"></script>
+        <script type="text/javascript" src="{{Asset('adminlib')}}/js/plugins/charCount.js"></script>        
+        <script type="text/javascript" src="{{Asset('adminlib')}}/js/plugins/jquery.smartWizard-2.0.min.js"></script>
+        <script type="text/javascript" src="{{Asset('adminlib')}}/js/plugins/jquery.colorbox-min.js"></script>        
         <script type="text/javascript" src="{{Asset('adminlib')}}/js/plugins/ui.spinner.min.js"></script>
         <script type="text/javascript" src="{{Asset('adminlib')}}/js/custom/forms.js"></script>
          <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="adminlib/js/plugins/excanvas.min.js"></script><![endif]-->

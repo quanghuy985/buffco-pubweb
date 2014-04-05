@@ -17,14 +17,11 @@ class ProductController extends Controller {
     public function getAddProduct($thongbao = '') {
         //lấy danh sách nhà cung cấp   
         $tblManu = new tblManufacturerModel();
-        $arrManu = $tblManu->selectAll(1000);
-        //lấy danh sách các khuyến mại
-        $tblPromotion = new tblPromotionModel();
-        $objPromotion = $tblPromotion->getAllPromotion(1000);
+        $arrManu = $tblManu->selectAll(1000);     
         //lấy danh sách danh mục sản phẩm
         $objCateproduct = new TblCategoryProductModel();
         $data = $objCateproduct->getAllCategoryProductPaginate(10000);
-        return View::make('backend.product.addproduct')->with('catproduct', $data)->with('arrPromotion', $objPromotion)->with('arrManu', $arrManu)->with('thongbao', $thongbao);
+        return View::make('backend.product.addproduct')->with('catproduct', $data)->with('arrManu', $arrManu)->with('thongbao', $thongbao);
     }
 
     public function postAddProduct() {
