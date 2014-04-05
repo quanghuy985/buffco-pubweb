@@ -60,9 +60,8 @@
             <col class="con0" style="width: 15%">
             <col class="con1" style="width: 10%">
             <col class="con0" style="width: 10%">
-            <col class="con1" style="width: 5%">
-            <col class="con0" style="width: 5%">
             <col class="con1" style="width: 10%">
+            <col class="con0" style="width: 10%">
         </colgroup>
         <thead>
             <tr>
@@ -73,10 +72,9 @@
                 <th class="head1">Size</th>
                 <th class="head0">Màu</th>
                 <th class="head1">Giá</th>
-                <th class="head0">Khuyến mại</th>
-                <th class="head1">Số lượng</th>
-                <th class="head0">Kho</th>
-                <th class="head1">Tổng tiền</th>
+                <th class="head0">Số lượng</th>
+                <th class="head1">Kho</th>
+                <th class="head0">Tổng tiền</th>
             </tr>
         </thead>
         <tbody id="tableproduct">
@@ -90,7 +88,6 @@
                 <td><label value="cateNews">{{str_limit( $item->sizeName, 30, '...')}}</label></td>
                 <td><label value="cateNews">{{str_limit( $item->colorName, 30, '...')}}</label></td> 
                 <td><label value="cateNews">{{number_format($item->productPrice,0,'.', ',')}}</label></td> 
-                <td><label value="cateNews">{{str_limit($item->promotionAmount, 30, '...')}} </label></td>
                 <td><label value="cateNews">{{number_format($item->amount,0,'.', ',')}} </label></td>
                 <td><label value="cateNews">@foreach($arrayStore as $itemStore)@if ($itemStore->productID == $item->productID && $itemStore->sizeID == $item->sizeID && $itemStore->colorID == $item->colorID)  {{number_format(($itemStore->soluongnhap - $itemStore->soluongban),0,'.', ',')}} @endif @endforeach </label></td>
                 <td><label value="cateNews">{{number_format($item->total,0,'.', ',')}} </label></td>
@@ -104,7 +101,7 @@
             };
             ?>
             <tr>
-                <td colspan="9" style="text-align: right;"><strong><label>Tổng giá trị đơn hàng :</label></strong></td>
+                <td colspan="8" style="text-align: right;"><strong><label>Tổng giá trị đơn hàng :</label></strong></td>
                 <td><label value="cateNews">{{$total}}</label></td>
             </tr>
         </tbody>
@@ -142,11 +139,11 @@
             @endforeach
             @endforeach
             @if($check==True) 
-               <a href = "#" class = "stdbtn btn_red">Hết hàng</a>
+            <a href = "#" class = "stdbtn btn_red">Hết hàng</a>
             @else
             <input type = "submit" class = "btn" value = "Cập nhật"  >
             @endif
-                   <a href = "{{URL::action('OrderController@getViewAll')}}" class = "stdbtn">Quay lại</a>
+            <a href = "{{URL::action('OrderController@getViewAll')}}" class = "stdbtn">Quay lại</a>
             @else
             <a href = "{{URL::action('OrderController@getViewAll')}}" class = "stdbtn">Quay lại</a>
             @endif

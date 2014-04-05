@@ -113,8 +113,8 @@
                 Từ : <input id="datepicker" name="timeform" type="text" class="longinput" /> 
                 &nbsp;   Đến : <input id="datepicker1"  name="timeto" type="text" class="datepicker"  /> 
                 &nbsp; <select name="status" id="status">
-                     <option value="3">Tất cả</option>
-                     <option value="0" selected>Chờ xử lý</option>
+                    <option value="3">Tất cả</option>
+                    <option value="0" selected>Chờ xử lý</option>
                     <option value="1">Đã xử lý</option>
                     <option value="2">Đã xóa</option>
                 </select>
@@ -181,10 +181,7 @@
                     <td class="center">
                         <a href="{{URL::action('OrderController@getEdit')}}/{{$item->orderCode}}" class="btn btn4 btn_orderdetail" title="Chi tiết đơn hàng"></a>
                         &nbsp; 
-                        @if($item->status=='0')
-                        <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 1)"  title="Đăng bài"> <img src="{{Asset('adminlib/images/icons/active.png')}}" width="35px"></img></a>
-                        @endif
-                        @if($item->status!='2')
+                        @if($item->status =='0')
                         <a href="javascript: void(0)" onclick="xoasanpham({{$item->id}})" class="btn btn4 btn_trash" title="Xóa"></a>
                         @endif
                     </td>
