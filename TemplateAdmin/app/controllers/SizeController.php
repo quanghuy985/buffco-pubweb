@@ -15,9 +15,9 @@ class SizeController extends Controller {
         //var_dump($check);
         $link = $check->links();
         if($msg!=''){
-            return View::make('backend.SizeManage')->with('arrSize', $check)->with('link',$link)->with('msg',$msg);
+            return View::make('backend.size.SizeManage')->with('arrSize', $check)->with('link',$link)->with('msg',$msg);
         }else{
-            return View::make('backend.SizeManage')->with('arrSize', $check)->with('link',$link);
+            return View::make('backend.size.SizeManage')->with('arrSize', $check)->with('link',$link);
         }
     }
 
@@ -26,7 +26,7 @@ class SizeController extends Controller {
         $data = $objSize->getSizeByID(Input::get('id'));  
         
         //var_dump($data);
-        return View::make('backend.SizeManage')->with('arraySize', $data);
+        return View::make('backend.size.SizeManage')->with('arraySize', $data);
     }
     
     public function postUpdateSize() {
@@ -77,7 +77,7 @@ class SizeController extends Controller {
         $objSize = new tblSizeModel();
         $data = $objSize->FindSize('', 5, 'id', '');
         $link = $data->links();
-        return View::make('backend.Sizeajax')->with('arraySize', $data)->with('link', $link);
+        return View::make('backend.size.Sizeajax')->with('arraySize', $data)->with('link', $link);
     }
     
     public function postDeleteSize(){
@@ -86,7 +86,7 @@ class SizeController extends Controller {
         //echo $tblPageModel;
         $arrsize = $objSize->selectAllSize(10,'id');        
         $link = $arrsize->links();
-        return View::make('backend.Sizeajax')->with('arraySize', $arrsize)->with('link', $link);
+        return View::make('backend.size.Sizeajax')->with('arraySize', $arrsize)->with('link', $link);
     }
     
     public function postSizeActive() {
@@ -94,39 +94,39 @@ class SizeController extends Controller {
         $objSize->updateSize(Input::get('id'),'','', '',Input::get('status'));
         $arrsize = $objSize->allSize(10);
         $link = $arrsize->links();
-        return View::make('backend.Sizeajax')->with('arraySize', $arrsize)->with('link', $link);
+        return View::make('backend.size.Sizeajax')->with('arraySize', $arrsize)->with('link', $link);
     }
     
     public function getAjaxsearch() {
         $objSize = new tblSizeModel();
         if (Session::has('oderbyoption1')) {
             $tatus = Session::get('oderbyoption1');
-            $data = $objSize->FindSize(Input::get('keywordsearch'), 10, 'id', $tatus[0]);
+            $data = $objSize->SearchSize(Input::get('keywordsearch'), 10, 'id', $tatus[0]);
         } else {
-            $data = $objSize->FindSize(Input::get('keywordsearch'), 10, 'id', '');
+            $data = $objSize->SearchSize(Input::get('keywordsearch'), 10, 'id', '');
         }
         //  $data = $objGsp->FindProduct(Input::get('keywordsearch'), 10, 'id', '');
         // $data->setBaseUrl('view');
         $link = $data->links();
         Session::forget('keywordsearch');
         Session::push('keywordsearch', Input::get('keywordsearch'));
-        return View::make('backend.SizeManage')->with('arrPage', $data)->with('link', $link);
+        return View::make('backend.size.SizeManage')->with('arrPage', $data)->with('link', $link);
     }
     
     public function postAjaxsearch() {
         $objSize = new tblSizeModel();
         if (Session::has('oderbyoption1')) {
             $tatus = Session::get('oderbyoption1');
-            $data = $objSize->FindSize(Input::get('keywordsearch'), 10, 'id', $tatus[0]);
+            $data = $objSize->SearchSize(Input::get('keywordsearch'), 10, 'id', $tatus[0]);
         } else {
-            $data = $objSize->FindSize(Input::get('keywordsearch'), 10, 'id', '');
+            $data = $objSize->SearchSize(Input::get('keywordsearch'), 10, 'id', '');
         }
         //  $data = $objGsp->FindProduct(Input::get('keywordsearch'), 10, 'id', '');
         // $data->setBaseUrl('view');
         $link = $data->links();
         Session::forget('keywordsearch');
         Session::push('keywordsearch', Input::get('keywordsearch'));
-        return View::make('backend.Sizeajax')->with('arraySize', $data)->with('link', $link);
+        return View::make('backend.size.Sizeajax')->with('arraySize', $data)->with('link', $link);
     }
 
     public function postAjaxpagion() {
@@ -141,14 +141,14 @@ class SizeController extends Controller {
                 $data = $objSize->FindSize($keyw[0], 10, 'id', '');
             }
             $link = $data->links();
-            return View::make('backend.Sizeajax')->with('arraySize', $data)->with('link', $link);
+            return View::make('backend.size.Sizeajax')->with('arraySize', $data)->with('link', $link);
         } else {
             Session::forget('keywordsearch');
             $objSize = new tblSizeModel();
             $tatus = Session::get('oderbyoption1');
             $data = $objSize->FindSize('', 10, 'id', $tatus[0]);
             $link = $data->links();
-            return View::make('backend.Sizeajax')->with('arraySize', $data)->with('link', $link);
+            return View::make('backend.size.Sizeajax')->with('arraySize', $data)->with('link', $link);
         }
     }
     
@@ -161,7 +161,7 @@ class SizeController extends Controller {
         $link = $data->links();
         Session::forget('oderbyoption1');
         Session::push('oderbyoption1', Input::get('oderbyoption1'));
-        return View::make('backend.SizeManage')->with('arrSize', $data)->with('link', $link);
+        return View::make('backend.size.SizeManage')->with('arrSize', $data)->with('link', $link);
     }
     
     public function postFillterSize() {
@@ -173,7 +173,7 @@ class SizeController extends Controller {
         $link = $data->links();
         Session::forget('oderbyoption1');
         Session::push('oderbyoption1', Input::get('oderbyoption1'));
-        return View::make('backend.Sizeajax')->with('arraySize', $data)->with('link', $link);
+        return View::make('backend.size.Sizeajax')->with('arraySize', $data)->with('link', $link);
     }
 
 }
