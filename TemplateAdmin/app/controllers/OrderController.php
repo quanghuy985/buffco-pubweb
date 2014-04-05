@@ -18,6 +18,7 @@ class OrderController extends BaseController {
         $tblOderModel = new tblOrderModel();
         $orderdata = $tblOderModel->allOrder(10, 'time');
         $page = $orderdata->links();
+        
         if ($thongbao == '') {
             return View::make('backend.donhang.orderproduct')->with('arrOrder', $orderdata)->with('page', $page);
         } else {
@@ -40,6 +41,7 @@ class OrderController extends BaseController {
 
             array_push($arrayStore, $store[0]);
         }
+       // var_dump($objOrder);
         return View::make('backend.donhang.orderproductedit')->with('objOrder', $objOrder)->with('arrayStore', $arrayStore);
     }
 

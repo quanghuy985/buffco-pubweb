@@ -54,15 +54,7 @@ class CreateTblUsers extends Migration {
             $table->string('time');
             $table->integer('status');
         });
-        //tblPromotion luu cac khuyen mai 
-        Schema::create('tblPromotion', function($table) {
-            $table->increments('id');
-            $table->string('promotionName');
-            $table->longtext('promotionContent');
-            $table->string('promotionAmount');
-            $table->string('time');
-            $table->integer('status');
-        });
+
         //tblManufacturer luu lai xuat su nguon goc hang hoa
         Schema::create('tblManufacturer', function($table) {
             $table->increments('id');
@@ -80,7 +72,9 @@ class CreateTblUsers extends Migration {
             $table->string('productName');
             $table->longtext('productDescription');
             $table->decimal('productPrice', 20, 2);
-            $table->integer('promotionID')->nullable();
+            $table->decimal('salesPrice', 20, 2)->nullable;
+            $table->string('startSales')->nullable;
+            $table->string('endSales')->nullable;
             $table->string('productSlug');
             $table->string('productTag');
             $table->integer('manufactureID');
