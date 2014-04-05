@@ -21,11 +21,6 @@
 </style>
 <script>
     jQuery(document).ready(function() {
-        	jQuery('#wizard').smartWizard({onFinish: onFinishCallback});
-                function onFinishCallback(){
-			alert('Finish Clicked');
-		} 
-		
         //validate form thêm sản phẩm
         jQuery("#frmProduct").validate({
             rules: {
@@ -136,10 +131,7 @@
             }
         });
     });
-function xxx(){
-    alert('dđ');
-    return true;
-}
+
     //lấy tag theo danh mục sản phẩm
     function getCateTag() {
         jQuery.jGrowl("Đang tải dữ liệu!");
@@ -372,40 +364,10 @@ function xxx(){
         </div>
         @endif
         <div class="contenttitle2">
-            <h3>Thêm mới sản phẩm</h3>
+            <h3>Thêm mới</h3>
         </div>
-  <div id="wizard" class="wizard">
-                    	<br />
-                        <ul class="hormenu">
-                            <li>
-                            	<a href="#wiz1step1">
-                                	<span class="h2">Bước 1</span>
-                                    <span class="dot"><span></span></span>
-                                    <span class="label">Nhập thông tin cơ bản</span>
-                                </a>
-                            </li>
-                            <li>
-                            	<a href="#wiz1step2">
-                                	<span class="h2">Bước 2</span>
-                                    <span class="dot"><span></span></span>
-                                    <span class="label">Nhập thông tin chi tiết</span>
-                                </a>
-                            </li>
-                            <li>
-                            	<a href="#wiz1step3">
-                                	<span class="h2">Bước 3</span>
-                                    <span class="dot"><span></span></span>
-                                    <span class="label">Nhập kho</span>
-                                </a>
-                            </li>
-                        </ul>
-                        
-                        <br clear="all" /><br /><br />
-                        	
-                        <div id="wiz1step1" class="formwiz">
-                        	<h4>Bước 1: Nhập thông tin cơ bản</h4>
-                        	
-                              <form id="frmProduct" class="stdform stdform2" method="post" action="@if(isset($dataedit)){{URL::action('ProductController@postEditProduct')}} @else {{URL::action('ProductController@postAddProduct')}} @endif" accept-charset="UTF-8" enctype="multipart/form-data">
+
+        <form id="frmProduct" class="stdform stdform2" method="post" action="@if(isset($dataedit)){{URL::action('ProductController@postEditProduct')}} @else {{URL::action('ProductController@postAddProduct')}} @endif" accept-charset="UTF-8" enctype="multipart/form-data">
 
             <p>
                 <label>Tên sản phẩm</label>
@@ -482,7 +444,19 @@ function xxx(){
                 <span class="field">
                     <input type="text" name="productPrice"  placeholder="Nhập giá sản phẩm" class="smallinput" value="@if(isset($dataedit)){{$dataedit->productPrice}}@endif">
                 </span>
-            </p>          
+            </p>
+            <p>
+                <label>Chọn khuyến mại </label>
+                <span class="field" id="sPromotion"> 
+                    <select name="promotionID" id="promotionSelect">
+                        <option value="0">---Chọn khuyến mại---</option>
+                        @foreach($arrPromotion as $item)
+                        <option value="{{$item->id}}" @if(isset($dataedit) && $dataedit->promotionID == $item->id) selected @endif >{{$item->promotionName}}</option>
+                        @endforeach
+                    </select>
+                    <button type="button"  class="submit radius2" id="addPromotion">Thêm khuyến mại</button>
+                </span>
+            </p>
             <p> 
                 <label>Từ khóa seo</label>
                 <span class="field">
@@ -532,82 +506,6 @@ function xxx(){
                 <img id="frmProductLoader" hidden="true" src="{{Asset('adminlib/images/loaders/loader1.gif')}}" alt="" />
             </p>           
         </form>
-                        </div><!--#wiz1step1-->
-                        
-                        <div id="wiz1step2" class="formwiz">
-                        	<h4>Step 2: Account Information</h4>
-                            
-                                <p>
-                                    <label>Account No</label>
-                                    <span class="field"><input type="text" name="lastname" class="longinput" /></span>
-                                </p>
-                                <p>
-                                    <label>Address</label>
-                                    <span class="field"><textarea cols="80" rows="5" name="location"></textarea></span>
-                                </p>
-                                                                                               
-                        </div><!--#wiz1step2-->
-                        
-                        <div id="wiz1step3">
-                        	<h4>Step 3: Terms of Agreement</h4>
-                          <div class="notibar msgerror" id="divThongBaoLoi" hidden="true">
-                <a class="close"></a>
-                <p>Hàng đã có trong kho. Vui lòng chọn size và màu khác để nhập!</p>
-            </div><!-- notification msginfo -->
-            <div class="notibar msgerror" id="divThongBaoLoi1" hidden="true">
-                <a class="close"></a>
-                <p>Thêm hàng vào kho bị lỗi! Vui lòng nhập lại!</p>
-            </div><!-- notification msginfo -->
-            <div class="notibar msgsuccess" id="divThongBaoOK" hidden="true">
-                <a class="close"></a>
-                <p>Hàng đã được nhập vào kho. Bạn có thể tiếp tục nhập thêm hàng!</p>
-            </div>
-            <form class="stdform stdform2" method="post" id="frmStore" action="{{URL::action('StoreController@postAddStoreAjax')}}">
-                <p>                  
-                    <label>Size</label>
-                    <span class="field">                               
-                        <input type="hidden" name="proID" id="proID" value="@if(isset($dataedit)){{$dataedit->id}}@endif"/>
-                        <select name="sizeID" id="sizeID" required>
-                            <option value="">---Chọn size---</option>
-                            @if(isset($arrSize))
-                            @foreach($arrSize as $item)
-                            <option value="{{$item->id}}" >{{$item->sizeName}}</option>
-                            @endforeach
-                            @endif
-                        </select> 
-                        <button type="button"  class="submit radius2" id="addSize">Thêm size</button>
-                    </span>
-                </p>        
-                <p>           
-                    <label>Màu sắc</label>
-                    <span class="field">                                               
-                        <select name="colorID" id="colorID" required>
-                            <option value="">---Chọn màu---</option>
-                            @if(isset($arrColor))
-                            @foreach($arrColor as $item)
-                            <option value="{{$item->id}}" >{{$item->colorName}}</option>
-                            @endforeach
-                            @endif
-                        </select>  
-                        <button type="button"  class="submit radius2" id="addColor">Thêm màu</button>
-                    </span>                 
-                </p>  
-                <p>           
-                    <label>Số lượng</label>
-                    <span class="field">                                               
-                        <input type="text"  onkeypress="return event.charCode > 47 && event.charCode < 58;" pattern="[0-9]" name="soluongnhap" id="soluongnhap" placeholder="Số lượng" value="" class="longinput">
-                    </span>                 
-                </p>  
-                <p class="stdformbutton">
-                    <button class="submit radius2" type="button" id="btnAddStore" value="Thêm mới">Nhập </button>
-                    <input type="reset" class="reset radius2" value="Làm mới">
-                    <img id="frmStoreLoader" hidden="true" src="{{Asset('adminlib/images/loaders/loader1.gif')}}" alt="" />
-                </p>
-            </form>
-                        </div><!--#wiz1step3-->
-                     
-                    </div><!--#wizard-->
-       
         <div id="wPromotion" title="Thêm khuyến mại">
             <form class="stdform stdform2" method="post" id="frmPromotion" action="{{URL::action('PromotionController@postAddPromotionAjax')}}">
                 <p>                  

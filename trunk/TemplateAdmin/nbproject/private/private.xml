@@ -3,28 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/WAMPSERVER/www/TemplateAdmin/app/views/backend/feedback/repFeedback.blade.php</file>
-            <file>file:/E:/WAMPSERVER/www/TemplateAdmin/app/views/templateadmin2/mainfire.blade.php</file>
-            <file>file:/E:/WAMPSERVER/www/TemplateAdmin/app/models/tblFeedbackModel.php</file>
-            <file>file:/E:/WAMPSERVER/www/TemplateAdmin/app/controllers/AdminController.php</file>
-            <file>file:/E:/WAMPSERVER/www/TemplateAdmin/app/library/THUVIEN.php</file>
-            <file>file:/E:/WAMPSERVER/www/TemplateAdmin/public/adminlib/css/style.default.css</file>
-            <file>file:/E:/WAMPSERVER/www/TemplateAdmin/app/start/global.php</file>
-            <file>file:/E:/WAMPSERVER/www/TemplateAdmin/composer.json</file>
-            <file>file:/E:/WAMPSERVER/www/TemplateAdmin/app/views/backend/color/addnewcolor.blade.php</file>
-            <file>file:/E:/WAMPSERVER/www/TemplateAdmin/public/index.php</file>
-            <file>file:/E:/WAMPSERVER/www/TemplateAdmin/public/adminlib/js/custom/elements.js</file>
-            <file>file:/E:/WAMPSERVER/www/TemplateAdmin/app/views/templateadmin2/loginfire.blade.php</file>
-            <file>file:/E:/WAMPSERVER/www/TemplateAdmin/app/views/templateadmin2/admin-home.blade.php</file>
-            <file>file:/E:/WAMPSERVER/www/TemplateAdmin/public/adminlib/ckfinder/config.js</file>
-            <file>file:/E:/WAMPSERVER/www/TemplateAdmin/app/config/app.php</file>
-            <file>file:/E:/WAMPSERVER/www/TemplateAdmin/app/models/tblHistoryModel.php</file>
-            <file>file:/E:/WAMPSERVER/www/TemplateAdmin/app/models/tblColorModel.php</file>
-            <file>file:/E:/WAMPSERVER/www/TemplateAdmin/app/controllers/ColorController.php</file>
-            <file>file:/E:/WAMPSERVER/www/TemplateAdmin/public/adminlib/ckfinder/config.php</file>
-            <file>file:/E:/WAMPSERVER/www/TemplateAdmin/app/routes.php</file>
-            <file>file:/E:/WAMPSERVER/www/TemplateAdmin/app/views/backend/files/filemanager.blade.php</file>
-            <file>file:/E:/WAMPSERVER/www/TemplateAdmin/app/views/backend/feedback/feedbackManage.blade.php</file>
+            <file>file:/G:/WAMP/www/TemplateAdmin/app/models/tblStoreModel.php</file>
+            <file>file:/G:/WAMP/www/TemplateAdmin/app/views/backend/product/viewTag.blade.php</file>
+            <file>file:/G:/WAMP/www/TemplateAdmin/app/views/backend/supporter/supporterManage.blade.php</file>
+            <file>file:/G:/WAMP/www/TemplateAdmin/app/views/backend/product/viewproduct.blade.php</file>
+            <file>file:/G:/WAMP/www/TemplateAdmin/app/controllers/ProductController.php</file>
+            <file>file:/G:/WAMP/www/TemplateAdmin/app/views/backend/product/addproduct.blade.php</file>
+            <file>file:/G:/WAMP/www/TemplateAdmin/app/routes.php</file>
+            <file>file:/G:/WAMP/www/TemplateAdmin/app/controllers/StoreController.php</file>
+            <file>file:/G:/WAMP/www/TemplateAdmin/app/models/tblColorModel.php</file>
+            <file>file:/G:/WAMP/www/TemplateAdmin/app/models/tblSizeModel.php</file>
         </group>
     </open-files>
 </project-private>
