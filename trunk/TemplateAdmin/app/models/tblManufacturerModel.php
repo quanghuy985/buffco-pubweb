@@ -58,6 +58,14 @@ class tblManufacturerModel extends Eloquent{
         return $manufarray;
     }
     
+    public function SearchManufacturer($keyword, $per_page, $orderby, $status) {
+        $manufarray = '';
+        
+        $manufarray = DB::table('tblmanufacturer')->select('tblmanufacturer.*')->where('tblmanufacturer.manufacturerName', 'LIKE', '%' . $keyword . '%')->orwhere('tblmanufacturer.manufacturerPlace', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);
+        
+        return $manufarray;
+    }
+    
     
     public function selectAllManufacturer($per_page,$orderby){
         $allManufacturer = DB::table('tblmanufacturer')->orderBy($orderby, 'desc')->paginate($per_page);

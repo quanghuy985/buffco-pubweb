@@ -142,6 +142,12 @@ class tblUserModel extends Eloquent {
         }
         return $adminarray;
     }
+    
+    public function SearchUser($keyword, $per_page, $orderby, $status) {
+        $adminarray = '';        
+            $adminarray = DB::table('tblusers')->select('tblusers.*')->where('tblusers.userEmail', 'LIKE', '%' . $keyword . '%')->orwhere('tblusers.userFirstName', 'LIKE', '%' . $keyword . '%')->orwhere('tblusers.userLastName', 'LIKE', '%' . $keyword . '%')->orwhere('tblusers.userAddress', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);        
+        return $adminarray;
+    }
 
     public function getCountUserByStt($stt) {
         $count = DB::table('tblusers')->where('status', '=', $stt)->count();

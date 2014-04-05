@@ -58,6 +58,14 @@ class tblProjectModel extends Eloquent {
         return $projectfarray;
     }
     
+    public function SearchProject($keyword, $per_page, $orderby, $status) {
+        $projectfarray = '';
+        
+        $projectfarray = DB::table('tblproject')->select('tblproject.*')->where('tblproject.projectDescription', 'LIKE', '%' . $keyword . '%')->orwhere('tblproject.projectContent', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);
+        
+        return $projectfarray;
+    }
+    
     
     public function selectAllProject($per_page,$orderby){
         $allProject = DB::table('tblproject')->orderBy($orderby, 'desc')->paginate($per_page);

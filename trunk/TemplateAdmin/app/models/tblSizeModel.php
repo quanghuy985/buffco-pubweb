@@ -81,6 +81,12 @@ class tblSizeModel extends Eloquent {
         }
         return $sizearray;
     }
+    
+    public function SearchSize($keyword, $per_page, $orderby, $status){
+        $sizearray = '';
+        $sizearray = DB::table('tblsize')->select('tblsize.*')->where('tblsize.sizeName', 'LIKE', '%' . $keyword . '%')->orwhere('tblsize.sizeDescription', 'LIKE', '%' . $keyword . '%')->orwhere('tblsize.sizeValue', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);
+        return $sizearray;
+    }
 
 }
 
