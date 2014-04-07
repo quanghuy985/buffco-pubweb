@@ -71,6 +71,11 @@ class tblOrderModel extends Eloquent {
         return $allOrderDetail;
     }
 
+    public function findOrderByID($id) {
+        $objOrder = DB::table('tblOrder')->where('tblOrder.id', '=', $id)->get();
+        return $objOrder;
+    }
+
     public function deleteOrder($id) {
         $checkdel = $this->where('id', '=', $id)->update(array('status' => 2));
         if ($checkdel > 0) {

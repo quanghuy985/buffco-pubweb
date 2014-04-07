@@ -25,9 +25,11 @@ Route::controller('categoryproduct', 'CategoryProductController');
 Route::controller('product', 'ProductController');
 Route::controller('tag', 'TagController');
 Route::controller('manu', 'ManufacturerController');
-Route::controller('size', 'SizeController');
+Route::controller('admin', 'AdminController');
+Route::controller('groupadmin', 'GroupAdminController');
 Route::controller('color', 'ColorController');
-Route::controller('store', 'StoreController');
+Route::controller('feedback', 'FeedbackController');
+
 App::missing(function($exception) {
     return $exception;
 });

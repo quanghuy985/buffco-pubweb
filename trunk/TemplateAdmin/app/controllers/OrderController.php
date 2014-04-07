@@ -45,7 +45,6 @@ class OrderController extends BaseController {
         return View::make('backend.donhang.orderproductedit')->with('objOrder', $objOrder)->with('arrayStore', $arrayStore);
     }
 
-
     public function postAjaxOrder() {
         $tblOderModel = new tblOrderModel();
         $orderdata = $tblOderModel->allOrder(10, 'time');
@@ -75,8 +74,12 @@ class OrderController extends BaseController {
     public function postDel() {
         $objGsp = new tblOrderModel();
         $data = $objGsp->DeleteOrder(Input::get('id'));
+        $objOrder = $objGsp->findOrderByID(Input::get('id'));
+        $historyContent = 'Xóa thành công đơn hàng : ' . $objOrder->orderCode;
+        $objAdmin = Session::get('adminSession');
+        $tblHistoryAdminModel = new tblHistoryAdminModel();
+        $tblHistoryAdminModel->addHistory($objAdmin[0]->id, $historyContent, '0');
         $orderdata = $objGsp->allOrder(10, 'time');
-
         $page = $orderdata->links();
         return View::make('backend.donhang.orderproductajax')->with('arrOrder', $orderdata)->with('page', $page);
     }
@@ -134,6 +137,11 @@ class OrderController extends BaseController {
                         $tblStoreModel->updateStore($store[0]->id, '', '', '', $newAmount, '');
                         $tblOderModel->updateStatusOrderByOrderCode($orderCode, $status);
                     }
+
+                    $historyContent = 'Xử lý thành công đơn hàng : ' . $orderCode;
+                    $objAdmin = Session::get('adminSession');
+                    $tblHistoryAdminModel = new tblHistoryAdminModel();
+                    $tblHistoryAdminModel->addHistory($objAdmin[0]->id, $historyContent, '0');
                     return Redirect::action('OrderController@getViewAll', array('thongbao' => 'Đã xử lý đơn đặt hàng thành công!'));
                 }
                 // Luong hang trong khoa thoa man don hang nay cho update don hang
@@ -148,6 +156,11 @@ class OrderController extends BaseController {
         }
         if ($status == 2) {
             $tblOderModel->updateStatusOrderByOrderCode($orderCode, $status);
+
+            $historyContent = 'Xóa thành công đơn hàng : ' . $orderCode;
+            $objAdmin = Session::get('adminSession');
+            $tblHistoryAdminModel = new tblHistoryAdminModel();
+            $tblHistoryAdminModel->addHistory($objAdmin[0]->id, $historyContent, '0');
             return Redirect::action('OrderController@getViewAll', array('thongbao' => 'Đã xóa đơn đặt hàng!'));
         }
     }

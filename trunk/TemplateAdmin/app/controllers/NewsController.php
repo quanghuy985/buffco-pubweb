@@ -55,6 +55,11 @@ class NewsController extends Controller {
     public function postDeleteNews() {
         $tblNewsModel = new tblNewsModel();
         $tblNewsModel->deleteNews(Input::get('id'));
+        $objNews = $tblNewsModel->getNewsByID(Input::get('id'));
+        $historyContent = 'Xóa thành công tin tức : ' . $objNews->newsName;
+        $objAdmin = Session::get('adminSession');
+        $tblHistoryAdminModel = new tblHistoryAdminModel();
+        $tblHistoryAdminModel->addHistory($objAdmin[0]->id, $historyContent, '0');
         $NewsData = $tblNewsModel->allNews(15, 'id');
         $link = $NewsData->links();
         return View::make('backend.tintuc.newsAjax')->with('arrayNews', $NewsData)->with('link', $link);
@@ -63,6 +68,11 @@ class NewsController extends Controller {
     public function postNewsActive() {
         $tblNewsModel = new tblNewsModel();
         $tblNewsModel->updateNew(Input::get('id'), '', '', '', '', '', '', '', '', Input::get('status'));
+        $objNews = $tblNewsModel->getNewsByID(Input::get('id'));
+        $historyContent = 'Kích hoạt thành công tin tức : ' . $objNews->newsName;
+        $objAdmin = Session::get('adminSession');
+        $tblHistoryAdminModel = new tblHistoryAdminModel();
+        $tblHistoryAdminModel->addHistory($objAdmin[0]->id, $historyContent, '0');
         $arrNews = $tblNewsModel->allNews(15, 'id');
         $link = $arrNews->links();
         return View::make('backend.tintuc.newsAjax')->with('arrayNews', $arrNews)->with('link', $link);
@@ -104,6 +114,10 @@ class NewsController extends Controller {
                         }
                     }
                     $tblNewsModel->insertNew(Input::get('cbCateNews'), Input::get('newstitle'), Input::get('newsdescription'), Input::get('newsKeywords'), Input::get('newsContent'), Input::get('newstag'), Input::get('newsSlug'), $objAdmin[0]->id);
+                    $historyContent = 'Thêm mới thành công tin tức : ' . Input::get('newstitle');
+                    $objAdmin = Session::get('adminSession');
+                    $tblHistoryAdminModel = new tblHistoryAdminModel();
+                    $tblHistoryAdminModel->addHistory($objAdmin[0]->id, $historyContent, '0');
                     return Redirect::action('NewsController@getNewsView');
                 } else {
                     echo 'Bạn không có quyền thêm tin tức';
@@ -134,6 +148,10 @@ class NewsController extends Controller {
                 $arrRolesCode = $tblPhanQuyenModel->getRolesCodeByGroupAdmin($groupAdminID);
                 if (strpos(serialize($arrRolesCode), 'Sua-Bai') != FALSE) {
                     $tblNewsModel->updateNew(Input::get('idnews'), Input::get('cbCateNews'), Input::get('newstitle'), Input::get('newsdescription'), Input::get('newsKeywords'), Input::get('newsContent'), Input::get('newstag'), Input::get('newsSlug'), '', Input::get('status'));
+                    $historyContent = 'Sửa thành công tin tức : ' . Input::get('newstitle');
+                    $objAdmin = Session::get('adminSession');
+                    $tblHistoryAdminModel = new tblHistoryAdminModel();
+                    $tblHistoryAdminModel->addHistory($objAdmin[0]->id, $historyContent, '0');
                     return Redirect::action('NewsController@getNewsView');
                 } else {
                     echo 'Bạn không có quyền sửa bài viết';

@@ -13,58 +13,58 @@ class AdminController extends BaseController {
      *
      * @return void
      */
-    
-    public function getLogOut(){
+    public function getLogOut() {
         Session::remove('adminSession');
         return View::make('templateadmin2.loginfire');
     }
-    
-    public function getHistoryAdmin(){
-        if(Session::has('adminSession')){
+
+    public function getHistoryAdmin() {
+        if (Session::has('adminSession')) {
             $objadmin = Session::get('adminSession');
             //var_dump($objadmin);
             $id = $objadmin[0]->id;
             //echo $id;
             $tblAdminModel = new tblAdminModel();
-            $data = $tblAdminModel->selectHistoryAdmin($id,10);
+            $data = $tblAdminModel->selectHistoryAdmin($id, 10);
             //echo $data[0]->historyContent;
             //var_dump($data);
             $link = $data->links();
-            return View::make('backend.admin.adminHistory')->with('arrHistory',$data)->with('link',$link);
-        }else{
-            return View::make('fontend.404')->with('thongbao','Ko co lich su');
+            return View::make('backend.admin.adminHistory')->with('arrHistory', $data)->with('link', $link);
+        } else {
+            return View::make('fontend.404')->with('thongbao', 'Ko co lich su');
         }
     }
-    
-    
-    public function getProfileAdmin(){
-        if(Session::has('adminSession')){
+
+    public function getProfileAdmin() {
+        if (Session::has('adminSession')) {
             $objadmin = Session::get('adminSession');
             //var_dump($objadmin);
             $email = $objadmin[0]->adminEmail;
             $tblAdminModel = new tblAdminModel();
             $data = $tblAdminModel->findAdminByEmail($email);
-            return View::make('backend.admin.adminEditProfile')->with('dataProfile',$data);
-        }else{
+            return View::make('backend.admin.adminEditProfile')->with('dataProfile', $data[0]);
+        } else {
             return View::make('backend.admin.adminManage')->with('thongbao', 'Co loi xay ra');
         }
     }
-    
-    public function postProfileAdmin(){
+
+    public function postProfileAdmin() {
         $tblAdminModel = new tblAdminModel();
-        $rules = array(            
+        $rules = array(
             "adminName" => "required"
         );
         if (!Validator::make(Input::all(), $rules)->fails()) {
-            
             $tblAdminModel->updateAdmin(Input::get('adminEmail'), Input::get('adminPassword'), Input::get('adminName'), '', '');
+            $historyContent = 'Cập nhật thành công admin : ' . Input::get('adminEmail');
+            $objAdmin = Session::get('adminSession');
+            $tblHistoryAdminModel = new tblHistoryAdminModel();
+            $tblHistoryAdminModel->addHistory($objAdmin[0]->id, $historyContent, '0');
             return Redirect::action('AdminController@getHomeAdmin', array('thongbao' => 'Cập nhật thành công .'));
         } else {
             return Redirect::action('AdminController@getHomeAdmin', array('thongbao' => 'Cập nhật thất bại .'));
         }
     }
-    
-    
+
     public function getDangNhap() {
         if (Session::has('adminSession')) {
             return Redirect::action('AdminController@getHomeAdmin');
@@ -152,7 +152,7 @@ class AdminController extends BaseController {
         );
         if (!Validator::make(Input::all(), $rules)->fails()) {
 
-            $tblAdminModel->createAdmin(Input::get('adminEmail'),  md5(sha1(md5(Input::get('adminPassword')))) , Input::get('adminName'), Input::get('adminRoles'));
+            $tblAdminModel->createAdmin(Input::get('adminEmail'), md5(sha1(md5(Input::get('adminPassword')))), Input::get('adminName'), Input::get('adminRoles'));
             return Redirect::action('AdminController@getAdminView', array('thongbao' => 'Thêm mới thành công .'));
 
             $check = $tblAdminModel->checkAdminExist(Input::get('adminEmail'));
@@ -160,9 +160,12 @@ class AdminController extends BaseController {
                 return Redirect::action('AdminController@getAdminView', array('thongbao' => 'Tài khoản đã tồn tại!'));
             } else {
                 $tblAdminModel->createAdmin(Input::get('adminEmail'), md5(sha1(md5(Input::get('adminPassword')))), Input::get('adminName'), Input::get('adminRoles'));
+                $historyContent = 'Thêm mới thành công admin : ' . Input::get('adminEmail');
+                $objAdmin = Session::get('adminSession');
+                $tblHistoryAdminModel = new tblHistoryAdminModel();
+                $tblHistoryAdminModel->addHistory($objAdmin[0]->id, $historyContent, '0');
                 return Redirect::action('AdminController@getAdminView', array('thongbao' => 'Thêm mới thành công .'));
             }
-
         } else {
 
             return Redirect::action('AdminController@getAdminView', array('thongbao' => 'Thêm mới thất bại .'));
@@ -189,6 +192,10 @@ class AdminController extends BaseController {
         );
         if (!Validator::make(Input::all(), $rules)->fails()) {
             $tblAdminModel->updateAdmin(Input::get('adminEmail'), Input::get('adminPassword'), Input::get('adminName'), Input::get('adminRoles'), Input::get('status'));
+            $historyContent = 'Cập nhật thành công admin : ' . Input::get('adminEmail');
+            $objAdmin = Session::get('adminSession');
+            $tblHistoryAdminModel = new tblHistoryAdminModel();
+            $tblHistoryAdminModel->addHistory($objAdmin[0]->id, $historyContent, '0');
             return Redirect::action('AdminController@getAdminView', array('thongbao' => 'Cập nhật thành công .'));
         } else {
             return Redirect::action('AdminController@getAdminView', array('thongbao' => 'Cập nhật thất bại .'));
@@ -213,6 +220,11 @@ class AdminController extends BaseController {
     public function postAdminActive() {
         $tblAdminModel = new tblAdminModel();
         $tblAdminModel->updateAdmin(Input::get('id'), '', '', '', Input::get('status'));
+        $objAdmin = $tblAdminModel->findAdminByID(Input::get('id'));
+        $historyContent = 'Kích hoạt thành công admin : ' . $objAdmin[0]->adminEmail;
+        $objAdmin1 = Session::get('adminSession');
+        $tblHistoryAdminModel = new tblHistoryAdminModel();
+        $tblHistoryAdminModel->addHistory($objAdmin1[0]->id, $historyContent, '0');
         $arrAdmin = $tblAdminModel->allAdmin(10);
         $link = $arrAdmin->links();
         return View::make('backend.admin.adminAjax')->with('arrayAdmin', $arrAdmin)->with('link', $link);

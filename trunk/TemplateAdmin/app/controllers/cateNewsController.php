@@ -41,6 +41,10 @@ class cateNewsController extends Controller {
         $dataedit = $tblCateNewsModel->findCateNewsByID(Input::get('id'));
         if ($dataedit->catenewsParent == 0) {
             $tblCateNewsModel->deleteCateNewsChild($dataedit->id);
+             $historyContent = 'Xóa danh mục tin tức : ' . $dataedit->cateNewsName;
+            $objAdmin = Session::get('adminSession');
+            $tblHistoryAdminModel = new tblHistoryAdminModel();
+            $tblHistoryAdminModel->addHistory($objAdmin[0]->id, $historyContent, '0');
         }
         $tblCateNewsModel->deleteCateNews(Input::get('id'));
         $cateNewsData = $tblCateNewsModel->allCateNew(10);
@@ -59,6 +63,11 @@ class cateNewsController extends Controller {
     public function postCateNewsActive() {
         $tblCateNews = new tblCategoryNewsModel();
         $tblCateNews->updateCategoryNews(Input::get('id'), '', '', '', '', Input::get('status'));
+        $dataedit = $tblCateNewsModel->findCateNewsByID(Input::get('id'));
+        $historyContent = 'Kích hoạt danh mục tin tức : ' . $dataedit->cateNewsName;
+            $objAdmin = Session::get('adminSession');
+            $tblHistoryAdminModel = new tblHistoryAdminModel();
+            $tblHistoryAdminModel->addHistory($objAdmin[0]->id, $historyContent, '0');
         $cateNewsData = $tblCateNews->allCateNew(10);
         $link = $cateNewsData->links();
         return View::make('backend.tintuc.cateNewsAjax')->with('arrayCateNews', $cateNewsData)->with('link', $link);
@@ -74,6 +83,10 @@ class cateNewsController extends Controller {
         $tblCateNewsModel = new tblCategoryNewsModel();
         if (!Validator::make(Input::all(), $rules)->fails()) {
             $tblCateNewsModel->updateCategoryNews(Input::get('cateNewsID'), Input::get('cateNewsName'), Input::get('catenewsDescription'), Input::get('catenewsParent'), Input::get('catenewsSlug'), Input::get('status'));
+            $historyContent = 'Thay đổi danh mục tin tức : ' . Input::get('cateNewsName');
+            $objAdmin = Session::get('adminSession');
+            $tblHistoryAdminModel = new tblHistoryAdminModel();
+            $tblHistoryAdminModel->addHistory($objAdmin[0]->id, $historyContent, '0');
             return Redirect::action('cateNewsController@getCateNewsView', array('thongbao' => 'Cập nhật thành công .'));
         } else {
             return Redirect::action('cateNewsController@getCateNewsView', array('thongbao' => 'Cập nhật thất bại .'));
@@ -96,6 +109,10 @@ class cateNewsController extends Controller {
                 }
             }
             $tblCateNewsModel->addCategoryNews(Input::get('cateNewsName'), Input::get('catenewsDescription'), Input::get('catenewsParent'), Input::get('catenewsSlug'));
+            $historyContent = 'Thêm mới thành công danh mục tin tức : ' . Input::get('cateNewsName');
+            $objAdmin = Session::get('adminSession');
+            $tblHistoryAdminModel = new tblHistoryAdminModel();
+            $tblHistoryAdminModel->addHistory($objAdmin[0]->id, $historyContent, '0');
             return Redirect::action('cateNewsController@getCateNewsView', array('thongbao' => 'Thêm mới thành công .'));
         } else {
             return Redirect::action('cateNewsController@getCateNewsView', array('thongbao' => 'Thêm mới thất bại .'));
