@@ -11,7 +11,7 @@ class PageController extends Controller {
     public function getPageView($msg = '') {
         $tblPageModel = new tblPageModel();
         
-        $check = $tblPageModel->selectAllPage(5,'id');        
+        $check = $tblPageModel->selectAllPage(10,'id');        
         //var_dump($check);
         $link = $check->links();
         if($msg!=''){
@@ -135,26 +135,34 @@ class PageController extends Controller {
     }
 
     public function postAjaxpagion() {
+        
         if (Session::has('keywordsearch') && Input::get('page') != '') {
             $keyw = Session::get('keywordsearch');
-            $tblPageModel = new tblPageModel();
+            $objPage = new tblPageModel();
             $data = '';
             if (Session::has('oderbyoption1')) {
                 $tatus = Session::get('oderbyoption1');
-                $data = $tblPageModel->FindPage($keyw[0], 10, 'id', $tatus[0]);
+                $data = $objPage->FindPage($keyw[0], 10, 'id', $tatus[0]);
             } else {
-                $data = $tblPageModel->FindPage($keyw[0], 10, 'id', '');
+                $data = $objPage->FindPage($keyw[0], 10, 'id', '');
             }
             $link = $data->links();
             return View::make('backend.page.Pageajax')->with('arrayPage', $data)->with('link', $link);
-        } else {
+        } else if(!Session::has('keywordsearch') && Input::get('page') != ''){
             Session::forget('keywordsearch');
-            $tblPageModel = new tblPageModel();
+            $objPage = new tblPageModel();
             $tatus = Session::get('oderbyoption1');
-            $data = $tblPageModel->FindPage('', 10, 'id', $tatus[0]);
+            $data = $objPage->FindPage($keyw[0], 10, 'id', $tatus[0]);
             $link = $data->links();
             return View::make('backend.page.Pageajax')->with('arrayPage', $data)->with('link', $link);
+        } else{
+            $objPage = new tblPageModel();
+            $tatus = Session::get('oderbyoption1');
+            $data = $objPage->selectAllPage(10, 'id');
+            $link = $data->links();
+            return View::make('backend.page.PageManage')->with('arrPage', $data)->with('link', $link);
         }
+        
     }
     
     public function getFillterPage() {

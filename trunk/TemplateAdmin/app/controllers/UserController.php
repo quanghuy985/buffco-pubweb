@@ -17,9 +17,9 @@ class UserController extends Controller {
         $link = $check->links();
         //var_dump($check);
         if($msg!=''){
-            return View::make('backend.UserManage')->with('arrUser', $check)->with('link',$link)->with('msg',$msg);
+            return View::make('backend.user.UserManage')->with('arrUser', $check)->with('link',$link)->with('msg',$msg);
         }else{
-            return View::make('backend.UserManage')->with('arrUser', $check)->with('link',$link);
+            return View::make('backend.user.UserManage')->with('arrUser', $check)->with('link',$link);
         }
     }
 
@@ -27,7 +27,7 @@ class UserController extends Controller {
         $tblUserModel = new tblUserModel();
         $userdata = $tblUserModel->getUserById(Input::get('id'));
         //echo count($userdata);
-        return View::make('backend.UserManage')->with('arrayUsers', $userdata);
+        return View::make('backend.user.UserManage')->with('arrayUsers', $userdata);
     }
     
     public function postUpdateUser() {
@@ -61,7 +61,7 @@ class UserController extends Controller {
         $tblUserModel = new tblUserModel();
         $data = $tblUserModel->FindUser('', 10, 'id', '');
         $link = $data->links();
-        return View::make('backend.Userajax')->with('arrayUsers', $data)->with('link', $link);
+        return View::make('backend.user.Userajax')->with('arrayUsers', $data)->with('link', $link);
     }
     
     public function postUserActive() {
@@ -69,7 +69,7 @@ class UserController extends Controller {
         $tblUserModel->UpdateUser(Input::get('id'), '', '', '', '', '', '', Input::get('status'));
         $UserData = $tblUserModel->selectAll(10);
         $link = $UserData->links();
-        return View::make('backend.Userajax')->with('arrayUsers', $UserData)->with('link', $link);
+        return View::make('backend.user.Userajax')->with('arrayUsers', $UserData)->with('link', $link);
     }
 
     public function postDeleteUser() {
@@ -78,14 +78,14 @@ class UserController extends Controller {
             $tblUserModel->DeleteUserById(Input::get('id'));
             $UserData = $tblUserModel->selectAll(10);
             $link = $UserData->links();
-            return View::make('backend.Userajax')->with('arrayUsers', $UserData)->with('link', $link);
+            return View::make('backend.user.Userajax')->with('arrayUsers', $UserData)->with('link', $link);
         
     }
 
     
 
     public function getAddUser() {
-        return View::make('backend.UserManage');
+        return View::make('backend.user.UserManage');
     }
 
     public function postAddUser() {
@@ -101,7 +101,7 @@ class UserController extends Controller {
             "status"=>"required"
         );
         if ($tblUserModel->CheckUserExist(Input::get('userEmail'))) {
-            return View::make('backend.UserManage')->with('msg', "Email đã được sử dụng! Vui lòng nhập email khác");
+            return View::make('backend.user.UserManage')->with('msg', "Email đã được sử dụng! Vui lòng nhập email khác");
         } else {
             if (!Validator::make(Input::all(), $rules)->fails()) {
                 $verify = str_random(10);
@@ -118,7 +118,7 @@ class UserController extends Controller {
                 
                 return Redirect::action('UserController@getUserView',array('msg'=>'them moi thanh cong'));
             } else {
-                return View::make('backend.UserManage')->with('msg', "Các thông tin nhập không hợp lệ");
+                return View::make('backend.user.UserManage')->with('msg', "Các thông tin nhập không hợp lệ");
             }
         }
     }
@@ -128,12 +128,12 @@ class UserController extends Controller {
             $tblUserModel = new tblUserModel();
             $check = $tblUserModel->kichhoat($email, $verifycode);
             if ($check != 0) {
-                return View::make('backend.UserManage')->with('msg', 'Chúc mừng bạn đã kích hoạt thành công !');
+                return View::make('backend.user.UserManage')->with('msg', 'Chúc mừng bạn đã kích hoạt thành công !');
             } else {
-                return View::make('backend.UserManage')->with('msg', 'Kích hoạt thất bại vui lòng liên hệ hotline để chúng tôi hỗ trợ bạn !');
+                return View::make('backend.user.UserManage')->with('msg', 'Kích hoạt thất bại vui lòng liên hệ hotline để chúng tôi hỗ trợ bạn !');
             }
         } else {
-            return View::make('backend.UserManage')->with('msg', 'Liên kết đã hết hạn sử dụng');
+            return View::make('backend.user.UserManage')->with('msg', 'Liên kết đã hết hạn sử dụng');
         }
     }
     
@@ -148,7 +148,7 @@ class UserController extends Controller {
         $link = $data->links();
         Session::forget('keywordsearch');
         Session::push('keywordsearch', Input::get('keywordsearch'));
-        return View::make('backend.UserManage')->with('arrUser', $data)->with('link', $link);
+        return View::make('backend.user.UserManage')->with('arrUser', $data)->with('link', $link);
     }
 
     public function postAjaxsearch() {
@@ -162,7 +162,7 @@ class UserController extends Controller {
         $link = $data->links();
         Session::forget('keywordsearch');
         Session::push('keywordsearch', Input::get('keywordsearch'));
-        return View::make('backend.Userajax')->with('arrayUsers', $data)->with('link', $link);
+        return View::make('backend.user.Userajax')->with('arrayUsers', $data)->with('link', $link);
     }
     
     public function getFillterUser() {
@@ -171,7 +171,7 @@ class UserController extends Controller {
         $link = $data->links();
         Session::forget('oderbyoption1');
         Session::push('oderbyoption1', Input::get('oderbyoption1'));
-        return View::make('backend.UserManage')->with('arrUser', $data)->with('link', $link);
+        return View::make('backend.user.UserManage')->with('arrUser', $data)->with('link', $link);
     }
 
     public function postFillterUser() {
@@ -184,7 +184,7 @@ class UserController extends Controller {
     }
 
     public function postAjaxpagion() {
-        if (Session::has('keywordsearch') && Input::get('link') != '') {
+        if (Session::has('keywordsearch') && Input::get('page') != '') {
             $keyw = Session::get('keywordsearch');
             $tblUserModel = new tblUserModel();
             $data = '';
@@ -195,15 +195,23 @@ class UserController extends Controller {
                 $data = $tblUserModel->FindUser($keyw[0], 10, 'id', '');
             }
             $link = $data->links();
-            return View::make('backend.Userajax')->with('arrayUsers', $data)->with('link', $link);
-        } else {
+            return View::make('backend.user.Userajax')->with('arrayUsers', $data)->with('link', $link);
+        } else if(!Session::has('keywordsearch') && Input::get('page') != ''){
             Session::forget('keywordsearch');
             $tblUserModel = new tblUserModel();
             $tatus = Session::get('oderbyoption1');
-            $data = $tblUserModel->FindUser('', 10, 'id', $tatus[0]);
+            $data = $tblUserModel->FindUser('', 5, 'id', $tatus[0]);
             $link = $data->links();
-            return View::make('backend.Userajax')->with('arrayUsers', $data)->with('link', $link);
+            return View::make('backend.user.Userajax')->with('arrayUsers', $data)->with('link', $link);
+        } else {
+            $tblUserModel = new tblUserModel();
+            //$tatus = Session::get('oderbyoption1');
+            $data = $tblUserModel->selectAllUser(10, 'id');
+            $link = $data->links();
+            return View::make('backend.user.UserManage')->with('arrUser', $data)->with('link', $link);
         }
+            
+        
     }
 
 }

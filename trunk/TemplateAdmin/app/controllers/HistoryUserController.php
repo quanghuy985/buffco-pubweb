@@ -32,7 +32,7 @@ class HistoryUserController extends Controller {
             }
         }
         $objHistory = new tblHistoryUserModel();
-        $data = $objHistory->findHistory('', 5, 'id', '');
+        $data = $objHistory->findHistory('', 10, 'id', '');
         $link = $data->links();
         return View::make('backend.historyuser.HistoryUserajax')->with('arrayHistory', $data)->with('link', $link);
     }
@@ -58,9 +58,9 @@ class HistoryUserController extends Controller {
         $objHistory = new tblHistoryUserModel();
         if (Session::has('oderbyoption1')) {
             $tatus = Session::get('oderbyoption1');
-            $data = $objHistory->findHistory(Input::get('keywordsearch'), 10, 'id', $tatus[0]);
+            $data = $objHistory->SearchHistory(Input::get('keywordsearch'), 10, 'id', $tatus[0]);
         } else {
-            $data = $objHistory->findHistory(Input::get('keywordsearch'), 10, 'id', '');
+            $data = $objHistory->SearchHistory(Input::get('keywordsearch'), 10, 'id', '');
         }
         //  $data = $objGsp->FindProduct(Input::get('keywordsearch'), 10, 'id', '');
         // $data->setBaseUrl('view');
@@ -74,9 +74,9 @@ class HistoryUserController extends Controller {
         $objHistory = new tblHistoryUserModel();
         if (Session::has('oderbyoption1')) {
             $tatus = Session::get('oderbyoption1');
-            $data = $objHistory->findHistory(Input::get('keywordsearch'), 10, 'id', $tatus[0]);
+            $data = $objHistory->SearchHistory(Input::get('keywordsearch'), 10, 'id', $tatus[0]);
         } else {
-            $data = $objHistory->findHistory(Input::get('keywordsearch'), 10, 'id', '');
+            $data = $objHistory->SearchHistory(Input::get('keywordsearch'), 10, 'id', '');
         }
         //  $data = $objGsp->FindProduct(Input::get('keywordsearch'), 10, 'id', '');
         // $data->setBaseUrl('view');
@@ -99,14 +99,22 @@ class HistoryUserController extends Controller {
             }
             $link = $data->links();
             return View::make('backend.historyuser.HistoryUserajax')->with('arrayHistory', $data)->with('link', $link);
-        } else {
+        } else if(!Session::has('keywordsearch') && Input::get('page') != ''){
             Session::forget('keywordsearch');
             $objHistory = new tblHistoryUserModel();
             $tatus = Session::get('oderbyoption1');
             $data = $objHistory->findHistory('', 10, 'id', $tatus[0]);
             $link = $data->links();
             return View::make('backend.historyuser.HistoryUserajax')->with('arrayHistory', $data)->with('link', $link);
+        } else {
+            $objHistory = new tblHistoryUserModel();
+            //$tatus = Session::get('oderbyoption1');
+            $data = $objHistory->selectAllHistory(10, 'id'); 
+            $link = $data->links();
+            return View::make('backend.historyuser.HistoryManage')->with('arrHistory', $data)->with('link', $link);
         }
+            
+        
     }
     
     public function getFillterHistory() {

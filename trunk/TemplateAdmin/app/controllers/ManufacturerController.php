@@ -14,7 +14,7 @@ class ManufacturerController extends Controller {
 
     public function getManufactureView($msg='') {
         $objManufactuer = new tblManufacturerModel();
-        $check = $objManufactuer->selectAllManufacturer(5,'id');        
+        $check = $objManufactuer->selectAllManufacturer(10,'id');        
         //var_dump($check);
         $link = $check->links();
         if($msg!=''){
@@ -104,7 +104,7 @@ class ManufacturerController extends Controller {
             }
         }
         $objManufactuer = new tblManufacturerModel();
-        $data = $objManufactuer->findManufacturer('', 5, 'id', '');
+        $data = $objManufactuer->findManufacturer('', 10, 'id', '');
         $link = $data->links();
         return View::make('backend.manufacture.Manufacturerajax')->with('arrayManuf', $data)->with('link', $link);
     }
@@ -170,14 +170,22 @@ class ManufacturerController extends Controller {
             }
             $link = $data->links();
             return View::make('backend.manufacture.Manufacturerajax')->with('arrayManuf', $data)->with('link', $link);
-        } else {
+        } else if(!Session::has('keywordsearch') && Input::get('page') != ''){
             Session::forget('keywordsearch');
             $objManufactuer = new tblManufacturerModel();
             $tatus = Session::get('oderbyoption1');
             $data = $objManufactuer->findManufacturer('', 10, 'id', $tatus[0]);
             $link = $data->links();
             return View::make('backend.manufacture.Manufacturerajax')->with('arrayManuf', $data)->with('link', $link);
+        } else {
+            $objManufactuer = new tblManufacturerModel();
+            //$tatus = Session::get('oderbyoption1');
+            $data = $objManufactuer->selectAllManufacturer(10, 'id');
+            $link = $data->links();
+            return View::make('backend.project.ManufacturerManage')->with('arrayManufacturer', $data)->with('link', $link);
         }
+            
+        
     }
     
     public function getFillterManufacturer() {

@@ -44,9 +44,15 @@ class ProjectController extends Controller {
         if (!Validator::make(Input::all(), $rules)->fails()) {
             $from = strtotime(Input::get('from'));
             $to = strtotime(Input::get('to'));
+            $objHistoryAdmin = new tblHistoryAdminModel(); 
             if($from>$to){
                 return Redirect::action('ProjectController@getProjectView',array('msg'=>'Ngày bắt đầu không được lớn hơn ngày kết thúc'));
             }else{
+                if(Session::has('adminSession')){
+                    Session::get('adminSession');
+                    $id = $objadmin[0]->id;
+                    $objHistoryAdmin->addHistory($id, 'Edit project', 0);    
+                }
                 $objProject->updateProject(Input::get('idproject'),$from, $to, Input::get('description'), Input::get('content'), Input::get('status'));            
                 return Redirect::action('ProjectController@getProjectView',array('msg'=>'cap nhat thanh cong'));
             }
@@ -76,13 +82,22 @@ class ProjectController extends Controller {
         );
         $objProject = new tblProjectModel();
         
+        
         if (!Validator::make(Input::all(), $rules)->fails()) {
             $from = strtotime(Input::get('from'));
             $to = strtotime(Input::get('to'));
+            $objHistoryAdmin = new tblHistoryAdminModel();           
+            
             if($from>$to){
                 return Redirect::action('ProjectController@getProjectView',array('msg'=>'Ngày bắt đầu không được lớn hơn ngày kết thúc'));
-            }else{
+            }else{  
+                if(Session::has('adminSession')){
+                    Session::get('adminSession');
+                    $id = $objadmin[0]->id;
+                    $objHistoryAdmin->addHistory($id, 'Them project', 0);    
+                }
                 $objProject->addProject($from, $to, Input::get('description'), Input::get('content'), Input::get('status'));      
+                
                 return Redirect::action('ProjectController@getProjectView',array('msg'=>'them moi thanh cong'));
             }
         } else {
@@ -96,6 +111,11 @@ class ProjectController extends Controller {
             if ($item != '') {
                 $objProject = new tblProjectModel();
                 $objProject->deleteProject($item);
+                if(Session::has('adminSession')){
+                    Session::get('adminSession');
+                    $id = $objadmin[0]->id;
+                    $objHistoryAdmin->addHistory($id, 'Xoa project', 0);    
+                }
             }
         }
         $objProject = new tblProjectModel();
@@ -107,7 +127,11 @@ class ProjectController extends Controller {
     public function postDeleteProject(){
         $objProject = new tblProjectModel();        
         $objProject->deleteProject(Input::get('id'));
-        
+        if(Session::has('adminSession')){
+                    Session::get('adminSession');
+                    $id = $objadmin[0]->id;
+                    $objHistoryAdmin->addHistory($id, 'Xoa project', 0);    
+                }
         $arrayProject = $objProject->selectAllProject(10,'id');        
         $link = $arrayProject->links();
         return View::make('backend.project.Projectajax')->with('dataProject', $arrayProject)->with('link', $link);
@@ -116,6 +140,11 @@ class ProjectController extends Controller {
     public function postProjectActive() {
         $objProject = new tblProjectModel();
         $objProject->updateProject(Input::get('id'),'', '', '', '', Input::get('status'));
+        if(Session::has('adminSession')){
+                    Session::get('adminSession');
+                    $id = $objadmin[0]->id;
+                    $objHistoryAdmin->addHistory($id, 'active project', 0);    
+                }
         $arrayProject = $objProject->selectAll(10);
         $link = $arrayProject->links();
         return View::make('backend.project.Projectajax')->with('dataProject', $arrayProject)->with('link', $link);
@@ -125,9 +154,9 @@ class ProjectController extends Controller {
         $objProject = new tblProjectModel();
         if (Session::has('oderbyoption1')) {
             $tatus = Session::get('oderbyoption1');
-            $data = $objProject->SearchProject(Input::get('keywordsearch'), 10, 'id', $tatus[0]);
+            $data = $objProject->SearchProject(Input::get('keywordsearch'), 5, 'id', $tatus[0]);
         } else {
-            $data = $objProject->SearchProject(Input::get('keywordsearch'), 10, 'id', '');
+            $data = $objProject->SearchProject(Input::get('keywordsearch'), 5, 'id', '');
         }
         //  $data = $objGsp->FindProduct(Input::get('keywordsearch'), 10, 'id', '');
         // $data->setBaseUrl('view');
@@ -141,9 +170,9 @@ class ProjectController extends Controller {
         $objProject = new tblProjectModel();
         if (Session::has('oderbyoption1')) {
             $tatus = Session::get('oderbyoption1');
-            $data = $objProject->SearchProject(Input::get('keywordsearch'), 10, 'id', $tatus[0]);
+            $data = $objProject->SearchProject(Input::get('keywordsearch'), 5, 'id', $tatus[0]);
         } else {
-            $data = $objProject->SearchProject(Input::get('keywordsearch'), 10, 'id', '');
+            $data = $objProject->SearchProject(Input::get('keywordsearch'), 5, 'id', '');
         }
         //  $data = $objGsp->FindProduct(Input::get('keywordsearch'), 10, 'id', '');
         // $data->setBaseUrl('view');
@@ -160,26 +189,32 @@ class ProjectController extends Controller {
             $data = '';
             if (Session::has('oderbyoption1')) {
                 $tatus = Session::get('oderbyoption1');
-                $data = $objProject->findProject($keyw[0], 10, 'id', $tatus[0]);
+                $data = $objProject->findProject($keyw[0], 5, 'id', $tatus[0]);
             } else {
-                $data = $objProject->findProject($keyw[0], 10, 'id', '');
+                $data = $objProject->findProject($keyw[0], 5, 'id', '');
             }
             $link = $data->links();
             return View::make('backend.project.Projectajax')->with('dataProject', $data)->with('link', $link);
-        } else {
+        } else if(!Session::has('keywordsearch') && Input::get('page') != ''){
             Session::forget('keywordsearch');
             $objProject = new tblProjectModel();
             $tatus = Session::get('oderbyoption1');
-            $data = $objProject->findProject('', 10, 'id', $tatus[0]);
+            $data = $objProject->findProject('', 5, 'id', $tatus[0]);
             $link = $data->links();
             return View::make('backend.project.Projectajax')->with('dataProject', $data)->with('link', $link);
+        } else {
+            $objProject = new tblProjectModel();
+            //$tatus = Session::get('oderbyoption1');
+            $data = $objProject->selectAllProject(5, 'id');
+            $link = $data->links();
+            return View::make('backend.project.ProjectManage')->with('arrayProject', $data)->with('link', $link);
         }
     }
     
     public function getFillterProject() {
         Session::forget('keywordsearch');
         $objProject = new tblProjectModel();
-        $data = $objProject->findProject('', 10, 'id', Input::get('oderbyoption1'));
+        $data = $objProject->findProject('', 5, 'id', Input::get('oderbyoption1'));
         
         //echo count($data);
         $link = $data->links();
@@ -191,7 +226,7 @@ class ProjectController extends Controller {
     public function postFillterProject() {
         Session::forget('keywordsearch');
         $objProject = new tblProjectModel();
-        $data = $objProject->findProject('', 10, 'id', Input::get('oderbyoption1'));
+        $data = $objProject->findProject('', 5, 'id', Input::get('oderbyoption1'));
         
         //echo count($data);
         $link = $data->links();

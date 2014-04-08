@@ -51,9 +51,9 @@ class tblManufacturerModel extends Eloquent{
     public function findManufacturer($keyword, $per_page, $orderby, $status) {
         $manufarray = '';
         if ($status == '') {
-            $manufarray = DB::table('tblmanufacturer')->select('tblmanufacturer.*')->where('tblmanufacturer.manufacturerDescription', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);
+            $manufarray = DB::table('tblmanufacturer')->select('tblmanufacturer.*')->orderBy($orderby, 'desc')->paginate($per_page);
         } else {
-            $manufarray = DB::table('tblmanufacturer')->select('tblmanufacturer.*')->where('tblmanufacturer.manufacturerDescription', 'LIKE', '%' . $keyword . '%')->where('tblmanufacturer.status', '=', $status)->orderBy($orderby, 'desc')->paginate($per_page);
+            $manufarray = DB::table('tblmanufacturer')->select('tblmanufacturer.*')->where('tblmanufacturer.status', '=', $status)->orderBy($orderby, 'desc')->paginate($per_page);
         }
         return $manufarray;
     }

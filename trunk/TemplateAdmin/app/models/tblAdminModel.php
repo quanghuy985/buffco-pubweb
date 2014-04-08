@@ -45,6 +45,14 @@ class tblAdminModel extends Eloquent {
         }
     }
     
+    public function SearchHistoryAdmin($keyword, $per_page, $orderby, $status) {
+        $historyfarray = '';
+        
+        $historyfarray = DB::table('tbladmin')->join('tbladminhistory','tbladmin.id','=','tbladminhistory.userID')->select('tbladminhistory.id','tbladminhistory.historyContent','tbladminhistory.time','tbladmin.adminEmail','tbladmin.adminName')->where('tbladmin.adminEmail', 'LIKE', '%' . $keyword . '%')->orwhere('tbladmin.adminName', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);
+        
+        return $historyfarray;
+    }
+    
     public function selectHistoryAdmin($id,$perPage){
         $objAdmin = DB::table('tbladmin')->join('tbladminhistory','tbladmin.id','=','tbladminhistory.userID')->select('tbladminhistory.id','tbladminhistory.historyContent','tbladminhistory.time','tbladmin.adminEmail','tbladmin.adminName')->where('tbladmin.id','=',$id)->paginate($perPage);
         return $objAdmin;
@@ -99,6 +107,14 @@ class tblAdminModel extends Eloquent {
     public function findAdmin($keyword, $per_page) {
         $adminarray = DB::table('tblAdmin')->where('adminEmail', 'LIKE', '%' . $keyword . '%')->orWhere('adminName', 'LIKE', '%' . $keyword . '%')->orWhere('status', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
         return $adminarray;
+    }
+    
+    public function SearchProject($keyword, $per_page, $orderby, $status) {
+        $projectfarray = '';
+        
+        $projectfarray = DB::table('tblproject')->select('tblproject.*')->where('tblproject.projectDescription', 'LIKE', '%' . $keyword . '%')->orwhere('tblproject.projectContent', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);
+        
+        return $projectfarray;
     }
 
 }

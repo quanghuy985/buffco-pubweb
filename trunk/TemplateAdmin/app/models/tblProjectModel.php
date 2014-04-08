@@ -51,9 +51,9 @@ class tblProjectModel extends Eloquent {
     public function findProject($keyword, $per_page, $orderby, $status) {
         $projectfarray = '';
         if ($status == '') {
-            $projectfarray = DB::table('tblproject')->select('tblproject.*')->where('tblproject.projectDescription', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);
+            $projectfarray = DB::table('tblproject')->select('tblproject.*')->orderBy($orderby, 'desc')->paginate($per_page);
         } else {
-            $projectfarray = DB::table('tblproject')->select('tblproject.*')->where('tblproject.projectDescription', 'LIKE', '%' . $keyword . '%')->where('tblproject.status', '=', $status)->orderBy($orderby, 'desc')->paginate($per_page);
+            $projectfarray = DB::table('tblproject')->select('tblproject.*')->where('tblproject.status', '=', $status)->orderBy($orderby, 'desc')->paginate($per_page);
         }
         return $projectfarray;
     }
@@ -68,7 +68,7 @@ class tblProjectModel extends Eloquent {
     
     
     public function selectAllProject($per_page,$orderby){
-        $allProject = DB::table('tblproject')->orderBy($orderby, 'desc')->paginate($per_page);
+        $allProject = DB::table('tblproject')->select('tblproject.*')->orderBy($orderby, 'desc')->paginate($per_page);
         return $allProject;
     }
     

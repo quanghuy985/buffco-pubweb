@@ -76,9 +76,9 @@ class tblPageModel extends Eloquent {
     public function FindPage($keyword, $per_page, $orderby, $status) {
         $pagearray = '';
         if ($status == '') {
-            $pagearray = DB::table('tblpage')->select('tblpage.*')->where('tblpage.pageName', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);
+            $pagearray = DB::table('tblpage')->select('tblpage.*')->orderBy($orderby, 'desc')->paginate($per_page);
         } else {
-            $pagearray = DB::table('tblpage')->select('tblpage.*')->where('tblpage.pageName', 'LIKE', '%' . $keyword . '%')->where('tblpage.status', '=', $status)->orderBy($orderby, 'desc')->paginate($per_page);
+            $pagearray = DB::table('tblpage')->select('tblpage.*')->where('tblpage.status', '=', $status)->orderBy($orderby, 'desc')->paginate($per_page);
         }
         return $pagearray;
     }

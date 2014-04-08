@@ -9,7 +9,7 @@
     <div class="contenttitle2">
         <h3>Chỉnh sửa Profile</h3>
     </div>
-    <form class="stdform stdform2"  method="post" action="@if(isset($dataProfile)) {{URL::action('AdminController@postProfileAdmin')}} @else {{URL::action('AdminController@postAddAdmin')}}@endif">
+    <form class="stdform stdform2"  method="post" action="@if(isset($dataProfile)) {{URL::action('AdminController@postProfileAdmin')}} @endif">
         <p>
             <input type="hidden" name="adminEmail" id="status" value="@if(isset($dataProfile)){{$dataProfile->adminEmail}}@endif"/>
             <input type="hidden" name="id" id="idnews" value="@if(isset($AdminData)){{$AdminData->id}}@endif"/>
