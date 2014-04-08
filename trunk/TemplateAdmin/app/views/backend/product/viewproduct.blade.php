@@ -128,7 +128,7 @@
                 <col class="con0">
                 <col class="con1">
                 <col class="con0">
-                <col class="con1">
+               
                 <col class="con0">
                 <col class="con1">
 
@@ -140,7 +140,7 @@
                     <th class="head0">Nhóm</th>
                     <th class="head1">Tên sản phẩm</th>                    
                     <th class="head1">Giá</th>
-                    <th class="head0">Khuyến mại</th>                
+                                   
                     <th class="head0">Trạng thái</th>
                     <th class="head1">Action</th>
                 </tr>
@@ -154,7 +154,7 @@
                     <td>{{$item->cateName}}  </td>
                     <td>{{$item->productName}}</td>                  
                     <td class="center">{{$item->productPrice}} </td>
-                    <td class="center">{{str_limit( $item->promotionName, 35, '...')}}</td>                    
+                                       
                     <td class="center">
                         @if($item->status==0)
                         chờ đăng
