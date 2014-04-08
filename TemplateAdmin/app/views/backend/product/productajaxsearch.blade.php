@@ -5,7 +5,6 @@
                     <td>{{$item->cateName}}  </td>
                     <td>{{$item->productName}}</td>                  
                     <td class="center">{{$item->productPrice}} </td>
-                    <td class="center">{{str_limit( $item->promotionName, 35, '...')}}</td>                    
                     <td class="center">
                         @if($item->status==0)
                         chờ đăng

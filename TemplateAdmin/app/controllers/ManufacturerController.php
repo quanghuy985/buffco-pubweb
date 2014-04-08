@@ -84,7 +84,7 @@ class ManufacturerController extends Controller {
              $selectManu = '<option value="0">---Chọn nhà sản xuất---</option>';           
             foreach ($arrManu as $item) {
                 if (Input::get('manuID')!='' && Input::get('manuID') == $item->id) {
-                    $selectManu.=" <option value='".$item->id."' selected >" . $item->promotionName . "</option>";
+                    $selectManu.=" <option value='".$item->id."' selected >" . $item->manufacturerName . "</option>";
                 } else {
                     $selectManu.=" <option value=".$item->id.">" . $item->manufacturerName . "</option>";
                 }

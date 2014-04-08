@@ -65,6 +65,28 @@ class SizeController extends Controller {
             return Redirect::action('SizeController@getSizeView',array('msg'=>'them moi that bai'));
         }
     }
+     public function postAddSizeAjax() {
+        $rules = array(
+            "sizeName" => "required",            
+            "sizeValue" => "required"
+        );
+        $objSize = new tblSizeModel();
+        
+        if (!Validator::make(Input::all(), $rules)->fails()) {
+            $objSize->addSize(Input::get('sizeName'), ' ', Input::get('sizeValue')); 
+            
+            $tblSize1= new tblSizeModel();
+            $arrSize= $tblSize1->allSize(100);
+            $selectSize = '<option value="">---Chọn size---</option>';
+        foreach ($arrSize as $item) {
+            $selectSize.=" <option value=" . $item->id . ">" . $item->sizeName . "</option>";
+        }
+        return $selectSize;
+        } 
+        else{
+            return 'FALSE';
+        }
+    }
     
     public function postDelmulte() {
         $pieces1 = explode(",", Input::get('multiid'));

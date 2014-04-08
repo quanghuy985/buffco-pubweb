@@ -878,12 +878,45 @@
                         <input type="text"  onkeypress="return event.charCode > 47 && event.charCode < 58;" pattern="[0-9]" name="soluongnhap" id="soluongnhap" placeholder="Số lượng" value="" class="longinput">
                     </span>                 
                 </p>  
+            
+                
                 <p class="stdformbutton">
                     <button class="submit radius2" type="button" id="btnAddStore" value="Thêm mới">Nhập </button>
                     <input type="reset" class="reset radius2" value="Làm mới">
                     <img id="frmStoreLoader" hidden="true" src="{{Asset('adminlib/images/loaders/loader1.gif')}}" alt="" />
                 </p>
             </form>
+                 <div class="contenttitle2">
+                	<h3>Dynamic Table</h3>
+                </div><!--contenttitle-->
+                <table cellpadding="0" cellspacing="0" border="0" class="stdtable" id="dyntable">
+                    <colgroup>
+                        <col class="con0" />
+                        <col class="con1" />
+                        <col class="con0" />
+                        <col class="con1" />
+                        <col class="con0" />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th class="head0">Rendering engine</th>
+                            <th class="head1">Browser</th>
+                            <th class="head0">Platform(s)</th>
+                            <th class="head1">Engine version</th>
+                            <th class="head0">CSS grade</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      
+                        <tr class="gradeA">
+                            <td>Misc</td>
+                            <td>NetFront 3.4</td>
+                            <td>Embedded devices</td>
+                            <td class="center">-</td>
+                            <td class="center">A</td>
+                        </tr>
+                    </tbody>
+                </table>
         </div>
     </div>
 </div>      

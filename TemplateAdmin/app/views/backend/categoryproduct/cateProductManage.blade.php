@@ -172,8 +172,14 @@
         <p>
             <label>Đường dẫn</label>
             <span class="field"><input type="text" name="cateSlug" placeholder="Nhập đường dẫn" value="@if(isset($cateProductData)){{$cateProductData->cateSlug}}@endif" class="longinput"></span>
-        </p>
+        </p>       
         <p>
+            <label>Mô tả</label>
+            <span class="field">
+                <textarea  id="cateDescription" rows="5" name="cateDescription" placeholder="Nhập mô tả">@if(isset($cateProductData)){{$cateProductData->cateDescription}}@endif</textarea>                
+            </span>
+        </p>
+         <p>
             <label>Trạng thái</label>
             <span class="field">
                 <select name="status">
@@ -181,12 +187,6 @@
                     <option value="1" @if(isset($cateProductData)&& $cateProductData->status==1)selected@endif>Kích hoạt</option>
                     <option value="2" @if(isset($cateProductData)&& $cateProductData->status==2)selected@endif>Xóa</option>
                 </select>
-            </span>
-        </p>
-        <p>
-            <label>Mô tả</label>
-            <span class="field">
-                <textarea  id="cateDescription" rows="5" name="cateDescription" placeholder="Nhập mô tả">@if(isset($cateProductData)){{$cateProductData->cateDescription}}@endif</textarea>                
             </span>
         </p>
         <p class="stdformbutton">

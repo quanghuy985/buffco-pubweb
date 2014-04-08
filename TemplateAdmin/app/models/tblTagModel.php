@@ -51,7 +51,10 @@ class tblTagModel extends Eloquent {
         $allTag = DB::table('tbltag')->paginate($per_page);
         return $allTag;
     }
-
+    public function getAllTagDistint() {
+        $allTag = DB::table('tbltag')->groupBy('tagKey')->get();
+        return $allTag;
+    }
     public function getTagByID($tagID) {
         $objTag = DB::table('tbltag')->where('id', '=', $tagID)->get();
         return $objTag;

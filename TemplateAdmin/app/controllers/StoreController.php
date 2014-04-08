@@ -44,7 +44,18 @@ class StoreController extends Controller {
             return Redirect::action('SizeController@getSizeView', array('msg' => 'cap nhat that bai'));
         }
     }
-
+ public function postUpdateSoLuong() {
+        $objStore = new tblStoreModel();
+        $rules = array(
+            "soluongnhap" => "required"
+        );
+        if (!Validator::make(Input::all(), $rules)->fails()) {
+            $objStore->updateStore(Input::get('id'),'','','',  Input::get('soluongnhap'),  Input::get('status'));
+            return 'true';
+        } else {
+           return 'false';
+        }
+    }
     public function getAddStore() {
         return View::make('backend.SizeManage');
     }
@@ -71,26 +82,36 @@ class StoreController extends Controller {
             "proID" => "required",
             "sizeID" => "required",
             "colorID" => "required",
-            "soluongnhap" => "required"
+            "soluongnhap" => "required",
+            "storeStatus"=> "required"
         );
         $objStore = new tblStoreModel();
 
         if (!Validator::make(Input::all(), $rules)->fails()) {
-            $objStore->addStore(Input::get('proID'), Input::get('sizeID'), Input::get('colorID'), Input::get('soluongnhap'), 1);
+            $objStore->addStore(Input::get('proID'), Input::get('sizeID'), Input::get('colorID'), Input::get('soluongnhap'),Input::get('storeStatus') );
             return 'true';
         } else {
             return 'false';
         }
     }
+    public function postStoreByProductIDAjax(){
+        $tblStore= new tblStoreModel();
+        $arrStore= $tblStore->findStoreByProductID(Input::get('proID'));
+        return View::make('backend.product.viewStore')->with('arrStore',$arrStore);
+    }
 
     public function postCheckExitStore() {
         $tblStore = new tblStoreModel();
         $check = $tblStore->findStoreByProductIDAndType(Input::get('proID'), Input::get('sizeID'), Input::get('colorID'));       
-        if (count($check)> 0) {
-            return 1;
-        } else {
-            return 0;
-        }
+       return count($check);
+    }
+    public function postCheckSoLuong() {
+        $tblStore = new tblStoreModel();
+        $check = $tblStore->getStoreById(Input::get('id'));  
+        if($check[0]->soluongban > (int)Input::get('soluongnhap'))
+            return 'true';
+        else
+            return 'false';
     }
 
     public function postDelmulte() {
