@@ -40,12 +40,14 @@
             type: "POST"
         });
         request.done(function(msg) {
-            if (msg != 1) {
-                document.getElementById("newsSlug").value = str + '-' + msg;
-                return false;
-            } else {
-                document.getElementById("newsSlug").value = str;
-                return false;
+            if (msg != '') {
+                if (msg == '0') {
+                    document.getElementById("newsSlug").value = str;
+                    return false;
+                } else {
+                    document.getElementById("newsSlug").value = str + '-' + msg;
+                    return false;
+                }
             }
         });
     }

@@ -79,9 +79,14 @@
                 });
         request.done(function(msg) {
             if (msg != '') {
-                document.getElementById("catenewsSlug").value = str + '-' + msg;
+                if (msg == '0') {
+                    document.getElementById("catenewsSlug").value = str;
+                    return false;
+                } else{
+                    document.getElementById("catenewsSlug").value = str + '-' + msg;
                 return false;
             }
+        }
         });
     }
 </script>

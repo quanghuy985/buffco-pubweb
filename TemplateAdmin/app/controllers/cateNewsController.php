@@ -41,7 +41,7 @@ class cateNewsController extends Controller {
         $dataedit = $tblCateNewsModel->findCateNewsByID(Input::get('id'));
         if ($dataedit->catenewsParent == 0) {
             $tblCateNewsModel->deleteCateNewsChild($dataedit->id);
-             $historyContent = 'Xóa danh mục tin tức : ' . $dataedit->cateNewsName;
+            $historyContent = 'Xóa danh mục tin tức : ' . $dataedit->cateNewsName;
             $objAdmin = Session::get('adminSession');
             $tblHistoryAdminModel = new tblHistoryAdminModel();
             $tblHistoryAdminModel->addHistory($objAdmin[0]->id, $historyContent, '0');
@@ -65,9 +65,9 @@ class cateNewsController extends Controller {
         $tblCateNews->updateCategoryNews(Input::get('id'), '', '', '', '', Input::get('status'));
         $dataedit = $tblCateNewsModel->findCateNewsByID(Input::get('id'));
         $historyContent = 'Kích hoạt danh mục tin tức : ' . $dataedit->cateNewsName;
-            $objAdmin = Session::get('adminSession');
-            $tblHistoryAdminModel = new tblHistoryAdminModel();
-            $tblHistoryAdminModel->addHistory($objAdmin[0]->id, $historyContent, '0');
+        $objAdmin = Session::get('adminSession');
+        $tblHistoryAdminModel = new tblHistoryAdminModel();
+        $tblHistoryAdminModel->addHistory($objAdmin[0]->id, $historyContent, '0');
         $cateNewsData = $tblCateNews->allCateNew(10);
         $link = $cateNewsData->links();
         return View::make('backend.tintuc.cateNewsAjax')->with('arrayCateNews', $cateNewsData)->with('link', $link);
@@ -121,14 +121,10 @@ class cateNewsController extends Controller {
 
     public function postCheckSlug() {
         $tblCateNewsModel = new tblCategoryNewsModel();
-        $arrCateNews = $tblCateNewsModel->allCateNewList();
         $count = 0;
-        foreach ($arrCateNews as $itemCateNews) {
-            if (Input::get('slug') == $itemCateNews->catenewsSlug) {
-                $count++;
-            }
-        }
-        return $count + 1;
+        $slugcheck = Input::get('catenewsSlug');
+        $count = $tblCateNewsModel->countSlug($slugcheck);
+        return $count;
     }
 
 }
