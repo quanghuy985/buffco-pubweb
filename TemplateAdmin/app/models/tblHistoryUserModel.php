@@ -36,10 +36,18 @@ class tblHistoryUserModel extends Eloquent {
     public function findHistory($keyword, $per_page, $orderby, $status) {
         $historyarray = '';
         if ($status == '') {
-            $historyarray = DB::table('tblhistory')->join('tblusers','tblhistory.userID','=','tblusers.id')->select('tblhistory.id','tblhistory.historyContent','tblhistory.time','tblhistory.status','tblusers.userEmail','tblusers.userAddress')->where('tblhistory.userID', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);
+            $historyarray = DB::table('tblhistory')->join('tblusers','tblhistory.userID','=','tblusers.id')->select('tblhistory.id','tblhistory.historyContent','tblhistory.time','tblhistory.status','tblusers.userEmail','tblusers.userAddress')->orderBy($orderby, 'desc')->paginate($per_page);
         } else {
-            $historyarray = DB::table('tblhistory')->join('tblusers','tblhistory.userID','=','tblusers.id')->select('tblhistory.id','tblhistory.historyContent','tblhistory.time','tblhistory.status','tblusers.userEmail','tblusers.userAddress')->where('tblhistory.userID', 'LIKE', '%' . $keyword . '%')->where('tblhistory.status', '=', $status)->orderBy($orderby, 'desc')->paginate($per_page);
+            $historyarray = DB::table('tblhistory')->join('tblusers','tblhistory.userID','=','tblusers.id')->select('tblhistory.id','tblhistory.historyContent','tblhistory.time','tblhistory.status','tblusers.userEmail','tblusers.userAddress')->where('tblhistory.status', '=', $status)->orderBy($orderby, 'desc')->paginate($per_page);
         }
+        return $historyarray;
+    }
+    
+    public function SearchHistory($keyword, $per_page, $orderby, $status) {
+        $historyarray = '';
+        
+        $historyarray = DB::table('tblhistory')->join('tblusers','tblhistory.userID','=','tblusers.id')->select('tblhistory.id','tblhistory.historyContent','tblhistory.time','tblhistory.status','tblusers.userEmail','tblusers.userAddress')->where('tblusers.userEmail', 'LIKE', '%' . $keyword . '%')->orwhere('tblusers.userAddress', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);
+       
         return $historyarray;
     }
     

@@ -75,9 +75,9 @@ class tblSizeModel extends Eloquent {
     public function FindSize($keyword, $per_page, $orderby, $status) {
         $sizearray = '';
         if ($status == '') {
-            $sizearray = DB::table('tblsize')->select('tblsize.*')->where('tblsize.sizeName', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);
+            $sizearray = DB::table('tblsize')->select('tblsize.*')->orderBy($orderby, 'desc')->paginate($per_page);
         } else {
-            $sizearray = DB::table('tblsize')->select('tblsize.*')->where('tblsize.sizeName', 'LIKE', '%' . $keyword . '%')->where('tblsize.status', '=', $status)->orderBy($orderby, 'desc')->paginate($per_page);
+            $sizearray = DB::table('tblsize')->select('tblsize.*')->where('tblsize.status', '=', $status)->orderBy($orderby, 'desc')->paginate($per_page);
         }
         return $sizearray;
     }

@@ -75,7 +75,7 @@ class SizeController extends Controller {
             }
         }
         $objSize = new tblSizeModel();
-        $data = $objSize->FindSize('', 5, 'id', '');
+        $data = $objSize->FindSize('', 10, 'id', '');
         $link = $data->links();
         return View::make('backend.size.Sizeajax')->with('arraySize', $data)->with('link', $link);
     }
@@ -142,14 +142,22 @@ class SizeController extends Controller {
             }
             $link = $data->links();
             return View::make('backend.size.Sizeajax')->with('arraySize', $data)->with('link', $link);
-        } else {
+        } else if(!Session::has('keywordsearch') && Input::get('page') != ''){
             Session::forget('keywordsearch');
             $objSize = new tblSizeModel();
             $tatus = Session::get('oderbyoption1');
             $data = $objSize->FindSize('', 10, 'id', $tatus[0]);
             $link = $data->links();
             return View::make('backend.size.Sizeajax')->with('arraySize', $data)->with('link', $link);
+        } else {
+            $objSize = new tblSizeModel();
+            //$tatus = Session::get('oderbyoption1');
+            $data = $objSize->selectAllSize(10, 'id');
+            $link = $data->links();
+            return View::make('backend.size.SizeManage')->with('arrSize', $data)->with('link', $link);
         }
+            
+        
     }
     
     public function getFillterSize() {

@@ -1,6 +1,43 @@
 @extends("templateadmin2.mainfire")
 @section("contentadmin")
+<script>
+    jQuery(document).ready(function() {
 
+    
+    
+    jQuery('#searchblur').keypress(function(e) {
+    // Enter pressed?
+    if (e.which == 10 || e.which == 13) {
+    var request = jQuery.ajax({
+    url: "{{URL::action('AdminController@postAjaxsearch')}}?keywordsearch=" + jQuery('#searchblur').val(),
+            type: "POST",
+            dataType: "html"
+    });
+            request.done(function(msg) {
+            jQuery('#tableproduct').html(msg);
+            });
+    }
+    });      
+    });
+    
+    function phantrang(page) {
+            var request = jQuery.ajax({
+            url: "{{URL::action('AdminController@postAjaxpagionHistory')}}?page=" + page,
+                    type: "POST",
+                    dataType: "html"
+            });
+                    request.done(function(msg) {
+                    jQuery('#tableproduct').html(msg);
+                    });
+    }
+            
+    
+    
+            
+    
+    
+    
+</script>
 <div class="pageheader notab">
     <h1 class="pagetitle">Quản lý lịch sử</h1>
     <span class="pagedesc">Quản lý lịch sử</span>
@@ -17,7 +54,7 @@
         <div class="contenttitle2">
             <h3>Bảng quản lý các lịch sử</h3>
         </div>            
-        
+        <div class="dataTables_filter" id="searchformfile"><label>Search: <input id="searchblur" name="searchblur" style="border: 1px solid #ddd;padding: 7px 5px 8px 5px;width: 200px;background: #fff;" type="text"></label></div>
         <table cellpadding="0" cellspacing="0" border="0" id="table2" class="stdtable stdtablecb">
             <colgroup>
                 

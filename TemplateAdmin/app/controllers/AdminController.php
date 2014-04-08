@@ -44,7 +44,7 @@ class AdminController extends BaseController {
             $data = $tblAdminModel->findAdminByEmail($email);
             return View::make('backend.admin.adminEditProfile')->with('dataProfile', $data[0]);
         } else {
-            return View::make('backend.admin.adminManage')->with('thongbao', 'Co loi xay ra');
+            return View::make('templateadmin2.loginfire')->with('thongbao', 'Co loi xay ra');
         }
     }
 
@@ -208,6 +208,34 @@ class AdminController extends BaseController {
         $link = $arrAdmin->links();
         return View::make('backend.admin.adminAjax')->with('arrayAdmin', $arrAdmin)->with('link', $link);
     }
+    
+    public function postAjaxpagionHistory() {
+        if (Session::has('keywordsearch') && Input::get('page') != '' && Session::has('adminSession')) {
+            $keyw = Session::get('keywordsearch');
+            $tblAdminModel = new tblAdminModel(); 
+            $data = '';
+            if (Session::has('oderbyoption1')) {
+                $tatus = Session::get('oderbyoption1');
+                $data = $tblAdminModel->SearchHistoryAdmin($keyw[0], 10, 'id', $tatus[0]);
+            } else {
+                $data = $tblAdminModel->SearchHistoryAdmin($keyw[0], 10, 'id', '');
+            }
+            $link = $data->links();
+            return View::make('backend.admin.adminHistoryAjax')->with('arrHistory', $data)->with('link', $link);
+        }else if(!Session::has('keywordsearch') && Input::get('page') != '' && Session::has('adminSession')){
+            $tblAdminModel = new tblAdminModel();
+            $objadmin = Session::get('adminSession');
+        //var_dump($objadmin);
+            $id = $objadmin[0]->id;
+            //$tatus = Session::get('oderbyoption1');
+            
+            $data = $tblAdminModel->selectHistoryAdmin($id,2 );
+            $link = $data->links();
+            return View::make('backend.admin.adminHistoryAjax')->with('arrHistory', $data)->with('link', $link);
+        }
+        
+        
+    }
 
     public function postDeleteAdmin() {
         $tblAdminModel = new tblAdminModel();
@@ -228,6 +256,38 @@ class AdminController extends BaseController {
         $arrAdmin = $tblAdminModel->allAdmin(10);
         $link = $arrAdmin->links();
         return View::make('backend.admin.adminAjax')->with('arrayAdmin', $arrAdmin)->with('link', $link);
+    }
+    
+    public function getAjaxsearch() {
+        $tblAdminModel = new tblAdminModel();
+        if (Session::has('oderbyoption1')) {
+            $tatus = Session::get('oderbyoption1');
+            $data = $tblAdminModel->SearchHistoryAdmin(Input::get('keywordsearch'), 10, 'id', $tatus[0]);
+        } else {
+            $data = $tblAdminModel->SearchHistoryAdmin(Input::get('keywordsearch'), 10, 'id', '');
+        }
+        //  $data = $objGsp->FindProduct(Input::get('keywordsearch'), 10, 'id', '');
+        // $data->setBaseUrl('view');
+        $link = $data->links();
+        Session::forget('keywordsearch');
+        Session::push('keywordsearch', Input::get('keywordsearch'));
+        return View::make('backend.admin.adminHistoryAjax')->with('arrHistory', $data)->with('link', $link);
+    }
+    
+    public function postAjaxsearch() {
+        $tblAdminModel = new tblAdminModel();
+        if (Session::has('oderbyoption1')) {
+            $tatus = Session::get('oderbyoption1');
+            $data = $tblAdminModel->SearchHistoryAdmin(Input::get('keywordsearch'), 10, 'id', $tatus[0]);
+        } else {
+            $data = $tblAdminModel->SearchHistoryAdmin(Input::get('keywordsearch'), 10, 'id', '');
+        }
+        //  $data = $objGsp->FindProduct(Input::get('keywordsearch'), 10, 'id', '');
+        // $data->setBaseUrl('view');
+        $link = $data->links();
+        Session::forget('keywordsearch');
+        Session::push('keywordsearch', Input::get('keywordsearch'));
+        return View::make('backend.admin.adminHistoryAjax')->with('arrHistory', $data)->with('link', $link);
     }
 
 }

@@ -136,9 +136,9 @@ class tblUserModel extends Eloquent {
     public function FindUser($keyword, $per_page, $orderby, $status) {
         $adminarray = '';
         if ($status == '') {
-            $adminarray = DB::table('tblusers')->select('tblusers.*')->where('tblusers.userEmail', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);
+            $adminarray = DB::table('tblusers')->select('tblusers.*')->orderBy($orderby, 'desc')->paginate($per_page);
         } else {
-            $adminarray = DB::table('tblusers')->select('tblusers.*')->where('tblusers.userEmail', 'LIKE', '%' . $keyword . '%')->where('tblusers.status', '=', $status)->orderBy($orderby, 'desc')->paginate($per_page);
+            $adminarray = DB::table('tblusers')->select('tblusers.*')->where('tblusers.status', '=', $status)->orderBy($orderby, 'desc')->paginate($per_page);
         }
         return $adminarray;
     }

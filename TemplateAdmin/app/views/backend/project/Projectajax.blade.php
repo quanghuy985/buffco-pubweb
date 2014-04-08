@@ -34,6 +34,6 @@
                 @endforeach
                 @if($link!='')
                 <tr>
-                    <td colspan="7">{{$link}}</td>
+                    <td colspan="8">{{$link}}</td>
                 </tr>
                 @endif
