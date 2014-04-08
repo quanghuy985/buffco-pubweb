@@ -6,7 +6,7 @@ class tblHistoryAdminModel extends Eloquent {
     public $timestamps = false;
 
     public function addHistory($userID,$content,$status){
-        $this->userID = $userID;
+        $this->adminID = $userID;
         $this->historyContent = $content;
         $this->time = time();
         $this->status = 1;

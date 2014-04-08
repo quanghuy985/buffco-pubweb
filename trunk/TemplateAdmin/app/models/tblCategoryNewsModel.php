@@ -77,6 +77,14 @@ class tblCategoryNewsModel extends Eloquent {
         $arrCateNews = DB::table('tblCateNews')->paginate($per_page);
         return $arrCateNews;
     }
+     public function allCateNewList() {
+        $arrCateNews = DB::table('tblCateNews')->get();
+        return $arrCateNews;
+    }
+     public function countSlug($slug) {
+        $objCateNews = DB::table('tblCateNews')->where('catenewsSlug', 'Like', $slug.'%')->count();
+        return $objCateNews;
+    }
 
     public function findCateNewsByID($id) {
         $objCateNews = DB::table('tblCateNews')->where('id', '=', $id)->get();

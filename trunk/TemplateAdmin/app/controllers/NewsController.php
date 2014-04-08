@@ -17,7 +17,7 @@ class NewsController extends Controller {
             $tblPhanQuyenModel = new tblPhanQuyenModel();
             $arrRolesCode = $tblPhanQuyenModel->getRolesCodeByGroupAdmin($groupAdminID);
 
-            if (strpos(serialize($arrRolesCode), 'Xem-Bai') != FALSE) {
+            if (strpos(serialize($arrRolesCode), 'Quan-Ly-Tin-Tuc') != FALSE) {
                 $tblNewsModel = new tblNewsModel();
                 $check = $tblNewsModel->allNews(15, 'id');
                 $link = $check->links();
@@ -105,7 +105,7 @@ class NewsController extends Controller {
                 $groupAdminID = $objAdmin[0]->groupadminID;
                 $tblPhanQuyenModel = new tblPhanQuyenModel();
                 $arrRolesCode = $tblPhanQuyenModel->getRolesCodeByGroupAdmin($groupAdminID);
-                if (strpos(serialize($arrRolesCode), 'Them-Tin-Tuc') != FALSE) {
+                if (strpos(serialize($arrRolesCode), 'Quan-Ly-Tin-Tuc') != FALSE) {
                     $tblNewsModel = new tblNewsModel();
                     $arrNews = $tblNewsModel->getAllNewsList();
                     foreach ($arrNews as $itemNews) {
@@ -146,7 +146,7 @@ class NewsController extends Controller {
                 $groupAdminID = $objAdmin[0]->groupadminID;
                 $tblPhanQuyenModel = new tblPhanQuyenModel();
                 $arrRolesCode = $tblPhanQuyenModel->getRolesCodeByGroupAdmin($groupAdminID);
-                if (strpos(serialize($arrRolesCode), 'Sua-Bai') != FALSE) {
+                if (strpos(serialize($arrRolesCode), 'Quan-Ly-Tin-Tuc') != FALSE) {
                     $tblNewsModel->updateNew(Input::get('idnews'), Input::get('cbCateNews'), Input::get('newstitle'), Input::get('newsdescription'), Input::get('newsKeywords'), Input::get('newsContent'), Input::get('newstag'), Input::get('newsSlug'), '', Input::get('status'));
                     $historyContent = 'Sửa thành công tin tức : ' . Input::get('newstitle');
                     $objAdmin = Session::get('adminSession');
@@ -250,14 +250,10 @@ class NewsController extends Controller {
 
     public function postCheckSlug() {
         $tblNewsModel = new tblNewsModel();
-        $arrNews = $tblNewsModel->getAllNewsList();
         $count = 0;
-        foreach ($arrNews as $itemNews) {
-            if (Input::get('newsSlug') == $itemNews->newsSlug) {
-                $count++;
-            }
-        }
-        return $count + 1;
+        $slugcheck = Input::get('newsSlug');
+        $count = $tblNewsModel->countSlug($slugcheck);
+        return $count;
     }
 
     public function postAjaxNewsFilter() {
