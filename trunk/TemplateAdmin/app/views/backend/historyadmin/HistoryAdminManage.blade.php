@@ -31,7 +31,7 @@
     // Enter pressed?
     if (e.which == 10 || e.which == 13) {
     var request = jQuery.ajax({
-    url: "{{URL::action('HistoryAdminController@postAjaxsearch')}}?keywordsearch=" + jQuery('#searchblur').val(),
+    url: "{{URL::action('HistoryAdminController@postAjaxsearch')}}?keyword=" + jQuery('#searchblur').val(),
             type: "POST",
             dataType: "html"
     });
@@ -40,20 +40,17 @@
             });
     }
     });
-            jQuery("#fillterfunction").click(function() {
-    alert(jQuery('#oderbyoption').val());
-    });
-            jQuery("#loctheotieuchi").click(function() {
-    var request = jQuery.ajax({
-    url: "{{URL::action('HistoryAdminController@postFillterHistory')}}",
-            data: {selectoptionnum: jQuery('#selectoptionnum').val(), oderbyoption: jQuery('#oderbyoption').val(), oderbyoption1: jQuery('#oderbyoption1').val()},
-            type: "POST",
-            dataType: "html"
-    });
-            request.done(function(msg) {
-            jQuery('#tableproduct').html(msg);
-            });
-    });
+            
+        jQuery("#loctheotieuchi").click(function() {
+        var request = jQuery.ajax({
+                url: "{{URL::action('HistoryAdminController@postFillterHistory')}}?status=" + jQuery('#oderbyoption1').val(),                
+                type: "POST",
+                dataType: "html"
+        });
+                request.done(function(msg) {
+                jQuery('#tableproduct').html(msg);
+                });
+        });
     
             jQuery("#datefilter").click(function(){
                 var request = jQuery.ajax({
@@ -70,14 +67,25 @@
     });
     
     function phantrang(page) {
-            var request = jQuery.ajax({
-            url: "{{URL::action('HistoryAdminController@postAjaxpagion')}}?page=" + page,
-                    type: "POST",
-                    dataType: "html"
-            });
-                    request.done(function(msg) {
-                    jQuery('#tableproduct').html(msg);
-                    });
+        jQuery("#jGrowl").remove();
+        jQuery.jGrowl("Đang tải dữ liệu ...");
+        var urlpost = "{{URL::action('HistoryAdminController@postAjaxhistoryadmin')}}?page=" + page
+        if (jQuery('#oderbyoption1').val() != '') {
+            urlpost = "{{URL::action('HistoryAdminController@postFillterHistory')}}?status=" + jQuery('#oderbyoption1').val() + "&page=" + page;
+        }
+        if (jQuery('#searchblur').val() != '') {
+            urlpost = "{{URL::action('HistoryAdminController@postAjaxsearch')}}?keyword=" + jQuery('#searchblur').val() + "&page=" + page;
+        }
+        var request = jQuery.ajax({
+            url: urlpost,
+            type: "POST",
+            dataType: "html"
+        });
+        request.done(function(msg) {
+            jQuery("#jGrowl").remove();
+            jQuery.jGrowl("Đã tải dữ liệu thành công ...");
+            jQuery('#tableproduct').html(msg);
+        });
     }
             
     

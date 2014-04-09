@@ -25,50 +25,57 @@
     } else {
     jAlert('Bạn chưa chọn giá trị', 'Thông báo');
     }
-    });
-    
-    jQuery('#searchblur').keypress(function(e) {
+    });  
+        jQuery('#searchblur').keypress(function(e) {
     // Enter pressed?
-    if (e.which == 10 || e.which == 13) {
-    var request = jQuery.ajax({
-    url: "{{URL::action('ProjectController@postAjaxsearch')}}?keywordsearch=" + jQuery('#searchblur').val(),
-            type: "POST",
-            dataType: "html"
-    });
-            request.done(function(msg) {
-            jQuery('#tableproduct').html(msg);
-            });
-    }
-    });
-            jQuery("#fillterfunction").click(function() {
-    alert(jQuery('#oderbyoption').val());
-    });
-            jQuery("#loctheotieuchi").click(function() {
-    var request = jQuery.ajax({
-    url: "{{URL::action('ProjectController@postFillterProject')}}",
-            data: {selectoptionnum: jQuery('#selectoptionnum').val(), oderbyoption: jQuery('#oderbyoption').val(), oderbyoption1: jQuery('#oderbyoption1').val()},
-            type: "POST",
-            dataType: "html"
-    });
-            request.done(function(msg) {
-            jQuery('#tableproduct').html(msg);
-            });
-    });
-            
+        if (e.which == 10 || e.which == 13) {
+        var request = jQuery.ajax({
+                url: "{{URL::action('ProjectController@postAjaxsearch')}}?keyword=" + jQuery('#searchblur').val(),
+                type: "POST",
+                dataType: "html"
+        });
+                request.done(function(msg) {
+                jQuery('#tableproduct').html(msg);
+                });
+        }
+        });
+        
+        jQuery("#loctheotieuchi").click(function() {
+        var request = jQuery.ajax({
+                url: "{{URL::action('ProjectController@postFillterProject')}}?status=" + jQuery('#oderbyoption1').val(),                
+                type: "POST",
+                dataType: "html"
+        });
+                request.done(function(msg) {
+                jQuery('#tableproduct').html(msg);
+                });
+        });
+        
     });
     
+    
+            
     function phantrang(page) {
-            var request = jQuery.ajax({
-            url: "{{URL::action('ProjectController@postAjaxpagion')}}?page=" + page,
-                    type: "POST",
-                    dataType: "html"
-            });
-                    request.done(function(msg) {
-                    jQuery('#tableproduct').html(msg);
-                    });
+        jQuery("#jGrowl").remove();
+        jQuery.jGrowl("Đang tải dữ liệu ...");
+        var urlpost = "{{URL::action('ProjectController@postAjaxproject')}}?page=" + page
+        if (jQuery('#oderbyoption1').val() != '') {
+            urlpost = "{{URL::action('ProjectController@postFillterProject')}}?status=" + jQuery('#oderbyoption1').val() + "&page=" + page;
+        }
+        if (jQuery('#searchblur').val() != '') {
+            urlpost = "{{URL::action('ProjectController@postAjaxsearch')}}?keyword=" + jQuery('#searchblur').val() + "&page=" + page;
+        }
+        var request = jQuery.ajax({
+            url: urlpost,
+            type: "POST",
+            dataType: "html"
+        });
+        request.done(function(msg) {
+            jQuery("#jGrowl").remove();
+            jQuery.jGrowl("Đã tải dữ liệu thành công ...");
+            jQuery('#tableproduct').html(msg);
+        });
     }
-            
-    
     
             
     function xoasanpham(id) {
@@ -100,6 +107,12 @@
             });
             return true;
     }
+    
+    
+    
+    
+    
+    
 </script>
 
 
@@ -129,7 +142,11 @@
                 <option value="2">Xóa</option>
             </select>&nbsp;
             <button class="radius3" id="loctheotieuchi">Lọc theo tiêu chí</button>
-            <div class="dataTables_filter" id="searchformfile"><label>Search: <input id="searchblur" name="searchblur" style="border: 1px solid #ddd;padding: 7px 5px 8px 5px;width: 200px;background: #fff;" type="text"></label></div>
+            <div class="dataTables_filter" id="searchformfile">
+                <label>Search: 
+                    <input id="searchblur" name="searchblur" style="border: 1px solid #ddd;padding: 7px 5px 8px 5px;width: 200px;background: #fff;" type="text">
+                </label>
+            </div>
         </div>
         <table cellpadding="0" cellspacing="0" border="0" id="table2" class="stdtable stdtablecb">
             <colgroup>
