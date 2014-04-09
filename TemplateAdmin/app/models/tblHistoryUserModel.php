@@ -43,7 +43,7 @@ class tblHistoryUserModel extends Eloquent {
         return $historyarray;
     }
     
-    public function SearchHistory($keyword, $per_page, $orderby, $status) {
+    public function SearchHistory($keyword, $per_page, $orderby) {
         $historyarray = '';
         
         $historyarray = DB::table('tblhistory')->join('tblusers','tblhistory.userID','=','tblusers.id')->select('tblhistory.id','tblhistory.historyContent','tblhistory.time','tblhistory.status','tblusers.userEmail','tblusers.userAddress')->where('tblusers.userEmail', 'LIKE', '%' . $keyword . '%')->orwhere('tblusers.userAddress', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);

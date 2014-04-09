@@ -31,7 +31,7 @@
     // Enter pressed?
     if (e.which == 10 || e.which == 13) {
     var request = jQuery.ajax({
-    url: "{{URL::action('SizeController@postAjaxsearch')}}?keywordsearch=" + jQuery('#searchblur').val(),
+    url: "{{URL::action('SizeController@postAjaxsearch')}}?keyword=" + jQuery('#searchblur').val(),
             type: "POST",
             dataType: "html"
     });
@@ -40,13 +40,9 @@
             });
     }
     });
-            jQuery("#fillterfunction").click(function() {
-    alert(jQuery('#oderbyoption').val());
-    });
-            jQuery("#loctheotieuchi").click(function() {
-    var request = jQuery.ajax({
-    url: "{{URL::action('SizeController@postFillterSize')}}",
-            data: {selectoptionnum: jQuery('#selectoptionnum').val(), oderbyoption: jQuery('#oderbyoption').val(), oderbyoption1: jQuery('#oderbyoption1').val()},
+        jQuery("#loctheotieuchi").click(function() {
+        var request = jQuery.ajax({
+            url: "{{URL::action('SizeController@postFillterSize')}}?status=" + jQuery('#oderbyoption1').val(),                
             type: "POST",
             dataType: "html"
     });
@@ -58,14 +54,25 @@
     });
     
     function phantrang(page) {
-            var request = jQuery.ajax({
-            url: "{{URL::action('SizeController@postAjaxpagion')}}?page=" + page,
-                    type: "POST",
-                    dataType: "html"
-            });
-                    request.done(function(msg) {
-                    jQuery('#tableproduct').html(msg);
-                    });
+        jQuery("#jGrowl").remove();
+        jQuery.jGrowl("Đang tải dữ liệu ...");
+        var urlpost = "{{URL::action('SizeController@postAjaxsize')}}?page=" + page
+        if (jQuery('#oderbyoption1').val() != '') {
+            urlpost = "{{URL::action('SizeController@postFillterSize')}}?status=" + jQuery('#oderbyoption1').val() + "&page=" + page;
+        }
+        if (jQuery('#searchblur').val() != '') {
+            urlpost = "{{URL::action('SizeController@postAjaxsearch')}}?keyword=" + jQuery('#searchblur').val() + "&page=" + page;
+        }
+        var request = jQuery.ajax({
+            url: urlpost,
+            type: "POST",
+            dataType: "html"
+        });
+        request.done(function(msg) {
+            jQuery("#jGrowl").remove();
+            jQuery.jGrowl("Đã tải dữ liệu thành công ...");
+            jQuery('#tableproduct').html(msg);
+        });
     }
             
     

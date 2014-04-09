@@ -83,7 +83,7 @@ class tblPageModel extends Eloquent {
         return $pagearray;
     }
     
-    public function SearchPage($keyword, $per_page, $orderby, $status) {
+    public function SearchPage($keyword, $per_page, $orderby) {
         $pagearray = '';
         
         $pagearray = DB::table('tblpage')->select('tblpage.*')->where('tblpage.pageName', 'LIKE', '%' . $keyword . '%')->orwhere('tblpage.pageKeywords', 'LIKE', '%' . $keyword . '%')->orwhere('tblpage.pageTag', 'LIKE', '%' . $keyword . '%')->orwhere('tblpage.pageSlug', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);

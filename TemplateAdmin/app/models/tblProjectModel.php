@@ -5,7 +5,7 @@ class tblProjectModel extends Eloquent {
     protected $table = 'tblproject';
     public $timestamps = false;
 
-    public function addProject($from,$to,$description,$content,$status){
+    public function addProject($from, $to, $description, $content, $status) {
         $this->from = $from;
         $this->to = $to;
         $this->projectDescription = $description;
@@ -13,12 +13,11 @@ class tblProjectModel extends Eloquent {
         $this->time = time();
         $this->status = 0;
         $result = $this->save();
-        return $result;        
+        return $result;
     }
-    
-    
-    public function updateProject($Id,$from,$to,$description,$content,$status) {
-    // $tableAdmin = new TblAdminModel();
+
+    public function updateProject($Id, $from, $to, $description, $content, $status) {
+        // $tableAdmin = new TblAdminModel();
         $tableProject = $this->where('id', '=', $Id);
         $arraysql = array('id' => $Id);
         if ($from != '') {
@@ -28,57 +27,55 @@ class tblProjectModel extends Eloquent {
             $arraysql = array_merge($arraysql, array("to" => $to));
         }
         if ($description != '') {
-            $arraysql = array_merge($arraysql, array("projectDescription" => $description));               
+            $arraysql = array_merge($arraysql, array("projectDescription" => $description));
         }
         if ($content != '') {
-            $arraysql = array_merge($arraysql, array("projectContent" => $content));               
+            $arraysql = array_merge($arraysql, array("projectContent" => $content));
         }
         if ($status != '') {
             $arraysql = array_merge($arraysql, array("status" => $status));
         }
-        
+
 
         $checkupdate = $tableProject->update($arraysql);
         return $checkupdate;
     }
-    
+
     public function deleteProject($projectId) {
         $checkdel = $this->where('id', '=', $projectId)->update(array('status' => 2));
         return $checkdel;
-        
     }
-    
+
     public function findProject($keyword, $per_page, $orderby, $status) {
-        $projectfarray = '';
-        if ($status == '') {
+        $projectfarray = '';        
+        if($status==''){
             $projectfarray = DB::table('tblproject')->select('tblproject.*')->orderBy($orderby, 'desc')->paginate($per_page);
-        } else {
+        }else{
             $projectfarray = DB::table('tblproject')->select('tblproject.*')->where('tblproject.status', '=', $status)->orderBy($orderby, 'desc')->paginate($per_page);
         }
         return $projectfarray;
     }
-    
-    public function SearchProject($keyword, $per_page, $orderby, $status) {
+
+    public function SearchProject($keyword, $per_page, $orderby) {
         $projectfarray = '';
-        
+
         $projectfarray = DB::table('tblproject')->select('tblproject.*')->where('tblproject.projectDescription', 'LIKE', '%' . $keyword . '%')->orwhere('tblproject.projectContent', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);
-        
+
         return $projectfarray;
     }
-    
-    
-    public function selectAllProject($per_page,$orderby){
+
+    public function selectAllProject($per_page, $orderby) {
         $allProject = DB::table('tblproject')->select('tblproject.*')->orderBy($orderby, 'desc')->paginate($per_page);
         return $allProject;
     }
-    
-    public function selectAll($per_page){
+
+    public function selectAll($per_page) {
         $allProject = DB::table('tblproject')->paginate($per_page);
         return $allProject;
     }
-    
-    public function getProjectById($id){
-        $allProject = DB::table('tblproject')->where('id','=',$id)->get();
+
+    public function getProjectById($id) {
+        $allProject = DB::table('tblproject')->where('id', '=', $id)->get();
         return $allProject[0];
     }
 

@@ -11,7 +11,7 @@ class PageController extends Controller {
     public function getPageView($msg = '') {
         $tblPageModel = new tblPageModel();
         
-        $check = $tblPageModel->selectAllPage(10,'id');        
+        $check = $tblPageModel->selectAllPage(5,'id');        
         //var_dump($check);
         $link = $check->links();
         if($msg!=''){
@@ -23,8 +23,7 @@ class PageController extends Controller {
 
     public function getPageEdit() {
         $tblPageModel = new tblPageModel();
-        $data = $tblPageModel->getPageByID(Input::get('id'));  
-        
+        $data = $tblPageModel->getPageByID(Input::get('id'));          
         //var_dump($data);
         return View::make('backend.page.PageManage')->with('arrayPage', $data);
     }
@@ -40,6 +39,9 @@ class PageController extends Controller {
             "status" => "required"
             );
         if (!Validator::make(Input::all(), $rules)->fails()) {
+            $objadmin = Session::get('adminSession');
+            $id = $objadmin[0]->id;
+            $objHistoryAdmin->addHistory($id, 'sua page', 0); 
             $tblPageModel->updatePage(Input::get('idpage'),Input::get('pageName'), Input::get('pageContent'), Input::get('pageKeyword'),Input::get('pageTag'),Input::get('pageSlug'), Input::get('status'));            
             return Redirect::action('PageController@getPageView',array('msg'=>'cap nhat thanh cong'));
         } else {
@@ -63,6 +65,9 @@ class PageController extends Controller {
         $tblPageModel = new tblPageModel();
         
         if (!Validator::make(Input::all(), $rules)->fails()) {
+            $objadmin = Session::get('adminSession');
+            $id = $objadmin[0]->id;
+            $objHistoryAdmin->addHistory($id, 'them page', 0); 
             $tblPageModel->addPage(Input::get('pageName'), Input::get('pageContent'), Input::get('pageKeyword'),Input::get('pageTag'),Input::get('pageSlug'), Input::get('status'));
             
             return Redirect::action('PageController@getPageView',array('msg'=>'them moi thanh cong'));
@@ -77,10 +82,13 @@ class PageController extends Controller {
             if ($item != '') {
                 $tblPageModel = new tblPageModel();
                 $tblPageModel->deletePage($item);
+                $objadmin = Session::get('adminSession');
+                $id = $objadmin[0]->id;
+                $objHistoryAdmin->addHistory($id, 'xoa page', 0); 
             }
         }
         $tblPageModel = new tblPageModel();
-        $data = $tblPageModel->FindPage('', 5, 'id', '');
+        $data = $tblPageModel->selectAllPage(5,'id');
         $link = $data->links();
         return View::make('backend.page.Pageajax')->with('arrayPage', $data)->with('link', $link);
     }
@@ -88,8 +96,10 @@ class PageController extends Controller {
     public function postDeletePage(){
         $tblPageModel = new tblPageModel();
         $tblPageModel->deletePage(Input::get('id'));
-        //echo $tblPageModel;
-        $arrpage = $tblPageModel->selectAllPage(10,'id');        
+        $objadmin = Session::get('adminSession');
+        $id = $objadmin[0]->id;
+        $objHistoryAdmin->addHistory($id, 'xoa page', 0);
+        $arrpage = $tblPageModel->selectAllPage(5,'id');        
         $link = $arrpage->links();
         return View::make('backend.page.Pageajax')->with('arrayPage', $arrpage)->with('link', $link);
     }
@@ -97,95 +107,35 @@ class PageController extends Controller {
     public function postPageActive() {
         $tblPageModel = new tblPageModel();
         $tblPageModel->updatePage(Input::get('id'),'','', '', '', '', Input::get('status'));
-        $arrpage = $tblPageModel->allPage(10);
+        $objadmin = Session::get('adminSession');
+        $id = $objadmin[0]->id;
+        $objHistoryAdmin->addHistory($id, 'active page', 0);
+        $arrpage = $tblPageModel->selectAllPage(5,'id');
+        
         $link = $arrpage->links();
         return View::make('backend.page.Pageajax')->with('arrayPage', $arrpage)->with('link', $link);
     }
     
-    public function getAjaxsearch() {
+    public function postAjaxpage(){
         $tblPageModel = new tblPageModel();
-        if (Session::has('oderbyoption1')) {
-            $tatus = Session::get('oderbyoption1');
-            $data = $tblPageModel->SearchPage(Input::get('keywordsearch'), 10, 'id', $tatus[0]);
-        } else {
-            $data = $tblPageModel->SearchPage(Input::get('keywordsearch'), 10, 'id', '');
-        }
-        //  $data = $objGsp->FindProduct(Input::get('keywordsearch'), 10, 'id', '');
-        // $data->setBaseUrl('view');
-        $link = $data->links();
-        Session::forget('keywordsearch');
-        Session::push('keywordsearch', Input::get('keywordsearch'));
-        return View::make('backend.page.PageManage')->with('arrPage', $data)->with('link', $link);
+        $check = $tblPageModel->selectAllPage(5,'id'); 
+        $link = $check->links();
+        return View::make('backend.page.Pageajax')->with('arrayPage', $check)->with('link', $link);
     }
     
     public function postAjaxsearch() {
         $tblPageModel = new tblPageModel();
-        if (Session::has('oderbyoption1')) {
-            $tatus = Session::get('oderbyoption1');
-            $data = $tblPageModel->SearchPage(Input::get('keywordsearch'), 10, 'id', $tatus[0]);
-        } else {
-            $data = $tblPageModel->SearchPage(Input::get('keywordsearch'), 10, 'id', '');
-        }
-        //  $data = $objGsp->FindProduct(Input::get('keywordsearch'), 10, 'id', '');
-        // $data->setBaseUrl('view');
-        $link = $data->links();
-        Session::forget('keywordsearch');
-        Session::push('keywordsearch', Input::get('keywordsearch'));
+        $data = $tblPageModel->SearchPage(trim(Input::get('keyword')), 5, 'id');
+        $link = $data->links();        
         return View::make('backend.page.Pageajax')->with('arrayPage', $data)->with('link', $link);
     }
 
-    public function postAjaxpagion() {
-        
-        if (Session::has('keywordsearch') && Input::get('page') != '') {
-            $keyw = Session::get('keywordsearch');
-            $objPage = new tblPageModel();
-            $data = '';
-            if (Session::has('oderbyoption1')) {
-                $tatus = Session::get('oderbyoption1');
-                $data = $objPage->FindPage($keyw[0], 10, 'id', $tatus[0]);
-            } else {
-                $data = $objPage->FindPage($keyw[0], 10, 'id', '');
-            }
-            $link = $data->links();
-            return View::make('backend.page.Pageajax')->with('arrayPage', $data)->with('link', $link);
-        } else if(!Session::has('keywordsearch') && Input::get('page') != ''){
-            Session::forget('keywordsearch');
-            $objPage = new tblPageModel();
-            $tatus = Session::get('oderbyoption1');
-            $data = $objPage->FindPage($keyw[0], 10, 'id', $tatus[0]);
-            $link = $data->links();
-            return View::make('backend.page.Pageajax')->with('arrayPage', $data)->with('link', $link);
-        } else{
-            $objPage = new tblPageModel();
-            $tatus = Session::get('oderbyoption1');
-            $data = $objPage->selectAllPage(10, 'id');
-            $link = $data->links();
-            return View::make('backend.page.PageManage')->with('arrPage', $data)->with('link', $link);
-        }
-        
-    }
-    
-    public function getFillterPage() {
-        Session::forget('keywordsearch');
-        $tblPageModel = new tblPageModel();
-        $data = $tblPageModel->FindPage('', 10, 'id', Input::get('oderbyoption1'));
-        
-        //echo count($data);
-        $link = $data->links();
-        Session::forget('oderbyoption1');
-        Session::push('oderbyoption1', Input::get('oderbyoption1'));
-        return View::make('backend.page.PageManage')->with('arrPage', $data)->with('link', $link);
-    }
-    
     public function postFillterPage() {
-        Session::forget('keywordsearch');
-        $tblPageModel = new tblPageModel();
-        $data = $tblPageModel->FindPage('', 10, 'id', Input::get('oderbyoption1'));
         
+        $tblPageModel = new tblPageModel();
+        $data = $tblPageModel->FindPage('', 5, 'id', Input::get('status'));        
         //echo count($data);
-        $link = $data->links();
-        Session::forget('oderbyoption1');
-        Session::push('oderbyoption1', Input::get('oderbyoption1'));
+        $link = $data->links();        
         return View::make('backend.page.Pageajax')->with('arrayPage', $data)->with('link', $link);
     }
 

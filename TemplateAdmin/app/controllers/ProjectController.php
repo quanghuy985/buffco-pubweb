@@ -48,11 +48,11 @@ class ProjectController extends Controller {
             if($from>$to){
                 return Redirect::action('ProjectController@getProjectView',array('msg'=>'Ngày bắt đầu không được lớn hơn ngày kết thúc'));
             }else{
-                if(Session::has('adminSession')){
-                    Session::get('adminSession');
-                    $id = $objadmin[0]->id;
-                    $objHistoryAdmin->addHistory($id, 'Edit project', 0);    
-                }
+                
+                $objadmin=Session::get('adminSession');
+                $id = $objadmin[0]->id;
+                $objHistoryAdmin->addHistory($id, 'Edit project', 0);    
+                
                 $objProject->updateProject(Input::get('idproject'),$from, $to, Input::get('description'), Input::get('content'), Input::get('status'));            
                 return Redirect::action('ProjectController@getProjectView',array('msg'=>'cap nhat thanh cong'));
             }
@@ -91,11 +91,11 @@ class ProjectController extends Controller {
             if($from>$to){
                 return Redirect::action('ProjectController@getProjectView',array('msg'=>'Ngày bắt đầu không được lớn hơn ngày kết thúc'));
             }else{  
-                if(Session::has('adminSession')){
-                    Session::get('adminSession');
-                    $id = $objadmin[0]->id;
-                    $objHistoryAdmin->addHistory($id, 'Them project', 0);    
-                }
+                
+                $objadmin=Session::get('adminSession');
+                $id = $objadmin[0]->id;
+                $objHistoryAdmin->addHistory($id, 'Them project', 0);    
+                
                 $objProject->addProject($from, $to, Input::get('description'), Input::get('content'), Input::get('status'));      
                 
                 return Redirect::action('ProjectController@getProjectView',array('msg'=>'them moi thanh cong'));
@@ -111,15 +111,15 @@ class ProjectController extends Controller {
             if ($item != '') {
                 $objProject = new tblProjectModel();
                 $objProject->deleteProject($item);
-                if(Session::has('adminSession')){
-                    Session::get('adminSession');
-                    $id = $objadmin[0]->id;
-                    $objHistoryAdmin->addHistory($id, 'Xoa project', 0);    
-                }
+                
+                $objadmin=Session::get('adminSession');
+                $id = $objadmin[0]->id;
+                $objHistoryAdmin->addHistory($id, 'Xoa project', 0);   
+                
             }
         }
         $objProject = new tblProjectModel();
-        $data = $objProject->findProject('', 5, 'id', '');
+        $data = $objProject->selectAllProject(5,'id');
         $link = $data->links();
         return View::make('backend.project.Projectajax')->with('dataProject', $data)->with('link', $link);
     }
@@ -127,12 +127,12 @@ class ProjectController extends Controller {
     public function postDeleteProject(){
         $objProject = new tblProjectModel();        
         $objProject->deleteProject(Input::get('id'));
-        if(Session::has('adminSession')){
-                    Session::get('adminSession');
-                    $id = $objadmin[0]->id;
-                    $objHistoryAdmin->addHistory($id, 'Xoa project', 0);    
-                }
-        $arrayProject = $objProject->selectAllProject(10,'id');        
+        
+        $objadmin=Session::get('adminSession');
+        $id = $objadmin[0]->id;
+        $objHistoryAdmin->addHistory($id, 'Xoa project', 0);    
+                
+        $arrayProject = $objProject->selectAllProject(5,'id');        
         $link = $arrayProject->links();
         return View::make('backend.project.Projectajax')->with('dataProject', $arrayProject)->with('link', $link);
     }
@@ -140,102 +140,42 @@ class ProjectController extends Controller {
     public function postProjectActive() {
         $objProject = new tblProjectModel();
         $objProject->updateProject(Input::get('id'),'', '', '', '', Input::get('status'));
-        if(Session::has('adminSession')){
-                    Session::get('adminSession');
-                    $id = $objadmin[0]->id;
-                    $objHistoryAdmin->addHistory($id, 'active project', 0);    
-                }
-        $arrayProject = $objProject->selectAll(10);
+        
+        $objadmin = Session::get('adminSession');
+        $id = $objadmin[0]->id;
+        $objHistoryAdmin->addHistory($id, 'active project', 0);    
+                
+        $arrayProject = $objProject->selectAllProject(5,'id');
         $link = $arrayProject->links();
         return View::make('backend.project.Projectajax')->with('dataProject', $arrayProject)->with('link', $link);
     }
     
-    public function getAjaxsearch() {
-        $objProject = new tblProjectModel();
-        if (Session::has('oderbyoption1')) {
-            $tatus = Session::get('oderbyoption1');
-            $data = $objProject->SearchProject(Input::get('keywordsearch'), 5, 'id', $tatus[0]);
-        } else {
-            $data = $objProject->SearchProject(Input::get('keywordsearch'), 5, 'id', '');
-        }
-        //  $data = $objGsp->FindProduct(Input::get('keywordsearch'), 10, 'id', '');
-        // $data->setBaseUrl('view');
-        $link = $data->links();
-        Session::forget('keywordsearch');
-        Session::push('keywordsearch', Input::get('keywordsearch'));
-        return View::make('backend.project.ProjectManage')->with('arrayProject', $data)->with('link', $link);
-    }
+    
     
     public function postAjaxsearch() {
         $objProject = new tblProjectModel();
-        if (Session::has('oderbyoption1')) {
-            $tatus = Session::get('oderbyoption1');
-            $data = $objProject->SearchProject(Input::get('keywordsearch'), 5, 'id', $tatus[0]);
-        } else {
-            $data = $objProject->SearchProject(Input::get('keywordsearch'), 5, 'id', '');
-        }
-        //  $data = $objGsp->FindProduct(Input::get('keywordsearch'), 10, 'id', '');
-        // $data->setBaseUrl('view');
+        $data = $objProject->SearchProject(trim(Input::get('keyword')), 5, 'id');
         $link = $data->links();
-        Session::forget('keywordsearch');
-        Session::push('keywordsearch', Input::get('keywordsearch'));
         return View::make('backend.project.Projectajax')->with('dataProject', $data)->with('link', $link);
-    }
-
-    public function postAjaxpagion() {
-        if (Session::has('keywordsearch') && Input::get('page') != '') {
-            $keyw = Session::get('keywordsearch');
-            $objProject = new tblProjectModel();
-            $data = '';
-            if (Session::has('oderbyoption1')) {
-                $tatus = Session::get('oderbyoption1');
-                $data = $objProject->findProject($keyw[0], 5, 'id', $tatus[0]);
-            } else {
-                $data = $objProject->findProject($keyw[0], 5, 'id', '');
-            }
-            $link = $data->links();
-            return View::make('backend.project.Projectajax')->with('dataProject', $data)->with('link', $link);
-        } else if(!Session::has('keywordsearch') && Input::get('page') != ''){
-            Session::forget('keywordsearch');
-            $objProject = new tblProjectModel();
-            $tatus = Session::get('oderbyoption1');
-            $data = $objProject->findProject('', 5, 'id', $tatus[0]);
-            $link = $data->links();
-            return View::make('backend.project.Projectajax')->with('dataProject', $data)->with('link', $link);
-        } else {
-            $objProject = new tblProjectModel();
-            //$tatus = Session::get('oderbyoption1');
-            $data = $objProject->selectAllProject(5, 'id');
-            $link = $data->links();
-            return View::make('backend.project.ProjectManage')->with('arrayProject', $data)->with('link', $link);
-        }
-    }
-    
-    public function getFillterProject() {
-        Session::forget('keywordsearch');
-        $objProject = new tblProjectModel();
-        $data = $objProject->findProject('', 5, 'id', Input::get('oderbyoption1'));
-        
-        //echo count($data);
-        $link = $data->links();
-        Session::forget('oderbyoption1');
-        Session::push('oderbyoption1', Input::get('oderbyoption1'));
-        return View::make('backend.project.ProjectManage')->with('arrayProject', $data)->with('link', $link);
     }
     
     public function postFillterProject() {
-        Session::forget('keywordsearch');
-        $objProject = new tblProjectModel();
-        $data = $objProject->findProject('', 5, 'id', Input::get('oderbyoption1'));
         
+        $objProject = new tblProjectModel();
+        //echo Input::get('status');
+        $data = $objProject->findProject('', 5, 'id', Input::get('status'));
         //echo count($data);
         $link = $data->links();
-        Session::forget('oderbyoption1');
-        Session::push('oderbyoption1', Input::get('oderbyoption1'));
         return View::make('backend.project.Projectajax')->with('dataProject', $data)->with('link', $link);
+    
     }
     
-    
+    public function postAjaxproject(){
+        $objProject = new tblProjectModel();
+        $check = $objProject->selectAllProject(5,'id'); 
+        $link = $check->links();
+        return View::make('backend.project.Projectajax')->with('dataProject', $check)->with('link', $link);
+    }
     
 }
     

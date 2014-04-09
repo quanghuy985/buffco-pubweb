@@ -25,7 +25,7 @@ class AdminController extends BaseController {
             $id = $objadmin[0]->id;
             //echo $id;
             $tblAdminModel = new tblAdminModel();
-            $data = $tblAdminModel->selectHistoryAdmin($id, 10);
+            $data = $tblAdminModel->selectHistoryAdmin($id, 5);
             //echo $data[0]->historyContent;
             //var_dump($data);
             $link = $data->links();
@@ -207,36 +207,8 @@ class AdminController extends BaseController {
         $arrAdmin = $tblAdminModel->findAdmin('', 10);
         $link = $arrAdmin->links();
         return View::make('backend.admin.adminAjax')->with('arrayAdmin', $arrAdmin)->with('link', $link);
-    }
+    }    
     
-    public function postAjaxpagionHistory() {
-        if (Session::has('keywordsearch') && Input::get('page') != '' && Session::has('adminSession')) {
-            $keyw = Session::get('keywordsearch');
-            $tblAdminModel = new tblAdminModel(); 
-            $data = '';
-            if (Session::has('oderbyoption1')) {
-                $tatus = Session::get('oderbyoption1');
-                $data = $tblAdminModel->SearchHistoryAdmin($keyw[0], 10, 'id', $tatus[0]);
-            } else {
-                $data = $tblAdminModel->SearchHistoryAdmin($keyw[0], 10, 'id', '');
-            }
-            $link = $data->links();
-            return View::make('backend.admin.adminHistoryAjax')->with('arrHistory', $data)->with('link', $link);
-        }else if(!Session::has('keywordsearch') && Input::get('page') != '' && Session::has('adminSession')){
-            $tblAdminModel = new tblAdminModel();
-            $objadmin = Session::get('adminSession');
-        //var_dump($objadmin);
-            $id = $objadmin[0]->id;
-            //$tatus = Session::get('oderbyoption1');
-            
-            $data = $tblAdminModel->selectHistoryAdmin($id,2 );
-            $link = $data->links();
-            return View::make('backend.admin.adminHistoryAjax')->with('arrHistory', $data)->with('link', $link);
-        }
-        
-        
-    }
-
     public function postDeleteAdmin() {
         $tblAdminModel = new tblAdminModel();
         $tblAdminModel->updateAdmin(Input::get('id'), '', '', '', '2');
@@ -258,35 +230,21 @@ class AdminController extends BaseController {
         return View::make('backend.admin.adminAjax')->with('arrayAdmin', $arrAdmin)->with('link', $link);
     }
     
-    public function getAjaxsearch() {
+    public function postAjaxhistory(){
         $tblAdminModel = new tblAdminModel();
-        if (Session::has('oderbyoption1')) {
-            $tatus = Session::get('oderbyoption1');
-            $data = $tblAdminModel->SearchHistoryAdmin(Input::get('keywordsearch'), 10, 'id', $tatus[0]);
-        } else {
-            $data = $tblAdminModel->SearchHistoryAdmin(Input::get('keywordsearch'), 10, 'id', '');
-        }
-        //  $data = $objGsp->FindProduct(Input::get('keywordsearch'), 10, 'id', '');
-        // $data->setBaseUrl('view');
+        $objadmin = Session::get('adminSession');
+        $id = $objadmin[0]->id;
+            //echo $id;
+        $tblAdminModel = new tblAdminModel();
+        $data = $tblAdminModel->selectHistoryAdmin($id, 5);
         $link = $data->links();
-        Session::forget('keywordsearch');
-        Session::push('keywordsearch', Input::get('keywordsearch'));
         return View::make('backend.admin.adminHistoryAjax')->with('arrHistory', $data)->with('link', $link);
     }
     
     public function postAjaxsearch() {
         $tblAdminModel = new tblAdminModel();
-        if (Session::has('oderbyoption1')) {
-            $tatus = Session::get('oderbyoption1');
-            $data = $tblAdminModel->SearchHistoryAdmin(Input::get('keywordsearch'), 10, 'id', $tatus[0]);
-        } else {
-            $data = $tblAdminModel->SearchHistoryAdmin(Input::get('keywordsearch'), 10, 'id', '');
-        }
-        //  $data = $objGsp->FindProduct(Input::get('keywordsearch'), 10, 'id', '');
-        // $data->setBaseUrl('view');
+        $data = $tblAdminModel->SearchHistoryAdmin(trim(Input::get('keyword')), 5, 'id');
         $link = $data->links();
-        Session::forget('keywordsearch');
-        Session::push('keywordsearch', Input::get('keywordsearch'));
         return View::make('backend.admin.adminHistoryAjax')->with('arrHistory', $data)->with('link', $link);
     }
 

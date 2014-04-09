@@ -45,7 +45,7 @@ class tblHistoryAdminModel extends Eloquent {
         return $historyarray;
     }
     
-    public function SearchHistory($keyword, $per_page, $orderby, $status) {
+    public function SearchHistory($keyword, $per_page, $orderby) {
         $historyarray = '';
         
         $historyarray = DB::table('tbladminhistory')->join('tbladmin','tbladminhistory.userid','=','tbladmin.id')->select('tbladminhistory.id','tbladminhistory.historyContent','tbladminhistory.time','tbladminhistory.status','tbladmin.adminEmail','tbladmin.adminName')->where('tbladmin.adminEmail', 'LIKE', '%' . $keyword . '%')->orwhere('tbladmin.adminName', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);

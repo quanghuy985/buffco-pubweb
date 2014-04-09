@@ -1,15 +1,13 @@
 @extends("templateadmin2.mainfire")
 @section("contentadmin")
 <script>
-    jQuery(document).ready(function() {
-
-    
+    jQuery(document).ready(function(){   
     
     jQuery('#searchblur').keypress(function(e) {
     // Enter pressed?
     if (e.which == 10 || e.which == 13) {
     var request = jQuery.ajax({
-    url: "{{URL::action('AdminController@postAjaxsearch')}}?keywordsearch=" + jQuery('#searchblur').val(),
+    url: "{{URL::action('AdminController@postAjaxsearch')}}?keyword=" + jQuery('#searchblur').val(),
             type: "POST",
             dataType: "html"
     });
@@ -21,14 +19,23 @@
     });
     
     function phantrang(page) {
-            var request = jQuery.ajax({
-            url: "{{URL::action('AdminController@postAjaxpagionHistory')}}?page=" + page,
-                    type: "POST",
-                    dataType: "html"
-            });
-                    request.done(function(msg) {
-                    jQuery('#tableproduct').html(msg);
-                    });
+        jQuery("#jGrowl").remove();
+        jQuery.jGrowl("Đang tải dữ liệu ...");
+        var urlpost = "{{URL::action('AdminController@postAjaxhistory')}}?page=" + page
+        
+        if (jQuery('#searchblur').val() != '') {
+            urlpost = "{{URL::action('AdminController@postAjaxsearch')}}?keyword=" + jQuery('#searchblur').val() + "&page=" + page;
+        }
+        var request = jQuery.ajax({
+            url: urlpost,
+            type: "POST",
+            dataType: "html"
+        });
+        request.done(function(msg) {
+            jQuery("#jGrowl").remove();
+            jQuery.jGrowl("Đã tải dữ liệu thành công ...");
+            jQuery('#tableproduct').html(msg);
+        });
     }
             
     

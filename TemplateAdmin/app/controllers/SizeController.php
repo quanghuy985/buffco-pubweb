@@ -11,7 +11,7 @@ class SizeController extends Controller {
     public function getSizeView($msg = '') {
         $objSize = new tblSizeModel();
         
-        $check = $objSize->selectAllSize(10,'id');        
+        $check = $objSize->selectAllSize(5,'id');        
         //var_dump($check);
         $link = $check->links();
         if($msg!=''){
@@ -39,6 +39,9 @@ class SizeController extends Controller {
             );
         if (!Validator::make(Input::all(), $rules)->fails()) {
             $objSize->updateSize(Input::get('idsize'),Input::get('sizeName'), Input::get('sizeDescription'), Input::get('sizeValue'), Input::get('status'));            
+            $objadmin = Session::get('adminSession');
+            $id = $objadmin[0]->id;
+            $objHistoryAdmin->addHistory($id, 'sua size', 0);
             return Redirect::action('SizeController@getSizeView',array('msg'=>'cap nhat thanh cong'));
         } else {
             return Redirect::action('SizeController@getSizeView',array('msg'=>'cap nhat that bai'));
@@ -59,7 +62,9 @@ class SizeController extends Controller {
         
         if (!Validator::make(Input::all(), $rules)->fails()) {
             $objSize->addSize(Input::get('sizeName'), Input::get('sizeDescription'), Input::get('sizeValue'));
-            
+            $objadmin = Session::get('adminSession');
+            $id = $objadmin[0]->id;
+            $objHistoryAdmin->addHistory($id, 'them size', 0);
             return Redirect::action('SizeController@getSizeView',array('msg'=>'them moi thanh cong'));
         } else {
             return Redirect::action('SizeController@getSizeView',array('msg'=>'them moi that bai'));
@@ -94,10 +99,13 @@ class SizeController extends Controller {
             if ($item != '') {
                 $objSize = new tblSizeModel();
                 $objSize->deleteSize($item);
+                $objadmin = Session::get('adminSession');
+                $id = $objadmin[0]->id;
+                $objHistoryAdmin->addHistory($id, 'xoa size', 0);
             }
         }
         $objSize = new tblSizeModel();
-        $data = $objSize->FindSize('', 10, 'id', '');
+        $data = $objSize->FindSize('', 5, 'id', '');
         $link = $data->links();
         return View::make('backend.size.Sizeajax')->with('arraySize', $data)->with('link', $link);
     }
@@ -105,8 +113,11 @@ class SizeController extends Controller {
     public function postDeleteSize(){
         $objSize = new tblSizeModel();
         $objSize->deleteSize(Input::get('id'));
+        $objadmin = Session::get('adminSession');
+        $id = $objadmin[0]->id;
+        $objHistoryAdmin->addHistory($id, 'xoa size', 0);
         //echo $tblPageModel;
-        $arrsize = $objSize->selectAllSize(10,'id');        
+        $arrsize = $objSize->selectAllSize(5,'id');        
         $link = $arrsize->links();
         return View::make('backend.size.Sizeajax')->with('arraySize', $arrsize)->with('link', $link);
     }
@@ -114,95 +125,35 @@ class SizeController extends Controller {
     public function postSizeActive() {
         $objSize = new tblSizeModel();
         $objSize->updateSize(Input::get('id'),'','', '',Input::get('status'));
-        $arrsize = $objSize->allSize(10);
+        $objadmin = Session::get('adminSession');
+        $id = $objadmin[0]->id;
+        $objHistoryAdmin->addHistory($id, 'active size', 0);
+        $arrsize = $objSize->allSize(5);
         $link = $arrsize->links();
         return View::make('backend.size.Sizeajax')->with('arraySize', $arrsize)->with('link', $link);
     }
     
-    public function getAjaxsearch() {
+    public function postAjaxsize(){
         $objSize = new tblSizeModel();
-        if (Session::has('oderbyoption1')) {
-            $tatus = Session::get('oderbyoption1');
-            $data = $objSize->SearchSize(Input::get('keywordsearch'), 10, 'id', $tatus[0]);
-        } else {
-            $data = $objSize->SearchSize(Input::get('keywordsearch'), 10, 'id', '');
-        }
-        //  $data = $objGsp->FindProduct(Input::get('keywordsearch'), 10, 'id', '');
-        // $data->setBaseUrl('view');
-        $link = $data->links();
-        Session::forget('keywordsearch');
-        Session::push('keywordsearch', Input::get('keywordsearch'));
-        return View::make('backend.size.SizeManage')->with('arrPage', $data)->with('link', $link);
+        $check = $objSize->selectAllSize(5,'id'); 
+        $link = $check->links();
+        return View::make('backend.size.Sizeajax')->with('arraySize', $check)->with('link', $link);
     }
     
     public function postAjaxsearch() {
         $objSize = new tblSizeModel();
-        if (Session::has('oderbyoption1')) {
-            $tatus = Session::get('oderbyoption1');
-            $data = $objSize->SearchSize(Input::get('keywordsearch'), 10, 'id', $tatus[0]);
-        } else {
-            $data = $objSize->SearchSize(Input::get('keywordsearch'), 10, 'id', '');
-        }
-        //  $data = $objGsp->FindProduct(Input::get('keywordsearch'), 10, 'id', '');
-        // $data->setBaseUrl('view');
+        $data = $objSize->SearchSize(trim(Input::get('keyword')), 5, 'id');
         $link = $data->links();
-        Session::forget('keywordsearch');
-        Session::push('keywordsearch', Input::get('keywordsearch'));
         return View::make('backend.size.Sizeajax')->with('arraySize', $data)->with('link', $link);
     }
 
-    public function postAjaxpagion() {
-        if (Session::has('keywordsearch') && Input::get('page') != '') {
-            $keyw = Session::get('keywordsearch');
-            $objSize = new tblSizeModel();
-            $data = '';
-            if (Session::has('oderbyoption1')) {
-                $tatus = Session::get('oderbyoption1');
-                $data = $objSize->FindSize($keyw[0], 10, 'id', $tatus[0]);
-            } else {
-                $data = $objSize->FindSize($keyw[0], 10, 'id', '');
-            }
-            $link = $data->links();
-            return View::make('backend.size.Sizeajax')->with('arraySize', $data)->with('link', $link);
-        } else if(!Session::has('keywordsearch') && Input::get('page') != ''){
-            Session::forget('keywordsearch');
-            $objSize = new tblSizeModel();
-            $tatus = Session::get('oderbyoption1');
-            $data = $objSize->FindSize('', 10, 'id', $tatus[0]);
-            $link = $data->links();
-            return View::make('backend.size.Sizeajax')->with('arraySize', $data)->with('link', $link);
-        } else {
-            $objSize = new tblSizeModel();
-            //$tatus = Session::get('oderbyoption1');
-            $data = $objSize->selectAllSize(10, 'id');
-            $link = $data->links();
-            return View::make('backend.size.SizeManage')->with('arrSize', $data)->with('link', $link);
-        }
-            
         
-    }
-    
-    public function getFillterSize() {
-        Session::forget('keywordsearch');
-        $objSize = new tblSizeModel();
-        $data = $objSize->FindSize('', 10, 'id', Input::get('oderbyoption1'));
-        
-        //echo count($data);
-        $link = $data->links();
-        Session::forget('oderbyoption1');
-        Session::push('oderbyoption1', Input::get('oderbyoption1'));
-        return View::make('backend.size.SizeManage')->with('arrSize', $data)->with('link', $link);
-    }
-    
     public function postFillterSize() {
-        Session::forget('keywordsearch');
         $objSize = new tblSizeModel();
-        $data = $objSize->FindSize('', 10, 'id', Input::get('oderbyoption1'));
-        
+        //echo Input::get('status');
+        $data = $objSize->FindSize('', 5, 'id', Input::get('status'));
         //echo count($data);
         $link = $data->links();
-        Session::forget('oderbyoption1');
-        Session::push('oderbyoption1', Input::get('oderbyoption1'));
         return View::make('backend.size.Sizeajax')->with('arraySize', $data)->with('link', $link);
     }
 
