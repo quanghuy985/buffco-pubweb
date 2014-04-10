@@ -13,7 +13,7 @@ class tblStoreModel extends Eloquent {
     public $timestamps = false;
     public static $rules = array();
 
-    public function addStore($productID, $sizeID, $colorID, $soluongnhap,$status) {
+    public function addStore($productID, $sizeID, $colorID, $soluongnhap, $status) {
         $this->productID = $productID;
         $this->sizeID = $sizeID;
         $this->colorID = $colorID;
@@ -24,7 +24,7 @@ class tblStoreModel extends Eloquent {
         return $result;
     }
 
-    public function updateStore($id, $productID, $sizeID, $colorID, $soluongnhap,$status) {
+    public function updateStore($id, $productID, $sizeID, $colorID, $soluongnhap, $status) {
         $objStore = $this->where('id', '=', $id);
         $arraysql = array('id' => $id);
         if ($productID != '') {
@@ -51,7 +51,7 @@ class tblStoreModel extends Eloquent {
     }
 
     public function findStoreByProductID($id) {
-        $objStore = DB::table('tblStore')->join('tblSize','tblStore.sizeID', '=', 'tblSize.id')->join('tblColor','tblStore.colorID','=','tblColor.id')->select('tblStore.*','tblSize.sizeName','tblColor.colorName')->where('productID', '=', $id)->get();
+        $objStore = DB::table('tblStore')->join('tblSize', 'tblStore.sizeID', '=', 'tblSize.id')->join('tblColor', 'tblStore.colorID', '=', 'tblColor.id')->select('tblStore.*', 'tblSize.sizeName', 'tblColor.colorName')->where('productID', '=', $id)->get();
         return $objStore;
     }
 
@@ -59,9 +59,8 @@ class tblStoreModel extends Eloquent {
         $objStore = DB::table('tblStore')->where('id', '=', $id)->get();
         return $objStore;
     }
- 
 
-    public function findStoreByProductIDAndType($id, $sizeID ,$colorID) {
+    public function findStoreByProductIDAndType($id, $sizeID, $colorID) {
         $objStore = DB::table('tblStore')->where('productID', '=', $id)->where('sizeID', '=', $sizeID)->where('colorID', '=', $colorID)->get();
         return $objStore;
     }
@@ -73,6 +72,15 @@ class tblStoreModel extends Eloquent {
 
     public function deleteStoreByID($id) {
         $checkdel = $this->where('id', '=', $id)->update(array('status' => 2));
+        if ($checkdel > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
+    public function deleteStoreByProId($pID) {
+        $checkdel = $this->where('productID', '=', $pID)->delete();
         if ($checkdel > 0) {
             return TRUE;
         } else {

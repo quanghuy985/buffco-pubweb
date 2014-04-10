@@ -1,5 +1,6 @@
 @extends("templateadmin2.mainfire")
 @section("contentadmin")
+<script src="http://appendgrid.apphb.com/Scripts/jquery.appendGrid-1.3.4.js"></script>
 <style type="text/css">
     .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
         border: 1px solid #d3d3d3;
@@ -18,489 +19,431 @@
     #frmStore div.selector {
         height: 53px !important;
     }
+    #tblStore > tfoot > tr > td > button{
+        display: none !important;
+    }
 </style>
 <script>
+
     jQuery(document).ready(function() {
-    jQuery('#wizard').smartWizard({onFinish: onFinishCallback});
-            function onFinishCallback() {
+        jQuery('#wizard').smartWizard({onFinish: onFinishCallback});
+        function onFinishCallback() {
             alert('Finish Clicked');
-            }
+        }
 
-    //validate form thêm sản phẩm
-    jQuery("#frmProduct").validate({
-    rules: {
-    productName: {
-    required: true
-    },
-            cateProductSelect: {
-            required: true,
+        //validate form thêm sản phẩm
+        jQuery("#frmProduct").validate({
+            rules: {
+                productName: {
+                    required: true
+                },
+                cateProductSelect: {
+                    required: true,
                     min: 1
-            },
-            productDescription: {
-            required: true
-            },
-            productPrice: {
-            required: true
-            },
-            productTag: {
-            required: true
-            },
-            productSlug: {
-            required: true
-            },
-            manufactureSelect: {
-            required: true,
+                },
+                productDescription: {
+                    required: true
+                },
+                productPrice: {
+                    required: true
+                },
+                productTag: {
+                    required: true
+                },
+                productSlug: {
+                    required: true
+                },
+                manufactureSelect: {
+                    required: true,
                     min: 1
+                },
             },
-    },
             messages: {
-            productName: "Tên sản phẩm không được để trống",
-                    cateProductSelect: "Danh mục sản phẩm không được để trống",
-                    productDescription: "Mô tả sản phẩm không được để trống",
-                    productPrice: "Giá sản phẩm không được để trống",
-                    productTag: "Tag không được để trống",
-                    productSlug: "Đường dẫn không được để trống",
-                    manufactureSelect: "Nhà sản xuất không được để trống"
+                productName: "Tên sản phẩm không được để trống",
+                cateProductSelect: "Danh mục sản phẩm không được để trống",
+                productDescription: "Mô tả sản phẩm không được để trống",
+                productPrice: "Giá sản phẩm không được để trống",
+                productTag: "Tag không được để trống",
+                productSlug: "Đường dẫn không được để trống",
+                manufactureSelect: "Nhà sản xuất không được để trống"
             }
-    });
-            //validate form thêm khuyến mại
-            jQuery("#frmPromotion").validate({
-    rules: {
-    promotionContent: {
-    required: true
-    },
-            promotionName: {
-            required: true
+        });
+        //validate form thêm tag
+        jQuery("#frmTag").validate({
+            rules: {
+                tagKey: {
+                    required: true
+                },
+                tagValue: {
+                    required: true
+                },
             },
-            promotionAmount: {
-            required: true
-            },
-    },
             messages: {
-            promotionContent: "Nội dung khuyến mại không được để trống",
-                    promotionName: "Tên khuyến mại không được để trống",
-                    promotionAmount: "Giá trị khuyến mại không được để trống"
+                tagKey: "Key không được để trống",
+                tagValue: "Value không được để trống"
             }
-    });
-            //validate form thêm tag
-            jQuery("#frmTag").validate({
-    rules: {
-    tagKey: {
-    required: true
-    },
-            tagValue: {
-            required: true
+        });
+        //validate form thêm nhà sản xuất
+        jQuery("#frmManu").validate({
+            rules: {
+                manufacturerName: {
+                    required: true
+                },
+                manufacturerDescription: {
+                    required: true
+                },
+                manufacturerPlace: {
+                    required: true
+                },
             },
-    },
             messages: {
-            tagKey: "Key không được để trống",
-                    tagValue: "Value không được để trống"
+                manufacturerName: "Tên nhà sản xuất không được để trống",
+                manufacturerDescription: "Mô tả không được để trống",
+                manufacturerPlace: "Xuất xứ không được để trống"
             }
-    });
-            //validate form thêm nhà sản xuất
-            jQuery("#frmManu").validate({
-    rules: {
-    manufacturerName: {
-    required: true
-    },
-            manufacturerDescription: {
-            required: true
+        });
+
+        //validate form thêm mới size
+        jQuery("#frmSize").validate({
+            rules: {
+                sizeName: {
+                    required: true
+                },
+                sizeValue: {
+                    required: true
+                },
             },
-            manufacturerPlace: {
-            required: true
-            },
-    },
             messages: {
-            manufacturerName: "Tên nhà sản xuất không được để trống",
-                    manufacturerDescription: "Mô tả không được để trống",
-                    manufacturerPlace: "Xuất xứ không được để trống"
+                sizeName: "Tên size không được để trống",
+                sizeValue: "size không được để trống"
             }
+        });
     });
-            //validate form nhập hàng
-            jQuery("#frmStore").validate({
-    rules: {
-    sizeID: {
-    required: true
-    },
-            colorID: {
-            required: true
-            },
-            soluongnhap: {
-            required: true
-            },
-    },
-            messages: {
-            sizeID: "Size không được để trống",
-                    colorID: "Màu không được để trống",
-                    soluongnhap: "Số lượngkhông được để trống"
-            }
-    });
-            //validate form thêm mới size
-            jQuery("#frmSize").validate({
-    rules: {
-    sizeName: {
-    required: true
-    },
-            sizeValue: {
-            required: true
-            },
-    },
-            messages: {
-            sizeName: "Tên size không được để trống",
-                    sizeValue: "size không được để trống"
-            }
-    });
-    });
-            //kiểm tra đã thêm mới sản phẩm trước khi ấn nút next
-                    function checkSave() {
-                    alert('Bạn hãy lưu lại thông tin cơ bản trước!');
-                            return false;
-                    }
-            //lấy tag theo danh mục sản phẩm
-            function getCateTag() {
-            jQuery.jGrowl("Đang tải dữ liệu!");
-                    var cateID = jQuery('#cateProductSelect').val();
-                    if (cateID == '') {
+    //lấy tag theo danh mục sản phẩm
+    function getCateTag() {
+        //jQuery.jGrowl("Đang tải dữ liệu!");
+        var cateID = jQuery('#cateProductSelect').val();
+        if (cateID == '') {
             jQuery('#addTag').prop("disabled", true);
-                    jQuery("#spanTag").empty();
-            } else {
+            jQuery("#spanTag").empty();
+        } else {
             jQuery('#addTag').prop("disabled", false)
-                    var productID = jQuery('#idpro').val();
-                    var request = jQuery.ajax({
-                    url: "{{URL::action('ProductController@postTagByCateID')}}",
-                            data: {cateID: cateID, productID: productID},
-                            type: "POST",
-                            dataType: "html"
-                    });
-                    request.done(function(msg) {
-                    if (msg != 'FALSE') {
+            var productID = jQuery('#idpro').val();
+            var request = jQuery.ajax({
+                url: "{{URL::action('ProductController@postTagByCateID')}}",
+                data: {cateID: cateID, productID: productID},
+                type: "POST",
+                dataType: "html"
+            });
+            request.done(function(msg) {
+                if (msg != 'FALSE') {
                     jQuery("#spanTag").empty().html(msg);
-                    }
-                    });
-            }
-            }
-            //thêm key vào text box
-            function keyChange() {
-            jQuery('#tagKey').val(jQuery('#keyed').val());
-            }
+                }
+            });
+        }
+    }
+    //thêm key vào text box
+    function keyChange() {
+        jQuery('#tagKey').val(jQuery('#keyed').val());
+    }
+//lọc dấu tạo slug
+    function locdau() {
+        var str = (document.getElementById("productName").value); // lấy chuỗi dữ liệu nhập vào
+        str = str.toLowerCase(); // chuyển chuỗi sang chữ thường để xử lý
+        /* tìm kiếm và thay thế tất cả các nguyên âm có dấu sang không dấu*/
+        str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+        str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+        str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+        str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+        str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+        str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+        str = str.replace(/đ/g, "d");
+        str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'| |\"|\&|\#|\[|\]|~|$|_/g, "-");
+        /* tìm và thay thế các kí tự đặc biệt trong chuỗi sang kí tự - */
+        str = str.replace(/-+-/g, "-"); //thay thế 2- thành 1-
+        str = str.replace(/^\-+|\-+$/g, ""); //cắt bỏ ký tự - ở đầu và cuối chuỗi
+        document.getElementById("productSlug").value = str; // xuất kết quả xữ lý ra
+    }
 
-            //chỉnh sửa hàng trong kho
-            function editStore(id, sizeName, colorName, soluongnhap, soluongban, status) {
-            jQuery("#wEditStore").dialog("open");
-                    jQuery('#idStore').val(id);
-                    jQuery('#sizeText').val(sizeName);
-                    jQuery('#colorText').val(colorName);
-                    jQuery('#soluongnhapEdit').val(soluongnhap);
-                    jQuery('#soluongbanEdit').val(soluongban);
-                    jQuery("#statusEdit option:selected").prop("selected", false);
-                    jQuery("#statusEdit option[value=" + status + "]").prop("selected", true);
-            }
 
-            //update ckeditor để nhận giá trị vào form
-            function CKupdate() {
-            for (instance in CKEDITOR.instances)
-                    CKEDITOR.instances[instance].updateElement();
+    function getCheckSlug() {
+        var str = (document.getElementById("productName").value); // lấy chuỗi dữ liệu nhập vào
+        str = str.toLowerCase(); // chuyển chuỗi sang chữ thường để xử lý
+        /* tìm kiếm và thay thế tất cả các nguyên âm có dấu sang không dấu*/
+        str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+        str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+        str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+        str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+        str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+        str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+        str = str.replace(/đ/g, "d");
+        str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'| |\"|\&|\#|\[|\]|~|$|_/g, "-");
+        /* tìm và thay thế các kí tự đặc biệt trong chuỗi sang kí tự - */
+        str = str.replace(/-+-/g, "-"); //thay thế 2- thành 1-
+        str = str.replace(/^\-+|\-+$/g, ""); //cắt bỏ ký tự - ở đầu và cuối chuỗi
+        var request = jQuery.ajax({
+            url: "{{URL::action('ProductController@postCheckSlug')}}?slug=" + str,
+            type: "POST"
+        });
+        request.done(function(msg) {
+            if (msg != '') {
+                if (msg == '0') {
+                    document.getElementById("productSlug").value = str;
+                    return false;
+                } else {
+                    document.getElementById("productSlug").value = str + '-' + msg;
+                    return false;
+                }
             }
-            //xử lí các sự kiện của dialog
-            jQuery(function() {
-            //range datetimepicker
-            var dates = jQuery("#startSales, #endSales").datepicker({
+        });
+    }
+    //update ckeditor để nhận giá trị vào form
+    function CKupdate() {
+        for (instance in CKEDITOR.instances)
+            CKEDITOR.instances[instance].updateElement();
+    }
+    //hàm submit form thêm mới
+    function submitForm() {
+        var form = jQuery('#frmProduct');
+        if (!form.valid()) {
+            return false;
+        }
+        else {
+             var data = jQuery('#tblStore').appendGrid('getAllValue', true);
+            var count = data['_RowCount'];
+            jQuery('#countTable').val(count);
+            jQuery.jGrowl("Đang lưu sản phẩm!");
+            jQuery('#frmProductLoader').prop('hidden', false);
+            form.submit();
+
+        }
+    }
+    //xử lí các sự kiện của dialog
+    jQuery(function() {
+        // Initialize appendGrid
+        jQuery('#tblStore').appendGrid('init', {
+            initRows: 1,
+            columns: [
+                {name: 'ban', display: 'ban', type: 'hidden'},
+                {name: 'sizeID', display: 'ban', type: 'hidden'},
+                {name: 'colorID', display: 'ban', type: 'hidden'},
+                {name: 'SizeName', display: 'Size', type: 'text', ctrlCss: {width: '100px'}, ctrlProp: {disabled: 'disabled'}},
+                {name: 'ColorName', display: 'Màu', type: 'text', ctrlCss: {width: '100px'}, ctrlProp: {disabled: 'disabled'}},
+                {name: 'SoLuongBan', display: 'Đã bán', type: 'text', ctrlCss: {width: '100px'}, ctrlProp: {disabled: 'disabled'}},
+                {name: 'SoLuongNhap', display: 'Số lượng (Có thể sửa)', type: 'number', onChange: function(evt, rowIndex) {
+                        checkSoLuong(rowIndex);
+                    }, ctrlCss: {width: '100px'}},
+                {name: 'status', display: 'Trạng thái (Có thể sửa)', type: 'select', ctrlOptions: {0: 'Chờ kích hoạt', 1: 'Đã kích hoạt', 2: 'Đã xóa'}}
+            ],
+            initData: [
+<?php
+if (isset($arrStore)) {
+    foreach ($arrStore as $sItem) {
+        ?>
+                        {'ban': '<?php echo $sItem->soluongban; ?>', 'sizeID': '<?php echo $sItem->sizeID; ?>', 'colorID': '<?php echo $sItem->colorID; ?>', 'SizeName': '<?php echo $sItem->sizeName; ?>', 'ColorName': '<?php echo $sItem->colorName; ?>', 'SoLuongNhap': '<?php echo $sItem->soluongnhap; ?>', 'SoLuongBan': '<?php echo $sItem->soluongban; ?>', 'status': '<?php echo $sItem->status; ?>'},
+        <?php
+    }
+}
+?>
+            ],
+            hideRowNumColumn: true,
+            rowButtonsInFront: true,
+            hideButtons: {
+                remove: true,
+                removeLast: true,
+                insert: true,
+                moveUp: true,
+                moveDown: true,
+                appendRow: true
+            }
+        });
+        function checkSoLuong(x) {
+            var tmp = x + 1;
+            if (jQuery('#tblStore_SoLuongNhap_' + tmp).val() < jQuery('#tblStore_ban_' + tmp).val())
+            {
+                alert('Số lượng nhập không được nhỏ hơn số lượng đã bán!');
+                jQuery('#tblStore_SoLuongNhap_' + tmp).val(jQuery('#tblStore_SoLuongBan_' + tmp).val());
+                return false;
+            }
+        }
+        ;
+
+        //range datetimepicker
+        var dates = jQuery("#startSales, #endSales").datepicker({
             defaultDate: "+1w",
-                    changeMonth: true,
-                    changeYear: true,
-                    numberOfMonths: 1,
-                    onSelect: function(selectedDate) {
-                    var option = this.id == "startSales" ? "minDate" : "maxDate",
-                            instance = jQuery(this).data("datepicker"),
-                            date = jQuery.datepicker.parseDate(
-                                    instance.settings.dateFormat ||
-                                    jQuery.datepicker._defaults.dateFormat,
-                                    selectedDate, instance.settings);
-                            dates.not(this).datepicker("option", option, date);
-                    }
-            });
-                    jQuery("#wTag").dialog({
+            changeMonth: true,
+            changeYear: true,
+            numberOfMonths: 1,
+            onSelect: function(selectedDate) {
+                var option = this.id == "startSales" ? "minDate" : "maxDate",
+                        instance = jQuery(this).data("datepicker"),
+                        date = jQuery.datepicker.parseDate(
+                                instance.settings.dateFormat ||
+                                jQuery.datepicker._defaults.dateFormat,
+                                selectedDate, instance.settings);
+                dates.not(this).datepicker("option", option, date);
+            }
+        });
+        jQuery("#wTag").dialog({
             autoOpen: false,
-                    resizable: false,
-                    width: 600,
-                    height: 'auto',
-                    modal: true,
-            });
-                    jQuery("#wEditStore").dialog({
+            resizable: false,
+            width: 600,
+            height: 'auto',
+            modal: true
+        });
+        jQuery("#wManu").dialog({
             autoOpen: false,
-                    resizable: false,
-                    width: 600,
-                    height: 'auto',
-                    modal: true,
-            });
-                    jQuery("#wManu").dialog({
+            resizable: false,
+            width: 600,
+            height: 'auto',
+            modal: true
+        });
+        jQuery("#wSize").dialog({
             autoOpen: false,
-                    resizable: false,
-                    width: 600,
-                    height: 'auto',
-                    modal: true,
-            });
-                    jQuery("#wSize").dialog({
+            resizable: false,
+            width: 600,
+            height: 'auto',
+            modal: true
+        });
+        jQuery("#wColor").dialog({
             autoOpen: false,
-                    resizable: false,
-                    width: 600,
-                    height: 'auto',
-                    modal: true,
-            });
-                    jQuery("#wColor").dialog({
-            autoOpen: false,
-                    resizable: false,
-                    width: 600,
-                    height: 'auto',
-                    modal: true,
-            });
-                    //bật của sổ thêm nhà sản xuất
-                    jQuery("#addManu").button().click(function() {
+            resizable: false,
+            width: 600,
+            height: 'auto',
+            modal: true
+        });
+        //bật của sổ thêm nhà sản xuất
+        jQuery("#addManu").button().click(function() {
             jQuery("#wManu").dialog("open");
-            });
-                    //bật của sổ thêm size
-                    jQuery("#addSize").button().click(function() {
+        });
+        //bật của sổ thêm size
+        jQuery("#addSize").button().click(function() {
             jQuery("#wSize").dialog("open");
-            });
-                    //bật của sổ thêm màu
-                    jQuery("#addColor").button().click(function() {
+        });
+        //bật của sổ thêm màu
+        jQuery("#addColor").button().click(function() {
             jQuery("#wColor").dialog("open");
-            });
-                    //bật của sổ thêm tag cho danh mục sản phẩm
-                    jQuery("#addTag").button().click(function() {
+        });
+        //bật của sổ thêm tag cho danh mục sản phẩm
+        jQuery("#addTag").button().click(function() {
             var cateID = jQuery('#cateProductSelect').val();
-                    if (cateID == '') {
-            return;
+            if (cateID == '') {
+                return;
             }
             else {
-            jQuery('#cateTagID').val(jQuery('#cateProductSelect').val());
-                    jQuery("#ui-dialog-title-wTag").html('Thêm thông số kỹ thuật cho danh mục: ' + jQuery('#cateProductSelect option:selected').text());
-                    jQuery("#wTag").dialog("open");
+                jQuery('#cateTagID').val(jQuery('#cateProductSelect').val());
+                jQuery("#ui-dialog-title-wTag").html('Thêm thông số kỹ thuật cho danh mục: ' + jQuery('#cateProductSelect option:selected').text());
+                jQuery("#wTag").dialog("open");
             }
 
-            });
-                    //sự kiện submit form thêm tag   
-                    jQuery("#submitAddTag").button().click(function() {
+        });
+        //sự kiện submit form thêm tag   
+        jQuery("#submitAddTag").button().click(function() {
             jQuery.jGrowl("Đang thêm mới tag!");
-                    var form = jQuery('#frmTag');
-                    if (!form.valid())
-                    return false;
-                    jQuery('#frmTagLoader').prop('hidden', false);
-                    var request = jQuery.ajax({
-                    url: form.attr('action'),
-                            data: form.serialize(),
-                            type: "POST",
-                            dataType: "html"
-                    });
-                    request.done(function(msg) {
-                    jQuery("#wTag").dialog("close");
-                            if (msg != 'FALSE') {
+            var form = jQuery('#frmTag');
+            if (!form.valid())
+                return false;
+            jQuery('#frmTagLoader').prop('hidden', false);
+            var request = jQuery.ajax({
+                url: form.attr('action'),
+                data: form.serialize(),
+                type: "POST",
+                dataType: "html"
+            });
+            request.done(function(msg) {
+                jQuery("#wTag").dialog("close");
+                if (msg != 'FALSE') {
                     jQuery("#spanTag").empty().html(msg);
-                            jQuery.jGrowl("Thêm mới tag thành công!");
-                            jQuery('#frmTagLoader').prop('hidden', true);
-                    }
-                    //jQuery.jGrowl("Thêm mới khuyến mại thành công!");
-                    });
+                    jQuery.jGrowl("Thêm mới tag thành công!");
+                    jQuery('#frmTagLoader').prop('hidden', true);
+                }
+                //jQuery.jGrowl("Thêm mới khuyến mại thành công!");
             });
-                    //sự kiện submit form thêm mới nhà sản xuất       
-                    jQuery("#submitAddManu").button().click(function() {
+        });
+        //sự kiện submit form thêm mới nhà sản xuất       
+        jQuery("#submitAddManu").button().click(function() {
             var form = jQuery('#frmManu');
-                    if (!form.valid())
-                    return false;
-                    jQuery.jGrowl("Đang thêm mới nhà sản xuất!");
-                    jQuery('#frmManuLoader').prop('hidden', false);
-                    var request = jQuery.ajax({
-                    url: form.attr('action'),
-                            data: form.serialize(),
-                            type: "POST",
-                            dataType: "html"
-                    });
-                    request.done(function(msg) {
-                    jQuery("#wManu").dialog("close");
-                            if (msg != 'FALSE') {
+            if (!form.valid())
+                return false;
+            jQuery.jGrowl("Đang thêm mới nhà sản xuất!");
+            jQuery('#frmManuLoader').prop('hidden', false);
+            var request = jQuery.ajax({
+                url: form.attr('action'),
+                data: form.serialize(),
+                type: "POST",
+                dataType: "html"
+            });
+            request.done(function(msg) {
+                jQuery("#wManu").dialog("close");
+                if (msg != 'FALSE') {
                     jQuery("#manufactureSelect").empty().html(msg);
-                            jQuery.jGrowl("Thêm mới nhà sản xuất thành công!");
-                            jQuery('#frmManuLoader').prop('hidden', true);
-                    }
-                    });
+                    jQuery.jGrowl("Thêm mới nhà sản xuất thành công!");
+                    jQuery('#frmManuLoader').prop('hidden', true);
+                }
             });
-                    //sự kiên thêm size
-                    jQuery("#submitAddSize").button().click(function() {
+        });
+        //sự kiên thêm size
+        jQuery("#submitAddSize").button().click(function() {
             var form = jQuery('#frmSize');
-                    if (!form.valid())
-                    return false;
-                    jQuery.jGrowl("Đang thêm mới size!");
-                    jQuery('#frmSizeLoader').prop('hidden', false);
-                    var request = jQuery.ajax({
-                    url: form.attr('action'),
-                            data: form.serialize(),
-                            type: "POST",
-                            dataType: "html"
-                    });
-                    request.done(function(msg) {
-                    jQuery("#wSize").dialog("close");
-                            if (msg != 'FALSE') {
-                    jQuery("#sizeSelect").empty().html(msg);
-                            jQuery.jGrowl("Thêm mới Size thành công!");
-                            jQuery('#frmSizeLoader').prop('hidden', true);
-                    }
-                    else {
+            if (!form.valid())
+                return false;
+            jQuery.jGrowl("Đang thêm mới size!");
+            jQuery('#frmSizeLoader').prop('hidden', false);
+            var request = jQuery.ajax({
+                url: form.attr('action'),
+                data: form.serialize(),
+                type: "POST",
+                dataType: "html"
+            });
+            request.done(function(msg) {
+                jQuery("#wSize").dialog("close");
+                if (msg != 'FALSE') {
+                    jQuery("#sizeID").empty().html(msg);
+                    jQuery.jGrowl("Thêm mới Size thành công!");
+                    jQuery('#frmSizeLoader').prop('hidden', true);
+                }
+                else {
                     jQuery.jGrowl("Thêm mới Size không thành công!");
-                    }
-                    });
+                }
             });
-                    //sự kiên thêm color
-                    jQuery("#submitAddColor").button().click(function() {
+        });
+        //sự kiên thêm color
+        jQuery("#submitAddColor").button().click(function() {
             var form = jQuery('#frmColor');
-                    if (!form.valid())
-                    return false;
-                    jQuery.jGrowl("Đang thêm mới màu sắc!");
-                    jQuery('#frmColorLoader').prop('hidden', false);
-                    var request = jQuery.ajax({
-                    url: form.attr('action'),
-                            data: form.serialize(),
-                            type: "POST",
-                            dataType: "html"
-                    });
-                    request.done(function(msg) {
-                    jQuery("#wColor").dialog("close");
-                            if (msg != 'FALSE') {
-                    jQuery("#colorSelect").empty().html(msg);
-                            jQuery.jGrowl("Thêm mới Màu Sắc thành công!");
-                            jQuery('#frmColorLoader').prop('hidden', true);
-                    }
-                    else {
+            if (!form.valid())
+                return false;
+            jQuery.jGrowl("Đang thêm mới màu sắc!");
+            jQuery('#frmColorLoader').prop('hidden', false);
+            var request = jQuery.ajax({
+                url: form.attr('action'),
+                data: form.serialize(),
+                type: "POST",
+                dataType: "html"
+            });
+            request.done(function(msg) {
+                jQuery("#wColor").dialog("close");
+                if (msg != 'FALSE') {
+                    jQuery("#colorID").empty().html(msg);
+                    jQuery.jGrowl("Thêm mới Màu Sắc thành công!");
+                    jQuery('#frmColorLoader').prop('hidden', true);
+                }
+                else {
                     jQuery.jGrowl("Thêm mới Màu Sắc không thành công!");
-                    }
-                    });
+                }
             });
-                    //sự kiện thêm mới sản phẩm
-                    jQuery("#btnAddProduct").button().click(function() {
-            var form = jQuery('#frmProduct');
-                    if (!form.valid())
-                    return false;
-                    jQuery.jGrowl("Đang thêm mới sản phẩm!");
-                    jQuery('#frmProductLoader').prop('hidden', false);
-            });
-                    //thêm thông tin chi tiết sản phẩm   
-                    jQuery("#btnAdđetail").button().click(function() {
-            var form = jQuery('#frmDetail');
-                    if (!form.valid())
-                    return false;
-                    jQuery.jGrowl("Đang thêm thông tin chi tiết sản phẩm!");
-                    jQuery('#frmDetailLoader').prop('hidden', false);
-                    var request = jQuery.ajax({
-                    url: form.attr('action'),
-                            data: form.serialize(),
-                            type: "POST",
-                            dataType: "html"
-                    });
-                    request.done(function(msg) {
-                    jQuery.jGrowl(msg);
-                            jQuery('#frmDetailLoader').prop('hidden', true);
-                    });
-            });
-                    //Thêm mới size và màu
-                    jQuery("#btnAddStore").button().click(function() {
-            jQuery('#divThongBaoOK').prop('hidden', true);
-                    jQuery('#divThongBaoLoi').prop('hidden', true);
-                    jQuery('#divThongBaoLoi1').prop('hidden', true);
-                    var form = jQuery('#frmStore');
-                    if (!form.valid())
-                    return false;
-                    jQuery.jGrowl("Đang kiểm tra kho!");
-                    jQuery('#frmStoreLoader').prop('hidden', false);
-                    var request = jQuery.ajax({
-                    url: "{{URL::action('StoreController@postCheckExitStore')}}",
-                            data: {proID: jQuery('#proID').val(), sizeID: jQuery('#sizeSelect').val(), colorID: jQuery('#colorSelect').val()},
-                            type: "POST",
-                            dataType: "html"
-                    });
-                    request.done(function(msg) {
-                    if (msg > 0) {
-                    jQuery('#frmStoreLoader').prop('hidden', true);
-                            jQuery('#divThongBaoLoi').prop('hidden', false);
-                            jQuery.jGrowl("Hàng đã có trong kho.Hãy chọn size khác!");
-                            return false;
-                    }
-                    else {
-                    var request = jQuery.ajax({
-                    url: form.attr('action'),
-                            data: form.serialize(),
-                            type: "POST",
-                            dataType: "html"
-                    });
-                            request.done(function(msg1) {
-                            jQuery('#frmStoreLoader').prop('hidden', true);
-                                    if (msg1 == "true") {
-                            jQuery('#divThongBaoOK').prop('hidden', false);
-                                    var request1 = jQuery.ajax({
-                                    url: "{{URL::action('StoreController@postStoreByProductIDAjax')}}",
-                                            data: {proID: jQuery('#proID').val()},
-                                            type: "POST",
-                                            dataType: "html"
-                                    });
-                                    request1.done(function(store) {
-                                    if (store != '') {
-                                    jQuery('#divStore').empty().html(store);
-                                    }
-                                    });
-                                    jQuery.jGrowl("Nhập hàng vào kho thành công!");
-                            }
-                            else {
-                            jQuery('#divThongBaoLoi1').prop('hidden', false);
-                                    jQuery.jGrowl("Nhập hàng vào kho không thành công!");
-                            }
-                            });
-                    }
-                    });
-            });
-                    //chỉnh sủa số lượng hàng
-                    jQuery("#btnEditStore").button().click(function() {
-                    var form = jQuery('#frmEditStore');
-                    jQuery.jGrowl("Đang kiểm tra kho!");
-                    jQuery('#frmEditStoreLoader').prop('hidden', false);
-                    var request = jQuery.ajax({
-                    url: "{{URL::action('StoreController@postCheckSoLuong')}}",
-                            data: {id: jQuery('#idStore').val(), soluongnhap: jQuery('#soluongnhapEdit').val()},
-                            type: "POST",
-                            dataType: "html"
-                    });
-                    request.done(function(msg) {
-                    if (msg == "true") {
-                    jQuery.jGrowl("Số lượng nhập vào phải lớn hơn số lượng đã bán!");
-                    }
-                    else{
-                    var request1 = jQuery.ajax({
-                    url: "{{URL::action('StoreController@postUpdateSoLuong')}}",
-                            data: {id: jQuery('#idStore').val(), soluongnhap: jQuery('#soluongnhapEdit').val(), status: jQuery('#statusEdit').val()},
-                            type: "POST",
-                            dataType: "html"
-                    });
-                            request1.done(function(msg1) {
-                            if (msg1 == 'true'){
-                                jQuery("#wEditStore").dialog("close");
-                                  var request2 = jQuery.ajax({
-                                    url: "{{URL::action('StoreController@postStoreByProductIDAjax')}}",
-                                            data: {proID: jQuery('#proID').val()},
-                                            type: "POST",
-                                            dataType: "html"
-                                    });
-                                    request2.done(function(store) {
-                                    if (store != '') {
-                                    jQuery('#divStore').empty().html(store);
-                                    }
-                                    });
-                            jQuery.jGrowl("Hàng đã được cập nhật thành công.");
-                            }
-                            else{                                
-                            jQuery.jGrowl("Cập nhật hàng không thành công.");
-                            }
-                            });
-                    }
-                    });
-            });
-            });</script>
+        });
+        //Thêm mới size và màu
+        jQuery("#btnAddStore").button().click(function() {
+            if (jQuery('#sizeID').val() == '' || jQuery('#colorID').val()=='' || jQuery('#soluongnhap').val() == '') {
+                jQuery.jGrowl("Bạn phải nhập đầy đủ thông tin!");
+            }
+            else {
+                jQuery('#tblStore').appendGrid('insertRow', [
+                    {ban: '0', sizeID: jQuery('#sizeID').val(), colorID: jQuery('#colorID').val(), SizeName: jQuery('#sizeID option:selected').text(), ColorName: jQuery('#colorID option:selected').text(), SoLuongNhap: jQuery('#soluongnhap').val(), SoLuongBan: '0', status: '0'}
+                ], 0);
+            }
+        });
+    });</script>
 <div class="pageheader notab">
     <h1 class="pagetitle">QUẢN LÝ SẢN PHẨM</h1>
     <span class="pagedesc">Thêm sửa xóa sản phẩm</span>
@@ -516,44 +459,43 @@
         <div class="contenttitle2">
             <h3>@if(isset($dataedit))Chỉnh sửa sản phẩm @else Thêm mới sản phẩm @endif</h3>
         </div>
-        <div id="wizard" class="wizard">
-            <br />
-            <ul class="hormenu">
-                <li>
-                    <a href="#wiz1step1">
-                        <span class="h2">Bước 1</span>
-                        <span class="dot"><span></span></span>
-                        <span class="label">Nhập thông tin cơ bản</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#wiz1step2">
-                        <span class="h2">Bước 2</span>
-                        <span class="dot"><span></span></span>
-                        <span class="label">Nhập thông tin chi tiết</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#wiz1step3">
-                        <span class="h2">Bước 3</span>
-                        <span class="dot"><span></span></span>
-                        <span class="label">Nhập số lượng hàng</span>
-                    </a>
-                </li>
-            </ul>
+        <input type="hidden" id="divAvtive" value="" />
+        <form id="frmProduct" class="stdform stdform2" method="post" action="@if(isset($dataedit)){{URL::action('ProductController@postEditProduct')}} @else {{URL::action('ProductController@postAddProduct')}} @endif" accept-charset="UTF-8" enctype="multipart/form-data">
+            <div id="wizard" class="wizard">
+                <br />
+                <ul class="hormenu">
+                    <li>
+                        <a href="#wiz1step1">
+                            <span class="h2">Bước 1</span>
+                            <span class="dot"><span></span></span>
+                            <span class="label">Nhập thông tin cơ bản</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#wiz1step2">
+                            <span class="h2">Bước 2</span>
+                            <span class="dot"><span></span></span>
+                            <span class="label">Nhập thông tin chi tiết</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#wiz1step3">
+                            <span class="h2">Bước 3</span>
+                            <span class="dot"><span></span></span>
+                            <span class="label">Nhập số lượng hàng</span>
+                        </a>
+                    </li>
+                </ul>
 
-            <br clear="all" /><br /><br />
+                <br clear="all" /><br /><br />
 
-            <div id="wiz1step1" class="formwiz">
-                <h4>Bước 1: Nhập thông tin cơ bản</h4>
-
-                <form id="frmProduct" class="stdform stdform2" method="post" action="@if(isset($dataedit)){{URL::action('ProductController@postEditProduct')}} @else {{URL::action('ProductController@postAddProduct')}} @endif" accept-charset="UTF-8" enctype="multipart/form-data">
-
+                <div id="wiz1step1" class="formwiz">
+                    <h4>Bước 1: Nhập thông tin cơ bản</h4>
                     <p>
                         <label>Tên sản phẩm (<span style="color: red;">*</span>)</label>
                         <span class="field">
                             <input type="hidden" name="idpro" id="idpro" value="@if(isset($dataedit)){{$dataedit->id}}@endif"/>
-                            <input type="text" id="productName"  name="productName" placeholder="Nhập trên sản phẩm" class="longinput" value="@if(isset($dataedit)){{$dataedit->productName}}@endif">
+                            <input type="text" onkeyup="locdau()" onchange="getCheckSlug()" id="productName"  name="productName" placeholder="Nhập trên sản phẩm" class="longinput" value="@if(isset($dataedit)){{$dataedit->productName}}@endif">
                         </span>
                     </p>
                     <p>
@@ -600,13 +542,13 @@
                     <p>
                         <label>Khuyến mại</label>
                         <span class="field" id="sPromotion"> 
-                            <input type="text" name="salesPrice" value="@if(isset($dataedit)){{$dataedit->salesPrice}}@endif" placeholder="Nhập khuyến mại" onkeypress="return event.charCode > 47 && event.charCode < 58;" pattern="[0-9]" style="width:100px;" id="salesPrice">&nbsp;&nbsp;   Từ ngày:  <input type="text" id="startSales" value="@if(isset($dataedit)&& $dataedit->startSales!=''){{date('m/d/Y',$dataedit->startSales)}}@endif" name="startSales"/> &nbsp; &nbsp;Tới ngày: <input type="text" value="@if(isset($dataedit)&& $dataedit->endSales!=''){{date('m/d/Y',$dataedit->endSales)}}@endif" id="endSales" name="endSales"/>
+                            <input type="text" name="salesPrice" value="@if(isset($dataedit)){{$dataedit->salesPrice}}@endif" placeholder="Nhập khuyến mại" onkeypress="return event.charCode > 47 && event.charCode < 58;" pattern="[0-9]" style="width:100px;" id="salesPrice">&nbsp;&nbsp;   Từ ngày:  <input type="text" id="startSales" class="width100" value="@if(isset($dataedit)&& $dataedit->startSales!=''){{date('m/d/Y',$dataedit->startSales)}}@endif" name="startSales"/> &nbsp; &nbsp;Tới ngày: <input type="text" value="@if(isset($dataedit)&& $dataedit->endSales!=''){{date('m/d/Y',$dataedit->endSales)}}@endif" id="endSales" class="width100" name="endSales"/>
                         </span>
                     </p>
                     <p>
                         <label>Đường dẫn ngắn gọn</label>
                         <span class="field">
-                            <input type="text" name="productSlug" id="productSlug" placeholder="Nhập đường dẫn ngắn gọn" class="smallinput" value="@if(isset($dataedit)){{$dataedit->productSlug}}@endif"> 
+                            <input type="text" name="productSlug" id="productSlug" placeholder="Nhập đường dẫn ngắn gọn" class="smallinput" @if(isset($dataedit))disabled @endif value="@if(isset($dataedit)){{$dataedit->productSlug}}@endif"> 
                         </span>
                     </p>  
                     <p>
@@ -619,23 +561,10 @@
                             </select>
                         </span>
                     </p>
+                </div><!--#wiz1step1-->
 
-                    <p class="stdformbutton">
-                        @if(isset($dataedit))
-                        <button id="btnEditProduct"  class="submit radius2">Cập nhật</button>                        
-                        @else
-                        <button id="btnAddProduct" class="submit radius2"> Thêm mới</button>
-                        @endif
-                        <input type="reset" class="reset radius2" value="Làm lại">
-                        <button type="button" onclick="window.location.href ='{{URL::action('ProductController@getView')}}';" class="submit radius2">Quay lại danh sách sản phẩm</button>
-                        <img id="frmProductLoader" hidden="true" src="{{Asset('adminlib/images/loaders/loader1.gif')}}" alt="" />
-                    </p>           
-                </form>
-            </div><!--#wiz1step1-->
-
-            <div id="wiz1step2" class="formwiz">
-                <h4>Bước 2: Nhập thông tin chi tiết</h4>    
-                <form id="frmDetail" class="stdform stdform2" method="post" action="@if(isset($dataedit)){{URL::action('ProductController@postAdđetailProduct')}}@endif" accept-charset="UTF-8" enctype="multipart/form-data">
+                <div id="wiz1step2" class="formwiz">
+                    <h4>Bước 2: Nhập thông tin chi tiết</h4>  
                     <p>
                         <label>Thông số kỹ thuật</label>
                         <input type="hidden" name="productID" id="productID" value="@if(isset($dataedit)){{$dataedit->id}}@endif"/>
@@ -691,92 +620,23 @@
                             <button type="button"  class="submit radius2" id="addManu">Thêm nhà sản xuất</button>
                         </span>
                     </p>
-                    <p class="stdformbutton">
-                        @if(isset($dataedit))
-                        <button id="btnAdđetail" type="button"  class="submit radius2">Lưu lại</button>     
-                        @endif
-                        <input type="reset" class="reset radius2" value="Làm lại">                      
-                        <img id="frmDetailLoader" hidden="true" src="{{Asset('adminlib/images/loaders/loader1.gif')}}" alt="" />
-                    </p>         
-                </form>
-            </div><!--#wiz1step2-->
-            <div id="wiz1step3" class="formwiz">
-                <h4>Bước 3: Nhập số lượng hàng</h4>                 
-                <div class="notibar msgerror" id="divThongBaoLoi" hidden="true">
-                    <a class="close"></a>
-                    <p>Hàng đã có trong kho. Vui lòng chọn size và màu khác để nhập!</p>
-                </div><!-- notification msginfo -->
-                <div class="notibar msgerror" id="divThongBaoLoi1" hidden="true">
-                    <a class="close"></a>
-                    <p>Thêm hàng vào kho bị lỗi! Vui lòng nhập lại!</p>
-                </div><!-- notification msginfo -->
-                <div class="notibar msgsuccess" id="divThongBaoOK" hidden="true">
-                    <a class="close"></a>
-                    <p>Hàng đã được nhập vào kho. Bạn có thể tiếp tục nhập thêm hàng!</p>
-                </div>
-                <div class="contenttitle2">
-                    <h3>Hàng trong kho</h3>
-                </div><!--contenttitle-->
-                <div id="divStore">
-
-                    <table cellpadding="0" cellspacing="0" border="0" class="stdtable" id="dyntable">
-                        <colgroup>
-                            <col class="con0" />
-                            <col class="con1" />
-                            <col class="con0" />
-                            <col class="con1" />
-                            <col class="con0" />
-                            <col class="con1" />
-                            <col class="con0" />
-                        </colgroup>
-                        <thead>
-                            <tr>
-                                <th class="head0">STT</th>
-                                <th class="head1">Size</th>
-                                <th class="head0">Màu sắc</th>
-                                <th class="head1">Số lượng nhập</th>
-                                <th class="head0">Số lượng bán</th>
-                                <th class="head1">Tình trạng</th>
-                                <th class="head0">Chức năng</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php $i = 1; ?>
-                            @if(isset($arrStore))
-                            @foreach($arrStore as $item)
-                            <tr class="gradeA">
-                                <td>{{$i}}</td>
-                                <td>{{$item->sizeName}}</td>
-                                <td>{{$item->colorName}}</td>
-                                <td>{{$item->soluongnhap}}</td>
-                                <td>{{$item->soluongban}}</td>
-                                <td><?php
-                            if ($item->status == 0) {
-                                echo "chờ kích hoạt";
-                            } else if ($item->status == 1) {
-                                echo "đã kích hoạt";
-                            } else if ($item->status == 2) {
-                                echo "đã xóa";
-                            }
-                            ?>                           
-                                </td> 
-                                <td><a href="javascript:void(0);" onclick="editStore('{{$item->id}}','{{$item->sizeName}}','{{$item->colorName}}','{{$item->soluongnhap}}','{{$item->soluongban}}','{{$item->status}}')">Sửa</a></td>
-                                <?php $i++; ?>
-                            </tr>
-                            @endforeach
-                            @endif
-                        </tbody>
+                </div><!--#wiz1step2-->
+                <div id="wiz1step3" class="formwiz">
+                    <h4>Bước 3: Nhập hàng vào kho</h4>  
+                    <div class="contenttitle2">
+                        <h3>Hàng  trong kho</h3>
+                    </div>
+                    <table cellpadding="0" cellspacing="0" border="0" class="stdtable" id="tblStore">
                     </table>
-                </div>
-                <div id="divThemHang" class="contenttitle2">
-                    <h3>Nhập thêm hàng</h3>
-                </div>
-                <form class="stdform stdform2" method="post"  id="frmStore" action="{{URL::action('StoreController@postAddStoreAjax')}}">
+                    <input type="hidden" name="countTable" id="countTable" value="" />
+                    <div class="contenttitle2">
+                        <h3>Nhập thêm hàng</h3>
+                    </div>
                     <p>                  
-                        <label>Size: </label>
+                        <label>Size</label>
                         <span class="field">                               
                             <input type="hidden" name="proID" id="proID" value="@if(isset($dataedit)){{$dataedit->id}}@endif"/>
-                            <select name="sizeID" id="sizeSelect" required>
+                            <select name="sizeID" id="sizeID" >
                                 <option value="">---Chọn size---</option>
                                 @if(isset($arrSize))
                                 @foreach($arrSize as $item)
@@ -788,9 +648,9 @@
                         </span>
                     </p>        
                     <p>           
-                        <label>Màu sắc: </label>
+                        <label>Màu sắc</label>
                         <span class="field">                                               
-                            <select name="colorID" id="colorSelect" required>
+                            <select name="colorID" id="colorID" >
                                 <option value="">---Chọn màu---</option>
                                 @if(isset($arrColor))
                                 @foreach($arrColor as $item)
@@ -802,30 +662,20 @@
                         </span>                 
                     </p>  
                     <p>           
-                        <label>Số lượng: </label>
+                        <label>Số lượng</label>
                         <span class="field">                                               
-                            <input type="text"  onkeypress="return event.charCode > 47 && event.charCode < 58;" pattern="[0-9]" name="soluongnhap" id="soluongnhap" placeholder="Số lượng" value="" class="longinput">
+                            <input type="text"  onkeypress="return event.charCode > 47 && event.charCode < 58;" pattern="[0-9]" name="soluongnhap" id="soluongnhap" placeholder="Số lượng" value="" class="width100">
                         </span>                 
                     </p>  
-                    <p>
-                        <label>Trạng thái</label>
-                        <span class="field">
-                            <select name="storeStatus">
-                                <option value="0" >Chờ kích hoạt</option>
-                                <option value="1" >Kích hoạt</option>
-                                <option value="2" >Xóa</option>
-                            </select>
-                        </span>
-                    </p>
+
+
                     <p class="stdformbutton">
-                        <button class="submit radius2" type="button" id="btnAddStore" value="Thêm mới">Nhập </button>
-                        <input type="reset" class="reset radius2" value="Làm mới">
+                        <button class="submit radius2" type="button" id="btnAddStore" value="Thêm mới">Nhập </button>                       
                         <img id="frmStoreLoader" hidden="true" src="{{Asset('adminlib/images/loaders/loader1.gif')}}" alt="" />
                     </p>
-                </form>              
-            </div>
-        </div><!--#wizard-->
-
+                </div>
+            </div><!--#wizard-->
+        </form>
 
         <div id="wTag" title="Thêm thông số kỹ thuật">
             <form class="stdform stdform2" method="post" id="frmTag" action="{{URL::action('TagController@postAddTagAjax')}}">
@@ -1174,49 +1024,6 @@
                     <button class="submit radius2" type="button" id="submitAddManu" value="Thêm mới">Thêm mới </button>
                     <input type="reset" class="reset radius2" value="Làm mới">
                     <img id="frmManuLoader" hidden="true" src="{{Asset('adminlib/images/loaders/loader1.gif')}}" alt="" />
-                </p>
-            </form>
-        </div>
-        <div id="wEditStore" title="Chỉnh sửa số lượng hàng">
-            <form class="stdform stdform2" method="post"  id="frmEditStore" action="{{URL::action('StoreController@postAddStoreAjax')}}">
-                <p>                  
-                    <label>Size: </label>
-                    <span class="field">                
-                        <input type="hidden" name="idStore" id="idStore" value=""/>                        
-                        <input type="text" class="width100" id="sizeText" disabled="true" />
-                    </span>
-                </p>        
-                <p>           
-                    <label>Màu sắc: </label>
-                    <span class="field">                                               
-                        <input type="text" class="width100" id="colorText" disabled="true" />
-                    </span>                 
-                </p>  
-                <p>           
-                    <label>Số lượng đã bán: </label>
-                    <span class="field">                                               
-                        <input type="text"  name="soluongbanEdit" disabled="true" id="soluongbanEdit" placeholder="Số lượng bán" value="" class="width100">
-                    </span>                 
-                </p>
-                <p>           
-                    <label>Số lượng nhập: </label>
-                    <span class="field">                                               
-                        <input type="text"  onkeypress="return event.charCode > 47 && event.charCode < 58;" pattern="[0-9]" name="soluongnhapEdit" id="soluongnhapEdit" placeholder="Số lượng" value="" class="width100">
-                    </span>                 
-                </p>                  
-                <p>
-                    <label>Trạng thái</label>
-                    <span class="field">
-                        <select name="statusEdit" id='statusEdit'>
-                            <option value="0" >Chờ kích hoạt</option>
-                            <option value="1" >Kích hoạt</option>
-                            <option value="2" >Xóa</option>
-                        </select>
-                    </span>
-                </p>
-                <p class="stdformbutton">
-                    <button class="submit radius2" type="button" id="btnEditStore" value="Luu lại">Luu lại </button>                        
-                    <img id="frmStoreLoader" hidden="true" src="{{Asset('adminlib/images/loaders/loader1.gif')}}" alt="" />
                 </p>
             </form>
         </div>

@@ -43,12 +43,12 @@
     }
 </script>
 <div class="pageheader notab">
-    <h1 class="pagetitle">QUẢN LÝ SUPPORTTER</h1>
-    <span class="pagedesc">Quản lý người hỗ trợ</span>
+    <h1 class="pagetitle">QUẢN LÝ THUỘC TÍNH</h1>
+    <span class="pagedesc">Quản lý thuộc tính</span>
 </div>
 <div class="contentwrapper">
     <div class="contenttitle2">
-        <h3>Bảng supporter</h3>
+        <h3>Bảng thuộc tính</h3>
     </div>
     <div class="contentwrapper">
         <div class="subcontent">
@@ -188,4 +188,55 @@
         </p>
     </form>
 </div>
+
 @endsection
+ <div id="tabs-3">
+                        <script type="text/javascript">
+
+                            function BrowseServer(startupPath, functionData)
+                            {
+                                // You can use the "CKFinder" class to render CKFinder in a page:
+                                var finder = new CKFinder();
+
+                                // The path for the installation of CKFinder (default = "/ckfinder/").
+                                // finder.basePath = '../';
+
+                                //Startup path in a form: "Type:/path/to/directory/"
+                                finder.startupPath = startupPath;
+                                // Name of a function which is called when a file is selected in CKFinder.
+                                finder.selectActionFunction = SetFileField;
+
+                                // Additional data to be passed to the selectActionFunction in a second argument.
+                                // We'll use this feature to pass the Id of a field that will be updated.
+                                finder.selectActionData = functionData;
+                                // Launch CKFinder
+                                finder.popup();
+                            }
+
+// This is a sample function which is called when a file is selected in CKFinder.
+                            function SetFileField(fileUrl, data)
+                            {
+                                var sFileName = this.getSelectedFile().name;
+                                var urlImg = '<div id="image-' + sFileName + '"><img src="http://' + window.location.hostname + fileUrl + '" width="100" height="100"/><a href="javascript:void(o);" onclick="xoaanhthum(\'image-' + sFileName + '\');" class="delete" title="Delete image">x</a></div>';
+                                document.getElementById('thumbnails').innerHTML += urlImg;
+                                returnurlimg();
+                                //   document.getElementById(data["selectActionData"]).value = fileUrl;
+                            }
+                            function xoaanhthum(id) {
+                                document.getElementById(id).remove();
+                                returnurlimg();
+
+                            }
+                            function returnurlimg() {
+                                var images = jQuery("#thumbnails").find("img").map(function() {
+                                    return this.src;
+                                }).get();
+                                jQuery("#xImagePath").val(images);
+                            }
+                        </script>
+
+                        <div id="thumbnails"></div>
+                        <input id="xImagePath" name="ImagePath" type="hidden" />
+                        <div class="clear"></div>
+                        <input type="button" value="Thêm ảnh" class="stdbtn btn_orange" onclick="BrowseServer('Images:/', 'xImagePath');" />
+                    </div>
