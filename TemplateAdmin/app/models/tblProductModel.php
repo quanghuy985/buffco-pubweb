@@ -6,6 +6,8 @@ class TblProductModel extends Eloquent {
     public $timestamps = false;
 
     public function insertProduct($cateID, $productName, $productDescription, $productPrice, $productSlug, $productTag, $manufactureID, $salesPrice, $startSales, $endSales, $status) {
+        $guid = new TblProductModel();
+        $this->productCode = 'p-' . $guid->createGuid();
         $this->cateID = $cateID;
         $this->productName = $productName;
         $this->productDescription = $productDescription;
@@ -23,7 +25,7 @@ class TblProductModel extends Eloquent {
         $this->manufactureID = $manufactureID;
         $this->time = time();
         $this->status = $status;
-        $check = $this->save();
+        $check = $this->save();       
         return $check;
     }
 
@@ -113,8 +115,22 @@ class TblProductModel extends Eloquent {
         $arrProduct = DB::table('tblproduct')->join('tblorder', 'tblproduct.id', '=', 'tblorder.productID')->select('tblproduct.*')->distinct()->orderBy('id', 'desc')->limit(5)->get();
         return $arrProduct;
     }
+
     public function countSlug($slug) {
         $objProduct = DB::table('tblproduct')->where('productSlug', 'LIKE', $slug . '%')->count();
         return $objProduct;
     }
+
+    function createGuid() {
+        mt_srand((double) microtime() * 10000); //optional for php 4.2.0 and up.
+        $charid = strtoupper(md5(uniqid(rand(), true)));
+        $hyphen = chr(45); // "-"
+        $uuid = substr($charid, 0, 8) . $hyphen
+                . substr($charid, 8, 4) . $hyphen
+                . substr($charid, 12, 4) . $hyphen
+                . substr($charid, 16, 4) . $hyphen
+                . substr($charid, 20, 12);
+        return $uuid;
+    }
+
 }

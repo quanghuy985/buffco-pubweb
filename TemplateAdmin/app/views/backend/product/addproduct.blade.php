@@ -31,6 +31,17 @@
             alert('Finish Clicked');
         }
 
+<?php
+if (isset($arrAttach)) {
+    foreach ($arrAttach as $item) {
+        ?>
+                var urlImg = '<span class="divanhsanphams" id="image-' + <?php echo $item->id; ?> + '"><img src="<?php echo $item->attachmentURL; ?>" width="100" height="100"/><a href="javascript:void(o);" onclick="xoaanhthum(\'image-' + <?php echo $item->id; ?> + '\');" class="delete" title="Delete image">x</a></span>';
+                document.getElementById('thumbnails').innerHTML += urlImg;
+        <?php }
+    ?>
+            returnurlimg();
+<?php }
+?>
         //validate form thêm sản phẩm
         jQuery("#frmProduct").validate({
             rules: {
@@ -142,9 +153,70 @@
             });
         }
     }
+    function BrowseServer(startupPath, functionData)
+    {
+        // You can use the "CKFinder" class to render CKFinder in a page:
+        var finder = new CKFinder();
+
+        // The path for the installation of CKFinder (default = "/ckfinder/").
+        // finder.basePath = '../';
+
+        //Startup path in a form: "Type:/path/to/directory/"
+        finder.startupPath = startupPath;
+        // Name of a function which is called when a file is selected in CKFinder.
+        finder.selectActionFunction = SetFileField;
+
+        // Additional data to be passed to the selectActionFunction in a second argument.
+        // We'll use this feature to pass the Id of a field that will be updated.
+        finder.selectActionData = functionData;
+        // Launch CKFinder
+        finder.popup();
+    }
+
+// This is a sample function which is called when a file is selected in CKFinder.
+    function SetFileField(fileUrl, data)
+    {
+        var sFileName = this.getSelectedFile().name;
+        var urlImg = '<span class="divanhsanphams" id="image-' + sFileName + '"><img src="http://' + window.location.hostname + fileUrl + '" width="100" height="100"/><a href="javascript:void(o);" onclick="xoaanhthum(\'image-' + sFileName + '\');" class="delete" title="Delete image">x</a></span>';
+        document.getElementById('thumbnails').innerHTML += urlImg;
+        returnurlimg();
+        //   document.getElementById(data["selectActionData"]).value = fileUrl;
+    }
+    function xoaanhthum(id) {
+        document.getElementById(id).remove();
+        returnurlimg();
+
+    }
+    function returnurlimg() {
+        var images = jQuery("#thumbnails").find("img").map(function() {
+            return this.src;
+        }).get();
+        jQuery("#xImagePath").val(images);
+    }
     //thêm key vào text box
     function keyChange() {
         jQuery('#tagKey').val(jQuery('#keyed').val());
+    }
+    //kiểm tra giá và khuyến mại
+    function checkPrice(obj) {
+
+        var price = jQuery('#productPrice').val();
+        var sales = jQuery('#salesPrice').val();
+        if (price != '' && sales != '')
+        {
+            if (price < sales)
+            {
+                alert('Giá khuyến mại không được lớn hơn giá sản phẩm!');
+                if (obj == 0)
+                {
+                    jQuery('#productPrice').val('').focus();
+                }
+                else
+                {
+                    jQuery('#salesPrice').val('').focus();
+                }
+            }
+        }
     }
 //lọc dấu tạo slug
     function locdau() {
@@ -261,7 +333,8 @@ if (isset($arrStore)) {
             var tmp = x + 1;
             if (jQuery('#tblStore_SoLuongNhap_' + tmp).val() < jQuery('#tblStore_ban_' + tmp).val())
             {
-                alert('Số lượng nhập không được nhỏ hơn số lượng đã bán!');
+                alert('Số lượng nhập không được nhỏ hơn số lượng đã bán!', 'Thông báo');
+                // alert('Số lượng nhập không được nhỏ hơn số lượng đã bán!');
                 jQuery('#tblStore_SoLuongNhap_' + tmp).val(jQuery('#tblStore_SoLuongBan_' + tmp).val());
                 return false;
             }
@@ -434,7 +507,7 @@ if (isset($arrStore)) {
         });
         //Thêm mới size và màu
         jQuery("#btnAddStore").button().click(function() {
-            if (jQuery('#sizeID').val() == '' || jQuery('#colorID').val()=='' || jQuery('#soluongnhap').val() == '') {
+            if (jQuery('#sizeID').val() == '' || jQuery('#colorID').val() == '' || jQuery('#soluongnhap').val() == '') {
                 jQuery.jGrowl("Bạn phải nhập đầy đủ thông tin!");
             }
             else {
@@ -528,6 +601,20 @@ if (isset($arrStore)) {
                         </span>
                     </p>
                     <p>
+                        <label>Ảnh sản phẩm</label>
+                        <span class="field"  >                
+                            <span id="thumbnails">
+                                @if(isset($arrAttach))
+
+                                @endif 
+                            </span>
+                            <input id="xImagePath" name="ImagePath" type="hidden" />    
+                            <br/>
+                            <input type="button" value="Thêm ảnh" class="stdbtn btn_orange" onclick="BrowseServer('Images:/', 'xImagePath');" />
+                        </span>      
+                    </p>
+
+                    <p>
                         <label>Mô tả (<span style="color: red;">*</span>)</label>
                         <span class="field">
                             <textarea class="ckeditor" id="productDescription" rows="5" name="productDescription" placeholder="Nhập chi tiết sản phẩm">@if(isset($dataedit)){{$dataedit->productDescription}}@endif</textarea>
@@ -536,13 +623,13 @@ if (isset($arrStore)) {
                     <p>
                         <label>Giá sản phẩm (<span style="color: red;">*</span>)</label>
                         <span class="field">
-                            <input type="text" name="productPrice"   onkeypress="return event.charCode > 47 && event.charCode < 58;" pattern="[0-9]"  placeholder="Nhập giá sản phẩm" class="smallinput" value="@if(isset($dataedit)){{$dataedit->productPrice}}@endif">
+                            <input type="text" name="productPrice" id="productPrice"  onchange="checkPrice(0)"  onkeypress="return event.charCode > 47 && event.charCode < 58;" pattern="[0-9]"  placeholder="Nhập giá sản phẩm" class="width100" value="@if(isset($dataedit)){{$dataedit->productPrice}}@endif">&nbsp;VND
                         </span>
                     </p>      
                     <p>
                         <label>Khuyến mại</label>
                         <span class="field" id="sPromotion"> 
-                            <input type="text" name="salesPrice" value="@if(isset($dataedit)){{$dataedit->salesPrice}}@endif" placeholder="Nhập khuyến mại" onkeypress="return event.charCode > 47 && event.charCode < 58;" pattern="[0-9]" style="width:100px;" id="salesPrice">&nbsp;&nbsp;   Từ ngày:  <input type="text" id="startSales" class="width100" value="@if(isset($dataedit)&& $dataedit->startSales!=''){{date('m/d/Y',$dataedit->startSales)}}@endif" name="startSales"/> &nbsp; &nbsp;Tới ngày: <input type="text" value="@if(isset($dataedit)&& $dataedit->endSales!=''){{date('m/d/Y',$dataedit->endSales)}}@endif" id="endSales" class="width100" name="endSales"/>
+                            <input type="text" name="salesPrice" onchange="checkPrice(1)" value="@if(isset($dataedit)){{$dataedit->salesPrice}}@endif" placeholder="Nhập khuyến mại" onkeypress="return event.charCode > 47 && event.charCode < 58;" pattern="[0-9]" style="width:100px;" id="salesPrice">&nbsp;VND &nbsp;&nbsp;&nbsp;   Từ ngày:  <input type="text" id="startSales" class="width100" value="@if(isset($dataedit)&& $dataedit->startSales!=''){{date('m/d/Y',$dataedit->startSales)}}@endif" name="startSales"/> &nbsp; &nbsp;Tới ngày: <input type="text" value="@if(isset($dataedit)&& $dataedit->endSales!=''){{date('m/d/Y',$dataedit->endSales)}}@endif" id="endSales" class="width100" name="endSales"/>
                         </span>
                     </p>
                     <p>

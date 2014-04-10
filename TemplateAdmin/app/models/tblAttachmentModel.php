@@ -58,14 +58,23 @@ class tblAttachmentModel extends Eloquent {
         }
     }
 
-    public function deleteAttachmentByDestinyID($id) {
-        $checkdel = $this->where('id', '=', $id)->update(array('status' => 2));
+//    public function deleteAttachmentByDestinyID($id) {
+//        $checkdel = $this->where('id', '=', $id)->update(array('status' => 2));
+//        if ($checkdel > 0) {
+//            return TRUE;
+//        } else {
+//            return FALSE;
+//        }
+//    }
+        public function deleteAttachmentByDestinyID($destinyID) {
+        $checkdel = $this->where('destinyID', '=', $destinyID)->delete();
         if ($checkdel > 0) {
             return TRUE;
         } else {
             return FALSE;
         }
     }
+
 
     public function allAttachmentPanigate($per_page) {
         $arrAttachment = DB::table('tblAttachment')->paginate($per_page);
