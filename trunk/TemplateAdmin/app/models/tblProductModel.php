@@ -113,5 +113,8 @@ class TblProductModel extends Eloquent {
         $arrProduct = DB::table('tblproduct')->join('tblorder', 'tblproduct.id', '=', 'tblorder.productID')->select('tblproduct.*')->distinct()->orderBy('id', 'desc')->limit(5)->get();
         return $arrProduct;
     }
-
+    public function countSlug($slug) {
+        $objProduct = DB::table('tblproduct')->where('productSlug', 'LIKE', $slug . '%')->count();
+        return $objProduct;
+    }
 }
