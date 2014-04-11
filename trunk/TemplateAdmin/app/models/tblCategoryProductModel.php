@@ -94,4 +94,8 @@ class tblCategoryProductModel extends Eloquent {
         return Paginator::make($results1, count($results1), $per_page);
     }
 
+    public function countSlug($slug) {
+        $objCateProduct = DB::table('tblcategoryproduct')->where('cateSlug', 'LIKE', $slug . '%')->count();
+        return $objCateProduct;
+    }
 }

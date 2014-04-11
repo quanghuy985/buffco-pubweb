@@ -111,5 +111,11 @@ class CategoryProductController extends Controller {
             return Redirect::action('CategoryProductController@getCateProductView', array('thongbao' => 'Thêm mới thất bại .'));
         }
     }
+  public function postCheckSlug() {
+        $tblCate = new tblCategoryProductModel();      
+        $slugcheck = Input::get('slug');
+        $count = $tblCate->countSlug($slugcheck);
+        return $count;
+    }
 
 }
