@@ -202,20 +202,10 @@
                             if (isset($cateProductData) && $item->id == $cateProductData->cateParent) {
                                 $selec = 'selected';
                             }
-                            echo '<option value="' . $item->id . '" ' . $selec . '> ' . $item->cateName . '</option>';
-//                            foreach ($arrayMenu as $item1) {
-//                                if ($item1->menuParent == $item->id) {
-//                                    $selec1 = '';
-//                                    if (isset($cateProductData) && $item1->id == $cateProductData->menuID) {
-//                                        $selec1 = 'selected';
-//                                    }
-//                                    echo '<option value="' . $item1->id . '" ' . $selec1 . '>-- ' . $item1->menuName . '</option>';
-//                                }
-//                            }
+                            echo '<option value="' . $item->id . '" ' . $selec . '> ' . $item->cateName . '</option>';                          
                         }
                     }
                     ?>
-
                 </select>
             </span>
         </p>

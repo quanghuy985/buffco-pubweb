@@ -20,7 +20,7 @@ class ProductController extends Controller {
         $arrManu = $tblManu->selectAll(1000);
         //lấy danh sách danh mục sản phẩm
         $objCateproduct = new TblCategoryProductModel();
-        $data = $objCateproduct->getAllCategoryProductPaginate(10000);      
+        $data = $objCateproduct->getAllCategoryProductPaginate(10000);
         //lấy danh sách màu
         $tblColor = new tblColorModel();
         $arrColor = $tblColor->selectAll();
@@ -49,7 +49,7 @@ class ProductController extends Controller {
                     return Redirect::action('ProductController@getAddProduct', array('thongbao' => 'Đường dẫn đã tồn tại vui lòng chọn đường dẫn khác .'));
                 }
             }
-            $objproduct->insertProduct(Input::get('cateID'), Input::get('productName'), Input::get('productDescription'),Input::get('productAttributes'), Input::get('productPrice'), Input::get('productSlug'), Input::get('productTag'), Input::get('manufactureID'), Input::get('salesPrice'), Input::get('startSales'), Input::get('endSales'), Input::get('status'));
+            $objproduct->insertProduct(Input::get('cateID'), Input::get('productName'), Input::get('productDescription'), Input::get('productAttributes'), Input::get('productPrice'), Input::get('productSlug'), Input::get('productTag'), Input::get('manufactureID'), Input::get('salesPrice'), Input::get('startSales'), Input::get('endSales'), Input::get('status'));
             $idPro = $objproduct->id;
             //thêm mới store
             for ($i = 1; $i <= (int) Input::get('countTable'); $i++) {
@@ -66,7 +66,7 @@ class ProductController extends Controller {
             //lấy danh sách danh mục sản phẩm
             $data = $objCateproduct->getAllCategoryProductPaginate(1000);
             //lấy sản phẩm theo id          
-            $datap = $objproduct->getProductById($idPro);          
+            $datap = $objproduct->getProductById($idPro);
             //lấy danh sách nhà cung cấp   
             $tblManu = new tblManufacturerModel();
             $arrManu = $tblManu->selectAll(1000);
@@ -75,14 +75,14 @@ class ProductController extends Controller {
             $arrColor = $tblColor->selectAll();
             //lấy danh sách size
             $tblSize = new tblSizeModel();
-            $arrSize = $tblSize->allSize(1000);           
+            $arrSize = $tblSize->allSize(1000);
             //lấy số lượng hàng trong kho
             $tblStore = new tblStoreModel();
             $arrStore = $tblStore->findStoreByProductID(Input::get('idedit'));
-             //lấy danh sách ảnh sản phẩm
-            $tblAttach= new tblAttachmentModel();
-            $arrAttach= $tblAttach->getAttachmentByDestinyID($datap[0]->productCode);
-            return View::make('backend.product.addproduct')->with('catproduct', $data)->with('dataedit', $datap[0])->with('arrAttach',$arrAttach)->with('arrManu', $arrManu)->with('openStore', 'true')->with('arrSize', $arrSize)->with('arrColor', $arrColor)->with('arrStore', $arrStore)->with('thongbao', 'Sản phẩm đã được thêm mới thành công');
+            //lấy danh sách ảnh sản phẩm
+            $tblAttach = new tblAttachmentModel();
+            $arrAttach = $tblAttach->getAttachmentByDestinyID($datap[0]->productCode);
+            return View::make('backend.product.addproduct')->with('catproduct', $data)->with('dataedit', $datap[0])->with('arrAttach', $arrAttach)->with('arrManu', $arrManu)->with('openStore', 'true')->with('arrSize', $arrSize)->with('arrColor', $arrColor)->with('arrStore', $arrStore)->with('thongbao', 'Sản phẩm đã được thêm mới thành công');
         } else {
             return Redirect::action('ProductController@getAddProduct', array('thongbao' => 'Thêm mới không thành công.Vui lòng thử lại!'));
         }
@@ -96,7 +96,7 @@ class ProductController extends Controller {
             $data = $objCateproduct->getAllCategoryProductPaginate(1000);
             //lấy sản phẩm theo id
             $objproduct = new TblProductModel();
-            $datap = $objproduct->getProductById(Input::get('idedit'));          
+            $datap = $objproduct->getProductById(Input::get('idedit'));
             //lấy danh sách nhà sản xuất
             $tblManu = new tblManufacturerModel();
             $arrManu = $tblManu->selectAll(1000);
@@ -108,11 +108,11 @@ class ProductController extends Controller {
             $arrSize = $tblSize->allSize(1000);
             //lấy số lượng hàng trong kho
             $tblStore = new tblStoreModel();
-            $arrStore = $tblStore->findStoreByProductID(Input::get('idedit'));           
+            $arrStore = $tblStore->findStoreByProductID(Input::get('idedit'));
             //lấy danh sách ảnh sản phẩm
-            $tblAttach= new tblAttachmentModel();
-            $arrAttach= $tblAttach->getAttachmentByDestinyID($datap[0]->productCode);
-            return View::make('backend.product.addproduct')->with('catproduct', $data)->with('dataedit', $datap[0])->with('arrAttach',$arrAttach)->with('arrManu', $arrManu)->with('arrSize', $arrSize)->with('arrColor', $arrColor)->with('arrStore', $arrStore);
+            $tblAttach = new tblAttachmentModel();
+            $arrAttach = $tblAttach->getAttachmentByDestinyID($datap[0]->productCode);
+            return View::make('backend.product.addproduct')->with('catproduct', $data)->with('dataedit', $datap[0])->with('arrAttach', $arrAttach)->with('arrManu', $arrManu)->with('arrSize', $arrSize)->with('arrColor', $arrColor)->with('arrStore', $arrStore);
         }
     }
 
@@ -143,7 +143,7 @@ class ProductController extends Controller {
         //lấy sản phẩm theo id          
         $datap = $objproduct->getProductById(Input::get('idpro'));
         if (!Validator::make(Input::all(), $rules)->fails()) {
-            $objproduct->updateProduct(Input::get('idpro'), Input::get('cateID'), Input::get('productName'), Input::get('productDescription'),Input::get('productAttributes'), Input::get('productPrice'), '', Input::get('productTag'), Input::get('manufactureID'), Input::get('salesPrice'), Input::get('startSales'), Input::get('endSales'), Input::get('status'));
+            $objproduct->updateProduct(Input::get('idpro'), Input::get('cateID'), Input::get('productName'), Input::get('productDescription'), Input::get('productAttributes'), Input::get('productPrice'), '', Input::get('productTag'), Input::get('manufactureID'), Input::get('salesPrice'), Input::get('startSales'), Input::get('endSales'), Input::get('status'));
 
             $idPro = Input::get('idpro');
             $tblSto = new tblStoreModel();
@@ -172,20 +172,20 @@ class ProductController extends Controller {
         $arrManu = $tblManu->selectAll(1000);
         //lấy danh sánh hàng có trong kho
         $tblStore = new tblStoreModel();
-        $arrStore = $tblStore->findStoreByProductID(Input::get('idpro'));       
+        $arrStore = $tblStore->findStoreByProductID(Input::get('idpro'));
         //lấy danh sách màu
         $tblColor = new tblColorModel();
         $arrColor = $tblColor->selectAll();
         //lấy danh sách size
         $tblSize = new tblSizeModel();
         $arrSize = $tblSize->allSize(1000);
-         //lấy danh sách ảnh sản phẩm
-            $tblAttach= new tblAttachmentModel();
-            $arrAttach= $tblAttach->getAttachmentByDestinyID($datap[0]->productCode);
+        //lấy danh sách ảnh sản phẩm
+        $tblAttach = new tblAttachmentModel();
+        $arrAttach = $tblAttach->getAttachmentByDestinyID($datap[0]->productCode);
         if ($checkUpdate == 1) {
-            return View::make('backend.product.addproduct')->with('catproduct', $data)->with('dataedit', $datap[0])->with('arrManu', $arrManu)->with('arrAttach',$arrAttach)->with('arrStore', $arrStore)->with('arrSize', $arrSize)->with('arrColor', $arrColor)->with('thongbao', 'Sản phẩm đã được cập nhật thành công');
+            return View::make('backend.product.addproduct')->with('catproduct', $data)->with('dataedit', $datap[0])->with('arrManu', $arrManu)->with('arrAttach', $arrAttach)->with('arrStore', $arrStore)->with('arrSize', $arrSize)->with('arrColor', $arrColor)->with('thongbao', 'Sản phẩm đã được cập nhật thành công');
         } else {
-            return View::make('backend.product.addproduct')->with('catproduct', $data)->with('dataedit', $datap[0])->with('arrManu', $arrManu)->with('arrAttach',$arrAttach)->with('arrStore', $arrStore)->with('arrSize', $arrSize)->with('arrColor', $arrColor)->with('thongbao', 'Cập nhật sản phẩm không thành công');
+            return View::make('backend.product.addproduct')->with('catproduct', $data)->with('dataedit', $datap[0])->with('arrManu', $arrManu)->with('arrAttach', $arrAttach)->with('arrStore', $arrStore)->with('arrSize', $arrSize)->with('arrColor', $arrColor)->with('thongbao', 'Cập nhật sản phẩm không thành công');
         }
     }
 
@@ -269,10 +269,19 @@ class ProductController extends Controller {
     }
 
     public function postDel() {
-        $objGsp = new TblProductModel();
-        $objGsp->DeleteProduct(Input::get('id'));
-        $objGsp = new TblProductModel();
-        $data = $objGsp->FindProduct('', 10, 'id', '');
+        $objProduct = new TblProductModel();
+        $objProduct->DeleteProduct(Input::get('id'));
+        $objProduct1 = new TblProductModel();
+        $data = $objProduct1->FindProduct('', 10, 'id', '');
+        $link = $data->links();
+        return View::make('backend.product.productajaxsearch')->with('dataproduct', $data)->with('page', $link);
+    }
+
+    public function postKichHoat() {
+        $tblProduct = new TblProductModel();
+        $tblProduct->updateProduct(Input::get('id'), '', '', '', '', '', '', '', '', '', '', '', Input::get('status'));
+        $tblProduct1 = new TblProductModel();
+        $data = $tblProduct1->FindProduct('', 10, 'id', '');
         $link = $data->links();
         return View::make('backend.product.productajaxsearch')->with('dataproduct', $data)->with('page', $link);
     }

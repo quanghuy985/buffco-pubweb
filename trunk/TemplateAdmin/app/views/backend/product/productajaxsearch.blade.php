@@ -7,17 +7,28 @@
                     <td class="center">{{$item->productPrice}} </td>
                     <td class="center">
                         @if($item->status==0)
-                        chờ đăng
+                        Chờ đăng
                         @endif
                         @if($item->status==1)
-                        đã đăng
+                        Đã đăng
                         @endif 
                         @if($item->status==2)
-                        xóa
+                       Đã xóa
                         @endif
 
                     </td>
-                    <td class="center"><a href="{{URL::action('ProductController@getEditProduct')}}?idedit={{$item->id}}" >Chỉnh sửa</a> &nbsp; <a href="javascript: void(0)" onclick="xoasanpham({{$item->id}})">Xóa</a></td>
+                    <td class="center">
+                          <a href="{{URL::action('ProductController@getEditProduct')}}?idedit={{$item->id}}" class="btn btn4 btn_book" title="Sửa"></a>
+                            @if($item->status=='2')
+                            <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 0)" class="btn btn4 btn_flag" title="Khởi tạo"></a>
+                            @endif
+                            @if($item->status=='0')
+                            <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 1)" class="btn btn4 btn_world" title="Kích hoạt"></a>
+                            @endif
+                            @if($item->status!='2')
+                            <a href="javascript: void(0)" onclick="xoasanpham({{$item->id}})" class="btn btn4 btn_trash" title="Xóa"></a>
+                            @endif
+                    </td>
                 </tr>
                 @endforeach
                 @if($page!='')
