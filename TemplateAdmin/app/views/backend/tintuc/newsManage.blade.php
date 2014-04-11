@@ -2,95 +2,95 @@
 @section("contentadmin")
 <script>
     function phantrang(page) {
-    jQuery("#jGrowl").remove();
-            jQuery.jGrowl("Đang tải dữ liệu ...");
-            var urlpost = "{{URL::action('NewsController@postAjaxNews')}}?page=" + page
-            if (jQuery('#datepicker').val() != '' && jQuery('#datepicker1').val() != '') {
-    urlpost = "{{URL::action('NewsController@postAjaxNewsFilter')}}?fromtime=" + jQuery('#datepicker').val() + "&totime=" + jQuery('#datepicker1').val() + "&status=" + jQuery('#status').val() + "&page=" + page;
+        jQuery("#jGrowl").remove();
+        jQuery.jGrowl("Đang tải dữ liệu ...");
+        var urlpost = "{{URL::action('NewsController@postAjaxNews')}}?page=" + page
+        if (jQuery('#datepicker').val() != '' && jQuery('#datepicker1').val() != '') {
+            urlpost = "{{URL::action('NewsController@postAjaxNewsFilter')}}?fromtime=" + jQuery('#datepicker').val() + "&totime=" + jQuery('#datepicker1').val() + "&status=" + jQuery('#status').val() + "&page=" + page;
+        }
+        if (jQuery('#searchblur').val() != '') {
+            urlpost = "{{URL::action('NewsController@postAjaxSearchNews')}}?keyword=" + jQuery('#searchblur').val() + "&page=" + page;
+        }
+        var request = jQuery.ajax({
+            url: urlpost,
+            type: "POST",
+            dataType: "html"
+        });
+        request.done(function(msg) {
+            jQuery("#jGrowl").remove();
+            jQuery.jGrowl("Đã tải dữ liệu thành công ...");
+            jQuery('#tableproduct').html(msg);
+        });
     }
-    if (jQuery('#searchblur').val() != '') {
-    urlpost = "{{URL::action('NewsController@postAjaxSearchNews')}}?keyword=" + jQuery('#searchblur').val() + "&page=" + page;
+    function locdulieu() {
+        jQuery('#searchblur').val("");
+        jQuery("#jGrowl").remove();
+        jQuery.jGrowl("Đang tải dữ liệu ...");
+        var request = jQuery.ajax({
+            url: "{{URL::action('NewsController@postAjaxNewsFilter')}}?fromtime=" + jQuery('#datepicker').val() + "&totime=" + jQuery('#datepicker1').val() + "&status=" + jQuery('#status').val(),
+            type: "POST",
+            dataType: "html"
+        });
+        request.done(function(msg) {
+            jQuery("#jGrowl").remove();
+            jQuery.jGrowl("Đã tải dữ liệu thành công ...");
+            jQuery('#tableproduct').html(msg);
+        });
     }
+    function timkiem() {
+        jQuery('#datepicker').val('')
+        jQuery('#datepicker1').val('')
+        jQuery("#jGrowl").remove();
+        jQuery.jGrowl("Đang tải dữ liệu ...");
+        var request = jQuery.ajax({
+            url: "{{URL::action('NewsController@postAjaxSearchNews')}}?keyword=" + jQuery('#searchblur').val(),
+            type: "POST",
+            dataType: "html"
+        });
+        request.done(function(msg) {
+            jQuery("#jGrowl").remove();
+            jQuery.jGrowl("Đã tải dữ liệu thành công ...");
+            jQuery('#tableproduct').html(msg);
+        });
+    }
+    jQuery(document).ready(function() {
+
+        jQuery('#searchblur').keypress(function(e) {
+            if (e.which == 10 || e.which == 13) {
+                jQuery('#datepicker').val('')
+                jQuery('#datepicker1').val('')
+                jQuery("#jGrowl").remove();
+                jQuery.jGrowl("Đang tải dữ liệu ...");
+                var request = jQuery.ajax({
+                    url: "{{URL::action('NewsController@postAjaxSearchNews')}}?keyword=" + jQuery('#searchblur').val(),
+                    type: "POST",
+                    dataType: "html"
+                });
+                request.done(function(msg) {
+                    jQuery("#jGrowl").remove();
+                    jQuery.jGrowl("Đã tải dữ liệu thành công ...");
+                    jQuery('#tableproduct').html(msg);
+                });
+            }
+        });
+    });
+    function xoasanpham(id) {
+    jConfirm('Bạn có chắc chắn muốn xóa ?', 'Thông báo', function(r) {
+    if (r == true) {
     var request = jQuery.ajax({
-    url: urlpost,
+    url: "{{URL::action('NewsController@postDeleteNews')}}?id=" + id,
             type: "POST",
             dataType: "html"
     });
             request.done(function(msg) {
-            jQuery("#jGrowl").remove();
-                    jQuery.jGrowl("Đã tải dữ liệu thành công ...");
-                    jQuery('#tableproduct').html(msg);
+            jQuery('#tableproduct').html(msg);
             });
-    }
-    function locdulieu() {
-    jQuery('#searchblur').val("");
-            jQuery("#jGrowl").remove();
-            jQuery.jGrowl("Đang tải dữ liệu ...");
-            var request = jQuery.ajax({
-            url: "{{URL::action('NewsController@postAjaxNewsFilter')}}?fromtime=" + jQuery('#datepicker').val() + "&totime=" + jQuery('#datepicker1').val() + "&status=" + jQuery('#status').val(),
-                    type: "POST",
-                    dataType: "html"
-            });
-            request.done(function(msg) {
-            jQuery("#jGrowl").remove();
-                    jQuery.jGrowl("Đã tải dữ liệu thành công ...");
-                    jQuery('#tableproduct').html(msg);
-            });
-    }
-    function timkiem() {
-    jQuery('#datepicker').val('')
-            jQuery('#datepicker1').val('')
-            jQuery("#jGrowl").remove();
-            jQuery.jGrowl("Đang tải dữ liệu ...");
-            var request = jQuery.ajax({
-            url: "{{URL::action('NewsController@postAjaxSearchNews')}}?keyword=" + jQuery('#searchblur').val(),
-                    type: "POST",
-                    dataType: "html"
-            });
-            request.done(function(msg) {
-            jQuery("#jGrowl").remove();
-                    jQuery.jGrowl("Đã tải dữ liệu thành công ...");
-                    jQuery('#tableproduct').html(msg);
-            });
-    }
-    jQuery(document).ready(function() {
-
-    jQuery('#searchblur').keypress(function(e) {
-    if (e.which == 10 || e.which == 13) {
-    jQuery('#datepicker').val('')
-            jQuery('#datepicker1').val('')
-            jQuery("#jGrowl").remove();
-            jQuery.jGrowl("Đang tải dữ liệu ...");
-            var request = jQuery.ajax({
-            url: "{{URL::action('NewsController@postAjaxSearchNews')}}?keyword=" + jQuery('#searchblur').val(),
-                    type: "POST",
-                    dataType: "html"
-            });
-            request.done(function(msg) {
-            jQuery("#jGrowl").remove();
-                    jQuery.jGrowl("Đã tải dữ liệu thành công ...");
-                    jQuery('#tableproduct').html(msg);
-            });
-    }
-    });
-    });
-            function xoasanpham(id) {
-            jConfirm('Bạn có chắc chắn muốn xóa ?', 'Thông báo', function(r) {
-            if (r == true) {
-            var request = jQuery.ajax({
-            url: "{{URL::action('NewsController@postDeleteNews')}}?id=" + id,
-                    type: "POST",
-                    dataType: "html"
-            });
-                    request.done(function(msg) {
-                    jQuery('#tableproduct').html(msg);
-                    });
-                    return false;
-            } else {
             return false;
-            }
-            })
-            }
+    } else {
+    return false;
+    }
+    })
+    }
     function kichhoat(id, stus) {
     var request = jQuery.ajax({
     url: "{{URL::action('NewsController@postNewsActive')}}?id=" + id + '&status=' + stus,
@@ -123,6 +123,7 @@
                 Từ : <input id="datepicker" name="timeform" type="text" class="longinput" /> 
                 &nbsp;   Đến : <input id="datepicker1"  name="timeto" type="text" class="datepicker"  /> 
                 &nbsp; <select name="status" id="status">
+                    <option value="3">Tất cả</option>
                     <option value="0">Chờ đăng</option>
                     <option value="1">Đã đăng</option>
                     <option value="2">Đã xóa</option>
@@ -194,6 +195,11 @@
                 @if($link!='')
                 <tr>
                     <td colspan="7">{{$link}}</td>
+                </tr>
+                @endif
+                @if(count($arrayNews)==0)
+                <tr>
+                    <td colspan="7">Không có dữ liệu trả về .</td>
                 </tr>
                 @endif
             </tbody>

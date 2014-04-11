@@ -36,7 +36,7 @@
                     <div class="notibar msgalert"><p>{{$messenge}}</p></div>                  
                 </div><!--nopassword-->
                 @endif
-                <form id="login" action="{{URL::action('AdminController@postForgot')}}" method="post">
+                <form id="login" action="{{URL::action('LoginController@postForgot')}}" method="post">
 
                     <div class="username">
                         <div class="usernameinner">

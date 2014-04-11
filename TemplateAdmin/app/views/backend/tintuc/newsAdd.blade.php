@@ -116,7 +116,7 @@
             </p>
             <p>
                 <label>Link tới bài viết</label>
-                <span class="field"><input type="text" name="newsSlug" id="newsSlug" placeholder="Ví dụ: pubweb.vn/tinngoaiweb/vu-an-hinh-su ; vu-an-hinh-su là từ được nhập" value='@if(isset($objNews)){{$objNews->newsSlug}}@endif' class="longinput"></span>
+                <span class="field"><input type="text" name="newsSlug" id="newsSlug" placeholder="Ví dụ: pubweb.vn/tinngoaiweb/vu-an-hinh-su ; vu-an-hinh-su là từ được nhập" value='@if(isset($objNews)){{$objNews->newsSlug}}@endif' class="longinput" @if(isset($objNews))disabled @endif></span>
             </p>
 
             <p class="stdformbutton">

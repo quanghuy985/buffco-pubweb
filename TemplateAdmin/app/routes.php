@@ -54,7 +54,7 @@ Route::group(array('before' => 'kiemtradangnhap'), function() {
         Route::controller('setting', 'SettingController');
     });
     Route::group(array('before' => 'Quan-Ly-Menu'), function() {
-        Route::controller('menu', 'MenuController');
+       // Route::controller('menu', 'MenuController');
     });
     Route::group(array('before' => 'Quan-Ly-Du-An'), function() {
         Route::controller('project', 'ProjectController');
@@ -67,9 +67,9 @@ Route::group(array('before' => 'kiemtradangnhap'), function() {
         Route::controller('feedback', 'FeedbackController');
     });
     Route::group(array('before' => 'Quan-Ly-Thong-Ke'), function() {
-        Route::controller('feedback', 'StatisticController');
+        //Route::controller('feedback', 'StatisticController');
     });
 });
 App::missing(function($exception) {
-    return $exception;
+    return View::make('backend.404Page');
 });

@@ -36,7 +36,7 @@ class LoginController extends BaseController {
                 $groupAdmin = $check[0]->groupadminID;
                 $tblGroupAdminRoles = new tblGroupAdminRolesModel();
                 $arrGroupAdminRoles = $tblGroupAdminRoles->findRolesByGroupAdmin($groupAdmin);
-                // var_dump($arrGroupAdminRoles);
+               
                 Session::push('adminRoles', $arrGroupAdminRoles);
                 Session::push('adminSession', $check[0]);
                 // kiem tra trang goi den de dua ve trang dich 

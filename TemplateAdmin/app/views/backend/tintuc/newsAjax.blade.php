@@ -35,3 +35,8 @@
     <td colspan="7">{{$link}}</td>
 </tr>
 @endif
+@if(count($arrayNews)==0)
+<tr>
+    <td colspan="7">Không có dữ liệu trả về .</td>
+</tr>
+@endif

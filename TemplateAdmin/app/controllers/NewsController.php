@@ -44,7 +44,7 @@ class NewsController extends Controller {
         $tblNewsModel = new tblNewsModel();
         $tblNewsModel->deleteNews(Input::get('id'));
         $objNews = $tblNewsModel->getNewsByID(Input::get('id'));
-        $historyContent = 'Xóa thành công tin tức : ' . $objNews->newsName;
+        $historyContent = 'Xóa thành công tin tức : ' . $objNews[0]->newsName;
         $objAdmin = Session::get('adminSession');
         $tblHistoryAdminModel = new tblHistoryAdminModel();
         $tblHistoryAdminModel->addHistory($objAdmin[0]->id, $historyContent, '0');
@@ -57,7 +57,7 @@ class NewsController extends Controller {
         $tblNewsModel = new tblNewsModel();
         $tblNewsModel->updateNew(Input::get('id'), '', '', '', '', '', '', '', '', Input::get('status'));
         $objNews = $tblNewsModel->getNewsByID(Input::get('id'));
-        $historyContent = 'Kích hoạt thành công tin tức : ' . $objNews->newsName;
+        $historyContent = 'Kích hoạt thành công tin tức : ' . $objNews[0]->newsName;
         $objAdmin = Session::get('adminSession');
         $tblHistoryAdminModel = new tblHistoryAdminModel();
         $tblHistoryAdminModel->addHistory($objAdmin[0]->id, $historyContent, '0');
@@ -102,7 +102,7 @@ class NewsController extends Controller {
             
             $tblHistoryAdminModel = new tblHistoryAdminModel();
             $tblHistoryAdminModel->addHistory($objAdmin[0]->id, $historyContent, '0');
-            return Redirect::action('NewsController@getNewsView');
+            return Redirect::action('NewsController@getNewsView')->with('thongbao','Thêm mới thành công');
         } else {
             echo "that bai";
         }
@@ -115,8 +115,7 @@ class NewsController extends Controller {
             "newstitle" => "required",
             "newsdescription" => "required",
             "newsContent" => "required",
-            "newstag" => "required",
-            "newsSlug" => "required");
+            "newstag" => "required");
         if (!Validator::make(Input::all(), $rules)->fails()) {
             // Kiểm tra roles
 
@@ -125,82 +124,13 @@ class NewsController extends Controller {
             $objAdmin = Session::get('adminSession');
             $tblHistoryAdminModel = new tblHistoryAdminModel();
             $tblHistoryAdminModel->addHistory($objAdmin[0]->id, $historyContent, '0');
-            return Redirect::action('NewsController@getNewsView');
+            return Redirect::action('NewsController@getNewsView')->with('thongbao','Cập nhật thành công');
         } else {
             echo "that bai";
         }
     }
 
-//    public function postDelmulte() {
-//        if (Session::has('adminSession')) {
-//            $objAdmin = Session::get('adminSession');
-//            $groupAdminID = $objAdmin[0]->groupadminID;
-//            $tblPhanQuyenModel = new tblPhanQuyenModel();
-//            $arrRolesCode = $tblPhanQuyenModel->getRolesCodeByGroupAdmin($groupAdminID);
-//            if (strpos(serialize($arrRolesCode), 'Go-Bai') != FALSE) {
-//                $pieces1 = explode(",", Input::get('multiid'));
-//                foreach ($pieces1 as $item) {
-//                    if ($item != '') {
-//                        $tblNewsModel = new tblNewsModel();
-//                        $tblNewsModel->deleteNews($item);
-//                    }
-//                }
-//                $tblNewsModel = new tblNewsModel();
-//                $arrNews = $tblNewsModel->FindNews('', 10, 'id', '');
-//                $link = $arrNews->links();
-//                return View::make('backend.tintuc.newsManage')->with('arrayNews', $arrNews)->with('link', $link);
-//            } else {
-//                echo 'Bạn không có quyền xóa bài viết';
-//            }
-//        } else {
-//            echo 'Cho trang đăng nhập vào đây';
-//        }
-//    }
-//    public function postAjaxsearch() {
-//        $tblNewsModel = new tblNewsModel();
-//        if (Session::has('oderbyoption1')) {
-//            $tatus = Session::get('oderbyoption1');
-//            $arrNews = $tblNewsModel->FindNews(Input::get('keywordsearch'), 10, 'id', $tatus[0]);
-//        } else {
-//            $arrNews = $tblNewsModel->FindNews(Input::get('keywordsearch'), 10, 'id', '');
-//        }
-//        $link = $arrNews->links();
-//        Session::forget('keywordsearch');
-//        Session::push('keywordsearch', Input::get('keywordsearch'));
-//        return View::make('backend.tintuc.newsAjax')->with('arrayNews', $arrNews)->with('link', $link);
-//    }
-//
-//    public function postFillterNews() {
-//        $tblNewsModel = new tblNewsModel();
-//        $arrNews = $tblNewsModel->FindNews('', 10, 'id', Input::get('oderbyoption1'));
-//        $link = $arrNews->links();
-//        Session::forget('oderbyoption1');
-//        Session::push('oderbyoption1', Input::get('oderbyoption1'));
-//        return View::make('backend.tintuc.newsAjax')->with('arrayNews', $arrNews)->with('link', $link);
-//    }
-//
-//    public function postAjaxpagion() {
-//        if (Session::has('keywordsearch') && Input::get('link') != '') {
-//            $keyw = Session::get('keywordsearch');
-//            $tblNewsModel = new tblNewsModel();
-//            $arrNews = '';
-//            if (Session::has('oderbyoption1')) {
-//                $tatus = Session::get('oderbyoption1');
-//                $arrNews = $tblNewsModel->FindNews($keyw[0], 10, 'id', $tatus[0]);
-//            } else {
-//                $arrNews = $tblNewsModel->FindNews($keyw[0], 10, 'id', '');
-//            }
-//            $link = $arrNews->links();
-//            return View::make('backend.tintuc.newsAjax')->with('arrayNews', $arrNews)->with('link', $link);
-//        } else {
-//            Session::forget('keywordsearch');
-//            $tblNewsModel = new tblNewsModel();
-//            $tatus = Session::get('oderbyoption1');
-//            $arrNews = $tblNewsModel->FindNews('', 10, 'id', $tatus[0]);
-//            $link = $arrNews->links();
-//            return View::make('backend.tintuc.newsAjax')->with('arrayNews', $arrNews)->with('link', $link);
-//        }
-//    }
+
     public function postAjaxNews() {
         $tblNewsModel = new tblNewsModel();
         $arrNews = $tblNewsModel->allNews(15, 'time');
