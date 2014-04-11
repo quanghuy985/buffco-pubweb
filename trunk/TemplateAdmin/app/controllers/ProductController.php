@@ -195,12 +195,14 @@ class ProductController extends Controller {
             $objGsp = new TblProductModel();
             $data = $objGsp->FindProduct($keyw[0], 10, 'id', '');
             $link = $data->links();
+           
             return View::make('backend.product.viewproduct')->with('dataproduct', $data)->with('page', $link);
         } else {
             Session::forget('keywordsearch');
             $objGsp = new TblProductModel();
             $data = $objGsp->FindProduct('', 10, 'id', '');
             $link = $data->links();
+           
             return View::make('backend.product.viewproduct')->with('dataproduct', $data)->with('page', $link);
         }
     }

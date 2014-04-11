@@ -41,7 +41,8 @@ class SizeController extends Controller {
             $objSize->updateSize(Input::get('idsize'), Input::get('sizeName'), Input::get('sizeDescription'), Input::get('sizeValue'), Input::get('status'));
             $objadmin = Session::get('adminSession');
             $id = $objadmin[0]->id;
-            $objHistoryAdmin->addHistory($id, 'sua size', 0);
+            $objHistoryAdmin = new tblHistoryAdminModel();
+            $objHistoryAdmin->addHistory($id, 'Sua size :' . Input::get('sizeName'), 0);
             return Redirect::action('SizeController@getSizeView', array('msg' => 'cap nhat thanh cong'));
         } else {
             return Redirect::action('SizeController@getSizeView', array('msg' => 'cap nhat that bai'));
@@ -64,7 +65,8 @@ class SizeController extends Controller {
             $objSize->addSize(Input::get('sizeName'), Input::get('sizeDescription'), Input::get('sizeValue'));
             $objadmin = Session::get('adminSession');
             $id = $objadmin[0]->id;
-            $objHistoryAdmin->addHistory($id, 'them size', 0);
+            $objHistoryAdmin = new tblHistoryAdminModel();
+            $objHistoryAdmin->addHistory($id, 'Them size :' . Input::get('sizeName'), 0);
             return Redirect::action('SizeController@getSizeView', array('msg' => 'them moi thanh cong'));
         } else {
             return Redirect::action('SizeController@getSizeView', array('msg' => 'them moi that bai'));
@@ -99,9 +101,11 @@ class SizeController extends Controller {
             if ($item != '') {
                 $objSize = new tblSizeModel();
                 $objSize->deleteSize($item);
+                $size = $objSize->getSizeByID($item);
                 $objadmin = Session::get('adminSession');
                 $id = $objadmin[0]->id;
-                $objHistoryAdmin->addHistory($id, 'xoa size', 0);
+                $objHistoryAdmin = new tblHistoryAdminModel();
+                $objHistoryAdmin->addHistory($id, 'Xoa size :' . $size->sizeName, 0);
             }
         }
         $objSize = new tblSizeModel();
@@ -113,9 +117,11 @@ class SizeController extends Controller {
     public function postDeleteSize() {
         $objSize = new tblSizeModel();
         $objSize->deleteSize(Input::get('id'));
+        $size = $objSize->getSizeByID(Input::get('id'));
         $objadmin = Session::get('adminSession');
         $id = $objadmin[0]->id;
-        $objHistoryAdmin->addHistory($id, 'xoa size', 0);
+        $objHistoryAdmin = new tblHistoryAdminModel();
+        $objHistoryAdmin->addHistory($id, 'Xoa size :' . $size->sizeName, 0);
         //echo $tblPageModel;
         $arrsize = $objSize->selectAllSize(5, 'id');
         $link = $arrsize->links();
@@ -125,9 +131,11 @@ class SizeController extends Controller {
     public function postSizeActive() {
         $objSize = new tblSizeModel();
         $objSize->updateSize(Input::get('id'), '', '', '', Input::get('status'));
+        $size = $objSize->getSizeByID(Input::get('id'));
         $objadmin = Session::get('adminSession');
         $id = $objadmin[0]->id;
-        $objHistoryAdmin->addHistory($id, 'active size', 0);
+        $objHistoryAdmin = new tblHistoryAdminModel();
+        $objHistoryAdmin->addHistory($id, 'Active size :' . $size->sizeName, 0);
         $arrsize = $objSize->allSize(5);
         $link = $arrsize->links();
         return View::make('backend.size.Sizeajax')->with('arraySize', $arrsize)->with('link', $link);

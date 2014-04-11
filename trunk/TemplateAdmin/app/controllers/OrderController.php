@@ -134,7 +134,7 @@ class OrderController extends BaseController {
                         $soluongton = $store[0]->soluongnhap - $store[0]->soluongban;
 
                         $newAmount = $store[0]->soluongban + $amount;
-                        $tblStoreModel->updateStore($store[0]->id, '', '', '', $newAmount, '');
+                        $tblStoreModel->updateStoreBanHang($store[0]->id, '', '', '', $newAmount, '');
                         $tblOderModel->updateStatusOrderByOrderCode($orderCode, $status);
                     }
 

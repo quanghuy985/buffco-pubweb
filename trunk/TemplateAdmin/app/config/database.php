@@ -48,7 +48,7 @@ return array(
         'mysql' => array(
             'driver' => 'mysql',
             'host' => 'localhost',
-            'database' => 'templateadmin',
+            'database' => 'laravel',
             'username' => 'root',
             'password' => '',
             'charset' => 'utf8',

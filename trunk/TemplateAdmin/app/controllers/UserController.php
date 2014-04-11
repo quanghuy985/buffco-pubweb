@@ -180,7 +180,7 @@ class UserController extends Controller {
         $link = $data->links();
         Session::forget('oderbyoption1');
         Session::push('oderbyoption1', Input::get('oderbyoption1'));
-        return View::make('backend.Userajax')->with('arrayUsers', $data)->with('link', $link);
+        return View::make('backend.user.Userajax')->with('arrayUsers', $data)->with('link', $link);
     }
 
     public function postAjaxpagion() {

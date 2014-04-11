@@ -49,6 +49,31 @@ class tblStoreModel extends Eloquent {
             return FALSE;
         }
     }
+    public function updateStoreBanHang($id, $productID, $sizeID, $colorID, $soluongban, $status) {
+        $objStore = $this->where('id', '=', $id);
+        $arraysql = array('id' => $id);
+        if ($productID != '') {
+            $arraysql = array_merge($arraysql, array("productID" => $productID));
+        }
+        if ($sizeID != '') {
+            $arraysql = array_merge($arraysql, array("sizeID" => $sizeID));
+        }
+        if ($soluongban != '') {
+            $arraysql = array_merge($arraysql, array("soluongban" => $soluongban));
+        }
+        if ($colorID != '') {
+            $arraysql = array_merge($arraysql, array("colorID" => $colorID));
+        }
+        if ($status != '') {
+            $arraysql = array_merge($arraysql, array("status" => $status));
+        }
+        $checku = $objStore->update($arraysql);
+        if ($checku > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
 
     public function findStoreByProductID($id) {
         $objStore = DB::table('tblStore')->join('tblSize', 'tblStore.sizeID', '=', 'tblSize.id')->join('tblColor', 'tblStore.colorID', '=', 'tblColor.id')->select('tblStore.*', 'tblSize.sizeName', 'tblColor.colorName')->where('productID', '=', $id)->get();

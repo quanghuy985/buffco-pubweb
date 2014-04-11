@@ -79,7 +79,7 @@ Route::filter('Quan-Ly-Tin-Tuc', function() {
     $check = false;
     $roleaccess = 'Quan-Ly-Tin-Tuc';
     $arrAdminRoles = Session::get('adminRoles');
-    // var_dump($arrAdminRoles);
+    //var_dump($arrAdminRoles);
     foreach ($arrAdminRoles[0] as $role) {
         if ($role->rolesCode == $roleaccess) {
             $check = true;
