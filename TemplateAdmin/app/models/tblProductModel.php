@@ -5,11 +5,12 @@ class TblProductModel extends Eloquent {
     protected $table = 'tblproduct';
     public $timestamps = false;
 
-    public function insertProduct($cateID, $productName, $productDescription, $productPrice, $productSlug, $productTag, $manufactureID, $salesPrice, $startSales, $endSales, $status) {
+    public function insertProduct($cateID, $productName, $productDescription,$productAttributes, $productPrice, $productSlug, $productTag, $manufactureID, $salesPrice, $startSales, $endSales, $status) {
         $guid = new TblProductModel();
         $this->productCode = 'p-' . $guid->createGuid();
         $this->cateID = $cateID;
         $this->productName = $productName;
+        $this->productAttributes = $productAttributes;        
         $this->productDescription = $productDescription;
         $this->productPrice = $productPrice;
         $this->productSlug = $productSlug;
@@ -29,7 +30,7 @@ class TblProductModel extends Eloquent {
         return $check;
     }
 
-    public function updateProduct($id, $cateID, $productName, $productDescription, $productPrice, $productSlug, $productTag, $manufactureID, $salesPrice, $startSales, $endSales, $status) {
+    public function updateProduct($id, $cateID, $productName, $productDescription,$productAttributes, $productPrice, $productSlug, $productTag, $manufactureID, $salesPrice, $startSales, $endSales, $status) {
         $supporter = $this->where('id', '=', $id);
         $arraysql = array('id' => $id);
         if ($cateID != '') {
@@ -40,6 +41,9 @@ class TblProductModel extends Eloquent {
         }
         if ($productDescription != '') {
             $arraysql = array_merge($arraysql, array("productDescription" => $productDescription));
+        }
+        if ($productAttributes != '') {
+            $arraysql = array_merge($arraysql, array("productAttributes" => $productAttributes));
         }
         if ($productPrice != '') {
             $arraysql = array_merge($arraysql, array("productPrice" => $productPrice));
