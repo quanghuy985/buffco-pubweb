@@ -1,6 +1,8 @@
 @extends("templateadmin2.mainfire")
 @section("contentadmin")
-<script src="http://appendgrid.apphb.com/Scripts/jquery.appendGrid-1.3.4.js"></script>
+
+ <script  src="{{Asset('adminlib/js/plugins/jquery.appendGrid-1.3.4.js')}}"></script>
+
 <style type="text/css">
     .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
         border: 1px solid #d3d3d3;
@@ -22,6 +24,7 @@
     #tblStore > tfoot > tr > td > button{
         display: none !important;
     }
+
 </style>
 <script>
 
@@ -37,7 +40,7 @@ if (isset($arrAttach)) {
         ?>
                 var urlImg = '<span class="divanhsanphams" id="image-' + <?php echo $item->id; ?> + '"><img src="<?php echo $item->attachmentURL; ?>" width="100" height="100"/><a href="javascript:void(o);" onclick="xoaanhthum(\'image-' + <?php echo $item->id; ?> + '\');" class="delete" title="Delete image">x</a></span>';
                 document.getElementById('thumbnails').innerHTML += urlImg;
-        <?php }
+    <?php }
     ?>
             returnurlimg();
 <?php }
@@ -65,9 +68,8 @@ if (isset($arrAttach)) {
                     required: true
                 },
                 manufactureSelect: {
-                    required: true,
-                    min: 1
-                },
+                    required: true                    
+                }
             },
             messages: {
                 productName: "Tên sản phẩm không được để trống",
@@ -77,21 +79,6 @@ if (isset($arrAttach)) {
                 productTag: "Tag không được để trống",
                 productSlug: "Đường dẫn không được để trống",
                 manufactureSelect: "Nhà sản xuất không được để trống"
-            }
-        });
-        //validate form thêm tag
-        jQuery("#frmTag").validate({
-            rules: {
-                tagKey: {
-                    required: true
-                },
-                tagValue: {
-                    required: true
-                },
-            },
-            messages: {
-                tagKey: "Key không được để trống",
-                tagValue: "Value không được để trống"
             }
         });
         //validate form thêm nhà sản xuất
@@ -130,29 +117,6 @@ if (isset($arrAttach)) {
             }
         });
     });
-    //lấy tag theo danh mục sản phẩm
-    function getCateTag() {
-        //jQuery.jGrowl("Đang tải dữ liệu!");
-        var cateID = jQuery('#cateProductSelect').val();
-        if (cateID == '') {
-            jQuery('#addTag').prop("disabled", true);
-            jQuery("#spanTag").empty();
-        } else {
-            jQuery('#addTag').prop("disabled", false)
-            var productID = jQuery('#idpro').val();
-            var request = jQuery.ajax({
-                url: "{{URL::action('ProductController@postTagByCateID')}}",
-                data: {cateID: cateID, productID: productID},
-                type: "POST",
-                dataType: "html"
-            });
-            request.done(function(msg) {
-                if (msg != 'FALSE') {
-                    jQuery("#spanTag").empty().html(msg);
-                }
-            });
-        }
-    }
     function BrowseServer(startupPath, functionData)
     {
         // You can use the "CKFinder" class to render CKFinder in a page:
@@ -193,9 +157,25 @@ if (isset($arrAttach)) {
         }).get();
         jQuery("#xImagePath").val(images);
     }
-    //thêm key vào text box
-    function keyChange() {
-        jQuery('#tagKey').val(jQuery('#keyed').val());
+    //kiểm tra ngày bắt đầu và kết thúc
+    function checkDateFromTo(tmp) {
+        var from = jQuery('#startSales').val();         
+        var to = jQuery('#endSales').val();
+        if (from != '' && to != '') {
+            var startDate = parseDate(from).getTime();           
+            var endDate = parseDate(to).getTime();           
+            if (startDate < endDate) {
+                alert("Ngày bắt đầu không được nhỏ hơn ngày kết thúc");
+                if(tmp == 1)
+                    jQuery('#startSales').val( jQuery('#endSales').val());
+                else
+                     jQuery('#endSales').val( jQuery('#startSales').val());
+            }           
+        }
+    }
+    function parseDate(str) {
+        var mdy = str.split('/');
+        return new Date(mdy[2], mdy[0], mdy[1]);
     }
     //kiểm tra giá và khuyến mại
     function checkPrice(obj) {
@@ -236,7 +216,6 @@ if (isset($arrAttach)) {
         str = str.replace(/^\-+|\-+$/g, ""); //cắt bỏ ký tự - ở đầu và cuối chuỗi
         document.getElementById("productSlug").value = str; // xuất kết quả xữ lý ra
     }
-
 
     function getCheckSlug() {
         var str = (document.getElementById("productName").value); // lấy chuỗi dữ liệu nhập vào
@@ -302,26 +281,24 @@ if (isset($arrAttach)) {
                 {name: 'SizeName', display: 'Size', type: 'text', ctrlCss: {width: '100px'}, ctrlProp: {disabled: 'disabled'}},
                 {name: 'ColorName', display: 'Màu', type: 'text', ctrlCss: {width: '100px'}, ctrlProp: {disabled: 'disabled'}},
                 {name: 'SoLuongBan', display: 'Đã bán', type: 'text', ctrlCss: {width: '100px'}, ctrlProp: {disabled: 'disabled'}},
-                {name: 'SoLuongNhap', display: 'Số lượng (Có thể sửa)', type: 'number', onChange: function(evt, rowIndex) {
+                {name: 'SoLuongNhap', display: 'Số lượng', type: 'number', onChange: function(evt, rowIndex) {
                         checkSoLuong(rowIndex);
-                    }, ctrlCss: {width: '100px'}},
-                {name: 'status', display: 'Trạng thái (Có thể sửa)', type: 'select', ctrlOptions: {0: 'Chờ kích hoạt', 1: 'Đã kích hoạt', 2: 'Đã xóa'}}
+                    }, ctrlCss: {width: '100px'}}
             ],
             initData: [
 <?php
 if (isset($arrStore)) {
     foreach ($arrStore as $sItem) {
         ?>
-                        {'ban': '<?php echo $sItem->soluongban; ?>', 'sizeID': '<?php echo $sItem->sizeID; ?>', 'colorID': '<?php echo $sItem->colorID; ?>', 'SizeName': '<?php echo $sItem->sizeName; ?>', 'ColorName': '<?php echo $sItem->colorName; ?>', 'SoLuongNhap': '<?php echo $sItem->soluongnhap; ?>', 'SoLuongBan': '<?php echo $sItem->soluongban; ?>', 'status': '<?php echo $sItem->status; ?>'},
+                        {'ban': '<?php echo $sItem->soluongban; ?>', 'sizeID': '<?php echo $sItem->sizeID; ?>', 'colorID': '<?php echo $sItem->colorID; ?>', 'SizeName': '<?php echo $sItem->sizeName; ?>', 'ColorName': '<?php echo $sItem->colorName; ?>', 'SoLuongNhap': '<?php echo $sItem->soluongnhap; ?>', 'SoLuongBan': '<?php echo $sItem->soluongban; ?>'},
         <?php
     }
 }
 ?>
             ],
             hideRowNumColumn: true,
-            rowButtonsInFront: true,
+            //rowButtonsInFront: true,
             hideButtons: {
-                remove: true,
                 removeLast: true,
                 insert: true,
                 moveUp: true,
@@ -329,6 +306,7 @@ if (isset($arrStore)) {
                 appendRow: true
             }
         });
+        jQuery('#tblStore > tbody > tr > td > button> span.ui-button-icon-primary.ui-icon.ui-icon-trash').html('Xóa');
         function checkSoLuong(x) {
             var tmp = x + 1;
             if (jQuery('#tblStore_SoLuongNhap_' + tmp).val() < jQuery('#tblStore_ban_' + tmp).val())
@@ -340,7 +318,7 @@ if (isset($arrStore)) {
             }
         }
         ;
-
+        jQuery.datepicker.setDefaults(jQuery.datepicker.regional[ "fr" ]);
         //range datetimepicker
         var dates = jQuery("#startSales, #endSales").datepicker({
             defaultDate: "+1w",
@@ -356,13 +334,6 @@ if (isset($arrStore)) {
                                 selectedDate, instance.settings);
                 dates.not(this).datepicker("option", option, date);
             }
-        });
-        jQuery("#wTag").dialog({
-            autoOpen: false,
-            resizable: false,
-            width: 600,
-            height: 'auto',
-            modal: true
         });
         jQuery("#wManu").dialog({
             autoOpen: false,
@@ -396,42 +367,6 @@ if (isset($arrStore)) {
         //bật của sổ thêm màu
         jQuery("#addColor").button().click(function() {
             jQuery("#wColor").dialog("open");
-        });
-        //bật của sổ thêm tag cho danh mục sản phẩm
-        jQuery("#addTag").button().click(function() {
-            var cateID = jQuery('#cateProductSelect').val();
-            if (cateID == '') {
-                return;
-            }
-            else {
-                jQuery('#cateTagID').val(jQuery('#cateProductSelect').val());
-                jQuery("#ui-dialog-title-wTag").html('Thêm thông số kỹ thuật cho danh mục: ' + jQuery('#cateProductSelect option:selected').text());
-                jQuery("#wTag").dialog("open");
-            }
-
-        });
-        //sự kiện submit form thêm tag   
-        jQuery("#submitAddTag").button().click(function() {
-            jQuery.jGrowl("Đang thêm mới tag!");
-            var form = jQuery('#frmTag');
-            if (!form.valid())
-                return false;
-            jQuery('#frmTagLoader').prop('hidden', false);
-            var request = jQuery.ajax({
-                url: form.attr('action'),
-                data: form.serialize(),
-                type: "POST",
-                dataType: "html"
-            });
-            request.done(function(msg) {
-                jQuery("#wTag").dialog("close");
-                if (msg != 'FALSE') {
-                    jQuery("#spanTag").empty().html(msg);
-                    jQuery.jGrowl("Thêm mới tag thành công!");
-                    jQuery('#frmTagLoader').prop('hidden', true);
-                }
-                //jQuery.jGrowl("Thêm mới khuyến mại thành công!");
-            });
         });
         //sự kiện submit form thêm mới nhà sản xuất       
         jQuery("#submitAddManu").button().click(function() {
@@ -509,11 +444,23 @@ if (isset($arrStore)) {
         jQuery("#btnAddStore").button().click(function() {
             if (jQuery('#sizeID').val() == '' || jQuery('#colorID').val() == '' || jQuery('#soluongnhap').val() == '') {
                 jQuery.jGrowl("Bạn phải nhập đầy đủ thông tin!");
+                jQuery('#soluongnhap').focus()
             }
             else {
+<?php
+for ($i = 0; $i < 100; $i++) {
+    ?>
+                    if (jQuery('#tblStore_sizeID_<?php echo $i; ?>').val() == jQuery('#sizeID').val() && jQuery('#tblStore_colorID_<?php echo $i; ?>').val() == jQuery('#colorID').val()) {
+                        alert('Sản phẩm này đã có trong kho');
+                        return;
+                    }
+    <?php
+}
+?>
                 jQuery('#tblStore').appendGrid('insertRow', [
-                    {ban: '0', sizeID: jQuery('#sizeID').val(), colorID: jQuery('#colorID').val(), SizeName: jQuery('#sizeID option:selected').text(), ColorName: jQuery('#colorID option:selected').text(), SoLuongNhap: jQuery('#soluongnhap').val(), SoLuongBan: '0', status: '0'}
+                    {ban: '0', sizeID: jQuery('#sizeID').val(), colorID: jQuery('#colorID').val(), SizeName: jQuery('#sizeID option:selected').text(), ColorName: jQuery('#colorID option:selected').text(), SoLuongNhap: jQuery('#soluongnhap').val(), SoLuongBan: '0'}
                 ], 0);
+                jQuery('#tblStore > tbody > tr > td > button> span.ui-button-icon-primary.ui-icon.ui-icon-trash').html('Xóa');
             }
         });
     });</script>
@@ -623,19 +570,19 @@ if (isset($arrStore)) {
                     <p>
                         <label>Giá sản phẩm (<span style="color: red;">*</span>)</label>
                         <span class="field">
-                            <input type="text" name="productPrice" id="productPrice"  onchange="checkPrice(0)"  onkeypress="return event.charCode > 47 && event.charCode < 58;" pattern="[0-9]"  placeholder="Nhập giá sản phẩm" class="width100" value="@if(isset($dataedit)){{$dataedit->productPrice}}@endif">&nbsp;VND
+                            <input type="text" name="productPrice" id="productPrice"  onchange="checkPrice(0)"  onkeypress="return event.charCode > 47 && event.charCode < 58;" pattern="[0-9]"  placeholder="Nhập giá sản phẩm" style="width:120px;" value="@if(isset($dataedit)){{$dataedit->productPrice}}@endif">&nbsp;VND
                         </span>
                     </p>      
                     <p>
                         <label>Khuyến mại</label>
                         <span class="field" id="sPromotion"> 
-                            <input type="text" name="salesPrice" onchange="checkPrice(1)" value="@if(isset($dataedit)){{$dataedit->salesPrice}}@endif" placeholder="Nhập khuyến mại" onkeypress="return event.charCode > 47 && event.charCode < 58;" pattern="[0-9]" style="width:100px;" id="salesPrice">&nbsp;VND &nbsp;&nbsp;&nbsp;   Từ ngày:  <input type="text" id="startSales" class="width100" value="@if(isset($dataedit)&& $dataedit->startSales!=''){{date('m/d/Y',$dataedit->startSales)}}@endif" name="startSales"/> &nbsp; &nbsp;Tới ngày: <input type="text" value="@if(isset($dataedit)&& $dataedit->endSales!=''){{date('m/d/Y',$dataedit->endSales)}}@endif" id="endSales" class="width100" name="endSales"/>
+                            <input type="text" name="salesPrice" onchange="checkPrice(1)" value="@if(isset($dataedit)){{$dataedit->salesPrice}}@endif" placeholder="Nhập khuyến mại" onkeypress="return event.charCode > 47 && event.charCode < 58;" pattern="[0-9]" style="width:120px;" id="salesPrice">&nbsp;VND &nbsp;&nbsp;&nbsp;   Từ ngày:  <input type="text" id="startSales" onchange="checkDateFromTo(1)" class="width100" value="@if(isset($dataedit)&& $dataedit->startSales!=''){{date('m/d/Y',$dataedit->startSales)}}@endif" name="startSales"/> &nbsp; &nbsp;Tới ngày: <input type="text" onchange="checkDateFromTo(2)" value="@if(isset($dataedit)&& $dataedit->endSales!=''){{date('m/d/Y',$dataedit->endSales)}}@endif" id="endSales" class="width100" name="endSales"/>
                         </span>
                     </p>
                     <p>
                         <label>Đường dẫn ngắn gọn</label>
                         <span class="field">
-                            <input type="text" name="productSlug" id="productSlug" placeholder="Nhập đường dẫn ngắn gọn" class="smallinput" @if(isset($dataedit))disabled @endif value="@if(isset($dataedit)){{$dataedit->productSlug}}@endif"> 
+                            <input type="text" name="productSlug" id="productSlug" placeholder="Nhập đường dẫn ngắn gọn" class="longinput" @if(isset($dataedit))disabled @endif value="@if(isset($dataedit)){{$dataedit->productSlug}}@endif"> 
                         </span>
                     </p>  
                     <p>
@@ -653,39 +600,11 @@ if (isset($arrStore)) {
                 <div id="wiz1step2" class="formwiz">
                     <h4>Bước 2: Nhập thông tin chi tiết</h4>  
                     <p>
-                        <label>Thông số kỹ thuật</label>
-                        <input type="hidden" name="productID" id="productID" value="@if(isset($dataedit)){{$dataedit->id}}@endif"/>
-                        <span class="field" id="spanTag" style="overflow: auto;width: 548px; height: 200px;border: 1;BORDER-RIGHT: blue 1px solid;BORDER-TOP: blue 1px solid; BORDER-LEFT: blue 1px solid;BORDER-BOTTOM: blue 1px solid;BACKGROUND-COLOR: White;">
-                            <?php
-                            if (isset($arrTag)) {
-                                foreach ($arrTag as $itemTag) {
-                                    if (isset($arrTaged)) {
-                                        $checked = '';
-                                        foreach ($arrTaged as $itemTaged) {
-                                            if ($itemTaged->tagID == $itemTag->id) {
-                                                $checked = 'checked';
-                                                break;
-                                            } else {
-                                                $checked = '';
-                                            }
-                                        }
-                                        echo '<input ' . $checked . ' type="checkbox" value="' . $itemTag->id . '" name="tag[]" />' . $itemTag->tagKey . ':  ' . $itemTag->tagValue . ' <br />';
-                                    } else {
-                                        echo '<input type="checkbox" value="' . $itemTag->id . '" name="tag[]" />' . $itemTag->tagKey . ':  ' . $itemTag->tagValue . ' <br />';
-                                    }
-                                }
-                            }
-                            ?>                        
-                        </span>  
-
-
-                    </p>  
-                    <p> 
-                        <label>Thêm thông số kỹ thuật</label>
+                        <label>Thông số kỹ thuật</label>                      
                         <span class="field">
-                            <button type="button"   class="submit radius2" id="addTag">Thêm thông số kỹ thuật</button>
-                        </span>
-                    </p>
+                            <textarea class="ckeditor" id="productAttributes" rows="5" name="productAttributes" placeholder="Nhập thông số kĩ thuật">@if(isset($dataedit)){{$dataedit->productAttributes}}@endif</textarea>         
+                        </span>  
+                    </p>                   
                     <p> 
                         <label>Từ khóa seo (<span style="color: red;">*</span>)</label>
                         <span class="field">
@@ -763,39 +682,6 @@ if (isset($arrStore)) {
                 </div>
             </div><!--#wizard-->
         </form>
-
-        <div id="wTag" title="Thêm thông số kỹ thuật">
-            <form class="stdform stdform2" method="post" id="frmTag" action="{{URL::action('TagController@postAddTagAjax')}}">
-                <p>                  
-                    <label>Chọn Key</label>
-                    <span class="field">
-                        <input type="hidden" name="cateTagID" id="cateTagID" value=""/>
-                        <input type="hidden" name="productID"  id="productID" value="@if(isset($dataedit)){{$dataedit->id}}@endif"/>
-                        <select id="keyed" name="keyed" onchange="keyChange();">
-                            <option value="">--Chọn key--</option>
-                            @foreach($arrTagKey as $item)
-                            <option value="{{$item->tagKey}}">{{$item->tagKey}}</option>
-                            @endforeach
-                        </select>
-                </p>
-                <p>                  
-                    <label>Custom key</label>
-                    <span class="field">                        
-                        <input type="text" name="tagKey" id="tagKey" placeholder="Tên Tag" value="" class="longinput"></span>
-                </p>
-                <p>           
-                    <label>Value</label>
-                    <span class="field">                    
-                        <input type="text" name="tagValue" id="tagValue" placeholder="Giá trị của Tag" value="" class="longinput">
-                    </span>                 
-                </p>                        
-                <p class="stdformbutton">
-                    <button class="submit radius2" type="button" id="submitAddTag" value="Thêm mới">Thêm mới </button>
-                    <input type="reset" class="reset radius2" value="Làm mới">
-                    <img id="frmTagLoader" hidden="true" src="{{Asset('adminlib/images/loaders/loader1.gif')}}" alt="" />
-                </p>
-            </form>
-        </div>
         <div id="wSize" title="Thêm size">
             <form class="stdform stdform2" method="post" id="frmSize" action="{{URL::action('SizeController@postAddSizeAjax')}}">
                 <p>                  
