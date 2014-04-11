@@ -71,6 +71,7 @@ class CreateTblUsers extends Migration {
             $table->integer('cateID');
             $table->string('productName');
             $table->longtext('productDescription');
+            $table->longtext('productAttributes');
             $table->decimal('productPrice', 20, 2);
             $table->decimal('salesPrice', 20, 2)->nullable;
             $table->string('startSales')->nullable;
