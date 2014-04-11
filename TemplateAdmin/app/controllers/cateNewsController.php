@@ -54,10 +54,16 @@ class cateNewsController extends Controller {
 
     public function getCateNewsEdit() {
         $tblCateNewsModel = new tblCategoryNewsModel();
-        $cateNewsData = $tblCateNewsModel->allCateNew(10);
-        $link = $cateNewsData->links();
+        $cateNewsData = $tblCateNewsModel->getAllCategoryNewPaginate(10);
+        $links = $cateNewsData->links();
+        $start = $cateNewsData->getCurrentPage() * 10 - 10;
+        if ($start < 0) {
+            $start = 0;
+        }
+        $arrCateNews = $tblCateNewsModel->getAllCategoryNew($start, 10);
+
         $dataedit = $tblCateNewsModel->findCateNewsByID(Input::get('id'));
-        return View::make('backend.tintuc.cateNewsManage')->with('cateNewsData', $dataedit)->with('arrayCateNews', $cateNewsData)->with('link', $link);
+        return View::make('backend.tintuc.cateNewsManage')->with('cateNewsData', $dataedit[0])->with('arrayCateNews', $arrCateNews)->with('link', $links);
     }
 
     public function postCateNewsActive() {
@@ -82,7 +88,7 @@ class cateNewsController extends Controller {
         );
         $tblCateNewsModel = new tblCategoryNewsModel();
         if (!Validator::make(Input::all(), $rules)->fails()) {
-            $tblCateNewsModel->updateCategoryNews(Input::get('cateNewsID'), Input::get('cateNewsName'), Input::get('catenewsDescription'), Input::get('catenewsParent'), Input::get('catenewsSlug'), Input::get('status'));
+            $tblCateNewsModel->updateCategoryNews(Input::get('cateNewsID'), Input::get('cateNewsName'), Input::get('catenewsDescription'), Input::get('catenewsParent'), '', Input::get('status'));
             $historyContent = 'Thay đổi danh mục tin tức : ' . Input::get('cateNewsName');
             $objAdmin = Session::get('adminSession');
             $tblHistoryAdminModel = new tblHistoryAdminModel();
@@ -121,8 +127,9 @@ class cateNewsController extends Controller {
 
     public function postCheckSlug() {
         $tblCateNewsModel = new tblCategoryNewsModel();
+        $arrCateNews = $tblCateNewsModel->allCateNewList();
         $count = 0;
-        $slugcheck = Input::get('catenewsSlug');
+        $slugcheck = Input::get('slug');
         $count = $tblCateNewsModel->countSlug($slugcheck);
         return $count;
     }

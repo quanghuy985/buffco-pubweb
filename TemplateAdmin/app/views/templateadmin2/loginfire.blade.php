@@ -36,7 +36,7 @@
                     <div class="notibar msgalert"><p>{{$messenge}}</p></div>                  
                 </div><!--nopassword-->
                 @endif
-                <form id="login" action="{{URL::action('AdminController@postDangNhap')}}" method="post">
+                <form id="login" action="{{URL::action('LoginController@postDangNhap')}}" method="post">
 
                     <div class="username">
                         <div class="usernameinner">
@@ -52,7 +52,7 @@
 
                     <button>Đăng nhập</button>
 
-                    <div class="keep"> Quên mật khẩu ? <a href="{{URL::action('AdminController@getForgot')}}" title="Quên mật khẩu ">Click here.</a></div>
+                    <div class="keep"> Quên mật khẩu ? <a href="{{URL::action('LoginController@getForgot')}}" title="Quên mật khẩu ">Click here.</a></div>
 
                 </form>
 

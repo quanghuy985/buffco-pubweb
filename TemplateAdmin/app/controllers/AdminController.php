@@ -13,11 +13,6 @@ class AdminController extends BaseController {
      *
      * @return void
      */
-    public function getLogOut() {
-        Session::remove('adminSession');
-        return View::make('templateadmin2.loginfire');
-    }
-
     public function getHistoryAdmin() {
         if (Session::has('adminSession')) {
             $objadmin = Session::get('adminSession');
@@ -59,68 +54,10 @@ class AdminController extends BaseController {
             $objAdmin = Session::get('adminSession');
             $tblHistoryAdminModel = new tblHistoryAdminModel();
             $tblHistoryAdminModel->addHistory($objAdmin[0]->id, $historyContent, '0');
-            return Redirect::action('AdminController@getHomeAdmin', array('thongbao' => 'Cập nhật thành công .'));
+            return Redirect::action('LoginController@getHomeAdmin', array('thongbao' => 'Cập nhật thành công .'));
         } else {
-            return Redirect::action('AdminController@getHomeAdmin', array('thongbao' => 'Cập nhật thất bại .'));
+            return Redirect::action('LoginController@getHomeAdmin', array('thongbao' => 'Cập nhật thất bại .'));
         }
-    }
-
-    public function getDangNhap() {
-        if (Session::has('adminSession')) {
-            return Redirect::action('AdminController@getHomeAdmin');
-        } else {
-            return View::make('templateadmin2.loginfire');
-        }
-    }
-
-    public function postDangNhap() {
-        $tblAdminModel = new tblAdminModel();
-        $check = $tblAdminModel->checkLogin(Input::get('username'), Input::get('password'));
-        if (count($check) > 0) {
-            if ($check[0]->status != 1) {
-                return View::make('templateadmin2.loginfire')->with('messenge', 'Tài khoản của bạn đã bị khóa !');
-            } else {
-                Session::push('adminSession', $check[0]);
-                // var_dump(Session::has('userlogined'));
-                return Redirect::action('AdminController@getHomeAdmin');
-                // return View::make('templateadmin2.loginfire');
-            }
-        } else {
-            return View::make('templateadmin2.loginfire')->with('messenge', 'Email hoặc mật khẩu sai !');
-        }
-    }
-
-    public function getForgot() {
-        if (Session::has('adminSession')) {
-            return Redirect::action('AdminController@getHomeAdmin');
-        } else {
-            return View::make('templateadmin2.forgorpass');
-        }
-    }
-
-    public function postForgot() {
-        $tblAdminModel = new tblAdminModel();
-        $check = $tblAdminModel->checkAdminExist(Input::get('username'));
-        if ($check == true) {
-            $pass = str_random(10);
-            Mail::send('emails.auth.reminder', array('password' => $pass), function($message) {
-                $message->from('no-rep@pubweb.vn', 'Pubweb.vn');
-                $message->to(Input::get('username'));
-                $message->subject('Lấy lại mật khẩu');
-            });
-            $check1 = $tblAdminModel->adminForgotPassword(Input::get('username'), $pass);
-            return View::make('templateadmin2.forgorpass')->with('messenge', 'Bạn check email để lấy lại mật khẩu! ');
-        } else {
-            return View::make('templateadmin2.forgorpass')->with('messenge', 'Email không tôn tại trên hệ thống !');
-        }
-    }
-
-    public function getHomeAdmin() {
-        return View::make('templateadmin2.admin-home');
-    }
-
-    public function getAlladmin() {
-        echo 'asda';
     }
 
     public function getAdminView($thongbao = '') {
@@ -134,12 +71,6 @@ class AdminController extends BaseController {
         } else {
             return View::make('backend.admin.adminManage')->with('arrayAdmin', $arrAdmin)->with('link', $link)->with('arrGroupAdmin', $arrGroupAdmin);
         }
-    }
-
-    public function postLogin() {
-        $tblAdminModel = new tblAdminModel();
-        $check = $tblAdminModel->checkLogin(Input::get('ngoquanghuyhn@gmail'), Input::get('password'));
-        var_dump($check);
     }
 
     public function postAddAdmin() {
@@ -207,8 +138,34 @@ class AdminController extends BaseController {
         $arrAdmin = $tblAdminModel->findAdmin('', 10);
         $link = $arrAdmin->links();
         return View::make('backend.admin.adminAjax')->with('arrayAdmin', $arrAdmin)->with('link', $link);
-    }    
-    
+    }
+
+    public function postAjaxpagionHistory() {
+        if (Session::has('keywordsearch') && Input::get('page') != '' && Session::has('adminSession')) {
+            $keyw = Session::get('keywordsearch');
+            $tblAdminModel = new tblAdminModel();
+            $data = '';
+            if (Session::has('oderbyoption1')) {
+                $tatus = Session::get('oderbyoption1');
+                $data = $tblAdminModel->SearchHistoryAdmin($keyw[0], 10, 'id', $tatus[0]);
+            } else {
+                $data = $tblAdminModel->SearchHistoryAdmin($keyw[0], 10, 'id', '');
+            }
+            $link = $data->links();
+            return View::make('backend.admin.adminHistoryAjax')->with('arrHistory', $data)->with('link', $link);
+        } else if (!Session::has('keywordsearch') && Input::get('page') != '' && Session::has('adminSession')) {
+            $tblAdminModel = new tblAdminModel();
+            $objadmin = Session::get('adminSession');
+            //var_dump($objadmin);
+            $id = $objadmin[0]->id;
+            //$tatus = Session::get('oderbyoption1');
+
+            $data = $tblAdminModel->selectHistoryAdmin($id, 2);
+            $link = $data->links();
+            return View::make('backend.admin.adminHistoryAjax')->with('arrHistory', $data)->with('link', $link);
+        }
+    }
+
     public function postDeleteAdmin() {
         $tblAdminModel = new tblAdminModel();
         $tblAdminModel->updateAdmin(Input::get('id'), '', '', '', '2');
@@ -229,18 +186,18 @@ class AdminController extends BaseController {
         $link = $arrAdmin->links();
         return View::make('backend.admin.adminAjax')->with('arrayAdmin', $arrAdmin)->with('link', $link);
     }
-    
-    public function postAjaxhistory(){
+
+    public function postAjaxhistory() {
         $tblAdminModel = new tblAdminModel();
         $objadmin = Session::get('adminSession');
         $id = $objadmin[0]->id;
-            //echo $id;
+        //echo $id;
         $tblAdminModel = new tblAdminModel();
         $data = $tblAdminModel->selectHistoryAdmin($id, 5);
         $link = $data->links();
         return View::make('backend.admin.adminHistoryAjax')->with('arrHistory', $data)->with('link', $link);
     }
-    
+
     public function postAjaxsearch() {
         $tblAdminModel = new tblAdminModel();
         $data = $tblAdminModel->SearchHistoryAdmin(trim(Input::get('keyword')), 5, 'id');

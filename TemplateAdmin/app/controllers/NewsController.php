@@ -11,23 +11,11 @@ class NewsController extends Controller {
     public static $rules = array();
 
     public function getNewsView($thongbao = '') {
-        if (Session::has('adminSession')) {
-            $objAdmin = Session::get('adminSession');
-            $groupAdminID = $objAdmin[0]->groupadminID;
-            $tblPhanQuyenModel = new tblPhanQuyenModel();
-            $arrRolesCode = $tblPhanQuyenModel->getRolesCodeByGroupAdmin($groupAdminID);
 
-            if (strpos(serialize($arrRolesCode), 'Quan-Ly-Tin-Tuc') != FALSE) {
-                $tblNewsModel = new tblNewsModel();
-                $check = $tblNewsModel->allNews(15, 'id');
-                $link = $check->links();
-                return View::make('backend.tintuc.newsManage')->with('arrayNews', $check)->with('link', $link)->with('thongbao', $thongbao);
-            } else {
-                echo 'Bạn không có quyền xem bài viết';
-            }
-        } else {
-            echo 'Cho trang đăng nhập vào đây';
-        }
+        $tblNewsModel = new tblNewsModel();
+        $check = $tblNewsModel->allNews(15, 'id');
+        $link = $check->links();
+        return View::make('backend.tintuc.newsManage')->with('arrayNews', $check)->with('link', $link)->with('thongbao', $thongbao);
     }
 
     public function getAllNews() {
@@ -100,31 +88,21 @@ class NewsController extends Controller {
             "newstag" => "required",
             "newsSlug" => "required");
         if (!Validator::make(Input::all(), $rules)->fails()) {
-            if (Session::has('adminSession')) {
-                $objAdmin = Session::get('adminSession');
-                $groupAdminID = $objAdmin[0]->groupadminID;
-                $tblPhanQuyenModel = new tblPhanQuyenModel();
-                $arrRolesCode = $tblPhanQuyenModel->getRolesCodeByGroupAdmin($groupAdminID);
-                if (strpos(serialize($arrRolesCode), 'Quan-Ly-Tin-Tuc') != FALSE) {
-                    $tblNewsModel = new tblNewsModel();
-                    $arrNews = $tblNewsModel->getAllNewsList();
-                    foreach ($arrNews as $itemNews) {
-                        if (Input::get('newsSlug') == $itemNews->newsSlug) {
-                            return Redirect::action('NewsController@getNewsView', array('thongbao' => 'Đường dẫn đã tồn tại vui lòng chọn đường dẫn khác .'));
-                        }
-                    }
-                    $tblNewsModel->insertNew(Input::get('cbCateNews'), Input::get('newstitle'), Input::get('newsdescription'), Input::get('newsKeywords'), Input::get('newsContent'), Input::get('newstag'), Input::get('newsSlug'), $objAdmin[0]->id);
-                    $historyContent = 'Thêm mới thành công tin tức : ' . Input::get('newstitle');
-                    $objAdmin = Session::get('adminSession');
-                    $tblHistoryAdminModel = new tblHistoryAdminModel();
-                    $tblHistoryAdminModel->addHistory($objAdmin[0]->id, $historyContent, '0');
-                    return Redirect::action('NewsController@getNewsView');
-                } else {
-                    echo 'Bạn không có quyền thêm tin tức';
+
+            $tblNewsModel = new tblNewsModel();
+            $arrNews = $tblNewsModel->getAllNewsList();
+            foreach ($arrNews as $itemNews) {
+                if (Input::get('newsSlug') == $itemNews->newsSlug) {
+                    return Redirect::action('NewsController@getNewsView', array('thongbao' => 'Đường dẫn đã tồn tại vui lòng chọn đường dẫn khác .'));
                 }
-            } else {
-                echo 'Cho trang đăng nhập vào đây';
             }
+            $objAdmin = Session::get('adminSession');
+            $tblNewsModel->insertNew(Input::get('cbCateNews'), Input::get('newstitle'), Input::get('newsdescription'), Input::get('newsKeywords'), Input::get('newsContent'), Input::get('newstag'), Input::get('newsSlug'), $objAdmin[0]->id);
+            $historyContent = 'Thêm mới thành công tin tức : ' . Input::get('newstitle');
+            
+            $tblHistoryAdminModel = new tblHistoryAdminModel();
+            $tblHistoryAdminModel->addHistory($objAdmin[0]->id, $historyContent, '0');
+            return Redirect::action('NewsController@getNewsView');
         } else {
             echo "that bai";
         }
@@ -141,24 +119,13 @@ class NewsController extends Controller {
             "newsSlug" => "required");
         if (!Validator::make(Input::all(), $rules)->fails()) {
             // Kiểm tra roles
-            if (Session::has('adminSession')) {
-                $objAdmin = Session::get('adminSession');
-                $groupAdminID = $objAdmin[0]->groupadminID;
-                $tblPhanQuyenModel = new tblPhanQuyenModel();
-                $arrRolesCode = $tblPhanQuyenModel->getRolesCodeByGroupAdmin($groupAdminID);
-                if (strpos(serialize($arrRolesCode), 'Quan-Ly-Tin-Tuc') != FALSE) {
-                    $tblNewsModel->updateNew(Input::get('idnews'), Input::get('cbCateNews'), Input::get('newstitle'), Input::get('newsdescription'), Input::get('newsKeywords'), Input::get('newsContent'), Input::get('newstag'), Input::get('newsSlug'), '', Input::get('status'));
-                    $historyContent = 'Sửa thành công tin tức : ' . Input::get('newstitle');
-                    $objAdmin = Session::get('adminSession');
-                    $tblHistoryAdminModel = new tblHistoryAdminModel();
-                    $tblHistoryAdminModel->addHistory($objAdmin[0]->id, $historyContent, '0');
-                    return Redirect::action('NewsController@getNewsView');
-                } else {
-                    echo 'Bạn không có quyền sửa bài viết';
-                }
-            } else {
-                echo 'Cho trang đăng nhập vào đây';
-            }
+
+            $tblNewsModel->updateNew(Input::get('idnews'), Input::get('cbCateNews'), Input::get('newstitle'), Input::get('newsdescription'), Input::get('newsKeywords'), Input::get('newsContent'), Input::get('newstag'), Input::get('newsSlug'), '', Input::get('status'));
+            $historyContent = 'Sửa thành công tin tức : ' . Input::get('newstitle');
+            $objAdmin = Session::get('adminSession');
+            $tblHistoryAdminModel = new tblHistoryAdminModel();
+            $tblHistoryAdminModel->addHistory($objAdmin[0]->id, $historyContent, '0');
+            return Redirect::action('NewsController@getNewsView');
         } else {
             echo "that bai";
         }
@@ -251,7 +218,7 @@ class NewsController extends Controller {
     public function postCheckSlug() {
         $tblNewsModel = new tblNewsModel();
         $count = 0;
-        $slugcheck = Input::get('newsSlug');
+        $slugcheck = Input::get('slug');
         $count = $tblNewsModel->countSlug($slugcheck);
         return $count;
     }

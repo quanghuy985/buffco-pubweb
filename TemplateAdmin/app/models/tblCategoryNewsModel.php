@@ -82,7 +82,7 @@ class tblCategoryNewsModel extends Eloquent {
         return $arrCateNews;
     }
      public function countSlug($slug) {
-        $objCateNews = DB::table('tblCateNews')->where('catenewsSlug', 'Like', $slug.'%')->count();
+        $objCateNews = DB::table('tblCateNews')->where('catenewsSlug', 'LIKE', $slug.'%')->count();
         return $objCateNews;
     }
 

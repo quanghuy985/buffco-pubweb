@@ -79,14 +79,15 @@
                 });
         request.done(function(msg) {
             if (msg != '') {
+
                 if (msg == '0') {
                     document.getElementById("catenewsSlug").value = str;
                     return false;
-                } else{
+                } else {
                     document.getElementById("catenewsSlug").value = str + '-' + msg;
-                return false;
+                    return false;
+                }
             }
-        }
         });
     }
 </script>
@@ -222,7 +223,7 @@
         </p>
         <p>
             <label>Đường dẫn</label>
-            <span class="field"><input type="text" name="catenewsSlug" id='catenewsSlug' placeholder="Nhập đường dẫn" onchange="" value="@if(isset($cateNewsData)){{$cateNewsData->catenewsSlug}}@endif" class="longinput"></span>
+            <span class="field"><input type="text" name="catenewsSlug" id='catenewsSlug' placeholder="Nhập đường dẫn" onchange="" value="@if(isset($cateNewsData)){{$cateNewsData->catenewsSlug}}@endif" class="longinput" @if(isset($cateNewsData)) disabled @endif></span>
         </p>
         <p>
             <label>Trạng thái</label>
