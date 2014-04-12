@@ -2,6 +2,16 @@
 @section("contentadmin")
 
 <script>
+    function detail(email,fname,lname,dob,add,phone){
+      jQuery('#dEmail').val(email);
+      jQuery('#dFirstName').val(fname);
+      jQuery('#dLastName').val(lname);
+      jQuery('#dDOB').val(dob);
+      jQuery('#dAddress').val(add);
+      jQuery('#dPhone').val(phone);
+      window.location.href='#frmEdit';
+    };
+    
     jQuery(document).ready(function() {
 
     jQuery('.deletepromulti').click(function() {
@@ -106,11 +116,7 @@
             userEmail: {
                 required: true,
                 email: true
-            },
-            userPassword: {
-                required: true,
-                minlength: 6
-            },
+            },            
             userFirstName: {
                 required: true
             },
@@ -132,11 +138,7 @@
             userEmail: {
                 required: 'Email là trường bắt buộc',
                 email: 'Email chưa đúng định dạng'
-            },
-            userPassword: {
-                required: 'Mật khẩu là trường bắt buộc',
-                minlength: 'Mật khẩu phải có ít nhất 6 ký tự'
-            },
+            },            
             userFirstName: {
                 required: 'Vui lòng nhập họ và đệm'
             },
@@ -189,8 +191,7 @@
                 <col class="con0" style="width: 3%">
                 <col class="con1" style="width: 10%">                                
                 <col class="con1" style="width: 10%">
-                <col class="con1" style="width: 10%">
-                <col class="con1" style="width: 10%">
+                <col class="con1" style="width: 10%">                
                 <col class="con1" style="width: 15%">
                 <col class="con1" style="width: 10%">
                 <col class="con1" style="width: 15%">
@@ -200,8 +201,7 @@
                     <th class="head0"><input type="checkbox" class="checkall" name="checkall" ></th> 
                     <th class="head1">Email</th>
                     <th class="head0">Địa chỉ</th>
-                    <th class="head1">Sdt</th>
-                    <th class="head0">Mã xác nhận</th>
+                    <th class="head1">Sdt</th>                    
                     <th class="head1">Khởi tạo</th>
                     <th class="head0">Tình trạng</th>
                     <th class="head1">Chức năng</th>
@@ -211,15 +211,13 @@
             <tbody id="tableproduct"> 
 
 
-                @if(isset($arrUser))
+                
                 @foreach($arrUser as $item)
                 <tr> 
                     <td><input name="checkboxidfile" type="checkbox" value="{{$item->id}}"></td> 
-                    <td><label value="user">{{str_limit( $item->userEmail, 10, '...')}}</label></td> 
-
+                    <td><a href="javascript:void(0);" onclick="detail('{{$item->userEmail}}','{{$item->userFirstName}}','{{$item->userLastName}}','{{$item->userDOB}}','{{$item->userAddress}}','{{$item->userPhone}}')">{{str_limit( $item->userEmail, 10, '...')}}</a></td> 
                     <td><label value="user">{{str_limit( $item->userAddress, 10, '...')}}</label></td>
                     <td><label value="user">{{str_limit($item->userPhone, 10, '...')}} </label></td> 
-                    <td><label value="user">{{str_limit($item->verify, 10, '...')}} </label></td> 
                     <td><label value="user"></label><?php echo date('d/m/Y h:i:s', $item->time); ?></td> 
                     <td><label value="user">
                             <?php
@@ -249,11 +247,11 @@
                 @endforeach
                 @if($link!='')
                 <tr>
-                    <td colspan="8">{{$link}}</td>
+                    <td colspan="7">{{$link}}</td>
                 </tr>
                 @endif
 
-                @endif
+                
             </tbody>
         </table>
 
@@ -274,7 +272,7 @@
 
             <p>
                 <label>Mật khẩu</label>
-                <span class="field"><input type="password" name="userPassword" id="userPassword" placeholder="Nhập pass" value="@if(isset($arrayUsers)){{$arrayUsers->userEmail}}@endif" class="longinput"></span>
+                <span class="field"><input type="password" name="userPassword" id="userPassword" placeholder="@if(isset($arrayUsers))Để trống nếu không thay đổi @else Nhập mật khẩu @endif" class="longinput"></span>
             </p>
 
             <p>
@@ -287,7 +285,7 @@
             </p> 
             <p>
                 <label>Ngày sinh</label>
-                <span class="field"><input type="date" name="userDOB" id="userDOB" value="@if(isset($arrayUsers)){{date('Y-m-d', $arrayUsers->userDOB)}}@endif" width="100px"></span>
+                <span class="field"><input type="text" name="userDOB" id="datepicker" value="@if(isset($arrayUsers)){{date('Y-m-d', $arrayUsers->userDOB)}}@endif" width="100px"></span>
             </p> 
             <p>
                 <label>Địa chỉ</label>
@@ -314,7 +312,39 @@
                 
             </p>
         </form>
+        <div class="contenttitle2">
+            <h3>Xem chi tiết user</h3>
+            <a name="frmEdit"></a> 
+        </div>
+        <form class="stdform stdform2" id="user" action="">
+                      
+            
+            <p>
+                <label>Email</label>
+                <span class="field"><input disabled="true" type="text" name="dEmail" id="dEmail" class="longinput"></span>
+            </p>           
 
+            <p>
+                <label>Firstname</label>
+                <span class="field"><input disabled="true" type="text" name="dFirstName" id="dFirstName" value="" class="longinput"></span>
+            </p> 
+            <p>
+                <label>Lastname</label>
+                <span class="field"><input disabled="true" type="text" name="dLastName" id="dLastName" value="" class="longinput"></span>
+            </p> 
+            <p>
+                <label>Ngày sinh</label>
+                <span class="field"><input disabled="true" type="text" name="dDOB" id="dDOB" value="" width="100px"></span>
+            </p> 
+            <p>
+                <label>Địa chỉ</label>
+                <span class="field"><input disabled="true" type="text" name="dAddress" id="dAddress" value="" class="longinput"></span>
+            </p> 
+            <p>
+                <label>Sdt</label>
+                <span class="field"><input disabled="true" type="text" name="dPhone" id="dPhone" value="" class="longinput"></span>
+            </p>     
+        </form>
     </div>
 </div>
 @endsection

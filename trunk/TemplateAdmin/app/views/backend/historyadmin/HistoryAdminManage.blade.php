@@ -1,8 +1,14 @@
 @extends("templateadmin2.mainfire")
 @section("contentadmin")
 <script>
+   function xxx(id,email,name,content){
+      jQuery('#id').val(id);
+      jQuery('#email').val(email);
+      jQuery('#name').val(name);
+      jQuery('#content').val(content);
+      window.location.href='#frmEdit';
+    };
     jQuery(document).ready(function() {
-
     jQuery('.deletepromulti').click(function() {
     var addon = '';
             av = document.getElementsByName("checkboxidfile");
@@ -87,10 +93,6 @@
             jQuery('#tableproduct').html(msg);
         });
     }
-            
-    
-    
-            
     function xoasanpham(id) {
     jConfirm('Bạn có chắc chắn muốn xóa ?', 'Thông báo', function(r) {
     if (r == true) {
@@ -108,7 +110,6 @@
     }
     })
     }
-    
     function kichhoat(id, stus) {
     var request = jQuery.ajax({
     url: "{{URL::action('HistoryAdminController@postHistoryActive')}}?id=" + id + '&status=' + stus,
@@ -157,6 +158,7 @@
         </div>
         <table cellpadding="0" cellspacing="0" border="0" id="table2" class="stdtable stdtablecb">
             <colgroup>
+                
                 <col class="con0" style="width: 3%">
                 <col class="con1" style="width: 10%">
                 <col class="con0" style="width: 15%">
@@ -167,7 +169,8 @@
             </colgroup>
             <thead>
                 <tr>
-                    <th class="head0"><input type="checkbox" class="checkall" name="checkall" ></th> 
+                    <th class="head0"><input type="checkbox" class="checkall" name="checkall" ></th>
+                    
                     <th class="head1">Email</th>
                     <th class="head0">Ten</th>
                     <th class="head1">Nội dung</th>
@@ -176,15 +179,13 @@
                     <th class="head0">Chức năng</th>
                 </tr>  
             </thead>
-
             <tbody id="tableproduct"> 
-                
-                
                 @if(isset($arrHistory))
                 @foreach($arrHistory as $item)
                 <tr> 
                     <td><input name="checkboxidfile" type="checkbox" value="{{$item->id}}"></td> 
-                    <td><label value="page">{{str_limit( $item->adminEmail, 15, '...')}}</label></td> 
+                    
+                    <td><a href="javascript:void(0);" onclick="xxx('{{$item->id}}','{{$item->adminEmail}}','{{$item->adminName}}','{{$item->historyContent}}')">{{str_limit( $item->adminEmail, 15, '...')}}</a></td> 
                     <td><label value="page">{{str_limit($item->adminName, 15, '...')}} </label></td> 
                     <td><label value="page">{{str_limit($item->historyContent, 15, '...')}} </label></td> 
                     <td><label value="page"></label><?php echo date('d/m/Y h:i:s', $item->time); ?></td> 
@@ -216,15 +217,41 @@
                 @endforeach
                 @if($link!='')
                 <tr>
-                    <td colspan="7">{{$link}}</td>
+                    <td colspan="8">{{$link}}</td>
                 </tr>
                 @endif
                 
                 @endif
             </tbody>
-        </table>
+        </table> 
         
-        
+        <div class="contenttitle2">
+            <h3>Xem chi tiết lịch sử</h3>
+            <a name="frmEdit"></a> 
+        </div>
+        <form class="stdform stdform2" id="history" action="">
+                      
+            
+            <p>
+                <label>Email</label>
+                <span class="field">
+                    <input type="text" id="email" name="email" disabled="true" value="" width="100px">
+                </span>
+            </p>
+            <p>
+                <label>Tên</label>
+                <span class="field">
+                    <input type="text" id="name" name="name" disabled="true" value="" width="100px">
+                </span>
+            </p>            
+            <p>
+                <label>Nội dung</label>
+                <span class="field">
+                    <textarea id="content" style="resize: vertical;" name="content" disabled="true" width="100px"></textarea>
+                    
+                </span>
+            </p>    
+        </form>
     </div>
 </div>
 @endsection

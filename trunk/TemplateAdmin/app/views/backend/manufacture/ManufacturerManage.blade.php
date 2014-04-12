@@ -1,5 +1,6 @@
 @extends("templateadmin2.mainfire")
 @section("contentadmin")
+
 <script>
     jQuery(document).ready(function() {
 
@@ -255,7 +256,9 @@
 
             <p>
                 <label>Mô tả</label>
-                <span class="field"><input type="text" name="manufDescription" placeholder="Nhập 1 đoạn miêu tả ngắn gọn " value="@if(isset($arrayManuf)){{$arrayManuf->manufacturerDescription}}@endif" class="longinput"></span>
+                <span class="field">                    
+                    <textarea id="des" style="resize: vertical;" rows="5" name="manufDescription" class="longinput">@if(isset($arrayManuf)){{$arrayManuf->manufacturerDescription}}@endif</textarea>
+                </span>
             </p>
             
             <p>

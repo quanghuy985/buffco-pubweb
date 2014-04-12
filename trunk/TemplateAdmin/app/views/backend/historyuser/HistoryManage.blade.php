@@ -1,6 +1,13 @@
 @extends("templateadmin2.mainfire")
 @section("contentadmin")
 <script>
+    function xxx(id,email,name,content){
+      jQuery('#id').val(id);
+      jQuery('#email').val(email);
+      jQuery('#name').val(name);
+      jQuery('#content').val(content);
+      window.location.href='#frmEdit';
+    };
     jQuery(document).ready(function() {
 
     jQuery('.deletepromulti').click(function() {
@@ -183,7 +190,7 @@
                 @foreach($arrHistory as $item)
                 <tr> 
                     <td><input name="checkboxidfile" type="checkbox" value="{{$item->id}}"></td> 
-                    <td><label value="page">{{str_limit( $item->userEmail, 15, '...')}}</label></td> 
+                    <td><a href="javascript:void(0);" onclick="xxx('{{$item->id}}','{{$item->userEmail}}','{{$item->userAddress}}','{{$item->historyContent}}')">{{str_limit( $item->userEmail, 15, '...')}}</a></td> 
                     <td><label value="page">{{str_limit($item->userAddress, 15, '...')}} </label></td> 
                     <td><label value="page">{{str_limit($item->historyContent, 15, '...')}} </label></td> 
                     <td><label value="page"></label><?php echo date('d/m/Y h:i:s', $item->time); ?></td> 
@@ -223,6 +230,31 @@
             </tbody>
         </table>
         
+        <div class="contenttitle2">
+            <h3>Xem chi tiết lịch sử</h3>
+        </div>
+        <form class="stdform stdform2" id="history" action="">            <a name="frmEdit"></a>           
+            
+            <p>
+                <label>Email</label>
+                <span class="field">
+                    <input type="text" id="email" name="email" disabled="true" value="" width="100px">
+                </span>
+            </p>
+            <p>
+                <label>Tên</label>
+                <span class="field">
+                    <input type="text" id="name" name="name" disabled="true" value="" width="100px">
+                </span>
+            </p>            
+            <p>
+                <label>Nội dung</label>
+                <span class="field">
+                    <textarea style="resize: vertical;" id="content" name="content" disabled="true" width="100px"></textarea>
+                    
+                </span>
+            </p>    
+        </form>
         
     </div>
 </div>

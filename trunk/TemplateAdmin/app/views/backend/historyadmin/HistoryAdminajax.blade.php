@@ -1,8 +1,9 @@
 @if(isset($arrayHistory))
                 @foreach($arrayHistory as $item)
                 <tr> 
-                    <td><input name="checkboxidfile" type="checkbox" value="{{$item->id}}"></td> 
-                    <td><label value="page">{{str_limit( $item->adminEmail, 15, '...')}}</label></td> 
+                    <td><input name="checkboxidfile" type="checkbox" value="{{$item->id}}"></td>
+                    
+                    <td><a href="javascript:void(0);" onclick="xxx('{{$item->id}}','{{$item->adminEmail}}','{{$item->adminName}}','{{$item->historyContent}}')">{{str_limit( $item->adminEmail, 15, '...')}}</a></td> 
                     <td><label value="page">{{str_limit($item->adminName, 15, '...')}} </label></td> 
                     <td><label value="page">{{str_limit($item->historyContent, 15, '...')}} </label></td> 
                     <td><label value="page"></label><?php echo date('d/m/Y h:i:s', $item->time); ?></td> 
@@ -34,7 +35,7 @@
                 @endforeach
                 @if($link!='')
                 <tr>
-                    <td colspan="7">{{$link}}</td>
+                    <td colspan="8">{{$link}}</td>
                 </tr>
                 @endif
                 

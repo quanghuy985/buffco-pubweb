@@ -204,5 +204,8 @@ class AdminController extends BaseController {
         $link = $data->links();
         return View::make('backend.admin.adminHistoryAjax')->with('arrHistory', $data)->with('link', $link);
     }
+    
+   
+            
 
 }
