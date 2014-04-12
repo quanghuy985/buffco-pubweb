@@ -2,7 +2,7 @@
                 @foreach($arrayUsers as $item)
                 <tr> 
                     <td><input name="checkboxidfile" type="checkbox" value="{{$item->id}}"></td> 
-                    <td><a href="javascript:void(0);" onclick="detail('{{$item->userEmail}}','{{$item->userFirstName}}','{{$item->userLastName}}','{{$item->userDOB}}','{{$item->userAddress}}','{{$item->userPhone}}')">{{str_limit( $item->userEmail, 10, '...')}}</a></td>                     
+                    <td><a href="{{URL::action('UserController@getUserDetail')}}?email={{$item->userEmail}}">{{str_limit( $item->userEmail, 10, '...')}}</a></td> 
                     <td><label value="user">{{str_limit( $item->userAddress, 10, '...')}}</label></td>
                     <td><label value="user">{{str_limit($item->userPhone, 10, '...')}} </label></td> 
                     <td><label value="user"></label><?php echo date('d/m/Y h:i:s', $item->time); ?></td> 

@@ -23,7 +23,22 @@ class UserController extends Controller {
         }
     }
     
+   public function getUserDetail(){
+       $tblUserModel = new tblUserModel();
+       $email = Input::get('email');
+       //echo $email;
+       $data = $tblUserModel->getUserByEmail($email); 
+       //echo $data->userEmail;
+       //echo count($data);
+       return View::make('backend.user.UserDetail')->with('data', $data);
+   }
    
+   public function postUserDetail(){
+       $tblUserModel = new tblUserModel();
+       $check = $tblUserModel->selectAllUser(5,'id');
+       $link = $check->links();
+       return View::make('backend.user.UserManage')->with('arrUser', $check)->with('link',$link);
+   }
 
     public function getUserEdit() {
         $tblUserModel = new tblUserModel();
@@ -47,7 +62,7 @@ class UserController extends Controller {
             );
         if (!Validator::make(Input::all(), $rules)->fails()) {
             
-            $tblUserModel->UpdateUser(Input::get('iduser'),Input::get('userPassword'), Input::get('userFirstName'), Input::get('userLastName'),Input::get('userDOB'),Input::get('userAddress'),Input::get('userPhone'), Input::get('status'));            
+            $tblUserModel->UpdateUser(Input::get('iduser'),Input::get('userPassword'), Input::get('userFirstName'), Input::get('userLastName'),strtotime(Input::get('userDOB')),Input::get('userAddress'),Input::get('userPhone'), Input::get('status'));            
             return Redirect::action('UserController@getUserView',array('msg'=>'cap nhat thanh cong'));
         } else {
             return Redirect::action('UserController@getUserView',array('msg'=>'cap nhat that bai'));
@@ -109,6 +124,7 @@ class UserController extends Controller {
         } else {
             if (!Validator::make(Input::all(), $rules)->fails()) {
                 $verify = str_random(10);
+                
                 $tblUserModel->RegisterUser(Input::get('userEmail'), Input::get('userPassword'), Input::get('userFirstName'), Input::get('userLastName'),  strtotime(Input::get('userDOB')), Input::get('userAddress'), Input::get('userPhone'), $verify, Input::get('status'));
 
 //                $data = URL::action('UserController@getKichHoat') . '/' . md5(Input::get('userEmail')) . '/' . md5($verify) . '/' . time();
