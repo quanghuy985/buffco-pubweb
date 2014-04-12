@@ -13,7 +13,7 @@ class UserController extends Controller {
     public function getUserView($msg='') {
 
         $tblUserModel = new tblUserModel();
-        $check = $tblUserModel->selectAllUser(10,'id');
+        $check = $tblUserModel->selectAllUser(5,'id');
         $link = $check->links();
         //var_dump($check);
         if($msg!=''){
@@ -22,18 +22,22 @@ class UserController extends Controller {
             return View::make('backend.user.UserManage')->with('arrUser', $check)->with('link',$link);
         }
     }
+    
+   
 
     public function getUserEdit() {
         $tblUserModel = new tblUserModel();
+        $check = $tblUserModel->selectAllUser(5,'id');
+        $link = $check->links();
         $userdata = $tblUserModel->getUserById(Input::get('id'));
         //echo count($userdata);
-        return View::make('backend.user.UserManage')->with('arrayUsers', $userdata);
+        return View::make('backend.user.UserManage')->with('arrayUsers', $userdata)->with('arrUser',$check)->with('link',$link);
     }
     
     public function postUpdateUser() {
         $tblUserModel = new tblUserModel();
         $rules = array(
-            "userPassword" => "required|min:6",
+            
             "userFirstName" => "required",
             "userLastName" => "required",
             "userDOB" => "required",
@@ -59,7 +63,7 @@ class UserController extends Controller {
             }
         }
         $tblUserModel = new tblUserModel();
-        $data = $tblUserModel->FindUser('', 10, 'id', '');
+        $data = $tblUserModel->selectAll(5);
         $link = $data->links();
         return View::make('backend.user.Userajax')->with('arrayUsers', $data)->with('link', $link);
     }
@@ -67,7 +71,7 @@ class UserController extends Controller {
     public function postUserActive() {
         $tblUserModel = new tblUserModel();
         $tblUserModel->UpdateUser(Input::get('id'), '', '', '', '', '', '', Input::get('status'));
-        $UserData = $tblUserModel->selectAll(10);
+        $UserData = $tblUserModel->selectAll(5);
         $link = $UserData->links();
         return View::make('backend.user.Userajax')->with('arrayUsers', $UserData)->with('link', $link);
     }
@@ -76,7 +80,7 @@ class UserController extends Controller {
         
             $tblUserModel = new tblUserModel();
             $tblUserModel->DeleteUserById(Input::get('id'));
-            $UserData = $tblUserModel->selectAll(10);
+            $UserData = $tblUserModel->selectAll(5);
             $link = $UserData->links();
             return View::make('backend.user.Userajax')->with('arrayUsers', $UserData)->with('link', $link);
         
@@ -141,9 +145,9 @@ class UserController extends Controller {
         $tblUserModel = new tblUserModel();
         if (Session::has('oderbyoption1')) {
             $tatus = Session::get('oderbyoption1');
-            $data = $tblUserModel->SearchUser(Input::get('keywordsearch'), 10,'id',$tatus[0]);
+            $data = $tblUserModel->SearchUser(Input::get('keywordsearch'), 5,'id',$tatus[0]);
         } else {
-            $data = $tblUserModel->SearchUser(Input::get('keywordsearch'), 10,'id','');
+            $data = $tblUserModel->SearchUser(Input::get('keywordsearch'), 5,'id','');
         }
         $link = $data->links();
         Session::forget('keywordsearch');
@@ -155,9 +159,9 @@ class UserController extends Controller {
         $tblUserModel = new tblUserModel();
         if (Session::has('oderbyoption1')) {
             $tatus = Session::get('oderbyoption1');
-            $data = $tblUserModel->SearchUser(Input::get('keywordsearch'), 10,'id',$tatus[0]);
+            $data = $tblUserModel->SearchUser(Input::get('keywordsearch'), 5,'id',$tatus[0]);
         } else {
-            $data = $tblUserModel->SearchUser(Input::get('keywordsearch'), 10,'id','');
+            $data = $tblUserModel->SearchUser(Input::get('keywordsearch'), 5,'id','');
         }
         $link = $data->links();
         Session::forget('keywordsearch');
@@ -167,7 +171,7 @@ class UserController extends Controller {
     
     public function getFillterUser() {
         $tblUserModel = new tblUserModel();
-        $data = $tblUserModel->FindUser('', 10, 'id', Input::get('oderbyoption1'));
+        $data = $tblUserModel->FindUser('', 5, 'id', Input::get('oderbyoption1'));
         $link = $data->links();
         Session::forget('oderbyoption1');
         Session::push('oderbyoption1', Input::get('oderbyoption1'));
@@ -176,7 +180,7 @@ class UserController extends Controller {
 
     public function postFillterUser() {
         $tblUserModel = new tblUserModel();
-        $data = $tblUserModel->FindUser('', 10, 'id', Input::get('oderbyoption1'));
+        $data = $tblUserModel->FindUser('', 5, 'id', Input::get('oderbyoption1'));
         $link = $data->links();
         Session::forget('oderbyoption1');
         Session::push('oderbyoption1', Input::get('oderbyoption1'));
@@ -190,9 +194,9 @@ class UserController extends Controller {
             $data = '';
             if (Session::has('oderbyoption1')) {
                 $tatus = Session::get('oderbyoption1');
-                $data = $tblUserModel->FindUser($keyw[0], 10, 'id', $tatus[0]);
+                $data = $tblUserModel->FindUser($keyw[0], 5, 'id', $tatus[0]);
             } else {
-                $data = $tblUserModel->FindUser($keyw[0], 10, 'id', '');
+                $data = $tblUserModel->FindUser($keyw[0], 5, 'id', '');
             }
             $link = $data->links();
             return View::make('backend.user.Userajax')->with('arrayUsers', $data)->with('link', $link);
@@ -206,7 +210,7 @@ class UserController extends Controller {
         } else {
             $tblUserModel = new tblUserModel();
             //$tatus = Session::get('oderbyoption1');
-            $data = $tblUserModel->selectAllUser(10, 'id');
+            $data = $tblUserModel->selectAllUser(5, 'id');
             $link = $data->links();
             return View::make('backend.user.UserManage')->with('arrUser', $data)->with('link', $link);
         }

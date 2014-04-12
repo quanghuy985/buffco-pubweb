@@ -24,8 +24,11 @@ class PageController extends Controller {
     public function getPageEdit() {
         $tblPageModel = new tblPageModel();
         $data = $tblPageModel->getPageByID(Input::get('id'));
+        $check = $tblPageModel->selectAllPage(5, 'id');
+        //var_dump($check);
+        $link = $check->links();
         //var_dump($data);
-        return View::make('backend.page.PageManage')->with('arrayPage', $data);
+        return View::make('backend.page.PageManage')->with('arrayPage', $data)->with('arrPage', $check)->with('link', $link);
     }
 
     public function postUpdatePage() {

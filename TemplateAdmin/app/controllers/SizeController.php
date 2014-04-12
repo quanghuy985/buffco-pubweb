@@ -24,9 +24,10 @@ class SizeController extends Controller {
     public function getSizeEdit() {
         $objSize = new tblSizeModel();
         $data = $objSize->getSizeByID(Input::get('id'));
-
+        $check = $objSize->selectAllSize(5, 'id');
+        $link = $check->links();
         //var_dump($data);
-        return View::make('backend.size.SizeManage')->with('arraySize', $data);
+        return View::make('backend.size.SizeManage')->with('arraySize', $data)->with('arrSize', $check)->with('link', $link);
     }
 
     public function postUpdateSize() {

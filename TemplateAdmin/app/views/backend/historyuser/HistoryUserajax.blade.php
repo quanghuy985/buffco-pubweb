@@ -2,7 +2,7 @@
                 @foreach($arrayHistory as $item)
                 <tr> 
                     <td><input name="checkboxidfile" type="checkbox" value="{{$item->id}}"></td> 
-                    <td><label value="page">{{str_limit( $item->userEmail, 15, '...')}}</label></td> 
+                    <td><a href="javascript:void(0);" onclick="xxx('{{$item->id}}','{{$item->userEmail}}','{{$item->userAddress}}','{{$item->historyContent}}')">{{str_limit( $item->userEmail, 15, '...')}}</a></td> 
                     <td><label value="page">{{str_limit($item->userAddress, 15, '...')}} </label></td> 
                     <td><label value="page">{{str_limit($item->historyContent, 15, '...')}} </label></td> 
                     <td><label value="page"></label><?php echo date('d/m/Y h:i:s', $item->time); ?></td> 

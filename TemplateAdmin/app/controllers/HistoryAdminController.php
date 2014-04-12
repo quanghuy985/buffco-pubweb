@@ -108,5 +108,7 @@ class HistoryAdminController extends Controller {
        
         return View::make('backend.historyadmin.HistoryAdminajax')->with('arrayHistory', $data)->with('link', $link);
     }
+    
+    
 
 }

@@ -14,7 +14,7 @@ class ManufacturerController extends Controller {
 
     public function getManufactureView($msg='') {
         $objManufactuer = new tblManufacturerModel();
-        $check = $objManufactuer->selectAllManufacturer(10,'id');        
+        $check = $objManufactuer->selectAllManufacturer(5,'id');        
         //var_dump($check);
         $link = $check->links();
         if($msg!=''){
@@ -27,9 +27,11 @@ class ManufacturerController extends Controller {
     public function getManufacturerEdit() {
         $objManufactuer = new tblManufacturerModel();
         $data = $objManufactuer->getManufacturerById(Input::get('id'));  
-        
+        $check = $objManufactuer->selectAllManufacturer(5,'id');        
+        //var_dump($check);
+        $link = $check->links();
         //var_dump($data);
-        return View::make('backend.manufacture.ManufacturerManage')->with('arrayManuf', $data);
+        return View::make('backend.manufacture.ManufacturerManage')->with('arrayManuf', $data)->with('arrayManufacturer', $check)->with('link',$link);
     }
     
     public function postUpdateManufacturer() {
@@ -104,7 +106,7 @@ class ManufacturerController extends Controller {
             }
         }
         $objManufactuer = new tblManufacturerModel();
-        $data = $objManufactuer->findManufacturer('', 10, 'id', '');
+        $data = $objManufactuer->findManufacturer('', 5, 'id', '');
         $link = $data->links();
         return View::make('backend.manufacture.Manufacturerajax')->with('arrayManuf', $data)->with('link', $link);
     }
@@ -112,7 +114,7 @@ class ManufacturerController extends Controller {
     public function postDeleteManufacturer(){
         $objManufactuer = new tblManufacturerModel();
         $objManufactuer->deleteManufacturer(Input::get('id'));
-        $arrmanuf = $objManufactuer->selectAllManufacturer(10,'id');        
+        $arrmanuf = $objManufactuer->selectAllManufacturer(5,'id');        
         $link = $arrmanuf->links();
         return View::make('backend.manufacture.Manufacturerajax')->with('arrayManuf', $arrmanuf)->with('link', $link);
     }
@@ -120,7 +122,7 @@ class ManufacturerController extends Controller {
     public function postManufacturerActive() {
         $objManufactuer = new tblManufacturerModel();
         $objManufactuer->updateManufacturer(Input::get('id'), '', '', '', Input::get('status'));
-        $arrmanuf = $objManufactuer->selectAll(10);
+        $arrmanuf = $objManufactuer->selectAll(5);
         $link = $arrmanuf->links();
         return View::make('backend.manufacture.Manufacturerajax')->with('arrayManuf', $arrmanuf)->with('link', $link);
     }
@@ -129,9 +131,9 @@ class ManufacturerController extends Controller {
         $objManufactuer = new tblManufacturerModel();
         if (Session::has('oderbyoption1')) {
             $tatus = Session::get('oderbyoption1');
-            $data = $objManufactuer->SearchManufacturer(Input::get('keywordsearch'), 10, 'id', $tatus[0]);
+            $data = $objManufactuer->SearchManufacturer(Input::get('keywordsearch'), 5, 'id', $tatus[0]);
         } else {
-            $data = $objManufactuer->SearchManufacturer(Input::get('keywordsearch'), 10, 'id', '');
+            $data = $objManufactuer->SearchManufacturer(Input::get('keywordsearch'), 5, 'id', '');
         }
         //  $data = $objGsp->FindProduct(Input::get('keywordsearch'), 10, 'id', '');
         // $data->setBaseUrl('view');
@@ -145,9 +147,9 @@ class ManufacturerController extends Controller {
         $objManufactuer = new tblManufacturerModel();
         if (Session::has('oderbyoption1')) {
             $tatus = Session::get('oderbyoption1');
-            $data = $objManufactuer->SearchManufacturer(Input::get('keywordsearch'), 10, 'id', $tatus[0]);
+            $data = $objManufactuer->SearchManufacturer(Input::get('keywordsearch'), 5, 'id', $tatus[0]);
         } else {
-            $data = $objManufactuer->SearchManufacturer(Input::get('keywordsearch'), 10, 'id', '');
+            $data = $objManufactuer->SearchManufacturer(Input::get('keywordsearch'), 5, 'id', '');
         }
         //  $data = $objGsp->FindProduct(Input::get('keywordsearch'), 10, 'id', '');
         // $data->setBaseUrl('view');
@@ -164,9 +166,9 @@ class ManufacturerController extends Controller {
             $data = '';
             if (Session::has('oderbyoption1')) {
                 $tatus = Session::get('oderbyoption1');
-                $data = $objManufactuer->findManufacturer($keyw[0], 10, 'id', $tatus[0]);
+                $data = $objManufactuer->findManufacturer($keyw[0], 5, 'id', $tatus[0]);
             } else {
-                $data = $objManufactuer->findManufacturer($keyw[0], 10, 'id', '');
+                $data = $objManufactuer->findManufacturer($keyw[0], 5, 'id', '');
             }
             $link = $data->links();
             return View::make('backend.manufacture.Manufacturerajax')->with('arrayManuf', $data)->with('link', $link);
@@ -174,13 +176,13 @@ class ManufacturerController extends Controller {
             Session::forget('keywordsearch');
             $objManufactuer = new tblManufacturerModel();
             $tatus = Session::get('oderbyoption1');
-            $data = $objManufactuer->findManufacturer('', 10, 'id', $tatus[0]);
+            $data = $objManufactuer->findManufacturer('', 5, 'id', $tatus[0]);
             $link = $data->links();
             return View::make('backend.manufacture.Manufacturerajax')->with('arrayManuf', $data)->with('link', $link);
         } else {
             $objManufactuer = new tblManufacturerModel();
             //$tatus = Session::get('oderbyoption1');
-            $data = $objManufactuer->selectAllManufacturer(10, 'id');
+            $data = $objManufactuer->selectAllManufacturer(5, 'id');
             $link = $data->links();
             return View::make('backend.project.ManufacturerManage')->with('arrayManufacturer', $data)->with('link', $link);
         }
@@ -191,7 +193,7 @@ class ManufacturerController extends Controller {
     public function getFillterManufacturer() {
         Session::forget('keywordsearch');
         $objManufactuer = new tblManufacturerModel();
-        $data = $objManufactuer->findManufacturer('', 10, 'id', Input::get('oderbyoption1'));
+        $data = $objManufactuer->findManufacturer('', 5, 'id', Input::get('oderbyoption1'));
         
         //echo count($data);
         $link = $data->links();
@@ -203,7 +205,7 @@ class ManufacturerController extends Controller {
     public function postFillterManufacturer() {
         Session::forget('keywordsearch');
         $objManufactuer = new tblManufacturerModel();
-        $data = $objManufactuer->findManufacturer('', 10, 'id', Input::get('oderbyoption1'));
+        $data = $objManufactuer->findManufacturer('', 5, 'id', Input::get('oderbyoption1'));
         
         //echo count($data);
         $link = $data->links();
