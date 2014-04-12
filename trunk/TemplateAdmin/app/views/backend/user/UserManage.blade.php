@@ -2,15 +2,7 @@
 @section("contentadmin")
 
 <script>
-    function detail(email,fname,lname,dob,add,phone){
-      jQuery('#dEmail').val(email);
-      jQuery('#dFirstName').val(fname);
-      jQuery('#dLastName').val(lname);
-      jQuery('#dDOB').val(dob);
-      jQuery('#dAddress').val(add);
-      jQuery('#dPhone').val(phone);
-      window.location.href='#frmEdit';
-    };
+    
     
     jQuery(document).ready(function() {
 
@@ -209,13 +201,10 @@
             </thead>
 
             <tbody id="tableproduct"> 
-
-
-                
                 @foreach($arrUser as $item)
                 <tr> 
                     <td><input name="checkboxidfile" type="checkbox" value="{{$item->id}}"></td> 
-                    <td><a href="javascript:void(0);" onclick="detail('{{$item->userEmail}}','{{$item->userFirstName}}','{{$item->userLastName}}','{{$item->userDOB}}','{{$item->userAddress}}','{{$item->userPhone}}')">{{str_limit( $item->userEmail, 10, '...')}}</a></td> 
+                    <td><a href="{{URL::action('UserController@getUserDetail')}}?email={{$item->userEmail}}">{{str_limit( $item->userEmail, 10, '...')}}</a></td> 
                     <td><label value="user">{{str_limit( $item->userAddress, 10, '...')}}</label></td>
                     <td><label value="user">{{str_limit($item->userPhone, 10, '...')}} </label></td> 
                     <td><label value="user"></label><?php echo date('d/m/Y h:i:s', $item->time); ?></td> 
@@ -285,7 +274,7 @@
             </p> 
             <p>
                 <label>Ngày sinh</label>
-                <span class="field"><input type="text" name="userDOB" id="datepicker" value="@if(isset($arrayUsers)){{date('Y-m-d', $arrayUsers->userDOB)}}@endif" width="100px"></span>
+                <span class="field"><input type="text" name="userDOB" id="datepicker" value="@if(isset($arrayUsers)){{date('d/m/y', $arrayUsers->userDOB)}}@endif" width="100px"></span>
             </p> 
             <p>
                 <label>Địa chỉ</label>
@@ -312,39 +301,7 @@
                 
             </p>
         </form>
-        <div class="contenttitle2">
-            <h3>Xem chi tiết user</h3>
-            <a name="frmEdit"></a> 
-        </div>
-        <form class="stdform stdform2" id="user" action="">
-                      
-            
-            <p>
-                <label>Email</label>
-                <span class="field"><input disabled="true" type="text" name="dEmail" id="dEmail" class="longinput"></span>
-            </p>           
-
-            <p>
-                <label>Firstname</label>
-                <span class="field"><input disabled="true" type="text" name="dFirstName" id="dFirstName" value="" class="longinput"></span>
-            </p> 
-            <p>
-                <label>Lastname</label>
-                <span class="field"><input disabled="true" type="text" name="dLastName" id="dLastName" value="" class="longinput"></span>
-            </p> 
-            <p>
-                <label>Ngày sinh</label>
-                <span class="field"><input disabled="true" type="text" name="dDOB" id="dDOB" value="" width="100px"></span>
-            </p> 
-            <p>
-                <label>Địa chỉ</label>
-                <span class="field"><input disabled="true" type="text" name="dAddress" id="dAddress" value="" class="longinput"></span>
-            </p> 
-            <p>
-                <label>Sdt</label>
-                <span class="field"><input disabled="true" type="text" name="dPhone" id="dPhone" value="" class="longinput"></span>
-            </p>     
-        </form>
+        
     </div>
 </div>
 @endsection
