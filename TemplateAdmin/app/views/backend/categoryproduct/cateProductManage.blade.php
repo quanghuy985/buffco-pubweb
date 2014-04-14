@@ -99,8 +99,7 @@
 <div class="contentwrapper">
     <div class="contenttitle2">
         <h3>Bảng danh mục sản phẩm</h3>
-    </div>
-    <a name="frmEdit"></a>
+    </div>  
     <div class="contentwrapper">
         <div class="subcontent">
             <div id="messages1">
@@ -183,6 +182,7 @@
     <div class="contenttitle2">
         <h3>Bảng thêm và chỉnh sửa</h3>
     </div>
+      <a name="frmEdit"></a>
     <form class="stdform stdform2" method="post" action="@if(isset($cateProductData)) {{URL::action('CategoryProductController@postUpdateCateProduct')}} @else {{URL::action('CategoryProductController@postAddCateProduct')}}@endif">
 
         <p>

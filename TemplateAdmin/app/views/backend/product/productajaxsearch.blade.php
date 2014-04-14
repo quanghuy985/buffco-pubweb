@@ -1,40 +1,36 @@
- @foreach($dataproduct as $item)
-                <tr >
-                    <td align="center"><input type="checkbox" name="checkboxidfile" value="{{$item->id}}" ></td>
-                    <td>{{$item->id}}</td>
-                    <td>{{$item->cateName}}  </td>
-                    <td>{{$item->productName}}</td>                  
-                    <td class="center">{{$item->productPrice}} </td>
+  @foreach($dataproduct as $item)
+                <tr >  
+                    <td><a href="{{URL::action('ProductController@getEditProduct')}}/{{$item->id}}" >{{$item->productName}}</a>  </td>
+                    <td><a href="{{URL::action('ProductController@getEditProduct')}}/{{$item->id}}" >{{$item->productCode}}</a></td>             
+                    <td class="center">{{$item->cateName}} </td>
+                    <td class="center">{{number_format($item->productPrice,0,'.', ',')}}</td>   
+                    <td class="center">{{number_format($item->salesPrice,0,'.', ',')}}<br/>
+                        (Từ {{date('d/m/Y',$item->startSales)}} đến {{date('d/m/Y',$item->endSales)}})
+                    </td> 
                     <td class="center">
                         @if($item->status==0)
-                        Chờ đăng
+                        chờ đăng
                         @endif
                         @if($item->status==1)
-                        Đã đăng
+                        đã đăng
                         @endif 
                         @if($item->status==2)
-                       Đã xóa
+                        xóa
                         @endif
 
                     </td>
-                    <td class="center">
-                          <a href="{{URL::action('ProductController@getEditProduct')}}?idedit={{$item->id}}" class="btn btn4 btn_book" title="Sửa"></a>
-                            @if($item->status=='2')
-                            <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 0)" class="btn btn4 btn_flag" title="Khởi tạo"></a>
-                            @endif
-                            @if($item->status=='0')
-                            <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 1)" class="btn btn4 btn_world" title="Kích hoạt"></a>
-                            @endif
-                            @if($item->status!='2')
-                            <a href="javascript: void(0)" onclick="xoasanpham({{$item->id}})" class="btn btn4 btn_trash" title="Xóa"></a>
-                            @endif
-                    </td>
+                    <td class="center"><a href="{{URL::action('ProductController@getEditProduct')}}/{{$item->id}}" >Chỉnh sửa</a> &nbsp; <a href="javascript: void(0)" onclick="xoasanpham({{$item->id}})">Xóa</a></td>
                 </tr>
                 @endforeach
-                @if($page!='')
+                @if($link!='')
                 <tr>
                     <td colspan="10">
-                        {{$page}}
+                        {{$link}}
                     </td>
+                </tr>
+                @endif
+                @if(count($dataproduct)==0)
+                <tr>
+                    <td colspan="8" style="text-align: center;"><span class="center">Không có dữ liệu trả về .</span></td>
                 </tr>
                 @endif

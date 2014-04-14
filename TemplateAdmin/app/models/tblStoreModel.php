@@ -18,26 +18,46 @@ class tblStoreModel extends Eloquent {
         $this->sizeID = $sizeID;
         $this->colorID = $colorID;
         $this->soluongnhap = $soluongnhap;
+        $this->daban = 0;
         $this->time = time();
         $this->status = $status;
         $result = $this->save();
         return $result;
     }
 
-    public function updateStore($id, $productID, $sizeID, $colorID, $soluongnhap, $status) {
+    public function checkStore($productID, $sizeID, $colorID) {
+        $objStore = DB::table('tblStore')->where('productID', '=', $productID)->where('sizeID', '=', $sizeID)->where('colorID', '=', $colorID)->get();
+        return $objStore;
+    }
+
+    public function updateSoLuong($id, $soluong) {
+        $objStore = $this->where('id', '=', $id);
+        $arraysql = array('id' => $id);
+        if ($soluong != '') {
+            $arraysql = array_merge($arraysql, array("soluongnhap" => $soluong));
+        }
+        $checku = $objStore->update($arraysql);
+        if ($checku > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
+    public function updateStore($id, $productID, $type, $soluongnhap, $soluongban, $status) {
         $objStore = $this->where('id', '=', $id);
         $arraysql = array('id' => $id);
         if ($productID != '') {
             $arraysql = array_merge($arraysql, array("productID" => $productID));
         }
-        if ($sizeID != '') {
-            $arraysql = array_merge($arraysql, array("sizeID" => $sizeID));
+        if ($type != '') {
+            $arraysql = array_merge($arraysql, array("type" => $type));
         }
         if ($soluongnhap != '') {
             $arraysql = array_merge($arraysql, array("soluongnhap" => $soluongnhap));
         }
-        if ($colorID != '') {
-            $arraysql = array_merge($arraysql, array("colorID" => $colorID));
+        if ($soluongban != '') {
+            $arraysql = array_merge($arraysql, array("soluongban" => $soluongban));
         }
         if ($status != '') {
             $arraysql = array_merge($arraysql, array("status" => $status));
@@ -76,15 +96,14 @@ class tblStoreModel extends Eloquent {
     }
 
     public function findStoreByProductID($id) {
-        $objStore = DB::table('tblStore')->join('tblSize', 'tblStore.sizeID', '=', 'tblSize.id')->join('tblColor', 'tblStore.colorID', '=', 'tblColor.id')->select('tblStore.*', 'tblSize.sizeName', 'tblColor.colorName')->where('productID', '=', $id)->get();
+        $objStore = DB::table('tblStore')->where('productID', '=', $id)->get();
         return $objStore;
     }
+    public function getStoreByProductID($id) {
+          $objStore = DB::table('tblStore')->join('tblSize', 'tblStore.sizeID', '=', 'tblSize.id')->join('tblColor', 'tblStore.colorID', '=', 'tblColor.id')->select('tblStore.*', 'tblSize.sizeName', 'tblColor.colorName')->where('productID', '=', $id)->get();
 
-    public function getStoreById($id) {
-        $objStore = DB::table('tblStore')->where('id', '=', $id)->get();
         return $objStore;
     }
-
     public function findStoreByProductIDAndType($id, $sizeID, $colorID) {
         $objStore = DB::table('tblStore')->where('productID', '=', $id)->where('sizeID', '=', $sizeID)->where('colorID', '=', $colorID)->get();
         return $objStore;
@@ -103,9 +122,8 @@ class tblStoreModel extends Eloquent {
             return FALSE;
         }
     }
-
-    public function deleteStoreByProId($pID) {
-        $checkdel = $this->where('productID', '=', $pID)->delete();
+      public function deleteStoreByProID($id) {
+        $checkdel = $this->where('productID', '=', $id)->delete();
         if ($checkdel > 0) {
             return TRUE;
         } else {

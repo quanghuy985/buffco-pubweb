@@ -9,31 +9,29 @@
 class ManufacturerController extends Controller {
 
     public static $rules = array();
-    
-    
 
-    public function getManufactureView($msg='') {
+    public function getManufactureView($msg = '') {
         $objManufactuer = new tblManufacturerModel();
-        $check = $objManufactuer->selectAllManufacturer(5,'id');        
+        $check = $objManufactuer->selectAllManufacturer(10, 'id');
         //var_dump($check);
         $link = $check->links();
-        if($msg!=''){
-            return View::make('backend.manufacture.ManufacturerManage')->with('arrayManufacturer', $check)->with('link',$link)->with('msg',$msg);
-        }else{
-            return View::make('backend.manufacture.ManufacturerManage')->with('arrayManufacturer', $check)->with('link',$link);
+        if ($msg != '') {
+            return View::make('backend.manufacture.ManufacturerManage')->with('arrayManufacturer', $check)->with('link', $link)->with('msg', $msg);
+        } else {
+            return View::make('backend.manufacture.ManufacturerManage')->with('arrayManufacturer', $check)->with('link', $link);
         }
     }
-    
+
     public function getManufacturerEdit() {
         $objManufactuer = new tblManufacturerModel();
-        $data = $objManufactuer->getManufacturerById(Input::get('id'));  
+        $data = $objManufactuer->getManufacturerById(Input::get('id'));
         $check = $objManufactuer->selectAllManufacturer(5,'id');        
         //var_dump($check);
         $link = $check->links();
         //var_dump($data);
         return View::make('backend.manufacture.ManufacturerManage')->with('arrayManuf', $data)->with('arrayManufacturer', $check)->with('link',$link);
     }
-    
+
     public function postUpdateManufacturer() {
         $objManufactuer = new tblManufacturerModel();
         $rules = array(
@@ -41,15 +39,15 @@ class ManufacturerController extends Controller {
             "manufDescription" => "required",
             "manufPlace" => "required",
             "status" => "required"
-            );
+        );
         if (!Validator::make(Input::all(), $rules)->fails()) {
-            $objManufactuer->updateManufacturer(Input::get('idmanuf'),Input::get('manufName'), Input::get('manufDescription'), Input::get('manufPlace'), Input::get('status'));            
-            return Redirect::action('ManufacturerController@getManufactureView',array('msg'=>'cap nhat thanh cong'));
+            $objManufactuer->updateManufacturer(Input::get('idmanuf'), Input::get('manufName'), Input::get('manufDescription'), Input::get('manufPlace'), Input::get('status'));
+            return Redirect::action('ManufacturerController@getManufactureView', array('msg' => 'cap nhat thanh cong'));
         } else {
-            return Redirect::action('ManufacturerController@getManufactureView',array('msg'=>'cap nhat that bai'));
+            return Redirect::action('ManufacturerController@getManufactureView', array('msg' => 'cap nhat that bai'));
         }
     }
-    
+
     public function getAddManufaturer() {
         return View::make('backend.manufacture.ManufacturerManage');
     }
@@ -62,41 +60,41 @@ class ManufacturerController extends Controller {
             "status" => "required"
         );
         $objManufactuer = new tblManufacturerModel();
-        
+
         if (!Validator::make(Input::all(), $rules)->fails()) {
             $objManufactuer->addManufacturer(Input::get('manufName'), Input::get('manufDescription'), Input::get('manufPlace'), Input::get('status'));
-            
-            return Redirect::action('ManufacturerController@getManufactureView',array('msg'=>'them moi thanh cong'));
+
+            return Redirect::action('ManufacturerController@getManufactureView', array('msg' => 'them moi thanh cong'));
         } else {
-            return Redirect::action('ManufacturerController@getManufactureView',array('msg'=>'them moi that bai'));
+            return Redirect::action('ManufacturerController@getManufactureView', array('msg' => 'them moi that bai'));
         }
     }
-    
-        public function postAddManufaturerAjax() {
+
+    public function postAddManufaturerAjax() {
         $rules = array(
             "manufacturerName" => "required",
             "manufacturerDescription" => "required",
-            "manufacturerPlace" => "required"           
+            "manufacturerPlace" => "required"
         );
         $objManufactuer = new tblManufacturerModel();
-        
+
         if (!Validator::make(Input::all(), $rules)->fails()) {
-            $objManufactuer->addManufacturer(Input::get('manufacturerName'), Input::get('manufacturerDescription'), Input::get('manufacturerPlace'), 1);      
-            $arrManu= $objManufactuer->selectAll(1000);
-             $selectManu = '<option value="0">---Chọn nhà sản xuất---</option>';           
+            $objManufactuer->addManufacturer(Input::get('manufacturerName'), Input::get('manufacturerDescription'), Input::get('manufacturerPlace'), 1);
+            $arrManu = $objManufactuer->selectAll(1000);
+            $selectManu = '<option value="0">---Chọn nhà sản xuất---</option>';
             foreach ($arrManu as $item) {
-                if (Input::get('manuID')!='' && Input::get('manuID') == $item->id) {
-                    $selectManu.=" <option value='".$item->id."' selected >" . $item->manufacturerName . "</option>";
+                if (Input::get('manuID') != '' && Input::get('manuID') == $item->id) {
+                    $selectManu.=" <option value='" . $item->id . "' selected >" . $item->manufacturerName . "</option>";
                 } else {
-                    $selectManu.=" <option value=".$item->id.">" . $item->manufacturerName . "</option>";
+                    $selectManu.=" <option value=" . $item->id . ">" . $item->manufacturerName . "</option>";
                 }
-                }           
+            }
             return $selectManu;
         } else {
-            return Redirect::action('ManufacturerController@getManufactureView',array('msg'=>'them moi that bai'));
+            return Redirect::action('ManufacturerController@getManufactureView', array('msg' => 'them moi that bai'));
         }
     }
-    
+
     public function postDelmulte() {
         $pieces1 = explode(",", Input::get('multiid'));
         foreach ($pieces1 as $item) {
@@ -110,15 +108,15 @@ class ManufacturerController extends Controller {
         $link = $data->links();
         return View::make('backend.manufacture.Manufacturerajax')->with('arrayManuf', $data)->with('link', $link);
     }
-    
-    public function postDeleteManufacturer(){
+
+    public function postDeleteManufacturer() {
         $objManufactuer = new tblManufacturerModel();
         $objManufactuer->deleteManufacturer(Input::get('id'));
-        $arrmanuf = $objManufactuer->selectAllManufacturer(5,'id');        
+        $arrmanuf = $objManufactuer->selectAllManufacturer(10, 'id');
         $link = $arrmanuf->links();
         return View::make('backend.manufacture.Manufacturerajax')->with('arrayManuf', $arrmanuf)->with('link', $link);
     }
-    
+
     public function postManufacturerActive() {
         $objManufactuer = new tblManufacturerModel();
         $objManufactuer->updateManufacturer(Input::get('id'), '', '', '', Input::get('status'));
@@ -126,7 +124,7 @@ class ManufacturerController extends Controller {
         $link = $arrmanuf->links();
         return View::make('backend.manufacture.Manufacturerajax')->with('arrayManuf', $arrmanuf)->with('link', $link);
     }
-    
+
     public function getAjaxsearch() {
         $objManufactuer = new tblManufacturerModel();
         if (Session::has('oderbyoption1')) {
@@ -142,7 +140,7 @@ class ManufacturerController extends Controller {
         Session::push('keywordsearch', Input::get('keywordsearch'));
         return View::make('backend.manufacture.ManufacturerManage')->with('arrayManufacturer', $data)->with('link', $link);
     }
-    
+
     public function postAjaxsearch() {
         $objManufactuer = new tblManufacturerModel();
         if (Session::has('oderbyoption1')) {
@@ -172,7 +170,7 @@ class ManufacturerController extends Controller {
             }
             $link = $data->links();
             return View::make('backend.manufacture.Manufacturerajax')->with('arrayManuf', $data)->with('link', $link);
-        } else if(!Session::has('keywordsearch') && Input::get('page') != ''){
+        } else if (!Session::has('keywordsearch') && Input::get('page') != '') {
             Session::forget('keywordsearch');
             $objManufactuer = new tblManufacturerModel();
             $tatus = Session::get('oderbyoption1');
@@ -186,38 +184,34 @@ class ManufacturerController extends Controller {
             $link = $data->links();
             return View::make('backend.project.ManufacturerManage')->with('arrayManufacturer', $data)->with('link', $link);
         }
-            
-        
     }
-    
+
     public function getFillterManufacturer() {
         Session::forget('keywordsearch');
         $objManufactuer = new tblManufacturerModel();
         $data = $objManufactuer->findManufacturer('', 5, 'id', Input::get('oderbyoption1'));
-        
+
         //echo count($data);
         $link = $data->links();
         Session::forget('oderbyoption1');
         Session::push('oderbyoption1', Input::get('oderbyoption1'));
         return View::make('backend.manufacture.ManufacturerManage')->with('arrayManufacturer', $data)->with('link', $link);
     }
-    
+
     public function postFillterManufacturer() {
         Session::forget('keywordsearch');
         $objManufactuer = new tblManufacturerModel();
         $data = $objManufactuer->findManufacturer('', 5, 'id', Input::get('oderbyoption1'));
-        
+
         //echo count($data);
         $link = $data->links();
         Session::forget('oderbyoption1');
         Session::push('oderbyoption1', Input::get('oderbyoption1'));
         return View::make('backend.manufacture.Manufacturerajax')->with('arrayManuf', $data)->with('link', $link);
     }
-    
-    
-    
+
 }
-    
+
 //    public function getAddManufaturer(){
 //        $objManufacturer = new tblManufacturerModel();
 //        $rules = array(

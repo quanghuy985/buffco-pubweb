@@ -11,17 +11,17 @@ class tblSizeModel extends Eloquent {
     protected $table = 'tblsize';
     public $timestamps = false;
 
-    public function addSize($sizeName, $sizeDescription,$sizeValue) {
+    public function addSize($sizeName, $sizeDescription, $sizeValue) {
         $this->sizeName = $sizeName;
         $this->sizeDescription = $sizeDescription;
-        $this->sizeValue = $sizeValue;        
+        $this->sizeValue = $sizeValue;
         $this->time = time();
         $this->status = 0;
         $check = $this->save();
         return $check;
     }
 
-    public function updateSize($id,$sizeName, $sizeDescription,$sizeValue, $sizeStatus) {
+    public function updateSize($id, $sizeName, $sizeDescription, $sizeValue, $sizeStatus) {
         // $tableAdmin = new TblAdminModel();
         $tableSize = $this->where('id', '=', $id);
         $arraysql = array('id' => $id);
@@ -55,15 +55,19 @@ class tblSizeModel extends Eloquent {
             return FALSE;
         }
     }
-    
-    public function selectAllSize($per_page,$orderby){
+
+    public function selectAllSize($per_page, $orderby) {
         $allSize = DB::table('tblsize')->orderBy($orderby, 'desc')->paginate($per_page);
         return $allSize;
     }
-    
 
     public function allSize($per_page) {
         $allSize = DB::table('tblsize')->paginate($per_page);
+        return $allSize;
+    }
+
+    public function getAllSize() {
+        $allSize = $this->where('status', '=', 1)->get();
         return $allSize;
     }
 
@@ -81,12 +85,11 @@ class tblSizeModel extends Eloquent {
         }
         return $sizearray;
     }
-    
-    public function SearchSize($keyword, $per_page, $orderby){
+
+    public function SearchSize($keyword, $per_page, $orderby) {
         $sizearray = '';
         $sizearray = DB::table('tblsize')->select('tblsize.*')->where('tblsize.sizeName', 'LIKE', '%' . $keyword . '%')->orwhere('tblsize.sizeDescription', 'LIKE', '%' . $keyword . '%')->orwhere('tblsize.sizeValue', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);
         return $sizearray;
     }
 
 }
-

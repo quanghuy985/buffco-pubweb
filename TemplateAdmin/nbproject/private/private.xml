@@ -3,14 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/wamp/www/TemplateAdmin/public/adminlib/js/custom/elements.js</file>
-            <file>file:/E:/wamp/www/TemplateAdmin/app/models/tblStoreModel.php</file>
+            <file>file:/E:/wamp/www/TemplateAdmin/app/views/backend/product/store.blade.php</file>
+            <file>file:/E:/wamp/www/TemplateAdmin/app/models/tblTagModel.php</file>
             <file>file:/E:/wamp/www/TemplateAdmin/app/models/tblProductModel.php</file>
+            <file>file:/E:/wamp/www/TemplateAdmin/app/views/backend/product/viewproduct.blade.php</file>
             <file>file:/E:/wamp/www/TemplateAdmin/app/controllers/ProductController.php</file>
             <file>file:/E:/wamp/www/TemplateAdmin/app/models/tblAttachmentModel.php</file>
-            <file>file:/E:/wamp/www/TemplateAdmin/app/views/templateadmin2/mainfire.blade.php</file>
-            <file>file:/E:/wamp/www/TemplateAdmin/public/adminlib/js/plugins/jquery.smartWizard-2.0.min.js</file>
-            <file>file:/E:/wamp/www/TemplateAdmin/public/adminlib/js/custom/product.js</file>
+            <file>file:/E:/wamp/www/TemplateAdmin/app/controllers/SizeController.php</file>
+            <file>file:/E:/wamp/www/TemplateAdmin/app/views/backend/product/addproduct2.blade.php</file>
+            <file>file:/E:/wamp/www/TemplateAdmin/app/controllers/ColorController.php</file>
             <file>file:/E:/wamp/www/TemplateAdmin/app/views/backend/product/addproduct.blade.php</file>
         </group>
     </open-files>
