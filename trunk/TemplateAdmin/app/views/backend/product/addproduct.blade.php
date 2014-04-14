@@ -1,473 +1,140 @@
 @extends("templateadmin2.mainfire")
 @section("contentadmin")
+<script type="text/javascript">
 
- <script  src="{{Asset('adminlib/js/plugins/jquery.appendGrid-1.3.4.js')}}"></script>
-
-<style type="text/css">
-    .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
-        border: 1px solid #d3d3d3;
-        background: #e6e6e6 url(images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
-        font-weight: normal;
-        color: #555555;
+    function checkValid(){
+    if (jQuery("#frmProduct").valid())
+            jQuery("#frmProduct").submit();
     }
-    .stdform small.desc {
-        margin: 5px 0 0 2px !important;
-    }
-    #frmStore #addColor,#addSize {
-        margin-left: 5px;
-        position: absolute;
+    var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0!
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+    dd = '0' + dd
     }
 
-    #frmStore div.selector {
-        height: 53px !important;
+    if (mm < 10) {
+    mm = '0' + mm
     }
-    #tblStore > tfoot > tr > td > button{
-        display: none !important;
-    }
-
-</style>
-<script>
-
-    jQuery(document).ready(function() {
-        jQuery('#wizard').smartWizard({onFinish: onFinishCallback});
-        function onFinishCallback() {
-            alert('Finish Clicked');
-        }
-
-<?php
-if (isset($arrAttach)) {
-    foreach ($arrAttach as $item) {
-        ?>
-                var urlImg = '<span class="divanhsanphams" id="image-' + <?php echo $item->id; ?> + '"><img src="<?php echo $item->attachmentURL; ?>" width="100" height="100"/><a href="javascript:void(o);" onclick="xoaanhthum(\'image-' + <?php echo $item->id; ?> + '\');" class="delete" title="Delete image">x</a></span>';
-                document.getElementById('thumbnails').innerHTML += urlImg;
-    <?php }
-    ?>
-            returnurlimg();
-<?php }
-?>
-        //validate form thêm sản phẩm
-        jQuery("#frmProduct").validate({
-            rules: {
-                productName: {
-                    required: true
-                },
-                cateProductSelect: {
-                    required: true,
-                    min: 1
-                },
-                productDescription: {
-                    required: true
-                },
-                productPrice: {
-                    required: true
-                },
-                productTag: {
-                    required: true
-                },
-                productSlug: {
-                    required: true
-                },
-                manufactureSelect: {
-                    required: true                    
-                }
-            },
-            messages: {
-                productName: "Tên sản phẩm không được để trống",
-                cateProductSelect: "Danh mục sản phẩm không được để trống",
-                productDescription: "Mô tả sản phẩm không được để trống",
-                productPrice: "Giá sản phẩm không được để trống",
-                productTag: "Tag không được để trống",
-                productSlug: "Đường dẫn không được để trống",
-                manufactureSelect: "Nhà sản xuất không được để trống"
+    today = mm + '/' + dd + '/' + yyyy;
+            function showkhuyenmai() {
+            jQuery("#datepicker").val('');
+                    jQuery("#datepicker1").val('');
+                    jQuery("#datepicker").datepicker("option", "minDate", today);
+                    jQuery("#datepicker1").datepicker("option", "minDate", today);
+                    jQuery("#book").toggle();
             }
-        });
-        //validate form thêm nhà sản xuất
-        jQuery("#frmManu").validate({
-            rules: {
-                manufacturerName: {
-                    required: true
-                },
-                manufacturerDescription: {
-                    required: true
-                },
-                manufacturerPlace: {
-                    required: true
-                },
-            },
-            messages: {
-                manufacturerName: "Tên nhà sản xuất không được để trống",
-                manufacturerDescription: "Mô tả không được để trống",
-                manufacturerPlace: "Xuất xứ không được để trống"
-            }
-        });
-
-        //validate form thêm mới size
-        jQuery("#frmSize").validate({
-            rules: {
-                sizeName: {
-                    required: true
-                },
-                sizeValue: {
-                    required: true
-                },
-            },
-            messages: {
-                sizeName: "Tên size không được để trống",
-                sizeValue: "size không được để trống"
-            }
-        });
-    });
-    function BrowseServer(startupPath, functionData)
-    {
-        // You can use the "CKFinder" class to render CKFinder in a page:
-        var finder = new CKFinder();
-
-        // The path for the installation of CKFinder (default = "/ckfinder/").
-        // finder.basePath = '../';
-
-        //Startup path in a form: "Type:/path/to/directory/"
-        finder.startupPath = startupPath;
-        // Name of a function which is called when a file is selected in CKFinder.
-        finder.selectActionFunction = SetFileField;
-
-        // Additional data to be passed to the selectActionFunction in a second argument.
-        // We'll use this feature to pass the Id of a field that will be updated.
-        finder.selectActionData = functionData;
-        // Launch CKFinder
-        finder.popup();
+    function checkngaykhuyenmai() {
+    jQuery("#datepicker1").datepicker("option", "minDate", jQuery("#datepicker").val());
     }
-
-// This is a sample function which is called when a file is selected in CKFinder.
-    function SetFileField(fileUrl, data)
-    {
-        var sFileName = this.getSelectedFile().name;
-        var urlImg = '<span class="divanhsanphams" id="image-' + sFileName + '"><img src="http://' + window.location.hostname + fileUrl + '" width="100" height="100"/><a href="javascript:void(o);" onclick="xoaanhthum(\'image-' + sFileName + '\');" class="delete" title="Delete image">x</a></span>';
-        document.getElementById('thumbnails').innerHTML += urlImg;
-        returnurlimg();
-        //   document.getElementById(data["selectActionData"]).value = fileUrl;
-    }
-    function xoaanhthum(id) {
-        document.getElementById(id).remove();
-        returnurlimg();
-
-    }
-    function returnurlimg() {
-        var images = jQuery("#thumbnails").find("img").map(function() {
-            return this.src;
-        }).get();
-        jQuery("#xImagePath").val(images);
-    }
-    //kiểm tra ngày bắt đầu và kết thúc
-    function checkDateFromTo(tmp) {
-        var from = jQuery('#startSales').val();         
-        var to = jQuery('#endSales').val();
-        if (from != '' && to != '') {
-            var startDate = parseDate(from).getTime();           
-            var endDate = parseDate(to).getTime();           
-            if (startDate < endDate) {
-                alert("Ngày bắt đầu không được nhỏ hơn ngày kết thúc");
-                if(tmp == 1)
-                    jQuery('#startSales').val( jQuery('#endSales').val());
-                else
-                     jQuery('#endSales').val( jQuery('#startSales').val());
-            }           
-        }
-    }
-    function parseDate(str) {
-        var mdy = str.split('/');
-        return new Date(mdy[2], mdy[0], mdy[1]);
-    }
-    //kiểm tra giá và khuyến mại
-    function checkPrice(obj) {
-
-        var price = jQuery('#productPrice').val();
-        var sales = jQuery('#salesPrice').val();
-        if (price != '' && sales != '')
-        {
-            if (price < sales)
-            {
-                alert('Giá khuyến mại không được lớn hơn giá sản phẩm!');
-                if (obj == 0)
-                {
-                    jQuery('#productPrice').val('').focus();
-                }
-                else
-                {
-                    jQuery('#salesPrice').val('').focus();
-                }
-            }
-        }
-    }
-//lọc dấu tạo slug
-    function locdau() {
-        var str = (document.getElementById("productName").value); // lấy chuỗi dữ liệu nhập vào
-        str = str.toLowerCase(); // chuyển chuỗi sang chữ thường để xử lý
-        /* tìm kiếm và thay thế tất cả các nguyên âm có dấu sang không dấu*/
-        str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
-        str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
-        str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
-        str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
-        str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
-        str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
-        str = str.replace(/đ/g, "d");
-        str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'| |\"|\&|\#|\[|\]|~|$|_/g, "-");
-        /* tìm và thay thế các kí tự đặc biệt trong chuỗi sang kí tự - */
-        str = str.replace(/-+-/g, "-"); //thay thế 2- thành 1-
-        str = str.replace(/^\-+|\-+$/g, ""); //cắt bỏ ký tự - ở đầu và cuối chuỗi
-        document.getElementById("productSlug").value = str; // xuất kết quả xữ lý ra
-    }
-
-    function getCheckSlug() {
-        var str = (document.getElementById("productName").value); // lấy chuỗi dữ liệu nhập vào
-        str = str.toLowerCase(); // chuyển chuỗi sang chữ thường để xử lý
-        /* tìm kiếm và thay thế tất cả các nguyên âm có dấu sang không dấu*/
-        str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
-        str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
-        str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
-        str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
-        str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
-        str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
-        str = str.replace(/đ/g, "d");
-        str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'| |\"|\&|\#|\[|\]|~|$|_/g, "-");
-        /* tìm và thay thế các kí tự đặc biệt trong chuỗi sang kí tự - */
-        str = str.replace(/-+-/g, "-"); //thay thế 2- thành 1-
-        str = str.replace(/^\-+|\-+$/g, ""); //cắt bỏ ký tự - ở đầu và cuối chuỗi
-        var request = jQuery.ajax({
-            url: "{{URL::action('ProductController@postCheckSlug')}}?slug=" + str,
-            type: "POST"
-        });
-        request.done(function(msg) {
-            if (msg != '') {
-                if (msg == '0') {
-                    document.getElementById("productSlug").value = str;
-                    return false;
-                } else {
-                    document.getElementById("productSlug").value = str + '-' + msg;
-                    return false;
-                }
-            }
-        });
-    }
-    //update ckeditor để nhận giá trị vào form
-    function CKupdate() {
-        for (instance in CKEDITOR.instances)
-            CKEDITOR.instances[instance].updateElement();
-    }
-    //hàm submit form thêm mới
-    function submitForm() {
-        var form = jQuery('#frmProduct');
-        if (!form.valid()) {
-            return false;
-        }
-        else {
-             var data = jQuery('#tblStore').appendGrid('getAllValue', true);
-            var count = data['_RowCount'];
-            jQuery('#countTable').val(count);
-            jQuery.jGrowl("Đang lưu sản phẩm!");
-            jQuery('#frmProductLoader').prop('hidden', false);
-            form.submit();
-
-        }
-    }
-    //xử lí các sự kiện của dialog
     jQuery(function() {
-        // Initialize appendGrid
-        jQuery('#tblStore').appendGrid('init', {
-            initRows: 1,
-            columns: [
-                {name: 'ban', display: 'ban', type: 'hidden'},
-                {name: 'sizeID', display: 'ban', type: 'hidden'},
-                {name: 'colorID', display: 'ban', type: 'hidden'},
-                {name: 'SizeName', display: 'Size', type: 'text', ctrlCss: {width: '100px'}, ctrlProp: {disabled: 'disabled'}},
-                {name: 'ColorName', display: 'Màu', type: 'text', ctrlCss: {width: '100px'}, ctrlProp: {disabled: 'disabled'}},
-                {name: 'SoLuongBan', display: 'Đã bán', type: 'text', ctrlCss: {width: '100px'}, ctrlProp: {disabled: 'disabled'}},
-                {name: 'SoLuongNhap', display: 'Số lượng', type: 'number', onChange: function(evt, rowIndex) {
-                        checkSoLuong(rowIndex);
-                    }, ctrlCss: {width: '100px'}}
-            ],
-            initData: [
-<?php
-if (isset($arrStore)) {
-    foreach ($arrStore as $sItem) {
-        ?>
-                        {'ban': '<?php echo $sItem->soluongban; ?>', 'sizeID': '<?php echo $sItem->sizeID; ?>', 'colorID': '<?php echo $sItem->colorID; ?>', 'SizeName': '<?php echo $sItem->sizeName; ?>', 'ColorName': '<?php echo $sItem->colorName; ?>', 'SoLuongNhap': '<?php echo $sItem->soluongnhap; ?>', 'SoLuongBan': '<?php echo $sItem->soluongban; ?>'},
-        <?php
-    }
-}
-?>
-            ],
-            hideRowNumColumn: true,
-            //rowButtonsInFront: true,
-            hideButtons: {
-                removeLast: true,
-                insert: true,
-                moveUp: true,
-                moveDown: true,
-                appendRow: true
-            }
-        });
-        jQuery('#tblStore > tbody > tr > td > button> span.ui-button-icon-primary.ui-icon.ui-icon-trash').html('Xóa');
-        function checkSoLuong(x) {
-            var tmp = x + 1;
-            if (jQuery('#tblStore_SoLuongNhap_' + tmp).val() < jQuery('#tblStore_ban_' + tmp).val())
-            {
-                alert('Số lượng nhập không được nhỏ hơn số lượng đã bán!', 'Thông báo');
-                // alert('Số lượng nhập không được nhỏ hơn số lượng đã bán!');
-                jQuery('#tblStore_SoLuongNhap_' + tmp).val(jQuery('#tblStore_SoLuongBan_' + tmp).val());
-                return false;
-            }
-        }
-        ;
-        jQuery.datepicker.setDefaults(jQuery.datepicker.regional[ "fr" ]);
-        //range datetimepicker
-        var dates = jQuery("#startSales, #endSales").datepicker({
-            defaultDate: "+1w",
-            changeMonth: true,
-            changeYear: true,
-            numberOfMonths: 1,
-            onSelect: function(selectedDate) {
-                var option = this.id == "startSales" ? "minDate" : "maxDate",
-                        instance = jQuery(this).data("datepicker"),
-                        date = jQuery.datepicker.parseDate(
-                                instance.settings.dateFormat ||
-                                jQuery.datepicker._defaults.dateFormat,
-                                selectedDate, instance.settings);
-                dates.not(this).datepicker("option", option, date);
-            }
-        });
-        jQuery("#wManu").dialog({
-            autoOpen: false,
+    jQuery("#wManu").dialog({
+    autoOpen: false,
             resizable: false,
             width: 600,
             height: 'auto',
             modal: true
-        });
-        jQuery("#wSize").dialog({
-            autoOpen: false,
+    });
+            jQuery("#wSize").dialog({
+    autoOpen: false,
             resizable: false,
             width: 600,
             height: 'auto',
             modal: true
-        });
-        jQuery("#wColor").dialog({
-            autoOpen: false,
+    });
+            jQuery("#wColor").dialog({
+    autoOpen: false,
             resizable: false,
             width: 600,
             height: 'auto',
             modal: true
-        });
-        //bật của sổ thêm nhà sản xuất
-        jQuery("#addManu").button().click(function() {
-            jQuery("#wManu").dialog("open");
-        });
-        //bật của sổ thêm size
-        jQuery("#addSize").button().click(function() {
-            jQuery("#wSize").dialog("open");
-        });
-        //bật của sổ thêm màu
-        jQuery("#addColor").button().click(function() {
-            jQuery("#wColor").dialog("open");
-        });
-        //sự kiện submit form thêm mới nhà sản xuất       
-        jQuery("#submitAddManu").button().click(function() {
-            var form = jQuery('#frmManu');
+    });
+            //bật của sổ thêm nhà sản xuất
+            jQuery("#addManu").button().click(function() {
+    jQuery("#wManu").dialog("open");
+    });
+            //bật của sổ thêm size
+            jQuery("#addSize").button().click(function() {
+    jQuery("#wSize").dialog("open");
+    });
+            //bật của sổ thêm màu
+            jQuery("#addColor").button().click(function() {
+    jQuery("#wColor").dialog("open");
+    });
+            //sự kiện submit form thêm mới nhà sản xuất       
+            jQuery("#submitAddManu").button().click(function() {
+    var form = jQuery('#frmManu');
             if (!form.valid())
-                return false;
+            return false;
             jQuery.jGrowl("Đang thêm mới nhà sản xuất!");
             jQuery('#frmManuLoader').prop('hidden', false);
             var request = jQuery.ajax({
-                url: form.attr('action'),
-                data: form.serialize(),
-                type: "POST",
-                dataType: "html"
+            url: form.attr('action'),
+                    data: form.serialize(),
+                    type: "POST",
+                    dataType: "html"
             });
             request.done(function(msg) {
-                jQuery("#wManu").dialog("close");
-                if (msg != 'FALSE') {
-                    jQuery("#manufactureSelect").empty().html(msg);
+            jQuery("#wManu").dialog("close");
+                    if (msg != 'FALSE') {
+            jQuery("#manufactureSelect").empty().html(msg);
                     jQuery.jGrowl("Thêm mới nhà sản xuất thành công!");
                     jQuery('#frmManuLoader').prop('hidden', true);
-                }
+            }
             });
-        });
-        //sự kiên thêm size
-        jQuery("#submitAddSize").button().click(function() {
-            var form = jQuery('#frmSize');
+    });
+            //sự kiên thêm size
+            jQuery("#submitAddSize").button().click(function() {
+    var form = jQuery('#frmSize');
             if (!form.valid())
-                return false;
+            return false;
             jQuery.jGrowl("Đang thêm mới size!");
             jQuery('#frmSizeLoader').prop('hidden', false);
             var request = jQuery.ajax({
-                url: form.attr('action'),
-                data: form.serialize(),
-                type: "POST",
-                dataType: "html"
+            url: form.attr('action'),
+                    data: form.serialize(),
+                    type: "POST",
+                    dataType: "html"
             });
             request.done(function(msg) {
-                jQuery("#wSize").dialog("close");
-                if (msg != 'FALSE') {
-                    jQuery("#sizeID").empty().html(msg);
+            jQuery("#wSize").dialog("close");
+                    if (msg != 'FALSE') {
+            jQuery("#sizeproduct").empty().html(msg);
                     jQuery.jGrowl("Thêm mới Size thành công!");
                     jQuery('#frmSizeLoader').prop('hidden', true);
-                }
-                else {
-                    jQuery.jGrowl("Thêm mới Size không thành công!");
-                }
+            }
+            else {
+            jQuery.jGrowl("Thêm mới Size không thành công!");
+            }
             });
-        });
-        //sự kiên thêm color
-        jQuery("#submitAddColor").button().click(function() {
-            var form = jQuery('#frmColor');
+    });
+            //sự kiên thêm color
+            jQuery("#submitAddColor").button().click(function() {
+    var form = jQuery('#frmColor');
             if (!form.valid())
-                return false;
+            return false;
             jQuery.jGrowl("Đang thêm mới màu sắc!");
             jQuery('#frmColorLoader').prop('hidden', false);
             var request = jQuery.ajax({
-                url: form.attr('action'),
-                data: form.serialize(),
-                type: "POST",
-                dataType: "html"
+            url: form.attr('action'),
+                    data: form.serialize(),
+                    type: "POST",
+                    dataType: "html"
             });
             request.done(function(msg) {
-                jQuery("#wColor").dialog("close");
-                if (msg != 'FALSE') {
-                    jQuery("#colorID").empty().html(msg);
+            jQuery("#wColor").dialog("close");
+                    if (msg != 'FALSE') {
+            jQuery("#mausacproduct").empty().html(msg);
                     jQuery.jGrowl("Thêm mới Màu Sắc thành công!");
                     jQuery('#frmColorLoader').prop('hidden', true);
-                }
-                else {
-                    jQuery.jGrowl("Thêm mới Màu Sắc không thành công!");
-                }
-            });
-        });
-        //Thêm mới size và màu
-        jQuery("#btnAddStore").button().click(function() {
-            if (jQuery('#sizeID').val() == '' || jQuery('#colorID').val() == '' || jQuery('#soluongnhap').val() == '') {
-                jQuery.jGrowl("Bạn phải nhập đầy đủ thông tin!");
-                jQuery('#soluongnhap').focus()
             }
             else {
-<?php
-for ($i = 0; $i < 100; $i++) {
-    ?>
-                    if (jQuery('#tblStore_sizeID_<?php echo $i; ?>').val() == jQuery('#sizeID').val() && jQuery('#tblStore_colorID_<?php echo $i; ?>').val() == jQuery('#colorID').val()) {
-                        alert('Sản phẩm này đã có trong kho');
-                        return;
-                    }
-    <?php
-}
-?>
-                jQuery('#tblStore').appendGrid('insertRow', [
-                    {ban: '0', sizeID: jQuery('#sizeID').val(), colorID: jQuery('#colorID').val(), SizeName: jQuery('#sizeID option:selected').text(), ColorName: jQuery('#colorID option:selected').text(), SoLuongNhap: jQuery('#soluongnhap').val(), SoLuongBan: '0'}
-                ], 0);
-                jQuery('#tblStore > tbody > tr > td > button> span.ui-button-icon-primary.ui-icon.ui-icon-trash').html('Xóa');
+            jQuery.jGrowl("Thêm mới Màu Sắc không thành công!");
             }
-        });
+            });
+    });
     });</script>
-<div class="pageheader notab">
-    <h1 class="pagetitle">QUẢN LÝ SẢN PHẨM</h1>
-    <span class="pagedesc">Thêm sửa xóa sản phẩm</span>
-</div>
 <div class="contentwrapper">
     <div class="subcontent">
         @if(isset($thongbao) && $thongbao!='')
@@ -476,531 +143,523 @@ for ($i = 0; $i < 100; $i++) {
             <p>{{$thongbao}}</p>
         </div>
         @endif
+        @if(isset($thongbaoloi) && $thongbaoloi!='')
+        <div class="notibar msgalert">
+            <a class="close"></a>
+            <p>{{$thongbaoloi}}</p>
+        </div>
+        @endif
         <div class="contenttitle2">
-            <h3>@if(isset($dataedit))Chỉnh sửa sản phẩm @else Thêm mới sản phẩm @endif</h3>
+            <h3>@if(isset($dataedit))CẬP NHẬT SẢN PHẨM @else  THÊM MỚI SẢN PHẨM @endif</h3>
         </div>
-        <input type="hidden" id="divAvtive" value="" />
-        <form id="frmProduct" class="stdform stdform2" method="post" action="@if(isset($dataedit)){{URL::action('ProductController@postEditProduct')}} @else {{URL::action('ProductController@postAddProduct')}} @endif" accept-charset="UTF-8" enctype="multipart/form-data">
-            <div id="wizard" class="wizard">
-                <br />
-                <ul class="hormenu">
-                    <li>
-                        <a href="#wiz1step1">
-                            <span class="h2">Bước 1</span>
-                            <span class="dot"><span></span></span>
-                            <span class="label">Nhập thông tin cơ bản</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#wiz1step2">
-                            <span class="h2">Bước 2</span>
-                            <span class="dot"><span></span></span>
-                            <span class="label">Nhập thông tin chi tiết</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#wiz1step3">
-                            <span class="h2">Bước 3</span>
-                            <span class="dot"><span></span></span>
-                            <span class="label">Nhập số lượng hàng</span>
-                        </a>
-                    </li>
-                </ul>
-
-                <br clear="all" /><br /><br />
-
-                <div id="wiz1step1" class="formwiz">
-                    <h4>Bước 1: Nhập thông tin cơ bản</h4>
-                    <p>
-                        <label>Tên sản phẩm (<span style="color: red;">*</span>)</label>
-                        <span class="field">
-                            <input type="hidden" name="idpro" id="idpro" value="@if(isset($dataedit)){{$dataedit->id}}@endif"/>
-                            <input type="text" onkeyup="locdau()" onchange="getCheckSlug()" id="productName"  name="productName" placeholder="Nhập trên sản phẩm" class="longinput" value="@if(isset($dataedit)){{$dataedit->productName}}@endif">
-                        </span>
-                    </p>
-                    <p>
-                        <label>Danh mục sản phẩm (<span style="color: red;">*</span>)</label>
-                        <span class="field">
-                            <select name="cateID" id="cateProductSelect" onchange="getCateTag();" >
-                                <option value="" >---Chọn danh mục---</option>
-                                <?php
-                                foreach ($catproduct as $item) {
-                                    if ($item->cateParent == 0) {
-                                        $selec = '';
-                                        if (isset($dataedit) && $item->id == $dataedit->cateID) {
-                                            $selec = 'selected';
-                                        }
-                                        echo '<option value="' . $item->id . '" ' . $selec . '> ' . $item->cateName . '</option>';
-                                        foreach ($catproduct as $item1) {
-                                            if ($item1->cateParent == $item->id) {
-                                                $selec1 = '';
-                                                if (isset($dataedit) && $item1->id == $dataedit->cateID) {
-                                                    $selec1 = 'selected';
-                                                }
-                                                echo '<option value="' . $item1->id . '" ' . $selec1 . '>-- ' . $item1->cateName . '</option>';
-                                            }
-                                        }
-                                    }
-                                }
-                                ?>
-                            </select>      
-
-                        </span>
-                    </p>
-                    <p>
-                        <label>Ảnh sản phẩm</label>
-                        <span class="field"  >                
-                            <span id="thumbnails">
-                                @if(isset($arrAttach))
-
-                                @endif 
-                            </span>
-                            <input id="xImagePath" name="ImagePath" type="hidden" />    
-                            <br/>
-                            <input type="button" value="Thêm ảnh" class="stdbtn btn_orange" onclick="BrowseServer('Images:/', 'xImagePath');" />
-                        </span>      
-                    </p>
-
-                    <p>
-                        <label>Mô tả (<span style="color: red;">*</span>)</label>
-                        <span class="field">
-                            <textarea class="ckeditor" id="productDescription" rows="5" name="productDescription" placeholder="Nhập chi tiết sản phẩm">@if(isset($dataedit)){{$dataedit->productDescription}}@endif</textarea>
-                        </span>
-                    </p>
-                    <p>
-                        <label>Giá sản phẩm (<span style="color: red;">*</span>)</label>
-                        <span class="field">
-                            <input type="text" name="productPrice" id="productPrice"  onchange="checkPrice(0)"  onkeypress="return event.charCode > 47 && event.charCode < 58;" pattern="[0-9]"  placeholder="Nhập giá sản phẩm" style="width:120px;" value="@if(isset($dataedit)){{$dataedit->productPrice}}@endif">&nbsp;VND
-                        </span>
-                    </p>      
-                    <p>
-                        <label>Khuyến mại</label>
-                        <span class="field" id="sPromotion"> 
-                            <input type="text" name="salesPrice" onchange="checkPrice(1)" value="@if(isset($dataedit)){{$dataedit->salesPrice}}@endif" placeholder="Nhập khuyến mại" onkeypress="return event.charCode > 47 && event.charCode < 58;" pattern="[0-9]" style="width:120px;" id="salesPrice">&nbsp;VND &nbsp;&nbsp;&nbsp;   Từ ngày:  <input type="text" id="startSales" onchange="checkDateFromTo(1)" class="width100" value="@if(isset($dataedit)&& $dataedit->startSales!=''){{date('m/d/Y',$dataedit->startSales)}}@endif" name="startSales"/> &nbsp; &nbsp;Tới ngày: <input type="text" onchange="checkDateFromTo(2)" value="@if(isset($dataedit)&& $dataedit->endSales!=''){{date('m/d/Y',$dataedit->endSales)}}@endif" id="endSales" class="width100" name="endSales"/>
-                        </span>
-                    </p>
-                    <p>
-                        <label>Đường dẫn ngắn gọn</label>
-                        <span class="field">
-                            <input type="text" name="productSlug" id="productSlug" placeholder="Nhập đường dẫn ngắn gọn" class="longinput" @if(isset($dataedit))disabled @endif value="@if(isset($dataedit)){{$dataedit->productSlug}}@endif"> 
-                        </span>
-                    </p>  
-                    <p>
-                        <label>Trạng thái</label>
-                        <span class="field">
-                            <select name="status" id="selection2">
-                                <option value="0" @if(isset($dataedit)&& $dataedit->status==0)selected @endif >Chờ đăng</option>
-                                <option value="1" @if(isset($dataedit)&&$dataedit->status==1)selected @endif >Đã đăng</option>
-                                <option value="2" @if(isset($dataedit)&&$dataedit->status==2)selected @endif >Xóa</option>
-                            </select>
-                        </span>
-                    </p>
-                </div><!--#wiz1step1-->
-
-                <div id="wiz1step2" class="formwiz">
-                    <h4>Bước 2: Nhập thông tin chi tiết</h4>  
-                    <p>
-                        <label>Thông số kỹ thuật</label>                      
-                        <span class="field">
-                            <textarea class="ckeditor" id="productAttributes" rows="5" name="productAttributes" placeholder="Nhập thông số kĩ thuật">@if(isset($dataedit)){{$dataedit->productAttributes}}@endif</textarea>         
-                        </span>  
-                    </p>                   
-                    <p> 
-                        <label>Từ khóa seo (<span style="color: red;">*</span>)</label>
-                        <span class="field">
-                            <input type="text" name="productTag" placeholder="Nhập từ khóa seo " id="tags" class="smallinput" value="@if(isset($dataedit)){{$dataedit->productTag}}@endif">
-                            <small class="desc">Ấn phím enter hoắc dấu "," sau mỗi lần nhập từ khóa</small>
-                        </span>
-
-                    </p>
-
-                    <p>
-                        <label>Chọn nhà sản xuất (<span style="color: red;">*</span>)</label>
-                        <span class="field" id="sPromotion"> 
-                            <select name="manufactureID" id="manufactureSelect">
-                                <option value="">---Chọn nhà sản xuất---</option>
-                                @foreach($arrManu as $item)
-                                <option value="{{$item->id}}" @if(isset($dataedit) && $dataedit->manufactureID == $item->id) selected @endif >{{$item->manufacturerName}}</option>
-                                @endforeach
-                            </select>           
-                            <button type="button"  class="submit radius2" id="addManu">Thêm nhà sản xuất</button>
-                        </span>
-                    </p>
-                </div><!--#wiz1step2-->
-                <div id="wiz1step3" class="formwiz">
-                    <h4>Bước 3: Nhập hàng vào kho</h4>  
-                    <div class="contenttitle2">
-                        <h3>Hàng  trong kho</h3>
-                    </div>
-                    <table cellpadding="0" cellspacing="0" border="0" class="stdtable" id="tblStore">
-                    </table>
-                    <input type="hidden" name="countTable" id="countTable" value="" />
-                    <div class="contenttitle2">
-                        <h3>Nhập thêm hàng</h3>
-                    </div>
-                    <p>                  
-                        <label>Size</label>
-                        <span class="field">                               
-                            <input type="hidden" name="proID" id="proID" value="@if(isset($dataedit)){{$dataedit->id}}@endif"/>
-                            <select name="sizeID" id="sizeID" >
-                                <option value="">---Chọn size---</option>
-                                @if(isset($arrSize))
-                                @foreach($arrSize as $item)
-                                <option value="{{$item->id}}" >{{$item->sizeName}}</option>
-                                @endforeach
-                                @endif
-                            </select> 
-                            <button type="button"  class="submit radius2" id="addSize">Thêm size</button>
-                        </span>
-                    </p>        
-                    <p>           
-                        <label>Màu sắc</label>
-                        <span class="field">                                               
-                            <select name="colorID" id="colorID" >
-                                <option value="">---Chọn màu---</option>
-                                @if(isset($arrColor))
-                                @foreach($arrColor as $item)
-                                <option value="{{$item->id}}" >{{$item->colorName}}</option>
-                                @endforeach
-                                @endif
-                            </select>  
-                            <button type="button"  class="submit radius2" id="addColor">Thêm màu</button>
-                        </span>                 
-                    </p>  
-                    <p>           
-                        <label>Số lượng</label>
-                        <span class="field">                                               
-                            <input type="text"  onkeypress="return event.charCode > 47 && event.charCode < 58;" pattern="[0-9]" name="soluongnhap" id="soluongnhap" placeholder="Số lượng" value="" class="width100">
-                        </span>                 
-                    </p>  
-
-
-                    <p class="stdformbutton">
-                        <button class="submit radius2" type="button" id="btnAddStore" value="Thêm mới">Nhập </button>                       
-                        <img id="frmStoreLoader" hidden="true" src="{{Asset('adminlib/images/loaders/loader1.gif')}}" alt="" />
-                    </p>
-                </div>
-            </div><!--#wizard-->
-        </form>
-        <div id="wSize" title="Thêm size">
-            <form class="stdform stdform2" method="post" id="frmSize" action="{{URL::action('SizeController@postAddSizeAjax')}}">
-                <p>                  
-                    <label>Tên</label>
-                    <span class="field">                                              
-                        <input type="text" name="sizeName" id="sizeName" placeholder="Tên size" value="" class="longinput"></span>
-                </p>
-                <p>           
-                    <label>Size</label>
-                    <span class="field">                    
-                        <input type="text" name="sizeValue" id="sizeValue" placeholder="Size" value="" class="longinput">
-                    </span>                 
-                </p>                        
-                <p class="stdformbutton">
-                    <button class="submit radius2" type="button" id="submitAddSize" value="Thêm mới">Thêm mới </button>
-                    <input type="reset" class="reset radius2" value="Làm mới">
-                    <img id="frmSizeLoader" hidden="true" src="{{Asset('adminlib/images/loaders/loader1.gif')}}" alt="" />
-                </p>
-            </form>
-        </div>
-        <div id="wColor" title="Thêm màu sắc">
-            <form class="stdform stdform2" method="post" id="frmColor" action="{{URL::action('ColorController@postAddColorAjax')}}">
-                <p>                  
-                    <label>Màu sắc: </label>
-                    <span class="field">                                              
-                        <input type="text" name="colorName" id="colorName" placeholder="Tên màu" value="" class="longinput"></span>
-                </p>
-                <p>           
-                    <label>Mã màu: </label>
-                    <span class="field">                    
-                        <input type="text" name="colorCode" id="colorpicker" placeholder="Mã màu" value="" class="width100">
-                        <span id="colorSelector" class="colorselector">                       
-                        </span>
-                    </span>                 
-                </p>                        
-                <p class="stdformbutton">
-                    <button class="submit radius2" type="button" id="submitAddColor" value="Thêm mới">Thêm mới </button>
-                    <input type="reset" class="reset radius2" value="Làm mới">
-                    <img id="frmColorLoader" hidden="true" src="{{Asset('adminlib/images/loaders/loader1.gif')}}" alt="" />
-                </p>
-            </form>
-        </div>
-        <div id="wManu" title="Thêm nhà sản xuất">
-            <form class="stdform stdform2" method="post" id="frmManu" action="{{URL::action('ManufacturerController@postAddManufaturerAjax')}}">
-                <p>                  
-                    <label>Tên nhà sản xuất</label>
-                    <span class="field">          
-                        <input type="hidden" name="manuID" value="@if(isset($dataedit)){{$dataedit->manufactureID}}@endif"/>
-                        <input type="text" name="manufacturerName" id="manufacturerName" placeholder="Tên nhà sản xuất" value="" class="longinput"></span>
-                </p>
-                <p>           
-                    <label>Mô tả</label>
-                    <span class="field">                    
-                        <textarea class="longinput" rows="5" name="manufacturerDescription" id="manufacturerDescription" placeholder="Mô tả nhà sản xuất"></textarea>
-                    </span>                 
-                </p>      
-                <p>           
-                    <label>Xuất xứ</label>
-                    <span class="field">        
-                        <select name="manufacturerPlace" id="manufacturerPlace">
-                            <option value="">Country...</option>
-                            <option value="Afganistan">Afghanistan</option>
-                            <option value="Albania">Albania</option>
-                            <option value="Algeria">Algeria</option>
-                            <option value="American Samoa">American Samoa</option>
-                            <option value="Andorra">Andorra</option>
-                            <option value="Angola">Angola</option>
-                            <option value="Anguilla">Anguilla</option>
-                            <option value="Antigua &amp; Barbuda">Antigua &amp; Barbuda</option>
-                            <option value="Argentina">Argentina</option>
-                            <option value="Armenia">Armenia</option>
-                            <option value="Aruba">Aruba</option>
-                            <option value="Australia">Australia</option>
-                            <option value="Austria">Austria</option>
-                            <option value="Azerbaijan">Azerbaijan</option>
-                            <option value="Bahamas">Bahamas</option>
-                            <option value="Bahrain">Bahrain</option>
-                            <option value="Bangladesh">Bangladesh</option>
-                            <option value="Barbados">Barbados</option>
-                            <option value="Belarus">Belarus</option>
-                            <option value="Belgium">Belgium</option>
-                            <option value="Belize">Belize</option>
-                            <option value="Benin">Benin</option>
-                            <option value="Bermuda">Bermuda</option>
-                            <option value="Bhutan">Bhutan</option>
-                            <option value="Bolivia">Bolivia</option>
-                            <option value="Bonaire">Bonaire</option>
-                            <option value="Bosnia &amp; Herzegovina">Bosnia &amp; Herzegovina</option>
-                            <option value="Botswana">Botswana</option>
-                            <option value="Brazil">Brazil</option>
-                            <option value="British Indian Ocean Ter">British Indian Ocean Ter</option>
-                            <option value="Brunei">Brunei</option>
-                            <option value="Bulgaria">Bulgaria</option>
-                            <option value="Burkina Faso">Burkina Faso</option>
-                            <option value="Burundi">Burundi</option>
-                            <option value="Cambodia">Cambodia</option>
-                            <option value="Cameroon">Cameroon</option>
-                            <option value="Canada">Canada</option>
-                            <option value="Canary Islands">Canary Islands</option>
-                            <option value="Cape Verde">Cape Verde</option>
-                            <option value="Cayman Islands">Cayman Islands</option>
-                            <option value="Central African Republic">Central African Republic</option>
-                            <option value="Chad">Chad</option>
-                            <option value="Channel Islands">Channel Islands</option>
-                            <option value="Chile">Chile</option>
-                            <option value="China">China</option>
-                            <option value="Christmas Island">Christmas Island</option>
-                            <option value="Cocos Island">Cocos Island</option>
-                            <option value="Colombia">Colombia</option>
-                            <option value="Comoros">Comoros</option>
-                            <option value="Congo">Congo</option>
-                            <option value="Cook Islands">Cook Islands</option>
-                            <option value="Costa Rica">Costa Rica</option>
-                            <option value="Cote DIvoire">Cote D'Ivoire</option>
-                            <option value="Croatia">Croatia</option>
-                            <option value="Cuba">Cuba</option>
-                            <option value="Curaco">Curacao</option>
-                            <option value="Cyprus">Cyprus</option>
-                            <option value="Czech Republic">Czech Republic</option>
-                            <option value="Denmark">Denmark</option>
-                            <option value="Djibouti">Djibouti</option>
-                            <option value="Dominica">Dominica</option>
-                            <option value="Dominican Republic">Dominican Republic</option>
-                            <option value="East Timor">East Timor</option>
-                            <option value="Ecuador">Ecuador</option>
-                            <option value="Egypt">Egypt</option>
-                            <option value="El Salvador">El Salvador</option>
-                            <option value="Equatorial Guinea">Equatorial Guinea</option>
-                            <option value="Eritrea">Eritrea</option>
-                            <option value="Estonia">Estonia</option>
-                            <option value="Ethiopia">Ethiopia</option>
-                            <option value="Falkland Islands">Falkland Islands</option>
-                            <option value="Faroe Islands">Faroe Islands</option>
-                            <option value="Fiji">Fiji</option>
-                            <option value="Finland">Finland</option>
-                            <option value="France">France</option>
-                            <option value="French Guiana">French Guiana</option>
-                            <option value="French Polynesia">French Polynesia</option>
-                            <option value="French Southern Ter">French Southern Ter</option>
-                            <option value="Gabon">Gabon</option>
-                            <option value="Gambia">Gambia</option>
-                            <option value="Georgia">Georgia</option>
-                            <option value="Germany">Germany</option>
-                            <option value="Ghana">Ghana</option>
-                            <option value="Gibraltar">Gibraltar</option>
-                            <option value="Great Britain">Great Britain</option>
-                            <option value="Greece">Greece</option>
-                            <option value="Greenland">Greenland</option>
-                            <option value="Grenada">Grenada</option>
-                            <option value="Guadeloupe">Guadeloupe</option>
-                            <option value="Guam">Guam</option>
-                            <option value="Guatemala">Guatemala</option>
-                            <option value="Guinea">Guinea</option>
-                            <option value="Guyana">Guyana</option>
-                            <option value="Haiti">Haiti</option>
-                            <option value="Hawaii">Hawaii</option>
-                            <option value="Honduras">Honduras</option>
-                            <option value="Hong Kong">Hong Kong</option>
-                            <option value="Hungary">Hungary</option>
-                            <option value="Iceland">Iceland</option>
-                            <option value="India">India</option>
-                            <option value="Indonesia">Indonesia</option>
-                            <option value="Iran">Iran</option>
-                            <option value="Iraq">Iraq</option>
-                            <option value="Ireland">Ireland</option>
-                            <option value="Isle of Man">Isle of Man</option>
-                            <option value="Israel">Israel</option>
-                            <option value="Italy">Italy</option>
-                            <option value="Jamaica">Jamaica</option>
-                            <option value="Japan">Japan</option>
-                            <option value="Jordan">Jordan</option>
-                            <option value="Kazakhstan">Kazakhstan</option>
-                            <option value="Kenya">Kenya</option>
-                            <option value="Kiribati">Kiribati</option>
-                            <option value="Korea North">Korea North</option>
-                            <option value="Korea Sout">Korea South</option>
-                            <option value="Kuwait">Kuwait</option>
-                            <option value="Kyrgyzstan">Kyrgyzstan</option>
-                            <option value="Laos">Laos</option>
-                            <option value="Latvia">Latvia</option>
-                            <option value="Lebanon">Lebanon</option>
-                            <option value="Lesotho">Lesotho</option>
-                            <option value="Liberia">Liberia</option>
-                            <option value="Libya">Libya</option>
-                            <option value="Liechtenstein">Liechtenstein</option>
-                            <option value="Lithuania">Lithuania</option>
-                            <option value="Luxembourg">Luxembourg</option>
-                            <option value="Macau">Macau</option>
-                            <option value="Macedonia">Macedonia</option>
-                            <option value="Madagascar">Madagascar</option>
-                            <option value="Malaysia">Malaysia</option>
-                            <option value="Malawi">Malawi</option>
-                            <option value="Maldives">Maldives</option>
-                            <option value="Mali">Mali</option>
-                            <option value="Malta">Malta</option>
-                            <option value="Marshall Islands">Marshall Islands</option>
-                            <option value="Martinique">Martinique</option>
-                            <option value="Mauritania">Mauritania</option>
-                            <option value="Mauritius">Mauritius</option>
-                            <option value="Mayotte">Mayotte</option>
-                            <option value="Mexico">Mexico</option>
-                            <option value="Midway Islands">Midway Islands</option>
-                            <option value="Moldova">Moldova</option>
-                            <option value="Monaco">Monaco</option>
-                            <option value="Mongolia">Mongolia</option>
-                            <option value="Montserrat">Montserrat</option>
-                            <option value="Morocco">Morocco</option>
-                            <option value="Mozambique">Mozambique</option>
-                            <option value="Myanmar">Myanmar</option>
-                            <option value="Nambia">Nambia</option>
-                            <option value="Nauru">Nauru</option>
-                            <option value="Nepal">Nepal</option>
-                            <option value="Netherland Antilles">Netherland Antilles</option>
-                            <option value="Netherlands">Netherlands (Holland, Europe)</option>
-                            <option value="Nevis">Nevis</option>
-                            <option value="New Caledonia">New Caledonia</option>
-                            <option value="New Zealand">New Zealand</option>
-                            <option value="Nicaragua">Nicaragua</option>
-                            <option value="Niger">Niger</option>
-                            <option value="Nigeria">Nigeria</option>
-                            <option value="Niue">Niue</option>
-                            <option value="Norfolk Island">Norfolk Island</option>
-                            <option value="Norway">Norway</option>
-                            <option value="Oman">Oman</option>
-                            <option value="Pakistan">Pakistan</option>
-                            <option value="Palau Island">Palau Island</option>
-                            <option value="Palestine">Palestine</option>
-                            <option value="Panama">Panama</option>
-                            <option value="Papua New Guinea">Papua New Guinea</option>
-                            <option value="Paraguay">Paraguay</option>
-                            <option value="Peru">Peru</option>
-                            <option value="Phillipines">Philippines</option>
-                            <option value="Pitcairn Island">Pitcairn Island</option>
-                            <option value="Poland">Poland</option>
-                            <option value="Portugal">Portugal</option>
-                            <option value="Puerto Rico">Puerto Rico</option>
-                            <option value="Qatar">Qatar</option>
-                            <option value="Republic of Montenegro">Republic of Montenegro</option>
-                            <option value="Republic of Serbia">Republic of Serbia</option>
-                            <option value="Reunion">Reunion</option>
-                            <option value="Romania">Romania</option>
-                            <option value="Russia">Russia</option>
-                            <option value="Rwanda">Rwanda</option>
-                            <option value="St Barthelemy">St Barthelemy</option>
-                            <option value="St Eustatius">St Eustatius</option>
-                            <option value="St Helena">St Helena</option>
-                            <option value="St Kitts-Nevis">St Kitts-Nevis</option>
-                            <option value="St Lucia">St Lucia</option>
-                            <option value="St Maarten">St Maarten</option>
-                            <option value="St Pierre &amp; Miquelon">St Pierre &amp; Miquelon</option>
-                            <option value="St Vincent &amp; Grenadines">St Vincent &amp; Grenadines</option>
-                            <option value="Saipan">Saipan</option>
-                            <option value="Samoa">Samoa</option>
-                            <option value="Samoa American">Samoa American</option>
-                            <option value="San Marino">San Marino</option>
-                            <option value="Sao Tome &amp; Principe">Sao Tome &amp; Principe</option>
-                            <option value="Saudi Arabia">Saudi Arabia</option>
-                            <option value="Senegal">Senegal</option>
-                            <option value="Serbia">Serbia</option>
-                            <option value="Seychelles">Seychelles</option>
-                            <option value="Sierra Leone">Sierra Leone</option>
-                            <option value="Singapore">Singapore</option>
-                            <option value="Slovakia">Slovakia</option>
-                            <option value="Slovenia">Slovenia</option>
-                            <option value="Solomon Islands">Solomon Islands</option>
-                            <option value="Somalia">Somalia</option>
-                            <option value="South Africa">South Africa</option>
-                            <option value="Spain">Spain</option>
-                            <option value="Sri Lanka">Sri Lanka</option>
-                            <option value="Sudan">Sudan</option>
-                            <option value="Suriname">Suriname</option>
-                            <option value="Swaziland">Swaziland</option>
-                            <option value="Sweden">Sweden</option>
-                            <option value="Switzerland">Switzerland</option>
-                            <option value="Syria">Syria</option>
-                            <option value="Tahiti">Tahiti</option>
-                            <option value="Taiwan">Taiwan</option>
-                            <option value="Tajikistan">Tajikistan</option>
-                            <option value="Tanzania">Tanzania</option>
-                            <option value="Thailand">Thailand</option>
-                            <option value="Togo">Togo</option>
-                            <option value="Tokelau">Tokelau</option>
-                            <option value="Tonga">Tonga</option>
-                            <option value="Trinidad &amp; Tobago">Trinidad &amp; Tobago</option>
-                            <option value="Tunisia">Tunisia</option>
-                            <option value="Turkey">Turkey</option>
-                            <option value="Turkmenistan">Turkmenistan</option>
-                            <option value="Turks &amp; Caicos Is">Turks &amp; Caicos Is</option>
-                            <option value="Tuvalu">Tuvalu</option>
-                            <option value="Uganda">Uganda</option>
-                            <option value="Ukraine">Ukraine</option>
-                            <option value="United Arab Erimates">United Arab Emirates</option>
-                            <option value="United Kingdom">United Kingdom</option>
-                            <option value="United States of America">United States of America</option>
-                            <option value="Uraguay">Uruguay</option>
-                            <option value="Uzbekistan">Uzbekistan</option>
-                            <option value="Vanuatu">Vanuatu</option>
-                            <option value="Vatican City State">Vatican City State</option>
-                            <option value="Venezuela">Venezuela</option>
-                            <option selected value="Vietnam">Việt Nam</option>
-                            <option value="Virgin Islands (Brit)">Virgin Islands (Brit)</option>
-                            <option value="Virgin Islands (USA)">Virgin Islands (USA)</option>
-                            <option value="Wake Island">Wake Island</option>
-                            <option value="Wallis &amp; Futana Is">Wallis &amp; Futana Is</option>
-                            <option value="Yemen">Yemen</option>
-                            <option value="Zaire">Zaire</option>
-                            <option value="Zambia">Zambia</option>
-                            <option value="Zimbabwe">Zimbabwe</option>                                   
-                        </select>
-                    </span>                 
-                </p>   
-                <p class="stdformbutton">
-                    <button class="submit radius2" type="button" id="submitAddManu" value="Thêm mới">Thêm mới </button>
-                    <input type="reset" class="reset radius2" value="Làm mới">
-                    <img id="frmManuLoader" hidden="true" src="{{Asset('adminlib/images/loaders/loader1.gif')}}" alt="" />
-                </p>
-            </form>
-        </div>
-
     </div>
-</div>      
+    <form class="stdform" id="frmProduct" action="@if(isset($dataedit)){{URL::action('ProductController@postEditProduct')}} @else {{URL::action("ProductController@postAddProduct")}} @endif" method="post">
+        <p>
+            <label>Tên sản phẩm</label>
+            <input type="hidden" name="pid" id="pid" value="@if(isset($dataedit)){{$dataedit->id}}@endif"/>
+            <span class="field"><input type="text" required title="Trường này không được để trống" onkeyup="locdau()" onchange="getCheckSlug()" value="@if(isset($dataedit)){{$dataedit->productName}}@endif" id="productName"  name="nameProduct" class="longinput" /></span>
+            <script>
+                        //lọc dấu tạo slug
+                                function locdau() {
+                                var str = (document.getElementById("productName").value); // lấy chuỗi dữ liệu nhập vào
+                                        str = str.toLowerCase(); // chuyển chuỗi sang chữ thường để xử lý
+                                        /* tìm kiếm và thay thế tất cả các nguyên âm có dấu sang không dấu*/
+                                        str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+                                        str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+                                        str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+                                        str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+                                        str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+                                        str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+                                        str = str.replace(/đ/g, "d");
+                                        str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'| |\"|\&|\#|\[|\]|~|$|_/g, "-");
+                                        /* tìm và thay thế các kí tự đặc biệt trong chuỗi sang kí tự - */
+                                        str = str.replace(/-+-/g, "-"); //thay thế 2- thành 1-
+                                        str = str.replace(/^\-+|\-+$/g, ""); //cắt bỏ ký tự - ở đầu và cuối chuỗi
+                                        document.getElementById("productSlug").value = str; // xuất kết quả xữ lý ra
+                                }
+
+                        function getCheckSlug() {
+                        var str = (document.getElementById("productName").value); // lấy chuỗi dữ liệu nhập vào
+                                str = str.toLowerCase(); // chuyển chuỗi sang chữ thường để xử lý
+                                /* tìm kiếm và thay thế tất cả các nguyên âm có dấu sang không dấu*/
+                                str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+                                str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+                                str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+                                str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+                                str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+                                str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+                                str = str.replace(/đ/g, "d");
+                                str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'| |\"|\&|\#|\[|\]|~|$|_/g, "-");
+                                /* tìm và thay thế các kí tự đặc biệt trong chuỗi sang kí tự - */
+                                str = str.replace(/-+-/g, "-"); //thay thế 2- thành 1-
+                                str = str.replace(/^\-+|\-+$/g, ""); //cắt bỏ ký tự - ở đầu và cuối chuỗi
+                                var request = jQuery.ajax({
+                                url: "{{URL::action('ProductController@postCheckSlug')}}?slug=" + str,
+                                        type: "POST"
+                                });
+                                request.done(function(msg) {
+                                if (msg != '') {
+                                if (msg == '0') {
+                                document.getElementById("productSlug").value = str;
+                                        return false;
+                                } else {
+                                document.getElementById("productSlug").value = str + '-' + msg;
+                                        return false;
+                                }
+                                }
+                                });
+                        }
+                        //kiểm trra product code
+                        function checkProductCode(){
+                        var id = jQuery('#pid').val();
+                                var code = jQuery('#productCode').val();
+                                var request = jQuery.ajax({
+                                url: "{{URL::action('ProductController@postCheckProductCode')}}?id=" + id + "&code=" + code,
+                                        type: "POST"
+                                });
+                                request.done(function(msg) {
+                                if (msg == 'false'){
+                                jAlert('Mã sản phẩm "' + code + '" đã tồn tại.Vui lòng nhập mã khác', 'Thông báo');
+                                        if (jQuery('#codeHidden').val() != ''){
+                                jQuery('#productCode').val(jQuery('#codeHidden').val());
+                                }
+                                else{
+                                jQuery('#productCode').val('');
+                                }
+                                jQuery('#productCode').focus();
+                                }
+                                });
+                        }
+            </script>
+        </p>
+        <p>
+            <label>Mã sản phẩm</label>
+            <input type="hidden" id="codeHidden" value="@if(isset($dataedit)){{$dataedit->productCode}}@endif" />
+            <span class="field"><input type="text" required title="Trường này không được để trống" onchange="checkProductCode()" id="productCode"  name="productCode"  value="@if(isset($dataedit)){{$dataedit->productCode}}@endif" class="smallinput" /></span>
+            <small class="desc">Ví dụ : JEAN-1029, AO-1292 .</small>
+        </p>
+        <p>
+            <label>Nhóm sản phẩm</label>
+            <span class="field">
+                <select name="productGroup" id="productGroup">
+                    @if(isset($arrCatProduct))
+                    @foreach($arrCatProduct as $item)
+                    <?php
+                    if ($item->cateParent == 0) {
+                        ?>
+                        <option @if(isset($dataedit) && $dataedit->cateID== $item->id)selected @endif value="{{$item->id}}">{{$item->cateName}}</option>
+                        <?php
+                        foreach ($arrCatProduct as $item1) {
+                            if ($item1->cateParent == $item->id) {
+                                $selected = '';
+                                if (isset($dataedit) && $dataedit->cateID == $item1->id) {
+                                    $selected = 'selected';
+                                }
+                                echo '<option ' . $selected . ' value="' . $item1->id . '" >-- ' . $item1->cateName . '</option>';
+                            }
+                        }
+                    }
+                    ?>
+                    @endforeach
+                    @endif
+                </select>
+
+                <button type="button" onclick="loadNhom()"  class="stdbtn" >Làm mới</button>
+                <button type="button" onclick="window.open('{{URL::action('CategoryProductController@getCateProductView')}}?#frmEdit','_newtab');" class="submit radius2" >Thêm nhóm</button>
+            </span>
+        </p>
+        <script>
+                                    function loadNhom(){
+                                    var request = jQuery.ajax({
+                                    url: "{{URL::action('ProductController@postCateAjax')}}",
+                                            type: "POST"
+                                    });
+                                            request.done(function(msg) {
+                                            jQuery('#productGroup').empty().html(msg);
+                                            }
+                                            );
+                                    }
+        </script>
+        <p>
+            <label>Mô tả sản phẩm</label>
+            <span class="field"><textarea cols="80" rows="5" required title="Trường này không được để trống"  id="productDescription" class="ckeditor" name="productDescription" placeholder="Mô tả sản phẩm">@if(isset($dataedit)){{$dataedit->productDescription}}@endif</textarea></span>
+
+        </p>
+        <p>
+            <label>Chi tiết sản phẩm</label>
+        <div id="tabs">
+            <ul>
+                <li><a href="#tabs-1">Thuộc tính sản phẩm</a></li>
+                <li><a href="#tabs-2">Số lượng</a></li>   
+                <li><a href="#tabs-3">Ảnh sản phẩm</a></li>   
+                <li><a href="#tabs-4">Phân loại</a></li>   
+            </ul>
+            <div id="tabs-1">
+                <p>
+                    <textarea cols="80" rows="3"  id="location3" class="ckeditor" name="productAttributes" placeholder="Thuộc tính sản phẩm">@if(isset($dataedit)){{$dataedit->Attributes}}@endif</textarea>
+                </p>
+            </div>
+            <div id="tabs-2">
+                <script type="text/javascript">
+                                    var a = 0;
+                                            function  onfor(id) {
+                                            a = jQuery('#mausanpham-' + id).val();
+                                            }
+                                    function  onchangeselec(id) {
+
+                                    var rowCount = jQuery('#myTable tr').length;
+                                            var check = true;
+                                            for (i = 1; i <= rowCount - 1; i++) {
+                                    if (i != id) {
+                                    if (jQuery('#mausanpham-' + i).val() == jQuery('#mausanpham-' + id).val() && jQuery('#sizesanpham-' + i).val() == jQuery('#sizesanpham-' + id).val()) {
+                                    check = false;
+                                    }
+                                    }
+                                    }
+                                    if (check == true) {
+                                    return  true;
+                                    } else {
+                                    jQuery('#mausanpham-' + id).val(a)
+                                            jAlert('Phần tử đã thêm đã tồn tại', 'Thông báo');
+                                    }
+                                    }
+
+                                    var b = 0;
+                                            function  onfor1(id) {
+                                            b = jQuery('#sizesanpham-' + id).val();
+                                            }
+                                    function  onchangeselec1(id) {
+
+                                    var rowCount = jQuery('#myTable tr').length;
+                                            var check = true;
+                                            for (i = 1; i <= rowCount - 1; i++) {
+                                    if (i != id) {
+                                    if (jQuery('#mausanpham-' + i).val() == jQuery('#mausanpham-' + id).val() && jQuery('#sizesanpham-' + i).val() == jQuery('#sizesanpham-' + id).val()) {
+                                    check = false;
+                                    }
+                                    }
+                                    }
+                                    if (check == true) {
+                                    return  true;
+                                    } else {
+                                    jQuery('#sizesanpham-' + id).val(b)
+                                            jAlert('Phần tử đã thêm đã tồn tại', 'Thông báo');
+                                    }
+                                    }
+                                    function themsoluong(mausac, size, soluong) {
+
+                                    var rowCount = jQuery('#myTable tr').length;
+                                            var check = true;
+                                            for (i = 1; i <= rowCount - 1; i++) {
+                                    if (jQuery('#mausanpham-' + i).val() == mausac && jQuery('#sizesanpham-' + i).val() == size) {
+                                    check = false;
+                                    }
+                                    }
+
+                                    if (check == false)
+                                    {
+                                    jAlert('Phần tử đã thêm đã tồn tại', 'Thông báo');
+                                    } else {
+                                    if (soluong == '') {
+                                    jAlert('Bạn vui lòng thêm số lượng sản phẩm', 'Thông báo');
+                                    } else {
+                                    var html = '<tr id="row-' + rowCount + '"> <td><span id="stt-' + rowCount + '">' + rowCount + '</span></td><td><select  name="mausacsanpham[]" id="mausanpham-' + rowCount + '"  onfocus="onfor(' + rowCount + ')" onchange="onchangeselec(' + rowCount + ')"> @if(isset($arrColor))@foreach($arrColor as $item)<option value="{{$item->id}}" style="background: {{$item->colorCode}}">{{$item->colorName}}</option>@endforeach@endif</select></td><td><select name="sizesanphamr[]" id="sizesanpham-' + rowCount + '" onfocus="onfor1(' + rowCount + ')" onchange="onchangeselec1(' + rowCount + ')">  @if(isset($arrSize))@foreach($arrSize as $item)<option value="{{$item->id}}" >{{$item->sizeName}}</option>@endforeach@endif</select></td> <td class="center"><input type="text" id="soluongsanpham-' + rowCount + '" name="soluongsanpham[]" style="smallinput"/></td><td class="center"><a href="javascript:void(0);" onclick="xoasanpham(\'row-' + rowCount + '\')" class="btn btn4 btn_trash"></a></td></tr>';
+                                            jQuery('#themsoluong').append(html);
+                                            setTimeout(jQuery('#mausanpham-' + rowCount).val(mausac), 100);
+                                            setTimeout(jQuery('#sizesanpham-' + rowCount).val(size), 100);
+                                            setTimeout(jQuery('#soluongsanpham-' + rowCount).val(soluong), 100);
+                                    }
+                                    }
+                                    }
+                                    function xoasanpham(id) {
+                                    jConfirm('Bạn có chắc chắn muốn xóa ?', 'Thông báo', function(r) {
+                                    if (r == true) {
+                                    jQuery('#' + id).remove();
+                                    } else {
+                                    return false;
+                                    }
+                                    });
+                                    }
+                </script>
+                <table  cellpadding="0" cellspacing="0" border="0" class="stdtable" id="myTable">
+                    <colgroup>
+                        <col class="con0" style="width: 10%;" />
+                        <col class="con1" style="width: 30%;" />
+                        <col class="con0"  style="width: 30%;"/>
+                        <col class="con1" style="width: 20%;" />
+                        <col class="con0" style="width: 10%;" />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th class="head0">STT</th>
+                            <th class="head1">Màu sắc</th>
+                            <th class="head0">Size</th>
+                            <th class="head1">Số lượng</th>    
+                            <th class="head1">Xóa</th>  
+                        </tr>
+                    </thead>
+                    <tbody id="themsoluong">
+
+                    </tbody>
+                </table>
+                <p>
+                    <label>Màu sắc</label>
+                    <span class="field">
+                        <select  name="mausacproduct" id="mausacproduct">
+                            @if(isset($arrColor))
+                            @foreach($arrColor as $item)
+                            <option value="{{$item->id}}" style="background: {{$item->colorCode}}">{{$item->colorName}}</option>
+                            @endforeach
+                            @endif
+                        </select>
+                        <button type="button"  class="submit radius2" id="addColor">Thêm màu</button>
+                    </span>
+                </p>
+                <p>
+                    <label>Size</label>
+                    <span class="field">
+                        <select name="sizeproduct" id="sizeproduct">
+                            @if(isset($arrSize))
+                            @foreach($arrSize as $item)
+                            <option value="{{$item->id}}" >{{$item->sizeName}}</option>
+                            @endforeach
+                            @endif
+                        </select>
+                        <button type="button"  class="submit radius2" id="addSize">Thêm size</button>
+                    </span>
+                </p>
+                <p>
+                    <label>Số lượng</label>
+                    <span class="field"><input type="text" onkeypress="return event.charCode > 47 && event.charCode < 58;" pattern="[0-9]" name="soluongproduct" id="soluongproduct" class="longinput" /></span>
+                </p>
+                <input type="button" class="stdbtn btn_orange" value="Thêm loại" onclick="themsoluong(jQuery('#mausacproduct').val(), jQuery('#sizeproduct').val(), jQuery('#soluongproduct').val());"/>
+            </div>
+            <div id="tabs-3">
+                <script type="text/javascript">
+
+                                            function BrowseServer(startupPath, functionData)
+                                            {
+                                            // You can use the "CKFinder" class to render CKFinder in a page:
+                                            var finder = new CKFinder();
+                                                    // The path for the installation of CKFinder (default = "/ckfinder/").
+                                                    // finder.basePath = '../';
+
+                                                    //Startup path in a form: "Type:/path/to/directory/"
+                                                    finder.startupPath = startupPath;
+                                                    // Name of a function which is called when a file is selected in CKFinder.
+                                                    finder.selectActionFunction = SetFileField;
+                                                    // Additional data to be passed to the selectActionFunction in a second argument.
+                                                    // We'll use this feature to pass the Id of a field that will be updated.
+                                                    finder.selectActionData = functionData;
+                                                    // Launch CKFinder
+                                                    finder.popup();
+                                            }
+
+// This is a sample function which is called when a file is selected in CKFinder.
+                                    function SetFileField(fileUrl, data)
+                                    {
+                                    var sFileName = this.getSelectedFile().name;
+                                            var urlImg = '<div id="image-' + sFileName + '"><img src="{{Asset('timthumb.php')}}?src=http://' + window.location.hostname + fileUrl + '&w=100&h=100&zc=0&q=100" width="100" height="100"/><a href="javascript:void(0);" onclick="xoaanhthum(\'image-' + sFileName + '\');" class="delete" title="Delete image">x</a></div>';
+                                            document.getElementById('thumbnails').innerHTML += urlImg;
+                                            returnurlimg();
+                                            //   document.getElementById(data["selectActionData"]).value = fileUrl;
+                                    }
+                                    function xoaanhthum(id) {
+                                    document.getElementById(id).remove();
+                                            returnurlimg();
+                                    }
+                                    function returnurlimg() {
+                                    var images = jQuery("#thumbnails").find("img").map(function() {
+                                    return this.src;
+                                    }).get();
+                                            jQuery("#xImagePath").val(images);
+                                    }
+
+                                    //load ảnh
+                                    jQuery(document).ready(function() {
+<?php
+if (isset($dataimg)) {
+    foreach ($dataimg as $item) {
+        ?>
+                                            var urlImg = '<div id="image-' + <?php echo $item->id; ?> + '"><img src="<?php echo $item->attachmentURL; ?>" width="100" height="100"/><a href="javascript:void(o);" onclick="xoaanhthum(\'image-' + <?php echo $item->id; ?> + '\');" class="delete" title="Delete image">x</a></div>';
+                                                    document.getElementById('thumbnails').innerHTML += urlImg;
+    <?php }
+    ?>
+                                        returnurlimg();
+<?php }
+?>
+<?php
+if (isset($dataStore)) {
+    foreach ($dataStore as $sItem) {
+        ?>
+                                            themsoluong('<?php echo $sItem->colorName; ?>', '<?php echo $sItem->sizeName; ?>', '<?php echo $sItem->soluongnhap; ?>');
+        <?php
+    }
+}
+?>
+                                    });</script>
+
+                <div id="thumbnails">
+
+                </div>
+                <input id="xImagePath" name="ImagePath" type="hidden" />
+                <div class="clear"></div>
+                <input type="button" value="Thêm ảnh" class="stdbtn btn_orange" onclick="BrowseServer('Images:/', 'xImagePath');" />
+            </div>
+            <div id="tabs-4">
+                <p>
+                    <label>Chọn loại</label>
+                    <span class="field">
+                        <select name="loaisanpham[]" multiple="multiple" size="10">
+                            @if(isset($arrmuti))
+                            @foreach($arrmuti as $item)
+                            <?php $select = ''; ?>
+                            @if(isset($arrPmeta)) 
+                            @foreach($arrPmeta as $item1)
+                            @if($item1->tagID == $item->id)
+                            <?php $select = 'selected'; ?>
+                            @endif
+                            @endforeach
+                            @endif
+                            <option <?php echo $select; ?> value="{{$item->id}}" >{{$item->tagName}}</option>
+                            @endforeach
+                            @endif
+                        </select>
+                    </span>
+                    <small class="desc">Bạn có thể chọn nhiều loại bằng cách giữ CTRL rồi chọn</small>
+                </p>
+            </div>
+        </div>
+        </p>
+        <p>
+            <label>Giá sản phẩm </label>
+            <span class="field"><input type="text" required title="Trường này không được để trống" value="@if(isset($dataedit)){{$dataedit->productPrice}}@endif" id="productPrice" onchange="checkPrice(0)"  onkeypress="return event.charCode > 47 && event.charCode < 58;"  name="productPrice" class="smallinput" /></span>
+        </p>
+        <p>
+            <label>Giá khuyến mại </label>
+            <span class="field"><input type="text" id="salesPrice" value="@if(isset($dataedit)){{$dataedit->salesPrice}}@endif"  onchange="checkPrice(1)"  onkeypress="return event.charCode > 47 && event.charCode < 58;"   name="salesPrice" class="smallinput" />  &nbsp;<a href="javascript:void(0);" onclick="showkhuyenmai();">Thời gian khuyến mại</a></span>
+            <small class="desc">Không khuyến mại để mặc định là trống .</small>
+        </p>
+        <script>
+                                    //kiểm tra giá và khuyến mại
+                                            function checkPrice(obj) {
+
+                                            var price = jQuery('#productPrice').val();
+                                                    var sales = jQuery('#salesPrice').val();
+                                                    if (price != '' && sales != '')
+                                            {
+                                            if (price < sales)
+                                            {
+                                            jAlert('Giá khuyến mại không được lớn hơn giá sản phẩm!', 'Thông báo');
+                                                    if (obj == 0)
+                                            {
+                                            jQuery('#productPrice').val('').focus();
+                                            }
+                                            else
+                                            {
+                                            jQuery('#salesPrice').val('').focus();
+                                            }
+                                            }
+                                            }
+                                            }
+        </script>
+        <p id="book" style="display: none;">
+            <label>Thời gian khuyến mại </label>
+            <span class="field">Từ&nbsp;<input type="text" name="datetosales" value="@if(isset($dataedit)){{$dataedit->startSales}}@endif" id="datepicker" class="smallinput" onchange="checkngaykhuyenmai()" />&nbsp;&nbsp;Đến&nbsp;<input id="datepicker1" type="text" name="datefromsales" value="@if(isset($dataedit)){{$dataedit->endSales}}@endif" class="smallinput" /> </span>
+        </p>
+        <p>
+            <label>Đường dẫn tĩnh </label>
+            <span class="field"><input required title="Trường này không được để trống" @if(isset($dataedit))  disabled @else id="productSlug" @endif value="@if(isset($dataedit)){{$dataedit->productSlug}}@endif" type="text"  name="productSlug" class="smallinput" /></span>
+        </p>
+        <p>
+            <label>Tags</label>
+            <span class="field">
+                <input name="producttags" value="@if(isset($dataedit)){{$dataedit->productTag}}@endif"  id="tags" class="longinput" />
+                <small class="desc">Tag cách nhau bằng dấu phẩy.</small>
+            </span>
+        </p>
+        <p>
+            <label>Nhà sản xuất</label>
+            <span class="field">
+                <select name="manufacture" id="manufacture">
+                    @if(isset($arrManu))
+                    @foreach($arrManu as $item)                   
+                    <option  @if(isset($dataedit) && $dataedit->manufactureID== $item->id) selected @endif value="{{$item->id}}">{{$item->manufacturerName}}</option>
+                    @endforeach
+                    @endif
+                </select>
+                <button type="button" class="stdbtn" onclick="loadNhaSanXuat()">Làm mới</button>
+                <button type="button" onclick="window.open('{{URL::action('ManufacturerController@getAddManufaturer')}}', '_newtab');" class="submit radius2" >Thêm nhà sản xuất</button>
+            </span>
+        </p>
+        <p>
+            <label>Trạng thái</label>
+            <span class="field">
+                <select name="status" id="status">
+                    <option value="0" @if(isset($dataedit)&& $dataedit->status==0)selected @endif >Chờ đăng</option>
+                    <option value="1" @if(isset($dataedit)&&$dataedit->status==1)selected @endif >Đã đăng</option>
+                    <option value="2" @if(isset($dataedit)&&$dataedit->status==2)selected @endif >Xóa</option>
+                </select>
+            </span>
+        </p>
+        <script>
+                                                    function loadNhaSanXuat(){
+                                                    var request = jQuery.ajax({
+                                                    url: "{{URL::action('ProductController@postManuAjax')}}",
+                                                            type: "POST"
+                                                    });
+                                                            request.done(function(msg) {
+                                                            jQuery('#manufacture').empty().html(msg);
+                                                            }
+                                                            );
+                                                    }
+        </script>
+        <p class="stdformbutton">
+            <button class="submit radius2" type="button" onclick="checkValid()" value="Thêm mới">@if(isset($dataedit))Cập nhật @else Thêm mới @endif </button>
+            <button type="button" onclick="window.location.href ='{{URL::action('ProductController@getView')}}';" class="stdbtn">Quay lại danh sách sản phẩm</button>
+        </p>
+    </form>
+    <div id="wSize" title="Thêm size">
+        <form class="stdform stdform2" method="post" id="frmSize" action="{{URL::action('SizeController@postAddSizeAjax')}}">
+            <p>                  
+                <label>Tên</label>
+                <span class="field">                                              
+                    <input type="text" name="sizeName" required title="Trường này không được để trống" id="sizeName" placeholder="Tên size" value="" class="longinput"></span>
+            </p>
+            <p>           
+                <label>Size</label>
+                <span class="field">                    
+                    <input type="text" name="sizeValue" required title="Trường này không được để trống" id="sizeValue" placeholder="Size" value="" class="longinput">
+                </span>                 
+            </p>                        
+            <p class="stdformbutton">
+                <button class="submit radius2" type="button" id="submitAddSize" value="Thêm mới">Thêm mới </button>
+                <input type="reset" class="reset radius2" value="Làm mới">
+                <img id="frmSizeLoader" hidden="true" src="{{Asset('adminlib/images/loaders/loader1.gif')}}" alt="" />
+            </p>
+        </form>
+    </div>
+    <div id="wColor" title="Thêm màu sắc">
+        <form class="stdform stdform2" method="post" id="frmColor" action="{{URL::action('ColorController@postAddColorAjax')}}">
+            <p>                  
+                <label>Màu sắc: </label>
+                <span class="field">                                              
+                    <input type="text" name="colorName" required title="Trường này không được để trống" id="colorName" placeholder="Tên màu" value="" class="longinput"></span>
+            </p>
+            <p>           
+                <label>Mã màu: </label>
+                <span class="field">                    
+                    <input type="text" name="colorCode" required title="Trường này không được để trống" id="colorpicker" placeholder="Mã màu" value="" class="width100">
+                    <span id="colorSelector" class="colorselector">                       
+                    </span>
+                </span>                 
+            </p>                        
+            <p class="stdformbutton">
+                <button class="submit radius2" type="button" id="submitAddColor" value="Thêm mới">Thêm mới </button>
+                <input type="reset" class="reset radius2" value="Làm mới">
+                <img id="frmColorLoader" hidden="true" src="{{Asset('adminlib/images/loaders/loader1.gif')}}" alt="" />
+            </p>
+        </form>
+    </div>    
+</div>
 @endsection

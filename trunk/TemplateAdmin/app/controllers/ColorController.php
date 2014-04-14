@@ -31,7 +31,7 @@ class ColorController extends BaseController {
 
         $selectColor = '<option value="">---Chọn màu---</option>';
         foreach ($arrColor as $item) {
-            $selectColor.=" <option value=" . $item->id . ">" . $item->colorName . "</option>";
+            $selectColor.=" <option value=" . $item->id . " style='background:'".$item->colorCode.">" . $item->colorName . "</option>";
         }
         return $selectColor;
         } catch (Exception $exc) {

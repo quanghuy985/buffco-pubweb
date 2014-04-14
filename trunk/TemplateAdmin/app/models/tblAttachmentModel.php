@@ -11,9 +11,8 @@ class tblAttachmentModel extends Eloquent {
     protected $table = 'tblAttachment';
     public $timestamps = false;
 
-    public function addAttachment($destinyID, $attachmentName, $attachmentURL) {
-        $this->destinyID = $destinyID;
-        $this->attachmentName = $attachmentName;
+    public function addAttachment($destinyID, $attachmentURL) {
+        $this->destinyID = $destinyID;    
         $this->attachmentURL = $attachmentURL;
         $this->time = time();
         $this->status = 0;
@@ -44,7 +43,7 @@ class tblAttachmentModel extends Eloquent {
         }
     }
 
-    public function getAttachmentByDestinyID($destinyID) {
+    public function getAttachmentByProductId($destinyID) {
         $arrAttachment = DB::table('tblAttachment')->where('destinyID', '=', $destinyID)->get();
         return $arrAttachment;
     }

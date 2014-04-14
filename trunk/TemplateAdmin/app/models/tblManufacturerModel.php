@@ -72,11 +72,11 @@ class tblManufacturerModel extends Eloquent{
         return $allManufacturer;
     }
     
-    public function selectAll($per_page){
-        $allManufacturer = DB::table('tblmanufacturer')->paginate($per_page);
+   
+     public function selectAll(){
+        $allManufacturer = DB::table('tblmanufacturer')->get();
         return $allManufacturer;
     }
-    
     public function getManufacturerById($id){
         $arrManufacturer = DB::table('tblmanufacturer')->where('id','=',$id)->get();
         return $arrManufacturer[0];

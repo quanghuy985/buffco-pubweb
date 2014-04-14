@@ -1057,7 +1057,7 @@ form label.error { float: none; color: #f00; font-size: 11px; display: block; te
     -webkit-border-radius: 2px 2px 0 0; border-radius: 2px 2px 0 0; -moz-box-shadow: inset 0 1px 0 #fff;
     -webkit-box-shadow: inset 0 1px 0 #fff; box-shadow: inset 0 1px 0 #fff;
 }
-.stepContainer p { margin: 0px 0; }
+.stepContainer p { margin: 20px 0; }
 .stepContainer .par p { margin: 10px; line-height: 21px; }
 .stepContainer .par p:last-child { border-bottom: 0; }
 .actionBar { 
@@ -2367,3 +2367,26 @@ blockquote.bq2 {
 a.btn_orderdetail{
     background-position: -10px -190px;
 }
+#thumbnails  img {
+    border-radius: 5px;
+    margin-right: 16.28px;
+    margin-top: 10px;
+    border: 1px solid #C0C0C0;
+}
+#thumbnails  div {
+    float: left;
+}
+#thumbnails .delete {
+    background: none repeat scroll 0 0 #000000;
+    border-radius: 100%;
+    color: #FFFFFF;
+    margin-left: -27px;
+    margin-top: -3px;
+    padding: 0 8px;
+    position: absolute;
+    border: 1px solid #C0C0C0;
+}
+#thumbnails .delete:hover {
+    background: none repeat scroll 0 0 #ff6666;
+}
+.clear{clear: both;}
