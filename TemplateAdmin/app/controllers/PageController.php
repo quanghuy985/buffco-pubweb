@@ -143,5 +143,13 @@ class PageController extends Controller {
         $link = $data->links();
         return View::make('backend.page.Pageajax')->with('arrayPage', $data)->with('link', $link);
     }
+    
+    public function postCheckSlug() {
+        $tblPageModel = new tblPageModel();
+        $count = 0;
+        $slugcheck = Input::get('slug');
+        $count = $tblPageModel->countSlug($slugcheck);
+        return $count;
+    }
 
 }

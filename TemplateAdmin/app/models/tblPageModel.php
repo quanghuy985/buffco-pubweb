@@ -90,5 +90,10 @@ class tblPageModel extends Eloquent {
        
         return $pagearray;
     }
+    
+    public function countSlug($slug) {
+        $objectPage = DB::table('tblpage')->where('pageSlug', 'LIKE', $slug . '%')->count();
+        return $objectPage;
+    }
 
 }
