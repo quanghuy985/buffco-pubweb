@@ -227,22 +227,22 @@ class TblProductModel extends Eloquent {
     }
 
     public function getAllProduct($per_page) {
-        $arrProduct = DB::table('tblproduct')->join('tblcategoryproduct', 'tblproduct.cateID', '=', 'tblcategoryproduct.id')->join('tblstore', 'tblproduct.id', '=', 'tblstore.productID')->select('tblproduct.*', 'tblcategoryproduct.cateName', DB::raw('SUM(tblstore.soluongnhap) as soluong'), DB::raw('SUM(tblstore.daban) as daban'))->orderBy('tblproduct.id', 'desc')->groupBy('tblproduct.id')->where('tblproduct.status', '=', 1)->paginate($per_page);
+        $arrProduct = DB::table('tblproduct')->join('tblcategoryproduct', 'tblproduct.cateID', '=', 'tblcategoryproduct.id')->join('tblstore', 'tblproduct.id', '=', 'tblstore.productID')->select('tblproduct.*', 'tblcategoryproduct.cateName', DB::raw('SUM(tblstore.soluongnhap) as soluong'), DB::raw('SUM(tblstore.soluongban) as daban'))->orderBy('tblproduct.id', 'desc')->groupBy('tblproduct.id')->where('tblproduct.status', '=', 1)->paginate($per_page);
         return $arrProduct;
     }
 
     public function getAllProductFillter($fromdate, $todate, $status, $per_page) {
         if ($status == '') {
             if ($fromdate == '' || $todate == '') {
-                $arrProduct = DB::table('tblproduct')->join('tblcategoryproduct', 'tblproduct.cateID', '=', 'tblcategoryproduct.id')->join('tblstore', 'tblproduct.id', '=', 'tblstore.productID')->select('tblproduct.*', 'tblcategoryproduct.cateName', DB::raw('SUM(tblstore.soluongnhap) as soluong'), DB::raw('SUM(tblstore.daban) as daban'))->orderBy('tblproduct.id', 'desc')->groupBy('tblproduct.id')->paginate($per_page);
+                $arrProduct = DB::table('tblproduct')->join('tblcategoryproduct', 'tblproduct.cateID', '=', 'tblcategoryproduct.id')->join('tblstore', 'tblproduct.id', '=', 'tblstore.productID')->select('tblproduct.*', 'tblcategoryproduct.cateName', DB::raw('SUM(tblstore.soluongnhap) as soluong'), DB::raw('SUM(tblstore.soluongban) as daban'))->orderBy('tblproduct.id', 'desc')->groupBy('tblproduct.id')->paginate($per_page);
             } else {
-                $arrProduct = DB::table('tblproduct')->join('tblcategoryproduct', 'tblproduct.cateID', '=', 'tblcategoryproduct.id')->join('tblstore', 'tblproduct.id', '=', 'tblstore.productID')->select('tblproduct.*', 'tblcategoryproduct.cateName', DB::raw('SUM(tblstore.soluongnhap) as soluong'), DB::raw('SUM(tblstore.daban) as daban'))->orderBy('tblproduct.id', 'desc')->groupBy('tblproduct.id')->whereBetween('tblproduct.time', array($fromdate, $todate))->paginate($per_page);
+                $arrProduct = DB::table('tblproduct')->join('tblcategoryproduct', 'tblproduct.cateID', '=', 'tblcategoryproduct.id')->join('tblstore', 'tblproduct.id', '=', 'tblstore.productID')->select('tblproduct.*', 'tblcategoryproduct.cateName', DB::raw('SUM(tblstore.soluongnhap) as soluong'), DB::raw('SUM(tblstore.soluongban) as daban'))->orderBy('tblproduct.id', 'desc')->groupBy('tblproduct.id')->whereBetween('tblproduct.time', array($fromdate, $todate))->paginate($per_page);
             }
         } else {
             if ($fromdate == '' || $todate == '') {
-                $arrProduct = DB::table('tblproduct')->join('tblcategoryproduct', 'tblproduct.cateID', '=', 'tblcategoryproduct.id')->join('tblstore', 'tblproduct.id', '=', 'tblstore.productID')->select('tblproduct.*', 'tblcategoryproduct.cateName', DB::raw('SUM(tblstore.soluongnhap) as soluong'), DB::raw('SUM(tblstore.daban) as daban'))->orderBy('tblproduct.id', 'desc')->groupBy('tblproduct.id')->where('tblproduct.status', '=', $status)->paginate($per_page);
+                $arrProduct = DB::table('tblproduct')->join('tblcategoryproduct', 'tblproduct.cateID', '=', 'tblcategoryproduct.id')->join('tblstore', 'tblproduct.id', '=', 'tblstore.productID')->select('tblproduct.*', 'tblcategoryproduct.cateName', DB::raw('SUM(tblstore.soluongnhap) as soluong'), DB::raw('SUM(tblstore.soluongban) as daban'))->orderBy('tblproduct.id', 'desc')->groupBy('tblproduct.id')->where('tblproduct.status', '=', $status)->paginate($per_page);
             } else {
-                $arrProduct = DB::table('tblproduct')->join('tblcategoryproduct', 'tblproduct.cateID', '=', 'tblcategoryproduct.id')->join('tblstore', 'tblproduct.id', '=', 'tblstore.productID')->select('tblproduct.*', 'tblcategoryproduct.cateName', DB::raw('SUM(tblstore.soluongnhap) as soluong'), DB::raw('SUM(tblstore.daban) as daban'))->orderBy('tblproduct.id', 'desc')->groupBy('tblproduct.id')->where('tblproduct.status', '=', $status)->whereBetween('tblproduct.time', array($fromdate, $todate))->paginate($per_page);
+                $arrProduct = DB::table('tblproduct')->join('tblcategoryproduct', 'tblproduct.cateID', '=', 'tblcategoryproduct.id')->join('tblstore', 'tblproduct.id', '=', 'tblstore.productID')->select('tblproduct.*', 'tblcategoryproduct.cateName', DB::raw('SUM(tblstore.soluongnhap) as soluong'), DB::raw('SUM(tblstore.soluongban) as daban'))->orderBy('tblproduct.id', 'desc')->groupBy('tblproduct.id')->where('tblproduct.status', '=', $status)->whereBetween('tblproduct.time', array($fromdate, $todate))->paginate($per_page);
             }
         }
 
@@ -250,7 +250,7 @@ class TblProductModel extends Eloquent {
     }
 
     public function getAllProductSearch($keyword, $per_page) {
-        $arrProduct = DB::table('tblproduct')->join('tblcategoryproduct', 'tblproduct.cateID', '=', 'tblcategoryproduct.id')->join('tblstore', 'tblproduct.id', '=', 'tblstore.productID')->select('tblproduct.*', 'tblcategoryproduct.cateName', DB::raw('SUM(tblstore.soluongnhap) as soluong'), DB::raw('SUM(tblstore.daban) as daban'))->orderBy('tblproduct.id', 'desc')->groupBy('tblproduct.id')->where('tblproduct.productCode', 'LIKE', '%' . $keyword . '%')->orWhere('tblproduct.productCode', 'LIKE', '%' . $keyword . '%')->orWhere('tblproduct.productName', 'LIKE', '%' . $keyword . '%')->orWhere('tblproduct.productDescription', 'LIKE', '%' . $keyword . '%')->orWhere('tblproduct.attributes', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
+        $arrProduct = DB::table('tblproduct')->join('tblcategoryproduct', 'tblproduct.cateID', '=', 'tblcategoryproduct.id')->join('tblstore', 'tblproduct.id', '=', 'tblstore.productID')->select('tblproduct.*', 'tblcategoryproduct.cateName', DB::raw('SUM(tblstore.soluongnhap) as soluong'), DB::raw('SUM(tblstore.soluongban) as daban'))->orderBy('tblproduct.id', 'desc')->groupBy('tblproduct.id')->where('tblproduct.productCode', 'LIKE', '%' . $keyword . '%')->orWhere('tblproduct.productCode', 'LIKE', '%' . $keyword . '%')->orWhere('tblproduct.productName', 'LIKE', '%' . $keyword . '%')->orWhere('tblproduct.productDescription', 'LIKE', '%' . $keyword . '%')->orWhere('tblproduct.attributes', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
         return $arrProduct;
     }
 
