@@ -1,5 +1,27 @@
 @extends("templateadmin2.mainfire")
 @section("contentadmin")
+<script>
+    function deletecolor(id){
+    jConfirm('Bạn có chắc chắn muốn xóa ?', 'Thông báo', function(r) {
+    if (r == true) {
+    jQuery("#jGrowl").remove();
+            jQuery.jGrowl("Đang tải dữ liệu ...");
+            urlpost = "{{URL::action('ColorController@postDelColor')}}?id=" + id;
+            var request = jQuery.ajax({
+            url: urlpost,
+                    type: "POST",
+                    dataType: "html"
+            });
+            request.done(function(msg) {
+            jQuery("#jGrowl").remove();
+                    jQuery.jGrowl("Đã tải dữ liệu thành công ...");s
+            })
+            return false;
+    } else {
+    return false;
+    }
+    })
+    }</script>
 <div class="pageheader notab">
     <h1 class="pagetitle">QUẢN LÝ THUỘC TÍNH SẢN PHẨM</h1>
     <span class="pagedesc">Quản lý màu sắc</span>
@@ -48,7 +70,7 @@
                     <td>
                         <a href="{{URL::action("ColorController@getEditColor")}}/{{$item->id}}" class="btn btn4 btn_edit " title="Chỉnh sửa"></a>
 
-                        <a href="javascript:void(0)" onclick="xoasanpham(5)" class="btn btn4 btn_trash" title="Xóa"></a>
+                        <a href="javascript:void(0)" onclick="deletecolor({{$item->id}})" class="btn btn4 btn_trash delete" title="Xóa"></a>
                     </td>
                 </tr>
                 <?php $i ++; ?>
