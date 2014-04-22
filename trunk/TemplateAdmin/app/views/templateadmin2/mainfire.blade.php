@@ -93,7 +93,7 @@
 
             <div class="vernav2 iconmenu">
                 <ul>
-                    <li><a href="#newsSub" class="gallery">Quản lý tập tin</a>  
+                    <li><a href="{{URL::action('FilemanagerController@getFileManager')}}" class="gallery">Quản lý tập tin</a>  
                     </li>
                     <li><a href="#newsSub" class="editor">Tin tức</a>
                         <span class="arrow"></span>

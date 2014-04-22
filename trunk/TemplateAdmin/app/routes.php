@@ -18,6 +18,7 @@ Route::controller('login', 'LoginController');
 
 
 Route::group(array('before' => 'kiemtradangnhap'), function() {
+    Route::controller('files', 'FilemanagerController');
     Route::group(array('before' => 'Quan-Ly-Tin-Tuc'), function() {
         Route::controller('news', 'NewsController');
         Route::controller('catenews', 'cateNewsController');
@@ -54,7 +55,7 @@ Route::group(array('before' => 'kiemtradangnhap'), function() {
         Route::controller('setting', 'SettingController');
     });
     Route::group(array('before' => 'Quan-Ly-Menu'), function() {
-       // Route::controller('menu', 'MenuController');
+        // Route::controller('menu', 'MenuController');
     });
     Route::group(array('before' => 'Quan-Ly-Du-An'), function() {
         Route::controller('project', 'ProjectController');

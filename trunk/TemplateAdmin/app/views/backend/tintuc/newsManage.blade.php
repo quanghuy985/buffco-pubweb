@@ -109,10 +109,12 @@
 </div>
 
 <div class="contentwrapper">
+    @if($thongbao!='')
     <div class="notibar msgalert">
         <a class="close"></a>
-        <p>@if(isset($thongbao)){{$thongbao}} @endif</p>
+        <p>{{$thongbao}} </p>
     </div>
+    @endif
     <div class="subcontent">
         <div class="contenttitle2">
             <h3>Bảng tin tức</h3>

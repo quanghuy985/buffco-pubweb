@@ -102,7 +102,7 @@ class NewsController extends Controller {
             
             $tblHistoryAdminModel = new tblHistoryAdminModel();
             $tblHistoryAdminModel->addHistory($objAdmin[0]->id, $historyContent, '0');
-            return Redirect::action('NewsController@getNewsView')->with('thongbao','Thêm mới thành công');
+            return Redirect::action('NewsController@getNewsView',array('thongbao' => 'Thêm mới thành công'));
         } else {
             echo "that bai";
         }
@@ -124,7 +124,7 @@ class NewsController extends Controller {
             $objAdmin = Session::get('adminSession');
             $tblHistoryAdminModel = new tblHistoryAdminModel();
             $tblHistoryAdminModel->addHistory($objAdmin[0]->id, $historyContent, '0');
-            return Redirect::action('NewsController@getNewsView')->with('thongbao','Cập nhật thành công');
+            return Redirect::action('NewsController@getNewsView',array('thongbao' => 'Cập nhật thành công'));
         } else {
             echo "that bai";
         }
