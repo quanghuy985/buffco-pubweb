@@ -15,6 +15,7 @@ class LoginController extends BaseController {
      */
     public function getLogOut() {
         Session::remove('adminSession');
+        unset($_SESSION['urlfolderupload']);
         return View::make('templateadmin2.loginfire');
     }
 
@@ -36,9 +37,11 @@ class LoginController extends BaseController {
                 $groupAdmin = $check[0]->groupadminID;
                 $tblGroupAdminRoles = new tblGroupAdminRolesModel();
                 $arrGroupAdminRoles = $tblGroupAdminRoles->findRolesByGroupAdmin($groupAdmin);
-               
+
                 Session::push('adminRoles', $arrGroupAdminRoles);
                 Session::push('adminSession', $check[0]);
+                session_start();
+                $_SESSION['urlfolderupload'] = md5($check[0]->adminEmail);
                 // kiem tra trang goi den de dua ve trang dich 
                 if (Session::has('urlBack')) {
                     //$objServices = Session::get('ServicesOrderURL');

@@ -74,9 +74,9 @@ $config['LicenseKey'] = 'BNHY-MFK1-P111-X7B9-MVFK-UL5A-11XH';
 
   ATTENTION: The trailing slash is required.
  */
-//session_start();
-//$userfolder = $_SESSION['urlfolderupload'];
-$baseUrl = '/TemplateAdmin/public/uploadimg/';
+session_start();
+$userfolder = $_SESSION['urlfolderupload'];
+$baseUrl = '/TemplateAdmin/public/uploadimg/' . $userfolder . '/';
 
 /*
   $baseDir : the path to the local directory (in the server) which points to the
@@ -158,7 +158,7 @@ $config['AccessControl'][] = Array(
     'fileView' => true,
     'fileUpload' => true,
     'fileRename' => true,
-    'fileDelete' => true);
+    'fileDelete' => false);
 
 /*
   For example, if you want to restrict the upload, rename or delete of files in

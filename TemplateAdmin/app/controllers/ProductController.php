@@ -1,7 +1,5 @@
 <?php
 
-
-
 class ProductController extends Controller {
 
     public function getView() {
@@ -26,6 +24,7 @@ class ProductController extends Controller {
     }
 
     public function postAddProduct() {
+        
         $rules = array(
             "productGroup" => "required",
             "nameProduct" => "required",
@@ -90,7 +89,7 @@ class ProductController extends Controller {
                 }
             }
 
-            return $this->editProduct($idproduct, 'Thêm mới thành công', '');
+           return Redirect::action('ProductController@getAddProduct', array('thongbaoloi' => 'Thêm mới thành công.'));
         } else {
             return Redirect::action('ProductController@getAddProduct', array('thongbaoloi' => 'Thêm mới không thành công. Vui lòng thử lại!'));
         }

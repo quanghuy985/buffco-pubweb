@@ -134,7 +134,8 @@
                 &nbsp &nbsp &nbsp<input style="float: left;width: 100px;" type="checkbox" name="roles[]" @if(isset($arrGroupAdminRolesExist)) @foreach($arrGroupAdminRolesExist as $itemRolesExist)
                                         @if($itemRolesExist->rolesCode == $itemRoles->rolesCode)checked @endif
                                         @endforeach @endif id="checkboktest" value="{{$itemRoles->id}}"  \>{{$itemRoles->rolesDescription}}
-                @endforeach
+             <br/> 
+                                        @endforeach
                 <br>
             </span>
         </p>
