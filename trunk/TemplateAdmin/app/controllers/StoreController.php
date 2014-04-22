@@ -8,6 +8,8 @@
 
 class StoreController extends Controller {
 
-    
+    function getStoreView() {
+        
+    }
 
 }

@@ -63,7 +63,7 @@ class tblGroupAdminModel extends Eloquent {
     }
 
     public function allGroupAdmin($per_page) {
-        $arrGroupAdmin = DB::table('tblGroupAdmin')->where('groupadminName','!=','Full Control')->paginate($per_page);
+        $arrGroupAdmin = DB::table('tblGroupAdmin')->where('status','!=','5')->paginate($per_page);
         return $arrGroupAdmin;
     }
 

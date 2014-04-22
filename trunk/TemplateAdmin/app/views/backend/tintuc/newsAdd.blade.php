@@ -73,7 +73,7 @@
                         <?php
                         foreach ($arrayCate as $item) {
                             if ($item->catenewsParent == 0) {
-                                echo '<option  value="' . $item->id . '">' . $item->catenewsName . '</option>';
+                                echo '<option  value="' . $item->id . '" disabled>' . $item->catenewsName . '</option>';
                                 foreach ($arrayCate as $item1) {
                                     if ($item1->catenewsParent == $item->id) {
                                         echo '<option value="' . $item1->id . '">-- ' . $item1->catenewsName . '</option>';
@@ -83,6 +83,7 @@
                         }
                         ?>
                     </select>
+                    <a href="{{URL::action('cateNewsController@getCateNewsView')}}" > Thêm mới?</a>
                 </span>
             </p>
             <p>

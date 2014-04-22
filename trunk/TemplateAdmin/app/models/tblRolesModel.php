@@ -53,7 +53,7 @@ class tblRolesModel extends Eloquent {
     }
 
     public function allRolesList() {
-        $arrRoles = DB::table('tblRoles')->select('tblRoles.*')->where('tblRoles.status', '=', 1)->where('tblRoles.rolesCode', '!=', 'Quan-Ly-Admin')->get();
+        $arrRoles = DB::table('tblRoles')->select('tblRoles.*')->where('tblRoles.status', '=', 1)->where('tblRoles.rolesCode', '!=', 'Quan-Ly-Admin')->where('tblRoles.rolesCode', '!=', 'Quan-Ly-Cau-Hinh')->get();
         return $arrRoles;
     }
 

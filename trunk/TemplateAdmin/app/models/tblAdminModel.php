@@ -73,7 +73,7 @@ class tblAdminModel extends Eloquent {
     }
 
     public function allAdmin($per_page) {
-        $arrAdmin = DB::table('tblAdmin')->join('tblGroupAdmin', 'tblAdmin.groupadminID', '=', 'tblGroupAdmin.id')->select('tblAdmin.*', 'tblGroupAdmin.groupadminName')->where('adminName','!=','Administrator')->paginate($per_page);
+        $arrAdmin = DB::table('tblAdmin')->join('tblGroupAdmin', 'tblAdmin.groupadminID', '=', 'tblGroupAdmin.id')->select('tblAdmin.*', 'tblGroupAdmin.groupadminName')->where('tblGroupAdmin.status','!=','5')->paginate($per_page);
         return $arrAdmin;
     }
 

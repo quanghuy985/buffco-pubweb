@@ -62,16 +62,7 @@ class ProjectController extends Controller {
         }
     }
 
-    public function getAddProject() {
-        return View::make('backend.project.ProjectManage');
-    }
 
-//    public function postAddProject(){
-//        $objProject = new tblProjectModel();
-//        $from = strtotime(Input::get('from'));
-//        $to = strtotime(Input::get('to'));
-//        
-//    }
 
     public function postAddProject() {
         $rules = array(

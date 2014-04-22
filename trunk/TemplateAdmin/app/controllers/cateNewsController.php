@@ -83,8 +83,7 @@ class cateNewsController extends Controller {
         $rules = array(
             "cateNewsName" => "required",
             "catenewsDescription" => "required",
-            "catenewsParent" => "required|numeric",
-            "catenewsSlug" => "required",
+            "catenewsParent" => "required|numeric"
         );
         $tblCateNewsModel = new tblCategoryNewsModel();
         if (!Validator::make(Input::all(), $rules)->fails()) {
