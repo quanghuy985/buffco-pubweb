@@ -98,56 +98,58 @@
                     <li><a href="#newsSub" class="editor">Tin tức</a>
                         <span class="arrow"></span>
                         <ul id="newsSub">
-                            <li><a href="">Tất cả tin tức</a></li>
-                            <li><a href="">Thêm mới tin tức</a></li>
-                            <li><a href="">Nhóm tin tức</a></li>
+                            <li><a href="{{URL::action('NewsController@getNewsView')}}">Tất cả tin tức</a></li>
+                            <li><a href="{{URL::action('NewsController@getAddNews')}}">Thêm mới tin tức</a></li>
+                            <li><a href="{{URL::action('cateNewsController@getCateNewsView')}}">Nhóm tin tức</a></li>
                         </ul>
                     </li>
                     <li><a href="#productsub" class="elements">Sản phẩm</a>
                         <span class="arrow"></span>
                         <ul id="productsub">
-                            <li><a href="" >Tất cả sản phẩm</a></li>
-                            <li><a href="" >Thêm mới</a></li>
-                            <li><a href="">Nhóm sản phẩm</a></li>
+                            <li><a href="{{URL::action('ProductController@getView')}}" >Tất cả sản phẩm</a></li>
+                            <li><a href="{{URL::action('ProductController@getAddProduct')}}" >Thêm mới sản phẩm</a></li>
+                            <li><a href="{{URL::action('CategoryProductController@getCateProductView')}}">Nhóm sản phẩm</a></li>
+                            <li><a href="{{URL::action('SizeController@getSizeView')}}">Quản lý size</a></li>
+                            <li><a href="{{URL::action('ColorController@getAddColor')}}">Quản lý màu</a></li>
+                            <li><a href="{{URL::action('ManufacturerController@getManufactureView')}}">Nhà sản xuất</a></li>
                         </ul>
                     </li>
-                    <li><a href="" class="widgets">Dịch vụ</a>
+                    <li><a href="{{URL::action('OrderController@getViewAll')}}" class="widgets">Đơn hàng</a>
                     </li>
-                    <li><a href="#ahshs" class="calendar">Danh sách đơn hàng</a>
+                    <li><a href="{{URL::action('StoreController@getStoreView')}}" class="tables">Kho hàng</a>
+                    </li>
+                    <li><a href="{{URL::action('UserController@getUserView')}}" class="user">Khách hàng</a>
+                    </li>
+                    <li><a href="#supportSub" class="support">Quản lý hỗ trợ viên</a>
                         <span class="arrow"></span>
-                        <ul id="ahshs">
-                            <li><a href="notfound.html">Đơn hàng sản phẩm</a></li>
-                            <li><a href="forbidden.html">Đơn hàng dịch vụ</a></li>
-                            <li><a href="internal.html">Internal Server Error</a></li>
-                            <li><a href="offline.html">Offline</a></li>
+                        <ul id="supportSub">
+                            <li><a href="{{URL::action('SupporterController@getSupporterView')}}" class="support">Quản lý hỗ trợ viên</a>
+                            </li>
+                            <li><a href="{{URL::action('SupporterGroupController@getSupporterGroupView')}}" class="support">Nhóm hỗ trợ viên</a>
+                            </li>
                         </ul>
                     </li>
-                    <li><a href="#userSub" class="support">Khách hàng</a>
+                    <li><a href="{{URL::action('FeedbackController@getPhanHoi')}}" class="buttons">Phản hồi</a> </li>
+                    <li><a href="{{URL::action('ProjectController@getProjectView')}}" class="calendar new">Quản lý dự án</a> </li>
+                    <li><a href="{{URL::action('PageController@getPageView')}}" class="buttons">Quản lý các trang</a> </li>
+                    <li><a href="{{URL::action('PageController@getPageView')}}" class="settings">Quản lý thanh menu</a> </li>
+                    <li><a href="{{URL::action('PageController@getPageView')}}" class="settings">Thống kê</a> </li>
+                    <li><a href="#historySub" class="calendar">Lịch sử</a>
                         <span class="arrow"></span>
-                        <ul id="userSub">
-                            <li><a href="">Tất cả khách hàng</a></li>
-                            <li><a href="">Thêm mới khách hàng</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#pageSub" class="typo">Nhà sản xuất</a>
-                        <span class="arrow"></span>
-                        <ul id="pageSub">
-
-                        </ul>
-                    </li>
-                    <li><a href="" class="buttons">phản hồi</a> </li>
-                    <li><a href="#supporterSub" class="tables">Hỗ trợ viên</a>
-                        <span class="arrow"></span>
-                        <ul id="supporterSub">
-                            <li><a href="">Danh sánh hỗ trợ viên</a></li>
-                            <li><a href="">Nhóm hỗ trợ viên</a></li>
+                        <ul id="historySub">
+                            <li><a href="{{URL::action('HistoryUserController@getHistoryView')}}">Lịch sử khách hàng</a></li>
+                            <li><a href="{{URL::action('HistoryAdminController@getHistoryView')}}">Lịch sử nhân viên</a></li>
                         </ul>
                     </li>
 
-                    <li><a href="" class="error">thanh menu</a>
+                    <li><a href="{{URL::action('SettingController@getUpdateSetting')}}" class="error">Cấu hình</a>
                     </li>
-                    <li><a href="" class="addons">Admin</a>
-
+                    <li><a href="#adminSub" class="addons">Nhân viên</a>
+                        <span class="arrow"></span>
+                        <ul id="adminSub">
+                            <li><a href="{{URL::action('AdminController@getAdminView')}}">Quản lý nhân viên</a></li>
+                            <li><a href="{{URL::action('GroupAdminController@getGroupAdminView')}}">Quản lý phòng ban</a></li>
+                        </ul>
                     </li>
                 </ul>
                 <a class="togglemenu"></a>

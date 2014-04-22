@@ -101,12 +101,7 @@ class UserController extends Controller {
         
     }
 
-    
-
-    public function getAddUser() {
-        return View::make('backend.user.UserManage');
-    }
-
+   
     public function postAddUser() {
         $tblUserModel = new tblUserModel();
         $rules = array(
