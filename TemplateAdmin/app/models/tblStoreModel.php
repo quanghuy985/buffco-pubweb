@@ -18,7 +18,7 @@ class tblStoreModel extends Eloquent {
         $this->sizeID = $sizeID;
         $this->colorID = $colorID;
         $this->soluongnhap = $soluongnhap;
-        $this->daban = 0;
+        $this->soluongban = 0;
         $this->time = time();
         $this->status = $status;
         $result = $this->save();
