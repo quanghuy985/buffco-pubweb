@@ -44,6 +44,15 @@ class CreateTblUsers extends Migration {
             $table->string('time');
             $table->integer('status');
         });
+        //Attachment luu anh cua toan bo Project
+        Schema::create('tblAttachmentProject', function($table) {
+            $table->increments('id');
+            $table->string('projectID');
+            $table->string('attachmentName');
+            $table->string('attachmentURL');
+            $table->string('time');
+            $table->integer('status');
+        });
         // tblCategoryProduct luu lai danh muc san pham
         Schema::create('tblCategoryProduct', function($table) {
             $table->increments('id');
@@ -101,8 +110,8 @@ class CreateTblUsers extends Migration {
         Schema::create('tblStore', function($table) {
             $table->increments('id');
             $table->string('productID');
-            $table->string('sizeID');
-            $table->string('colorID');
+            $table->string('sizeID')->nullable;
+            $table->string('colorID')->nullable;
             $table->integer('soluongnhap');
             $table->integer('soluongban');
             $table->string('time');
@@ -123,8 +132,8 @@ class CreateTblUsers extends Migration {
             $table->increments('id');
             $table->string('orderCode');
             $table->integer('productID');
-            $table->string('sizeID');
-            $table->string('colorID');
+            $table->string('sizeID')->nullable;
+            $table->string('colorID')->nullable;
             $table->integer('amount');
             $table->decimal('total', 20, 2);
             $table->string('time');
@@ -170,6 +179,7 @@ class CreateTblUsers extends Migration {
             $table->increments('id');
             $table->integer('catenewsID');
             $table->string('newsName'); //name chi co 70 ky tu
+            $table->string('newsImg');
             $table->string('newsDescription'); //description < 150
             $table->string('newsKeywords');
             $table->longtext('newsContent');
@@ -231,6 +241,7 @@ class CreateTblUsers extends Migration {
         //tblProject bang luu lai cac du an da lam - danh cho web gioi thieu cong ty
         Schema::create('tblProject', function($table) {
             $table->increments('id');
+            $table->string('projectName');
             $table->string('from');
             $table->string('to');
             $table->longtext('projectDescription');
