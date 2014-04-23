@@ -1,26 +1,29 @@
 @extends("templateadmin2.mainfire")
 @section("contentadmin")
 <script>
-    function deletecolor(id){
-    jConfirm('Bạn có chắc chắn muốn xóa ?', 'Thông báo', function(r) {
-    if (r == true) {
-    jQuery("#jGrowl").remove();
-            jQuery.jGrowl("Đang tải dữ liệu ...");
-            urlpost = "{{URL::action('ColorController@postDelColor')}}?id=" + id;
-            var request = jQuery.ajax({
-            url: urlpost,
+    function deletecolor(id) {
+        jConfirm('Bạn có chắc chắn muốn xóa ?', 'Thông báo', function(r) {
+            if (r == true) {
+                jQuery("#jGrowl").remove();
+                jQuery.jGrowl("Đang tải dữ liệu ...");
+                urlpost = "{{URL::action('ColorController@postDelColor')}}?id=" + id;
+                var request = jQuery.ajax({
+                    url: urlpost,
                     type: "POST",
                     dataType: "html"
-            });
-            request.done(function(msg) {
-            jQuery("#jGrowl").remove();
-                    jQuery.jGrowl("Đã tải dữ liệu thành công ...");s
-            })
-            return false;
-    } else {
-    return false;
-    }
-    })
+                });
+                request.done(function(msg) {
+                    jQuery("#itemcolor-" + id).fadeOut(function() {
+                        jQuery("#itemcolor-" + id).remove();
+                    });
+                    jQuery("#jGrowl").remove();
+                    jQuery.jGrowl("Đã tải dữ liệu thành công ...");
+                })
+                return false;
+            } else {
+                return false;
+            }
+        })
     }</script>
 <div class="pageheader notab">
     <h1 class="pagetitle">QUẢN LÝ THUỘC TÍNH SẢN PHẨM</h1>
@@ -60,7 +63,7 @@
             <tbody>
                 <?php $i = 1; ?>
                 @foreach($datacolor as $item)
-                <tr>
+                <tr id="itemcolor-{{$item->id}}">
                     <td>{{$i}}</td>
                     <td>{{$item->colorName}}</td>
                     <td>{{$item->colorCode}}<span class="colorselector">
