@@ -5,23 +5,27 @@ class tblProjectModel extends Eloquent {
     protected $table = 'tblproject';
     public $timestamps = false;
 
-    public function addProject($from, $to, $description, $content, $status) {
+    public function addProject($name,$from, $to, $description, $content, $status) {
+        $this->projectName = $name;
         $this->from = $from;
         $this->to = $to;
         $this->projectDescription = $description;
         $this->projectContent = $content;
         $this->time = time();
-        $this->status = 0;
+        $this->status = $status;
         $result = $this->save();
-        return $result;
+        return $this->id;;
     }
 
-    public function updateProject($Id, $from, $to, $description, $content, $status) {
+    public function updateProject($Id,$name, $from, $to, $description, $content, $status) {
         // $tableAdmin = new TblAdminModel();
         $tableProject = $this->where('id', '=', $Id);
         $arraysql = array('id' => $Id);
         if ($from != '') {
             $arraysql = array_merge($arraysql, array("from" => $from));
+        }
+        if ($name != '') {
+            $arraysql = array_merge($arraysql, array("projectName" => $name));
         }
         if ($to != '') {
             $arraysql = array_merge($arraysql, array("to" => $to));

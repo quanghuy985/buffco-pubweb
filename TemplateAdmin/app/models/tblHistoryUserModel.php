@@ -34,13 +34,19 @@ class tblHistoryUserModel extends Eloquent {
     }
     
     public function findHistory($keyword, $per_page, $orderby, $status) {
-        $historyarray = '';
-        if ($status == '') {
-            $historyarray = DB::table('tblhistory')->join('tblusers','tblhistory.userID','=','tblusers.id')->select('tblhistory.id','tblhistory.historyContent','tblhistory.time','tblhistory.status','tblusers.userEmail','tblusers.userAddress')->orderBy($orderby, 'desc')->paginate($per_page);
+        if ($status == 3 && $from != '' && $to != '') {
+            $historyarray = DB::table('tblhistory')->join('tblusers','tblhistory.userID','=','tblusers.id')->select('tblhistory.id','tblhistory.historyContent','tblhistory.time','tblhistory.status','tblusers.userEmail','tblusers.userAddress')->whereBetween('tblhistory.time', array($from, $to))->orderBy('tblhistory.time', 'desc')->paginate($per_page);
         } else {
-            $historyarray = DB::table('tblhistory')->join('tblusers','tblhistory.userID','=','tblusers.id')->select('tblhistory.id','tblhistory.historyContent','tblhistory.time','tblhistory.status','tblusers.userEmail','tblusers.userAddress')->where('tblhistory.status', '=', $status)->orderBy($orderby, 'desc')->paginate($per_page);
+            $historyarray = DB::table('tblhistory')->join('tblusers','tblhistory.userID','=','tblusers.id')->select('tblhistory.id','tblhistory.historyContent','tblhistory.time','tblhistory.status','tblusers.userEmail','tblusers.userAddress')->where('tblhistory.status', '=', $status)->orderBy('tblhistory.time', 'desc')->paginate($per_page);
         }
-        return $historyarray;
+        if ($from == '' || $to == '') {
+            if ($status == 3) {
+                $historyarray = DB::table('tblhistory')->join('tblusers','tblhistory.userID','=','tblusers.id')->select('tblhistory.id','tblhistory.historyContent','tblhistory.time','tblhistory.status','tblusers.userEmail','tblusers.userAddress')->orderBy('tblhistory.time', 'desc')->paginate($per_page);
+            } else {
+                $historyarray = DB::table('tblhistory')->join('tblusers','tblhistory.userID','=','tblusers.id')->select('tblhistory.id','tblhistory.historyContent','tblhistory.time','tblhistory.status','tblusers.userEmail','tblusers.userAddress')->where('tblhistory.status', '=', $status)->orderBy('tblhistory.time', 'desc')->paginate($per_page);
+            }
+        }        
+        return $historyarray;        
     }
     
     public function SearchHistory($keyword, $per_page, $orderby) {

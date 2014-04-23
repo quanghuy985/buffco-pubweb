@@ -6,7 +6,10 @@
       jQuery('#email').val(email);
       jQuery('#name').val(name);
       jQuery('#content').val(content);
-      window.location.href='#frmEdit';
+      //window.location.href='#frmEdit';
+      jQuery('html,body').animate({
+      scrollTop: jQuery('#frmEdit').offset().top},'slow');
+      kichhoat(id,1);
     };
     jQuery(document).ready(function() {
 
@@ -49,7 +52,7 @@
     });
             jQuery("#loctheotieuchi").click(function() {
         var request = jQuery.ajax({
-                url: "{{URL::action('HistoryUserController@postFillterHistory')}}?status=" + jQuery('#oderbyoption1').val(),                
+                url: "{{URL::action('HistoryUserController@postFillterHistory')}}?status=" + jQuery('#oderbyoption1').val()+"&from="+ jQuery('#datepicker').val()+"&to="+ jQuery('#datepicker1').val(),                
                 type: "POST",
                 dataType: "html"
         });
@@ -57,18 +60,6 @@
                 jQuery('#tableproduct').html(msg);
                 });
         });
-    
-            jQuery("#datefilter").click(function(){
-                var request = jQuery.ajax({
-                    url:"{{URL::action('HistoryUserController@postSearchDateHistory')}}",
-                    data:{from:jQuery('#from').val(),to:jQuery('#to').val()},
-                    type:"POST",
-                    dataType:"html"
-                });
-                request.done(function(msg) {
-            jQuery('#tableproduct').html(msg);
-            });
-            });
             
     });
     
@@ -76,7 +67,7 @@
         jQuery("#jGrowl").remove();
         jQuery.jGrowl("Đang tải dữ liệu ...");
         var urlpost = "{{URL::action('HistoryUserController@postAjaxhistoryuser')}}?page=" + page
-        if (jQuery('#oderbyoption1').val() != '') {
+        if (jQuery('#oderbyoption1').val() != '' || jQuery('#datepicker').val() != '' || jQuery('#datepicker1').val() != '') {
             urlpost = "{{URL::action('HistoryUserController@postFillterHistory')}}?status=" + jQuery('#oderbyoption1').val() + "&page=" + page;
         }
         if (jQuery('#searchblur').val() != '') {
@@ -146,18 +137,16 @@
             
         <div class="tableoptions">
             <button class="deletepromulti" title="table1">Xóa đã chọn</button> &nbsp;
+            <label>From: <input id="datepicker" name="from" style="border: 1px solid #ddd;padding: 7px 5px 8px 5px;background: #fff;" type="text"/></label>
+            <label>To: <input id="datepicker1" name="to" style="border: 1px solid #ddd;padding: 7px 5px 8px 5px;background: #fff;" type="text"/></label>
             <select class="radius3" name="oderbyoption1" id="oderbyoption1">
-                <option value="">Tất cả</option>
+                <option value="3">Tất cả</option>
                 <option value="0">Chờ kích hoạt</option>
                 <option value="1">Đã kích hoạt</option>
                 <option value="2">Xóa</option>
             </select>&nbsp;
-            <button class="radius3" id="loctheotieuchi">Lọc theo tiêu chí</button>
-            <div style="margin-top:10px">
-                <label>From: <input id="datepicker" name="from" style="border: 1px solid #ddd;padding: 7px 5px 8px 5px;background: #fff;" type="text"/></label>
-                <label>To: <input id="datepicker1" name="to" style="border: 1px solid #ddd;padding: 7px 5px 8px 5px;background: #fff;" type="text"/></label>
-                <button class="radius3" id="datefilter">Lọc theo ngày tháng</button>
-            </div>    
+            
+               
             
             <div class="dataTables_filter" id="searchformfile"><label>Search: <input id="searchblur" name="searchblur" style="border: 1px solid #ddd;padding: 7px 5px 8px 5px;width: 200px;background: #fff;" type="text"></label></div>
         </div>
@@ -173,7 +162,7 @@
             </colgroup>
             <thead>
                 <tr>
-                    <th class="head0"><input type="checkbox" class="checkall" name="checkall" ></th> 
+                    <th class="head0"></th> 
                     <th class="head1">Email</th>
                     <th class="head0">Địa chỉ</th>
                     <th class="head1">Nội dung</th>
@@ -233,7 +222,8 @@
         <div class="contenttitle2">
             <h3>Xem chi tiết lịch sử</h3>
         </div>
-        <form class="stdform stdform2" id="history" action="">            <a name="frmEdit"></a>           
+        <form class="stdform stdform2" id="history" action="">            
+            <div id="frmEdit"></div>           
             
             <p>
                 <label>Email</label>

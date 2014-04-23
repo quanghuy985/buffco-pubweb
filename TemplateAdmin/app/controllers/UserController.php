@@ -6,66 +6,63 @@
  * and open the template in the editor.
  */
 
-class UserController extends Controller {    
-    
-    
+class UserController extends Controller {
 
-    public function getUserView($msg='') {
+    public function getUserView($msg = '') {
 
         $tblUserModel = new tblUserModel();
-        $check = $tblUserModel->selectAllUser(5,'id');
+        $check = $tblUserModel->selectAllUser(5, 'id');
         $link = $check->links();
         //var_dump($check);
-        if($msg!=''){
-            return View::make('backend.user.UserManage')->with('arrUser', $check)->with('link',$link)->with('msg',$msg);
-        }else{
-            return View::make('backend.user.UserManage')->with('arrUser', $check)->with('link',$link);
+        if ($msg != '') {
+            return View::make('backend.user.UserManage')->with('arrUser', $check)->with('link', $link)->with('msg', $msg);
+        } else {
+            return View::make('backend.user.UserManage')->with('arrUser', $check)->with('link', $link);
         }
     }
-    
-   public function getUserDetail(){
-       $tblUserModel = new tblUserModel();
-       $email = Input::get('email');
-       //echo $email;
-       $data = $tblUserModel->getUserByEmail($email); 
-       //echo $data->userEmail;
-       //echo count($data);
-       return View::make('backend.user.UserDetail')->with('data', $data);
-   }
-   
-   public function postUserDetail(){
-       $tblUserModel = new tblUserModel();
-       $check = $tblUserModel->selectAllUser(5,'id');
-       $link = $check->links();
-       return View::make('backend.user.UserManage')->with('arrUser', $check)->with('link',$link);
-   }
+
+    public function getUserDetail() {
+        $tblUserModel = new tblUserModel();
+        $email = Input::get('email');
+        //echo $email;
+        $data = $tblUserModel->getUserByEmail($email);
+        //echo $data->userEmail;
+        //echo count($data);
+        return View::make('backend.user.UserDetail')->with('data', $data);
+    }
+
+    public function postUserDetail() {
+        $tblUserModel = new tblUserModel();
+        $check = $tblUserModel->selectAllUser(5, 'id');
+        $link = $check->links();
+        return View::make('backend.user.UserManage')->with('arrUser', $check)->with('link', $link);
+    }
 
     public function getUserEdit() {
         $tblUserModel = new tblUserModel();
-        $check = $tblUserModel->selectAllUser(5,'id');
+        $check = $tblUserModel->selectAllUser(5, 'id');
         $link = $check->links();
         $userdata = $tblUserModel->getUserById(Input::get('id'));
         //echo count($userdata);
-        return View::make('backend.user.UserManage')->with('arrayUsers', $userdata)->with('arrUser',$check)->with('link',$link);
+        return View::make('backend.user.UserManage')->with('arrayUsers', $userdata)->with('arrUser', $check)->with('link', $link);
     }
-    
+
     public function postUpdateUser() {
         $tblUserModel = new tblUserModel();
         $rules = array(
-            
             "userFirstName" => "required",
             "userLastName" => "required",
             "userDOB" => "required",
             "userAddress" => "required",
             "userPhone" => "required|numeric",
-            "status"=>"required"
-            );
+            "status" => "required"
+        );
         if (!Validator::make(Input::all(), $rules)->fails()) {
-            
-            $tblUserModel->UpdateUser(Input::get('iduser'),Input::get('userPassword'), Input::get('userFirstName'), Input::get('userLastName'),strtotime(Input::get('userDOB')),Input::get('userAddress'),Input::get('userPhone'), Input::get('status'));            
-            return Redirect::action('UserController@getUserView',array('msg'=>'cap nhat thanh cong'));
+
+            $tblUserModel->UpdateUser(Input::get('iduser'), Input::get('userPassword'), Input::get('userFirstName'), Input::get('userLastName'), strtotime(Input::get('userDOB')), Input::get('userAddress'), Input::get('userPhone'), Input::get('status'));
+            return Redirect::action('UserController@getUserView', array('msg' => 'cap nhat thanh cong'));
         } else {
-            return Redirect::action('UserController@getUserView',array('msg'=>'cap nhat that bai'));
+            return Redirect::action('UserController@getUserView', array('msg' => 'cap nhat that bai'));
         }
     }
 
@@ -82,7 +79,7 @@ class UserController extends Controller {
         $link = $data->links();
         return View::make('backend.user.Userajax')->with('arrayUsers', $data)->with('link', $link);
     }
-    
+
     public function postUserActive() {
         $tblUserModel = new tblUserModel();
         $tblUserModel->UpdateUser(Input::get('id'), '', '', '', '', '', '', Input::get('status'));
@@ -92,35 +89,36 @@ class UserController extends Controller {
     }
 
     public function postDeleteUser() {
-        
-            $tblUserModel = new tblUserModel();
-            $tblUserModel->DeleteUserById(Input::get('id'));
-            $UserData = $tblUserModel->selectAll(5);
-            $link = $UserData->links();
-            return View::make('backend.user.Userajax')->with('arrayUsers', $UserData)->with('link', $link);
-        
+
+        $tblUserModel = new tblUserModel();
+        $tblUserModel->DeleteUserById(Input::get('id'));
+        $UserData = $tblUserModel->selectAll(5);
+        $link = $UserData->links();
+        return View::make('backend.user.Userajax')->with('arrayUsers', $UserData)->with('link', $link);
     }
 
-   
     public function postAddUser() {
         $tblUserModel = new tblUserModel();
         $rules = array(
             "userEmail" => "required|email",
             "userPassword" => "required|min:6",
+            "userrePassword" => "required",
             "userFirstName" => "required",
             "userLastName" => "required",
             "userDOB" => "required",
             "userAddress" => "required",
             "userPhone" => "required|min:10|max:11",
-            "status"=>"required"
+            "status" => "required"
         );
         if ($tblUserModel->CheckUserExist(Input::get('userEmail'))) {
             return View::make('backend.user.UserManage')->with('msg', "Email đã được sử dụng! Vui lòng nhập email khác");
-        } else {
-            if (!Validator::make(Input::all(), $rules)->fails()) {
-                $verify = str_random(10);
-                
-                $tblUserModel->RegisterUser(Input::get('userEmail'), Input::get('userPassword'), Input::get('userFirstName'), Input::get('userLastName'),  strtotime(Input::get('userDOB')), Input::get('userAddress'), Input::get('userPhone'), $verify, Input::get('status'));
+        }else
+            {
+            if (!Validator::make(Input::all(), $rules)->fails()) {                
+                    $verify = str_random(10);
+
+
+                    $tblUserModel->RegisterUser(Input::get('userEmail'), Input::get('userPassword'), Input::get('userFirstName'), Input::get('userLastName'), strtotime(Input::get('userDOB')), Input::get('userAddress'), Input::get('userPhone'), $verify, Input::get('status'));
 
 //                $data = URL::action('UserController@getKichHoat') . '/' . md5(Input::get('userEmail')) . '/' . md5($verify) . '/' . time();
 ////                $data = URL::action('UserController@getUserView');
@@ -130,14 +128,15 @@ class UserController extends Controller {
 //                    $message->to(Input::get('userEmail'));
 //                    $message->subject('Kích hoạt tài khoản');
 //                });
+
+                    return Redirect::action('UserController@getUserView', array('msg' => 'them moi thanh cong'));
                 
-                return Redirect::action('UserController@getUserView',array('msg'=>'them moi thanh cong'));
             } else {
                 return View::make('backend.user.UserManage')->with('msg', "Các thông tin nhập không hợp lệ");
             }
         }
     }
-    
+
     public function getKichHoat($email, $verifycode, $time) {
         if ((time() - $time) / 60 / 60 < 24) {
             $tblUserModel = new tblUserModel();
@@ -151,14 +150,14 @@ class UserController extends Controller {
             return View::make('backend.user.UserManage')->with('msg', 'Liên kết đã hết hạn sử dụng');
         }
     }
-    
+
     public function getAjaxsearch() {
         $tblUserModel = new tblUserModel();
         if (Session::has('oderbyoption1')) {
             $tatus = Session::get('oderbyoption1');
-            $data = $tblUserModel->SearchUser(Input::get('keywordsearch'), 5,'id',$tatus[0]);
+            $data = $tblUserModel->SearchUser(Input::get('keywordsearch'), 5, 'id', $tatus[0]);
         } else {
-            $data = $tblUserModel->SearchUser(Input::get('keywordsearch'), 5,'id','');
+            $data = $tblUserModel->SearchUser(Input::get('keywordsearch'), 5, 'id', '');
         }
         $link = $data->links();
         Session::forget('keywordsearch');
@@ -170,16 +169,16 @@ class UserController extends Controller {
         $tblUserModel = new tblUserModel();
         if (Session::has('oderbyoption1')) {
             $tatus = Session::get('oderbyoption1');
-            $data = $tblUserModel->SearchUser(Input::get('keywordsearch'), 5,'id',$tatus[0]);
+            $data = $tblUserModel->SearchUser(Input::get('keywordsearch'), 5, 'id', $tatus[0]);
         } else {
-            $data = $tblUserModel->SearchUser(Input::get('keywordsearch'), 5,'id','');
+            $data = $tblUserModel->SearchUser(Input::get('keywordsearch'), 5, 'id', '');
         }
         $link = $data->links();
         Session::forget('keywordsearch');
         Session::push('keywordsearch', Input::get('keywordsearch'));
         return View::make('backend.user.Userajax')->with('arrayUsers', $data)->with('link', $link);
     }
-    
+
     public function getFillterUser() {
         $tblUserModel = new tblUserModel();
         $data = $tblUserModel->FindUser('', 5, 'id', Input::get('oderbyoption1'));
@@ -211,7 +210,7 @@ class UserController extends Controller {
             }
             $link = $data->links();
             return View::make('backend.user.Userajax')->with('arrayUsers', $data)->with('link', $link);
-        } else if(!Session::has('keywordsearch') && Input::get('page') != ''){
+        } else if (!Session::has('keywordsearch') && Input::get('page') != '') {
             Session::forget('keywordsearch');
             $tblUserModel = new tblUserModel();
             $tatus = Session::get('oderbyoption1');
@@ -225,8 +224,6 @@ class UserController extends Controller {
             $link = $data->links();
             return View::make('backend.user.UserManage')->with('arrUser', $data)->with('link', $link);
         }
-            
-        
     }
 
 }

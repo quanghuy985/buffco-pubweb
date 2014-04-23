@@ -25,59 +25,54 @@
     } else {
     jAlert('Bạn chưa chọn giá trị', 'Thông báo');
     }
-    });  
-        jQuery('#searchblur').keypress(function(e) {
-    // Enter pressed?
-        if (e.which == 10 || e.which == 13) {
-        var request = jQuery.ajax({
-                url: "{{URL::action('ProjectController@postAjaxsearch')}}?keyword=" + jQuery('#searchblur').val(),
-                type: "POST",
-                dataType: "html"
-        });
-                request.done(function(msg) {
-                jQuery('#tableproduct').html(msg);
-                });
-        }
-        });
-        
-        jQuery("#loctheotieuchi").click(function() {
-        var request = jQuery.ajax({
-                url: "{{URL::action('ProjectController@postFillterProject')}}?status=" + jQuery('#oderbyoption1').val(),                
-                type: "POST",
-                dataType: "html"
-        });
-                request.done(function(msg) {
-                jQuery('#tableproduct').html(msg);
-                });
-        });
-        
     });
-    
-    
-            
-    function phantrang(page) {
-        jQuery("#jGrowl").remove();
-        jQuery.jGrowl("Đang tải dữ liệu ...");
-        var urlpost = "{{URL::action('ProjectController@postAjaxproject')}}?page=" + page
-        if (jQuery('#oderbyoption1').val() != '') {
-            urlpost = "{{URL::action('ProjectController@postFillterProject')}}?status=" + jQuery('#oderbyoption1').val() + "&page=" + page;
-        }
-        if (jQuery('#searchblur').val() != '') {
-            urlpost = "{{URL::action('ProjectController@postAjaxsearch')}}?keyword=" + jQuery('#searchblur').val() + "&page=" + page;
-        }
-        var request = jQuery.ajax({
-            url: urlpost,
+            jQuery('#searchblur').keypress(function(e) {
+    // Enter pressed?
+    if (e.which == 10 || e.which == 13) {
+    var request = jQuery.ajax({
+    url: "{{URL::action('ProjectController@postAjaxsearch')}}?keyword=" + jQuery('#searchblur').val(),
             type: "POST",
             dataType: "html"
-        });
-        request.done(function(msg) {
-            jQuery("#jGrowl").remove();
-            jQuery.jGrowl("Đã tải dữ liệu thành công ...");
-            jQuery('#tableproduct').html(msg);
-        });
+    });
+            request.done(function(msg) {
+    jQuery('#tableproduct').html(msg);
+    });
     }
-    
-            
+    });
+            jQuery("#loctheotieuchi").click(function() {
+    var request = jQuery.ajax({
+    url: "{{URL::action('ProjectController@postFillterProject')}}?status=" + jQuery('#oderbyoption1').val(),
+            type: "POST",
+            dataType: "html"
+    });
+            request.done(function(msg) {
+    jQuery('#tableproduct').html(msg);
+    });
+    });
+    });
+            function phantrang(page) {
+            jQuery("#jGrowl").remove();
+                    jQuery.jGrowl("Đang tải dữ liệu ...");
+                    var urlpost = "{{URL::action('ProjectController@postAjaxproject')}}?page=" + page
+                    if (jQuery('#oderbyoption1').val() != '') {
+            urlpost = "{{URL::action('ProjectController@postFillterProject')}}?status=" + jQuery('#oderbyoption1').val() + "&page=" + page;
+            }
+            if (jQuery('#searchblur').val() != '') {
+            urlpost = "{{URL::action('ProjectController@postAjaxsearch')}}?keyword=" + jQuery('#searchblur').val() + "&page=" + page;
+            }
+            var request = jQuery.ajax({
+            url: urlpost,
+                    type: "POST",
+                    dataType: "html"
+            });
+                    request.done(function(msg) {
+            jQuery("#jGrowl").remove();
+                    jQuery.jGrowl("Đã tải dữ liệu thành công ...");
+                    jQuery('#tableproduct').html(msg);
+            });
+            }
+
+
     function xoasanpham(id) {
     jConfirm('Bạn có chắc chắn muốn xóa ?', 'Thông báo', function(r) {
     if (r == true) {
@@ -87,15 +82,15 @@
             dataType: "html"
     });
             request.done(function(msg) {
-            jQuery('#tableproduct').html(msg);
-            });
+    jQuery('#tableproduct').html(msg);
+    });
             return false;
     } else {
     return false;
     }
     })
     }
-    
+
     function kichhoat(id, stus) {
     var request = jQuery.ajax({
     url: "{{URL::action('ProjectController@postProjectActive')}}?id=" + id + '&status=' + stus,
@@ -103,17 +98,44 @@
             dataType: "html"
     });
             request.done(function(msg) {
-            jQuery('#tableproduct').html(msg);
-            });
+    jQuery('#tableproduct').html(msg);
+    });
             return true;
     }
+
     
-    
-    
-    
-    
-    
+
 </script>
+<script>
+    jQuery(document).ready(function(){
+
+
+    jQuery("#addProjectForm").validate({
+    rules: {
+    projectName: {
+    required: true,
+    },
+            description: {
+    required: true
+    },
+            content: {
+    required: true
+    }
+
+    },
+            messages: {
+    projectName: {
+    required: 'Tên dự án là trường bắt buộc',
+    },
+            description: {
+    required: 'Vui lòng nhập mô tả'
+    },
+            content: {
+    required: 'Vui lòng nhập nội dung '
+    }
+    }
+    });
+    });</script>
 
 
 <div class="pageheader notab">
@@ -123,16 +145,16 @@
 
 <div class="contentwrapper">
     @if(isset($msg))
-            <div class="notibar msgalert">
-                <a class="close"></a>
-                <p>{{$msg}}</p>
-            </div>
-            @endif
+    <div class="notibar msgalert">
+        <a class="close"></a>
+        <p>{{$msg}}</p>
+    </div>
+    @endif
     <div class="subcontent">
         <div class="contenttitle2">
             <h3>Bảng dự án</h3>
         </div>
-            
+
         <div class="tableoptions">
             <button class="deletepromulti" title="table1">Xóa đã chọn</button> &nbsp;
             <select class="radius3" name="oderbyoption1" id="oderbyoption1">
@@ -157,14 +179,14 @@
                 <col class="con1" style="width: 20%">
                 <col class="con0" style="width: 15%">
                 <col class="con1" style="width: 10%">
-                
+
             </colgroup>
             <thead>
                 <tr>
-                    <th class="head0"><input type="checkbox" class="checkall" name="checkall" ></th> 
+                    <th class="head0"></th> 
                     <th class="head1">Ngày bắt đầu</th>
                     <th class="head1">Ngày kết thúc</th>
-                    <th class="head0">Miêu tả</th>
+                    <th class="head0">Tên dự án</th>
                     <th class="head1">Nội dung</th>
                     <th class="head0">Khởi tạo</th>
                     <th class="head1">Tình trạng</th>
@@ -179,7 +201,7 @@
                     <td><input name="checkboxidfile" type="checkbox" value="{{$item->id}}"></td> 
                     <td><label value="project"></label><?php echo date('d/m/Y', $item->from); ?></td> 
                     <td><label value="project"></label><?php echo date('d/m/Y', $item->to); ?></td>
-                    <td><label value="project">{{str_limit( $item->projectDescription, 30, '...')}}</label></td> 
+                    <td><label value="project">{{str_limit( $item->projectName, 30, '...')}}</label></td> 
                     <td><label value="project">{{str_limit($item->projectContent, 30, '...')}} </label></td> 
                     <td><label value="project"></label><?php echo date('d/m/Y h:i:s', $item->time); ?></td> 
                     <td><label value="project">
@@ -197,13 +219,13 @@
                     <td>
                         <a href="{{URL::action('ProjectController@getProjectEdit')}}?id={{$item->id}}" class="btn btn4 btn_book" title="Sửa"></a>
                         @if($item->status=='2')
-                        <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 0)" class="btn btn4 btn_flag" title="Kích hoạt"></a>
+                        <a href="javascript:void(0)" onclick="kichhoat({{$item-> id}}, 0)" class="btn btn4 btn_flag" title="Kích hoạt"></a>
                         @endif
                         @if($item->status=='0')
-                        <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 1)" class="btn btn4 btn_world" title="Đăng bài"></a>
+                        <a href="javascript:void(0)" onclick="kichhoat({{$item-> id}}, 1)" class="btn btn4 btn_world" title="Đăng bài"></a>
                         @endif
                         @if($item->status!='2')
-                        <a href="javascript: void(0)" onclick="xoasanpham({{$item->id}})" class="btn btn4 btn_trash" title="Xóa"></a>
+                        <a href="javascript: void(0)" onclick="xoasanpham({{$item-> id}})" class="btn btn4 btn_trash" title="Xóa"></a>
                         @endif
                     </td> 
                 </tr> 
@@ -214,61 +236,11 @@
                 </tr>
                 @endif
                 @endif
-                
+
             </tbody>
         </table>
+
         
-        <div class="contenttitle2" id="editProject">
-            <h3>Thêm/Sửa dự án</h3>
-        </div>
-            
-            
-        <form class="stdform stdform2" id="addProjectForm" method="post" action="@if(isset($dataProject)) {{URL::action('ProjectController@postUpdateProject')}} @else {{URL::action('ProjectController@postAddProject')}}@endif">
-
-            <p>
-                <input type="hidden" name="idproject" id="idproject" value="@if(isset($dataProject)){{$dataProject->id}}@endif"/>
-                <input type="hidden" name="status" id="status" value="@if(isset($dataProject)){{$dataProject->status}}@endif"/>
-                
-            </p>
-            <p>
-                <label>Ngày bắt đầu</label>
-                <span class="field">
-                    <input type="text" id="datepicker" name="from" placeholder="From" value="@if(isset($dataProject)){{date('Y-m-d', $dataProject->from)}}@endif" width="100px"/>
-                </span>
-            </p>
-            
-            <p>
-                <label>Ngày kết thúc</label>
-                <span class="field"><input type="text" id="datepicker1" name="to" placeholder="To" value="@if(isset($dataProject)){{date('Y-m-d', $dataProject->to)}}@endif" width="100px"></span>
-            </p>
-
-            <p>
-                <label>Mô tả dự án</label>
-                <span class="field"><textarea cols="80" rows="5" id="description" class="ckeditor" name="description" placeholder="Mô tả dự án">@if(isset($dataProject)){{$dataProject->projectDescription}}@endif</textarea></span>
-            </p>
-            
-            <p>
-                <label>Nội dung dự án</label>
-                <span class="field"><textarea cols="80" rows="5" id="content" class="ckeditor" name="content" placeholder="Nội dung dự án">@if(isset($dataProject)){{$dataProject->projectContent}}@endif</textarea></span>
-            </p>           
-            
-
-            <p>
-                <label>Trạng thái</label>
-                <span class="field">
-                    <select name="status">
-                        <option value="0" @if(isset($dataProject)&& $dataProject->status==0)selected@endif >Chờ kích hoạt</option>
-                        <option value="1" @if(isset($dataProject)&& $dataProject->status==1)selected@endif>Kích hoạt</option>
-                        <option value="2" @if(isset($dataProject)&& $dataProject->status==2)selected@endif>Xóa</option>
-                    </select>
-                </span>
-            </p>
-            
-            <p class="stdformbutton">
-                <button class="submit radius2">@if(isset($dataProject))Cập nhật @else Thêm mới @endif</button>
-                <input type="reset" class="reset radius2" value="Làm lại">
-            </p>
-        </form>
     </div>
 </div>
 @endsection

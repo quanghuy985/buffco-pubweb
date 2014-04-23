@@ -163,8 +163,8 @@
             <button class="deletepromulti" title="table1">Xóa đã chọn</button> &nbsp;
             <select class="radius3" name="oderbyoption1" id="oderbyoption1">
                 <option value="">Tất cả</option>
-                <option value="0">Chờ đăng</option>
-                <option value="1">Đã đăng</option>
+                <option value="0">Chờ kích hoạt</option>
+                <option value="1">Đã kích hoạt</option>
                 <option value="2">Xóa</option>
             </select>&nbsp;
             <button class="radius3" id="loctheotieuchi">Lọc theo tiêu chí</button>
@@ -182,7 +182,7 @@
             </colgroup>
             <thead>
                 <tr>
-                    <th class="head0"><input type="checkbox" class="checkall" name="checkall" ></th> 
+                    <th class="head0"></th> 
                     <th class="head1">Tên nhà sản xuất</th>
                     <th class="head0">Miêu tả</th>
                     <th class="head1">Nơi sản xuất</th>
@@ -206,9 +206,9 @@
                     <td><label value="manuf">
                             <?php
                             if ($item->status == 0) {
-                                echo "chờ đăng";
+                                echo "chờ kích hoạt";
                             } else if ($item->status == 1) {
-                                echo "đã đăng";
+                                echo "đã kích hoạt";
                             } else if ($item->status == 2) {
                                 echo "đã xóa";
                             }
@@ -218,10 +218,10 @@
                     <td>
                         <a href="{{URL::action('ManufacturerController@getManufacturerEdit')}}?id={{$item->id}}" class="btn btn4 btn_book" title="Sửa"></a>
                         @if($item->status=='2')
-                        <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 0)" class="btn btn4 btn_flag" title="Kích hoạt"></a>
+                        <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 0)" class="btn btn4 btn_flag" title="Chờ kích hoạt"></a>
                         @endif
                         @if($item->status=='0')
-                        <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 1)" class="btn btn4 btn_world" title="Đăng bài"></a>
+                        <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 1)" class="btn btn4 btn_world" title="Đã kích haotj"></a>
                         @endif
                         @if($item->status!='2')
                         <a href="javascript: void(0)" onclick="xoasanpham({{$item->id}})" class="btn btn4 btn_trash" title="Xóa"></a>

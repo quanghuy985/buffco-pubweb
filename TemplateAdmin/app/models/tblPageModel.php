@@ -5,14 +5,14 @@ class tblPageModel extends Eloquent {
     protected $table = 'tblpage';
     public $timestamps = false;
 
-    public function addPage($pageName, $pageContent,$pageKeyword, $pageTag, $pageSlug) {
+    public function addPage($pageName, $pageContent,$pageKeyword, $pageTag, $pageSlug,$status) {
         $this->pageName = $pageName;
         $this->pageContent = $pageContent;
         $this->pageKeywords = $pageKeyword;
         $this->pageTag = $pageTag;
         $this->pageSlug = $pageSlug;
         $this->time = time();
-        $this->status = 0;
+        $this->status = $status;
         $check = $this->save();
         return $check;
     }
@@ -89,6 +89,15 @@ class tblPageModel extends Eloquent {
         $pagearray = DB::table('tblpage')->select('tblpage.*')->where('tblpage.pageName', 'LIKE', '%' . $keyword . '%')->orwhere('tblpage.pageKeywords', 'LIKE', '%' . $keyword . '%')->orwhere('tblpage.pageTag', 'LIKE', '%' . $keyword . '%')->orwhere('tblpage.pageSlug', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);
        
         return $pagearray;
+    }
+    
+    public function checkSlug($slug){
+        $checkslug = $this->where('pageSlug', '=', $slug)->count();
+        if ($checkslug > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
     }
     
     public function countSlug($slug) {
