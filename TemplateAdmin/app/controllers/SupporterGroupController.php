@@ -58,9 +58,9 @@ class SupporterGroupController extends Controller {
         $tblSupporterGroup = new tblSupporterGroupModel();
         if (!Validator::make(Input::all(), $rules)->fails()) {
             $tblSupporterGroup->updateSupportGroup(Input::get('id'), Input::get('supporterGroupName'), Input::get('status'));
-            return Redirect::action('SupporterGroupController@getSupporterGroupView', array('thongbao' => 'Cập nhật thành công .'));
+            return Redirect::action('SupporterGroupController@getSupporterGroupView',array('thongbaoOk' => 'Cập nhật thành công .'));
         } else {
-            return Redirect::action('SupporterGroupController@getSupporterGroupView', array('thongbao' => 'Cập nhật thất bại .'));
+            return Redirect::action('SupporterGroupController@getSupporterGroupView', array('thongbaoError' => 'Cập nhật thất bại .'));
         }
     }
 
@@ -70,10 +70,10 @@ class SupporterGroupController extends Controller {
         );
         $tblSupporterGroup = new tblSupporterGroupModel();
         if (!Validator::make(Input::all(), $rules)->fails()) {
-            $tblSupporterGroup->insertGSuppoert(Input::get('supporterGroupName'));
-            return Redirect::action('SupporterGroupController@getSupporterGroupView', array('thongbao' => 'Thêm mới thành công .'));
+            $tblSupporterGroup->insertSupportGroup(Input::get('supporterGroupName'),Input::get('status'));
+            return Redirect::action('SupporterGroupController@getSupporterGroupView', array('thongbaoOk' => 'Thêm mới thành công .'));
         } else {
-            return Redirect::action('SupporterGroupController@getSupporterGroupView', array('thongbao' => 'Thêm mới thất bại .'));
+            return Redirect::action('SupporterGroupController@getSupporterGroupView', array('thongbaoError' => 'Thêm mới thất bại .'));
         }
     }
 

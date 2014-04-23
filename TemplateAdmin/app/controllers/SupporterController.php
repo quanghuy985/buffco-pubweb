@@ -7,7 +7,7 @@
  */
 
 class SupporterController extends Controller {
-    public function getSupporterView($thongbao = '') {
+    public function getSupporterView($thongbaoOk = '',$thongbaoError='') {
         $tblSupporterModel = new tblSupporterModel();
         $tblSupporterGroupModel = new tblSupporterGroupModel();
         $arrSupporter = $tblSupporterModel->getAllSupporter(10);
@@ -64,9 +64,9 @@ class SupporterController extends Controller {
         if (!Validator::make(Input::all(), $rules)->fails()) {
 
             $tblSupporter->updateSupport(Input::get('idSupport'), Input::get('cbSupportGroup'),Input::get('supporterName'), Input::get('supporterNickSkype'),   Input::get('supporterNickYH'), Input::get('supporterPhone'), Input::get('status'));
-            return Redirect::action('SupporterController@getSupporterView', array('thongbao' => 'Cập nhật thành công .'));
+            return Redirect::action('SupporterController@getSupporterView', array('thongbaoOk' => 'Cập nhật thành công .'));
         } else {
-            return Redirect::action('SupporterController@getSupporterView', array('thongbao' => 'Cập nhật thất bại .'));
+            return Redirect::action('SupporterController@getSupporterView', array('thongbaoError' => 'Cập nhật thất bại .'));
         }
     }
 
@@ -81,9 +81,9 @@ class SupporterController extends Controller {
         if (!Validator::make(Input::all(), $rules)->fails()) {
 
             $tblSupporter->insertSupport(Input::get('cbSupportGroup'), Input::get('supporterName'), Input::get('supporterNickYH'), Input::get('supporterNickSkype'), Input::get('supporterPhone'));
-            return Redirect::action('SupporterController@getSupporterView', array('thongbao' => 'Thêm mới thành công .'));
+            return Redirect::action('SupporterController@getSupporterView',  array('thongbaoOk' => 'Thêm mới thành công .'));
         } else {
-            return Redirect::action('SupporterController@getSupporterView', array('thongbao' => 'Thêm mới thất bại .'));
+            return Redirect::action('SupporterController@getSupporterView', array('thongbaoError' => 'Thêm mới thất bại .'));
         }
     }
 
