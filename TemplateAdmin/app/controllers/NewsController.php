@@ -26,9 +26,9 @@ class NewsController extends Controller {
         }
     }
 
-    public function getNewsEdit() {
+    public function getNewsEdit($id) {
         $tblNewsModel = new tblNewsModel();
-        $objNews = $tblNewsModel->getNewsByID(Input::get('id'));
+        $objNews = $tblNewsModel->getNewsByID($id);
         $tableCateModel = new tblCategoryNewsModel();
         $arrCate = $tableCateModel->allCateNew(100);
         return View::make('backend.tintuc.newsAdd')->with('arrayCate', $arrCate)->with('objNews', $objNews[0]);
@@ -97,7 +97,7 @@ class NewsController extends Controller {
                 }
             }
             $objAdmin = Session::get('adminSession');
-            $tblNewsModel->insertNew(Input::get('cbCateNews'), Input::get('newstitle'), Input::get('newsdescription'), Input::get('newsKeywords'), Input::get('newsContent'), Input::get('newstag'), Input::get('newsSlug'), $objAdmin[0]->id);
+            $tblNewsModel->insertNew(Input::get('cbCateNews'), Input::get('newstitle'),Input::get('FilePath'), Input::get('newsdescription'), Input::get('newsKeywords'), Input::get('newsContent'), Input::get('newstag'), Input::get('newsSlug'),Input::get('status'), $objAdmin[0]->id);
             $historyContent = 'Thêm mới thành công tin tức : ' . Input::get('newstitle');
             
             $tblHistoryAdminModel = new tblHistoryAdminModel();
@@ -119,7 +119,7 @@ class NewsController extends Controller {
         if (!Validator::make(Input::all(), $rules)->fails()) {
             // Kiểm tra roles
 
-            $tblNewsModel->updateNew(Input::get('idnews'), Input::get('cbCateNews'), Input::get('newstitle'), Input::get('newsdescription'), Input::get('newsKeywords'), Input::get('newsContent'), Input::get('newstag'), Input::get('newsSlug'), '', Input::get('status'));
+            $tblNewsModel->updateNew(Input::get('idnews'), Input::get('cbCateNews'), Input::get('newstitle'),Input::get('FilePath'), Input::get('newsdescription'), Input::get('newsKeywords'), Input::get('newsContent'), Input::get('newstag'), Input::get('newsSlug'), '', Input::get('status'));
             $historyContent = 'Sửa thành công tin tức : ' . Input::get('newstitle');
             $objAdmin = Session::get('adminSession');
             $tblHistoryAdminModel = new tblHistoryAdminModel();
@@ -158,7 +158,7 @@ class NewsController extends Controller {
         $to = strtotime(Input::get('totime'));
         $status = Input::get('status');
         $tblNewsModel = new tblNewsModel();
-        $arrNews = $tblNewsModel->fillterNews(1, $from, $to, $status);
+        $arrNews = $tblNewsModel->fillterNews(15, $from, $to, $status);
         // var_dump($arrNews);
         $link = $arrNews->links();
         return View::make('backend.tintuc.newsAjax')->with('arrayNews', $arrNews)->with('link', $link);

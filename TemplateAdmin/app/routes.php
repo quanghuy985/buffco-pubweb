@@ -19,6 +19,7 @@ Route::controller('login', 'LoginController');
 
 Route::group(array('before' => 'kiemtradangnhap'), function() {
     Route::controller('files', 'FilemanagerController');
+    
     Route::group(array('before' => 'Quan-Ly-Tin-Tuc'), function() {
         Route::controller('news', 'NewsController');
         Route::controller('catenews', 'cateNewsController');

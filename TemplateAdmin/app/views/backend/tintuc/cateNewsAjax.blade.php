@@ -1,6 +1,6 @@
 @foreach($arrayCateNews as $item)    
 <tr> 
-    <td>@if($item->catenewsParent ==0) <strong> @endif <label value="cateMenuer">@if($item->catenewsParent !=0) &nbsp;-&nbsp; @endif {{str_limit( $item->catenewsName, 30, '...')}}</label>@if($item->catenewsParent ==0) </strong> @endif</td>
+    <td>@if($item->catenewsParent ==0) <strong> @endif <label value="cateMenuer">@if($item->catenewsParent !=0) &nbsp;-&nbsp; @endif <a href="{{URL::action('cateNewsController@getCateNewsEdit')}}/{{$item->id}}">{{str_limit( $item->catenewsName, 30, '...')}}</a></label>@if($item->catenewsParent ==0) </strong> @endif</td>
     <td><label value="cateMenuer">{{str_limit( $item->catenewsDescription, 30, '...')}}</label></td>
     <td><label value="cateMenuer">@if ($item->catenewsParent == 0 ) {{ 'Cha' }} @else {{str_limit($item->catenewsParentName , 30, '...')}} @endif</label></td>
     <td><label value="cateMenuer">{{str_limit($item->catenewsSlug , 30, '...')}}</label></td> 
@@ -18,7 +18,7 @@
     </td> 
     <td>
 
-        <a href="{{URL::action('cateNewsController@getCateNewsEdit')}}?id={{$item->id}}" class="btn btn4 btn_book" title="Sửa"></a>
+        <a href="{{URL::action('cateNewsController@getCateNewsEdit')}}/{{$item->id}}" class="btn btn4 btn_book" title="Sửa"></a>
         @if($item->status=='2')
         <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 0)" class="btn btn4 btn_flag" title="Khởi tạo"></a>
         @endif

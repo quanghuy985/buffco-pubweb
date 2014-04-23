@@ -90,7 +90,39 @@
             }
         });
     }
-</script>
+    jQuery(document).ready(function() {
+        jQuery("#addCateForm").validate({
+        rules: {
+        cateNewsName: {
+        required: true
+        },
+                catenewsDescription: {
+                required: true
+                },
+                newsdescription: {
+                required: true
+                },
+                catenewsSlug: {
+                required: true
+                }
+
+        },
+                messages: {
+                cateNewsName: {
+                required: 'Tên danh mục không được để trống'
+                },
+                        catenewsDescription: {
+                        required: 'Miêu tả danh mục không được để trống'
+                        },
+                        newsdescription: {
+                        required: 'Miêu tả bài viết là trường bắt buộc'
+                        },
+                        catenewsSlug: {
+                        required: 'Đường dẫn đến danh mục không được để trống'
+                        }
+                }
+        });
+    });</script>
 
 <div class="pageheader notab">
     <h1 class="pagetitle">QUẢN LÝ DANH MỤC TIN TỨC</h1>
@@ -135,7 +167,7 @@
                 <tbody id="tableproduct">
                     @foreach($arrayCateNews as $item)    
                     <tr> 
-                        <td>@if($item->catenewsParent ==0) <strong> @endif <label value="cateMenuer">@if($item->catenewsParent !=0) &nbsp;-&nbsp; @endif {{str_limit( $item->catenewsName, 30, '...')}}</label>@if($item->catenewsParent ==0) </strong> @endif</td>
+                        <td>@if($item->catenewsParent ==0) <strong> @endif <label value="cateMenuer">@if($item->catenewsParent !=0) &nbsp;-&nbsp; @endif <a href="{{URL::action('cateNewsController@getCateNewsEdit')}}/{{$item->id}}">{{str_limit( $item->catenewsName, 30, '...')}}</a></label>@if($item->catenewsParent ==0) </strong> @endif</td>
                         <td><label value="cateMenuer">{{str_limit( $item->catenewsDescription, 30, '...')}}</label></td>
                         <td><label value="cateMenuer">@if ($item->catenewsParent == 0 ) {{ 'Cha' }} @else {{str_limit($item->catenewsParentName , 30, '...')}} @endif</label></td>
                         <td><label value="cateMenuer">{{str_limit($item->catenewsSlug , 30, '...')}}</label></td> 
@@ -153,7 +185,7 @@
                         </td> 
                         <td>
 
-                            <a href="{{URL::action('cateNewsController@getCateNewsEdit')}}?id={{$item->id}}" class="btn btn4 btn_book" title="Sửa"></a>
+                            <a href="{{URL::action('cateNewsController@getCateNewsEdit')}}/{{$item->id}}" class="btn btn4 btn_book" title="Sửa"></a>
                             @if($item->status=='2')
                             <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 0)" class="btn btn4 btn_flag" title="Khởi tạo"></a>
                             @endif
@@ -180,7 +212,7 @@
     <div class="contenttitle2">
         <h3>Bảng thêm và chỉnh sửa</h3>
     </div>
-    <form class="stdform stdform2" method="post" action="@if(isset($cateNewsData)) {{URL::action('cateNewsController@postUpdateCateNews')}} @else {{URL::action('cateNewsController@postAddCateNews')}}@endif">
+    <form class="stdform stdform2" id="addCateForm" method="post" action="@if(isset($cateNewsData)) {{URL::action('cateNewsController@postUpdateCateNews')}} @else {{URL::action('cateNewsController@postAddCateNews')}}@endif">
 
         <p>
             <input type="hidden" name="cateNewsID" id="idnews" value="@if(isset($cateNewsData)){{$cateNewsData->id}}@endif"/>
@@ -205,15 +237,6 @@
                                 $selec = 'selected';
                             }
                             echo '<option value="' . $item->id . '" ' . $selec . '> ' . $item->catenewsName . '</option>';
-//                            foreach ($arrayMenu as $item1) {
-//                                if ($item1->menuParent == $item->id) {
-//                                    $selec1 = '';
-//                                    if (isset($cateNewsData) && $item1->id == $cateNewsData->menuID) {
-//                                        $selec1 = 'selected';
-//                                    }
-//                                    echo '<option value="' . $item1->id . '" ' . $selec1 . '>-- ' . $item1->menuName . '</option>';
-//                                }
-//                            }
                         }
                     }
                     ?>

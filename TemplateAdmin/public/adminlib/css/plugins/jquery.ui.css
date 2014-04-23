@@ -125,12 +125,41 @@
 
 
 /**DIALOG**/
-.ui-dialog { background: url(../../images/blacktrans.png); padding: 5px; }
+.ui-dialog { background: url(../../images/default/noise.white.png); padding: 5px; border: 1px solid #C0C0C0;}
 .ui-dialog { -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; position: relative; }
 .ui-dialog-titlebar { padding: 8px 10px; color: #fff; background: #eee url(../../images/thead.png) repeat-x top left; border-bottom: 1px solid #ccc; }
-.ui-dialog-content { background: #fff; padding: 10px; }
+.ui-dialog-content { background: #fff; padding: 10px; overflow:auto;}
 .ui-dialog-titlebar { color: #069; font-weight:  bold; }
-.ui-dialog-titlebar-close { position: absolute; top: 12px; right: 15px; font-size: 11px; font-weight: normal; color: #666; }
+.ui-dialog-titlebar-close { 
+   background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-image: url("../../images/close.png");
+    background-origin: padding-box;
+    background-position: 0 15px !important;
+    background-repeat: repeat;
+    background-size: auto auto;
+    color: #666666;
+    font-size: 0;
+    font-weight: normal;
+    height: 15px;
+    position: absolute;
+    right: 15px;
+    top: 12px;
+    width: 15px;
+}
+.ui-dialog-buttonset > button {
+    background: none repeat scroll 0 0 #FB9337;
+    border: 1px solid #FB9337;
+    border-radius: 5px;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-weight: bold;
+    margin-right: 10px;
+    margin-top: 6px;
+    opacity: 0.8;
+    padding: 7px 10px;
+}
 .ui-dialog-titlebar-close:hover { text-decoration: none; color: #333; }
 
 .ui-dialog .wysiwyg legend { position: absolute; top: 13px; left: 15px; font-size: 11px; text-transform: uppercase; }

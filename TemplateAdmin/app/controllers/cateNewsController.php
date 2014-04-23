@@ -39,20 +39,27 @@ class cateNewsController extends Controller {
     public function postDeleteCateNews() {
         $tblCateNewsModel = new tblCategoryNewsModel();
         $dataedit = $tblCateNewsModel->findCateNewsByID(Input::get('id'));
-        if ($dataedit->catenewsParent == 0) {
-            $tblCateNewsModel->deleteCateNewsChild($dataedit->id);
-            $historyContent = 'Xóa danh mục tin tức : ' . $dataedit->cateNewsName;
+        if ($dataedit[0]->catenewsParent == 0) {
+            $tblCateNewsModel->deleteCateNewsChild($dataedit[0]->id);
+            $historyContent = 'Xóa danh mục tin tức : ' . $dataedit[0]->catenewsName;
             $objAdmin = Session::get('adminSession');
             $tblHistoryAdminModel = new tblHistoryAdminModel();
             $tblHistoryAdminModel->addHistory($objAdmin[0]->id, $historyContent, '0');
         }
         $tblCateNewsModel->deleteCateNews(Input::get('id'));
-        $cateNewsData = $tblCateNewsModel->allCateNew(10);
+
+        $cateNewsData = $tblCateNewsModel->getAllCategoryNewPaginate(10);
+
+        $start = $cateNewsData->getCurrentPage() * 10 - 10;
+        if ($start < 0) {
+            $start = 0;
+        }
+        $arrCateNews = $tblCateNewsModel->getAllCategoryNew($start, 10);
         $link = $cateNewsData->links();
-        return View::make('backend.tintuc.cateNewsAjax')->with('arrayCateNews', $cateNewsData)->with('link', $link);
+        return View::make('backend.tintuc.cateNewsAjax')->with('arrayCateNews', $arrCateNews)->with('link', $link);
     }
 
-    public function getCateNewsEdit() {
+    public function getCateNewsEdit($id) {
         $tblCateNewsModel = new tblCategoryNewsModel();
         $cateNewsData = $tblCateNewsModel->getAllCategoryNewPaginate(10);
         $links = $cateNewsData->links();
@@ -62,21 +69,27 @@ class cateNewsController extends Controller {
         }
         $arrCateNews = $tblCateNewsModel->getAllCategoryNew($start, 10);
 
-        $dataedit = $tblCateNewsModel->findCateNewsByID(Input::get('id'));
+        $dataedit = $tblCateNewsModel->findCateNewsByID($id);
         return View::make('backend.tintuc.cateNewsManage')->with('cateNewsData', $dataedit[0])->with('arrayCateNews', $arrCateNews)->with('link', $links);
     }
 
     public function postCateNewsActive() {
         $tblCateNews = new tblCategoryNewsModel();
         $tblCateNews->updateCategoryNews(Input::get('id'), '', '', '', '', Input::get('status'));
-        $dataedit = $tblCateNewsModel->findCateNewsByID(Input::get('id'));
-        $historyContent = 'Kích hoạt danh mục tin tức : ' . $dataedit->cateNewsName;
+        $dataedit = $tblCateNews->findCateNewsByID(Input::get('id'));
+        $historyContent = 'Kích hoạt danh mục tin tức : ' . $dataedit[0]->catenewsName;
         $objAdmin = Session::get('adminSession');
         $tblHistoryAdminModel = new tblHistoryAdminModel();
         $tblHistoryAdminModel->addHistory($objAdmin[0]->id, $historyContent, '0');
-        $cateNewsData = $tblCateNews->allCateNew(10);
+        $cateNewsData = $tblCateNews->getAllCategoryNewPaginate(10);
+
+        $start = $cateNewsData->getCurrentPage() * 10 - 10;
+        if ($start < 0) {
+            $start = 0;
+        }
+        $arrCateNews = $tblCateNews->getAllCategoryNew($start, 10);
         $link = $cateNewsData->links();
-        return View::make('backend.tintuc.cateNewsAjax')->with('arrayCateNews', $cateNewsData)->with('link', $link);
+        return View::make('backend.tintuc.cateNewsAjax')->with('arrayCateNews', $arrCateNews)->with('link', $link);
     }
 
     public function postUpdateCateNews() {
