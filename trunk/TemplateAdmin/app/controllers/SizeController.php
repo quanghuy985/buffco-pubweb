@@ -63,7 +63,7 @@ class SizeController extends Controller {
         $objSize = new tblSizeModel();
 
         if (!Validator::make(Input::all(), $rules)->fails()) {
-            $objSize->addSize(Input::get('sizeName'), Input::get('sizeDescription'), Input::get('sizeValue'));
+            $objSize->addSize(Input::get('sizeName'), Input::get('sizeDescription'), Input::get('sizeValue'),0);
             $objadmin = Session::get('adminSession');
             $id = $objadmin[0]->id;
             $objHistoryAdmin = new tblHistoryAdminModel();
@@ -82,7 +82,7 @@ class SizeController extends Controller {
         $objSize = new tblSizeModel();
 
         if (!Validator::make(Input::all(), $rules)->fails()) {
-            $objSize->addSize(Input::get('sizeName'), ' ', Input::get('sizeValue'));
+            $objSize->addSize(Input::get('sizeName'), ' ', Input::get('sizeValue'),1);
 
             $tblSize1 = new tblSizeModel();
             $arrSize = $tblSize1->allSize(100);
