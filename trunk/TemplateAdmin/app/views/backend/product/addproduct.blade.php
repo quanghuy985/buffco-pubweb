@@ -128,6 +128,11 @@
             jQuery("#mausacproduct").empty().html(msg);
                     jQuery.jGrowl("Thêm mới Màu Sắc thành công!");
                     jQuery('#frmColorLoader').prop('hidden', true);
+                    <?php
+                     $tblColor = new tblColorModel();                    
+                        $arrColor = $tblColor->selectAll();
+                        
+                    ?>
             }
             else {
             jQuery.jGrowl("Thêm mới Màu Sắc không thành công!");
@@ -363,7 +368,13 @@
                                     if (soluong == '') {
                                     jAlert('Bạn vui lòng thêm số lượng sản phẩm', 'Thông báo');
                                     } else {
-                                    var html = '<tr id="row-' + rowCount + '"> <td><span id="stt-' + rowCount + '">' + rowCount + '</span></td><td><select  name="mausacsanpham[]" id="mausanpham-' + rowCount + '"  onfocus="onfor(' + rowCount + ')" onchange="onchangeselec(' + rowCount + ')"> @if(isset($arrColor))@foreach($arrColor as $item)<option value="{{$item->id}}" style="background: {{$item->colorCode}}">{{$item->colorName}}</option>@endforeach@endif</select></td><td><select name="sizesanphamr[]" id="sizesanpham-' + rowCount + '" onfocus="onfor1(' + rowCount + ')" onchange="onchangeselec1(' + rowCount + ')">  @if(isset($arrSize))@foreach($arrSize as $item)<option value="{{$item->id}}" >{{$item->sizeName}}</option>@endforeach@endif</select></td> <td class="center"><input type="text" id="soluongsanpham-' + rowCount + '" name="soluongsanpham[]" style="smallinput"/></td><td class="center"><a href="javascript:void(0);" onclick="xoasanpham(\'row-' + rowCount + '\')" class="btn btn4 btn_trash"></a></td></tr>';
+                                    var html = '<tr id="row-' + rowCount + '"> '+
+                                            ' <td><span id="stt-' + rowCount + '">' + rowCount + '</span></td>'+
+                                            '<td><select  name="mausacsanpham[]" id="mausanpham-' + rowCount + '"  onfocus="onfor(' + rowCount + ')" onchange="onchangeselec(' + rowCount + ')"> @if(isset($arrColor))@foreach($arrColor as $item)<option @if($item->id == '+mausac+') selected @endif value="{{$item->id}}" style="background: {{$item->colorCode}}">{{$item->colorName}}</option>@endforeach@endif</select></td>'+
+                                            '<td><select name="sizesanphamr[]" id="sizesanpham-' + rowCount + '" onfocus="onfor1(' + rowCount + ')" onchange="onchangeselec1(' + rowCount + ')">  @if(isset($arrSize))@foreach($arrSize as $item)<option  @if($item->id == '+size+') selected @endif value="{{$item->id}}" >{{$item->sizeName}}</option>@endforeach@endif</select></td>'+
+                                            '<td class="center"><input type="text" id="soluongsanpham-' + rowCount + '" name="soluongsanpham[]" style="smallinput"/></td>'+
+                                            '<td class="center"><a href="javascript:void(0);" onclick="xoasanpham(\'row-' + rowCount + '\')" class="btn btn4 btn_trash"></a></td>'+
+                                            '</tr>';
                                             jQuery('#themsoluong').append(html);
                                             setTimeout(jQuery('#mausanpham-' + rowCount).val(mausac), 100);
                                             setTimeout(jQuery('#sizesanpham-' + rowCount).val(size), 100);
@@ -492,7 +503,7 @@ if (isset($dataimg)) {
 if (isset($dataStore)) {
     foreach ($dataStore as $sItem) {
         ?>
-                                            themsoluong('<?php echo $sItem->colorName; ?>', '<?php echo $sItem->sizeName; ?>', '<?php echo $sItem->soluongnhap; ?>');
+                                            themsoluong('<?php echo $sItem->colorID; ?>', '<?php echo $sItem->sizeID; ?>', '<?php echo $sItem->soluongnhap; ?>');
         <?php
     }
 }
@@ -548,7 +559,7 @@ if (isset($dataStore)) {
                                                     var sales = jQuery('#salesPrice').val();
                                                     if (price != '' && sales != '')
                                             {
-                                            if (price < sales)
+                                            if (parseInt(price) < parseInt(sales))
                                             {
                                             jAlert('Giá khuyến mại không được lớn hơn giá sản phẩm!', 'Thông báo');
                                                     if (obj == 0)

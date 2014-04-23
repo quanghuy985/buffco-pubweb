@@ -4,7 +4,7 @@
 <script>
 
     function phantrang(page) {
-       // jQuery("#jGrowl").remove();
+        jQuery("#jGrowl").remove();
         jQuery.jGrowl("Đang tải dữ liệu ...");
         var urlpost = "{{URL::action('ProductController@postAjaxpagion')}}?page=" + page;
         if (jQuery('#datepicker').val() != '' && jQuery('#datepicker1').val() != '') {
@@ -26,8 +26,8 @@
 
     }
     function locdulieu() {
-        jQuery('#searchblur').val("");
-       // jQuery("#jGrowl").remove();
+        jQuery('#searchblur').val('');
+        jQuery("#jGrowl").remove();
         jQuery.jGrowl("Đang tải dữ liệu ...");
         var request = jQuery.ajax({
             url: "{{URL::action('ProductController@postAjaxpagionFillter')}}?timeform=" + jQuery('#datepicker').val() + "&timeto=" + jQuery('#datepicker1').val() + "&oderbyoption=" + jQuery("#oderbyoption1").val(),
@@ -36,7 +36,7 @@
         }
         );
         request.done(function(msg) {
-            //jQuery("#jGrowl").remove();
+            jQuery("#jGrowl").remove();
             jQuery.jGrowl("Đã tải dữ liệu thành công ...");
             jQuery('#tableproduct').html(msg);
         });
@@ -44,7 +44,7 @@
     function timkiem() {
         jQuery('#datepicker').val('');
         jQuery('#datepicker1').val('');
-       // jQuery("#jGrowl").remove();
+        //jQuery("#jGrowl").remove();
         jQuery.jGrowl("Đang tải dữ liệu ...");
         var request = jQuery.ajax({
             url: "{{URL::action('ProductController@postAjaxpagionSearch')}}?keyword=" + jQuery('#searchblur').val(),
@@ -61,39 +61,39 @@
 
         jQuery('#searchblur').keypress(function(e) {
             if (e.which == 10 || e.which == 13) {
-                jQuery('#datepicker').val('');
-                jQuery('#datepicker1').val('');
+            jQuery('#datepicker').val('');
+                    jQuery('#datepicker1').val('');
+            // jQuery("#jGrowl").remove();
+            jQuery.jGrowl("Đang tải dữ liệu ...");
+            var request = jQuery.ajax({
+                url: "{{URL::action('ProductController@postAjaxpagionSearch')}}?keyword=" + jQuery('#searchblur').val(),
+                type: "POST",
+                dataType: "html"
+            });
+            request.done(function(msg) {
                 //jQuery("#jGrowl").remove();
-                jQuery.jGrowl("Đang tải dữ liệu ...");
+                jQuery.jGrowl("Đã tải dữ liệu thành công ...");
+                jQuery('#tableproduct').html(msg);
+            });
+        }
+        });
+    });
+    function xoasanpham(id) {
+        jConfirm('Bạn có chắc chắn muốn xóa ?', 'Thông báo', function(r) {
+            if (r == true) {
                 var request = jQuery.ajax({
-                    url: "{{URL::action('ProductController@postAjaxpagionSearch')}}?keyword=" + jQuery('#searchblur').val(),
+                    url: "{{URL::action('ProductController@postDel')}}?id=" + id,
                     type: "POST",
                     dataType: "html"
                 });
                 request.done(function(msg) {
-                   // jQuery("#jGrowl").remove();
-                    jQuery.jGrowl("Đã tải dữ liệu thành công ...");
                     jQuery('#tableproduct').html(msg);
                 });
+                return false;
+            } else {
+                return false;
             }
-        });
-    });
-    function xoasanpham(id) {
-    jConfirm('Bạn có chắc chắn muốn xóa ?', 'Thông báo', function(r) {
-    if (r == true) {
-    var request = jQuery.ajax({
-    url: "{{URL::action('ProductController@postDel')}}?id=" + id,
-            type: "POST",
-            dataType: "html"
-    });
-            request.done(function(msg) {
-            jQuery('#tableproduct').html(msg);
-            });
-            return false;
-    } else {
-    return false;
-    }
-    })
+        })
     }
 </script>
 <div class="pageheader notab">
@@ -123,12 +123,14 @@
             <colgroup>
 
                 <col class="con0" style="width: 20%">
-                <col class="con1" style="width: 15%">
-                <col class="con0" style="width: 15%">
                 <col class="con1" style="width: 10%">
+                <col class="con0" style="width: 12%">
+                <col class="con1" style="width: 7%">
+                <col class="con0" style="width: 7%">
+                <col class="con1" style="width: 7%">
                 <col class="con0" style="width: 20%">
-                <col class="con1" style="width: 10%">
-                <col class="con0" style="width: 10%">
+                <col class="con1" style="width: 8%">
+                <col class="con0" style="width: 15%">
 
             </colgroup>
             <thead>
@@ -137,6 +139,8 @@
                     <th class="head1">Mã sản phẩm</th>
                     <th class="head0">Nhóm</th>                    
                     <th class="head1">Giá</th>
+                    <th class="head0">Số lượng</th>
+                    <th class="head1">Đã bán</th>
                     <th class="head0">Khuyến mại</th>                
                     <th class="head1">Trạng thái</th>
                     <th class="head0">Action</th>
@@ -149,8 +153,10 @@
                     <td><a href="{{URL::action('ProductController@getEditProduct')}}/{{$item->id}}" >{{$item->productName}}</a>  </td>
                     <td><a href="{{URL::action('ProductController@getEditProduct')}}/{{$item->id}}" >{{$item->productCode}}</a></td>             
                     <td class="center">{{$item->cateName}} </td>
-                    <td class="center">{{number_format($item->productPrice,0,'.', ',')}}</td>   
-                    <td class="center">{{number_format($item->salesPrice,0,'.', ',')}}<br/>
+                    <td class="center">{{number_format($item->productPrice,0,'.', ',')}}</td>  
+                    <td class="center">{{$item->soluong}} </td>
+                    <td class="center">{{$item->daban}} </td>
+                    <td class="center">{{number_format($item->salesPrice,0,'.', ',')}}<br/>                    
                         (Từ {{date('d/m/Y',$item->startSales)}} đến {{date('d/m/Y',$item->endSales)}})
                     </td> 
                     <td class="center">
@@ -163,14 +169,13 @@
                         @if($item->status==2)
                         xóa
                         @endif
-
                     </td>
-                    <td class="center"><a href="{{URL::action('ProductController@getEditProduct')}}/{{$item->id}}" >Chỉnh sửa</a> &nbsp; <a href="javascript: void(0)" onclick="xoasanpham({{$item->id}})">Xóa</a></td>
+                    <td class="center"><a href="{{URL::action('ProductController@getEditProduct')}}/{{$item->id}}" >Sửa</a> &nbsp; || &nbsp; <a href="javascript: void(0)" onclick="xoasanpham({{$item->id}})">Xóa</a></td>
                 </tr>
                 @endforeach
                 @if($link!='')
                 <tr>
-                    <td colspan="10">
+                    <td colspan="9">
                         {{$link}}
                     </td>
                 </tr>
