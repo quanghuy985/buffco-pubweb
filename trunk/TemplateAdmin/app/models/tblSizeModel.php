@@ -11,12 +11,12 @@ class tblSizeModel extends Eloquent {
     protected $table = 'tblsize';
     public $timestamps = false;
 
-    public function addSize($sizeName, $sizeDescription, $sizeValue) {
+    public function addSize($sizeName, $sizeDescription, $sizeValue,$status) {
         $this->sizeName = $sizeName;
         $this->sizeDescription = $sizeDescription;
         $this->sizeValue = $sizeValue;
         $this->time = time();
-        $this->status = 0;
+        $this->status = $status;
         $check = $this->save();
         return $check;
     }

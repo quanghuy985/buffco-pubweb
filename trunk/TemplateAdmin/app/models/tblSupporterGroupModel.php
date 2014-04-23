@@ -5,10 +5,10 @@ class tblSupporterGroupModel extends Eloquent {
     protected $table = 'tblsupportergroup';
     public $timestamps = false;
 
-    public function insertSupportGroup($supporterGroupName) {
+    public function insertSupportGroup($supporterGroupName,$status) {
         $this->supporterGroupName = $supporterGroupName;       
         $this->time = time();
-        $this->status = 0;
+        $this->status = $status;
         $check = $this->save();
         return $check;;
     }
