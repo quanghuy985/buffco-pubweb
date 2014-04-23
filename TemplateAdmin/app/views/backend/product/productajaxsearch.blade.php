@@ -1,11 +1,13 @@
-  @foreach($dataproduct as $item)
+ @foreach($dataproduct as $item)
                 <tr >  
                     <td><a href="{{URL::action('ProductController@getEditProduct')}}/{{$item->id}}" >{{$item->productName}}</a>  </td>
                     <td><a href="{{URL::action('ProductController@getEditProduct')}}/{{$item->id}}" >{{$item->productCode}}</a></td>             
                     <td class="center">{{$item->cateName}} </td>
-                    <td class="center">{{number_format($item->productPrice,0,'.', ',')}}</td>   
-                    <td class="center">{{number_format($item->salesPrice,0,'.', ',')}}<br/>
-                        (Từ {{date('d/m/Y',$item->startSales)}} đến {{date('d/m/Y',$item->endSales)}})
+                    <td class="center">{{number_format($item->productPrice,0,'.', ',')}}</td>  
+                    <td class="center">{{$item->soluong}} </td>
+                    <td class="center">{{$item->daban}} </td>
+                    <td class="center">{{number_format($item->salesPrice,0,'.', ',')}}<br/>                    
+                    (Từ {{date('d/m/Y',$item->startSales)}} đến {{date('d/m/Y',$item->endSales)}})
                     </td> 
                     <td class="center">
                         @if($item->status==0)
@@ -17,14 +19,13 @@
                         @if($item->status==2)
                         xóa
                         @endif
-
                     </td>
-                    <td class="center"><a href="{{URL::action('ProductController@getEditProduct')}}/{{$item->id}}" >Chỉnh sửa</a> &nbsp; <a href="javascript: void(0)" onclick="xoasanpham({{$item->id}})">Xóa</a></td>
+                    <td class="center"><a href="{{URL::action('ProductController@getEditProduct')}}/{{$item->id}}" >Sửa</a> &nbsp; || &nbsp; <a href="javascript: void(0)" onclick="xoasanpham({{$item->id}})">Xóa</a></td>
                 </tr>
                 @endforeach
                 @if($link!='')
                 <tr>
-                    <td colspan="10">
+                    <td colspan="9">
                         {{$link}}
                     </td>
                 </tr>
