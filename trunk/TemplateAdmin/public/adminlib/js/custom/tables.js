@@ -71,13 +71,13 @@ jQuery(document).ready(function(){
 	
 	
 	///// DELETE INDIVIDUAL ROW IN A TABLE /////
-	jQuery('.stdtable a.delete').click(function(){
-		var c = confirm('Continue delete?');
-		if(c) jQuery(this).parents('tr').fadeOut(function(){ 
-			jQuery(this).remove();
-		});
-		return false;
-	});
+//	jQuery('.stdtable a.delete').click(function(){
+//		var c = true;
+//		if(c) jQuery(this).parents('tr').fadeOut(function(){ 
+//			jQuery(this).remove();
+//		});
+//		return false;
+//	});
 	
 	///// GET DATA FROM THE SERVER AND INJECT IT RIGHT NEXT TO THE ROW SELECTED /////
 	jQuery('.stdtable a.toggle').click(function(){
