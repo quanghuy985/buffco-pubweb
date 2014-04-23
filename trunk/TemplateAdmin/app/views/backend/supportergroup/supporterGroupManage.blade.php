@@ -35,9 +35,9 @@
             dataType: "html"
     });
             request.done(function(msg) {
-            jQuery('#tableproduct').html(msg);     
-             jQuery('#messages1').empty().html(" <div class='notibar msgsuccess'><a class='close'></a><p>Cập nhật thành công.</p> </div>"); 
-        });
+            jQuery('#tableproduct').html(msg);
+                    jQuery('#messages1').empty().html(" <div class='notibar msgsuccess'><a class='close'></a><p>Cập nhật thành công.</p> </div>");
+            });
             return true;
     }
 </script>
@@ -51,14 +51,20 @@
     </div>
     <div class="contentwrapper">
         <div class="subcontent">
-             <div id="messages1">
-            @if(isset($thongbao))
-            <div class="notibar msgalert">
-                <a class="close"></a>
-                <p>{{$thongbao}}</p>
+            <div id="messages1">
+                @if(isset($thongbaoError))
+                <div class="notibar msgalert">
+                    <a class="close"></a>
+                    <p>{{$thongbaoError}}</p>
+                </div>
+                @endif
+                @if(isset($thongbaoOk))
+                <div class="notibar msgsuccess">
+                    <a class="close"></a>
+                    <p>{{$thongbaoOk}}</p>
+                </div>
+                @endif
             </div>
-            @endif
-             </div>
             <table cellpadding="0" cellspacing="0" border="0" id="table2" class="stdtable stdtablecb">
                 <colgroup>
                     <col class="con1" style="width: 5%">
@@ -69,19 +75,19 @@
                 </colgroup>
                 <thead>
                     <tr>
-                        <th class="head1">ID</th>
+                        <th class="head1">STT</th>
                         <th class="head0">Tên nhóm</th>
                         <th class="head1">Khởi tạo</th>
                         <th class="head0">Tình trạng</th>
                         <th class="head1">Chức năng</th>
                     </tr>  
                 </thead>
-
+                <?php $i = 1; ?>
                 <tbody id="tableproduct">
                     @foreach($arrSupporterGroup as $item)
                     <tr> 
 
-                        <td><label value="cateMenuer">{{$item->id }}</label></td> 
+                        <td><label value="cateMenuer"><?php echo $i; $i++; ?></label></td> 
                         <td><label value="cateMenuer">{{str_limit( $item->supporterGroupName, 30, '...')}}</label></td>
                         <td><label value="cateMenuer"><?php echo date('d/m/Y h:i:s', $item->time); ?></label></td> 
                         <td><label value="cateMenuer"><?php
@@ -125,17 +131,17 @@
         <h3>Bảng thêm và chỉnh sửa</h3>
     </div>
     <a name="frmEdit"></a>
-    <form class="stdform stdform2" method="post" action="@if(isset($SupporterGroupData)) {{URL::action('SupporterGroupController@postUpdateSupporterGroup')}} @else {{URL::action('SupporterGroupController@postAddSupporterGroup')}}@endif">
+    <form class="stdform stdform2" id="frmSuport" method="post" action="@if(isset($SupporterGroupData)) {{URL::action('SupporterGroupController@postUpdateSupporterGroup')}} @else {{URL::action('SupporterGroupController@postAddSupporterGroup')}}@endif">
 
         <p>
             <input type="hidden" name="id" id="idnews" value="@if(isset($SupporterGroupData)){{$SupporterGroupData->id}}@endif"/>
             <label>Tên nhóm hỗ trợ viên</label>
-            <span class="field"><input type="text" name="supporterGroupName" placeholder="Nhập tên nhóm hỗ trợ viên" value="@if(isset($SupporterGroupData)){{$SupporterGroupData->supporterGroupName}}@endif" class="longinput"></span>
+            <span class="field"><input required title="Bạn phải nhập trường này" type="text" name="supporterGroupName" placeholder="Nhập tên nhóm hỗ trợ viên" value="@if(isset($SupporterGroupData)){{$SupporterGroupData->supporterGroupName}}@endif" class="longinput"></span>
         </p>
         <p>
             <label>Trạng thái</label>
             <span class="field">
-                <select name="status">
+                <select name="status" required>
                     <option value="0" @if(isset($SupporterGroupData)&& $SupporterGroupData->status==0)selected@endif >Chờ kích hoạt</option>
                     <option value="1" @if(isset($SupporterGroupData)&& $SupporterGroupData->status==1)selected@endif>Kích hoạt</option>
                     <option value="2" @if(isset($SupporterGroupData)&& $SupporterGroupData->status==2)selected@endif>Xóa</option>
@@ -143,10 +149,21 @@
             </span>
         </p>
         <p class="stdformbutton">
-            <button class="submit radius2" value="@if(isset($SupporterGroupData))Cập nhật @else Thêm mới @endif ">@if(isset($SupporterGroupData))Cập nhật @else Thêm mới @endif </button>
+            <button class="submit radius2" type="button" onclick="submitForm()" value="@if(isset($SupporterGroupData))Cập nhật @else Thêm mới @endif ">@if(isset($SupporterGroupData))Cập nhật @else Thêm mới @endif </button>
             <input type="reset" class="reset radius2" value="Làm mới">
         </p>
     </form>
+    <script>
+
+                function submitForm(){
+                var form = jQuery('#frmSuport');
+                        if (!form.valid()){
+                return false;
+                }
+                else{
+                form.submit();
+                }
+                }</script>
 </div>
 
 @endsection
