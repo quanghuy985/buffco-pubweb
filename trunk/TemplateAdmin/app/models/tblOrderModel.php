@@ -67,7 +67,7 @@ class tblOrderModel extends Eloquent {
     }
 
     public function getOrderByOrderCode($orderCode) {
-        $allOrderDetail = DB::table('tblOrderDetail')->join('tblSize', 'tblOrderDetail.sizeID', '=', 'tblSize.id')->join('tblColor', 'tblOrderDetail.colorID', '=', 'tblColor.id')->join('tblproduct', 'tblOrderDetail.productID', '=', 'tblproduct.id')->join('tblOrder', 'tblOrderDetail.orderCode', '=', 'tblOrder.orderCode')->join('tblUsers', 'tblOrder.userID', '=', 'tblUsers.id')->select('tblOrderDetail.*', 'tblusers.userEmail', 'tblusers.userFirstName', 'tblusers.userLastName', 'tblproduct.productCode', 'tblproduct.productName', 'tblSize.sizeName', 'tblColor.colorName', 'tblOrder.status as orderStatus', 'tblOrder.receiverName', 'tblOrder.orderAddress')->orderBy('tblOrderDetail.orderCode')->where('tblOrderDetail.orderCode', '=', $orderCode)->get();
+        $allOrderDetail = DB::table('tblOrderDetail')->join('tblSize', 'tblOrderDetail.sizeID', '=', 'tblSize.id')->join('tblColor', 'tblOrderDetail.colorID', '=', 'tblColor.id')->join('tblproduct', 'tblOrderDetail.productID', '=', 'tblproduct.id')->join('tblOrder', 'tblOrderDetail.orderCode', '=', 'tblOrder.orderCode')->join('tblUsers', 'tblOrder.userID', '=', 'tblUsers.id')->select('tblOrderDetail.*', 'tblusers.userEmail', 'tblusers.userFirstName', 'tblusers.userLastName', 'tblusers.userPhone', 'tblproduct.productCode', 'tblproduct.productName', 'tblSize.sizeName', 'tblColor.colorName', 'tblOrder.status as orderStatus', 'tblOrder.receiverName', 'tblOrder.orderAddress', 'tblOrder.receiverPhone')->orderBy('tblOrderDetail.orderCode')->where('tblOrderDetail.orderCode', '=', $orderCode)->get();
         return $allOrderDetail;
     }
 

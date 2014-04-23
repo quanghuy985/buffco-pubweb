@@ -11,6 +11,9 @@
         if (jQuery('#searchblur').val() != '') {
             urlpost = "{{URL::action('NewsController@postAjaxSearchNews')}}?keyword=" + jQuery('#searchblur').val() + "&page=" + page;
         }
+         if (jQuery('#status').val() != '') {
+            urlpost = "{{URL::action('NewsController@postAjaxNewsFilter')}}?status=" + jQuery('#status').val() + "&page=" + page;
+        }
         var request = jQuery.ajax({
             url: urlpost,
             type: "POST",
@@ -141,16 +144,18 @@
         </div> 
         <table cellpadding="0" cellspacing="0" border="0" id="table2" class="stdtable stdtablecb">
             <colgroup>
+                <col class="con0" style="width: 2%">
                 <col class="con1" style="width: 15%">
                 <col class="con0" style="width: 15%">
                 <col class="con1" style="width: 15%">
                 <col class="con0" style="width: 15%">
-                <col class="con0" style="width: 15%">
+                <col class="con0" style="width: 13%">
                 <col class="con1" style="width: 10%">
                 <col class="con0" style="width: 15%">
             </colgroup>
             <thead>
                 <tr>
+                    <th class="head0">STT</th>
                     <th class="head1">Tiêu đề</th>
                     <th class="head0">Nhóm tin tức</th>
                     <th class="head1">Miêu tả</th>
@@ -162,9 +167,11 @@
             </thead>
 
             <tbody id="tableproduct">
+                <?php $i = 1 ?>
                 @foreach($arrayNews as $item)
                 <tr> 
-                    <td><label value="cateNews">{{str_limit( $item->newsName, 30, '...')}}</label></td> 
+                    <td><label value="cateNews">{{$i++}}</label></td> 
+                    <td><label value="cateNews"><a href="{{URL::action('NewsController@getNewsEdit')}}/{{$item->id}}">{{str_limit( $item->newsName, 30, '...')}}</a></label></td> 
                     <td><label value="cateNews">{{$item->cateNewsName }}</label></td> 
                     <td><label value="cateNews">{{str_limit($item->newsDescription, 30, '...')}} </label></td>
                     <td><label value="cateNews">{{str_limit($item->adminName, 30, '...')}} </label></td> 
@@ -181,7 +188,7 @@
                         </label>
                     </td> 
                     <td>
-                        <a href="{{URL::action('NewsController@getNewsEdit')}}?id={{$item->id}}" class="btn btn4 btn_book" title="Sửa"></a>
+                        <a href="{{URL::action('NewsController@getNewsEdit')}}/{{$item->id}}" class="btn btn4 btn_book" title="Sửa"></a>
                         @if($item->status=='2')
                         <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 0)" class="btn btn4 btn_flag" title="Kích hoạt"></a>
                         @endif
@@ -196,12 +203,12 @@
                 @endforeach
                 @if($link!='')
                 <tr>
-                    <td colspan="7">{{$link}}</td>
+                    <td colspan="8">{{$link}}</td>
                 </tr>
                 @endif
                 @if(count($arrayNews)==0)
                 <tr>
-                    <td colspan="7">Không có dữ liệu trả về .</td>
+                    <td colspan="8">Không có dữ liệu trả về .</td>
                 </tr>
                 @endif
             </tbody>

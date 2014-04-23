@@ -1,6 +1,5 @@
 @extends("templateadmin2.mainfire")
 @section("contentadmin")
-
 <div class="pageheader notab">
     <h1 class="pagetitle">Quản Lý thông tin cá nhân</h1>
     <span class="pagedesc">Quản lý Profile</span>

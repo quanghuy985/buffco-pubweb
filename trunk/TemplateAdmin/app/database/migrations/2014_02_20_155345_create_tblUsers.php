@@ -123,6 +123,7 @@ class CreateTblUsers extends Migration {
             $table->string('orderCode');
             $table->integer('userID');
             $table->string('receiverName');
+            $table->string('receiverPhone');
             $table->string('orderAddress');
             $table->string('time');
             $table->integer('status');

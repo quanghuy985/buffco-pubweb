@@ -5,9 +5,10 @@ class tblNewsModel extends Eloquent {
     protected $table = 'tblnews';
     public $timestamps = false;
 
-    public function insertNew($catenewsID, $newsName, $newsDescription, $newsKeywords, $newsContent, $newsTag, $newsSlug, $adminID) {
+    public function insertNew($catenewsID, $newsName, $newsImg, $newsDescription, $newsKeywords, $newsContent, $newsTag, $newsSlug, $adminID, $status) {
         $this->catenewsID = $catenewsID;
         $this->newsName = $newsName;
+        $this->newsImg = $newsImg;
         $this->newsDescription = $newsDescription;
         $this->newsKeywords = $newsKeywords;
         $this->newsContent = $newsContent;
@@ -15,12 +16,12 @@ class tblNewsModel extends Eloquent {
         $this->newsSlug = $newsSlug;
         $this->adminID = $adminID;
         $this->time = time();
-        $this->status = 0;
+        $this->status = $status;
         $check = $this->save();
         return $check;
     }
 
-    public function updateNew($newID, $catenewsID, $newsName, $newsDescription, $newsKeywords, $newsContent, $newsTag, $newsSlug, $adminID, $tagStatus) {
+    public function updateNew($newID, $catenewsID, $newsName, $newsImg, $newsDescription, $newsKeywords, $newsContent, $newsTag, $newsSlug, $adminID, $tagStatus) {
         // $tableAdmin = new TblAdminModel();
         $tableNew = $this->where('id', '=', $newID);
         $arraysql = array('id' => $newID);
@@ -29,6 +30,9 @@ class tblNewsModel extends Eloquent {
         }
         if ($newsName != '') {
             $arraysql = array_merge($arraysql, array("newsName" => $newsName));
+        }
+        if ($newsDescription != '') {
+            $arraysql = array_merge($arraysql, array("newsImg" => $newsImg));
         }
         if ($newsDescription != '') {
             $arraysql = array_merge($arraysql, array("newsDescription" => $newsDescription));
