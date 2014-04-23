@@ -72,7 +72,9 @@ class HistoryUserController extends Controller {
     public function postFillterHistory() {
         
         $objHistory = new tblHistoryUserModel();
-        $data = $objHistory->findHistory('', 5, 'id', Input::get('status'));
+        $from = strtotime(Input::get('from'));
+        $to = strtotime(Input::get('to'));
+        $data = $objHistory->findHistory(5, $from,$to, Input::get('status'));
         $link = $data->links();        
         return View::make('backend.historyuser.HistoryUserajax')->with('arrayHistory', $data)->with('link', $link);
     }

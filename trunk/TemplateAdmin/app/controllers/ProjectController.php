@@ -24,17 +24,22 @@ class ProjectController extends Controller {
 
     public function getProjectEdit() {
         $objProject = new tblProjectModel();
+        $tblAttach = new tblAttachmentProjectModel();
+        $dataimg = $tblAttach->getAttachmentByProjectId(Input::get('id'));
         $data = $objProject->getProjectById(Input::get('id'));
         $check = $objProject->selectAllProject(5, 'id');
+        
         //var_dump($check);
-        $link = $check->links();
-        //var_dump($data);
-        return View::make('backend.project.ProjectManage')->with('dataProject', $data)->with('arrayProject', $check)->with('link', $link);
+        
+//        //var_dump($data);
+        return View::make('backend.project.Projectadd')->with('dataProject', $data)->with('dataimg', $dataimg)->with('arrayProject', $check);
     }
 
     public function postUpdateProject() {
         $objProject = new tblProjectModel();
+        $pid= Input::get('idproject');
         $rules = array(
+            "projectName"=>"required",
             "from" => "required",
             "to" => "required",
             "description" => "required",
@@ -53,7 +58,20 @@ class ProjectController extends Controller {
                 $id = $objadmin[0]->id;
 
 
-                $objProject->updateProject(Input::get('idproject'), $from, $to, Input::get('description'), Input::get('content'), Input::get('status'));
+                $objProject->updateProject(Input::get('idproject'),Input::get('projectName'), $from, $to, Input::get('description'), Input::get('content'), Input::get('status'));
+                if ($pid != NULL || $pid != ''){
+                    
+                    $attList = Input::get('ImagePath');
+                    
+                    if ($attList != '') {
+                        $arr = explode(',', $attList);
+                        foreach($arr as $item){
+                            $att = new tblAttachmentProjectModel();
+                            $att->addAttachment($pid, $item);
+                        }
+                    }
+                }
+                
                 $objHistoryAdmin->addHistory($id, 'Edit project ' . Input::get('description'), 0);
                 return Redirect::action('ProjectController@getProjectView', array('msg' => 'cap nhat thanh cong'));
             }
@@ -62,10 +80,15 @@ class ProjectController extends Controller {
         }
     }
 
+    public function getAddProject() {
+        return View::make('backend.project.Projectadd');
+    }
+
 
 
     public function postAddProject() {
         $rules = array(
+            "projectName" => "required",
             "from" => "required",
             "to" => "required",
             "description" => "required",
@@ -83,13 +106,23 @@ class ProjectController extends Controller {
             if ($from > $to) {
                 return Redirect::action('ProjectController@getProjectView', array('msg' => 'Ngày bắt đầu không được lớn hơn ngày kết thúc'));
             } else {
-
+                
                 $objadmin = Session::get('adminSession');
                 $id = $objadmin[0]->id;
 
-
-                $objProject->addProject($from, $to, Input::get('description'), Input::get('content'), Input::get('status'));
+                $idproject = $objProject->addProject(Input::get('projectName'),$from, $to, Input::get('description'), Input::get('content'), Input::get('status'));
                 $objHistoryAdmin->addHistory($id, 'Them project ' . Input::get('description'), 0);
+                if ($idproject != NULL || $idproject != ''){
+                    
+                    $attList = Input::get('ImagePath');
+                    if ($attList != '') {
+                        $arr = explode(',', $attList);
+                        foreach($arr as $item){
+                        $att = new tblAttachmentProjectModel();
+                        $att->addAttachment($idproject, $item);
+                        }
+                    }
+                }
                 return Redirect::action('ProjectController@getProjectView', array('msg' => 'them moi thanh cong'));
             }
         } else {

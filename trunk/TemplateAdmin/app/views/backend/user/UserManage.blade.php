@@ -100,15 +100,26 @@
     });
             return true;
     }
+    
+    function focus(){
+        window.location.href='#focus';
+    }
 </script>
 <script>
     jQuery(document).ready(function(){
+    
+    
     jQuery("#addUserForm").validate({
     rules: {
             userEmail: {
                 required: true,
                 email: true
-            },            
+            }, 
+            
+            userrePassword: {                
+                equalTo: "#userPassword"
+            },
+            
             userFirstName: {
                 required: true
             },
@@ -130,7 +141,10 @@
             userEmail: {
                 required: 'Email là trường bắt buộc',
                 email: 'Email chưa đúng định dạng'
-            },            
+            },        
+            userrePassword: {                
+                equalTo: "Nhập lại mật khẩu ko đúng"
+            },
             userFirstName: {
                 required: 'Vui lòng nhập họ và đệm'
             },
@@ -190,10 +204,10 @@
             </colgroup>
             <thead>
                 <tr>
-                    <th class="head0"><input type="checkbox" class="checkall" name="checkall" ></th> 
+                    <th class="head0"></th> 
                     <th class="head1">Email</th>
                     <th class="head0">Địa chỉ</th>
-                    <th class="head1">Sdt</th>                    
+                    <th class="head1">Số điện thoại</th>                    
                     <th class="head1">Khởi tạo</th>
                     <th class="head0">Tình trạng</th>
                     <th class="head1">Chức năng</th>
@@ -221,7 +235,7 @@
                         </label>
                     </td> 
                     <td>
-                        <a href="{{URL::action('UserController@getUserEdit')}}?id={{$item->id}}" class="btn btn4 btn_book" title="Sửa"></a>
+                        <a href="{{URL::action('UserController@getUserEdit')}}?id={{$item->id}}" class="btn btn4 btn_book" title="Sửa" onclick="focus()"></a>
                         @if($item->status=='2')
                         <a href="javascript: void(0)" onclick="kichhoat({{$item -> id}}, 0)" class="btn btn4 btn_flag" title="Chờ kích hoạt"></a>
                         @endif
@@ -246,6 +260,7 @@
 
         <div class="contenttitle2" id="editUser">
             <h3>Thêm/Sửa thành viên</h3>
+            <a name="focus"></a> 
         </div>
         <form class="stdform stdform2" id="addUserForm" method="post" action="@if(isset($arrayUsers)) {{URL::action('UserController@postUpdateUser')}} @else {{URL::action('UserController@postAddUser')}}@endif">
 
@@ -263,13 +278,18 @@
                 <label>Mật khẩu</label>
                 <span class="field"><input type="password" name="userPassword" id="userPassword" placeholder="@if(isset($arrayUsers))Để trống nếu không thay đổi @else Nhập mật khẩu @endif" class="longinput"></span>
             </p>
-
+            
             <p>
-                <label>Firstname</label>
+                <label>Nhập lại mật khẩu</label>
+                <span class="field"><input type="password" name="userrePassword" id="userrePassword" @if(isset($arrayUsers)) disabled @endif class="longinput"></span>
+            </p>
+            
+            <p>
+                <label>Họ</label>
                 <span class="field"><input type="text" name="userFirstName" id="userFirstName" placeholder="Nhập họ" value="@if(isset($arrayUsers)){{$arrayUsers->userFirstName}}@endif" class="longinput"></span>
             </p> 
             <p>
-                <label>Lastname</label>
+                <label>Tên</label>
                 <span class="field"><input type="text" name="userLastName" id="userLastName" placeholder="Nhập tên" value="@if(isset($arrayUsers)){{$arrayUsers->userLastName}}@endif" class="longinput"></span>
             </p> 
             <p>
@@ -278,17 +298,20 @@
             </p> 
             <p>
                 <label>Địa chỉ</label>
-                <span class="field"><input type="text" name="userAddress" id="userAddress" placeholder="Nhập địa chỉ" value="@if(isset($arrayUsers)){{$arrayUsers->userAddress}}@endif" class="longinput"></span>
+                <span class="field">
+                    <textarea name="userAddress" style="resize: vertical" id="userAddress" >@if(isset($arrayUsers)){{$arrayUsers->userAddress}}@endif</textarea>
+                    
+                </span>
             </p> 
             <p>
-                <label>Sdt</label>
+                <label>Số điện thoại</label>
                 <span class="field"><input type="text" name="userPhone" id="userPhone" placeholder="Nhập sdt" value="@if(isset($arrayUsers)){{$arrayUsers->userPhone}}@endif" class="longinput"></span>
             </p> 
             <p>
                 <label>Trạng thái</label>
                 <span class="field">
                     <select name="status">
-                        <option value="0" @if(isset($arrayUsers)&& $arrayUsers->status==0)selected@endif >Chờ kích hoạt</option>
+                        <option value="0" @if(isset($arrayUsers)&& $arrayUsers->status==0)selected@endif>Chờ kích hoạt</option>
                         <option value="1" @if(isset($arrayUsers)&& $arrayUsers->status==1)selected@endif>Kích hoạt</option>
                         <option value="2" @if(isset($arrayUsers)&& $arrayUsers->status==2)selected@endif>Xóa</option>
                     </select>

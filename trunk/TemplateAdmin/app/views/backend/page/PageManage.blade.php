@@ -189,7 +189,7 @@
             </colgroup>
             <thead>
                 <tr>
-                    <th class="head0"><input type="checkbox" class="checkall" name="checkall" ></th> 
+                    <th class="head0"></th> 
                     <th class="head1">Tên trang</th>
                     <th class="head0">Từ khóa</th>
                     <th class="head1">Tag</th>
@@ -215,9 +215,9 @@
                     <td><label value="page">
                             <?php
                             if ($item->status == 0) {
-                                echo "chờ đăng";
+                                echo "chờ kích hoạt";
                             } else if ($item->status == 1) {
-                                echo "đã đăng";
+                                echo "đã kích hoạt";
                             } else if ($item->status == 2) {
                                 echo "đã xóa";
                             }
@@ -227,10 +227,10 @@
                     <td>
                         <a href="{{URL::action('PageController@getPageEdit')}}?id={{$item->id}}" class="btn btn4 btn_book" title="Sửa"></a>
                         @if($item->status=='2')
-                        <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 0)" class="btn btn4 btn_flag" title="Kích hoạt"></a>
+                        <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 0)" class="btn btn4 btn_world" title="Chờ kích hoạt"></a>
                         @endif
                         @if($item->status=='0')
-                        <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 1)" class="btn btn4 btn_world" title="Đăng bài"></a>
+                        <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 1)" class="btn btn4 btn_flag" title="Kích hoạt"></a>
                         @endif
                         @if($item->status!='2')
                         <a href="javascript: void(0)" onclick="xoasanpham({{$item->id}})" class="btn btn4 btn_trash" title="Xóa"></a>
@@ -248,106 +248,7 @@
             </tbody>
         </table>
         
-        <div class="contenttitle2" id="editPage">
-            <h3>Thêm/Sửa trang</h3>
-        </div>
-        <form class="stdform stdform2" id="addPage" method="post" action="@if(isset($arrayPage)) {{URL::action('PageController@postUpdatePage')}} @else {{URL::action('PageController@postAddPage')}}@endif">
-
-            <p>
-                <input type="hidden" name="idpage" id="idpage" value="@if(isset($arrayPage)){{$arrayPage->id}}@endif"/>
-                <input type="hidden" name="status" id="status" value="@if(isset($arrayPage)){{$arrayPage->status}}@endif"/>
-                
-            </p>
-            <p>
-                <label>Tên trang</label>
-                <span class="field"><input type="text" onkeyup="locdau()" onchange="getCheckSlug()" id="pageName" name="pageName" placeholder="Nhập tên nhà sản xuất" value="@if(isset($arrayPage)){{$arrayPage->pageName}}@endif" class="longinput"></span>
-                <script>
-                        function locdau() {
-                        var str = (document.getElementById("pageName").value); // lấy chuỗi dữ liệu nhập vào
-                                str = str.toLowerCase(); // chuyển chuỗi sang chữ thường để xử lý
-                                /* tìm kiếm và thay thế tất cả các nguyên âm có dấu sang không dấu*/
-                                str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
-                                str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
-                                str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
-                                str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
-                                str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
-                                str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
-                                str = str.replace(/đ/g, "d");
-                                str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'| |\"|\&|\#|\[|\]|~|$|_/g, "-");
-                                /* tìm và thay thế các kí tự đặc biệt trong chuỗi sang kí tự - */
-                                str = str.replace(/-+-/g, "-"); //thay thế 2- thành 1-
-                                str = str.replace(/^\-+|\-+$/g, ""); //cắt bỏ ký tự - ở đầu và cuối chuỗi
-                                document.getElementById("pageSlug").value = str; // xuất kết quả xữ lý ra
-                        }
-
-                        function getCheckSlug() {
-                        var str = (document.getElementById("pageName").value); // lấy chuỗi dữ liệu nhập vào
-                                str = str.toLowerCase(); // chuyển chuỗi sang chữ thường để xử lý
-                                /* tìm kiếm và thay thế tất cả các nguyên âm có dấu sang không dấu*/
-                                str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
-                                str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
-                                str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
-                                str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
-                                str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
-                                str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
-                                str = str.replace(/đ/g, "d");
-                                str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'| |\"|\&|\#|\[|\]|~|$|_/g, "-");
-                                /* tìm và thay thế các kí tự đặc biệt trong chuỗi sang kí tự - */
-                                str = str.replace(/-+-/g, "-"); //thay thế 2- thành 1-
-                                str = str.replace(/^\-+|\-+$/g, ""); //cắt bỏ ký tự - ở đầu và cuối chuỗi
-                                var request = jQuery.ajax({
-                                url: "{{URL::action('PageController@postCheckSlug')}}?slug=" + str,
-                                        type: "POST"
-                                });
-                                request.done(function(msg) {
-                                if (msg != '') {
-                                if (msg == '0') {
-                                document.getElementById("pageSlug").value = str;
-                                        return false;
-                                } else {
-                                document.getElementById("pageSlug").value = str + '-' + msg;
-                                        return false;
-                                }
-                                }
-                                });
-                        }
-                </script>
-            </p>
-
-            <p>
-                <label>Nội dung</label>
-                <span class="field"><textarea cols="80" rows="5" id="location2" class="ckeditor" name="pageContent" placeholder="Nội dung trang">@if(isset($arrayPage)){{$arrayPage->pageContent}}@endif</textarea></span>
-            </p>
-            
-            <p>
-                <label>Từ khóa</label>
-                <span class="field"><input type="text" name="pageKeyword" placeholder="Nhập từ khóa" value="@if(isset($arrayPage)){{$arrayPage->pageKeywords}}@endif" class="longinput"></span>
-            </p> 
-            <p>
-                <label>Tag</label>
-                <span class="field"><input type="text" name="pageTag" placeholder="Nhập tag" value="@if(isset($arrayPage)){{$arrayPage->pageTag}}@endif" class="longinput"></span>
-            </p> 
-            <p>
-                <label>Slug</label>
-                <span class="field"><input type="text" name="pageSlug" placeholder="Nhập slug" id="pageSlug" value="@if(isset($arrayPage)){{$arrayPage->pageSlug}}@endif" class="longinput"></span>
-            </p> 
-
-            <p>
-                <label>Trạng thái</label>
-                <span class="field">
-                    <select name="status">
-                        <option value="0" @if(isset($arrayPage)&& $arrayPage->status==0)selected@endif >Chờ kích hoạt</option>
-                        <option value="1" @if(isset($arrayPage)&& $arrayPage->status==1)selected@endif>Kích hoạt</option>
-                        <option value="2" @if(isset($arrayPage)&& $arrayPage->status==2)selected@endif>Xóa</option>
-                    </select>
-                </span>
-            </p>
-            
-            <p class="stdformbutton">
-                <button class="submit radius2">@if(isset($arrayPage))Cập nhật @else Thêm mới @endif</button>
-                <input type="reset" class="reset radius2" value="Làm lại">
-            </p>
-        </form>
+        
     </div>
 </div>
 @endsection

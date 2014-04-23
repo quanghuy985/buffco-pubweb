@@ -58,12 +58,17 @@ class SizeController extends Controller {
         $rules = array(
             "sizeName" => "required",
             "sizeDescription" => "required",
-            "sizeValue" => "required"
+            "sizeValue" => "required",
+            "status"=>"required"
         );
         $objSize = new tblSizeModel();
 
         if (!Validator::make(Input::all(), $rules)->fails()) {
-            $objSize->addSize(Input::get('sizeName'), Input::get('sizeDescription'), Input::get('sizeValue'),0);
+
+            $objSize->addSize(Input::get('sizeName'), Input::get('sizeDescription'), Input::get('sizeValue'),Input::get('status'));
+
+            
+
             $objadmin = Session::get('adminSession');
             $id = $objadmin[0]->id;
             $objHistoryAdmin = new tblHistoryAdminModel();

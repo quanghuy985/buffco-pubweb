@@ -10,7 +10,7 @@ class tblUserModel extends Eloquent {
         return $adminarray;
     }
 
-    public function RegisterUser($uemail, $upassword, $ufname, $ulname,$uDOB, $uaddress, $uphone, $verify) {
+    public function RegisterUser($uemail, $upassword, $ufname, $ulname,$uDOB, $uaddress, $uphone, $verify,$status) {
         $this->userEmail = $uemail;
         $this->userPassword = md5(sha1(md5($upassword)));
         $this->userFirstName = $ufname;
@@ -20,7 +20,7 @@ class tblUserModel extends Eloquent {
         $this->userPhone = $uphone;
         $this->verify = $verify;
         $this->time = time();
-        $this->status = 0;
+        $this->status = $status;
         $check = $this->save();
         return $check;
     }
@@ -152,6 +152,11 @@ class tblUserModel extends Eloquent {
     public function getCountUserByStt($stt) {
         $count = DB::table('tblusers')->where('status', '=', $stt)->count();
         return $count;
+    }
+    
+    public function selectNewUser(){
+        $allProject = DB::table('tblusers')->where('status','=','1')->orderBy('time', 'desc')->limit(5)->get();
+        return $allProject;
     }
 
 }

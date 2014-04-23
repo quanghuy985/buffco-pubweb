@@ -9,9 +9,9 @@
                     <td><label value="page">
                             <?php
                             if ($item->status == 0) {
-                                echo "chờ kích hoạt";
+                                echo "chưa xem";
                             } else if ($item->status == 1) {
-                                echo "đã kích hoạt";
+                                echo "đã xem";
                             } else if ($item->status == 2) {
                                 echo "đã xóa";
                             }
@@ -21,10 +21,10 @@
                     <td>
                         
                         @if($item->status=='2')
-                        <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 0)" class="btn btn4 btn_world" title="Chờ kích hoạt"></a>
+                        <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 0)" class="btn btn4 btn_world" title="Chưa xem"></a>
                         @endif
                         @if($item->status=='0')
-                        <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 1)" class="btn btn4 btn_flag" title="Kích hoạt"></a>
+                        <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 1)" class="btn btn4 btn_flag" title="Đã xem"></a>
                         @endif
                         @if($item->status!='2')
                         <a href="javascript: void(0)" onclick="xoasanpham({{$item->id}})" class="btn btn4 btn_trash" title="Xóa"></a>

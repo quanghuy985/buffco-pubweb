@@ -163,8 +163,8 @@
             <button class="deletepromulti" title="table1">Xóa đã chọn</button> &nbsp;
             <select class="radius3" name="oderbyoption1" id="oderbyoption1">
                 <option value="">Tất cả</option>
-                <option value="0">Chờ kích hoạt</option>
-                <option value="1">Đã kích hoạt</option>
+                
+                <option value="1">Kích hoạt</option>
                 <option value="2">Xóa</option>
             </select>&nbsp;
             <button class="radius3" id="loctheotieuchi">Lọc theo tiêu chí</button>
@@ -182,7 +182,7 @@
             </colgroup>
             <thead>
                 <tr>
-                    <th class="head0"><input type="checkbox" class="checkall" name="checkall" ></th> 
+                    <th class="head0"></th> 
                     <th class="head1">Tên </th>
                     <th class="head1">Mô tả</th>
                     <th class="head1">Giá trị</th>
@@ -206,9 +206,7 @@
                     <td><label value="page"></label><?php echo date('d/m/Y h:i:s', $item->time); ?></td> 
                     <td><label value="page">
                             <?php
-                            if ($item->status == 0) {
-                                echo "chờ kích hoạt";
-                            } else if ($item->status == 1) {
+                            if ($item->status == 1) {
                                 echo "đã kích hoạt";
                             } else if ($item->status == 2) {
                                 echo "đã xóa";
@@ -218,13 +216,11 @@
                     </td> 
                     <td>
                         <a href="{{URL::action('SizeController@getSizeEdit')}}?id={{$item->id}}" class="btn btn4 btn_book" title="Sửa"></a>
+                        
                         @if($item->status=='2')
-                        <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 0)" class="btn btn4 btn_world" title="Chờ kích hoạt"></a>
-                        @endif
-                        @if($item->status=='0')
                         <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 1)" class="btn btn4 btn_flag" title="Kích hoạt"></a>
                         @endif
-                        @if($item->status!='2')
+                        @if($item->status=='1')
                         <a href="javascript: void(0)" onclick="xoasanpham({{$item->id}})" class="btn btn4 btn_trash" title="Xóa"></a>
                         @endif
                     </td> 
@@ -273,7 +269,7 @@
                 <label>Trạng thái</label>
                 <span class="field">
                     <select name="status">
-                        <option value="0" @if(isset($arraySize)&& $arraySize->status==0)selected@endif >Chờ kích hoạt</option>
+                        
                         <option value="1" @if(isset($arraySize)&& $arraySize->status==1)selected@endif>Kích hoạt</option>
                         <option value="2" @if(isset($arraySize)&& $arraySize->status==2)selected@endif>Xóa</option>
                     </select>

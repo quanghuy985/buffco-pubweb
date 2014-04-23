@@ -10,7 +10,7 @@ class tblManufacturerModel extends Eloquent{
         $this->manufacturerDescription = $Description;
         $this->manufacturerPlace = $Place;
         $this->time = time();
-        $this->status = 0;
+        $this->status = $status;
         $result = $this->save();
         return $result;        
     }
