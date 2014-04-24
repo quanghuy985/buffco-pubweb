@@ -128,11 +128,7 @@
             jQuery("#mausacproduct").empty().html(msg);
                     jQuery.jGrowl("Thêm mới Màu Sắc thành công!");
                     jQuery('#frmColorLoader').prop('hidden', true);
-                    <?php
-                     $tblColor = new tblColorModel();                    
-                        $arrColor = $tblColor->selectAll();
-                        
-                    ?>
+           
             }
             else {
             jQuery.jGrowl("Thêm mới Màu Sắc không thành công!");
@@ -368,16 +364,16 @@
                                     if (soluong == '') {
                                     jAlert('Bạn vui lòng thêm số lượng sản phẩm', 'Thông báo');
                                     } else {
-                                    var html = '<tr id="row-' + rowCount + '"> '+
-                                            ' <td><span id="stt-' + rowCount + '">' + rowCount + '</span></td>'+
-                                            '<td><select  name="mausacsanpham[]" id="mausanpham-' + rowCount + '"  onfocus="onfor(' + rowCount + ')" onchange="onchangeselec(' + rowCount + ')"> @if(isset($arrColor))@foreach($arrColor as $item)<option @if($item->id == '+mausac+') selected @endif value="{{$item->id}}" style="background: {{$item->colorCode}}">{{$item->colorName}}</option>@endforeach@endif</select></td>'+
-                                            '<td><select name="sizesanphamr[]" id="sizesanpham-' + rowCount + '" onfocus="onfor1(' + rowCount + ')" onchange="onchangeselec1(' + rowCount + ')">  @if(isset($arrSize))@foreach($arrSize as $item)<option  @if($item->id == '+size+') selected @endif value="{{$item->id}}" >{{$item->sizeName}}</option>@endforeach@endif</select></td>'+
-                                            '<td class="center"><input type="text" id="soluongsanpham-' + rowCount + '" name="soluongsanpham[]" style="smallinput"/></td>'+
-                                            '<td class="center"><a href="javascript:void(0);" onclick="xoasanpham(\'row-' + rowCount + '\')" class="btn btn4 btn_trash"></a></td>'+
+                                    var html = '<tr id="row-' + rowCount + '"> ' +
+                                            ' <td><span id="stt-' + rowCount + '">' + rowCount + '</span></td>' +
+                                            '<td><select  name="mausacsanpham[]" id="mausanpham-' + rowCount + '"  onfocus="onfor(' + rowCount + ')" onchange="onchangeselec(' + rowCount + ')"> @if(isset($arrColor))@foreach($arrColor as $item)<option @if($item->id == ' + mausac + ') selected @endif value="{{$item->id}}" style="background: {{$item->colorCode}}">{{$item->colorName}}</option>@endforeach@endif</select></td>' +
+                                            '<td><select name="sizesanphamr[]" id="sizesanpham-' + rowCount + '" onfocus="onfor1(' + rowCount + ')" onchange="onchangeselec1(' + rowCount + ')">  @if(isset($arrSize))@foreach($arrSize as $item)<option  @if($item->id == ' + size + ') selected @endif value="{{$item->id}}" >{{$item->sizeName}}</option>@endforeach@endif</select></td>' +
+                                            '<td class="center"><input type="text" id="soluongsanpham-' + rowCount + '" name="soluongsanpham[]" style="smallinput"/></td>' +
+                                            '<td class="center"><a href="javascript:void(0);" onclick="xoasanpham(\'row-' + rowCount + '\')" class="btn btn4 btn_trash"></a></td>' +
                                             '</tr>';
                                             jQuery('#themsoluong').append(html);
                                             setTimeout(jQuery('#mausanpham-' + rowCount).val(mausac), 100);
-                                            setTimeout(jQuery('#sizesanpham-' + rowCount).val(size), 100);
+                                            (jQuery('#sizesanpham-' + rowCount).val(size), 100);
                                             setTimeout(jQuery('#soluongsanpham-' + rowCount).val(soluong), 100);
                                     }
                                     }
@@ -524,11 +520,11 @@ if (isset($dataStore)) {
                         <select name="loaisanpham[]" multiple="multiple" size="10">
                             @if(isset($arrmuti))
                             @foreach($arrmuti as $item)
-                            <?php $select = ''; ?>
+<?php $select = ''; ?>
                             @if(isset($arrPmeta)) 
                             @foreach($arrPmeta as $item1)
                             @if($item1->tagID == $item->id)
-                            <?php $select = 'selected'; ?>
+<?php $select = 'selected'; ?>
                             @endif
                             @endforeach
                             @endif
