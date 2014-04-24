@@ -1,5 +1,9 @@
 @extends("templateadmin2.mainfire")
 @section("contentadmin")
+<style>
+    .selector{width: 150px  !important;}
+
+</style>
 <script type="text/javascript">
 
     function checkValid(){
@@ -42,6 +46,13 @@
             width: 600,
             height: 'auto',
             modal: true
+    });
+            jQuery("#wTag").dialog({
+    autoOpen: false,
+            resizable: false,
+            width: 600,
+            height: 'auto',
+            modal: true,
     });
             jQuery("#wColor").dialog({
     autoOpen: false,
@@ -109,6 +120,29 @@
             }
             });
     });
+            //sự kiện submit form thêm tag   
+            jQuery("#submitAddTag").button().click(function() {
+    jQuery.jGrowl("Đang thêm mới loại!");
+            var form = jQuery('#frmTag');
+            if (!form.valid())
+            return false;
+            jQuery('#frmTagLoader').prop('hidden', false);
+            var request = jQuery.ajax({
+            url: form.attr('action'),
+                    data: form.serialize(),
+                    type: "POST",
+                    dataType: "html"
+            });
+            request.done(function(msg) {
+            jQuery("#wTag").dialog("close");
+                    if (msg != 'FALSE') {
+            jQuery("#spanTag").empty().html(msg);
+                    jQuery.jGrowl("Thêm mới tag thành công!");
+                    jQuery('#frmTagLoader').prop('hidden', true);
+            }
+            //jQuery.jGrowl("Thêm mới khuyến mại thành công!");
+            });
+    });
             //sự kiên thêm color
             jQuery("#submitAddColor").button().click(function() {
     var form = jQuery('#frmColor');
@@ -128,12 +162,14 @@
             jQuery("#mausacproduct").empty().html(msg);
                     jQuery.jGrowl("Thêm mới Màu Sắc thành công!");
                     jQuery('#frmColorLoader').prop('hidden', true);
-           
             }
             else {
             jQuery.jGrowl("Thêm mới Màu Sắc không thành công!");
             }
             });
+    });
+            jQuery("#addTag").button().click(function() {
+    jQuery("#wTag").dialog("open");
     });
     });</script>
 <div class="contentwrapper">
@@ -248,7 +284,7 @@
                     <?php
                     if ($item->cateParent == 0) {
                         ?>
-                        <option @if(isset($dataedit) && $dataedit->cateID== $item->id)selected @endif value="{{$item->id}}">{{$item->cateName}}</option>
+                        <option disabled style="color: red; " @if(isset($dataedit) && $dataedit->cateID== $item->id)selected @endif value="{{$item->id}}">{{$item->cateName}}</option>
                         <?php
                         foreach ($arrCatProduct as $item1) {
                             if ($item1->cateParent == $item->id) {
@@ -266,20 +302,34 @@
                 </select>
 
                 <button type="button" onclick="loadNhom()"  class="stdbtn" >Làm mới</button>
-                <button type="button" onclick="window.open('{{URL::action('CategoryProductController@getCateProductView')}}?#frmEdit','_newtab');" class="submit radius2" >Thêm nhóm</button>
+                <a style="color: #00F;text-decoration: underline;" href="javascript:void{0}" onclick="window.open('{{URL::action('CategoryProductController@getCateProductView')}}?#frmEdit','_newtab');"  >Thêm nhóm</a>
+            </span>
+        </p>
+        <p>
+            <label>Nhà sản xuất</label>
+            <span class="field">
+                <select name="manufacture" id="manufacture">
+                    @if(isset($arrManu))
+                    @foreach($arrManu as $item)                   
+                    <option  @if(isset($dataedit) && $dataedit->manufactureID== $item->id) selected @endif value="{{$item->id}}">{{$item->manufacturerName}}</option>
+                    @endforeach
+                    @endif
+                </select>
+                <button type="button" class="stdbtn" onclick="loadNhaSanXuat()">Làm mới</button>
+                <a style="color: #00F;text-decoration: underline;" href="javascript:void{0}" onclick="window.open('{{URL::action('ManufacturerController@getAddManufaturer')}}', '_newtab');" class="submit radius2" >Thêm nhà sản xuất</a>
             </span>
         </p>
         <script>
-                                    function loadNhom(){
-                                    var request = jQuery.ajax({
-                                    url: "{{URL::action('ProductController@postCateAjax')}}",
-                                            type: "POST"
-                                    });
-                                            request.done(function(msg) {
-                                            jQuery('#productGroup').empty().html(msg);
+                                            function loadNhom(){
+                                            var request = jQuery.ajax({
+                                            url: "{{URL::action('ProductController@postCateAjax')}}",
+                                                    type: "POST"
+                                            });
+                                                    request.done(function(msg) {
+                                                    jQuery('#productGroup').empty().html(msg);
+                                                    }
+                                                    );
                                             }
-                                            );
-                                    }
         </script>
         <p>
             <label>Mô tả sản phẩm</label>
@@ -302,91 +352,91 @@
             </div>
             <div id="tabs-2">
                 <script type="text/javascript">
-                                    var a = 0;
-                                            function  onfor(id) {
-                                            a = jQuery('#mausanpham-' + id).val();
+                                            var a = 0;
+                                                    function  onfor(id) {
+                                                    a = jQuery('#mausanpham-' + id).val();
+                                                    }
+                                            function  onchangeselec(id) {
+
+                                            var rowCount = jQuery('#myTable tr').length;
+                                                    var check = true;
+                                                    for (i = 1; i <= rowCount - 1; i++) {
+                                            if (i != id) {
+                                            if (jQuery('#mausanpham-' + i).val() == jQuery('#mausanpham-' + id).val() && jQuery('#sizesanpham-' + i).val() == jQuery('#sizesanpham-' + id).val()) {
+                                            check = false;
                                             }
-                                    function  onchangeselec(id) {
-
-                                    var rowCount = jQuery('#myTable tr').length;
-                                            var check = true;
-                                            for (i = 1; i <= rowCount - 1; i++) {
-                                    if (i != id) {
-                                    if (jQuery('#mausanpham-' + i).val() == jQuery('#mausanpham-' + id).val() && jQuery('#sizesanpham-' + i).val() == jQuery('#sizesanpham-' + id).val()) {
-                                    check = false;
-                                    }
-                                    }
-                                    }
-                                    if (check == true) {
-                                    return  true;
-                                    } else {
-                                    jQuery('#mausanpham-' + id).val(a)
-                                            jAlert('Phần tử đã thêm đã tồn tại', 'Thông báo');
-                                    }
-                                    }
-
-                                    var b = 0;
-                                            function  onfor1(id) {
-                                            b = jQuery('#sizesanpham-' + id).val();
                                             }
-                                    function  onchangeselec1(id) {
+                                            }
+                                            if (check == true) {
+                                            return  true;
+                                            } else {
+                                            jQuery('#mausanpham-' + id).val(a)
+                                                    jAlert('Phần tử đã thêm đã tồn tại', 'Thông báo');
+                                            }
+                                            }
 
-                                    var rowCount = jQuery('#myTable tr').length;
-                                            var check = true;
-                                            for (i = 1; i <= rowCount - 1; i++) {
-                                    if (i != id) {
-                                    if (jQuery('#mausanpham-' + i).val() == jQuery('#mausanpham-' + id).val() && jQuery('#sizesanpham-' + i).val() == jQuery('#sizesanpham-' + id).val()) {
-                                    check = false;
-                                    }
-                                    }
-                                    }
-                                    if (check == true) {
-                                    return  true;
-                                    } else {
-                                    jQuery('#sizesanpham-' + id).val(b)
+                                            var b = 0;
+                                                    function  onfor1(id) {
+                                                    b = jQuery('#sizesanpham-' + id).val();
+                                                    }
+                                            function  onchangeselec1(id) {
+
+                                            var rowCount = jQuery('#myTable tr').length;
+                                                    var check = true;
+                                                    for (i = 1; i <= rowCount - 1; i++) {
+                                            if (i != id) {
+                                            if (jQuery('#mausanpham-' + i).val() == jQuery('#mausanpham-' + id).val() && jQuery('#sizesanpham-' + i).val() == jQuery('#sizesanpham-' + id).val()) {
+                                            check = false;
+                                            }
+                                            }
+                                            }
+                                            if (check == true) {
+                                            return  true;
+                                            } else {
+                                            jQuery('#sizesanpham-' + id).val(b)
+                                                    jAlert('Phần tử đã thêm đã tồn tại', 'Thông báo');
+                                            }
+                                            }
+                                            function themsoluong(mausac, size, soluong) {
+
+                                            var rowCount = jQuery('#myTable tr').length;
+                                                    var check = true;
+                                                    for (i = 1; i <= rowCount - 1; i++) {
+                                            if (jQuery('#mausanpham-' + i).val() == mausac && jQuery('#sizesanpham-' + i).val() == size) {
+                                            check = false;
+                                            }
+                                            }
+
+                                            if (check == false)
+                                            {
                                             jAlert('Phần tử đã thêm đã tồn tại', 'Thông báo');
-                                    }
-                                    }
-                                    function themsoluong(mausac, size, soluong) {
-
-                                    var rowCount = jQuery('#myTable tr').length;
-                                            var check = true;
-                                            for (i = 1; i <= rowCount - 1; i++) {
-                                    if (jQuery('#mausanpham-' + i).val() == mausac && jQuery('#sizesanpham-' + i).val() == size) {
-                                    check = false;
-                                    }
-                                    }
-
-                                    if (check == false)
-                                    {
-                                    jAlert('Phần tử đã thêm đã tồn tại', 'Thông báo');
-                                    } else {
-                                    if (soluong == '') {
-                                    jAlert('Bạn vui lòng thêm số lượng sản phẩm', 'Thông báo');
-                                    } else {
-                                    var html = '<tr id="row-' + rowCount + '"> ' +
-                                            ' <td><span id="stt-' + rowCount + '">' + rowCount + '</span></td>' +
-                                            '<td><select  name="mausacsanpham[]" id="mausanpham-' + rowCount + '"  onfocus="onfor(' + rowCount + ')" onchange="onchangeselec(' + rowCount + ')"> @if(isset($arrColor))@foreach($arrColor as $item)<option @if($item->id == ' + mausac + ') selected @endif value="{{$item->id}}" style="background: {{$item->colorCode}}">{{$item->colorName}}</option>@endforeach@endif</select></td>' +
-                                            '<td><select name="sizesanphamr[]" id="sizesanpham-' + rowCount + '" onfocus="onfor1(' + rowCount + ')" onchange="onchangeselec1(' + rowCount + ')">  @if(isset($arrSize))@foreach($arrSize as $item)<option  @if($item->id == ' + size + ') selected @endif value="{{$item->id}}" >{{$item->sizeName}}</option>@endforeach@endif</select></td>' +
-                                            '<td class="center"><input type="text" id="soluongsanpham-' + rowCount + '" name="soluongsanpham[]" style="smallinput"/></td>' +
-                                            '<td class="center"><a href="javascript:void(0);" onclick="xoasanpham(\'row-' + rowCount + '\')" class="btn btn4 btn_trash"></a></td>' +
-                                            '</tr>';
-                                            jQuery('#themsoluong').append(html);
-                                            setTimeout(jQuery('#mausanpham-' + rowCount).val(mausac), 100);
-                                            (jQuery('#sizesanpham-' + rowCount).val(size), 100);
-                                            setTimeout(jQuery('#soluongsanpham-' + rowCount).val(soluong), 100);
-                                    }
-                                    }
-                                    }
-                                    function xoasanpham(id) {
-                                    jConfirm('Bạn có chắc chắn muốn xóa ?', 'Thông báo', function(r) {
-                                    if (r == true) {
-                                    jQuery('#' + id).remove();
-                                    } else {
-                                    return false;
-                                    }
-                                    });
-                                    }
+                                            } else {
+                                            if (soluong == '') {
+                                            jAlert('Bạn vui lòng thêm số lượng sản phẩm', 'Thông báo');
+                                            } else {
+                                            var html = '<tr id="row-' + rowCount + '"> ' +
+                                                    ' <td><span id="stt-' + rowCount + '">' + rowCount + '</span></td>' +
+                                                    '<td><select  name="mausacsanpham[]" id="mausanpham-' + rowCount + '"  onfocus="onfor(' + rowCount + ')" onchange="onchangeselec(' + rowCount + ')"> @if(isset($arrColor))@foreach($arrColor as $item)<option @if($item->id == ' + mausac + ') selected @endif value="{{$item->id}}" style="background: {{$item->colorCode}}">{{$item->colorName}}</option>@endforeach@endif</select></td>' +
+                                                    '<td><select name="sizesanphamr[]" id="sizesanpham-' + rowCount + '" onfocus="onfor1(' + rowCount + ')" onchange="onchangeselec1(' + rowCount + ')">  @if(isset($arrSize))@foreach($arrSize as $item)<option  @if($item->id == ' + size + ') selected @endif value="{{$item->id}}" >{{$item->sizeName}}</option>@endforeach@endif</select></td>' +
+                                                    '<td class="center"><input type="text" id="soluongsanpham-' + rowCount + '" name="soluongsanpham[]" style="smallinput"/></td>' +
+                                                    '<td class="center"><a href="javascript:void(0);" onclick="xoasanpham(\'row-' + rowCount + '\')" class="btn btn4 btn_trash"></a></td>' +
+                                                    '</tr>';
+                                                    jQuery('#themsoluong').append(html);
+                                                    setTimeout(jQuery('#mausanpham-' + rowCount).val(mausac), 100);
+                                                    (jQuery('#sizesanpham-' + rowCount).val(size), 100);
+                                                    setTimeout(jQuery('#soluongsanpham-' + rowCount).val(soluong), 100);
+                                            }
+                                            }
+                                            }
+                                            function xoasanpham(id) {
+                                            jConfirm('Bạn có chắc chắn muốn xóa ?', 'Thông báo', function(r) {
+                                            if (r == true) {
+                                            jQuery('#' + id).remove();
+                                            } else {
+                                            return false;
+                                            }
+                                            });
+                                            }
                 </script>
                 <table  cellpadding="0" cellspacing="0" border="0" class="stdtable" id="myTable">
                     <colgroup>
@@ -444,87 +494,94 @@
             <div id="tabs-3">
                 <script type="text/javascript">
 
-                                            function BrowseServer(startupPath, functionData)
-                                            {
-                                            // You can use the "CKFinder" class to render CKFinder in a page:
-                                            var finder = new CKFinder();
-                                                    // The path for the installation of CKFinder (default = "/ckfinder/").
-                                                    // finder.basePath = '../';
+                                                    function BrowseServer(startupPath, functionData)
+                                                    {
+                                                    // You can use the "CKFinder" class to render CKFinder in a page:
+                                                    var finder = new CKFinder();
+                                                            // The path for the installation of CKFinder (default = "/ckfinder/").
+                                                            // finder.basePath = '../';
 
-                                                    //Startup path in a form: "Type:/path/to/directory/"
-                                                    finder.startupPath = startupPath;
-                                                    // Name of a function which is called when a file is selected in CKFinder.
-                                                    finder.selectActionFunction = SetFileField;
-                                                    // Additional data to be passed to the selectActionFunction in a second argument.
-                                                    // We'll use this feature to pass the Id of a field that will be updated.
-                                                    finder.selectActionData = functionData;
-                                                    // Launch CKFinder
-                                                    finder.popup();
-                                            }
+                                                            //Startup path in a form: "Type:/path/to/directory/"
+                                                            finder.startupPath = startupPath;
+                                                            // Name of a function which is called when a file is selected in CKFinder.
+                                                            finder.selectActionFunction = SetFileField;
+                                                            // Additional data to be passed to the selectActionFunction in a second argument.
+                                                            // We'll use this feature to pass the Id of a field that will be updated.
+                                                            finder.selectActionData = functionData;
+                                                            // Launch CKFinder
+                                                            finder.popup();
+                                                    }
 
 // This is a sample function which is called when a file is selected in CKFinder.
-                                    function SetFileField(fileUrl, data)
-                                    {
-                                    var sFileName = this.getSelectedFile().name;
-                                            var urlImg = '<div id="image-' + sFileName + '"><img src="{{Asset('timthumb.php')}}?src=http://' + window.location.hostname + fileUrl + '&w=100&h=100&zc=0&q=100" width="100" height="100"/><a href="javascript:void(0);" onclick="xoaanhthum(\'image-' + sFileName + '\');" class="delete" title="Delete image">x</a></div>';
-                                            document.getElementById('thumbnails').innerHTML += urlImg;
-                                            returnurlimg();
-                                            //   document.getElementById(data["selectActionData"]).value = fileUrl;
-                                    }
-                                    function xoaanhthum(id) {
-                                    document.getElementById(id).remove();
-                                            returnurlimg();
-                                    }
-                                    function returnurlimg() {
-                                    var images = jQuery("#thumbnails").find("img").map(function() {
-                                    return this.src;
-                                    }).get();
-                                            jQuery("#xImagePath").val(images);
-                                    }
+                                            function SetFileField(fileUrl, data)
+                                            {
+                                            var sFileName = this.getSelectedFile().name;
+                                                    var urlImg = '<div id="image-' + sFileName + '"><img src="{{Asset('timthumb.php')}}?src=http://' + window.location.hostname + fileUrl + '&w=100&h=100&zc=0&q=100" width="100" height="100"/><a href="javascript:void(0);" onclick="xoaanhthum(\'image-' + sFileName + '\');" class="delete" title="Delete image">x</a></div>';
+                                                    document.getElementById('thumbnails').innerHTML += urlImg;
+                                                    var urlImgNoThumb = '<div id="n-image-' + sFileName + '"><img src="http://' + window.location.hostname + fileUrl + '" width="100" height="100"/></div>';
+                                                    document.getElementById('noThumb').innerHTML += urlImgNoThumb;
+                                                    returnurlimg();
+                                                    //   document.getElementById(data["selectActionData"]).value = fileUrl;
+                                            }
+                                            function xoaanhthum(id) {
+                                            document.getElementById(id).remove();
+                                            document.getElementById('n-'+id).remove();
+                                                    returnurlimg();
+                                            }
+                                            function returnurlimg() {
+                                            var images = jQuery("#noThumb").find("img").map(function() {
+                                            return this.src;
+                                            }).get();
+                                                    jQuery("#xImagePath").val(images);
+                                            }
 
-                                    //load ảnh
-                                    jQuery(document).ready(function() {
+                                            //load ảnh
+                                            jQuery(document).ready(function() {
 <?php
 if (isset($dataimg)) {
     foreach ($dataimg as $item) {
         ?>
-                                            var urlImg = '<div id="image-' + <?php echo $item->id; ?> + '"><img src="<?php echo $item->attachmentURL; ?>" width="100" height="100"/><a href="javascript:void(o);" onclick="xoaanhthum(\'image-' + <?php echo $item->id; ?> + '\');" class="delete" title="Delete image">x</a></div>';
-                                                    document.getElementById('thumbnails').innerHTML += urlImg;
+                                                    var urlImg = '<div id="image-' + <?php echo $item->id; ?> + '"><img src="<?php echo $item->attachmentURL; ?>" width="100" height="100"/><a href="javascript:void(o);" onclick="xoaanhthum(\'image-' + <?php echo $item->id; ?> + '\');" class="delete" title="Delete image">x</a></div>';
+                                                            document.getElementById('thumbnails').innerHTML += urlImg;
     <?php }
     ?>
-                                        returnurlimg();
+                                                returnurlimg();
 <?php }
 ?>
 <?php
 if (isset($dataStore)) {
     foreach ($dataStore as $sItem) {
         ?>
-                                            themsoluong('<?php echo $sItem->colorID; ?>', '<?php echo $sItem->sizeID; ?>', '<?php echo $sItem->soluongnhap; ?>');
+                                                    themsoluong('<?php echo $sItem->colorID; ?>', '<?php echo $sItem->sizeID; ?>', '<?php echo $sItem->soluongnhap; ?>');
         <?php
     }
 }
 ?>
-                                    });</script>
+                                            });</script>
 
                 <div id="thumbnails">
 
-                </div>
+                </div>               
+                <div hidden="true" id="imaagePathUrl"></div>
                 <input id="xImagePath" name="ImagePath" type="hidden" />
                 <div class="clear"></div>
                 <input type="button" value="Thêm ảnh" class="stdbtn btn_orange" onclick="BrowseServer('Images:/', 'xImagePath');" />
             </div>
+             <div hidden="true" id="noThumb">
+
+                </div>
             <div id="tabs-4">
                 <p>
                     <label>Chọn loại</label>
                     <span class="field">
-                        <select name="loaisanpham[]" multiple="multiple" size="10">
+                        <select name="loaisanpham[]" multiple="multiple" id="spanTag" size="10">
                             @if(isset($arrmuti))
                             @foreach($arrmuti as $item)
-<?php $select = ''; ?>
+                            <?php $select = ''; ?>
                             @if(isset($arrPmeta)) 
                             @foreach($arrPmeta as $item1)
                             @if($item1->tagID == $item->id)
-<?php $select = 'selected'; ?>
+                            <?php $select = 'selected'; ?>
                             @endif
                             @endforeach
                             @endif
@@ -532,6 +589,7 @@ if (isset($dataStore)) {
                             @endforeach
                             @endif
                         </select>
+                        <button type="button"   class="submit radius2" id="addTag">Thêm loại</button>
                     </span>
                     <small class="desc">Bạn có thể chọn nhiều loại bằng cách giữ CTRL rồi chọn</small>
                 </p>
@@ -548,27 +606,27 @@ if (isset($dataStore)) {
             <small class="desc">Không khuyến mại để mặc định là trống .</small>
         </p>
         <script>
-                                    //kiểm tra giá và khuyến mại
-                                            function checkPrice(obj) {
+                                            //kiểm tra giá và khuyến mại
+                                                    function checkPrice(obj) {
 
-                                            var price = jQuery('#productPrice').val();
-                                                    var sales = jQuery('#salesPrice').val();
-                                                    if (price != '' && sales != '')
-                                            {
-                                            if (parseInt(price) < parseInt(sales))
-                                            {
-                                            jAlert('Giá khuyến mại không được lớn hơn giá sản phẩm!', 'Thông báo');
-                                                    if (obj == 0)
-                                            {
-                                            jQuery('#productPrice').val('').focus();
-                                            }
-                                            else
-                                            {
-                                            jQuery('#salesPrice').val('').focus();
-                                            }
-                                            }
-                                            }
-                                            }
+                                                    var price = jQuery('#productPrice').val();
+                                                            var sales = jQuery('#salesPrice').val();
+                                                            if (price != '' && sales != '')
+                                                    {
+                                                    if (parseInt(price) < parseInt(sales))
+                                                    {
+                                                    jAlert('Giá khuyến mại không được lớn hơn giá sản phẩm!', 'Thông báo');
+                                                            if (obj == 0)
+                                                    {
+                                                    jQuery('#productPrice').val('').focus();
+                                                    }
+                                                    else
+                                                    {
+                                                    jQuery('#salesPrice').val('').focus();
+                                                    }
+                                                    }
+                                                    }
+                                                    }
         </script>
         <p id="book" style="display: none;">
             <label>Thời gian khuyến mại </label>
@@ -585,20 +643,7 @@ if (isset($dataStore)) {
                 <small class="desc">Tag cách nhau bằng dấu phẩy.</small>
             </span>
         </p>
-        <p>
-            <label>Nhà sản xuất</label>
-            <span class="field">
-                <select name="manufacture" id="manufacture">
-                    @if(isset($arrManu))
-                    @foreach($arrManu as $item)                   
-                    <option  @if(isset($dataedit) && $dataedit->manufactureID== $item->id) selected @endif value="{{$item->id}}">{{$item->manufacturerName}}</option>
-                    @endforeach
-                    @endif
-                </select>
-                <button type="button" class="stdbtn" onclick="loadNhaSanXuat()">Làm mới</button>
-                <button type="button" onclick="window.open('{{URL::action('ManufacturerController@getAddManufaturer')}}', '_newtab');" class="submit radius2" >Thêm nhà sản xuất</button>
-            </span>
-        </p>
+
         <p>
             <label>Trạng thái</label>
             <span class="field">
@@ -668,5 +713,26 @@ if (isset($dataStore)) {
             </p>
         </form>
     </div>    
+    <div id="wTag" title="Thêm loại">
+        <form class="stdform stdform2" method="post" id="frmTag" action="{{URL::action('TagController@postAddTagAjax')}}">
+            <p>                  
+                <label>Key</label>
+                <span class="field">                        
+                    <input type="hidden" name="productID" id="productID" value="@if(isset($dataedit)){{$dataedit->id}}@endif"/>
+                    <input type="text" name="tagKey" id="tagKey" placeholder="Tên Tag" value="" class="longinput"></span>
+            </p>
+            <p>           
+                <label>Value</label>
+                <span class="field">                    
+                    <input type="text" name="tagSlug" id="tagValue" placeholder="Giá trị của Tag" value="" class="longinput">
+                </span>                 
+            </p>                        
+            <p class="stdformbutton">
+                <button class="submit radius2" type="button" id="submitAddTag" value="Thêm mới">Thêm mới </button>
+                <input type="reset" class="reset radius2" value="Làm mới">
+                <img id="frmTagLoader" hidden="true" src="{{Asset('adminlib/images/loaders/loader1.gif')}}" alt="" />
+            </p>
+        </form>
+    </div>
 </div>
 @endsection

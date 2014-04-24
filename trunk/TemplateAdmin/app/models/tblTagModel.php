@@ -5,12 +5,11 @@ class tblTagModel extends Eloquent {
     protected $table = 'tbltag';
     public $timestamps = false;
 
-    public function insertTag($tagKey, $tagValue, $catetagID) {
+    public function insertTag($tagKey, $tagSlug) {
         $this->tagKey = $tagKey;
-        $this->tagValue = $tagValue;
-        $this->catetagID = $catetagID;
+       $this->tagSlug = $tagSlug;
         $this->time = time();
-        $this->status = 0;
+        $this->status = 1;
         $check = $this->save();
         return $check;
     }
