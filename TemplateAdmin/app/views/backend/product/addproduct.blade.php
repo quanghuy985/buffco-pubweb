@@ -541,8 +541,10 @@
 if (isset($dataimg)) {
     foreach ($dataimg as $item) {
         ?>
-                                                    var urlImg = '<div id="image-' + <?php echo $item->id; ?> + '"><img src="<?php echo $item->attachmentURL; ?>" width="100" height="100"/><a href="javascript:void(o);" onclick="xoaanhthum(\'image-' + <?php echo $item->id; ?> + '\');" class="delete" title="Delete image">x</a></div>';
+                                                    var urlImg = '<div id="image-' + <?php echo $item->id; ?> + '"><img src="{{Asset('timthumb.php')}}?src=<?php echo $item->attachmentURL; ?>&w=100&h=100&zc=0&q=100" width="100" height="100"/><a href="javascript:void(o);" onclick="xoaanhthum(\'image-' + <?php echo $item->id; ?> + '\');" class="delete" title="Delete image">x</a></div>';
                                                             document.getElementById('thumbnails').innerHTML += urlImg;
+                                                             var urlImgNoThumb = '<div id="n-image-'+<?php echo $item->id; ?>+ '"><img src="<?php echo $item->attachmentURL; ?>" width="100" height="100"/></div>';
+                                                    document.getElementById('noThumb').innerHTML += urlImgNoThumb;
     <?php }
     ?>
                                                 returnurlimg();
