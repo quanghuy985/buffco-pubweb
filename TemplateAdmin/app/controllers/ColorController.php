@@ -38,11 +38,12 @@ class ColorController extends BaseController {
         } catch (Exception $exc) {
             return 'FALSE';
         }
+    }
 
     public function postDelColor() {
         $tblColorModel = new tblColorModel();
         $check = $tblColorModel->deleteColor(Input::get('id'));
-        echo 'true';
+        return 'true';
 
     }
 

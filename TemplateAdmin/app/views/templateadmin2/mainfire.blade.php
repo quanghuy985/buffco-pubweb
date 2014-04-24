@@ -116,7 +116,7 @@
                     </li>
                     <li><a href="{{URL::action('OrderController@getViewAll')}}" class="widgets">Đơn hàng</a>
                     </li>
-                    <li><a href="{{URL::action('StoreController@getStoreView')}}" class="tables">Kho hàng</a>
+                    <li><a href="{{URL::action('StoreController@getView')}}" class="tables">Kho hàng</a>
                     </li>
                     <li><a href="{{URL::action('UserController@getUserView')}}" class="user">Khách hàng</a>
                     </li>
