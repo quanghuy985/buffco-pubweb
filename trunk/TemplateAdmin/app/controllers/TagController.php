@@ -13,20 +13,19 @@ class TagController extends Controller {
             $tblTag = new tblTagModel();
             $rules = array(
                 "tagKey" => "required",
-                "tagValue" => "required",
-                "cateTagID" => "required"
+                "tagSlug" => "required"
             );
             if (!Validator::make(Input::all(), $rules)->fails()) {
-                $tblTag->insertTag(Input::get('tagKey'), Input::get('tagValue'), Input::get('cateTagID'));
+                $tblTag->insertTag(Input::get('tagKey'), Input::get('tagSlug'));
             }
-            $arrTag = $tblTag->getTagByCateID(Input::get('cateTagID'));
+            $arrmuti = $tblTag->getAll();
             //lấy danh sách các tag đã được chọn
             if (Input::get('productID') != '') {
-                $tblPMetaModel = new tblPMetaModel();
-                $arrTaged = $tblPMetaModel->getTagByProductID(Input::get('productID'));
-                return View::make('backend.product.viewTag')->with('arrTag', $arrTag)->with('arrTaged', $arrTaged);
+                $tblPMeta = new tblPMetaModel();
+                $arrPmeta = $tblPMeta->getMetaByProductID(Input::get('productID'));
+                return View::make('backend.product.viewTag')->with('arrmuti', $arrmuti)->with('arrPmeta', $arrPmeta);
             } else {
-                return View::make('backend.product.viewTag')->with('arrTag', $arrTag);
+                return View::make('backend.product.viewTag')->with('arrmuti', $arrmuti);
             }
         } catch (Exception $exc) {
             return 'FALSE';
