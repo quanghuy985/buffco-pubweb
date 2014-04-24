@@ -24,7 +24,7 @@
             jQuery('#tableproduct').html(msg);
         });
     }
-    function updateStore(id) {
+    function updateStore(id, productID) {
         if (jQuery('#soluongnhap_' + id).val() == '') {
             jAlert('Số lượng nhập không được để trống', 'Thông báo');
         }
@@ -38,21 +38,36 @@
         }
         else {
             var soluongnhap = jQuery('#soluongnhap_' + id).val();
-            var colorID = jQuery('#color_'+id).val();
-            var sizeID = jQuery('#size_'+id).val();
-            jQuery.jGrowl("Đang cập nhật kho hàng!");
-            var request = jQuery.ajax({
-                url: "{{URL::action('StoreController@postUpdateStoreAjax')}}",
-                data: {id: id, soluongnhap: soluongnhap, colorID: colorID, sizeID: sizeID},
+            var colorID = jQuery('#color_' + id).val();
+            var sizeID = jQuery('#size_' + id).val();
+            jQuery.jGrowl("Đang kiểm tra kho!");
+            var checkStore = jQuery.ajax({
+                url: "{{URL::action('StoreController@postCheckExitStore')}}",
+                data: {proID: productID, sizeID: sizeID, colorID: colorID},
                 type: "POST",
                 dataType: "html"
             });
-            request.done(function(msg) {
-                if (msg == 'true') {
-                    jQuery.jGrowl("Cập nhật kho hàng thành công!");
+            checkStore.done(function(check) {
+                if (check == 'true') {
+                    jQuery.jGrowl("Hàng đã có trong kho. Hãy chọn size hoặc màu khác!");
+                    return false;
                 }
                 else {
-                    jQuery.jGrowl("Cập nhật kho hàng thất bại!");
+                    jQuery.jGrowl("Đang cập nhật kho hàng!");
+                    var request = jQuery.ajax({
+                        url: "{{URL::action('StoreController@postUpdateStoreAjax')}}",
+                        data: {id: id, soluongnhap: soluongnhap, colorID: colorID, sizeID: sizeID},
+                        type: "POST",
+                        dataType: "html"
+                    });
+                    request.done(function(msg) {
+                        if (msg == 'true') {
+                            jQuery.jGrowl("Cập nhật kho hàng thành công!");
+                        }
+                        else {
+                            jQuery.jGrowl("Cập nhật kho hàng thất bại!");
+                        }
+                    });
                 }
             });
         }
@@ -159,6 +174,7 @@ $arrColor = $tblColor->selectAll();
             });
         });
         jQuery("#btnAddStore").button().click(function() {
+            jQuery('#spanLoi').prop('hidden', true);
             var form = jQuery('#frmStore');
             if (!form.valid())
                 return false;
@@ -173,6 +189,8 @@ $arrColor = $tblColor->selectAll();
             checkStore.done(function(check) {
                 if (check == 'true') {
                     jQuery('#frmStoreLoader').prop('hidden', true);
+                    jQuery('#spanLoi').prop('hidden', false);
+
                     jQuery.jGrowl("Hàng đã có trong kho. Hãy chọn size hoặc màu khác!");
                     return false;
                 }
@@ -198,31 +216,6 @@ $arrColor = $tblColor->selectAll();
         });
 
     });
-    var a = 0;
-    function  focusColor(id) {
-        a = jQuery('#color_'+id).val();        
-    }
-    var b = 0;
-    function  focusSize(id) {
-        b = jQuery('#size_' + id).val();
-    }
-    function changeColor(id, productID) {
-        var check = jQuery.ajax({
-            url: "{{URL::action('StoreController@postCheckExitStore')}}",
-            data: { proID: productID, sizeID: jQuery('#size_'+id).val(), colorID: jQuery('#color_'+id).val()},
-            type: "POST",
-            dataType: "html"
-        });
-        check.done(function(ck) {
-            if (ck == 'true') {
-                jQuery('#color_'+id).val(a);
-                jAlert('Hàng này đã tồn tại', 'Thông báo');
-            }
-            else{
-                //updateStore(id);
-            }
-        });
-    }
 
 </script>
 <div class="pageheader notab">
@@ -269,7 +262,7 @@ $arrColor = $tblColor->selectAll();
                         ?> </td>
                     <td>
                         @if(isset($arrColor))
-                        <select onchange="changeColor('{{$item->id}}',{{$item->productID}})" onfocus="focusColor('{{$item->id}}')" id="color_{{$item->id}}" style="width: 100px;">
+                        <select   id="color_{{$item->id}}" style="width: 100px;">
                             @foreach($arrColor as $mau)
                             <option value="{{$mau->id}}" @if($item->colorID == $mau->id) selected @endif >{{$mau->colorName}}</option>
                             @endforeach
@@ -291,7 +284,7 @@ $arrColor = $tblColor->selectAll();
                     </td>
                     <td class="center">{{$item->soluongban}} </td> 
 
-                    <td ><a class="btn btn_orange btn_search radius50" href="javascript:updateStore('{{$item->id}}');" ><span>Cập nhật</span></a> &nbsp; &nbsp; <a href="javascript:deleteStore('{{$item->id}}','{{$item->productID}}')" class="btn btn_trash" ><span>Xóa</span></a></td>
+                    <td ><a class="btn btn_orange btn_search radius50" href="javascript:updateStore('{{$item->id}}','{{$item->productID}}');" ><span>Cập nhật</span></a> &nbsp; &nbsp; <a href="javascript:deleteStore('{{$item->id}}','{{$item->productID}}')" class="btn btn_trash" ><span>Xóa</span></a></td>
                 </tr>
                 @endforeach
                 @if($link!='')
@@ -342,13 +335,14 @@ $arrColor = $tblColor->selectAll();
             <p>           
                 <label>Số lượng</label>
                 <span class="field">                                               
-                    <input type="text" required  onkeypress="return event.charCode > 47 && event.charCode < 58;" pattern="[0-9]" name="soluongnhap" id="soluongnhap" placeholder="Số lượng" value="" class="longinput">
+                    <input type="text" required title="Trường này không được để trống"  onkeypress="return event.charCode > 47 && event.charCode < 58;" pattern="[0-9]" name="soluongnhap" id="soluongnhap" placeholder="Số lượng" value="" class="longinput">
                 </span>                 
             </p>               
             <p class="stdformbutton">
                 <button class="submit radius2" type="button" id="btnAddStore" value="Thêm mới">Thêm hàng </button>
                 <input type="reset" class="reset radius2" value="Làm mới">
                 <img id="frmStoreLoader" hidden="true" src="{{Asset('adminlib/images/loaders/loader1.gif')}}" alt="" />
+                <span hidden="true" id="spanLoi" style="color: red;">Hàng đã có trong kho. Vui lòng chọn size hoặc màu khác </span>
             </p>
         </form>
     </div>

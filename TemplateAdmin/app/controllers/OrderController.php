@@ -156,7 +156,6 @@ class OrderController extends BaseController {
         }
         if ($status == 2) {
             $tblOderModel->updateStatusOrderByOrderCode($orderCode, $status);
-
             $historyContent = 'Xóa thành công đơn hàng : ' . $orderCode;
             $objAdmin = Session::get('adminSession');
             $tblHistoryAdminModel = new tblHistoryAdminModel();

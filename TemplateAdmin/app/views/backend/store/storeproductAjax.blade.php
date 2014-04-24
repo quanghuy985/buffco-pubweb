@@ -12,7 +12,7 @@
                         ?> </td>
                     <td>
                         @if(isset($arrColor))
-                        <select id="color_{{$item->id}}" style="width: 100px;">
+                        <select onchange="changeColor('{{$item->id}}','{{$item->productID}}')" onfocus="focusColor('{{$item->id}}')" id="color_{{$item->id}}" style="width: 100px;">
                             @foreach($arrColor as $mau)
                             <option value="{{$mau->id}}" @if($item->colorID == $mau->id) selected @endif >{{$mau->colorName}}</option>
                             @endforeach
