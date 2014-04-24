@@ -14,7 +14,7 @@ class StoreController extends Controller {
         $link = $arrProduct->links();
         return View::make('backend.store.viewstore')->with('dataproduct', $arrProduct)->with('link', $link);
     }
-
+//view
     public function getViewStoreProduct() {
         $tblStore = new tblStoreModel();
         $arrStore = $tblStore->getStoreByProductID(Input::get('id'));
