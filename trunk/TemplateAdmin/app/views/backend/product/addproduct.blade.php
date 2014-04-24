@@ -528,7 +528,7 @@ if (isset($dataStore)) {
                             @endif
                             @endforeach
                             @endif
-                            <option <?php echo $select; ?> value="{{$item->id}}" >{{$item->tagName}}</option>
+                            <option <?php echo $select; ?> value="{{$item->id}}" >{{$item->tagKey}}</option>
                             @endforeach
                             @endif
                         </select>
