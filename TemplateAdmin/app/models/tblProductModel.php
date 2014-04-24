@@ -87,7 +87,7 @@ class TblProductModel extends Eloquent {
     }
 
     public function getAllProduct($per_page) {
-        $arrProduct = DB::table('tblproduct')->join('tblcategoryproduct', 'tblproduct.cateID', '=', 'tblcategoryproduct.id')->join('tblstore', 'tblproduct.id', '=', 'tblstore.productID')->select('tblproduct.*', 'tblcategoryproduct.cateName', DB::raw('SUM(tblstore.soluongnhap) as soluong'), DB::raw('SUM(tblstore.soluongban) as daban'))->orderBy('tblproduct.id', 'desc')->groupBy('tblproduct.id')->paginate($per_page);
+        $arrProduct = DB::table('tblproduct')->join('tblcategoryproduct', 'tblproduct.cateID', '=', 'tblcategoryproduct.id')->join('tblstore', 'tblproduct.id', '=', 'tblstore.productID')->select('tblproduct.*', 'tblcategoryproduct.cateName', DB::raw('SUM(tblstore.soluongnhap) as soluong'), DB::raw('SUM(tblstore.soluongban) as daban'))->where('tblstore.status','=',1)->orderBy('tblproduct.id', 'desc')->groupBy('tblproduct.id')->paginate($per_page);
 
         return $arrProduct;
     }
