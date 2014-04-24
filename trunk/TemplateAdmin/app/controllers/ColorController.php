@@ -22,10 +22,28 @@ class ColorController extends BaseController {
         return Redirect::action('ColorController@getAddColor');
     }
 
+
+    public function postAddColorAjax() {
+        try {
+            $tblColorModel = new tblColorModel();
+            $check = $tblColorModel->addColor(Input::get('colorName'), Input::get('colorCode'));
+            $tblColorModel = new tblColorModel();
+            $arrColor = $tblColorModel->selectAll(100);
+
+            $selectColor = '<option value="">---Chọn màu---</option>';
+            foreach ($arrColor as $item) {
+                $selectColor.=" <option value=" . $item->id . " style='background:'" . $item->colorCode . ">" . $item->colorName . "</option>";
+            }
+            return $selectColor;
+        } catch (Exception $exc) {
+            return 'FALSE';
+        }
+
     public function postDelColor() {
         $tblColorModel = new tblColorModel();
         $check = $tblColorModel->deleteColor(Input::get('id'));
         echo 'true';
+
     }
 
     public function getEditColor($id = '') {
@@ -35,6 +53,7 @@ class ColorController extends BaseController {
         return View::make('backend.color.addnewcolor')->with('datacolor', $arrColor)->with('coloredit', $editColor[0]);
     }
 
+// post
     public function postEditColor() {
         $tblColorModel = new tblColorModel();
         $check = $tblColorModel->editColor(Input::get('idcolor'), Input::get('colorname'), Input::get('colorpicker'), 1);
