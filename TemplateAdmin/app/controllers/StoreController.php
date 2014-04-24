@@ -26,6 +26,13 @@ class StoreController extends Controller {
         return View::make('backend.store.storeproduct')->with('arrStore', $arrStore)->with('arrSize', $arrSize)->with('arrColor', $arrColor)->with('link', $link);
     }
 
+    public function getDetailStore() {
+          $tblStore = new tblStoreModel();
+        $arrStore = $tblStore->getStoreByProductID(Input::get('id'));
+        $link = $arrStore->links();
+        return View::make('backend.store.detail')->with('arrStore', $arrStore)->with('link', $link);
+    }
+
     public function postAddStoreAjax() {
         $rules = array(
             "productID" => "required",
