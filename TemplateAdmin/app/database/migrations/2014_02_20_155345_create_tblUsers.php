@@ -85,6 +85,8 @@ class CreateTblUsers extends Migration {
             $table->decimal('salesPrice', 20, 2)->nullable;
             $table->string('startSales')->nullable;
             $table->string('endSales')->nullable;
+            $table->integer('total_votes')->nullable;
+            $table->integer('total_value')->nullable;
             $table->string('productSlug');
             $table->string('productTag');
             $table->integer('manufactureID');
