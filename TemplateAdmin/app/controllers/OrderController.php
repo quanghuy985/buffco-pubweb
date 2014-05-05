@@ -163,5 +163,23 @@ class OrderController extends BaseController {
             return Redirect::action('OrderController@getViewAll', array('thongbao' => 'Đã xóa đơn đặt hàng!'));
         }
     }
+    
+    public function getThongKe(){
+        $tblOderModel = new tblOrderModel();
+        $from = Input::get('from');
+        $to = Input::get('to');
+        $count = $tblOderModel->getCountOrderOnDay(12345432, 12345432);
+        $count_range= $tblOderModel->getCountOrderOnDay($from, $to);
+        return View::make('backend.thongke.order')->with('count', $count);
+    }
+    
+    public function getThongKeAjax(){
+        $tblOderModel = new tblOrderModel();
+        $from = Input::get('from');
+        $to = Input::get('to');
+        $count = $tblOderModel->getNewOrderOnDay(12345432, 12345432);
+        $count_range= $tblOderModel->getCountOrderOnDay($from, $to);
+        return View::make('backend.thongke.ajax')->with('count_range', $count_range);
+    }
 
 }
