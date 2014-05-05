@@ -81,6 +81,12 @@ class tblNewsModel extends Eloquent {
         $arrNew = DB::table('tblnews')->get();
         return $arrNew;
     }
+    
+    public function getNews($cateid){
+        $allNews = DB::table('tblNews')->join('tblCateNews', 'tblNews.catenewsID', '=', 'tblCateNews.id')->select('tblNews.id', 'tblCateNews.cateNewsName', 'tblNews.newsName', 'tblNews.newsDescription', 'tblNews.newsKeywords', 'tblNews.newsContent', 'tblNews.newsTag', 'tblNews.newsSlug', 'tblNews.time', 'tblNews.status')->where('tblNews.catenewsID','=',$cateid)->orderBy('time', 'desc')->limit(5)->get();
+        return $allNews;
+    }
+            
 
     public function getNewByID($newID) {
         $arrNew = DB::table('tblnews')->where('id', '=', $newID)->get();

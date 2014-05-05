@@ -119,5 +119,27 @@ class tblOrderModel extends Eloquent {
         }
         return $arrOrder;
     }
+    
+    public function getNewOrderOnDay($from,$to){
+        $allorder= DB::table('tblOrder')->whereBetween('tblOrder.time',array($from,$to))->orderBy('time', 'desc')->count();
+        return $allorder;
+    }
+    
+    public function getLimitOrder() {
+        $allOrder = DB::table('tblOrder')->join('tblUsers', 'tblOrder.userID', '=', 'tblUsers.id')->select('tblOrder.*', 'tblusers.userEmail', 'tblusers.userAddress','tblusers.userFirstName', 'tblusers.userLastName')->orderBy('tblOrder.time','desc')->limit(10)->get();
+        return $allOrder;
+    }
+    
+    //thong ke
+    
+    public function getCountOrderOnDay($from,$to){
+        $allorder= DB::table('tblOrder')->leftJoin('tblOrderDetail', 'tblOrder.orderCode', '=', 'tblOrderDetail.orderCode')->select('tblOrder.*','tblOrderDetail.total')->whereBetween('tblOrder.time',array($from,$to))->count();
+        return $allorder;
+    }
+    
+    public function getTotalOrderOnDay($from,$to){
+        $alltotal = DB::table('tblOrder')->leftJoin('tblOrderDetail', 'tblOrder.orderCode', '=', 'tblOrderDetail.orderCode')->select('tblOrder.*',DB::raw('SUM(tblOrderDetail.total) as total'))->whereBetween('tblOrder.time',array($from,$to))->get();
+        return $alltotal;
+    }
 
 }
