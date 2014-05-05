@@ -158,5 +158,11 @@ class tblUserModel extends Eloquent {
         $allProject = DB::table('tblusers')->where('status','=','1')->orderBy('time', 'desc')->limit(5)->get();
         return $allProject;
     }
+    
+    public function getNewUserOnDay($from,$to){
+        $alluser = DB::table('tblusers')->whereBetween('tblusers.time',array($from,$to))->orderBy('time', 'desc')->count();
+        return $alluser;
+    }
+            
 
 }

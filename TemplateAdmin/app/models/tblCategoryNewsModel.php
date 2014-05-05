@@ -77,6 +77,13 @@ class tblCategoryNewsModel extends Eloquent {
         $arrCateNews = DB::table('tblCateNews')->paginate($per_page);
         return $arrCateNews;
     }
+    
+    public function getAllCateChild(){
+        $arrCateNews = DB::table('tblCateNews')->join('tblNews',  'tblCateNews.id', '=','tblNews.catenewsID')->select('tblCateNews.catenewsName','tblNews.newsSlug','tblNews.newsName','tblNews.newsContent')->where('catenewsParent','!=','0')->get();
+        return $arrCateNews;
+    }
+            
+    
      public function allCateNewList() {
         $arrCateNews = DB::table('tblCateNews')->get();
         return $arrCateNews;
