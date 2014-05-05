@@ -55,7 +55,7 @@ class NewsController extends Controller {
 
     public function postNewsActive() {
         $tblNewsModel = new tblNewsModel();
-        $tblNewsModel->updateNew(Input::get('id'), '', '', '', '', '', '', '', '', Input::get('status'));
+        $tblNewsModel->updateNew(Input::get('id'), '', '', '', '', '', '', '', '','', Input::get('status'));
         $objNews = $tblNewsModel->getNewsByID(Input::get('id'));
         $historyContent = 'Kích hoạt thành công tin tức : ' . $objNews[0]->newsName;
         $objAdmin = Session::get('adminSession');
