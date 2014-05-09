@@ -159,8 +159,8 @@
                     <th class="head1">Tiêu đề</th>
                     <th class="head0">Nhóm tin tức</th>
                     <th class="head1">Miêu tả</th>
-                    <th class="head0">Khởi tạo</th>
-                    <th class="head1">Tác giả</th>
+                    <th class="head0">Tác giả</th>
+                    <th class="head1">Khởi tạo</th>
                     <th class="head0">Tình trạng</th>
                     <th class="head1">Chức năng</th>
                 </tr>  
