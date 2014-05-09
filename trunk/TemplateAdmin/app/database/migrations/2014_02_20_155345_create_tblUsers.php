@@ -24,6 +24,7 @@ class CreateTblUsers extends Migration {
             $table->string('time');
             $table->integer('status');
         });
+        
         //tblFeedback bang feedback dung de luu lai cac feedback tu nguoi dung
         Schema::create('tblFeedback', function($table) {
             $table->increments('id');
@@ -93,6 +94,15 @@ class CreateTblUsers extends Migration {
             $table->string('time');
             $table->integer('status');
         });
+        //tblWishlist de luu wishlist cua user
+         Schema::create('tblWishlist', function($table) {
+            $table->increments('id');
+            $table->string('userEmail');
+            $table->integer('productID');
+            $table->string('time');
+            $table->integer('status');
+        });
+        //tblSize de luu size
         Schema::create('tblSize', function($table) {
             $table->increments('id');
             $table->string('sizeName');
@@ -137,6 +147,7 @@ class CreateTblUsers extends Migration {
             $table->integer('productID');
             $table->string('sizeID')->nullable;
             $table->string('colorID')->nullable;
+            $table->decimal('productPrice', 20, 2);
             $table->integer('amount');
             $table->decimal('total', 20, 2);
             $table->string('time');

@@ -151,5 +151,6 @@ class TblProductModel extends Eloquent {
         $objProduct = DB::table('tblproduct')->where('productCode', '=', $code)->get();
         return $objProduct;
     }
+     
 
 }
