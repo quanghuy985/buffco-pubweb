@@ -28,18 +28,17 @@ class ProjectController extends Controller {
         $dataimg = $tblAttach->getAttachmentByProjectId(Input::get('id'));
         $data = $objProject->getProjectById(Input::get('id'));
         $check = $objProject->selectAllProject(5, 'id');
-        
+
         //var_dump($check);
-        
 //        //var_dump($data);
         return View::make('backend.project.Projectadd')->with('dataProject', $data)->with('dataimg', $dataimg)->with('arrayProject', $check);
     }
 
     public function postUpdateProject() {
         $objProject = new tblProjectModel();
-        $pid= Input::get('idproject');
+        $pid = Input::get('idproject');
         $rules = array(
-            "projectName"=>"required",
+            "projectName" => "required",
             "from" => "required",
             "to" => "required",
             "description" => "required",
@@ -58,20 +57,20 @@ class ProjectController extends Controller {
                 $id = $objadmin[0]->id;
 
 
-                $objProject->updateProject(Input::get('idproject'),Input::get('projectName'), $from, $to, Input::get('description'), Input::get('content'), Input::get('status'));
-                if ($pid != NULL || $pid != ''){
-                    
+                $objProject->updateProject(Input::get('idproject'), Input::get('projectName'), $from, $to, Input::get('description'), Input::get('content'), Input::get('status'));
+                if ($pid != NULL || $pid != '') {
+
                     $attList = Input::get('ImagePath');
-                    
+
                     if ($attList != '') {
                         $arr = explode(',', $attList);
-                        foreach($arr as $item){
+                        foreach ($arr as $item) {
                             $att = new tblAttachmentProjectModel();
                             $att->addAttachment($pid, $item);
                         }
                     }
                 }
-                
+
                 $objHistoryAdmin->addHistory($id, 'Edit project ' . Input::get('description'), 0);
                 return Redirect::action('ProjectController@getProjectView', array('msg' => 'cap nhat thanh cong'));
             }
@@ -83,8 +82,6 @@ class ProjectController extends Controller {
     public function getAddProject() {
         return View::make('backend.project.Projectadd');
     }
-
-
 
     public function postAddProject() {
         $rules = array(
@@ -106,20 +103,20 @@ class ProjectController extends Controller {
             if ($from > $to) {
                 return Redirect::action('ProjectController@getProjectView', array('msg' => 'Ngày bắt đầu không được lớn hơn ngày kết thúc'));
             } else {
-                
+
                 $objadmin = Session::get('adminSession');
                 $id = $objadmin[0]->id;
 
-                $idproject = $objProject->addProject(Input::get('projectName'),$from, $to, Input::get('description'), Input::get('content'), Input::get('status'));
+                $idproject = $objProject->addProject(Input::get('projectName'), $from, $to, Input::get('description'), Input::get('content'), Input::get('status'));
                 $objHistoryAdmin->addHistory($id, 'Them project ' . Input::get('description'), 0);
-                if ($idproject != NULL || $idproject != ''){
-                    
+                if ($idproject != NULL || $idproject != '') {
+
                     $attList = Input::get('ImagePath');
                     if ($attList != '') {
                         $arr = explode(',', $attList);
-                        foreach($arr as $item){
-                        $att = new tblAttachmentProjectModel();
-                        $att->addAttachment($idproject, $item);
+                        foreach ($arr as $item) {
+                            $att = new tblAttachmentProjectModel();
+                            $att->addAttachment($idproject, $item);
                         }
                     }
                 }
@@ -131,6 +128,7 @@ class ProjectController extends Controller {
     }
 
     public function postDelmulte() {
+        $objHistoryAdmin = new tblHistoryAdminModel();
         $pieces1 = explode(",", Input::get('multiid'));
         foreach ($pieces1 as $item) {
             if ($item != '') {
@@ -154,6 +152,7 @@ class ProjectController extends Controller {
 
         $objadmin = Session::get('adminSession');
         $id = $objadmin[0]->id;
+        $objHistoryAdmin = new tblHistoryAdminModel();
         $objHistoryAdmin->addHistory($id, 'Xoa project', 0);
 
         $arrayProject = $objProject->selectAllProject(5, 'id');
@@ -163,8 +162,8 @@ class ProjectController extends Controller {
 
     public function postProjectActive() {
         $objProject = new tblProjectModel();
-        $objProject->updateProject(Input::get('id'), '', '', '', '', Input::get('status'));
-
+        $objProject->updateProject(Input::get('id'), '', '', '', '', '', Input::get('status'));
+        $objHistoryAdmin = new tblHistoryAdminModel();
         $objadmin = Session::get('adminSession');
         $id = $objadmin[0]->id;
         $objHistoryAdmin->addHistory($id, 'active project', 0);

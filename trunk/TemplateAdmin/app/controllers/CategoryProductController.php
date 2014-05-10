@@ -19,13 +19,16 @@ class CategoryProductController extends Controller {
         $data = $tblCateProduct->getAllCategoryProduct($start, 10);
         return View::make('backend.categoryproduct.cateProductManage')->with('arrCateProduct', $data)->with('link', $links);
     }
-    
-    public function getTagByCateID($cateID){
-        $tblTagModel=new tblTagModel();
-        $arrTag= $tblTagModel->getTagByCateID($cateID);
-        
-        return;
-    }    
+
+    public function getTagByCateID($cateID) {
+        $tblTagModel = new tblTagModel();
+        $arrTag = $tblTagModel->getTagByCateID($cateID);
+        return $arrTag;
+    }
+
+    public function getCategoryProductBySlugCate($slugcat = '') {
+        echo $slugcat;
+    }
 
     public function postAjaxpagion() {
         $tblCateProduct = new tblCategoryProductModel();
@@ -111,8 +114,9 @@ class CategoryProductController extends Controller {
             return Redirect::action('CategoryProductController@getCateProductView', array('thongbao' => 'Thêm mới thất bại .'));
         }
     }
-  public function postCheckSlug() {
-        $tblCate = new tblCategoryProductModel();      
+
+    public function postCheckSlug() {
+        $tblCate = new tblCategoryProductModel();
         $slugcheck = Input::get('slug');
         $count = $tblCate->countSlug($slugcheck);
         return $count;

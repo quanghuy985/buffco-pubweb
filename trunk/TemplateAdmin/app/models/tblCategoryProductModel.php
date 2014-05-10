@@ -13,6 +13,11 @@ class tblCategoryProductModel extends Eloquent {
     public $timestamps = false;
     public static $rules = array();
 
+    public function allListCateProduct() {
+        $arrCateProduct = DB::table('tblCategoryProduct')->get();
+        return $arrCateProduct;
+    }
+
     public function addnewCateProduct($cateName, $cateParent, $cateSlug, $cateDescription) {
         $this->cateName = $cateName;
         $this->cateParent = $cateParent;
@@ -98,4 +103,5 @@ class tblCategoryProductModel extends Eloquent {
         $objCateProduct = DB::table('tblcategoryproduct')->where('cateSlug', 'LIKE', $slug . '%')->count();
         return $objCateProduct;
     }
+
 }

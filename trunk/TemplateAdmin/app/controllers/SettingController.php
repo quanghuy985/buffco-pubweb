@@ -14,7 +14,6 @@ class SettingController extends BaseController {
             'tagline' => Input::get('tagline'),
             'description' => Input::get('description'),
             'keywordsearch' => Input::get('keywordsearch'),
-            'keywordsearch' => Input::get('keywordsearch'),
             'smtphost' => Input::get('smtphost'),
             'smtpport' => Input::get('smtpport'),
             'frommail' => Input::get('frommail'),
@@ -24,17 +23,29 @@ class SettingController extends BaseController {
             'baokimuser' => Input::get('baokimuser'),
             'nganluonguser' => Input::get('nganluonguser'),
             'tiente' => Input::get('tiente'),
-            'logowebsite' => Input::get('logowebsite')
+            'logowebsite' => Input::get('logowebsite'),
+            'footer' => Input::get('footer'),
+            'tencongty' => Input::get('tencongty'),
+            'diachicongty' => Input::get('diachicongty'),
+            'sodienthoaicongty' => Input::get('sodienthoaicongty'),
+            'sodienthoaiddcongty' => Input::get('sodienthoaiddcongty'),
+            'emailcongty' => Input::get('emailcongty'),
+            'webcongty' => Input::get('webcongty'),
+            'facebookfanpage' => Input::get('facebookfanpage'),
+            'commentfb' => Input::get('commentfb'),
+            'googleanc' => Input::get('googleanc'),
+            'googlemaps' => Input::get('googlemaps'),
         );
         $tblSettingModel = new tblSettingModel();
         $check = $tblSettingModel->saveSetting(serialize($paramseting));
-        $arrSetting = $tblSettingModel->getSetting();
-        $arrSetting = unserialize($arrSetting[0]->settingValue);
-        return View::make('backend.setting.setting')->with('arrSetting', $arrSetting);
+//        $arrSetting = $tblSettingModel->getSetting();
+//        $arrSetting = unserialize($arrSetting[0]->settingValue);
+        // return View::make('backend.setting.setting')->with('arrSetting', $arrSetting);
+        return Redirect::action('SettingController@getUpdateSetting');
     }
 
     public function getUpdateSetting() {
-        var_dump( URL::asset(''));
+
         $tblSettingModel = new tblSettingModel();
         $arrSetting = $tblSettingModel->getSetting();
         $arrSetting = unserialize($arrSetting[0]->settingValue);

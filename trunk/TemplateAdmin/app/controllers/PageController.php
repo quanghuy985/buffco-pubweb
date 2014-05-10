@@ -106,6 +106,7 @@ class PageController extends Controller {
         $tblPageModel->deletePage(Input::get('id'));
         $objadmin = Session::get('adminSession');
         $id = $objadmin[0]->id;
+        $objHistoryAdmin = new tblHistoryAdminModel();
         $objHistoryAdmin->addHistory($id, 'xóa page', 0);
         $arrpage = $tblPageModel->selectAllPage(5, 'id');
         $link = $arrpage->links();
@@ -117,6 +118,7 @@ class PageController extends Controller {
         $tblPageModel->updatePage(Input::get('id'), '', '', '', '', '', Input::get('status'));
         $objadmin = Session::get('adminSession');
         $id = $objadmin[0]->id;
+        $objHistoryAdmin = new tblHistoryAdminModel();
         $objHistoryAdmin->addHistory($id, 'active page', 0);
         $arrpage = $tblPageModel->selectAllPage(5, 'id');
 
@@ -153,6 +155,10 @@ class PageController extends Controller {
         $slugcheck = Input::get('slug');
         $count = $tblPageModel->countSlug($slugcheck);
         return $count;
+    }
+    
+    public function getPageBySlug($slugcat = '') {
+        echo $slugcat;
     }
 
 }
