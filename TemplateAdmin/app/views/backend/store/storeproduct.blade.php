@@ -24,7 +24,10 @@
             jQuery('#tableproduct').html(msg);
         });
     }
-    function updateStore(id, productID) {
+    function updateStore(id, productID, oldSize, oldColor) {
+        var soluongnhap = jQuery('#soluongnhap_' + id).val();
+        var colorID = jQuery('#color_' + id).val();
+        var sizeID = jQuery('#size_' + id).val();
         if (jQuery('#soluongnhap_' + id).val() == '') {
             jAlert('Số lượng nhập không được để trống', 'Thông báo');
         }
@@ -36,10 +39,24 @@
             jAlert('Số lượng nhập phải lớn hơn số lượng bán', 'Thông báo');
             jQuery('#soluongnhap_' + id).val('');
         }
+        else if (colorID == oldColor && sizeID == oldSize) {
+            jQuery.jGrowl("Đang cập nhật kho hàng!");
+            var request = jQuery.ajax({
+                url: "{{URL::action('StoreController@postUpdateStoreAjax')}}",
+                data: {id: id, soluongnhap: soluongnhap, colorID: colorID, sizeID: sizeID},
+                type: "POST",
+                dataType: "html"
+            });
+            request.done(function(msg) {
+                if (msg == 'true') {
+                    jQuery.jGrowl("Cập nhật kho hàng thành công!");
+                }
+                else {
+                    jQuery.jGrowl("Cập nhật kho hàng thất bại!");
+                }
+            });
+        }
         else {
-            var soluongnhap = jQuery('#soluongnhap_' + id).val();
-            var colorID = jQuery('#color_' + id).val();
-            var sizeID = jQuery('#size_' + id).val();
             jQuery.jGrowl("Đang kiểm tra kho!");
             var checkStore = jQuery.ajax({
                 url: "{{URL::action('StoreController@postCheckExitStore')}}",
@@ -233,8 +250,8 @@ $arrColor = $tblColor->selectAll();
                 <col class="con0" style="width: 25%">
                 <col class="con1" style="width: 25%">
                 <col class="con0" style="width: 13%">              
-                <col class="con0" style="width: 12%">
-                <col class="con0" style="width: 20%">              
+                <col class="con0" style="width: 10%">
+                <col class="con0" style="width: 22%">              
             </colgroup>
             <thead>
                 <tr>
@@ -284,7 +301,7 @@ $arrColor = $tblColor->selectAll();
                     </td>
                     <td class="center">{{$item->soluongban}} </td> 
 
-                    <td ><a class="btn btn_orange btn_search radius50" href="javascript:updateStore('{{$item->id}}','{{$item->productID}}');" ><span>Cập nhật</span></a> &nbsp; &nbsp; <a href="javascript:deleteStore('{{$item->id}}','{{$item->productID}}')" class="btn btn_trash" ><span>Xóa</span></a></td>
+                    <td ><a class="btn btn_orange btn_search radius50" href="javascript:updateStore('{{$item->id}}','{{$item->productID}}','{{$item->sizeID}}','{{$item->colorID}}');" ><span>Cập nhật</span></a> &nbsp; &nbsp; <a href="javascript:deleteStore('{{$item->id}}','{{$item->productID}}')" class="btn btn_trash" ><span>Xóa</span></a></td>
                 </tr>
                 @endforeach
                 @if($link!='')
