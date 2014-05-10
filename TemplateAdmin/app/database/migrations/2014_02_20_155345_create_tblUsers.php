@@ -54,6 +54,7 @@ class CreateTblUsers extends Migration {
             $table->string('time');
             $table->integer('status');
         });
+        
         // tblCategoryProduct luu lai danh muc san pham
         Schema::create('tblCategoryProduct', function($table) {
             $table->increments('id');

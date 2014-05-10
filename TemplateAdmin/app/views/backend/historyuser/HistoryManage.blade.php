@@ -221,9 +221,10 @@
         
         <div class="contenttitle2">
             <h3>Xem chi tiết lịch sử</h3>
+             <div id="frmEdit"></div>  
         </div>
         <form class="stdform stdform2" id="history" action="">            
-            <div id="frmEdit"></div>           
+                    
             
             <p>
                 <label>Email</label>

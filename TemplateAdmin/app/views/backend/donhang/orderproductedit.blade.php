@@ -102,19 +102,14 @@
                 <td><label value="cateNews">{{number_format($item->productPrice,0,'.', ',')}}</label></td> 
                 <td><label value="cateNews">{{number_format($item->amount,0,'.', ',')}} </label></td>
                 <td><label value="cateNews">@foreach($arrayStore as $itemStore)@if ($itemStore->productID == $item->productID && $itemStore->sizeID == $item->sizeID && $itemStore->colorID == $item->colorID)  {{number_format(($itemStore->soluongnhap - $itemStore->soluongban),0,'.', ',')}} @endif @endforeach </label></td>
-                <td><label value="cateNews">{{number_format($item->total,0,'.', ',')}} </label></td>
+                <td><label value="cateNews">{{number_format($item->productPrice * $item->amount,0,'.', ',')}} VND</label></td>
             </tr> 
 
             @endforeach
-            <?php
-            $total = 0;
-            foreach ($objOrder as $item) {
-                $total = $item->total + $total;
-            };
-            ?>
+          
             <tr>
                 <td colspan="8" style="text-align: right;"><strong><label>Tổng giá trị đơn hàng :</label></strong></td>
-                <td><label value="cateNews">{{$total}}</label></td>
+                <td><label value="cateNews">{{number_format($objOrder[0]->total,0,'.', ',')}} VND</label></td>
             </tr>
         </tbody>
     </table>

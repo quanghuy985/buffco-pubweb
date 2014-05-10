@@ -144,7 +144,7 @@
                         xóa
                         @endif
                     </td>
-                    <td class="center"><a href="" >Thêm hàng</a> &nbsp; || &nbsp; <a href="javascript: void(0)" onclick="xoasanpham({{$item->id}})">Chi tiết</a></td>
+                    <td class="center"><a href="{{URL::action('StoreController@getViewStoreProduct')}}?id={{$item->id}}" >Thêm hàng</a> &nbsp;</td>
                 </tr>
                 @endforeach
                 @if($link!='')

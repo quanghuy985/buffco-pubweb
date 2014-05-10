@@ -10,7 +10,7 @@ class tblUserModel extends Eloquent {
         return $adminarray;
     }
 
-    public function RegisterUser($uemail, $upassword, $ufname, $ulname,$uDOB, $uaddress, $uphone, $verify,$status) {
+    public function RegisterUser($uemail, $upassword, $ufname, $ulname, $uDOB, $uaddress, $uphone, $verify, $status) {
         $this->userEmail = $uemail;
         $this->userPassword = md5(sha1(md5($upassword)));
         $this->userFirstName = $ufname;
@@ -25,7 +25,7 @@ class tblUserModel extends Eloquent {
         return $check;
     }
 
-    public function UpdateUser($id, $upassword, $ufname, $ulname,$uDOB, $uaddress, $uphone,$ustatus) {
+    public function UpdateUser($id, $upassword, $ufname, $ulname, $uDOB, $uaddress, $uphone, $ustatus) {
         $user = $this->where('id', '=', $id);
         $arraysql = array('id' => $id);
         if ($upassword != '') {
@@ -46,7 +46,7 @@ class tblUserModel extends Eloquent {
         if ($uphone != '') {
             $arraysql = array_merge($arraysql, array("userPhone" => $uphone));
         }
-        
+
         if ($ustatus != '') {
             $arraysql = array_merge($arraysql, array("status" => $ustatus));
         }
@@ -75,7 +75,7 @@ class tblUserModel extends Eloquent {
         $results = DB::select($sqlfun);
         return ($results);
     }
-    
+
     public function kichhoat($uemailf, $verify) {
         $test = DB::update('update tblusers set status = 1 where md5(userEmail) = ? and md5(verify)=?', array($uemailf, $verify));
         return $test;
@@ -89,7 +89,7 @@ class tblUserModel extends Eloquent {
             return FALSE;
         }
     }
-    
+
     public function DeleteUserById($id) {
         $checkdel = $this->where('id', '=', $id)->update(array('status' => 2));
         if ($checkdel > 0) {
@@ -117,8 +117,8 @@ class tblUserModel extends Eloquent {
         $adminarray = DB::table('tblusers')->paginate($per_page);
         return $adminarray;
     }
-    
-    public function selectAllUser($per_page,$orderby){
+
+    public function selectAllUser($per_page, $orderby) {
         $allProject = DB::table('tblusers')->orderBy($orderby, 'desc')->paginate($per_page);
         return $allProject;
     }
@@ -127,7 +127,7 @@ class tblUserModel extends Eloquent {
         $objectUser = DB::table('tblusers')->where('userEmail', '=', $userEmail)->get();
         return $objectUser[0];
     }
-    
+
     public function getUserById($userId) {
         $objectUser = DB::table('tblusers')->where('id', '=', $userId)->get();
         return $objectUser[0];
@@ -142,10 +142,10 @@ class tblUserModel extends Eloquent {
         }
         return $adminarray;
     }
-    
+
     public function SearchUser($keyword, $per_page, $orderby, $status) {
-        $adminarray = '';        
-            $adminarray = DB::table('tblusers')->select('tblusers.*')->where('tblusers.userEmail', 'LIKE', '%' . $keyword . '%')->orwhere('tblusers.userFirstName', 'LIKE', '%' . $keyword . '%')->orwhere('tblusers.userLastName', 'LIKE', '%' . $keyword . '%')->orwhere('tblusers.userAddress', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);        
+        $adminarray = '';
+        $adminarray = DB::table('tblusers')->select('tblusers.*')->where('tblusers.userEmail', 'LIKE', '%' . $keyword . '%')->orwhere('tblusers.userFirstName', 'LIKE', '%' . $keyword . '%')->orwhere('tblusers.userLastName', 'LIKE', '%' . $keyword . '%')->orwhere('tblusers.userAddress', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);
         return $adminarray;
     }
 
@@ -153,16 +153,21 @@ class tblUserModel extends Eloquent {
         $count = DB::table('tblusers')->where('status', '=', $stt)->count();
         return $count;
     }
-    
-    public function selectNewUser(){
-        $allProject = DB::table('tblusers')->where('status','=','1')->orderBy('time', 'desc')->limit(5)->get();
+
+    public function selectNewUser() {
+        $allProject = DB::table('tblusers')->where('status', '=', '1')->orderBy('time', 'desc')->limit(5)->get();
         return $allProject;
     }
-    
-    public function getNewUserOnDay($from,$to){
-        $alluser = DB::table('tblusers')->whereBetween('tblusers.time',array($from,$to))->orderBy('time', 'desc')->count();
+
+    public function getNewUserOnDay($from, $to) {
+        $alluser = DB::table('tblusers')->whereBetween('tblusers.time', array($from, $to))->orderBy('time', 'desc')->count();
         return $alluser;
     }
-            
+
+    //thong ke
+    public function getCountUserOnDay($from, $to) {
+        $alluser = DB::table('tblusers')->whereBetween('tblusers.time', array($from, $to))->count();
+        return $alluser;
+    }
 
 }

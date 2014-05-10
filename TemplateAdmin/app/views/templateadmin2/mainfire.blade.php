@@ -123,17 +123,29 @@
                     <li><a href="#supportSub" class="support">Quản lý hỗ trợ viên</a>
                         <span class="arrow"></span>
                         <ul id="supportSub">
-                            <li><a href="{{URL::action('SupporterController@getSupporterView')}}" class="support">Quản lý hỗ trợ viên</a>
+                            <li><a href="{{URL::action('SupporterController@getSupporterView')}}">Quản lý hỗ trợ viên</a>
                             </li>
-                            <li><a href="{{URL::action('SupporterGroupController@getSupporterGroupView')}}" class="support">Nhóm hỗ trợ viên</a>
+                            <li><a href="{{URL::action('SupporterGroupController@getSupporterGroupView')}}">Nhóm hỗ trợ viên</a>
                             </li>
                         </ul>
                     </li>
                     <li><a href="{{URL::action('FeedbackController@getPhanHoi')}}" class="buttons">Phản hồi</a> </li>
-                    <li><a href="{{URL::action('ProjectController@getProjectView')}}" class="calendar new">Quản lý dự án</a> </li>
+                     <li><a href="#projectSub" class="calendar new">Quản lý dự án</a>
+                        <span class="arrow"></span>
+                        <ul id="projectSub">
+                            <li><a href="{{URL::action('ProjectController@getProjectView')}}">Quản lý dự án</a></li>
+                            <li><a href="{{URL::action('ProjectController@getAddProject')}}">Thêm mới dự án</a></li>
+                        </ul>
+                    </li>
                     <li><a href="{{URL::action('PageController@getPageView')}}" class="buttons">Quản lý các trang</a> </li>
-                    <li><a href="{{URL::action('PageController@getPageView')}}" class="settings">Quản lý thanh menu</a> </li>
-                    <li><a href="{{URL::action('PageController@getPageView')}}" class="settings">Thống kê</a> </li>
+                    <li><a href="{{URL::action('MenuController@getMenuView')}}" class="settings">Quản lý thanh menu</a> </li>
+                    <li><a href="#statisticSub" class="settings">Thống kê</a>
+                        <span class="arrow"></span>
+                        <ul id="statisticSub">
+                            <li><a href="{{URL::action('StatisticController@getThongKeUser')}}">Thống kê người dùng</a></li>
+                            <li><a href="{{URL::action('StatisticController@getThongKeOrder')}}">Thống kê đơn hàng</a></li>
+                        </ul>
+                    </li>
                     <li><a href="#historySub" class="calendar">Lịch sử</a>
                         <span class="arrow"></span>
                         <ul id="historySub">

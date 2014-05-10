@@ -62,6 +62,11 @@ class tblPageModel extends Eloquent {
         return $allPage;
     }
     
+    public function getAllPage() {
+        $allPage = DB::table('tblpage')->get();
+        return $allPage;
+    }
+    
 
     public function allPage($per_page) {
         $allPage = DB::table('tblpage')->paginate($per_page);
