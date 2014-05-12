@@ -238,7 +238,7 @@ if ($item->status == 0) {
         <p>
             <label>Đường dẫn</label>
             <span class="field">
-                <input type="hidden" id="urlValue" name="urlValue" value="@if(isset($arrayMenu)){{$arrayMenu->menuURL}}@else {{Asset('fontend')}} @endif"/>
+                <input type="text" id="urlValue" name="urlValue" value="@if(isset($arrayMenu)){{$arrayMenu->menuURL}}@endif"/>
                 <select id="url">
                     <option value="1">Trang trong</option>
                     <option value="2">Trang ngoài</option>
@@ -268,8 +268,7 @@ if ($item->status == 0) {
                     @endif
                 </select>
 
-                <label class="external" style="margin-right:-185px;margin-left: -20px;">URL:</label>
-                <input type="text" class="external" id="externalValue" style="width: 40%;margin-top:10px "/>
+                <label class="external" style="margin-right:-185px;margin-left: -20px;">URL:</label><input type="text" class="external" id="externalValue" style="width: 40%;margin-top:10px "/>
 
             </span>
         </p>
