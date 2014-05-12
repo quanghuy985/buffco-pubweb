@@ -112,13 +112,12 @@ class UserController extends Controller {
         );
         if ($tblUserModel->CheckUserExist(Input::get('userEmail'))) {
             return View::make('backend.user.UserManage')->with('msg', "Email đã được sử dụng! Vui lòng nhập email khác");
-        }else
-            {
-            if (!Validator::make(Input::all(), $rules)->fails()) {                
-                    $verify = str_random(10);
+        } else {
+            if (!Validator::make(Input::all(), $rules)->fails()) {
+                $verify = str_random(10);
 
 
-                    $tblUserModel->RegisterUser(Input::get('userEmail'), Input::get('userPassword'), Input::get('userFirstName'), Input::get('userLastName'), strtotime(Input::get('userDOB')), Input::get('userAddress'), Input::get('userPhone'), $verify, Input::get('status'));
+                $tblUserModel->RegisterUser(Input::get('userEmail'), Input::get('userPassword'), Input::get('userFirstName'), Input::get('userLastName'), strtotime(Input::get('userDOB')), Input::get('userAddress'), Input::get('userPhone'), $verify, Input::get('status'));
 
 //                $data = URL::action('UserController@getKichHoat') . '/' . md5(Input::get('userEmail')) . '/' . md5($verify) . '/' . time();
 ////                $data = URL::action('UserController@getUserView');
@@ -129,8 +128,7 @@ class UserController extends Controller {
 //                    $message->subject('Kích hoạt tài khoản');
 //                });
 
-                    return Redirect::action('UserController@getUserView', array('msg' => 'them moi thanh cong'));
-                
+                return Redirect::action('UserController@getUserView', array('msg' => 'them moi thanh cong'));
             } else {
                 return View::make('backend.user.UserManage')->with('msg', "Các thông tin nhập không hợp lệ");
             }
@@ -224,6 +222,36 @@ class UserController extends Controller {
             $link = $data->links();
             return View::make('backend.user.UserManage')->with('arrUser', $data)->with('link', $link);
         }
+    }
+
+    public function getThongKe() {
+        $tblUserModel = new tblUserModel();
+        $count = $tblUserModel->getCountUserOnDay(time(), time());
+        return View::make('backend.thongke.user')->with('count', $count);
+    }
+
+    public function postThongKeUserAjax() {
+        $tblUserModel = new tblUserModel();
+        $from = strtotime(Input::get('from'));
+        $to = strtotime(Input::get('to'));
+        $count_range = $tblUserModel->getCountUserOnDay($from, $to);
+        return View::make('backend.thongke.ajaxuser')->with('count_range', $count_range);
+    }
+    
+    public function postSearchDateUser() {
+        
+        $tblUserModel = new tblUserModel();        
+        
+        $from = strtotime(Input::get('from'));
+        $to = strtotime(Input::get('to'));
+        
+        
+        $data = $tblUserModel->getUserByDate($from,$to, 5); 
+        
+        //echo count($data);
+        $link = $data->links();
+       
+        return View::make('backend.thongke.Userajax')->with('user', $data)->with('link', $link);
     }
 
 }

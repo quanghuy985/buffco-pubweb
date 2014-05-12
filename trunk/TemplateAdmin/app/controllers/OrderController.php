@@ -168,7 +168,7 @@ class OrderController extends BaseController {
         $tblOderModel = new tblOrderModel();
         $from = Input::get('from');
         $to = Input::get('to');
-        $count = $tblOderModel->getCountOrderOnDay(12345432, 12345432);
+        $count = $tblOderModel->getCountOrderOnDay(time(), time());
         $count_range= $tblOderModel->getCountOrderOnDay($from, $to);
         return View::make('backend.thongke.order')->with('count', $count);
     }
@@ -177,9 +177,42 @@ class OrderController extends BaseController {
         $tblOderModel = new tblOrderModel();
         $from = Input::get('from');
         $to = Input::get('to');
-        $count = $tblOderModel->getNewOrderOnDay(12345432, 12345432);
+        $count = $tblOderModel->getNewOrderOnDay(time(), time());
         $count_range= $tblOderModel->getCountOrderOnDay($from, $to);
         return View::make('backend.thongke.ajax')->with('count_range', $count_range);
+    }
+    
+    public function postThongKeOrderAjax(){
+        $tblOderModel = new tblOrderModel();
+        $from = strtotime(Input::get('from'));
+        $to = strtotime(Input::get('to'));        
+        $count_range= $tblOderModel->getCountOrderOnDay($from, $to);
+        $total_range = $tblOderModel->getTotalOrderOnDay($from, $to);
+        return View::make('backend.thongke.ajax')->with('count_range', $count_range);
+    }
+    
+    public function postThongKePriceAjax(){
+        $tblOderModel = new tblOrderModel();
+        $from = strtotime(Input::get('from'));
+        $to = strtotime(Input::get('to'));                
+        $total_range = $tblOderModel->getTotalOrderOnDay($from, $to);
+        return View::make('backend.thongke.ajaxprice')->with('total_range', $total_range);
+    }
+    
+    public function postSearchDateOrder() {
+        
+        $tblOderModel = new tblOrderModel();        
+        
+        $from = strtotime(Input::get('from'));
+        $to = strtotime(Input::get('to'));
+        
+        
+        $data = $tblOderModel->getOrderByDate($from,$to, 5); 
+        
+        //echo count($data);
+        $link = $data->links();
+       
+        return View::make('backend.thongke.orderajax')->with('order', $data)->with('link', $link);
     }
 
 }
