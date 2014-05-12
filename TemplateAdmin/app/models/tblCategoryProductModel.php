@@ -14,7 +14,7 @@ class tblCategoryProductModel extends Eloquent {
     public static $rules = array();
 
     public function allListCateProduct() {
-        $arrCateProduct = DB::table('tblCategoryProduct')->get();
+        $arrCateProduct = DB::table('tblCategoryProduct')->where('cateParent','=','0')->get();
         return $arrCateProduct;
     }
 

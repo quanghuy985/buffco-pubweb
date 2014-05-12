@@ -169,5 +169,10 @@ class tblUserModel extends Eloquent {
         $alluser = DB::table('tblusers')->whereBetween('tblusers.time', array($from, $to))->count();
         return $alluser;
     }
+    
+    public function getUserByDate($from, $to,$per_page) {
+        $alluser = DB::table('tblusers')->whereBetween('tblusers.time', array($from, $to))->orderBy('id', 'desc')->paginate($per_page);
+        return $alluser;
+    }
 
 }

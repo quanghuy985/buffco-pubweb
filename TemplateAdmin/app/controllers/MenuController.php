@@ -10,6 +10,7 @@ class MenuController extends Controller {
 
     public function getMenuView($msg = '') {
         $tblMenu = new tblMenuModel();
+        $tblpage= new tblPageModel();
         $check = $tblMenu->getAllMenuNewPaginate(10);
         $links = $check->links();
         $start = $check->getCurrentPage() * 10 - 10;
@@ -20,7 +21,8 @@ class MenuController extends Controller {
         $tblcateProduct = new tblCategoryProductModel();        
         $catepro = $tblcateProduct->allListCateProduct();
         $catenews = $tblcateNews->allCateNewList();
-        $menu = $tblMenu->getMenu();
+        $menu = $tblpage->getAllPage();
+        //$menu = $tblMenu->getMenu();
         $arrMenu = $tblMenu->getAllMenuNew($start, 10);
         if ($msg != '') {
             return View::make('backend.menu.menu')->with('arrMenu', $arrMenu)->with('catenews',$catenews)->with('catepro',$catepro)->with('menu',$menu)->with('link', $links)->with('msg', $msg);
@@ -33,6 +35,7 @@ class MenuController extends Controller {
     
     public function getMenuEdit($id) {
         $tblMenu = new tblMenuModel();
+        $tblpage= new tblPageModel();
         $check = $tblMenu->getAllMenuNewPaginate(10);
         $links = $check->links();
         $start = $check->getCurrentPage() * 10 - 10;
@@ -44,7 +47,8 @@ class MenuController extends Controller {
         $tblcateProduct = new tblCategoryProductModel();        
         $catepro = $tblcateProduct->allListCateProduct();
         $catenews = $tblcateNews->allCateNewList();
-        $menu = $tblMenu->getMenu();
+        $menu = $tblpage->getAllPage();
+        //$menu = $tblMenu->getMenu();
         $dataedit = $tblMenu->findMenuByID($id);
         return View::make('backend.menu.menu')->with('arrayMenu', $dataedit[0])->with('arrMenu', $arrMenu)->with('catenews',$catenews)->with('catepro',$catepro)->with('menu',$menu)->with('link', $links);
     }
@@ -74,6 +78,7 @@ class MenuController extends Controller {
         $tblcateProduct = new tblCategoryProductModel();        
         $catepro = $tblcateProduct->allListCateProduct();
         $catenews = $tblcateNews->allCateNewList();
+        
         $page= $tblPage->getAllPage();
         //var_dump($page);
         //$menu = $tblMenu->getMenu();

@@ -141,5 +141,10 @@ class tblOrderModel extends Eloquent {
         $alltotal = DB::table('tblOrder')->leftJoin('tblOrderDetail', 'tblOrder.orderCode', '=', 'tblOrderDetail.orderCode')->select('tblOrder.*',DB::raw('SUM(tblOrderDetail.total) as total'))->whereBetween('tblOrder.time',array($from,$to))->get();
         return $alltotal;
     }
+    
+    public function getOrderByDate($from,$to,$per_page){
+        $alltotal = DB::table('tblOrder')->leftJoin('tblOrderDetail', 'tblOrder.orderCode', '=', 'tblOrderDetail.orderCode')->select('tblOrder.*','tblOrderDetail.total')->whereBetween('tblOrder.time',array($from,$to))->paginate($per_page);
+        return $alltotal;
+    }
 
 }

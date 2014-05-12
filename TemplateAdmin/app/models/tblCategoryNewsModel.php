@@ -85,7 +85,7 @@ class tblCategoryNewsModel extends Eloquent {
             
     
      public function allCateNewList() {
-        $arrCateNews = DB::table('tblCateNews')->get();
+        $arrCateNews = DB::table('tblCateNews')->where('catenewsParent','=','0')->get();
         return $arrCateNews;
     }
      public function countSlug($slug) {
