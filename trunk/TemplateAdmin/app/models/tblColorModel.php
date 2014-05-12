@@ -21,6 +21,11 @@ class tblColorModel extends Eloquent {
         return $allColor;
     }
 
+    public function getColorByColorCode($colorCode) {
+        $allColor = $this->where('colorCode', '=', $colorCode)->get();
+        return $allColor;
+    }
+
     public function addColor($colorName, $colorCode) {
         $this->colorName = $colorName;
         $this->colorCode = $colorCode;

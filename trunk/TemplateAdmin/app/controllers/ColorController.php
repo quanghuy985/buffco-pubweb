@@ -22,7 +22,6 @@ class ColorController extends BaseController {
         return Redirect::action('ColorController@getAddColor');
     }
 
-
     public function postAddColorAjax() {
         try {
             $tblColorModel = new tblColorModel();
@@ -40,11 +39,20 @@ class ColorController extends BaseController {
         }
     }
 
+    public function postCheckColor() {
+        $tblColor = new tblColorModel();
+        $arrColor = $tblColor->getColorByColorCode(Input::get('colorCode'));
+        if (count($arrColor) > 0) {
+            return 'true';
+        } else {
+            return 'false';
+        }
+    }
+
     public function postDelColor() {
         $tblColorModel = new tblColorModel();
         $check = $tblColorModel->deleteColor(Input::get('id'));
         return 'true';
-
     }
 
     public function getEditColor($id = '') {

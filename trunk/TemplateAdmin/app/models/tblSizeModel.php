@@ -75,7 +75,10 @@ class tblSizeModel extends Eloquent {
         $objectSize = DB::table('tblsize')->where('id', '=', $id)->get();
         return $objectSize[0];
     }
-
+     public function getSizeBySizeValue($sizeValue) {
+        $objectSize = DB::table('tblsize')->where('sizeValue', '=', $sizeValue)->get();
+        return $objectSize;
+    }
     public function FindSize($keyword, $per_page, $orderby, $status) {
         $sizearray = '';
         if ($status == '') {

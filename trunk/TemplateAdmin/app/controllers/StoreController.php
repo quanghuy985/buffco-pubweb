@@ -10,8 +10,9 @@ class StoreController extends Controller {
 
     public function getView() {
         $tblProduct = new TblProductModel();
-        $arrProduct = $tblProduct->getAllProduct(10);
+        $arrProduct = $tblProduct->getAllProduct('','','','',10);
         $link = $arrProduct->links();
+        //var_dump($arrProduct);
         return View::make('backend.store.viewstore')->with('dataproduct', $arrProduct)->with('link', $link);
     }
 //view
@@ -102,54 +103,25 @@ class StoreController extends Controller {
         }
     }
 
-    public function postAjaxsearch() {
-        $objGsp = new TblProductModel();
-        if (Session::has('orderby')) {
-            $status = Session::get('orderby');
-            $data = $objGsp->FindProduct(Input::get('keyword'), 10, 'id', $status[0]);
-        } else {
-            $data = $objGsp->FindProduct(Input::get('keyword'), 10, 'id', '');
-        }
-        $link = $data->links();
-        Session::forget('keywordsearch');
-        Session::push('keywordsearch', Input::get('keyword'));
-        return View::make('backend.store.productajaxsearch')->with('dataproduct', $data)->with('page', $link);
-    }
-
     public function postAjaxpagion() {
-
-        $tblProduct = new TblProductModel();
-        $arrProduct = $tblProduct->getAllProduct(10);
-        $link = $arrProduct->links();
-        return View::make('backend.store.productajaxsearch')->with('dataproduct', $arrProduct)->with('link', $link);
-    }
-
-    public function postAjaxpagionFillter() {
-        $fromdate = Input::get('timeform');
-        $todate = Input::get('timeto');
-        $orderby = Input::get('oderbyoption');
-        $tblProduct = new TblProductModel();
-        $arrProduct = $tblProduct->getAllProductFillter(strtotime($fromdate), strtotime($todate), $orderby, 10);
-        $link = $arrProduct->links();
-        return View::make('backend.store.productajaxsearch')->with('dataproduct', $arrProduct)->with('link', $link);
-    }
-
-    public function postAjaxpagionSearch() {
+        $from = Input::get('from');
+        $to = Input::get('to');
+        $status = Input::get('status');
         $keyword = Input::get('keyword');
         $tblProduct = new TblProductModel();
-        $arrProduct = $tblProduct->getAllProductSearch($keyword, 10);
+        $arrProduct = $tblProduct->getAllProduct($from, $to, $status, $keyword,10);
         $link = $arrProduct->links();
-        return View::make('backend.store.productajaxsearch')->with('dataproduct', $arrProduct)->with('link', $link);
+        return View::make('backend.store.productajax')->with('dataproduct', $arrProduct)->with('link', $link);
     }
-
     public function postFillterProduct() {
-        Session::forget('keywordsearch');
-        $objGsp = new TblProductModel();
-        $data = $objGsp->FindProduct('', 10, 'id', Input::get('orderby'));
-        $link = $data->links();
-        Session::forget('orderby');
-        Session::push('orderby', Input::get('orderby'));
-        return View::make('backend.store.productajaxsearch')->with('dataproduct', $data)->with('page', $link);
+       $from = Input::get('from');
+        $to = Input::get('to');
+        $status = Input::get('status');
+        $keyword = Input::get('keyword');
+        $tblProduct = new TblProductModel();
+        $arrProduct = $tblProduct->getAllProduct($from, $to, $status, $keyword,10);
+        $link = $arrProduct->links();
+        return View::make('backend.store.productajax')->with('dataproduct', $arrProduct)->with('link', $link);
     }
 
 }

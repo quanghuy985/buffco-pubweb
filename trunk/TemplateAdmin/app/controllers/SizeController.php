@@ -59,15 +59,15 @@ class SizeController extends Controller {
             "sizeName" => "required",
             "sizeDescription" => "required",
             "sizeValue" => "required",
-            "status"=>"required"
+            "status" => "required"
         );
         $objSize = new tblSizeModel();
 
         if (!Validator::make(Input::all(), $rules)->fails()) {
 
-            $objSize->addSize(Input::get('sizeName'), Input::get('sizeDescription'), Input::get('sizeValue'),Input::get('status'));
+            $objSize->addSize(Input::get('sizeName'), Input::get('sizeDescription'), Input::get('sizeValue'), Input::get('status'));
 
-            
+
 
             $objadmin = Session::get('adminSession');
             $id = $objadmin[0]->id;
@@ -87,7 +87,7 @@ class SizeController extends Controller {
         $objSize = new tblSizeModel();
 
         if (!Validator::make(Input::all(), $rules)->fails()) {
-            $objSize->addSize(Input::get('sizeName'), ' ', Input::get('sizeValue'),1);
+            $objSize->addSize(Input::get('sizeName'), ' ', Input::get('sizeValue'), 1);
 
             $tblSize1 = new tblSizeModel();
             $arrSize = $tblSize1->allSize(100);
@@ -98,6 +98,16 @@ class SizeController extends Controller {
             return $selectSize;
         } else {
             return 'FALSE';
+        }
+    }
+
+    public function postCheckSize() {
+        $tblSize1 = new tblSizeModel();
+        $arrSize = $tblSize1->getSizeBySizeValue(Input::get('sizeValue'));
+        if (count($arrSize) > 0) {
+            return 'true';
+        } else {
+            return 'false';
         }
     }
 
