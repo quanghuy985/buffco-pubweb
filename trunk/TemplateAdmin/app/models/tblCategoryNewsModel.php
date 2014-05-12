@@ -92,6 +92,11 @@ class tblCategoryNewsModel extends Eloquent {
         $objCateNews = DB::table('tblCateNews')->where('catenewsSlug', 'LIKE', $slug.'%')->count();
         return $objCateNews;
     }
+    
+    public function getCateNewsBySlug($slug) {
+        $objCateNews = DB::table('tblCateNews')->where('catenewsSlug', '=', $slug)->get();
+        return $objCateNews;
+    }
 
     public function findCateNewsByID($id) {
         $objCateNews = DB::table('tblCateNews')->where('id', '=', $id)->get();

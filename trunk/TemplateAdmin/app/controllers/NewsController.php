@@ -164,4 +164,11 @@ class NewsController extends Controller {
         return View::make('backend.tintuc.newsAjax')->with('arrayNews', $arrNews)->with('link', $link);
     }
 
+    public function getNewsBySlugCate($slug) {
+        $tblCategoryNewsModel = new tblCategoryNewsModel();
+        $data = $tblCategoryNewsModel->getCateNewsBySlug($slug);        
+        return View::make('fontend.page.PageManage')->with('arrayPage', $data[0]);
+        
+    }
+    
 }

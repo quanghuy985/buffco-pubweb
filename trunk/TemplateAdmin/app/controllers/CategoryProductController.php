@@ -26,8 +26,10 @@ class CategoryProductController extends Controller {
         return $arrTag;
     }
 
-    public function getCategoryProductBySlugCate($slugcat = '') {
-        echo $slugcat;
+    public function getCategoryProductBySlugCate($slug) {
+        $tblCateProduct = new tblCategoryProductModel();
+        $data = $tblPage->getCateProductBySlug($slug);        
+        return View::make('fontend.page.PageManage')->with('arrayPage', $data[0]);
     }
 
     public function postAjaxpagion() {

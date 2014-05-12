@@ -73,6 +73,11 @@ class tblCategoryProductModel extends Eloquent {
             return FALSE;
         }
     }
+    
+    public function getCateProductBySlug($slug) {
+        $objCateProduct = DB::table('tblcategoryproduct')->where('cateSlug', '=', $slug)->get();
+        return $objCateProduct;
+    }
 
     public function findCateProduct($keyword, $per_page) {
         $arrCateProduct = DB::table('tblCategoryProduct')->where('cateName', 'LIKE', '%' . $keyword . '%')->orWhere('cateSlug', 'LIKE', '%' . $keyword . '%')->orWhere('cateTime', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
