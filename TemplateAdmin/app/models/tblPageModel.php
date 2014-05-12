@@ -77,6 +77,11 @@ class tblPageModel extends Eloquent {
         $objectPage = DB::table('tblpage')->where('id', '=', $pageID)->get();
         return $objectPage[0];
     }
+    
+    public function getPageBySlug($slug) {
+        $objectPage = DB::table('tblpage')->where('pageSlug', '=', $slug)->get();
+        return $objectPage;
+    }
 
     public function FindPage($keyword, $per_page, $orderby, $status) {
         $pagearray = '';

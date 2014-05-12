@@ -157,8 +157,10 @@ class PageController extends Controller {
         return $count;
     }
     
-    public function getPageBySlug($slugcat = '') {
-        echo $slugcat;
+    public function getPageBySlug($slug) {
+        $tblPage = new tblPageModel();
+        $data = $tblPage->getPageBySlug($slug);        
+        return View::make('fontend.page.PageManage')->with('arrayPage', $data[0]);
     }
 
 }
