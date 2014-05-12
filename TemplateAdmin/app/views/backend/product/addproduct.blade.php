@@ -100,23 +100,35 @@
     var form = jQuery('#frmSize');
             if (!form.valid())
             return false;
-            jQuery.jGrowl("Đang thêm mới size!");
-            jQuery('#frmSizeLoader').prop('hidden', false);
-            var request = jQuery.ajax({
-            url: form.attr('action'),
-                    data: form.serialize(),
+            var checkSize = jQuery.ajax({
+            url: "{{URL::action('SizeController@postCheckSize')}}",
+                    data: {sizeValue: jQuery('#sizeValue').val()},
                     type: "POST",
                     dataType: "html"
             });
-            request.done(function(msg) {
-            jQuery("#wSize").dialog("close");
-                    if (msg != 'FALSE') {
-            jQuery("#sizeproduct").empty().html(msg);
-                    jQuery.jGrowl("Thêm mới Size thành công!");
-                    jQuery('#frmSizeLoader').prop('hidden', true);
-            }
-            else {
-            jQuery.jGrowl("Thêm mới Size không thành công!");
+            checkSize.done(function(check) {
+            if (check == 'true') {
+            jQuery.jGrowl("Size này đã tồn tại.");
+            } else {
+            jQuery.jGrowl("Đang thêm mới size!");
+                    jQuery('#frmSizeLoader').prop('hidden', false);
+                    var request = jQuery.ajax({
+                    url: form.attr('action'),
+                            data: form.serialize(),
+                            type: "POST",
+                            dataType: "html"
+                    });
+                    request.done(function(msg) {
+                    jQuery("#wSize").dialog("close");
+                            if (msg != 'FALSE') {
+                    jQuery("#sizeproduct").empty().html(msg);
+                            jQuery.jGrowl("Thêm mới Size thành công!");
+                            jQuery('#frmSizeLoader').prop('hidden', true);
+                    }
+                    else {
+                    jQuery.jGrowl("Thêm mới Size không thành công!");
+                    }
+                    });
             }
             });
     });
@@ -148,23 +160,35 @@
     var form = jQuery('#frmColor');
             if (!form.valid())
             return false;
-            jQuery.jGrowl("Đang thêm mới màu sắc!");
-            jQuery('#frmColorLoader').prop('hidden', false);
-            var request = jQuery.ajax({
-            url: form.attr('action'),
-                    data: form.serialize(),
+            var checkColor = jQuery.ajax({
+            url: "{{URL::action('ColorController@postCheckColor')}}",
+                    data: {colorCode: jQuery('#colorpicker').val()},
                     type: "POST",
                     dataType: "html"
             });
-            request.done(function(msg) {
-            jQuery("#wColor").dialog("close");
-                    if (msg != 'FALSE') {
-            jQuery("#mausacproduct").empty().html(msg);
-                    jQuery.jGrowl("Thêm mới Màu Sắc thành công!");
-                    jQuery('#frmColorLoader').prop('hidden', true);
-            }
-            else {
-            jQuery.jGrowl("Thêm mới Màu Sắc không thành công!");
+            checkColor.done(function(check) {
+            if (check == 'true') {
+            jQuery.jGrowl("Màu này đã tồn tại.");
+            } else {
+            jQuery.jGrowl("Đang thêm mới màu sắc!");
+                    jQuery('#frmColorLoader').prop('hidden', false);
+                    var request = jQuery.ajax({
+                    url: form.attr('action'),
+                            data: form.serialize(),
+                            type: "POST",
+                            dataType: "html"
+                    });
+                    request.done(function(msg) {
+                    jQuery("#wColor").dialog("close");
+                            if (msg != 'FALSE') {
+                    jQuery("#mausacproduct").empty().html(msg);
+                            jQuery.jGrowl("Thêm mới Màu Sắc thành công!");
+                            jQuery('#frmColorLoader').prop('hidden', true);
+                    }
+                    else {
+                    jQuery.jGrowl("Thêm mới Màu Sắc không thành công!");
+                    }
+                    });
             }
             });
     });
@@ -525,7 +549,7 @@
                                             }
                                             function xoaanhthum(id) {
                                             document.getElementById(id).remove();
-                                            document.getElementById('n-'+id).remove();
+                                                    document.getElementById('n-' + id).remove();
                                                     returnurlimg();
                                             }
                                             function returnurlimg() {
@@ -543,8 +567,8 @@ if (isset($dataimg)) {
         ?>
                                                     var urlImg = '<div id="image-' + <?php echo $item->id; ?> + '"><img src="{{Asset('timthumb.php')}}?src=<?php echo $item->attachmentURL; ?>&w=100&h=100&zc=0&q=100" width="100" height="100"/><a href="javascript:void(o);" onclick="xoaanhthum(\'image-' + <?php echo $item->id; ?> + '\');" class="delete" title="Delete image">x</a></div>';
                                                             document.getElementById('thumbnails').innerHTML += urlImg;
-                                                             var urlImgNoThumb = '<div id="n-image-'+<?php echo $item->id; ?>+ '"><img src="<?php echo $item->attachmentURL; ?>" width="100" height="100"/></div>';
-                                                    document.getElementById('noThumb').innerHTML += urlImgNoThumb;
+                                                            var urlImgNoThumb = '<div id="n-image-' +<?php echo $item->id; ?> + '"><img src="<?php echo $item->attachmentURL; ?>" width="100" height="100"/></div>';
+                                                            document.getElementById('noThumb').innerHTML += urlImgNoThumb;
     <?php }
     ?>
                                                 returnurlimg();
@@ -569,9 +593,9 @@ if (isset($dataStore)) {
                 <div class="clear"></div>
                 <input type="button" value="Thêm ảnh" class="stdbtn btn_orange" onclick="BrowseServer('Images:/', 'xImagePath');" />
             </div>
-             <div hidden="true" id="noThumb">
+            <div hidden="true" id="noThumb">
 
-                </div>
+            </div>
             <div id="tabs-4">
                 <p>
                     <label>Chọn loại</label>

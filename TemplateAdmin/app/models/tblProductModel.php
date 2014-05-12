@@ -1,6 +1,5 @@
 <?php
 
-
 class TblProductModel extends Eloquent {
 
     protected $table = 'tblproduct';
@@ -86,10 +85,19 @@ class TblProductModel extends Eloquent {
         }
     }
 
-    public function getAllProduct($per_page) {
-        $arrProduct = DB::table('tblproduct')->join('tblcategoryproduct', 'tblproduct.cateID', '=', 'tblcategoryproduct.id')->join('tblstore', 'tblproduct.id', '=', 'tblstore.productID')->select('tblproduct.*', 'tblcategoryproduct.cateName', DB::raw('SUM(tblstore.soluongnhap) as soluong'), DB::raw('SUM(tblstore.soluongban) as daban'))->where('tblstore.status','=',1)->orderBy('tblproduct.id', 'desc')->groupBy('tblproduct.id')->paginate($per_page);
-
-        return $arrProduct;
+    public function getAllProduct($from, $to, $status, $keyword, $per_page) {
+        $query = DB::table('tblproduct')->leftJoin('tblcategoryproduct', 'tblproduct.cateID', '=', 'tblcategoryproduct.id')->leftJoin('tblstore', 'tblproduct.id', '=', 'tblstore.productID')->select('tblproduct.*', 'tblcategoryproduct.cateName', DB::raw('SUM(tblstore.soluongnhap) as soluong'), DB::raw('SUM(tblstore.soluongban) as daban'));
+        if ($from != null && $to != null && $from != 0 && $to != 0) {
+            $query->whereBetween('tblproduct.time', array($from, $to));
+        }
+        if ($status != null) {
+            $query->where('tblproduct.status', '=', $status);
+        }
+        if ($keyword != null) {
+            $query->where('tblproduct.productCode', 'LIKE', '%' . $keyword . '%')->orWhere('tblproduct.productCode', 'LIKE', '%' . $keyword . '%')->orWhere('tblproduct.productName', 'LIKE', '%' . $keyword . '%')->orWhere('tblproduct.productDescription', 'LIKE', '%' . $keyword . '%')->orWhere('tblproduct.attributes', 'LIKE', '%' . $keyword . '%');
+        }
+        $results = $query->orderBy('tblproduct.id', 'desc')->groupBy('tblproduct.id')->paginate($per_page);
+        return $results;
     }
 
     public function getAllProductFillter($fromdate, $todate, $status, $per_page) {
@@ -123,9 +131,9 @@ class TblProductModel extends Eloquent {
     public function FindProduct($keyword, $per_page, $orderby, $status) {
         $arrProduct = '';
         if ($status == '') {
-            $arrProduct = DB::table('tblproduct')->join('tblcategoryproduct', 'tblproduct.cateID', '=', 'tblcategoryproduct.id')->join('tblpromotion', 'tblproduct.promotionID', '=', 'tblpromotion.id')->select('tblproduct.*', 'tblcategoryproduct.cateName', 'tblpromotion.promotionName')->where('tblproduct.productName', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);
+            $arrProduct = DB::table('tblproduct')->join('tblcategoryproduct', 'tblproduct.cateID', '=', 'tblcategoryproduct.id')->select('tblproduct.*', 'tblcategoryproduct.cateName')->where('tblproduct.productName', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);
         } else {
-            $arrProduct = DB::table('tblproduct')->join('tblcategoryproduct', 'tblproduct.cateID', '=', 'tblcategoryproduct.id')->join('tblpromotion', 'tblproduct.promotionID', '=', 'tblpromotion.id')->select('tblproduct.*', 'tblcategoryproduct.cateName', 'tblpromotion.promotionName')->where('tblproduct.productName', 'LIKE', '%' . $keyword . '%')->where('tblproduct.status', '=', $status)->orderBy($orderby, 'desc')->paginate($per_page);
+            $arrProduct = DB::table('tblproduct')->join('tblcategoryproduct', 'tblproduct.cateID', '=', 'tblcategoryproduct.id')->select('tblproduct.*', 'tblcategoryproduct.cateName')->where('tblproduct.productName', 'LIKE', '%' . $keyword . '%')->where('tblproduct.status', '=', $status)->orderBy($orderby, 'desc')->paginate($per_page);
         }
         return $arrProduct;
     }
@@ -151,6 +159,5 @@ class TblProductModel extends Eloquent {
         $objProduct = DB::table('tblproduct')->where('productCode', '=', $code)->get();
         return $objProduct;
     }
-     
 
 }

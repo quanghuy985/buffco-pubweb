@@ -32,7 +32,7 @@
 <div class="contentwrapper">
     <div class="subcontent">
         <div class="contenttitle2">
-            <h3>Bảng phản hồi</h3>
+            <h3>Bảng quản lý màu sắc</h3>
         </div>
         <table cellpadding="0" cellspacing="0" border="0" class="stdtable" id="dyntable">
             <colgroup>

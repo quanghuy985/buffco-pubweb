@@ -3,27 +3,7 @@
 
 <script>
 
-    function phantrang(page) {
-        jQuery("#jGrowl").remove();
-        jQuery.jGrowl("Đang tải dữ liệu ...");
-        var urlpost = "{{URL::action('StoreController@postAjaxpagion')}}?page=" + page;
-        if (jQuery('#datepicker').val() != '' && jQuery('#datepicker1').val() != '') {
-            urlpost = "{{URL::action('StoreController@postAjaxpagionFillter')}}?timeform=" + jQuery('#datepicker').val() + "&timeto=" + jQuery('#datepicker1').val() + "&oderbyoption=" + jQuery("#oderbyoption1").val() + "&page=" + page;
-        }
-        if (jQuery('#searchblur').val() != '') {
-            urlpost = "{{URL::action('StoreController@postAjaxpagionSearch')}}?keyword=" + jQuery('#searchblur').val() + "&page=" + page;
-        }
-        var request = jQuery.ajax({
-            url: urlpost,
-            type: "POST",
-            dataType: "html"
-        });
-        request.done(function(msg) {
-            //jQuery("#jGrowl").remove();
-            jQuery.jGrowl("Đã tải dữ liệu thành công ...");
-            jQuery('#tableproduct').html(msg);
-        });
-    }
+
     function updateStore(id, productID, oldSize, oldColor) {
         var soluongnhap = jQuery('#soluongnhap_' + id).val();
         var colorID = jQuery('#color_' + id).val();
@@ -66,6 +46,10 @@
             });
             checkStore.done(function(check) {
                 if (check == 'true') {
+                    jQuery("#uniform-size_" + id + " span").html(jQuery("#size_" + id + " option[value=" + oldColor + "]").text());
+                    jQuery("#uniform-color_" + id + " span").html(jQuery("#color_" + id + " option[value=" + oldSize + "]").text());
+                    jQuery("#size_" + id + " option[value=" + oldColor + "]").prop('selected', true);
+                    jQuery("#color_" + id + " option[value=" + oldSize + "]").prop('selected', true);
                     jQuery.jGrowl("Hàng đã có trong kho. Hãy chọn size hoặc màu khác!");
                     return false;
                 }
@@ -141,23 +125,35 @@
             var form = jQuery('#frmSize');
             if (!form.valid())
                 return false;
-            jQuery.jGrowl("Đang thêm mới size!");
-            jQuery('#frmSizeLoader').prop('hidden', false);
-            var request = jQuery.ajax({
-                url: form.attr('action'),
-                data: form.serialize(),
+            var checkSize = jQuery.ajax({
+                url: "{{URL::action('SizeController@postCheckSize')}}",
+                data: {sizeValue: jQuery('#sizeValue').val()},
                 type: "POST",
                 dataType: "html"
             });
-            request.done(function(msg) {
-                jQuery("#wSize").dialog("close");
-                if (msg != 'FALSE') {
-                    jQuery("#sizeID").empty().html(msg);
-                    jQuery.jGrowl("Thêm mới Size thành công!");
-                    jQuery('#frmSizeLoader').prop('hidden', true);
-                }
-                else {
-                    jQuery.jGrowl("Thêm mới Size không thành công!");
+            checkSize.done(function(check) {
+                if (check == 'true') {
+                    jQuery.jGrowl("Size này đã tồn tại.");
+                } else {
+                    jQuery.jGrowl("Đang thêm mới size!");
+                    jQuery('#frmSizeLoader').prop('hidden', false);
+                    var request = jQuery.ajax({
+                        url: form.attr('action'),
+                        data: form.serialize(),
+                        type: "POST",
+                        dataType: "html"
+                    });
+                    request.done(function(msg) {
+                        jQuery("#wSize").dialog("close");
+                        if (msg != 'FALSE') {
+                            jQuery("#sizeID").empty().html(msg);
+                            jQuery.jGrowl("Thêm mới Size thành công!");
+                            jQuery('#frmSizeLoader').prop('hidden', true);
+                        }
+                        else {
+                            jQuery.jGrowl("Thêm mới Size không thành công!");
+                        }
+                    });
                 }
             });
         });
@@ -166,27 +162,39 @@
             var form = jQuery('#frmColor');
             if (!form.valid())
                 return false;
-            jQuery.jGrowl("Đang thêm mới màu sắc!");
-            jQuery('#frmColorLoader').prop('hidden', false);
-            var request = jQuery.ajax({
-                url: form.attr('action'),
-                data: form.serialize(),
+            var checkColor = jQuery.ajax({
+                url: "{{URL::action('ColorController@postCheckColor')}}",
+                data: {colorCode: jQuery('#colorpicker').val()},
                 type: "POST",
                 dataType: "html"
             });
-            request.done(function(msg) {
-                jQuery("#wColor").dialog("close");
-                if (msg != 'FALSE') {
-                    jQuery("#colorID").empty().html(msg);
-                    jQuery.jGrowl("Thêm mới Màu Sắc thành công!");
-                    jQuery('#frmColorLoader').prop('hidden', true);
+            checkColor.done(function(check) {
+                if (check == 'true') {
+                    jQuery.jGrowl("Màu này đã tồn tại.");
+                } else {
+                    jQuery.jGrowl("Đang thêm mới màu sắc!");
+                    jQuery('#frmColorLoader').prop('hidden', false);
+                    var request = jQuery.ajax({
+                        url: form.attr('action'),
+                        data: form.serialize(),
+                        type: "POST",
+                        dataType: "html"
+                    });
+                    request.done(function(msg) {
+                        jQuery("#wColor").dialog("close");
+                        if (msg != 'FALSE') {
+                            jQuery("#colorID").empty().html(msg);
+                            jQuery.jGrowl("Thêm mới Màu Sắc thành công!");
+                            jQuery('#frmColorLoader').prop('hidden', true);
 <?php
 $tblColor = new tblColorModel();
 $arrColor = $tblColor->selectAll();
 ?>
-                }
-                else {
-                    jQuery.jGrowl("Thêm mới Màu Sắc không thành công!");
+                        }
+                        else {
+                            jQuery.jGrowl("Thêm mới Màu Sắc không thành công!");
+                        }
+                    });
                 }
             });
         });

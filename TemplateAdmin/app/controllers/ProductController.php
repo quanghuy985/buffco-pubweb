@@ -316,7 +316,7 @@ class ProductController extends Controller {
 
     public function getView() {
         $tblProduct = new TblProductModel();
-        $arrProduct = $tblProduct->getAllProduct(10);
+        $arrProduct = $tblProduct->getAllProduct('','','','',10);
         $link = $arrProduct->links();
         return View::make('backend.product.viewproduct')->with('dataproduct', $arrProduct)->with('link', $link);
     }
@@ -465,6 +465,7 @@ class ProductController extends Controller {
         $productTag = Input::get('producttags');
         $manufactureID = Input::get('manufacture');
         $status = Input::get('status');
+
         if (!Validator::make(Input::all(), $rules)->fails()) {
             $tblProduct = new TblProductModel();
             $tblProduct->updateProduct($pid, $productCode, $cateID, $productName, $productDescription, $attributes, $productPrice, $salesPrice, strtotime($startSales), strtotime($endSales), '', $productTag, $manufactureID, $status);
@@ -529,57 +530,27 @@ class ProductController extends Controller {
         $arrManu = $objManufactuer->selectAll(1000);
         return View::make('backend.product.manuAjax')->with('arrManu', $arrManu);
     }
-
-    public function postAjaxsearch() {
-        $objGsp = new TblProductModel();
-        if (Session::has('oderbyoption1')) {
-            $status = Session::get('oderbyoption1');
-            $data = $objGsp->FindProduct(Input::get('keyword'), 10, 'id', $status[0]);
-        } else {
-            $data = $objGsp->FindProduct(Input::get('keyword'), 10, 'id', '');
-        }
-        $link = $data->links();
-        Session::forget('keywordsearch');
-        Session::push('keywordsearch', Input::get('keyword'));
-        return View::make('backend.product.productajaxsearch')->with('dataproduct', $data)->with('page', $link);
-    }
-
+ 
     public function postAjaxpagion() {
-
-        $tblProduct = new TblProductModel();
-        $arrProduct = $tblProduct->getAllProduct(10);
-        $link = $arrProduct->links();
-        return View::make('backend.product.productajaxsearch')->with('dataproduct', $arrProduct)->with('link', $link);
-    }
-
-    public function postAjaxpagionFillter() {
-        $fromdate = Input::get('timeform');
-        $todate = Input::get('timeto');
-        $orderby = Input::get('oderbyoption');
-        $tblProduct = new TblProductModel();
-        $arrProduct = $tblProduct->getAllProductFillter(strtotime($fromdate), strtotime($todate), $orderby, 10);
-        $link = $arrProduct->links();
-        return View::make('backend.product.productajaxsearch')->with('dataproduct', $arrProduct)->with('link', $link);
-    }
-
-    public function postAjaxpagionSearch() {
+        $from = Input::get('from');
+        $to = Input::get('to');
+        $status = Input::get('status');
         $keyword = Input::get('keyword');
         $tblProduct = new TblProductModel();
-        $arrProduct = $tblProduct->getAllProductSearch($keyword, 10);
+        $arrProduct = $tblProduct->getAllProduct($from, $to, $status, $keyword,10);
         $link = $arrProduct->links();
-        return View::make('backend.product.productajaxsearch')->with('dataproduct', $arrProduct)->with('link', $link);
+        return View::make('backend.product.productajax')->with('dataproduct', $arrProduct)->with('link', $link);
     }
-
-    public function postFillterProduct() {
-        Session::forget('keywordsearch');
+    public function postFillterProduct() {      
+        $from = Input::get('from');
+        $to = Input::get('to');
+        $status = Input::get('status');
+        $keyword = Input::get('keyword');
         $objGsp = new TblProductModel();
-        $data = $objGsp->FindProduct('', 10, 'id', Input::get('oderbyoption1'));
-        $link = $data->links();
-        Session::forget('oderbyoption1');
-        Session::push('oderbyoption1', Input::get('oderbyoption1'));
-        return View::make('backend.product.productajaxsearch')->with('dataproduct', $data)->with('page', $link);
+        $data = $objGsp->getAllProduct($from, $to, $status, $keyword,10);
+        $link = $data->links();        
+        return View::make('backend.product.productajax')->with('dataproduct', $data)->with('link', $link);
     }
-
     public function postDelmulte() {
         $pieces1 = explode(",", Input::get('multiid'));
         foreach ($pieces1 as $item) {
@@ -596,11 +567,8 @@ class ProductController extends Controller {
 
     public function postDel() {
         $objGsp = new TblProductModel();
-        $objGsp->DeleteProduct(Input::get('id'));
-        $objGsp = new TblProductModel();
-        $data = $objGsp->FindProduct('', 10, 'id', '');
-        $link = $data->links();
-        return View::make('backend.product.productajaxsearch')->with('dataproduct', $data)->with('page', $link);
+        $objGsp->DeleteProduct(Input::get('id'));        
+        return 'true';
     }
 
     public function postCheckSlug() {

@@ -2,82 +2,50 @@
 @section("contentadmin")
 
 <script>
-
-    function phantrang(page) {
-        jQuery("#jGrowl").remove();
-        jQuery.jGrowl("Đang tải dữ liệu ...");
-        var urlpost = "{{URL::action('StoreController@postAjaxpagion')}}?page=" + page;
-        if (jQuery('#datepicker').val() != '' && jQuery('#datepicker1').val() != '') {
-            urlpost = "{{URL::action('StoreController@postAjaxpagionFillter')}}?timeform=" + jQuery('#datepicker').val() + "&timeto=" + jQuery('#datepicker1').val() + "&oderbyoption=" + jQuery("#oderbyoption1").val() + "&page=" + page;
-        }
-        if (jQuery('#searchblur').val() != '') {
-            urlpost = "{{URL::action('StoreController@postAjaxpagionSearch')}}?keyword=" + jQuery('#searchblur').val() + "&page=" + page;
-        }
-        var request = jQuery.ajax({
-            url: urlpost,
-            type: "POST",
-            dataType: "html"
-        });
-        request.done(function(msg) {
-            //jQuery("#jGrowl").remove();
-            jQuery.jGrowl("Đã tải dữ liệu thành công ...");
-            jQuery('#tableproduct').html(msg);
-        });
-
-    }
+    var from =0;
+            var to =0;
+            var status = '';
+            var keyword = '';
+            function phantrang(page) {
+              
+                    jQuery.jGrowl("Đang tải dữ liệu ...");
+                    var urlpost = "{{URL::action('StoreController@postAjaxpagion')}}?page=" + page + "&from=" + from + "&to=" + to + "&keyword=" + keyword + "&status=" + status;
+                    var request = jQuery.ajax({
+                    url: urlpost,
+                            type: "POST",
+                            dataType: "html"
+                    });
+                    request.done(function(msg) {
+                    //  
+                    jQuery.jGrowl("Đã tải dữ liệu thành công ...");
+                            jQuery('#tableproduct').html(msg);
+                    });
+            }
     function locdulieu() {
-        jQuery('#searchblur').val('');
-        jQuery("#jGrowl").remove();
-        jQuery.jGrowl("Đang tải dữ liệu ...");
-        var request = jQuery.ajax({
-            url: "{{URL::action('StoreController@postAjaxpagionFillter')}}?timeform=" + jQuery('#datepicker').val() + "&timeto=" + jQuery('#datepicker1').val() + "&oderbyoption=" + jQuery("#oderbyoption1").val(),
-            type: "POST",
-            dataType: "html"
-        }
-        );
-        request.done(function(msg) {
-            jQuery("#jGrowl").remove();
-            jQuery.jGrowl("Đã tải dữ liệu thành công ...");
-            jQuery('#tableproduct').html(msg);
-        });
-    }
-    function timkiem() {
-        jQuery('#datepicker').val('');
-        jQuery('#datepicker1').val('');
-        //jQuery("#jGrowl").remove();
-        jQuery.jGrowl("Đang tải dữ liệu ...");
-        var request = jQuery.ajax({
-            url: "{{URL::action('StoreController@postAjaxpagionSearch')}}?keyword=" + jQuery('#searchblur').val(),
-            type: "POST",
-            dataType: "html"
-        });
-        request.done(function(msg) {
-            //jQuery("#jGrowl").remove();
-            jQuery.jGrowl("Đã tải dữ liệu thành công ...");
-            jQuery('#tableproduct').html(msg);
-        });
-    }
-    jQuery(document).ready(function() {
-
-        jQuery('#searchblur').keypress(function(e) {
-            if (e.which == 10 || e.which == 13) {
-            jQuery('#datepicker').val('');
-                    jQuery('#datepicker1').val('');
-            // jQuery("#jGrowl").remove();
+    from = jQuery('#datepicker').val();
+            to = jQuery('#datepicker1').val();
+            status = jQuery("#oderbyoption1").val();
+            keyword = jQuery('#searchblur').val();            
             jQuery.jGrowl("Đang tải dữ liệu ...");
             var request = jQuery.ajax({
-                url: "{{URL::action('StoreController@postAjaxpagionSearch')}}?keyword=" + jQuery('#searchblur').val(),
-                type: "POST",
-                dataType: "html"
-            });
+            url: "{{URL::action('StoreController@postFillterProduct')}}?from=" + from + "&to=" + to + "&status=" + status + "&keyword=" + keyword,
+                    type: "POST",
+                    dataType: "html"
+            }
+            );
             request.done(function(msg) {
-                //jQuery("#jGrowl").remove();
-                jQuery.jGrowl("Đã tải dữ liệu thành công ...");
-                jQuery('#tableproduct').html(msg);
+              
+                    jQuery.jGrowl("Đã tải dữ liệu thành công ...");
+                    jQuery('#tableproduct').html(msg);
             });
-        }
-        });
-    });   
+    }
+    jQuery(document).ready(function() {
+    jQuery('#searchblur').keypress(function(e) {
+    if (e.which == 10 || e.which == 13) {
+    locdulieu();
+    }
+    });
+    });
 </script>
 <div class="pageheader notab">
     <h1 class="pagetitle">QUẢN LÝ KHO HÀNG</h1>
@@ -100,7 +68,7 @@
                 </select>&nbsp; &nbsp;<button class="radius3" id="loctheotieuchi" onclick="locdulieu()">Lọc dữ liệu</button>
 
             </form>
-            <div class="dataTables_filter1" id="searchformfile"><label>Search: <input id="searchblur" name="searchblur" style="-moz-border-radius: 2px;-webkit-border-radius: 2px;border-radius: 2px;border: 1px solid #ddd;padding: 7px 5px 8px 5px;width: 200px;background: #fcfcfc;color: #666;-moz-box-shadow: inset 0 1px 3px #ddd;-webkit-box-shadow: inset 0 1px 3px #ddd;box-shadow: inset 0 1px 3px #ddd;" type="text"></label>&nbsp; &nbsp;<a href="javascript:void(0)" onclick="timkiem()" class="btn btn_search radius50"><span>Tìm kiếm</span></a></div>
+            <div class="dataTables_filter1" id="searchformfile"><label>Search: <input id="searchblur" name="searchblur" style="-moz-border-radius: 2px;-webkit-border-radius: 2px;border-radius: 2px;border: 1px solid #ddd;padding: 7px 5px 8px 5px;width: 200px;background: #fcfcfc;color: #666;-moz-box-shadow: inset 0 1px 3px #ddd;-webkit-box-shadow: inset 0 1px 3px #ddd;box-shadow: inset 0 1px 3px #ddd;" type="text"></label>&nbsp; &nbsp;<a href="javascript:void(0)" onclick="locdulieu()" class="btn btn_search radius50"><span>Tìm kiếm</span></a></div>
         </div>
         <table cellpadding="0" cellspacing="0" border="0"  class="stdtable stdtablecb">
             <colgroup>
@@ -131,8 +99,8 @@
                     <td class="center"><?php echo $i; $i++; ?> </td>
                     <td><a href="{{URL::action('StoreController@getViewStoreProduct')}}?id={{$item->id}}" alt="Thêm hàng vào kho" >{{$item->productName}}</a>  </td>
                     <td><a href="" >{{$item->productCode}}</a></td>                    
-                    <td class="center">{{$item->soluong}} </td>
-                    <td class="center">{{$item->daban}} </td> 
+                   <td class="center">@if($item->soluong!=null){{$item->soluong}} @else 0 @endif </td>
+                    <td class="center">@if($item->daban!=null) {{$item->daban}}  @else 0 @endif </td>
                     <td class="center">
                         @if($item->status==0)
                         chờ đăng
@@ -149,14 +117,14 @@
                 @endforeach
                 @if($link!='')
                 <tr>
-                    <td colspan="6">
+                    <td colspan="7">
                         {{$link}}
                     </td>
                 </tr>
                 @endif
                 @if(count($dataproduct)==0)
                 <tr>
-                    <td colspan="6" style="text-align: center;"><span class="center">Không có dữ liệu trả về .</span></td>
+                    <td colspan="7" style="text-align: center;"><span class="center">Không có dữ liệu trả về .</span></td>
                 </tr>
                 @endif
             </tbody>
