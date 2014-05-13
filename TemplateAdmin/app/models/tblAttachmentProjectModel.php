@@ -25,6 +25,15 @@ class tblAttachmentProjectModel extends Eloquent {
         return $arrAttachment;
     }
     
+    public function deleteAttachmentByProjectID($projectID) {
+        $checkdel = $this->where('projectID', '=', $projectID)->delete();
+        if ($checkdel > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+    
     
     
 
