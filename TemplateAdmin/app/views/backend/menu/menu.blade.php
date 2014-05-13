@@ -1,9 +1,9 @@
 @extends("templateadmin2.mainfire")
 @section("contentadmin")
 <script>
-    
 
-    
+
+
     function xoasanpham(id) {
     jConfirm('Bạn có chắc chắn muốn xóa ?', 'Thông báo', function(r) {
     if (r == true) {
@@ -37,31 +37,42 @@
 
 <script>
     jQuery(document).ready(function() {
-    jQuery('.external').hide();
-            jQuery('#catenews').hide();
-            jQuery('#cateproduct').hide();
-            jQuery('#url').change(function() {
-    if (jQuery('#url').val() == '1') {
-    jQuery('#internal').show();
             jQuery('.external').hide();
             jQuery('#catenews').hide();
             jQuery('#cateproduct').hide();
-    } else if (jQuery('#url').val() == '2') {
-    jQuery('#internal').hide();
-            jQuery('.external').show();
-            jQuery('#catenews').hide();
-            jQuery('#cateproduct').hide();
-    } else if (jQuery('#url').val() == '3') {
-    jQuery('#internal').hide();
-            jQuery('.external').hide();
-            jQuery('#catenews').show();
-            jQuery('#cateproduct').hide();
-    } else if (jQuery('#url').val() == '4') {
-    jQuery('#internal').hide();
-            jQuery('.external').hide();
-            jQuery('#catenews').hide();
-            jQuery('#cateproduct').show();
-    }
+            jQuery('#internal').hide();
+    jQuery('#url').change(function() {
+        if (jQuery('#url').val() == '1') {
+                jQuery('#internal').hide();
+                jQuery('.external').hide();
+                jQuery('#catenews').hide();
+                jQuery('#cateproduct').hide();
+                jQuery('#home').show();
+        } else if (jQuery('#url').val() == '2') {
+                jQuery('#internal').show();
+                jQuery('.external').hide();
+                jQuery('#catenews').hide();
+                jQuery('#cateproduct').hide();
+                jQuery('#home').hide();
+        } else if (jQuery('#url').val() == '3') {
+                jQuery('#internal').hide();
+                jQuery('.external').show();
+                jQuery('#catenews').hide();
+                jQuery('#cateproduct').hide();
+                jQuery('#home').hide();
+        } else if (jQuery('#url').val() == '4') {
+                jQuery('#internal').hide();
+                jQuery('.external').hide();
+                jQuery('#catenews').show();
+                jQuery('#cateproduct').hide();
+                jQuery('#home').hide();
+        }else if (jQuery('#url').val() == '5') {
+                jQuery('#internal').hide();
+                jQuery('.external').hide();
+                jQuery('#catenews').hide();
+                jQuery('#cateproduct').show();
+                jQuery('#home').hide();
+        }
     });
             jQuery('#cateproduct').change(function(){
     jQuery("#urlValue").val(jQuery('#cateproduct').val());
@@ -71,13 +82,15 @@
     });
             jQuery('#parent').change(function(){
     jQuery('#parentvalue').val(jQuery('#parent').val());
-            
     });
             jQuery('#externalValue').change(function(){
     jQuery('#urlValue').val(jQuery('#externalValue').val());
     });
             jQuery('#internal').change(function(){
     jQuery("#urlValue").val(jQuery('#internal').val());
+    });
+            jQuery('#home').change(function(){
+    jQuery("#urlValue").val(jQuery('#home').val());
     });
             jQuery("#addMenu").validate({
     rules: {
@@ -137,9 +150,9 @@
         </div>
 
         <div class="tableoptions">
-           
-           
-            
+
+
+
         </div>
         <table cellpadding="0" cellspacing="0" border="0" id="table2" class="stdtable stdtablecb">
             <colgroup>
@@ -178,27 +191,27 @@
                     <td><label value="page">{{$item->menuPosition}} </label></td> 
                     <td><label value="page"></label><?php echo date('d/m/Y h:i:s', $item->time); ?></td> 
                     <td><label value="page">
-<?php
-if ($item->status == 0) {
-    echo "chờ kích hoạt";
-} else if ($item->status == 1) {
-    echo "đã kích hoạt";
-} else if ($item->status == 2) {
-    echo "đã xóa";
-}
-?>
+                            <?php
+                            if ($item->status == 0) {
+                                echo "chờ kích hoạt";
+                            } else if ($item->status == 1) {
+                                echo "đã kích hoạt";
+                            } else if ($item->status == 2) {
+                                echo "đã xóa";
+                            }
+                            ?>
                         </label>
                     </td> 
                     <td>
-                        
+
                         @if($item->status=='2')
-                        <a href="javascript: void(0)" onclick="kichhoat({{$item -> id}}, 0)" class="btn btn4 btn_world" title="Chờ kích hoạt"></a>
+                        <a href="javascript: void(0)" onclick="kichhoat({{$item - > id}}, 0)" class="btn btn4 btn_world" title="Chờ kích hoạt"></a>
                         @endif
                         @if($item->status=='0')
-                        <a href="javascript: void(0)" onclick="kichhoat({{$item -> id}}, 1)" class="btn btn4 btn_flag" title="Kích hoạt"></a>
+                        <a href="javascript: void(0)" onclick="kichhoat({{$item - > id}}, 1)" class="btn btn4 btn_flag" title="Kích hoạt"></a>
                         @endif
                         @if($item->status!='2')
-                        <a href="javascript: void(0)" onclick="xoasanpham({{$item -> id}})" class="btn btn4 btn_trash" title="Xóa"></a>
+                        <a href="javascript: void(0)" onclick="xoasanpham({{$item - > id}})" class="btn btn4 btn_trash" title="Xóa"></a>
                         @endif
                     </td> 
                 </tr> 
@@ -240,36 +253,41 @@ if ($item->status == 0) {
             <span class="field">
                 <input type="text" id="urlValue" name="urlValue" value="@if(isset($arrayMenu)){{$arrayMenu->menuURL}}@endif"/>
                 <select id="url">
-                    <option value="1">Trang trong</option>
-                    <option value="2">Trang ngoài</option>
-                    <option value="3">Danh mục tin tức</option>
-                    <option value="4">Danh mục sản phẩm</option>
+                    <option value="1">Trang chủ</option>
+                    <option value="2">Trang trong</option>
+                    <option value="3">Trang ngoài</option>
+                    <option value="4">Danh mục tin tức</option>
+                    <option value="5">Danh mục sản phẩm</option>
                 </select><br/>                    
-                <select name="internal" id="internal" size="5">
-                    
+                <select name="home" id="home" size="5">                    
+                    <option value="{{action('HomeController@getHome1')}}">Trang chủ</option>  
+
+                </select>
+                <select name="internal" id="internal" size="5">                    
                     @if(isset($menu))
                     @foreach($menu as $item)
-                    <option value="{{action('PageController@getPageBySlug')}}/{{$item->pageSlug}}">{{$item->pageName}}</option>                        
+                    <option value="{{action('PageController@getPageBySlug')}}?slug={{$item->pageSlug}}">{{$item->pageName}}</option>                        
                     @endforeach
                     @endif
                 </select>
                 <select name="catenews" id="catenews" size="5">
+                    <option value="{{action('NewsController@getNewsView')}}">Tất cả tin tức</option>                        
                     @if(isset($catenews))
                     @foreach($catenews as $item)
-                    <option value="{{action('NewsController@getNewsByCategory')}}/cateslug/{{$item->catenewsSlug}}">{{$item->catenewsName}}</option>                        
+                    <option value="{{action('NewsController@getNewsByCategory')}}?cateslug={{$item->catenewsSlug}}">{{$item->catenewsName}}</option>                        
                     @endforeach
                     @endif
                 </select>
                 <select name="cateproduct" id="cateproduct" size="5">
+                    <option value="{{action('ProductController@getProduct')}}">Tất cả sản phẩm</option>
                     @if(isset($catepro))
                     @foreach($catepro as $item)
-                    <option value="{{action('ProductController@getProductByCategory')}}/cateslug/{{$item->cateSlug}}">{{$item->cateName}}</option>                        
+                    <option value="{{action('ProductController@getProductByCategory')}}?cateslug={{$item->cateSlug}}">{{$item->cateName}}</option>                        
                     @endforeach
                     @endif
-                </select>
-
-                <label class="external" style="margin-right:-185px;margin-left: -20px;">URL:</label><input type="text" class="external" id="externalValue" style="width: 40%;margin-top:10px "/>
-
+                </select>                
+                <label class="external" style="margin-right:-185px;margin-left: -10px;">URL:</label>
+                <input type="text" class="external" id="externalValue" style="width: 40%;margin-top:10px "/>
             </span>
         </p>
 
