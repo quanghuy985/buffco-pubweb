@@ -570,7 +570,12 @@ class ProductController extends Controller {
         $objGsp->DeleteProduct(Input::get('id'));        
         return 'true';
     }
-
+     public function postActive() {
+        $objGsp = new TblProductModel();
+        $objGsp->updateProduct(Input::get('id'), '', '', '', '', '', '', '', '', '', '', '', '', 1) ;
+        return 'true';
+    }
+    
     public function postCheckSlug() {
         $tblProduct = new TblProductModel();
         $count = 0;
