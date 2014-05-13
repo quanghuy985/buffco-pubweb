@@ -85,7 +85,7 @@ class tblMenuModel extends Eloquent {
         $results = DB::select("select a.menuName as N1,a.menuName as menuName,a.menuParent as menuParent,a.menuName as menuParentName,a.id as id,a.menuURL as menuURL,a.menuPosition as menuPosition,a.time as time,a.status as status FROM `tblmenu` as a where a.menuParent=0
         UNION ALL
         select a.menuName as N1,b.menuName as menuName,b.menuParent as menuParent,a.menuName as menuParentName,b.id as id,b.menuURL as menuURL,b.menuPosition as menuPosition ,b.time as time,b.status as status  FROM `tblmenu` as a INNER JOIN `tblmenu` as b On a.id = b.menuParent
-        ORDER BY menuParent,N1
+        ORDER BY N1,menuParent
         LIMIT ?,?", array($start, $per_page));
         return $results;
     }
@@ -94,7 +94,7 @@ class tblMenuModel extends Eloquent {
         $results = DB::select("select a.menuName as N1,a.menuName as menuName,a.menuParent as menuParent,a.menuName as menuParentName,a.id as id,a.menuURL as menuURL,a.menuPosition as menuPosition,a.time as time,a.status as status FROM `tblmenu` as a where a.menuParent=0
         UNION ALL
         select a.menuName as N1,b.menuName as menuName,b.menuParent as menuParent,a.menuName as menuParentName,b.id as id,b.menuURL as menuURL,b.menuPosition as menuPosition ,b.time as time,b.status as status  FROM `tblmenu` as a INNER JOIN `tblmenu` as b On a.id = b.menuParent
-        ORDER BY menuParent,N1
+        ORDER BY N1,menuParent
        ");
         return Paginator::make($results, count($results), $per_page);
     }
