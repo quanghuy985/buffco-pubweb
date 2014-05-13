@@ -256,14 +256,14 @@ if ($item->status == 0) {
                 <select name="catenews" id="catenews" size="5">
                     @if(isset($catenews))
                     @foreach($catenews as $item)
-                    <option value="{{action('NewsController@getNewsBySlugCate')}}/{{$item->catenewsSlug}}">{{$item->catenewsName}}</option>                        
+                    <option value="{{action('NewsController@getNewsByCategory')}}/cateslug/{{$item->catenewsSlug}}">{{$item->catenewsName}}</option>                        
                     @endforeach
                     @endif
                 </select>
                 <select name="cateproduct" id="cateproduct" size="5">
                     @if(isset($catepro))
                     @foreach($catepro as $item)
-                    <option value="{{action('CategoryProductController@getCategoryProductBySlugCate')}}/{{$item->cateSlug}}">{{$item->cateName}}</option>                        
+                    <option value="{{action('ProductController@getProductByCategory')}}/cateslug/{{$item->cateSlug}}">{{$item->cateName}}</option>                        
                     @endforeach
                     @endif
                 </select>
