@@ -61,7 +61,8 @@ class ProjectController extends Controller {
                 if ($pid != NULL || $pid != '') {
 
                     $attList = Input::get('ImagePath');
-
+                    $tblAttach = new tblAttachmentProjectModel();
+                    $tblAttach->deleteAttachmentByProjectID($pid);
                     if ($attList != '') {
                         $arr = explode(',', $attList);
                         foreach ($arr as $item) {
