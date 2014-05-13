@@ -1,4 +1,4 @@
-   @foreach($dataproduct as $item)
+    @foreach($dataproduct as $item)
                 <tr >  
                     <td><a href="{{URL::action('ProductController@getEditProduct')}}/{{$item->id}}" >{{$item->productName}}</a>  </td>
                     <td><a href="{{URL::action('ProductController@getEditProduct')}}/{{$item->id}}" >{{$item->productCode}}</a></td>             
@@ -22,7 +22,15 @@
                         xóa
                         @endif
                     </td>
-                    <td class="center"><a href="{{URL::action('ProductController@getEditProduct')}}/{{$item->id}}" >Sửa</a> &nbsp; || &nbsp; <a href="javascript: void(0)" onclick="xoasanpham('{{$item->id}}')">Xóa</a></td>
+                    <td class="center">
+                        <a href="{{URL::action('ProductController@getEditProduct')}}/{{$item->id}}" >Sửa</a> &nbsp; ||  &nbsp;
+                        @if($item->status==1 || $item->status==0  )
+                        <a href="javascript: void(0)" onclick="xoasanpham('{{$item->id}}')">Xóa</a>
+                        @else
+                          <a href="javascript: void(0)" onclick="kichhoat('{{$item->id}}')">Kích hoạt</a>
+                        @endif
+                        
+                    </td>
                 </tr>
                 @endforeach
                 @if($link!='')

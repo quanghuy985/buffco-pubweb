@@ -46,10 +46,10 @@
             });
             checkStore.done(function(check) {
                 if (check == 'true') {
-                    jQuery("#uniform-size_" + id + " span").html(jQuery("#size_" + id + " option[value=" + oldColor + "]").text());
-                    jQuery("#uniform-color_" + id + " span").html(jQuery("#color_" + id + " option[value=" + oldSize + "]").text());
-                    jQuery("#size_" + id + " option[value=" + oldColor + "]").prop('selected', true);
-                    jQuery("#color_" + id + " option[value=" + oldSize + "]").prop('selected', true);
+                    jQuery("#uniform-size_" + id + " span").html(jQuery("#size_" + id + " option[value=" + oldSize + "]").text());
+                    jQuery("#uniform-color_" + id + " span").html(jQuery("#color_" + id + " option[value=" + oldColor+ "]").text());
+                    jQuery("#size_" + id + " option[value=" +  oldSize+ "]").prop('selected', true);
+                    jQuery("#color_" + id + " option[value=" + oldColor  + "]").prop('selected', true);
                     jQuery.jGrowl("Hàng đã có trong kho. Hãy chọn size hoặc màu khác!");
                     return false;
                 }

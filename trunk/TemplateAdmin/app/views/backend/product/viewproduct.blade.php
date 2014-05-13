@@ -3,13 +3,13 @@
 
 <script>
 
-    var from =0;
-            var to =0;
+    var from = 0;
+            var to = 0;
             var status = '';
             var keyword = '';
             function phantrang(page) {
-              
-                    jQuery.jGrowl("Đang tải dữ liệu ...");
+
+            jQuery.jGrowl("Đang tải dữ liệu ...");
                     var urlpost = "{{URL::action('ProductController@postAjaxpagion')}}?page=" + page + "&from=" + from + "&to=" + to + "&keyword=" + keyword + "&status=" + status;
                     var request = jQuery.ajax({
                     url: urlpost,
@@ -26,7 +26,7 @@
     from = jQuery('#datepicker').val();
             to = jQuery('#datepicker1').val();
             status = jQuery("#oderbyoption1").val();
-            keyword = jQuery('#searchblur').val();            
+            keyword = jQuery('#searchblur').val();
             jQuery.jGrowl("Đang tải dữ liệu ...");
             var request = jQuery.ajax({
             url: "{{URL::action('ProductController@postFillterProduct')}}?from=" + from + "&to=" + to + "&status=" + status + "&keyword=" + keyword,
@@ -35,8 +35,8 @@
             }
             );
             request.done(function(msg) {
-              
-                    jQuery.jGrowl("Đã tải dữ liệu thành công ...");
+
+            jQuery.jGrowl("Đã tải dữ liệu thành công ...");
                     jQuery('#tableproduct').html(msg);
             });
     }
@@ -63,8 +63,26 @@
             {
             return false;
             }
-            })
+            });
             }
+    function kichhoat(id) {
+       jConfirm('Bạn có chắc chắn muốn kích hoạt  sản phẩm không ?', 'Thông báo', function(r) {
+            if (r == true) {
+            var request = jQuery.ajax({
+            url: "{{URL::action('ProductController@postActive')}}?id=" + id,
+                    type: "POST",
+                    dataType: "html"
+            });
+                    request.done(function(msg) {
+                    locdulieu();
+                    });
+                    return false;
+            } else
+            {
+            return false;
+            }
+            });
+    }
 </script>
 <div class="pageheader notab">
     <h1 class="pagetitle">QUẢN LÝ SẢN PHẨM</h1>
@@ -92,7 +110,7 @@
         <table cellpadding="0" cellspacing="0" border="0"  class="stdtable stdtablecb">
             <colgroup>
 
-                <col class="con0" style="width: 20%">
+                <col class="con0" style="width: 18%">
                 <col class="con1" style="width: 10%">
                 <col class="con0" style="width: 12%">
                 <col class="con1" style="width: 7%">
@@ -100,7 +118,7 @@
                 <col class="con1" style="width: 7%">
                 <col class="con0" style="width: 20%">
                 <col class="con1" style="width: 8%">
-                <col class="con0" style="width: 15%">
+                <col class="con0" style="width: 17%">
 
             </colgroup>
             <thead>
@@ -142,7 +160,15 @@
                         xóa
                         @endif
                     </td>
-                    <td class="center"><a href="{{URL::action('ProductController@getEditProduct')}}/{{$item->id}}" >Sửa</a> &nbsp; || &nbsp; <a href="javascript: void(0)" onclick="xoasanpham('{{$item->id}}')">Xóa</a></td>
+                    <td class="center">
+                        <a href="{{URL::action('ProductController@getEditProduct')}}/{{$item->id}}" >Sửa</a> &nbsp; ||  &nbsp;
+                        @if($item->status==1 || $item->status==0  )
+                        <a href="javascript: void(0)" onclick="xoasanpham('{{$item->id}}')">Xóa</a>
+                        @else
+                          <a href="javascript: void(0)" onclick="kichhoat('{{$item->id}}')">Kích hoạt</a>
+                        @endif
+                        
+                    </td>
                 </tr>
                 @endforeach
                 @if($link!='')
