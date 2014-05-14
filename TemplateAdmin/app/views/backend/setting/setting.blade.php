@@ -2,8 +2,7 @@
 @section("contentadmin")
 <script type="text/javascript">
 
-    function BrowseServer(startupPath, functionData)
-    {
+    function BrowseServer(startupPath, functionData) {
 // You can use the "CKFinder" class to render CKFinder in a page:
         var finder = new CKFinder();
 
@@ -27,19 +26,17 @@
         finder.popup();
     }
 
-// This is a sample function which is called when a file is selected in CKFinder.
-    function SetFileField(fileUrl, data)
-    {
+    // This is a sample function which is called when a file is selected in CKFinder.
+    function SetFileField(fileUrl, data) {
         document.getElementById(data["selectActionData"]).value = fileUrl;
     }
 
-// This is a sample function which is called when a thumbnail is selected in CKFinder.
-    function ShowThumbnails(fileUrl, data)
-    {
+    // This is a sample function which is called when a thumbnail is selected in CKFinder.
+    function ShowThumbnails(fileUrl, data) {
 // this = CKFinderAPI
         var sFileName = this.getSelectedFile().name;
         document.getElementById('thumbnails').innerHTML +=
-                '<div class="thumb">' +
+            '<div class="thumb">' +
                 '<img src="' + fileUrl + '" />' +
                 '<div class="caption">' +
                 '<a href="' + data["fileUrl"] + '" target="_blank">' + sFileName + '</a> (' + data["fileSize"] + 'KB)' +
@@ -53,216 +50,233 @@
     }
 </script>
 <div class="pageheader notab">
-    <h1 class="pagetitle">CẤU HÌNH WEBSITE</h1>
-    <span class="pagedesc">Cài đặt cấu hình website</span>
+    <h1 class="pagetitle uppercase">{{Lang::get('backend/setting.title')}}</h1>
+    <span class="pagedesc">{{Lang::get('backend/setting.title_description')}}</span>
 </div>
 <div class="contentwrapper">
-    <div class="subcontent">
-        <form class="stdform" method="post" action="{{URL::action('SettingController@postUpdateSetting')}}">
-            <div id="tabs">
-                <ul>
-                    <li><a href="#tabs-1">Tổng quát</a></li>
-                    <li><a href="#tabs-2">Cấu hình e-mail</a></li>
-                    <li><a href="#tabs-3">Cấu hình thanh toán</a></li>
-                    <li><a href="#tabs-4">Cấu hình Slider ảnh</a></li>
-                    <li><a href="#tabs-5">Cấu hình chân trang</a></li>
-                    <li><a href="#tabs-6">Thông tin liên hệ</a></li>
-                    <li><a href="#tabs-7">Mạng xã hội</a></li>
-                </ul>
-                <div id="tabs-1">
-                    <div class="contenttitle2">
-                        <h3>Tổng quát</h3>
-                    </div>
-                    <p>
-                        <label>Tiêu đề trang :</label>
-                        <span class="field">
-                            <input type="text" name="titlewebsite" placeholder="pubweb.vn" class="longinput" value="@if(isset($arrSetting)){{$arrSetting['titlewebsite']}} @endif"/>
-                        </span>
-                    </p>
-                    <p>
-                        <label>Tagline :</label>
-                        <span class="field">
-                            <input type="text" name="tagline" placeholder="Cung cấp website miễn phí" value="@if(isset($arrSetting)){{$arrSetting['tagline']}}@endif" class="longinput"/>
-                        </span>
-                    </p>
-                    <p>
-                        <label>Logo website :</label>
-                        <span class="field">
-                            <input id="logowebsite" name="logowebsite" class="smallinput" onclick="BrowseServer('Images:/', 'logowebsite');" type="text" value="@if(isset($arrSetting)){{$arrSetting['logowebsite']}}@endif" />
-                            <input type="button" value="Chọn hình ảnh" class="stdbtn" onclick="BrowseServer('Images:/', 'logowebsite');" />
-                        </span>
-                    </p>
-                    <p>
-                        <label>Mô tả trang :</label>
-                        <span class="field">
-                            <textarea cols="80" rows="5" name="description"  placeholder="Chúng tôi cung cấp website miễn phí . Cam kết giá rẻ nhất và nhanh nhất ." class="longinput">@if(isset($arrSetting)){{$arrSetting['description']}}@endif</textarea>
-                        </span>
-                    </p>
-                    <p>
-                        <label>Từ khóa :</label>
-                        <span class="field">
-                            <textarea cols="80" rows="5" name="keywordsearch" placeholder="website mien phi,pubweb.vn." class="longinput">@if(isset($arrSetting)){{$arrSetting['keywordsearch']}}@endif</textarea>
-                        </span>
-                    </p>
-                    <p>
-                        <label>Google Analytics Code :</label>
-                        <span class="field">
-                            <input type="text" name="googleanc" placeholder="Google Analytics Code" value="@if(isset($arrSetting['googleanc'])){{$arrSetting['googleanc']}}@endif" class="longinput"/>
-                        </span>
-                    </p>
-                </div>
-                <div id="tabs-2">
-                    <div class="contenttitle2">
-                        <h3>Cấu hình gửi e-mail</h3>
-                    </div>
-                    <p>
-                        <label>SMTP host :</label>
-                        <span class="field">
-                            <input type="text" name="smtphost" placeholder="smtp.gmail.com"  value="@if(isset($arrSetting)){{$arrSetting['smtphost']}}@endif" class="longinput"/>
-                        </span>
-                    </p>
-                    <p>
-                        <label>SMTP port :</label>
-                        <span class="field">
-                            <input type="text" name="smtpport" placeholder="587" value="@if(isset($arrSetting)){{$arrSetting['smtpport']}}@endif" class="longinput"/>
-                        </span>
-                    </p>
-                    <p>
-                        <label>From mail :</label>
-                        <span class="field">
-                            <input type="text" name="frommail" placeholder="Contact@Pubweb.vn" value="@if(isset($arrSetting)){{$arrSetting['frommail']}}@endif" class="longinput"/>
-                        </span>
-                    </p>
-                    <p>
-                        <label>From name :</label>
-                        <span class="field">
-                            <input type="text" name="fromname" placeholder="PUBWEB.VN" value="@if(isset($arrSetting)){{$arrSetting['fromname']}}@endif" class="longinput"/>
-                        </span>
-                    </p>
-                    <p>
-                        <label>Tài khoản :</label>
-                        <span class="field">
-                            <input type="text" name="usernamemail" placeholder="Contact@Pubweb.vn" value="@if(isset($arrSetting)){{$arrSetting['usernamemail']}}@endif" class="longinput"/>
-                        </span>
-                    </p>
-                    <p>
-                        <label>mật khẩu :</label>
-                        <span class="field">
-                            <input type="text" name="passwordmail" placeholder="Mật khẩu"  value="@if(isset($arrSetting)){{$arrSetting['passwordmail']}}@endif" class="longinput"/>
-                        </span>
-                    </p>
-                </div>
-                <div id="tabs-3">
-                    <div class="contenttitle2">
-                        <h3>Cấu hình thanh toán</h3>
-                    </div>
-                    <p>
-                        <label>Bảo Kim :</label>
-                        <span class="field">
-                            <input type="text" name="baokimuser" placeholder="Tài khoản bảo kim" value="@if(isset($arrSetting)){{$arrSetting['baokimuser']}}@endif" class="longinput"/>
-                        </span>
-                    </p>
-                    <p>
-                        <label>Ngân Lượng :</label>
-                        <span class="field">
-                            <input type="text" name="nganluonguser" placeholder="Tài khoản ngân lượng" value="@if(isset($arrSetting)){{$arrSetting['nganluonguser']}}@endif" class="longinput"/>
-                        </span>
-                    </p>
-                    <p>
-                        <label>Đơn vị tiền tệ :</label>
-                        <span class="field">
-                            <input type="text" name="tiente" placeholder="VNĐ , USD ..." value="@if(isset($arrSetting)){{$arrSetting['tiente']}}@endif" class="longinput"/>
-                        </span>
-                    </p>
-                </div>
-                <div id="tabs-4">
-                    Your content goes here for tab 1
-                </div>
-                <div id="tabs-5">
-                    <div class="contenttitle2">
-                        <h3>Cấu hình chân trang</h3>
-                    </div>
-                    <p>
-                        <label>Chân trang (footer) :</label>
-                        <span class="field">
-                            <textarea cols="80" rows="5" id="footer" class="ckeditor" name="footer" placeholder="Nội dung bài viết">@if(isset($arrSetting['footer'])){{$arrSetting['footer']}}@endif</textarea>
-                        </span>
-                    </p>
-                </div>
-                <div id="tabs-6">
-                    <div class="contenttitle2">
-                        <h3>Thông tin liên hệ</h3>
-                    </div>
-                    <p>
-                        <label>Tên công ty hoặc của hàng :</label>
-                        <span class="field">
-                            <input type="text" name="tencongty" placeholder="Nhập tên công ty hoặc của hàng" value="@if(isset($arrSetting['tencongty'])){{$arrSetting['tencongty']}}@endif" class="longinput"/>
-                        </span>
-                    </p>
-                    <p>
-                        <label>Địa chỉ :</label>
-                        <span class="field">
-                            <input type="text" name="diachicongty" placeholder="Nhập địa chỉ" value="@if(isset($arrSetting['diachicongty'])){{$arrSetting['diachicongty']}}@endif" class="longinput"/>
-                        </span>
-                    </p>
-                    <p>
-                        <label>Sô điện thoại cố định :</label>
-                        <span class="field">
-                            <input type="text" name="sodienthoaicongty" placeholder="Nhập số điện thoại" value="@if(isset($arrSetting['sodienthoaicongty'])){{$arrSetting['sodienthoaicongty']}}@endif" class="longinput"/>
-                        </span>
-                    </p>
-                    <p>
-                        <label>Sô điện thoại đi động :</label>
-                        <span class="field">
-                            <input type="text" name="sodienthoaiddcongty" placeholder="Nhập số điện thoại" value="@if(isset($arrSetting['sodienthoaiddcongty'])){{$arrSetting['sodienthoaiddcongty']}}@endif" class="longinput"/>
-                        </span>
-                    </p>
-                    <p>
-                        <label>E-mail :</label>
-                        <span class="field">
-                            <input type="text" name="emailcongty" placeholder="Nhập e-mail" value="@if(isset($arrSetting['emailcongty'])){{$arrSetting['emailcongty']}}@endif" class="longinput"/>
-                        </span>
-                    </p>
-                    <p>
-                        <label>Website :</label>
-                        <span class="field">
-                            <input type="text" name="webcongty" placeholder="Nhập website" value="@if(isset($arrSetting['webcongty'])){{$arrSetting['webcongty']}}@endif" class="longinput"/>
-                        </span>
-                    </p>
-                    <p>
-                        <label>Url bản đồ google maps :</label>
-                        <span class="field">
-                            <input type="text" name="googlemaps" placeholder="Nhập url bản đồ" value="@if(isset($arrSetting['googlemaps'])){{$arrSetting['googlemaps']}}@endif" class="longinput"/>
-                        </span>
-                    </p>
-                </div>
-                <div id="tabs-7">
-                    <div class="contenttitle2">
-                        <h3>Mạng xã hội</h3>
-                    </div>
-                    <p>
-                        <label>Bình luận facebook:</label>
-                        <span class="formwrapper">
-                            <input type="radio" name="commentfb" @if(isset($arrSetting['commentfb']) && $arrSetting['commentfb']==0)checked="checked" @endif value="0" />Tắt &nbsp; &nbsp;
-                                   <input type="radio" name="commentfb" @if(isset($arrSetting['commentfb']) && $arrSetting['commentfb']==1)checked="checked" @endif  value="1" /> Bật &nbsp; &nbsp;
-                        </span>
-                    </p>
-                    <p>
-                        <label>Facebook Fanpage:</label>
-                        <span class="field">
-                            <input type="text" name="facebookfanpage" placeholder="Nhập website" value="@if(isset($arrSetting['facebookfanpage'])){{$arrSetting['facebookfanpage']}}@endif" class="longinput"/>
-                        </span>
-                    </p>
-                </div>
-            </div>
-            <div class="f_left">
-                <p class="f_left">
-                    <input type="submit" class="submit radius2" value="Lưu cấu hình">
-                    <input type="reset" class="reset radius2" value="Reset Button">
-                </p>
-            </div>
-        </form>
+<div class="subcontent">
+{{Form::model($arrSetting, array('action'=>'SettingController@postUpdateSetting', 'class'=>'stdform'))}}
+<div id="tabs">
+<ul>
+    <li><a href="#tabs-1">{{Lang::get('backend/setting.general')}}</a></li>
+    <li><a href="#tabs-2">{{Lang::get('backend/setting.setting_email')}}</a></li>
+    <li><a href="#tabs-3">{{Lang::get('backend/setting.setting_payment')}}</a></li>
+    <li><a href="#tabs-4">{{Lang::get('backend/setting.setting_slider')}}</a></li>
+    <li><a href="#tabs-5">{{Lang::get('backend/setting.setting_footer')}}</a></li>
+    <li><a href="#tabs-6">{{Lang::get('backend/setting.setting_contact')}}</a></li>
+    <li><a href="#tabs-7">{{Lang::get('backend/setting.setting_social_networking')}}</a></li>
+</ul>
+<div id="tabs-1">
+    <div class="contenttitle2">
+        <h3>{{Lang::get('backend/setting.general')}}</h3>
     </div>
+    <p>
+        <label>{{Lang::get('backend/setting.website.title')}} :</label>
+        <span class="field">
+            {{Form::text('titlewebsite', null, array('placeholder'=>Lang::get('placeholder.title_website'), 'class'=>"longinput"))}}
+        </span>
+    </p>
+
+    <p>
+        <label>{{Lang::get('backend/setting.website.tag')}}  :</label>
+        <span class="field">
+            {{Form::text('tagline', null, array('class'=>"longinput"))}}
+        </span>
+    </p>
+
+    <p>
+        <label>{{Lang::get('backend/setting.website.logo')}} :</label>
+        <span class="field">
+            {{Form::text('logowebsite', null, array('class'=>"smallinput" ,'id'=>'logowebsite', 'onclick'=>"BrowseServer('Images:/', 'logowebsite');",'placeholder'=>Lang::get('placeholder.logo_website')))}}
+            <input type="button" value="{{Lang::get('button.choose_image')}}" class="stdbtn" onclick="BrowseServer('Images:/', 'logowebsite');"/>
+        </span>
+    </p>
+    <p>
+        <label>{{Lang::get('backend/setting.website.description')}} :</label>
+        <span class="field">
+            {{Form::textarea('description', null, array('cols'=>80, 'rows'=>5, 'class'=>'longinput', 'placeholder'=>Lang::get('placeholder.setting_description')))}}
+        </span>
+    </p>
+
+    <p>
+        <label>{{Lang::get('backend/setting.website.keyword')}}  :</label>
+        <span class="field">
+            {{Form::textarea('keywordsearch', null, array('cols'=>80, 'rows'=>5, 'class'=>'longinput',  'placeholder'=>Lang::get('placeholder.keyword_search')))}}
+        </span>
+    </p>
+
+    <p>
+        <label>{{Lang::get('backend/setting.website.analytics_code')}}  :</label>
+        <span class="field">
+            {{Form::text('googleanc', null, array('class'=>"longinput",  'placeholder'=>Lang::get('placeholder.analytics')))}}
+        </span>
+    </p>
+</div>
+<div id="tabs-2">
+    <div class="contenttitle2">
+        <h3>{{Lang::get('backend/setting.setting_email')}}</h3>
+    </div>
+    <p>
+        <label>{{Lang::get('backend/setting.email.smtp_host')}} :</label>
+        <span class="field">
+            {{Form::text('smtphost', null, array('class'=>"longinput", 'placeholder'=>Lang::get('placeholder.smtp_host')))}}
+        </span>
+    </p>
+
+    <p>
+        <label>{{Lang::get('backend/setting.email.smtp_port')}} :</label>
+        <span class="field">
+            {{Form::text('smtpport', null, array('class'=>"longinput", 'placeholder'=>Lang::get('placeholder.smtp_port')))}}
+        </span>
+    </p>
+    <p>
+        <label>{{Lang::get('backend/setting.email.from_mail')}} :</label>
+        <span class="field">
+            {{Form::text('frommail', null, array('class'=>"longinput", 'placeholder'=>Lang::get('placeholder.email_from_name')))}}
+        </span>
+    </p>
+    <p>
+        <label>{{Lang::get('backend/setting.email.from_name')}} :</label>
+        <span class="field">
+            {{Form::text('fromname', null, array('class'=>"longinput", 'placeholder'=>Lang::get('placeholder.email_from_mail')))}}
+        </span>
+    </p>
+    <p>
+        <label>{{Lang::get('backend/setting.email.user')}} :</label>
+        <span class="field">
+            {{Form::text('usernamemail', null, array('class'=>"longinput", 'placeholder'=>Lang::get('placeholder.email_user')))}}
+        </span>
+    </p>
+    <p>
+        <label>{{Lang::get('backend/setting.email.password')}} :</label>
+        <span class="field">
+            {{Form::text('passwordmail', null, array('class'=>"longinput", 'placeholder'=>Lang::get('placeholder.email_password')))}}
+        </span>
+    </p>
+</div>
+<div id="tabs-3">
+    <div class="contenttitle2">
+        <h3>{{Lang::get('backend/setting.setting_payment')}}</h3>
+    </div>
+    <p>
+        <label>{{Lang::get('backend/setting.payment.baokim')}}:</label>
+        <span class="field">
+            {{Form::text('baokimuser', null, array('class'=>"longinput", 'placeholder'=>Lang::get('placeholder.baokim')))}}
+        </span>
+    </p>
+
+    <p>
+        <label>{{Lang::get('backend/setting.payment.nganluong')}} :</label>
+        <span class="field">
+            {{Form::text('nganluonguser', null, array('class'=>"longinput", 'placeholder'=>Lang::get('placeholder.nganluong')))}}
+        </span>
+    </p>
+
+    <p>
+        <label>{{Lang::get('backend/setting.payment.currency')}} :</label>
+        <span class="field">
+            {{Form::text('tiente', null, array('class'=>"longinput", 'placeholder'=>Lang::get('placeholder.currency')))}}
+        </span>
+    </p>
+</div>
+<div id="tabs-4">
+    <div class="contenttitle2">
+        <h3>{{Lang::get('backend/setting.setting_slider')}}</h3>
+    </div>
+    <p>Your content goes here for tab 1</p>
+</div>
+<div id="tabs-5">
+    <div class="contenttitle2">
+        <h3>{{Lang::get('backend/setting.setting_footer')}}</h3>
+    </div>
+    <p>
+        <label>{{Lang::get('backend/setting.footer')}} :</label>
+        <span class="field">
+            {{Form::textarea('footer', null, array('cols'=>80, 'rows'=>5, 'class'=>'ckeditor', 'id'=>'footer'))}}
+        </span>
+    </p>
+</div>
+<div id="tabs-6">
+    <div class="contenttitle2">
+        <h3>{{Lang::get('backend/setting.setting_contact')}}</h3>
+    </div>
+    <p>
+        <label>{{Lang::get('backend/setting.contact.name')}}:</label>
+        <span class="field">
+            {{Form::text('tencongty', null, array('class'=>"longinput", 'placeholder'=>Lang::get('placeholder.company_name')))}}
+        </span>
+    </p>
+
+    <p>
+        <label>{{Lang::get('backend/setting.contact.address')}} :</label>
+        <span class="field">
+            {{Form::text('diachicongty', null, array('class'=>"longinput", 'placeholder'=>Lang::get('placeholder.company_address')))}}
+        </span>
+    </p>
+
+    <p>
+        <label>{{Lang::get('backend/setting.contact.phone')}} :</label>
+        <span class="field">
+            {{Form::text('sodienthoaicongty', null, array('class'=>"longinput", 'placeholder'=>Lang::get('placeholder.company_phone')))}}
+        </span>
+    </p>
+
+    <p>
+        <label>{{Lang::get('backend/setting.contact.mobile')}} :</label>
+        <span class="field">
+            {{Form::text('sodienthoaiddcongty', null, array('class'=>"longinput", 'placeholder'=>Lang::get('placeholder.company_mobile')))}}
+        </span>
+    </p>
+
+    <p>
+        <label>{{Lang::get('backend/setting.contact.email')}} :</label>
+        <span class="field">
+            {{Form::text('emailcongty', null, array('class'=>"longinput", 'placeholder'=>Lang::get('placeholder.company_email')))}}
+        </span>
+    </p>
+    <p>
+        <label>{{Lang::get('backend/setting.contact.website')}} :</label>
+        <span class="field">
+            {{Form::text('webcongty', null, array('class'=>"longinput", 'placeholder'=>Lang::get('placeholder.website_name')))}}
+        </span>
+    </p>
+
+    <p>
+        <label>{{Lang::get('backend/setting.contact.google_maps')}}:</label>
+        <span class="field">
+            {{Form::text('googlemaps', null, array('class'=>"longinput", 'placeholder'=>Lang::get('placeholder.google_maps')))}}
+        </span>
+    </p>
+</div>
+<div id="tabs-7">
+    <div class="contenttitle2">
+        <h3>{{Lang::get('backend/setting.setting_social_networking')}}</h3>
+    </div>
+    <p>
+        <label>{{Lang::get('backend/setting.social_networking.comment_fb')}}:</label>
+        <span class="formwrapper">
+
+            <input type="radio" name="commentfb" @if(isset($arrSetting['commentfb']) && $arrSetting['commentfb']==0)checked="checked" @endif value="0" />Tắt &nbsp; &nbsp;
+            <input type="radio" name="commentfb" @if(isset($arrSetting['commentfb']) && $arrSetting['commentfb']==1)checked="checked" @endif  value="1" /> Bật &nbsp; &nbsp;
+        </span>
+    </p>
+
+    <p>
+        <label>{{Lang::get('backend/setting.social_networking.fanpage_fb')}}:</label>
+        <span class="field">
+            {{Form::text('facebookfanpage', null, array('class'=>"longinput", 'placeholder'=>Lang::get('placeholder.fb_fanpage')))}}
+        </span>
+    </p>
+</div>
+</div>
+<div class="f_left">
+    <p class="f_left">
+        <input type="submit" class="submit radius2" value="{{Lang::get('button.save')}}">
+        <input type="reset" class="reset radius2" value="{{Lang::get('button.reset')}}">
+    </p>
+</div>
+{{Form::close()}}
+</div>
 </div>
 
 @endsection

@@ -1,10 +1,17 @@
 <!doctype html>
-<html lang="vi">
-
+<html lang="{{Config::get('app.locale')}}">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Dashboard | Amanda Admin Template</title>
+        <title>{{Lang::get('backend/title.dashboard')}} :: @yield("titleAdmin")</title>
+        <script type="text/javascript">
+        function jAlertOk(){
+			return "{{Lang::get('button.jAlertOk')}}";
+        }
+        function jAlertCancel(){
+        	return "{{Lang::get('button.jAlertCancel')}}";
+        }
+        </script>
         <link rel="stylesheet" href="{{Asset('adminlib/css/style.default.css')}}" type="text/css" />
         <script type="text/javascript" src="{{Asset('adminlib/js/plugins/jquery-1.7.min.js')}}"></script>
         <script type="text/javascript" src="{{Asset('adminlib/js/plugins/jquery-ui-1.8.16.custom.min.js')}}"></script>
@@ -36,147 +43,96 @@
         <!--[if lt IE 9]>
                 <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
         <![endif]-->
-
     </head>
-
     <body class="withvernav">
-
         <div class="bodywrapper">
-            <div class="topheader">
-                <div class="left">
-                    <h1 class="logo">PUBWEB.<span>vn</span></h1>
-                    <span class="slogan">Thiết kế bởi <a href="http://Pubweb.vn" target="_blabk">Pubweb.vn</a></span>
-                    <br clear="all" />
-
-                </div><!--left-->
-
-                <div class="right">
-                    <div class="notification">
-                        <a class="count" href="adminlib/ajax/notifications.html"><span>9</span></a>
-                    </div>
-                    <div class="userinfo">
-                        <img src="adminlib/images/thumbs/avatar.png" alt="" />
-                        <span>Juan Dela Cruz</span>
-                    </div><!--userinfo-->
-
-                    <div class="userinfodrop">
-                        <div class="avatar">
-                            <a href="#"><img src="adminlib/images/thumbs/avatarbig.png" alt="" /></a>
-                            <div class="changetheme">
-                                Change theme: <br />
-                                <a class="default"></a>
-                                <a class="blueline"></a>
-                                <a class="greenline"></a>
-                                <a class="contrast"></a>
-                                <a class="custombg"></a>
-                            </div>
-                        </div><!--avatar-->
-                        <div class="userdata">
-                            <h4>Juan Dela Cruz</h4>
-                            <span class="email">youremail@yourdomain.com</span>
-                            <ul>
-                                <li><a href="editprofile.html">Edit Profile</a></li>
-                                <li><a href="accountsettings.html">Account Settings</a></li>
-                                <li><a href="help.html">Help</a></li>
-                                <li><a href="index.html">Sign Out</a></li>
-                            </ul>
-                        </div><!--userdata-->
-                    </div><!--userinfodrop-->
-                </div><!--right-->
-            </div><!--topheader-->
-
-
-            <div class="header">
-
-
-            </div><!--header-->
-
+            @include('templateadmin2.header')
             <div class="vernav2 iconmenu">
                 <ul>
-                    <li><a href="{{URL::action('FilemanagerController@getFileManager')}}" class="gallery">Quản lý tập tin</a>  
+                    <li><a href="{{URL::action('FilemanagerController@getFileManager')}}" class="gallery">{{Lang::get('backend/dashboard.management_file')}}</a>
                     </li>
-                    <li><a href="#newsSub" class="editor">Tin tức</a>
+                    <li><a href="#newsSub" class="editor">{{Lang::get('backend/dashboard.news')}}</a>
                         <span class="arrow"></span>
                         <ul id="newsSub">
-                            <li><a href="{{URL::action('NewsController@getNewsView')}}">Tất cả tin tức</a></li>
-                            <li><a href="{{URL::action('NewsController@getAddNews')}}">Thêm mới tin tức</a></li>
-                            <li><a href="{{URL::action('cateNewsController@getCateNewsView')}}">Nhóm tin tức</a></li>
+                            <li><a href="{{URL::action('NewsController@getNewsView')}}">{{Lang::get('backend/dashboard.all_news')}}</a></li>
+                            <li><a href="{{URL::action('NewsController@getAddNews')}}">{{Lang::get('backend/dashboard.add_news')}}</a></li>
+                            <li><a href="{{URL::action('cateNewsController@getCateNewsView')}}">{{Lang::get('backend/dashboard.group_news')}}</a></li>
                         </ul>
                     </li>
-                    <li><a href="#productsub" class="elements">Sản phẩm</a>
+                    <li><a href="#productsub" class="elements">{{Lang::get('backend/dashboard.product')}}</a>
                         <span class="arrow"></span>
                         <ul id="productsub">
-                            <li><a href="{{URL::action('ProductController@getView')}}" >Tất cả sản phẩm</a></li>
-                            <li><a href="{{URL::action('ProductController@getAddProduct')}}" >Thêm mới sản phẩm</a></li>
-                            <li><a href="{{URL::action('CategoryProductController@getCateProductView')}}">Nhóm sản phẩm</a></li>
-                            <li><a href="{{URL::action('SizeController@getSizeView')}}">Quản lý size</a></li>
-                            <li><a href="{{URL::action('ColorController@getAddColor')}}">Quản lý màu</a></li>
-                            <li><a href="{{URL::action('ManufacturerController@getManufactureView')}}">Nhà sản xuất</a></li>
+                            <li><a href="{{URL::action('ProductController@getView')}}" >{{Lang::get('backend/dashboard.all_products')}}</a></li>
+                            <li><a href="{{URL::action('ProductController@getAddProduct')}}" >{{Lang::get('backend/dashboard.add_product')}}</a></li>
+                            <li><a href="{{URL::action('CategoryProductController@getCateProductView')}}">{{Lang::get('backend/dashboard.group_product')}}</a></li>
+                            <li><a href="{{URL::action('SizeController@getSizeView')}}">{{Lang::get('backend/dashboard.management_size')}}</a></li>
+                            <li><a href="{{URL::action('ColorController@getAddColor')}}">{{Lang::get('backend/dashboard.management_color')}}</a></li>
+                            <li><a href="{{URL::action('ManufacturerController@getManufactureView')}}">{{Lang::get('backend/dashboard.management_manufacturers')}}</a></li>
                         </ul>
                     </li>
-                    <li><a href="{{URL::action('OrderController@getViewAll')}}" class="widgets">Đơn hàng</a>
+                    <li><a href="{{URL::action('OrderController@getViewAll')}}" class="widgets">{{Lang::get('backend/dashboard.order')}}</a>
                     </li>
-                    <li><a href="{{URL::action('StoreController@getView')}}" class="tables">Kho hàng</a>
+                    <li><a href="{{URL::action('StoreController@getView')}}" class="tables">{{Lang::get('backend/dashboard.store')}}</a>
                     </li>
-                    <li><a href="{{URL::action('UserController@getUserView')}}" class="user">Khách hàng</a>
+                    <li><a href="{{URL::action('UserController@getUserView')}}" class="user">{{Lang::get('backend/dashboard.customer')}}</a>
                     </li>
-                    <li><a href="#supportSub" class="support">Quản lý hỗ trợ viên</a>
+                    <li><a href="#supportSub" class="support">{{Lang::get('backend/dashboard.management_supporter')}}</a>
                         <span class="arrow"></span>
                         <ul id="supportSub">
-                            <li><a href="{{URL::action('SupporterController@getSupporterView')}}">Quản lý hỗ trợ viên</a>
+                            <li><a href="{{URL::action('SupporterController@getSupporterView')}}">{{Lang::get('backend/dashboard.management_supporter')}}</a>
                             </li>
-                            <li><a href="{{URL::action('SupporterGroupController@getSupporterGroupView')}}">Nhóm hỗ trợ viên</a>
+                            <li><a href="{{URL::action('SupporterGroupController@getSupporterGroupView')}}">{{Lang::get('backend/dashboard.group_supporter')}}</a>
                             </li>
                         </ul>
                     </li>
-                    <li><a href="{{URL::action('FeedbackController@getPhanHoi')}}" class="buttons">Phản hồi</a> </li>
-                     <li><a href="#projectSub" class="calendar new">Quản lý dự án</a>
+                    <li><a href="{{URL::action('FeedbackController@getPhanHoi')}}" class="buttons">{{Lang::get('backend/dashboard.feedback')}}</a> </li>
+                     <li><a href="#projectSub" class="calendar new">{{Lang::get('backend/dashboard.management_project')}}</a>
                         <span class="arrow"></span>
                         <ul id="projectSub">
-                            <li><a href="{{URL::action('ProjectController@getProjectView')}}">Quản lý dự án</a></li>
-                            <li><a href="{{URL::action('ProjectController@getAddProject')}}">Thêm mới dự án</a></li>
+                            <li><a href="{{URL::action('ProjectController@getProjectView')}}">{{Lang::get('backend/dashboard.management_project')}}</a></li>
+                            <li><a href="{{URL::action('ProjectController@getAddProject')}}">{{Lang::get('backend/dashboard.add_project')}}</a></li>
                         </ul>
                     </li>
-                    <li><a href="{{URL::action('PageController@getPageView')}}" class="buttons">Quản lý các trang</a> </li>
-                    <li><a href="{{URL::action('MenuController@getMenuView')}}" class="settings">Quản lý thanh menu</a> </li>
-                    <li><a href="#statisticSub" class="settings">Thống kê</a>
+                    <li><a href="#pageSub" class="buttons">{{Lang::get('backend/dashboard.management_page')}}</a>
+                        <span class="arrow"></span>
+                        <ul id="pageSub">
+                            <li><a href="{{URL::action('PageController@getPageView')}}">{{Lang::get('backend/dashboard.management_page')}}</a></li>
+                            <li><a href="{{URL::action('PageController@getAddPage')}}">{{Lang::get('backend/dashboard.add_page')}}</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="{{URL::action('MenuController@getMenuView')}}" class="settings">{{Lang::get('backend/dashboard.management_menu')}}</a> </li>
+                    <li><a href="#statisticSub" class="settings">{{Lang::get('backend/dashboard.statistic')}}</a>
                         <span class="arrow"></span>
                         <ul id="statisticSub">
-                            <li><a href="{{URL::action('StatisticController@getThongKeUser')}}">Thống kê người dùng</a></li>
-                            <li><a href="{{URL::action('StatisticController@getThongKeOrder')}}">Thống kê đơn hàng</a></li>
+                            <li><a href="{{URL::action('StatisticController@getThongKeUser')}}">{{Lang::get('backend/dashboard.statistic_user')}}</a></li>
+                            <li><a href="{{URL::action('StatisticController@getThongKeOrder')}}">{{Lang::get('backend/dashboard.statistic_order')}}</a></li>
                         </ul>
                     </li>
-                    <li><a href="#historySub" class="calendar">Lịch sử</a>
+                    <li><a href="#historySub" class="calendar">{{Lang::get('backend/dashboard.history')}}</a>
                         <span class="arrow"></span>
                         <ul id="historySub">
-                            <li><a href="{{URL::action('HistoryUserController@getHistoryView')}}">Lịch sử khách hàng</a></li>
-                            <li><a href="{{URL::action('HistoryAdminController@getHistoryView')}}">Lịch sử nhân viên</a></li>
+                            <li><a href="{{URL::action('HistoryUserController@getHistoryView')}}">{{Lang::get('backend/dashboard.customer_history')}}</a></li>
+                            <li><a href="{{URL::action('HistoryAdminController@getHistoryView')}}">{{Lang::get('backend/dashboard.user_history')}}</a></li>
                         </ul>
                     </li>
 
-                    <li><a href="{{URL::action('SettingController@getUpdateSetting')}}" class="error">Cấu hình</a>
+                    <li><a href="{{URL::action('SettingController@getUpdateSetting')}}" class="error">{{Lang::get('backend/dashboard.setting')}}</a>
                     </li>
-                    <li><a href="#adminSub" class="addons">Nhân viên</a>
+                    <li><a href="#adminSub" class="addons">{{Lang::get('backend/dashboard.user')}}</a>
                         <span class="arrow"></span>
                         <ul id="adminSub">
-                            <li><a href="{{URL::action('AdminController@getAdminView')}}">Quản lý nhân viên</a></li>
-                            <li><a href="{{URL::action('GroupAdminController@getGroupAdminView')}}">Quản lý phòng ban</a></li>
+                            <li><a href="{{URL::action('AdminController@getAdminView')}}">{{Lang::get('backend/dashboard.management_user')}}</a></li>
+                            <li><a href="{{URL::action('GroupAdminController@getGroupAdminView')}}">{{Lang::get('backend/dashboard.management_department')}}</a></li>
                         </ul>
                     </li>
                 </ul>
                 <a class="togglemenu"></a>
                 <br /><br />
             </div><!--leftmenu-->
-
             <div class="centercontent">
-
                 @yield("contentadmin")
-
                 <br clear="all" />
-
             </div><!-- centercontent -->
-
-
         </div><!--bodywrapper-->
     </body>
 

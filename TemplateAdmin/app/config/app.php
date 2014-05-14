@@ -45,7 +45,7 @@ return array(
       | to any of the locales which will be supported by the application.
       |
      */
-    'locale' => 'en',
+    'locale' => 'vi',
     /*
       |--------------------------------------------------------------------------
       | Encryption Key

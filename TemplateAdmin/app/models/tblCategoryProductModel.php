@@ -6,15 +6,15 @@
  * and open the template in the editor.
  */
 
-class tblCategoryProductModel extends Eloquent {
+class tblCategoryproductModel extends Eloquent {
 
     protected $guarded = array();
-    protected $table = 'tblCategoryProduct';
+    protected $table = 'tblcategoryproduct';
     public $timestamps = false;
     public static $rules = array();
 
     public function allListCateProduct() {
-        $arrCateProduct = DB::table('tblCategoryProduct')->where('cateParent','=','0')->get();
+        $arrCateProduct = DB::table('tblcategoryproduct')->where('cateParent','=','0')->get();
         return $arrCateProduct;
     }
 
@@ -80,12 +80,12 @@ class tblCategoryProductModel extends Eloquent {
     }
 
     public function findCateProduct($keyword, $per_page) {
-        $arrCateProduct = DB::table('tblCategoryProduct')->where('cateName', 'LIKE', '%' . $keyword . '%')->orWhere('cateSlug', 'LIKE', '%' . $keyword . '%')->orWhere('cateTime', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
+        $arrCateProduct = DB::table('tblcategoryproduct')->where('cateName', 'LIKE', '%' . $keyword . '%')->orWhere('cateSlug', 'LIKE', '%' . $keyword . '%')->orWhere('cateTime', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
         return $arrCateProduct;
     }
 
     public function allCateProduct($per_page) {
-        $arrCateProduct = DB::table('tblCategoryProduct')->paginate($per_page);
+        $arrCateProduct = DB::table('tblcategoryproduct')->paginate($per_page);
         return $arrCateProduct;
     }
 

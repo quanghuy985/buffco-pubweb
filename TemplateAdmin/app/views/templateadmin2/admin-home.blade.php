@@ -10,7 +10,8 @@
     <div class="notibar msginfo">
         <a class="close"></a>
         <p>
-            {{$thongbao}}</p>
+            {{$thongbao}}
+        </p>
     </div>
 </div>
 @endif

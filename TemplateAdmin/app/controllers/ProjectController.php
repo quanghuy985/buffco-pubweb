@@ -28,38 +28,32 @@ class ProjectController extends Controller {
         $dataimg = $tblAttach->getAttachmentByProjectId(Input::get('id'));
         $data = $objProject->getProjectById(Input::get('id'));
         $check = $objProject->selectAllProject(5, 'id');
-
-        //var_dump($check);
-//        //var_dump($data);
         return View::make('backend.project.Projectadd')->with('dataProject', $data)->with('dataimg', $dataimg)->with('arrayProject', $check);
     }
 
     public function postUpdateProject() {
         $objProject = new tblProjectModel();
-        $pid = Input::get('idproject');
-        $rules = array(
-            "projectName" => "required",
-            "from" => "required",
-            "to" => "required",
-            "description" => "required",
-            "content" => "required",
-            "status" => "required"
+        $pid = Input::get('id');
+        $rules = array(            "projectName" => "required|max:255",
+            "from" => "required|date",
+            "to" => "required|date",
+            "projectDescription" => "required",
+            "projectContent" => "required",
+            "status" => "required|integer"
         );
-        if (!Validator::make(Input::all(), $rules)->fails()) {
+        $validate = Validator::make(Input::all(), $rules, array(), Lang::get('backend/attributes.project'));
+        if (!$validate->fails()) {
             $from = strtotime(Input::get('from'));
             $to = strtotime(Input::get('to'));
             $objHistoryAdmin = new tblHistoryAdminModel();
             if ($from > $to) {
-                return Redirect::action('ProjectController@getProjectView', array('msg' => 'Ngày bắt đầu không được lớn hơn ngày kết thúc'));
+                Session::flash('alert_error', Lang::get('messages.date_begin_end'));
+                return Redirect::back()->withInput(Input::all());
             } else {
-
                 $objadmin = Session::get('adminSession');
                 $id = $objadmin[0]->id;
-
-
-                $objProject->updateProject(Input::get('idproject'), Input::get('projectName'), $from, $to, Input::get('description'), Input::get('content'), Input::get('status'));
+                $objProject->updateProject(Input::get('id'), Input::get('projectName'), $from, $to, Input::get('projectDescription'), Input::get('projectContent'), Input::get('status'));
                 if ($pid != NULL || $pid != '') {
-
                     $attList = Input::get('ImagePath');
                     $tblAttach = new tblAttachmentProjectModel();
                     $tblAttach->deleteAttachmentByProjectID($pid);
@@ -71,12 +65,13 @@ class ProjectController extends Controller {
                         }
                     }
                 }
-
-                $objHistoryAdmin->addHistory($id, 'Edit project ' . Input::get('description'), 0);
-                return Redirect::action('ProjectController@getProjectView', array('msg' => 'cap nhat thanh cong'));
+                $objHistoryAdmin->addHistory($id, Lang::get('backend/history.project.update') . Input::get('projectDescription'), 0);
+                Session::flash('alert_success', Lang::get('messages.update.success'));
+                return Redirect::back();
             }
         } else {
-            return Redirect::action('ProjectController@getProjectView', array('msg' => 'cap nhat that bai'));
+            Session::flash('alert_error', Lang::get('messages.update.error'));
+            return Redirect::back()->withInput(Input::all())->withErrors($validate);//('ProjectController@getProjectView', array('msg' => 'cap nhat that bai'));
         }
     }
 
@@ -86,30 +81,30 @@ class ProjectController extends Controller {
 
     public function postAddProject() {
         $rules = array(
-            "projectName" => "required",
-            "from" => "required",
-            "to" => "required",
-            "description" => "required",
-            "content" => "required",
-            "status" => "required"
+            "projectName" => "required|max:255",
+            "from" => "required|date",
+            "to" => "required|date",
+            "projectDescription" => "required|max:255",
+            "projectContent" => "required|max:255",
+            "status" => "required|integer"
         );
         $objProject = new tblProjectModel();
 
-
-        if (!Validator::make(Input::all(), $rules)->fails()) {
+        $validate = Validator::make(Input::all(), $rules, array(), Lang::get('backend/attributes.project'));
+        if (!$validate->fails()) {
             $from = strtotime(Input::get('from'));
             $to = strtotime(Input::get('to'));
             $objHistoryAdmin = new tblHistoryAdminModel();
 
             if ($from > $to) {
-                return Redirect::action('ProjectController@getProjectView', array('msg' => 'Ngày bắt đầu không được lớn hơn ngày kết thúc'));
+                Session::flash('alert_error', Lang::get('messages.date_begin_end'));
+                return Redirect::back()->withInput(Input::all());
             } else {
 
                 $objadmin = Session::get('adminSession');
                 $id = $objadmin[0]->id;
 
-                $idproject = $objProject->addProject(Input::get('projectName'), $from, $to, Input::get('description'), Input::get('content'), Input::get('status'));
-                $objHistoryAdmin->addHistory($id, 'Them project ' . Input::get('description'), 0);
+                $idproject = $objProject->addProject(Input::get('projectName'), $from, $to, Input::get('projectDescription'), Input::get('projectContent'), Input::get('status'));
                 if ($idproject != NULL || $idproject != '') {
 
                     $attList = Input::get('ImagePath');
@@ -121,10 +116,13 @@ class ProjectController extends Controller {
                         }
                     }
                 }
-                return Redirect::action('ProjectController@getProjectView', array('msg' => 'them moi thanh cong'));
+                $objHistoryAdmin->addHistory($id, Lang::get('backend/history.project.create') . Input::get('projectDescription'), 0);
+                Session::flash('alert_success', Lang::get('messages.create.success'));
+                return Redirect::action('ProjectController@getProjectView');
             }
         } else {
-            return Redirect::action('ProjectController@getProjectView', array('msg' => 'them moi that bai'));
+            Session::flash('alert_error', Lang::get('messages.create.error'));
+            return Redirect::back()->withInput(Input::all())->withErrors($validate);
         }
     }
 
@@ -138,7 +136,7 @@ class ProjectController extends Controller {
 
                 $objadmin = Session::get('adminSession');
                 $id = $objadmin[0]->id;
-                $objHistoryAdmin->addHistory($id, 'Xoa project', 0);
+                $objHistoryAdmin->addHistory($id, Lang::get('backend/history.project.delete'), 0);
             }
         }
         $objProject = new tblProjectModel();
@@ -154,7 +152,7 @@ class ProjectController extends Controller {
         $objadmin = Session::get('adminSession');
         $id = $objadmin[0]->id;
         $objHistoryAdmin = new tblHistoryAdminModel();
-        $objHistoryAdmin->addHistory($id, 'Xoa project', 0);
+        $objHistoryAdmin->addHistory($id, Lang::get('backend/history.project.delete'), 0);
 
         $arrayProject = $objProject->selectAllProject(5, 'id');
         $link = $arrayProject->links();
@@ -167,7 +165,7 @@ class ProjectController extends Controller {
         $objHistoryAdmin = new tblHistoryAdminModel();
         $objadmin = Session::get('adminSession');
         $id = $objadmin[0]->id;
-        $objHistoryAdmin->addHistory($id, 'active project', 0);
+        $objHistoryAdmin->addHistory($id, Lang::get('backend/history.project.active'), 0);
 
         $arrayProject = $objProject->selectAllProject(5, 'id');
         $link = $arrayProject->links();

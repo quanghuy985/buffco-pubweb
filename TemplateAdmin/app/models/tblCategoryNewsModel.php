@@ -9,7 +9,7 @@
 class tblCategoryNewsModel extends Eloquent {
 
     protected $guarded = array();
-    protected $table = 'tblCateNews';
+    protected $table = 'tblcatenews';
     public $timestamps = false;
     public static $rules = array();
 
@@ -69,27 +69,27 @@ class tblCategoryNewsModel extends Eloquent {
     }
 
     public function findCateNews($keyword, $per_page) {
-        $cateArray = DB::table('tblCateNews')->where('catenewsName', 'LIKE', '%' . $keyword . '%')->orWhere('catenewsSlug', 'LIKE', '%' . $keyword . '%')->orWhere('catenewsTime', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
+        $cateArray = DB::table('tblcatenews')->where('catenewsName', 'LIKE', '%' . $keyword . '%')->orWhere('catenewsSlug', 'LIKE', '%' . $keyword . '%')->orWhere('catenewsTime', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
         return $cateArray;
     }
 
     public function allCateNew($per_page) {
-        $arrCateNews = DB::table('tblCateNews')->paginate($per_page);
+        $arrCateNews = DB::table('tblcatenews')->paginate($per_page);
         return $arrCateNews;
     }
     
     public function getAllCateChild(){
-        $arrCateNews = DB::table('tblCateNews')->join('tblNews',  'tblCateNews.id', '=','tblNews.catenewsID')->select('tblCateNews.catenewsName','tblNews.newsSlug','tblNews.newsName','tblNews.newsContent')->where('catenewsParent','!=','0')->get();
+        $arrCateNews = DB::table('tblcatenews')->join('tblnews',  'tblcatenews.id', '=','tblnews.catenewsID')->select('tblcatenews.catenewsName','tblnews.newsSlug','tblnews.newsName','tblnews.newsContent')->where('catenewsParent','!=','0')->get();
         return $arrCateNews;
     }
             
     
      public function allCateNewList() {
-        $arrCateNews = DB::table('tblCateNews')->where('catenewsParent','=','0')->get();
+        $arrCateNews = DB::table('tblcatenews')->where('catenewsParent','=','0')->get();
         return $arrCateNews;
     }
      public function countSlug($slug) {
-        $objCateNews = DB::table('tblCateNews')->where('catenewsSlug', 'LIKE', $slug.'%')->count();
+        $objCateNews = DB::table('tblcatenews')->where('catenewsSlug', 'LIKE', $slug.'%')->count();
         return $objCateNews;
     }
     
@@ -99,7 +99,7 @@ class tblCategoryNewsModel extends Eloquent {
     }
 
     public function findCateNewsByID($id) {
-        $objCateNews = DB::table('tblCateNews')->where('id', '=', $id)->get();
+        $objCateNews = DB::table('tblcatenews')->where('id', '=', $id)->get();
         return $objCateNews;
     }
 

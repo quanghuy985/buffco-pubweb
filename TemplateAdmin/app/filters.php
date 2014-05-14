@@ -73,7 +73,7 @@ Route::filter('csrf', function() {
         throw new Illuminate\Session\TokenMismatchException;
     }
 });
-
+/*
 Route::filter('Quan-Ly-Tin-Tuc', function() {
 //Code check
     $check = false;
@@ -313,7 +313,7 @@ Route::filter('Quan-Ly-Thong-Ke', function() {
     } else {
         //    return $check;
     }
-});
+});*/
 Route::filter('kiemtradangnhap', function() {
     if (!Session::has('adminSession')) {
         Session::forget('urlBack');

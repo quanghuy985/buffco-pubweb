@@ -83,7 +83,7 @@ class tblNewsModel extends Eloquent {
     }
     
     public function getNews($cateid){
-        $allNews = DB::table('tblNews')->join('tblCateNews', 'tblNews.catenewsID', '=', 'tblCateNews.id')->select('tblNews.id', 'tblCateNews.cateNewsName', 'tblNews.newsName', 'tblNews.newsDescription', 'tblNews.newsKeywords', 'tblNews.newsContent', 'tblNews.newsTag', 'tblNews.newsSlug', 'tblNews.time', 'tblNews.status')->where('tblNews.catenewsID','=',$cateid)->orderBy('time', 'desc')->limit(5)->get();
+        $allNews = DB::table('tblnews')->join('tblcatenews', 'tblnews.catenewsID', '=', 'tblcatenews.id')->select('tblnews.id', 'tblcatenews.cateNewsName', 'tblnews.newsName', 'tblnews.newsDescription', 'tblnews.newsKeywords', 'tblnews.newsContent', 'tblnews.newsTag', 'tblnews.newsSlug', 'tblnews.time', 'tblnews.status')->where('tblnews.catenewsID','=',$cateid)->orderBy('time', 'desc')->limit(5)->get();
         return $allNews;
     }
             
@@ -94,49 +94,49 @@ class tblNewsModel extends Eloquent {
     }
 
     public function allNews($per_page, $orderby) {
-        $allNews = DB::table('tblNews')->join('tblCateNews', 'tblNews.catenewsID', '=', 'tblCateNews.id')->join('tblAdmin', 'tblNews.adminID', '=', 'tblAdmin.id')->select('tblNews.id', 'tblCateNews.cateNewsName', 'tblNews.newsName', 'tblNews.newsDescription', 'tblNews.newsKeywords', 'tblNews.newsContent', 'tblNews.newsTag', 'tblNews.newsSlug', 'tblNews.time', 'tblNews.status', 'tblAdmin.adminName')->orderBy($orderby, 'desc')->paginate($per_page);
+        $allNews = DB::table('tblnews')->join('tblcatenews', 'tblnews.catenewsID', '=', 'tblcatenews.id')->join('tblAdmin', 'tblnews.adminID', '=', 'tblAdmin.id')->select('tblnews.id', 'tblcatenews.cateNewsName', 'tblnews.newsName', 'tblnews.newsDescription', 'tblnews.newsKeywords', 'tblnews.newsContent', 'tblnews.newsTag', 'tblnews.newsSlug', 'tblnews.time', 'tblnews.status', 'tblAdmin.adminName')->orderBy($orderby, 'desc')->paginate($per_page);
         return $allNews;
     }
 
     public function getNewsByID($newsID) {
-        $objNews = DB::table('tblNews')->where('id', '=', $newsID)->get();
+        $objNews = DB::table('tblnews')->where('id', '=', $newsID)->get();
         return $objNews;
     }
 
     public function FindNews($keyword, $per_page, $orderby, $status) {
         $arrNews = '';
         if ($status == '') {
-            $arrNews = DB::table('tblNews')->join('tblCateNews', 'tblNews.catenewsID', '=', 'tblCateNews.id')->select('tblNews.*', 'tblCateNews.cateNewsName')->where('tblNews.newsDescription', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);
+            $arrNews = DB::table('tblnews')->join('tblcatenews', 'tblnews.catenewsID', '=', 'tblcatenews.id')->select('tblnews.*', 'tblcatenews.cateNewsName')->where('tblnews.newsDescription', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);
         } else {
-            $arrNews = DB::table('tblNews')->join('tblCateNews', 'tblNews.catenewsID', '=', 'tblCateNews.id')->select('tblNews.*', 'tblCateNews.cateNewsName')->where('tblNews.newsDescription', 'LIKE', '%' . $keyword . '%')->where('tblNews.status', '=', $status)->orderBy($orderby, 'desc')->paginate($per_page);
+            $arrNews = DB::table('tblnews')->join('tblcatenews', 'tblnews.catenewsID', '=', 'tblcatenews.id')->select('tblnews.*', 'tblcatenews.cateNewsName')->where('tblnews.newsDescription', 'LIKE', '%' . $keyword . '%')->where('tblnews.status', '=', $status)->orderBy($orderby, 'desc')->paginate($per_page);
         }
         return $arrNews;
     }
 
     public function searchNews($per_page, $keyword) {
-        $arrNews = DB::table('tblNews')->join('tblCateNews', 'tblNews.catenewsID', '=', 'tblCateNews.id')->join('tblAdmin', 'tblNews.adminID', '=', 'tblAdmin.id')->select('tblNews.*', 'tblCateNews.cateNewsName', 'tblAdmin.adminName')->orderBy('status')->orderBy('time', 'desc')->where('newsName', 'LIKE', '%' . $keyword . '%')->orWhere('newsDescription', 'LIKE', '%' . $keyword . '%')->orWhere('newsKeywords', 'LIKE', '%' . $keyword . '%')->orWhere('newsContent', 'LIKE', '%' . $keyword . '%')->orWhere('newsTag', 'LIKE', '%' . $keyword . '%')->orWhere('newsSlug', 'LIKE', '%' . $keyword . '%')->orWhere('cateNewsName', 'LIKE', '%' . $keyword . '%')->orWhere('adminName', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
+        $arrNews = DB::table('tblnews')->join('tblcatenews', 'tblnews.catenewsID', '=', 'tblcatenews.id')->join('tblAdmin', 'tblnews.adminID', '=', 'tblAdmin.id')->select('tblnews.*', 'tblcatenews.cateNewsName', 'tblAdmin.adminName')->orderBy('status')->orderBy('time', 'desc')->where('newsName', 'LIKE', '%' . $keyword . '%')->orWhere('newsDescription', 'LIKE', '%' . $keyword . '%')->orWhere('newsKeywords', 'LIKE', '%' . $keyword . '%')->orWhere('newsContent', 'LIKE', '%' . $keyword . '%')->orWhere('newsTag', 'LIKE', '%' . $keyword . '%')->orWhere('newsSlug', 'LIKE', '%' . $keyword . '%')->orWhere('cateNewsName', 'LIKE', '%' . $keyword . '%')->orWhere('adminName', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
         return $arrNews;
     }
 
     public function fillterNews($per_page, $from, $to, $status) {
         if ($status == 3 && $from != '' && $to != '') {
-            $arrNews = DB::table('tblNews')->join('tblCateNews', 'tblNews.catenewsID', '=', 'tblCateNews.id')->join('tblAdmin', 'tblNews.adminID', '=', 'tblAdmin.id')->select('tblNews.id', 'tblCateNews.cateNewsName', 'tblNews.newsName', 'tblNews.newsDescription', 'tblNews.newsKeywords', 'tblNews.newsContent', 'tblNews.newsTag', 'tblNews.newsSlug', 'tblNews.time', 'tblNews.status', 'tblAdmin.adminName')->orderBy('tblNews.status')->orderBy('tblNews.time', 'desc')->whereBetween('tblNews.time', array($from, $to))->paginate($per_page);
+            $arrNews = DB::table('tblnews')->join('tblcatenews', 'tblnews.catenewsID', '=', 'tblcatenews.id')->join('tblAdmin', 'tblnews.adminID', '=', 'tblAdmin.id')->select('tblnews.id', 'tblcatenews.cateNewsName', 'tblnews.newsName', 'tblnews.newsDescription', 'tblnews.newsKeywords', 'tblnews.newsContent', 'tblnews.newsTag', 'tblnews.newsSlug', 'tblnews.time', 'tblnews.status', 'tblAdmin.adminName')->orderBy('tblnews.status')->orderBy('tblnews.time', 'desc')->whereBetween('tblnews.time', array($from, $to))->paginate($per_page);
         } else {
-            $arrNews = DB::table('tblNews')->join('tblCateNews', 'tblNews.catenewsID', '=', 'tblCateNews.id')->join('tblAdmin', 'tblNews.adminID', '=', 'tblAdmin.id')->select('tblNews.id', 'tblCateNews.cateNewsName', 'tblNews.newsName', 'tblNews.newsDescription', 'tblNews.newsKeywords', 'tblNews.newsContent', 'tblNews.newsTag', 'tblNews.newsSlug', 'tblNews.time', 'tblNews.status', 'tblAdmin.adminName')->orderBy('tblNews.status')->orderBy('tblNews.time', 'desc')->where('tblNews.status', '=', $status)->whereBetween('tblNews.time', array($from, $to))->paginate($per_page);
+            $arrNews = DB::table('tblnews')->join('tblcatenews', 'tblnews.catenewsID', '=', 'tblcatenews.id')->join('tblAdmin', 'tblnews.adminID', '=', 'tblAdmin.id')->select('tblnews.id', 'tblcatenews.cateNewsName', 'tblnews.newsName', 'tblnews.newsDescription', 'tblnews.newsKeywords', 'tblnews.newsContent', 'tblnews.newsTag', 'tblnews.newsSlug', 'tblnews.time', 'tblnews.status', 'tblAdmin.adminName')->orderBy('tblnews.status')->orderBy('tblnews.time', 'desc')->where('tblnews.status', '=', $status)->whereBetween('tblnews.time', array($from, $to))->paginate($per_page);
         }
         if ($from == '' || $to == '') {
             if ($status == 3) {
-                $arrNews = DB::table('tblNews')->join('tblCateNews', 'tblNews.catenewsID', '=', 'tblCateNews.id')->join('tblAdmin', 'tblNews.adminID', '=', 'tblAdmin.id')->select('tblNews.id', 'tblCateNews.cateNewsName', 'tblNews.newsName', 'tblNews.newsDescription', 'tblNews.newsKeywords', 'tblNews.newsContent', 'tblNews.newsTag', 'tblNews.newsSlug', 'tblNews.time', 'tblNews.status', 'tblAdmin.adminName')->orderBy('tblNews.status')->orderBy('tblNews.time', 'desc')->paginate($per_page);
+                $arrNews = DB::table('tblnews')->join('tblcatenews', 'tblnews.catenewsID', '=', 'tblcatenews.id')->join('tblAdmin', 'tblnews.adminID', '=', 'tblAdmin.id')->select('tblnews.id', 'tblcatenews.cateNewsName', 'tblnews.newsName', 'tblnews.newsDescription', 'tblnews.newsKeywords', 'tblnews.newsContent', 'tblnews.newsTag', 'tblnews.newsSlug', 'tblnews.time', 'tblnews.status', 'tblAdmin.adminName')->orderBy('tblnews.status')->orderBy('tblnews.time', 'desc')->paginate($per_page);
             } else {
-                $arrNews = DB::table('tblNews')->join('tblCateNews', 'tblNews.catenewsID', '=', 'tblCateNews.id')->join('tblAdmin', 'tblNews.adminID', '=', 'tblAdmin.id')->select('tblNews.id', 'tblCateNews.cateNewsName', 'tblNews.newsName', 'tblNews.newsDescription', 'tblNews.newsKeywords', 'tblNews.newsContent', 'tblNews.newsTag', 'tblNews.newsSlug', 'tblNews.time', 'tblNews.status', 'tblAdmin.adminName')->orderBy('tblNews.status')->orderBy('tblNews.time', 'desc')->where('tblNews.status', '=', $status)->paginate($per_page);
+                $arrNews = DB::table('tblnews')->join('tblcatenews', 'tblnews.catenewsID', '=', 'tblcatenews.id')->join('tblAdmin', 'tblnews.adminID', '=', 'tblAdmin.id')->select('tblnews.id', 'tblcatenews.cateNewsName', 'tblnews.newsName', 'tblnews.newsDescription', 'tblnews.newsKeywords', 'tblnews.newsContent', 'tblnews.newsTag', 'tblnews.newsSlug', 'tblnews.time', 'tblnews.status', 'tblAdmin.adminName')->orderBy('tblnews.status')->orderBy('tblnews.time', 'desc')->where('tblnews.status', '=', $status)->paginate($per_page);
             }
         }
-        // $arrNews = DB::table('tblNews')->join('tblCateNews', 'tblNews.catenewsID', '=', 'tblCateNews.id')->join('tblAdmin', 'tblNews.adminID', '=', 'tblAdmin.id')->select('tblNews.id', 'tblCateNews.cateNewsName', 'tblNews.newsName', 'tblNews.newsDescription', 'tblNews.newsKeywords', 'tblNews.newsContent', 'tblNews.newsTag', 'tblNews.newsSlug', 'tblNews.time', 'tblNews.status', 'tblAdmin.adminName')->orderBy('tblNews.status')->orderBy('tblNews.time', 'desc')->where('tblNews.status', '=', $status)->whereBetween('tblNews.time', array($from, $to))->paginate($per_page);
+        // $arrNews = DB::table('tblnews')->join('tblcatenews', 'tblnews.catenewsID', '=', 'tblcatenews.id')->join('tblAdmin', 'tblnews.adminID', '=', 'tblAdmin.id')->select('tblnews.id', 'tblcatenews.cateNewsName', 'tblnews.newsName', 'tblnews.newsDescription', 'tblnews.newsKeywords', 'tblnews.newsContent', 'tblnews.newsTag', 'tblnews.newsSlug', 'tblnews.time', 'tblnews.status', 'tblAdmin.adminName')->orderBy('tblnews.status')->orderBy('tblnews.time', 'desc')->where('tblnews.status', '=', $status)->whereBetween('tblnews.time', array($from, $to))->paginate($per_page);
         return $arrNews;
     }
 
     public function countSlug($slug) {
-        $objCateNews = DB::table('tblNews')->where('newsSlug', 'LIKE', $slug . '%')->count();
+        $objCateNews = DB::table('tblnews')->where('newsSlug', 'LIKE', $slug . '%')->count();
         return $objCateNews;
     }
 

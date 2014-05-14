@@ -1,71 +1,90 @@
 @extends("templateadmin2.mainfire")
+@section("titleAdmin")
+{{Lang::get('backend/title.history.titleUser')}}
+@stop
 @section("contentadmin")
 <script>
-    function xxx(id,email,name,content){
-      jQuery('#id').val(id);
-      jQuery('#email').val(email);
-      jQuery('#name').val(name);
-      jQuery('#content').val(content);
-      //window.location.href='#frmEdit';
-      jQuery('html,body').animate({
-      scrollTop: jQuery('#frmEdit').offset().top},'slow');
-      kichhoat(id,1);
-    };
-    jQuery(document).ready(function() {
+    function xxx(id, email, name, content) {
+        jQuery('#id').val(id);
+        jQuery('#email').val(email);
+        jQuery('#name').val(name);
+        jQuery('#content').val(content);
+        //window.location.href='#frmEdit';
+        jQuery('html,body').animate({
+            scrollTop: jQuery('#frmEdit').offset().top}, 'slow');
+        kichhoat(id, 1);
+    }
 
-    jQuery('.deletepromulti').click(function() {
-    var addon = '';
+    function xxx1(e){
+        var id, email, name, content;
+        id = jQuery(e).data('id');
+        email = jQuery(e).data('email');
+        name = jQuery(e).data('name');
+        content = jQuery(e).data('content');
+        jQuery('#id').html(id);
+        jQuery('#email').html(email);
+        jQuery('#name').html(name);
+        jQuery('#content').html(content);
+        // window.location.href='#frmEdit';
+        jQuery('html,body').animate({
+            scrollTop: jQuery('#frmEdit').offset().top}, 'slow');
+        kichhoat(id, 1);
+    }
+    jQuery(document).ready(function () {
+
+        jQuery('.deletepromulti').click(function () {
+            var addon = '';
             av = document.getElementsByName("checkboxidfile");
             for (e = 0; e < av.length; e++) {
-    if (av[e].checked == true) {
-    addon += av[e].value + ',';
-    }
-    }
-    if (addon != '') {
-    jConfirm('Bạn có chắc chắn muốn xóa ?', 'Thông báo', function(r) {
-    if (r == true) {
-    jQuery.post("{{URL::action('HistoryUserController@postDelmulte')}}", {multiid: addon}).done(function(data) {
-    window.location = '{{URL::action('HistoryUserController@getHistoryView')}}';
-    });
-            return false;
-    } else {
-    return false;
-    }
-    });
-    } else {
-    jAlert('Bạn chưa chọn giá trị', 'Thông báo');
-    }
-    });
-    
-    jQuery('#searchblur').keypress(function(e) {
-    // Enter pressed?
-    if (e.which == 10 || e.which == 13) {
-    var request = jQuery.ajax({
-    url: "{{URL::action('HistoryUserController@postAjaxsearch')}}?keyword=" + jQuery('#searchblur').val(),
-            type: "POST",
-            dataType: "html"
-    });
-            request.done(function(msg) {
-            jQuery('#tableproduct').html(msg);
-            });
-    }
-    });
-            jQuery("#loctheotieuchi").click(function() {
-        var request = jQuery.ajax({
-                url: "{{URL::action('HistoryUserController@postFillterHistory')}}?status=" + jQuery('#oderbyoption1').val()+"&from="+ jQuery('#datepicker').val()+"&to="+ jQuery('#datepicker1').val(),                
+                if (av[e].checked == true) {
+                    addon += av[e].value + ',';
+                }
+            }
+            if (addon != '') {
+                jConfirm("{{Lang::get('messages.delete_confirm')}}", "{{Lang::get('messages.alert')}}", function (r) {
+                    if (r == true) {
+                        jQuery.post("{{URL::action('HistoryUserController@postDelmulte')}}", {multiid: addon}).done(function (data) {
+                            window.location = '{{URL::action('HistoryUserController@getHistoryView')}}';
+                        });
+                        return false;
+                    } else {
+                        return false;
+                    }
+                });
+            } else {
+                jAlert("{{Lang::get('messages.select_empty')}}", "{{Lang::get('messages.alert')}}");
+            }
+        });
+
+        jQuery('#searchblur').keypress(function (e) {
+            // Enter pressed?
+            if (e.which == 10 || e.which == 13) {
+                var request = jQuery.ajax({
+                    url: "{{URL::action('HistoryUserController@postAjaxsearch')}}?keyword=" + jQuery('#searchblur').val(),
+                    type: "POST",
+                    dataType: "html"
+                });
+                request.done(function (msg) {
+                    jQuery('#tableproduct').html(msg);
+                });
+            }
+        });
+        jQuery("#loctheotieuchi").click(function () {
+            var request = jQuery.ajax({
+                url: "{{URL::action('HistoryUserController@postFillterHistory')}}?status=" + jQuery('#oderbyoption1').val() + "&from=" + jQuery('#datepicker').val() + "&to=" + jQuery('#datepicker1').val(),
                 type: "POST",
                 dataType: "html"
-        });
-                request.done(function(msg) {
+            });
+            request.done(function (msg) {
                 jQuery('#tableproduct').html(msg);
-                });
+            });
         });
-            
+
     });
-    
+
     function phantrang(page) {
         jQuery("#jGrowl").remove();
-        jQuery.jGrowl("Đang tải dữ liệu ...");
+        jQuery.jGrowl("{{Lang::get('messages.data_loading')}}");
         var urlpost = "{{URL::action('HistoryUserController@postAjaxhistoryuser')}}?page=" + page
         if (jQuery('#oderbyoption1').val() != '' || jQuery('#datepicker').val() != '' || jQuery('#datepicker1').val() != '') {
             urlpost = "{{URL::action('HistoryUserController@postFillterHistory')}}?status=" + jQuery('#oderbyoption1').val() + "&page=" + page;
@@ -78,77 +97,75 @@
             type: "POST",
             dataType: "html"
         });
-        request.done(function(msg) {
+        request.done(function (msg) {
             jQuery("#jGrowl").remove();
-            jQuery.jGrowl("Đã tải dữ liệu thành công ...");
+            jQuery.jGrowl("{{Lang::get('messages.data_load_success')}}");
             jQuery('#tableproduct').html(msg);
         });
     }
-            
-    
-    
-            
+
+
     function xoasanpham(id) {
-    jConfirm('Bạn có chắc chắn muốn xóa ?', 'Thông báo', function(r) {
-    if (r == true) {
-    var request = jQuery.ajax({
-    url: "{{URL::action('HistoryUserController@postDeleteHistory')}}?id=" + id,
-            type: "POST",
-            dataType: "html"
-    });
-            request.done(function(msg) {
-            jQuery('#tableproduct').html(msg);
-            });
-            return false;
-    } else {
-    return false;
+        jConfirm("{{Lang::get('messages.delete_confirm')}}", "{{Lang::get('messages.alert')}}", function (r) {
+            if (r == true) {
+                var request = jQuery.ajax({
+                    url: "{{URL::action('HistoryUserController@postDeleteHistory')}}?id=" + id,
+                    type: "POST",
+                    dataType: "html"
+                });
+                request.done(function (msg) {
+                    jQuery('#tableproduct').html(msg);
+                });
+                return false;
+            } else {
+                return false;
+            }
+        })
     }
-    })
-    }
-    
+
     function kichhoat(id, stus) {
-    var request = jQuery.ajax({
-    url: "{{URL::action('HistoryUserController@postHistoryActive')}}?id=" + id + '&status=' + stus,
+        var request = jQuery.ajax({
+            url: "{{URL::action('HistoryUserController@postHistoryActive')}}?id=" + id + '&status=' + stus,
             type: "POST",
             dataType: "html"
-    });
-            request.done(function(msg) {
+        });
+        request.done(function (msg) {
             jQuery('#tableproduct').html(msg);
-            });
-            return true;
+        });
+        return true;
     }
 </script>
 <div class="pageheader notab">
-    <h1 class="pagetitle">Quản lý lịch sử người dùng</h1>
-    <span class="pagedesc">Quản lý lịch sử</span>
+    <h1 class="pagetitle">{{Lang::get('backend/title.history.headingAdmin')}}</h1>
+    <span class="pagedesc">{{Lang::get('backend/title.history.headingAdmin')}}</span>
 </div>
 
 <div class="contentwrapper">
     @if(isset($msg))
-            <div class="notibar msgalert">
-                <a class="close"></a>
-                <p>{{$msg}}</p>
-            </div>
-            @endif
+    <div class="notibar msgalert">
+        <a class="close"></a>
+        <p>{{$msg}}</p>
+    </div>
+    @endif
     <div class="subcontent">
         <div class="contenttitle2">
-            <h3>Bảng quản lý các lịch sử</h3>
+            <h3>{{Lang::get('backend/title.history.caption_view')}}</h3>
         </div>
-            
+
         <div class="tableoptions">
-            <button class="deletepromulti" title="table1">Xóa đã chọn</button> &nbsp;
-            <label>From: <input id="datepicker" name="from" style="border: 1px solid #ddd;padding: 7px 5px 8px 5px;background: #fff;" type="text"/></label>
-            <label>To: <input id="datepicker1" name="to" style="border: 1px solid #ddd;padding: 7px 5px 8px 5px;background: #fff;" type="text"/></label>
-            <select class="radius3" name="oderbyoption1" id="oderbyoption1">
-                <option value="3">Tất cả</option>
-                <option value="0">Chờ kích hoạt</option>
-                <option value="1">Đã kích hoạt</option>
-                <option value="2">Xóa</option>
-            </select>&nbsp;
-            
-               
-            
-            <div class="dataTables_filter" id="searchformfile"><label>Search: <input id="searchblur" name="searchblur" style="border: 1px solid #ddd;padding: 7px 5px 8px 5px;width: 200px;background: #fff;" type="text"></label></div>
+            <button class="deletepromulti" title="table1">{{Lang::get('general.delete_select')}}</button>
+            &nbsp;
+            <label>{{Lang::get('general.date_from')}}: <input id="datepicker" name="from"
+                                                              style="border: 1px solid #ddd;padding: 7px 5px 8px 5px;background: #fff;"
+                                                              type="text"/></label>
+            <label>{{Lang::get('general.date_to')}}: <input id="datepicker1" name="to"
+                                                            style="border: 1px solid #ddd;padding: 7px 5px 8px 5px;background: #fff;"
+                                                            type="text"/></label>
+            <div class="dataTables_filter1" id="searchformfile"><label>{{Lang::get('general.search')}}: <input
+                        id="searchblur" name="searchblur"
+                        style="border: 1px solid #ddd;padding: 7px 5px 8px 5px;width: 200px;background: #fff;"
+                        type="text"></label>
+            </div>
         </div>
         <table cellpadding="0" cellspacing="0" border="0" id="table2" class="stdtable stdtablecb">
             <colgroup>
@@ -161,92 +178,78 @@
                 <col class="con0" style="width: 15%">
             </colgroup>
             <thead>
-                <tr>
-                    <th class="head0"></th> 
-                    <th class="head1">Email</th>
-                    <th class="head0">Địa chỉ</th>
-                    <th class="head1">Nội dung</th>
-                    <th class="head0">Khởi tạo</th>
-                    <th class="head1">Tình trạng</th>
-                    <th class="head0">Chức năng</th>
-                </tr>  
+            <tr>
+                <th class="head0"></th>
+                <th class="head1">{{Lang::get('general.email')}}</th>
+                <th class="head0">{{Lang::get('general.full_name')}}</th>
+                <th class="head1">{{Lang::get('general.content')}}</th>
+                <th class="head0">{{Lang::get('general.time')}}</th>
+                <th class="head1">{{Lang::get('general.status')}}</th>
+                <th class="head0">{{Lang::get('general.action')}}</th>
+            </tr>
             </thead>
 
-            <tbody id="tableproduct"> 
-                
-                
-                @if(isset($arrHistory))
-                @foreach($arrHistory as $item)
-                <tr> 
-                    <td><input name="checkboxidfile" type="checkbox" value="{{$item->id}}"></td> 
-                    <td><a href="javascript:void(0);" onclick="xxx('{{$item->id}}','{{$item->userEmail}}','{{$item->userAddress}}','{{$item->historyContent}}')">{{str_limit( $item->userEmail, 15, '...')}}</a></td> 
-                    <td><label value="page">{{str_limit($item->userAddress, 15, '...')}} </label></td> 
-                    <td><label value="page">{{str_limit($item->historyContent, 15, '...')}} </label></td> 
-                    <td><label value="page"></label><?php echo date('d/m/Y h:i:s', $item->time); ?></td> 
-                    <td><label value="page">
-                            <?php
-                            if ($item->status == 0) {
-                                echo "chờ kích hoạt";
-                            } else if ($item->status == 1) {
-                                echo "đã kích hoạt";
-                            } else if ($item->status == 2) {
-                                echo "đã xóa";
-                            }
-                            ?>
-                        </label>
-                    </td> 
-                    <td>
-                        
-                        @if($item->status=='2')
-                        <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 0)" class="btn btn4 btn_world" title="Chờ kích hoạt"></a>
+            <tbody id="tableproduct">
+
+
+            @if(isset($arrHistory))
+            @foreach($arrHistory as $item)
+            <tr>
+                <td><input name="checkboxidfile" type="checkbox" value="{{$item->id}}"></td>
+                <td>
+                    <?php echo '<a href="javascript:void(0);" onclick="xxx1(this);" data-id="'.$item->id.'" data-email="'.$item->userEmail.'" data-name="'.$item->userAddress.'" data-content="'.$item->historyContent.'">'.str_limit($item->userEmail, 15, '...').'</a>'; ?>
+                </td>
+                <td><label value="page">{{str_limit($item->userAddress, 15, '...')}} </label></td>
+                <td><label value="page">{{str_limit($item->historyContent, 15, '...')}} </label></td>
+                <td><label value="page"></label><?php echo date('d/m/Y h:i:s', $item->time); ?></td>
+                <td><label value="page">
+                        @if($item->status != 0)
+                            {{Lang::get('button.delete')}}
                         @endif
-                        @if($item->status=='0')
-                        <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 1)" class="btn btn4 btn_flag" title="Kích hoạt"></a>
-                        @endif
-                        @if($item->status!='2')
-                        <a href="javascript: void(0)" onclick="xoasanpham({{$item->id}})" class="btn btn4 btn_trash" title="Xóa"></a>
-                        @endif
-                    </td> 
-                </tr> 
-                @endforeach
-                @if($link!='')
-                <tr>
-                    <td colspan="7">{{$link}}</td>
-                </tr>
-                @endif
-                
-                @endif
+                    </label>
+                </td>
+                <td>
+                    @if($item->status==0)
+                    <a href="javascript: void(0)" onclick="xoasanpham({{$item->id}})" class="btn btn4 btn_trash"
+                       title="{{Lang::get('button.trash')}}"></a>
+                    @endif
+                </td>
+            </tr>
+            @endforeach
+            @if($link!='')
+            <tr>
+                <td colspan="7">{{$link}}</td>
+            </tr>
+            @endif
+
+            @endif
             </tbody>
         </table>
-        
+
         <div class="contenttitle2">
-            <h3>Xem chi tiết lịch sử</h3>
-             <div id="frmEdit"></div>  
+            <h3>{{Lang::get('backend/title.history.caption_detail')}}</h3>
+
+            <div id="frmEdit"></div>
         </div>
-        <form class="stdform stdform2" id="history" action="">            
-                    
-            
-            <p>
-                <label>Email</label>
-                <span class="field">
-                    <input type="text" id="email" name="email" disabled="true" value="" width="100px">
-                </span>
-            </p>
-            <p>
-                <label>Tên</label>
-                <span class="field">
-                    <input type="text" id="name" name="name" disabled="true" value="" width="100px">
-                </span>
-            </p>            
-            <p>
-                <label>Nội dung</label>
-                <span class="field">
-                    <textarea style="resize: vertical;" id="content" name="content" disabled="true" width="100px"></textarea>
-                    
-                </span>
-            </p>    
-        </form>
-        
+        <div>
+            <table cellpadding="0" cellspacing="0" border="0" class="stdtable stdtablecb">
+                <tbody>
+                <tr>
+                    <td style="width: 20%;border-top:1px solid #eee"><label>{{Lang::get('general.email')}}</label></td>
+                    <td style="border-top:1px solid #eee"><div id="email"></div></td>
+                </tr>
+                <tr>
+                    <td style="width: 20%"><label>{{Lang::get('general.full_name')}}</label></td>
+                    <td><div id="name"></div></td>
+                </tr>
+                <tr>
+                    <td style="width: 20%"><label>{{Lang::get('general.content')}}</label></td>
+                    <td><div id="content"></div></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
     </div>
 </div>
 @endsection

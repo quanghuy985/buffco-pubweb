@@ -9,7 +9,7 @@
 class tblGroupAdminModel extends Eloquent {
 
     protected $guarded = array();
-    protected $table = 'tblGroupAdmin';
+    protected $table = 'tblgroupadmin';
     public $timestamps = false;
     public static $rules = array();
 
@@ -23,7 +23,7 @@ class tblGroupAdminModel extends Eloquent {
     }
 
     public function insertGroupAdminGetLastID($groupadminName, $groupadminDescription, $status) {
-        $id = DB::table('tblGroupAdmin')->insertGetId(array('groupadminName' => $groupadminName, 'groupadminDescription' => $groupadminDescription, 'time' => time(), 'status' => $status));
+        $id = DB::table('tblgroupadmin')->insertGetId(array('groupadminName' => $groupadminName, 'groupadminDescription' => $groupadminDescription, 'time' => time(), 'status' => $status));
         return $id;
     }
 
@@ -58,27 +58,27 @@ class tblGroupAdminModel extends Eloquent {
     }
 
     public function findGroupAdminByID($id) {
-        $objGroupAdmin = DB::table('tblGroupAdmin')->where('id', '=', $id)->get();
+        $objGroupAdmin = DB::table('tblgroupadmin')->where('id', '=', $id)->get();
         return $objGroupAdmin;
     }
 
     public function allGroupAdmin($per_page) {
-        $arrGroupAdmin = DB::table('tblGroupAdmin')->where('status','!=','5')->paginate($per_page);
+        $arrGroupAdmin = DB::table('tblgroupadmin')->where('status','!=','5')->paginate($per_page);
         return $arrGroupAdmin;
     }
 
     public function allAdminByStatus($status) {
-        $arrGroupAdmin = DB::table('tblGroupAdmin')->where('status', '=', $status)->get();
+        $arrGroupAdmin = DB::table('tblgroupadmin')->where('status', '=', $status)->get();
         return $arrGroupAdmin;
     }
 
     public function allGroupAdminList() {
-        $arrGroupAdmin = DB::table('tblGroupAdmin')->get();
+        $arrGroupAdmin = DB::table('tblgroupadmin')->get();
         return $arrGroupAdmin;
     }
 
     public function findGroupAdmin($keyword, $per_page) {
-        $adminarray = DB::table('tblGroupAdmin')->where('groupadminName', 'LIKE', '%' . $keyword . '%')->orWhere('groupadminDescription', 'LIKE', '%' . $keyword . '%')->orWhere('status', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
+        $adminarray = DB::table('tblgroupadmin')->where('groupadminName', 'LIKE', '%' . $keyword . '%')->orWhere('groupadminDescription', 'LIKE', '%' . $keyword . '%')->orWhere('status', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
         return $adminarray;
     }
 
