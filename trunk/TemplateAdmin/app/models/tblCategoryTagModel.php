@@ -9,7 +9,7 @@
 class tblCategoryTagModel extends Eloquent {
 
     protected $guarded = array();
-    protected $table = 'tblCateTag';
+    protected $table = 'tblcatetag';
     public $timestamps = false;
     public static $rules = array();
 
@@ -23,7 +23,7 @@ class tblCategoryTagModel extends Eloquent {
 
     public function updateCateTag($cateTagID, $cateTagName, $cateStatus) {
         // $tableAdmin = new TblAdminModel();
-        $tblCateTag = $this->where('id', '=', $cateTagID);
+        $tblcatetag = $this->where('id', '=', $cateTagID);
         $arraysql = array('id' => $cateTagID);
         if ($cateTagName != '') {
             $arraysql = array_merge($arraysql, array("cateTagName" => $cateTagName));
@@ -31,7 +31,7 @@ class tblCategoryTagModel extends Eloquent {
         if ($cateStatus != '') {
             $arraysql = array_merge($arraysql, array("status" => $cateStatus));
         }
-        $checku = $tblCateTag->update($arraysql);
+        $checku = $tblcatetag->update($arraysql);
         if ($checku > 0) {
             return TRUE;
         } else {
@@ -49,12 +49,12 @@ class tblCategoryTagModel extends Eloquent {
     }
 
     public function allCateTag($per_page) {
-        $arrTag = DB::table('tblCateTag')->paginate($per_page);
+        $arrTag = DB::table('tblcatetag')->paginate($per_page);
         return $arrTag;
     }
 
     public function findCateTagByID($id) {
-        $objTag = DB::table('tblCateTag')->where('id', '=', $id)->get();
+        $objTag = DB::table('tblcatetag')->where('id', '=', $id)->get();
         return $objTag;
     }
 

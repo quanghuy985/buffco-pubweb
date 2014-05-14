@@ -33,23 +33,27 @@ class PageController extends Controller {
 
     public function postUpdatePage() {
         $tblPageModel = new tblPageModel();
+        $pageID = Input::get('id');
         $rules = array(
-            "pageName" => "required",
+            "pageName" => "required|max:255",
             "pageContent" => "required",
-            "pageKeyword" => "required",
-            "pageTag" => "required",
-            "slug" => "required",
-            "status" => "required"
+            "pageKeywords" => "required|max:255",
+            "pageTag" => "required|max:255",
+            "pageSlug" => "required|max:255|regex:/^[a-z0-9-]*$/|unique:tblPage,pageSlug,".$pageID.",id",
+            "status" => "required|integer"
         );
-        if (!Validator::make(Input::all(), $rules)->fails()) {
+        $validate = Validator::make(Input::all(), $rules, Lang::get('messages.validator'), Lang::get('backend/attributes.page'));
+        if (!$validate->fails()) {
             $objadmin = Session::get('adminSession');
             $id = $objadmin[0]->id;
             $objHistoryAdmin = new tblHistoryAdminModel();
-            $tblPageModel->updatePage(Input::get('idpage'), Input::get('pageName'), Input::get('pageContent'), Input::get('pageKeyword'), Input::get('pageTag'), Input::get('slug'), Input::get('status'));
-            $objHistoryAdmin->addHistory($id, 'Sua page ' . Input::get('pageName'), 0);
-            return Redirect::action('PageController@getPageView', array('msg' => 'cap nhat thanh cong'));
+            $tblPageModel->updatePage(Input::get('id'), Input::get('pageName'), Input::get('pageContent'), Input::get('pageKeywords'), Input::get('pageTag'), Input::get('slug'), Input::get('status'));
+            $objHistoryAdmin->addHistory($id, Lang::get('backend/history.page.update') . Input::get('pageName'), 0);
+            Session::flash('alert_success', Lang::get('messages.update.success'));
+            return Redirect::back();
         } else {
-            return Redirect::action('PageController@getPageView', array('msg' => 'cap nhat that bai'));
+            Session::flash('alert_error', Lang::get('messages.update.error'));
+            return Redirect::back()->withErrors($validate->messages())->withInput(Input::all());
         }
     }
 
@@ -59,28 +63,29 @@ class PageController extends Controller {
 
     public function postAddPage() {
         $rules = array(
-            "pageName" => "required",
+            "pageName" => "required|max:255",
             "pageContent" => "required",
-            "pageKeyword" => "required",
-            "pageTag" => "required",
-            "pageSlug" => "required",
-            "status" => "required"
+            "pageKeywords" => "required|max:255",
+            "pageTag" => "required|max:255",
+            "pageSlug" => "required|max:255|regex:/^[a-z0-9-]*$/|unique:tblPage",
+            "status" => "required|integer"
         );
-        $tblPageModel = new tblPageModel();
-        if ($tblPageModel->checkSlug(Input::get('pageSlug'))) {
-            return Redirect::action('PageController@getPageView', array('msg' => 'Slug đã tồn tại!'));
-        } else {
-            if (!Validator::make(Input::all(), $rules)->fails()) {
-                $objadmin = Session::get('adminSession');
-                $id = $objadmin[0]->id;
-                $objHistoryAdmin = new tblHistoryAdminModel();
+        $inputs = Input::all();
+        $validate = Validator::make($inputs, $rules, Lang::get('messages.validator'), Lang::get('backend/attributes.page'));
+        if (!$validate->fails()) {
 
-                $tblPageModel->addPage(Input::get('pageName'), Input::get('pageContent'), Input::get('pageKeyword'), Input::get('pageTag'), Input::get('pageSlug'), Input::get('status'));
-                $objHistoryAdmin->addHistory($id, 'Them page ' . Input::get('pageName'), 0);
-                return Redirect::action('PageController@getPageView', array('msg' => 'thêm mới thành công'));
-            } else {
-                return Redirect::action('PageController@getPageView', array('msg' => 'thêm mới thất bại'));
-            }
+            $tblPageModel = new tblPageModel();
+            $objadmin = Session::get('adminSession');
+            $id = $objadmin[0]->id;
+            $objHistoryAdmin = new tblHistoryAdminModel();
+
+            $tblPageModel->addPage(Input::get('pageName'), Input::get('pageContent'), Input::get('pageKeywords'), Input::get('pageTag'), Input::get('pageSlug'), Input::get('status'));
+            $objHistoryAdmin->addHistory($id, Lang::get('backend/history.page.create') . Input::get('pageName'), 0);
+            Session::flash('alert_success', Lang::get('messages.add.success'));
+            return Redirect::action('PageController@getPageView');
+        } else {
+            Session::flash('alert_error', Lang::get('messages.add.error'));
+            return Redirect::back()->withErrors($validate->messages())->withInput($inputs);
         }
     }
 
@@ -92,7 +97,8 @@ class PageController extends Controller {
                 $tblPageModel->deletePage($item);
                 $objadmin = Session::get('adminSession');
                 $id = $objadmin[0]->id;
-                $objHistoryAdmin->addHistory($id, 'xóa page', 0);
+                $objHistoryAdmin = new tblHistoryAdminModel();
+                $objHistoryAdmin->addHistory($id, Lang::get('backend/history.page.delete'), 0);
             }
         }
         $tblPageModel = new tblPageModel();
@@ -107,7 +113,7 @@ class PageController extends Controller {
         $objadmin = Session::get('adminSession');
         $id = $objadmin[0]->id;
         $objHistoryAdmin = new tblHistoryAdminModel();
-        $objHistoryAdmin->addHistory($id, 'xóa page', 0);
+        $objHistoryAdmin->addHistory($id, Lang::get('backend/history.page.delete'), 0);
         $arrpage = $tblPageModel->selectAllPage(5, 'id');
         $link = $arrpage->links();
         return View::make('backend.page.Pageajax')->with('arrayPage', $arrpage)->with('link', $link);
@@ -119,7 +125,7 @@ class PageController extends Controller {
         $objadmin = Session::get('adminSession');
         $id = $objadmin[0]->id;
         $objHistoryAdmin = new tblHistoryAdminModel();
-        $objHistoryAdmin->addHistory($id, 'active page', 0);
+        $objHistoryAdmin->addHistory($id, Lang::get('backend/history.page.active'), 0);
         $arrpage = $tblPageModel->selectAllPage(5, 'id');
 
         $link = $arrpage->links();

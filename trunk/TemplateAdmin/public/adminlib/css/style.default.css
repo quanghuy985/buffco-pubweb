@@ -335,7 +335,7 @@ body.withmenucoll2 { background-position: 35px 0; } /* with menu style 2 in coll
 
 .pageheader { padding-top: 20px; background: url(../images/default/noise.white.png); position: relative; }
 .pageheader .pagetitle { 
-    margin: 0 10px; color: #485b79; font-weight: normal; font-size: 28px; font-family: Arial, Helvetica, sans-serif; 
+    margin: 0 10px; color: #485b79; font-weight: normal; font-size: 28px; font-family: Arial, Helvetica, sans-serif;
 }
 .pageheader .pagedesc { color: #666; margin: 0 10px; }
 .notab { border-bottom: 1px solid #ddd; padding-bottom: 20px; }
@@ -2369,7 +2369,7 @@ a.btn_orderdetail{
 }
 #thumbnails  img {
     border-radius: 5px;
-    margin-right: 16.28px;
+    margin-right: 16.2px;
     margin-top: 10px;
     border: 1px solid #C0C0C0;
 }
@@ -2390,3 +2390,6 @@ a.btn_orderdetail{
     background: none repeat scroll 0 0 #ff6666;
 }
 .clear{clear: both;}
+.bodywrapper{min-width:1000px}
+.uppercase{text-transform: uppercase;}
+td.text-center, td.text-center, .stdtable thead th.text-center{text-align:center}

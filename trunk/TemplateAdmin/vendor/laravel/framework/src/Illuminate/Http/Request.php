@@ -30,6 +30,16 @@ class Request extends SymfonyRequest {
 	}
 
 	/**
+	 * Get the request method.
+	 *
+	 * @return string
+	 */
+	public function method()
+	{
+		return $this->getMethod();
+	}
+
+	/**
 	 * Get the root URL for the application.
 	 *
 	 * @return string
@@ -92,11 +102,7 @@ class Request extends SymfonyRequest {
 	 */
 	public function segment($index, $default = null)
 	{
-		$segments = explode('/', trim($this->getPathInfo(), '/'));
-
-		$segments = array_values(array_filter($segments));
-
-		return array_get($segments, $index - 1, $default);
+		return array_get($this->segments(), $index - 1, $default);
 	}
 
 	/**
@@ -106,9 +112,9 @@ class Request extends SymfonyRequest {
 	 */
 	public function segments()
 	{
-		$path = $this->path();
+		$segments = explode('/', $this->path());
 
-		return $path == '/' ? array() : explode('/', $path);
+		return array_values(array_filter($segments));
 	}
 
 	/**
@@ -151,7 +157,27 @@ class Request extends SymfonyRequest {
 	}
 
 	/**
-	 * Determine if the request contains a given input item.
+	 * Determine if the request contains a given input item key.
+	 *
+	 * @param  string|array  $key
+	 * @return bool
+	 */
+	public function exists($key)
+	{
+		$keys = is_array($key) ? $key : func_get_args();
+
+		$input = $this->all();
+
+		foreach ($keys as $value)
+		{
+			if ( ! array_key_exists($value, $input)) return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Determine if the request contains a non-emtpy value for an  input item.
 	 *
 	 * @param  string|array  $key
 	 * @return bool
@@ -287,7 +313,7 @@ class Request extends SymfonyRequest {
 	{
 		if (is_array($file = $this->file($key))) $file = head($file);
 
-		return $file instanceof \SplFileInfo;
+		return $file instanceof \SplFileInfo && $file->getPath() != '';
 	}
 
 	/**
@@ -508,6 +534,8 @@ class Request extends SymfonyRequest {
 	 * Get the session associated with the request.
 	 *
 	 * @return \Illuminate\Session\Store
+	 *
+	 * @throws \RuntimeException
 	 */
 	public function session()
 	{

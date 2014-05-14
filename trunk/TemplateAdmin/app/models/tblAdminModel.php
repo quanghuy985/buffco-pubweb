@@ -8,7 +8,7 @@
 
 class tblAdminModel extends Eloquent {
 
-    protected $table = 'tblAdmin';
+    protected $table = 'tbladmin';
     public $timestamps = false;
 
     public function createAdmin($adminEmail, $adminPassword, $adminName, $groupAdminID) {
@@ -68,12 +68,12 @@ class tblAdminModel extends Eloquent {
     }
 
     public function findAdminByAdminEmail($adminEmail) {
-        $objAdmin = DB::table('tblAdmin')->join('tblGroupAdmin', 'tblAdmin.groupadminID', '=', 'tblGroupAdmin.id')->select('tblAdmin.*', 'tblGroupAdmin.groupadminName')->where('adminEmail', '=', $adminEmail)->get();
+        $objAdmin = DB::table('tbladmin')->join('tblGroupAdmin', 'tbladmin.groupadminID', '=', 'tblGroupAdmin.id')->select('tbladmin.*', 'tblGroupAdmin.groupadminName')->where('adminEmail', '=', $adminEmail)->get();
         return $objAdmin;
     }
 
     public function allAdmin($per_page) {
-        $arrAdmin = DB::table('tblAdmin')->join('tblGroupAdmin', 'tblAdmin.groupadminID', '=', 'tblGroupAdmin.id')->select('tblAdmin.*', 'tblGroupAdmin.groupadminName')->where('tblGroupAdmin.status','!=','5')->paginate($per_page);
+        $arrAdmin = DB::table('tbladmin')->join('tblGroupAdmin', 'tbladmin.groupadminID', '=', 'tblGroupAdmin.id')->select('tbladmin.*', 'tblGroupAdmin.groupadminName')->where('tblGroupAdmin.status','!=','5')->paginate($per_page);
         return $arrAdmin;
     }
 
@@ -100,12 +100,12 @@ class tblAdminModel extends Eloquent {
     }
 
     public function checkLogin($adminEmail, $adminPassword) {
-        $objAdmin = DB::table('tblAdmin')->whereRaw('adminEmail = ? and adminPassword = ?', array($adminEmail, md5(sha1(md5($adminPassword)))))->get();
+        $objAdmin = DB::table('tbladmin')->whereRaw('adminEmail = ? and adminPassword = ?', array($adminEmail, md5(sha1(md5($adminPassword)))))->get();
         return $objAdmin;
     }
 
     public function findAdmin($keyword, $per_page) {
-        $adminarray = DB::table('tblAdmin')->where('adminEmail', 'LIKE', '%' . $keyword . '%')->orWhere('adminName', 'LIKE', '%' . $keyword . '%')->orWhere('status', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
+        $adminarray = DB::table('tbladmin')->where('adminEmail', 'LIKE', '%' . $keyword . '%')->orWhere('adminName', 'LIKE', '%' . $keyword . '%')->orWhere('status', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
         return $adminarray;
     }
     

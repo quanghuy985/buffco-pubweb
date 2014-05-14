@@ -6,7 +6,6 @@
  *	Built for Amanda Premium Responsive Admin Template
  *  http://themeforest.net/category/site-templates/admin-templates
  */
-
 jQuery().ready(function() {
 		jQuery('textarea.tinymce').tinymce({
 			// Location of TinyMCE script

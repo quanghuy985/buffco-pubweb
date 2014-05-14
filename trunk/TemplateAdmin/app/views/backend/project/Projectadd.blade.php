@@ -1,49 +1,42 @@
 @extends("templateadmin2.mainfire")
+@section("titleAdmin")
+@if(isset($dataProject))
+{{Lang::get('backend/title.project.edit')}}
+@else
+{{Lang::get('backend/title.project.add')}}
+@endif
+@stop
 @section("contentadmin")
 <script>
-    jQuery(document).ready(function() {
-        
+    jQuery(document).ready(function () {
         <?php
 if (isset($dataimg)) {
     foreach ($dataimg as $item) {
         ?>
-            var urlImg = '<div style="padding-top:10px" id="image-' + <?php echo $item->id; ?> + '"><img src="<?php echo $item->attachmentURL; ?>" width="100" height="100"/><a href="javascript:void(0);" onclick="xoaanhthum(\'image-' + <?php echo $item->id; ?> + '\');" class="delete" title="Delete image">x</a></div>';
-                    document.getElementById('thumbnails1').innerHTML += urlImg;
-    <?php }
-    ?>
+        var urlImg = '<div style="padding-top:10px" id="image-{{$item->id}}">' +
+            '<img src="{{$item->attachmentURL}}" width="100" height="100"/>' +
+            '<a href="javascript:void(0);" ' +
+            'onclick="xoaanhthum(\'image-{{$item->id}}\');" class="delete" title="{{Lang::get("button.delete")}}">x</a></div>';
+        document.getElementById('thumbnails1').innerHTML += urlImg;
+        <?php }
+        ?>
         returnurlimg();
-<?php }
-?>
-
-
-    jQuery("#addProjectForm").validate({
-    rules: {
-    projectName: {
-    required: true
-    },
-            description: {
-    required: true
-    },
-            content: {
-    required: true
-    }
-
-    },
+        <?php }
+        ?>
+        jQuery("#addProjectForm").validate({
+            rules: {
+                projectName: {required: true},
+                projectDescription: {required: true},
+                projectContent: {required: true}
+            },
             messages: {
-    projectName: {
-    required: 'Tên dự án là trường bắt buộc',
-    },
-            description: {
-    required: 'Vui lòng nhập mô tả'
-    },
-            content: {
-    required: 'Vui lòng nhập nội dung '
-    }
-    }
+                projectName: {required: '<?php echo Lang::get('jquery.project.name'); ?>'},
+                projectDescription: {required: '<?php echo Lang::get('jquery.project.description'); ?>'},
+                projectContent: {required:  '<?php echo Lang::get('jquery.project.content'); ?>'}
+            }
+        });
     });
-    });
-      function BrowseServer(startupPath, functionData)
-    {
+    function BrowseServer(startupPath, functionData) {
         // You can use the "CKFinder" class to render CKFinder in a page:
         var finder = new CKFinder();
         // The path for the installation of CKFinder (default = "/ckfinder/").
@@ -60,14 +53,13 @@ if (isset($dataimg)) {
         finder.popup();
     }
 
-    function SetFileField(fileUrl, data)
-    {
-        
+    function SetFileField(fileUrl, data) {
+
         var sFileName = this.getSelectedFile().name;
-        var urlImg = '<div style="padding-top:10px" id="image-' + sFileName + '">'+
-        '<img src="{{Asset('timthumb.php')}}?src=http://' + window.location.hostname + fileUrl + '&w=100&h=100&zc=0&q=100" width="100" height="100"/>'+
-        '<a href="javascript:void(0);" onclick="xoaanhthum(\'image-' + sFileName + '\');" class="delete" title="Delete image">x</a></div>';
-                document.getElementById('thumbnails1').innerHTML += urlImg;
+        var urlImg = '<div style="padding-top:10px" id="image-' + sFileName + '">' +
+            '<img src="{{Asset('timthumb.php')}}?src=http://' + window.location.hostname + fileUrl + '&w=100&h=100&zc=0&q=100" width="100" height="100"/>' +
+            '<a href="javascript:void(0);" onclick="xoaanhthum(\'image-' + sFileName + '\');" class="delete" title="{{Lang::get("button.delete")}}">x</a></div>';
+        document.getElementById('thumbnails1').innerHTML += urlImg;
         returnurlimg();
         //   document.getElementById(data["selectActionData"]).value = fileUrl;
     }
@@ -78,87 +70,98 @@ if (isset($dataimg)) {
     }
 
     function returnurlimg() {
-        var images = jQuery("#thumbnails1").find("img").map(function() {
+        var images = jQuery("#thumbnails1").find("img").map(function () {
             return this.src;
         }).get();
         jQuery("#xImagePath").val(images);
     }
-    </script>
+</script>
 <script>
-  
-
-    
 
 
 </script>
 
 
 <div class="contenttitle2" id="editProject">
-    <h3>Thêm/Sửa dự án</h3>
+    <h3 class="uppercase">
+        @if(isset($dataProject))
+        {{Lang::get('backend/title.project.edit')}}
+        @else
+        {{Lang::get('backend/title.project.add')}}
+        @endif
+    </h3>
 </div>
-
-
-<form class="stdform stdform2" id="addProjectForm" method="post" action="@if(isset($dataProject)) {{URL::action('ProjectController@postUpdateProject')}} @else {{URL::action('ProjectController@postAddProject')}}@endif">
-
-    <p>
-        <input type="hidden" name="idproject" id="idproject" value="@if(isset($dataProject)){{$dataProject->id}}@endif"/>
-        <input type="hidden" name="status" id="status" value="@if(isset($dataProject)){{$dataProject->status}}@endif"/>
-
-    </p>
-    <p>
-        <label>Tên dự án</label>
+@include('templateadmin2.alert')
+@if(isset($dataProject))
+{{Form::model($dataProject, array('action'=>'ProjectController@postUpdateProject', 'id'=>'addProjectForm', 'class'=>'stdform stdform2'))}}
+<?php
+$dataProject->from = date('m/d/Y', $dataProject->from);
+$dataProject->to = date('m/d/Y', $dataProject->to);
+?>
+@else
+{{Form::open(array('action'=>'ProjectController@postAddProject', 'id'=>'addProjectForm', 'class'=>'stdform stdform2'))}}
+@endif
+<p>
+    {{Form::hidden('id', null, array('id'=>'idproject'))}}
+    {{Form::hidden('status', null, array('id'=>'status'))}}
+</p>
+<p>
+    <label>{{Lang::get('general.project_name')}}</label>
         <span class="field">
-            <input type="text" value="@if(isset($dataProject)){{$dataProject->projectName}}@endif" id='projectName' name='projectName'/>
+            {{Form::text('projectName', null, array('id'=>'projectName'))}}
+        </span>
+</p>
+<p>
+    <label>{{Lang::get('general.date_begin')}}</label>
+        <span class="field">
+            {{Form::text('from', null, array('id'=>'datepicker', 'width'=>'100px'))}}
 
         </span>
-    </p>
-    <p>
-        <label>Ngày bắt đầu</label>
+</p>
+
+<p>
+    <label>{{Lang::get('general.date_end')}}</label>
+    <span class="field">
+        {{Form::text('to', null, array('id'=>'datepicker1', 'width'=>'100px'))}}
+    </span>
+</p>
+
+<p>
+    <label>{{Lang::get('general.description')}}</label>
+    <span class="field">
+        {{Form::textarea('projectDescription', null, array('id'=>'description', 'rows'=>5, 'cols'=>80, 'class'=>'ckeditor'))}}
+    </span>
+</p>
+
+<p>
+    <label>{{Lang::get('general.content')}}</label>
+    <span class="field">
+        {{Form::textarea('projectContent', null, array('id'=>'content', 'rows'=>5, 'cols'=>80, 'class'=>'ckeditor'))}}
+</p>
+<p>
+    <label>{{Lang::get('general.status')}}</label>
         <span class="field">
-            <input type="text" id="datepicker" name="from" placeholder="From" value="@if(isset($dataProject)){{date('Y-m-d', $dataProject->from)}}@endif" width="100px"/>
+            <?php
+            $selectData = Lang::get('general.data_status');
+            unset($selectData['']);
+            echo Form::select('status', $selectData);
+            ?>
         </span>
-    </p>
-
-    <p>
-        <label>Ngày kết thúc</label>
-        <span class="field"><input type="text" id="datepicker1" name="to" placeholder="To" value="@if(isset($dataProject)){{date('Y-m-d', $dataProject->to)}}@endif" width="100px"></span>
-    </p>
-
-    <p>
-        <label>Mô tả dự án</label>
-        <span class="field"><textarea cols="80" rows="5" id="description" class="ckeditor" name="description" placeholder="Mô tả dự án">@if(isset($dataProject)){{$dataProject->projectDescription}}@endif</textarea></span>
-    </p>
-
-    <p>
-        <label>Nội dung dự án</label>
-        <span class="field"><textarea cols="80" rows="5" id="content" class="ckeditor" name="content" placeholder="Nội dung dự án">@if(isset($dataProject)){{$dataProject->projectContent}}@endif</textarea></span>
-    </p>          
-
-    <p>
-        <label>Trạng thái</label>
-        <span class="field">
-            <select name="status">
-                <option value="0" @if(isset($dataProject)&& $dataProject->status==0)selected@endif >Chờ kích hoạt</option>
-                <option value="1" @if(isset($dataProject)&& $dataProject->status==1)selected@endif>Kích hoạt</option>
-                <option value="2" @if(isset($dataProject)&& $dataProject->status==2)selected@endif>Xóa</option>
-            </select>
-        </span>
-    </p>
-
-
-    <p>
-        <label>Thêm ảnh</label>
+</p>
+<p>
+    <label>{{Lang::get('general.image')}}</label>
 
         <span class="field">
-            <input type="button" value="Thêm ảnh" class="stdbtn btn_orange" onclick="BrowseServer('Images:/', 'xImagePath');" />
-            <input id="xImagePath" name="ImagePath" type="hidden" />
+            <input type="button" value="{{Lang::get('button.addImage')}}" class="stdbtn btn_orange"
+                   onclick="BrowseServer('Images:/', 'xImagePath');"/>
+            <input id="xImagePath" name="ImagePath" type="hidden"/>
             <span id="thumbnails1"></span>
 
         </span>
-    </p>
-    <p class="stdformbutton">
-        <button class="submit radius2">@if(isset($dataProject))Cập nhật @else Thêm mới @endif</button>
-        <input type="reset" class="reset radius2" value="Làm lại">
-    </p>
-</form>
+</p>
+<p class="stdformbutton">
+    <button class="submit radius2">@if(isset($dataProject)){{Lang::get('button.update')}} @else{{Lang::get('button.add')}} @endif</button>
+    <input type="reset" class="reset radius2" value="{{Lang::get('button.reset')}}">
+</p>
+{{Form::close()}}
 @endsection

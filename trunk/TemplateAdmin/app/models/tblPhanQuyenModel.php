@@ -9,7 +9,7 @@
 class tblPhanQuyenModel extends Eloquent {
 
     public function getRolesCodeByGroupAdmin($id) {
-        $arrRolesCode = DB::table('tblGroupAdminRoles')->join('tblRoles', 'tblGroupAdminRoles.rolesID', '=', 'tblRoles.id')->select('tblRoles.rolesCode')->where('groupadminID', '=', $id)->get();
+        $arrRolesCode = DB::table('tblgroupadminroles')->join('tblRoles', 'tblgroupadminroles.rolesID', '=', 'tblRoles.id')->select('tblRoles.rolesCode')->where('groupadminID', '=', $id)->get();
         return $arrRolesCode;
     }
 

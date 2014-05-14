@@ -11,9 +11,7 @@
   |
  */
 
-Route::get('/', function () {
-    return View::make('backend.admin-home');
-});
+
 Route::controller('login', 'LoginController');
 
 View::composer('backend.admin-home', function($view) {
@@ -92,6 +90,9 @@ View::composer('backend.admin-home', function($view) {
 
 
 Route::group(array('before' => 'kiemtradangnhap'), function() {
+    Route::get('/', function () {
+        return View::make('backend.admin-home');
+    });
     Route::controller('files', 'FilemanagerController');
 
     Route::group(array('before' => 'Quan-Ly-Tin-Tuc'), function() {

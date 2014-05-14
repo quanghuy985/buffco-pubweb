@@ -38,7 +38,7 @@ class tblOrderModel extends Eloquent {
 
 // Chua lam xong can fai chinh lai de search theo userName, productName, chu k search theo id
     public function findOrder($keyword, $per_page) {
-        $arrOrder = DB::table('tblOrder')->where('userID', 'LIKE', '%' . $keyword . '%')->orWhere('orderCode', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
+        $arrOrder = DB::table('tblorder')->where('userID', 'LIKE', '%' . $keyword . '%')->orWhere('orderCode', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
         return $arrOrder;
     }
 
@@ -48,31 +48,31 @@ class tblOrderModel extends Eloquent {
     }
 
     public function getAllOrder($per_page) {
-        $allOrder = DB::table('tblOrder')->join('tblUsers', 'tblOrder.userID', '=', 'tblUsers.id')->select('tblOrder.*', 'tblusers.userEmail', 'tblusers.userFirstName', 'tblusers.userLastName')->paginate($per_page);
+        $allOrder = DB::table('tblorder')->join('tblusers', 'tblorder.userID', '=', 'tblusers.id')->select('tblorder.*', 'tblusers.userEmail', 'tblusers.userFirstName', 'tblusers.userLastName')->paginate($per_page);
         return $allOrder;
     }
 
     public function fillterOrder($keyword, $per_page, $orderby) {
         if (Session::get('orderfillter') != '') {
             $orderby = Session::get('orderfillter');
-            $allOrder = DB::table('tblOrder')->join('tblusers', 'tblOrder.userID', '=', 'tblusers.id')->join('tblproduct', 'tblOrder.productID', '=', 'tblproduct.id')->select('tblOrder.*', 'tblusers.userEmail', 'tblproduct.productName')->where('tblusers.userEmail', 'LIKE', '%' . $keyword . '%')->where('tblOrder.status', '=', $orderby)->paginate($per_page);
+            $allOrder = DB::table('tblorder')->join('tblusers', 'tblorder.userID', '=', 'tblusers.id')->join('tblproduct', 'tblorder.productID', '=', 'tblproduct.id')->select('tblorder.*', 'tblusers.userEmail', 'tblproduct.productName')->where('tblusers.userEmail', 'LIKE', '%' . $keyword . '%')->where('tblorder.status', '=', $orderby)->paginate($per_page);
         }
         if ($orderby == '') {
 
-            $allOrder = DB::table('tblOrder')->join('tblusers', 'tblOrder.userID', '=', 'tblusers.id')->join('tblproduct', 'tblOrder.productID', '=', 'tblproduct.id')->select('tblOrder.*', 'tblusers.userEmail', 'tblproduct.productName')->where('tblusers.userEmail', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
+            $allOrder = DB::table('tblorder')->join('tblusers', 'tblorder.userID', '=', 'tblusers.id')->join('tblproduct', 'tblorder.productID', '=', 'tblproduct.id')->select('tblorder.*', 'tblusers.userEmail', 'tblproduct.productName')->where('tblusers.userEmail', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
         } else {
-            $allOrder = DB::table('tblOrder')->join('tblusers', 'tblOrder.userID', '=', 'tblusers.id')->join('tblproduct', 'tblOrder.productID', '=', 'tblproduct.id')->select('tblOrder.*', 'tblusers.userEmail', 'tblproduct.productName')->where('tblusers.userEmail', 'LIKE', '%' . $keyword . '%')->where('tblOrder.status', '=', $orderby)->paginate($per_page);
+            $allOrder = DB::table('tblorder')->join('tblusers', 'tblorder.userID', '=', 'tblusers.id')->join('tblproduct', 'tblorder.productID', '=', 'tblproduct.id')->select('tblorder.*', 'tblusers.userEmail', 'tblproduct.productName')->where('tblusers.userEmail', 'LIKE', '%' . $keyword . '%')->where('tblorder.status', '=', $orderby)->paginate($per_page);
         }
         return $allOrder;
     }
 
     public function getOrderByOrderCode($orderCode) {
-        $allOrderDetail = DB::table('tblOrderDetail')->join('tblSize', 'tblOrderDetail.sizeID', '=', 'tblSize.id')->join('tblColor', 'tblOrderDetail.colorID', '=', 'tblColor.id')->join('tblproduct', 'tblOrderDetail.productID', '=', 'tblproduct.id')->join('tblOrder', 'tblOrderDetail.orderCode', '=', 'tblOrder.orderCode')->join('tblUsers', 'tblOrder.userID', '=', 'tblUsers.id')->select('tblOrderDetail.*', 'tblusers.userEmail', 'tblusers.userFirstName', 'tblusers.userLastName', 'tblusers.userPhone', 'tblproduct.productCode', 'tblproduct.productName', 'tblSize.sizeName', 'tblColor.colorName', 'tblOrder.status as orderStatus', 'tblOrder.receiverName', 'tblOrder.orderAddress', 'tblOrder.receiverPhone')->orderBy('tblOrderDetail.orderCode')->where('tblOrderDetail.orderCode', '=', $orderCode)->get();
+        $allOrderDetail = DB::table('tblorderdetail')->join('tblSize', 'tblorderdetail.sizeID', '=', 'tblSize.id')->join('tblColor', 'tblorderdetail.colorID', '=', 'tblColor.id')->join('tblproduct', 'tblorderdetail.productID', '=', 'tblproduct.id')->join('tblorder', 'tblorderdetail.orderCode', '=', 'tblorder.orderCode')->join('tblusers', 'tblorder.userID', '=', 'tblusers.id')->select('tblorderdetail.*', 'tblusers.userEmail', 'tblusers.userFirstName', 'tblusers.userLastName', 'tblusers.userPhone', 'tblproduct.productCode', 'tblproduct.productName', 'tblSize.sizeName', 'tblColor.colorName', 'tblorder.status as orderStatus', 'tblorder.receiverName', 'tblorder.orderAddress', 'tblorder.receiverPhone')->orderBy('tblorderdetail.orderCode')->where('tblorderdetail.orderCode', '=', $orderCode)->get();
         return $allOrderDetail;
     }
 
     public function findOrderByID($id) {
-        $objOrder = DB::table('tblOrder')->where('tblOrder.id', '=', $id)->get();
+        $objOrder = DB::table('tblorder')->where('tblorder.id', '=', $id)->get();
         return $objOrder;
     }
 
@@ -95,55 +95,55 @@ class tblOrderModel extends Eloquent {
     }
 
     public function allOrder($per_page, $orderby) {
-        $arrOrder = DB::table('tblOrder')->join('tblUsers', 'tblOrder.userID', '=', 'tblUsers.id')->select('tblOrder.*', 'tblusers.userEmail', 'tblusers.userFirstName', 'tblusers.userLastName')->where('tblOrder.status', '=', '0')->orderBy($orderby, 'desc')->paginate($per_page);
+        $arrOrder = DB::table('tblorder')->join('tblusers', 'tblorder.userID', '=', 'tblusers.id')->select('tblorder.*', 'tblusers.userEmail', 'tblusers.userFirstName', 'tblusers.userLastName')->where('tblorder.status', '=', '0')->orderBy($orderby, 'desc')->paginate($per_page);
         return $arrOrder;
     }
 
     public function searchOrders($per_page, $keyword) {
-        $arrOrder = DB::table('tblOrder')->join('tblUsers', 'tblOrder.userID', '=', 'tblUsers.id')->select('tblOrder.*', 'tblusers.userEmail', 'tblusers.userFirstName', 'tblusers.userLastName')->orderBy('status')->orderBy('time', 'desc')->where('tblOrder.orderCode', 'LIKE', '%' . $keyword . '%')->orWhere('tblusers.userEmail', 'LIKE', '%' . $keyword . '%')->orWhere('tblusers.userFirstName', 'LIKE', '%' . $keyword . '%')->orWhere('tblusers.userLastName', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
+        $arrOrder = DB::table('tblorder')->join('tblusers', 'tblorder.userID', '=', 'tblusers.id')->select('tblorder.*', 'tblusers.userEmail', 'tblusers.userFirstName', 'tblusers.userLastName')->orderBy('status')->orderBy('time', 'desc')->where('tblorder.orderCode', 'LIKE', '%' . $keyword . '%')->orWhere('tblusers.userEmail', 'LIKE', '%' . $keyword . '%')->orWhere('tblusers.userFirstName', 'LIKE', '%' . $keyword . '%')->orWhere('tblusers.userLastName', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
         return $arrOrder;
     }
 
     public function fillterOrders($per_page, $from, $to, $status) {
         if ($status == 3 && $from != '' && $to != '') {
-            $arrOrder = DB::table('tblOrder')->join('tblUsers', 'tblOrder.userID', '=', 'tblUsers.id')->select('tblOrder.*', 'tblusers.userEmail', 'tblusers.userFirstName', 'tblusers.userLastName')->orderBy('status')->orderBy('time', 'desc')->whereBetween('tblOrder.time', array($from, $to))->paginate($per_page);
+            $arrOrder = DB::table('tblorder')->join('tblusers', 'tblorder.userID', '=', 'tblusers.id')->select('tblorder.*', 'tblusers.userEmail', 'tblusers.userFirstName', 'tblusers.userLastName')->orderBy('status')->orderBy('time', 'desc')->whereBetween('tblorder.time', array($from, $to))->paginate($per_page);
         } else {
-            $arrOrder = DB::table('tblOrder')->join('tblUsers', 'tblOrder.userID', '=', 'tblUsers.id')->select('tblOrder.*', 'tblusers.userEmail', 'tblusers.userFirstName', 'tblusers.userLastName')->orderBy('status')->orderBy('time', 'desc')->where('tblOrder.status', '=', $status)->whereBetween('tblOrder.time', array($from, $to))->paginate($per_page);
+            $arrOrder = DB::table('tblorder')->join('tblusers', 'tblorder.userID', '=', 'tblusers.id')->select('tblorder.*', 'tblusers.userEmail', 'tblusers.userFirstName', 'tblusers.userLastName')->orderBy('status')->orderBy('time', 'desc')->where('tblorder.status', '=', $status)->whereBetween('tblorder.time', array($from, $to))->paginate($per_page);
         }
         if ($from == '' || $to == '') {
             if ($status == 3) {
-                $arrOrder = DB::table('tblOrder')->join('tblUsers', 'tblOrder.userID', '=', 'tblUsers.id')->select('tblOrder.*', 'tblusers.userEmail', 'tblusers.userFirstName', 'tblusers.userLastName')->orderBy('status')->orderBy('time', 'desc')->paginate($per_page);
+                $arrOrder = DB::table('tblorder')->join('tblusers', 'tblorder.userID', '=', 'tblusers.id')->select('tblorder.*', 'tblusers.userEmail', 'tblusers.userFirstName', 'tblusers.userLastName')->orderBy('status')->orderBy('time', 'desc')->paginate($per_page);
             } else {
-                $arrOrder = DB::table('tblOrder')->join('tblUsers', 'tblOrder.userID', '=', 'tblUsers.id')->select('tblOrder.*', 'tblusers.userEmail', 'tblusers.userFirstName', 'tblusers.userLastName')->orderBy('status')->orderBy('time', 'desc')->where('tblOrder.status', '=', $status)->paginate($per_page);
+                $arrOrder = DB::table('tblorder')->join('tblusers', 'tblorder.userID', '=', 'tblusers.id')->select('tblorder.*', 'tblusers.userEmail', 'tblusers.userFirstName', 'tblusers.userLastName')->orderBy('status')->orderBy('time', 'desc')->where('tblorder.status', '=', $status)->paginate($per_page);
             }
         }
         return $arrOrder;
     }
     
     public function getNewOrderOnDay($from,$to){
-        $allorder= DB::table('tblOrder')->whereBetween('tblOrder.time',array($from,$to))->orderBy('time', 'desc')->count();
+        $allorder= DB::table('tblorder')->whereBetween('tblorder.time',array($from,$to))->orderBy('time', 'desc')->count();
         return $allorder;
     }
     
     public function getLimitOrder() {
-        $allOrder = DB::table('tblOrder')->join('tblUsers', 'tblOrder.userID', '=', 'tblUsers.id')->select('tblOrder.*', 'tblusers.userEmail', 'tblusers.userAddress','tblusers.userFirstName', 'tblusers.userLastName')->orderBy('tblOrder.time','desc')->limit(10)->get();
+        $allOrder = DB::table('tblorder')->join('tblusers', 'tblorder.userID', '=', 'tblusers.id')->select('tblorder.*', 'tblusers.userEmail', 'tblusers.userAddress','tblusers.userFirstName', 'tblusers.userLastName')->orderBy('tblorder.time','desc')->limit(10)->get();
         return $allOrder;
     }
     
     //thong ke
     
     public function getCountOrderOnDay($from,$to){
-        $allorder= DB::table('tblOrder')->leftJoin('tblOrderDetail', 'tblOrder.orderCode', '=', 'tblOrderDetail.orderCode')->select('tblOrder.*','tblOrderDetail.total')->whereBetween('tblOrder.time',array($from,$to))->count();
+        $allorder= DB::table('tblorder')->leftJoin('tblorderdetail', 'tblorder.orderCode', '=', 'tblorderdetail.orderCode')->select('tblorder.*','tblorderdetail.total')->whereBetween('tblorder.time',array($from,$to))->count();
         return $allorder;
     }
     
     public function getTotalOrderOnDay($from,$to){
-        $alltotal = DB::table('tblOrder')->leftJoin('tblOrderDetail', 'tblOrder.orderCode', '=', 'tblOrderDetail.orderCode')->select('tblOrder.*',DB::raw('SUM(tblOrderDetail.total) as total'))->whereBetween('tblOrder.time',array($from,$to))->get();
+        $alltotal = DB::table('tblorder')->leftJoin('tblorderdetail', 'tblorder.orderCode', '=', 'tblorderdetail.orderCode')->select('tblorder.*',DB::raw('SUM(tblorderdetail.total) as total'))->whereBetween('tblorder.time',array($from,$to))->get();
         return $alltotal;
     }
     
     public function getOrderByDate($from,$to,$per_page){
-        $alltotal = DB::table('tblOrder')->leftJoin('tblOrderDetail', 'tblOrder.orderCode', '=', 'tblOrderDetail.orderCode')->select('tblOrder.*','tblOrderDetail.total')->whereBetween('tblOrder.time',array($from,$to))->paginate($per_page);
+        $alltotal = DB::table('tblorder')->leftJoin('tblorderdetail', 'tblorder.orderCode', '=', 'tblorderdetail.orderCode')->select('tblorder.*','tblorderdetail.total')->whereBetween('tblorder.time',array($from,$to))->paginate($per_page);
         return $alltotal;
     }
 

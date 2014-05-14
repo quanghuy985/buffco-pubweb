@@ -8,7 +8,7 @@
 
 class tblGroupAdminRolesModel extends Eloquent {
 
-    protected $table = 'tblGroupAdminRoles';
+    protected $table = 'tblgroupadminroles';
     public $timestamps = false;
 
     public function addGroupAdminRoles($groupadminID, $rolesID) {
@@ -41,12 +41,12 @@ class tblGroupAdminRolesModel extends Eloquent {
     }
 
     public function findGroupAdminRolesByID($id) {
-        $objGroupAdminRoles = DB::table('tblGroupAdminRoles')->where('id', '=', $id)->get();
+        $objGroupAdminRoles = DB::table('tblgroupadminroles')->where('id', '=', $id)->get();
         return $objGroupAdminRoles;
     }
 
     public function allGroupAdminRoles($per_page) {
-        $arrGroupAdminRoles = DB::table('tblGroupAdminRoles')->paginate($per_page);
+        $arrGroupAdminRoles = DB::table('tblgroupadminroles')->paginate($per_page);
         return $arrGroupAdminRoles;
     }
 
@@ -60,7 +60,7 @@ class tblGroupAdminRolesModel extends Eloquent {
     }
 
     public function findRolesByGroupAdmin($groupAdminID) {
-        $arrRoles = DB::table('tblGroupAdminRoles')->join('tblRoles', 'tblGroupAdminRoles.rolesID', '=', 'tblRoles.id')->select('tblRoles.id', 'tblRoles.rolesCode')->where('tblGroupAdminRoles.groupAdminID', '=', $groupAdminID)->where('tblGroupAdminRoles.status', '=', 1)->get();
+        $arrRoles = DB::table('tblgroupadminroles')->join('tblroles', 'tblgroupadminroles.rolesID', '=', 'tblroles.id')->select('tblroles.id', 'tblroles.rolesCode')->where('tblgroupadminroles.groupAdminID', '=', $groupAdminID)->where('tblgroupadminroles.status', '=', 1)->get();
         return $arrRoles;
     }
 

@@ -14,9 +14,10 @@ class LoginController extends BaseController {
      * @return void
      */
     public function getLogOut() {
-        Session::remove('adminSession');
-        unset($_SESSION['urlfolderupload']);
-        return View::make('templateadmin2.loginfire');
+        Session::forget('adminSession');
+        Session::forget('urlfolderupload');
+//        unset($_SESSION['urlfolderupload']);
+        return Redirect::action('LoginController@getDangNhap');
     }
 
     public function getDangNhap() {
@@ -32,7 +33,8 @@ class LoginController extends BaseController {
         $check = $tblAdminModel->checkLogin(Input::get('username'), Input::get('password'));
         if (count($check) > 0) {
             if ($check[0]->status != 1) {
-                return View::make('templateadmin2.loginfire')->with('messenge', 'Tài khoản của bạn đã bị khóa !');
+                Session::flash('login_message', Lang::get('backend/user/messages.locked'));
+                return Redirect::back()->withInput(Input::all());
             } else {
                 $groupAdmin = $check[0]->groupadminID;
                 $tblGroupAdminRoles = new tblGroupAdminRolesModel();
@@ -42,6 +44,7 @@ class LoginController extends BaseController {
                 Session::push('adminSession', $check[0]);
                 session_start();
                 $_SESSION['urlfolderupload'] = md5($check[0]->adminEmail);
+//                Session::put('urlfolderupload',md5($check[0]->adminEmail));
                 // kiem tra trang goi den de dua ve trang dich 
                 if (Session::has('urlBack')) {
                     //$objServices = Session::get('ServicesOrderURL');
@@ -56,7 +59,8 @@ class LoginController extends BaseController {
                 }
             }
         } else {
-            return View::make('templateadmin2.loginfire')->with('messenge', 'Email hoặc mật khẩu sai !');
+            Session::flash('login_message', Lang::get('backend/user/messages.login_error'));
+            return Redirect::back()->withInput(Input::all());
         }
     }
 
@@ -76,12 +80,14 @@ class LoginController extends BaseController {
             Mail::send('emails.auth.reminder', array('password' => $pass), function($message) {
                 $message->from('no-rep@pubweb.vn', 'Pubweb.vn');
                 $message->to(Input::get('username'));
-                $message->subject('Lấy lại mật khẩu');
+                $message->subject(Lang::get('emails.forgot_password'));
             });
             $check1 = $tblAdminModel->adminForgotPassword(Input::get('username'), $pass);
-            return View::make('templateadmin2.forgorpass')->with('messenge', 'Bạn check email để lấy lại mật khẩu! ');
+            Session::flash('forgot_message', Lang::get('backend/user/messages.forgot_success'));
+            return Redirect::back();
         } else {
-            return View::make('templateadmin2.forgorpass')->with('messenge', 'Email không tôn tại trên hệ thống !');
+            Session::flash('forgot_message', Lang::get('backend/user/messages.email_exist'));
+            return Redirect::back()->withInput(Input::all());
         }
     }
 
