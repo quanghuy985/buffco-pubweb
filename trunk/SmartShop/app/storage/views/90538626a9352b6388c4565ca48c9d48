@@ -1,0 +1,5 @@
+<strong>Nội dung phản ánh : </strong><br>
+<?php echo $noidung; ?>
+<br>
+<strong>Trả lời của chúng tôi :</strong><br>
+<?php echo $traloi; ?>

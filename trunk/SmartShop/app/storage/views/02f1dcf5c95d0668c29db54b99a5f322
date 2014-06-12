@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <h2><?php echo Lang::get('emails.forgot_password_content'); ?></h2>
+
+        <div>
+            <?php echo Lang::get('emails.forgot_password_content'); ?> <?php echo URL::action('\BackEnd\LoginController@getChangePassword', array($token)); ?>.
+        </div>
+    </body>
+</html>

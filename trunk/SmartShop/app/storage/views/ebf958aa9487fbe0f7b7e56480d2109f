@@ -1,0 +1,122 @@
+<tr class="f_size_large">
+    <!--titles for td-->
+    <th>Anh &amp; Tên sản phẩm</th>
+    <th>Mã</th>
+    <th>Giá</th>
+    <th>Kích thước</th>
+    <th>Màu sắc</th>
+    <th>Số lượng</th>
+    <th>Tổng cộng</th>
+</tr>
+<?php foreach($listcart as $itemdel): ?>
+
+<tr>
+    <!--Product name and image-->
+    <td class="t_md_align_c">
+        <img src="<?php echo Asset('timthumb.php'); ?>?src=<?php if($itemdel->image==null || $itemdel->image==''): ?><?php echo Asset('fontendlib/images/noimg.jpg'); ?> <?php else: ?><?php echo $itemdel->image; ?><?php endif; ?>&w=110&h=110&zc=0&q=100" alt="<?php echo $itemdel->name; ?>" class="m_md_bottom_5 d_xs_block d_xs_centered">
+        <a href="<?php echo URL::action('App\Modules\Fontend\Controllers\ProductController@getChiTiet'); ?>/<?php echo $itemdel->slug; ?>" class="d_inline_b m_left_5 color_dark"> <?php echo str_limit($itemdel->name,20); ?></a>
+    </td>
+    <!--product key-->
+    <td><?php echo $itemdel->productcode; ?></td>
+    <!--product price-->
+    <td>
+<s><?php if($itemdel->sale!=''): ?><?php echo $itemdel->price; ?><?php endif; ?></s>
+<p class="f_size_large color_dark"><?php if($itemdel->sale!=''): ?><?php echo $itemdel->sale; ?> <?php else: ?> <?php echo $itemdel->price; ?> <?php endif; ?></p>
+</td>
+<td>
+    <?php
+    $exid = explode('-', $itemdel->id);
+    $listsize = array();
+    $listcolor = array();
+    ?>
+    <?php foreach($size as $item): ?>
+    <?php if($item['productid']==$exid[0]): ?>
+    <?php $listsize = $item['value']; ?>
+    <?php endif; ?>
+    <?php endforeach; ?>
+    <?php if(count($listsize)==0): ?>
+    Không có
+    <?php else: ?>
+    <div class="custom_select f_size_medium relative d_inline_middle">
+        <div class="select_title r_corners relative color_dark"><?php if($itemdel->size==''): ?> Chọn <?php else: ?> <?php foreach($listsize as $itemval): ?>
+            <?php if($itemval->id==$itemdel->size): ?> <?php echo $itemval->sizeName; ?><?php endif; ?>
+            <?php endforeach; ?> <?php endif; ?></div>
+        <ul class="select_list d_none"></ul>
+        <select name="product_size" id="product_size-<?php echo $itemdel->id; ?>">
+            <?php foreach($listsize as $itemval): ?>
+            <option value="<?php echo $itemval->id; ?>" <?php if($itemval->id==$itemdel->size): ?> selected <?php endif; ?>><?php echo $itemval->sizeName; ?></option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+    <?php endif; ?>
+</td>
+<td>
+    <?php foreach($color as $item): ?>
+    <?php if($item['productid']==$exid[0]): ?>
+    <?php $listcolor = $item['value']; ?>
+    <?php endif; ?>
+    <?php endforeach; ?>
+    <?php if(count($listcolor)==0): ?>
+    Không có
+    <?php else: ?>
+    <div class="custom_select f_size_medium relative d_inline_middle"> 
+        <div class="select_title r_corners relative color_dark"><?php if($itemdel->color==''): ?> Chọn <?php else: ?> <?php foreach($listcolor as $itemval): ?>
+            <?php if($itemval->id==$itemdel->color): ?> <?php echo $itemval->colorName; ?><?php endif; ?>
+            <?php endforeach; ?> <?php endif; ?></div>
+        <ul class="select_list d_none"></ul>
+        <select name="product_color" id="product_color-<?php echo $itemdel->id; ?>">
+            <?php foreach($listcolor as $itemval): ?>
+            <option  value="<?php echo $itemval->id; ?>"  <?php if($itemval->id==$itemdel->color): ?> selected <?php endif; ?>><?php echo $itemval->colorName; ?></option>
+            <?php endforeach; ?> 
+
+        </select>
+    </div>
+    <?php endif; ?>
+</td>
+<!--quanity-->
+<td>
+    <div class="clearfix quantity r_corners d_inline_middle f_size_medium color_dark m_bottom_10">
+        <button class="bg_tr d_block f_left" data-direction="down">-</button>
+        <input type="text" name="" readonly id="quantity-<?php echo $itemdel->id; ?>" value="<?php echo $itemdel->quantity; ?>" class="f_left">
+        <button class="bg_tr d_block f_left" data-direction="up">+</button>
+    </div>
+    <div>
+        <a href="javascript:void(0)" class="color_dark" onclick="capnhatgiohang('<?php echo $itemdel->id; ?>',jQuery('#product_size-<?php echo $itemdel->id; ?>').val(),jQuery('#product_color-<?php echo $itemdel->id; ?>').val(),jQuery('#quantity-<?php echo $itemdel->id; ?>').val())"><i class="fa fa-check f_size_medium m_right_5"></i>Cập nhật</a><br>
+        <a href="#" class="color_dark"><i class="fa fa-times f_size_medium m_right_5"></i>Xóa</a><br>
+    </div>
+</td>
+<!--subtotal-->
+<td>
+    <p class="f_size_large fw_medium scheme_color"><?php if($itemdel->sale!=''): ?><?php echo $itemdel->sale*$itemdel->quantity; ?> <?php else: ?> <?php echo $itemdel->price*$itemdel->quantity; ?> <?php endif; ?></p>
+</td>
+</tr>
+<?php endforeach; ?>
+
+<!--prices-->
+<tr>
+    <td colspan="6">
+        <p class="fw_medium f_size_large t_align_r">Tổng tiền:</p>
+    </td>
+    <td>
+        <p class="fw_medium f_size_large color_dark"><?php echo $tongcong; ?></p>
+    </td>
+</tr>
+<tr>
+    <td colspan="6">
+        <p class="fw_medium f_size_large t_align_r">Tiết kiệm:</p>
+    </td>
+    <td>
+        <p class="fw_medium f_size_large color_dark"><?php echo $tongcong-$tongtien; ?></p>
+    </td>
+</tr>	
+<!--total-->
+<tr>
+    <td colspan="6">
+
+        <p class="fw_medium f_size_large t_align_r scheme_color">Total:</p>
+    </td>
+    <td class="v_align_m">
+        <p class="fw_medium f_size_large scheme_color m_xs_bottom_10"><?php echo $tongtien; ?></p>
+                <script src="<?php echo Asset('fontendlib'); ?>/js/scripts.js"></script>
+    </td>
+</tr>

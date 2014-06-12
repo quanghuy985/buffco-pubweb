@@ -1,0 +1,127 @@
+<?php $__env->startSection('titleAdmin'); ?>
+<?php echo Lang::get('backend/title.groupSupporter.title'); ?>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection("contentadmin"); ?>
+<script>
+    function phantrang(page) {
+        var request = jQuery.ajax({
+            url: "<?php echo URL::action('\BackEnd\SupporterGroupController@postAjaxpagion'); ?>?page=" + page,
+            type: "POST",
+            dataType: "html"
+        });
+        request.done(function(msg) {
+            jQuery('#tableproduct').html(msg);
+        });
+    }
+    function xoasanpham(id) {
+        jConfirm("<?php echo Lang::get('messages.delete_confirm'); ?>", "<?php echo Lang::get('messages.alert'); ?>", function(r) {
+            if (r == true) {
+                var request = jQuery.ajax({
+                    url: "<?php echo URL::action('\BackEnd\SupporterGroupController@postDeleteSupporterGroup'); ?>?id=" + id,
+                    type: "POST",
+                    dataType: "html"
+                });
+                request.done(function(msg) {
+                    jQuery('#tableproduct').html(msg);
+                });
+                return true;
+            } else {
+                return false;
+            }
+        })
+    }
+    function kichhoat(id, stus) {
+        var request = jQuery.ajax({
+            url: "<?php echo URL::action('\BackEnd\SupporterGroupController@postSupporterGroupActive'); ?>?id=" + id + "&status=" + stus,
+            type: "POST",
+            dataType: "html"
+        });
+        request.done(function(msg) {
+            jQuery('#tableproduct').html(msg);
+            jQuery('#messages1').empty().html(" <div class='notibar msgsuccess'><a class='close'></a><p><?php echo Lang::get('messages.update.success'); ?></p> </div>");
+        });
+        return true;
+    }
+</script>
+<div class="pageheader notab">
+    <h1 class="pagetitle"><?php echo Lang::get('backend/title.groupSupporter.heading'); ?></h1>
+    <span class="pagedesc"><?php echo Lang::get('backend/title.groupSupporter.description'); ?></span>
+</div>
+<div class="contentwrapper">
+    <div class="contenttitle2">
+        <h3><?php echo Lang::get('backend/title.groupSupporter.caption'); ?></h3>
+    </div>
+    &nbsp;&nbsp;&nbsp;<a href="<?php echo URL::action('\BackEnd\SupporterGroupController@getSupporterGroupView'); ?>#formSubmit" class="btn btn_orange btn_link"><span><?php echo Lang::get('button.add'); ?></span></a>
+    <div class="contentwrapper">
+        <div class="subcontent">
+            <table cellpadding="0" cellspacing="0" border="0" id="table2" class="stdtable stdtablecb">
+                <colgroup>
+                    <col class="con1" style="width: 5%">
+                    <col class="con0" style="width: 25%">
+                    <col class="con1" style="width: 25%">
+                    <col class="con0" style="width: 20%">
+                    <col class="con1" style="width: 25%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="head1"><?php echo Lang::get('general.stt'); ?></th>
+                        <th class="head0"><?php echo Lang::get('general.group_support'); ?></th>
+                        <th class="head1"><?php echo Lang::get('general.time'); ?></th>
+                        <th class="head0"><?php echo Lang::get('general.status'); ?></th>
+                        <th class="head1"><?php echo Lang::get('general.action'); ?></th>
+                    </tr>  
+                </thead>
+                <?php $i = 1; ?>
+                <tbody id="tableproduct" class="tabledataajax">
+                    <?php echo $__env->make('backend.supportergroup.supporterGroupAjax', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <div class="contenttitle2">
+        <h3>
+            <?php if(isset($SupporterGroupData)): ?>
+            <?php echo Lang::get('backend/title.groupSupporter.edit'); ?>
+            <?php else: ?>
+            <?php echo Lang::get('backend/title.groupSupporter.add'); ?>
+            <?php endif; ?>
+        </h3>
+    </div>
+    <?php echo $__env->make('backend.alert', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <?php if(isset($SupporterGroupData)): ?>
+    <script>jQuery(document).ready(function() {
+            jQuery('html, body').animate({scrollTop: jQuery("#formSubmit").offset().top}, 2000);
+        })</script>
+    <?php echo Form::model($SupporterGroupData, array('action'=>'\BackEnd\SupporterGroupController@postUpdateSupporterGroup', 'class'=>'stdform stdform2', 'id'=>'formSubmit')); ?>
+    <?php else: ?>
+    <?php echo Form::open(array('action'=>'\BackEnd\SupporterGroupController@postAddSupporterGroup', 'class'=>'stdform stdform2', 'id'=>'formSubmit')); ?>
+    <?php endif; ?>
+    <p></p>
+    <p>
+        <input type="hidden" name="id" id="idnews" value="<?php if(isset($SupporterGroupData)): ?><?php echo $SupporterGroupData->id; ?><?php endif; ?>"/>
+        <label><?php echo Lang::get('general.group_support'); ?></label>
+        <span class="field">
+            <?php echo Form::text('supporterGroupName',null,array('class'=>'longinput')); ?>
+        </span>
+    </p>
+    <p>
+        <label><?php echo Lang::get('general.status'); ?></label>
+        <span class="field">
+            <?php
+            $supporter_status = Lang::get('general.supporter_status');
+            echo Form::select('status', $supporter_status);
+            ?>
+        </span>
+    </p>
+    <p class="stdformbutton">
+        <button class="submit radius2" type="submit" value="<?php if(isset($SupporterGroupData)): ?><?php echo Lang::get('button.update'); ?> <?php else: ?><?php echo Lang::get('button.add'); ?> <?php endif; ?> "><?php if(isset($SupporterGroupData)): ?>Cập nhật <?php else: ?> Thêm mới <?php endif; ?> </button>
+        <input type="reset" class="reset radius2" value="<?php echo Lang::get('button.reset'); ?>">
+    </p>
+</form>
+</div>
+
+<?php $__env->stopSection(); ?>
+
+
+<?php echo $__env->make("backend.template", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

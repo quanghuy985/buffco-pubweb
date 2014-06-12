@@ -1,0 +1,22 @@
+<h2 class="tt_uppercase color_dark m_bottom_25"><?php if(isset($tagsslug)): ?> <?php echo $tagsslug; ?> <?php endif; ?>  <?php if(isset($catslugs)): ?><?php if($catslugs==''): ?>Toàn bộ tin tức <?php else: ?> <?php echo $arrnews[0]->catenewsName; ?><?php endif; ?> <?php endif; ?></h2>
+<?php foreach($arrnews as $item): ?>
+<article class="m_bottom_20 clearfix">
+    <a href="<?php echo action('NewsController@getChiTiet'); ?>/<?php echo $item->newsSlug; ?>" class="photoframe d_block d_xs_inline_b f_xs_none wrapper shadow f_left m_right_20 m_bottom_10 r_corners">
+        <img src="<?php echo Asset('timthumb.php'); ?>?src=<?php if($item->newsImg==null): ?><?php echo Asset('fontendlib/images/noimg.jpg'); ?> <?php else: ?><?php echo $item->newsImg; ?><?php endif; ?>&w=350&h=220&zc=0&q=100" class="tr_all_long_hover" alt="">
+    </a>
+    <div class="mini_post_content">
+        <h4 class="m_bottom_5"><a href="<?php echo action('NewsController@getChiTiet'); ?>/<?php echo $item->newsSlug; ?>" class="color_dark fw_medium"><?php echo $item->newsName; ?></a></h4>
+        <p class="f_size_medium m_bottom_10">Ngày đăng : <?php echo date('d F,Y',$item->time); ?></p>
+        <hr class="m_bottom_10">
+        <p class="m_bottom_10"><?php if($item->newsDescription!=''): ?><?php echo str_limit($item->newsDescription,400); ?><?php else: ?> <?php echo str_limit($item->newsDescription,400); ?> <?php endif; ?></p>
+        <a href="<?php echo action('NewsController@getChiTiet'); ?>/<?php echo $item->newsSlug; ?>" class="tt_uppercase f_size_large">Chi tiết</a>
+    </div>
+</article>
+<hr class="divider_type_3 m_bottom_30">
+<?php endforeach; ?>
+<div class="row clearfix m_bottom_15 m_xs_bottom_30  w_xs_full"> 
+    <div class="col-lg-5 col-md-5 col-sm-4 t_align_l t_xs_align_l">
+        <!--pagination-->
+        <?php echo $arrnews->links(); ?>
+    </div>
+</div>

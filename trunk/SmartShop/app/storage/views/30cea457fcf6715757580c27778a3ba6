@@ -1,0 +1,87 @@
+<?php $__env->startSection("contentadmin"); ?>
+<div class="pageheader notab">
+    <h1 class="pagetitle">QUẢN LÝ THUỘC TÍNH SẢN PHẨM</h1>
+    <span class="pagedesc">Quản lý màu sắc</span>
+</div>
+<div class="contentwrapper">
+    <div class="subcontent">
+        <div class="contenttitle2">
+            <h3>Bảng phản hồi</h3>
+        </div>
+        <table cellpadding="0" cellspacing="0" border="0" class="stdtable" id="dyntable">
+            <colgroup>
+                <col class="con0" style="width: 3%">
+                <col class="con1" style="width: 30%">
+                <col class="con0" style="width: 30%">
+                <col class="con1" style="width: 27%">
+                <col class="con0" style="width: 10%">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th class="head0 nosort">STT</th>
+                    <th class="head1">Tên màu</th>
+                    <th class="head0">Mã màu</th>
+                    <th class="head1">Thời gian</th>
+                    <th class="head0 nosort">Chức năng</th>
+                </tr>  
+            </thead>
+            <tfoot>
+                <tr>
+                    <th class="head0 ">STT</th>
+                    <th class="head1">Tên màu</th>
+                    <th class="head0">Mã màu</th>
+                    <th class="head1">Thời gian</th>
+                    <th class="head0">Chức năng</th>
+                </tr> 
+            </tfoot>
+            <tbody>
+                <?php $i = 1; ?>
+                <?php foreach($datacolor as $item): ?>
+                <tr>
+                    <td><?php echo $i; ?></td>
+                    <td><?php echo $item->colorName; ?></td>
+                    <td><?php echo $item->colorCode; ?><span class="colorselector">
+                            <span style="background: <?php echo $item->colorCode; ?>"></span>
+                        </span></td>
+                    <td><?php echo date('d/m/Y h:i:s',$item->time); ?></td>
+                    <td>
+                        <a href="<?php echo URL::action("ColorController@getEditColor"); ?>/<?php echo $item->id; ?>" class="btn btn4 btn_edit " title="Chỉnh sửa"></a>
+
+                        <a href="javascript:void(0)" onclick="xoasanpham(5)" class="btn btn4 btn_trash" title="Xóa"></a>
+                    </td>
+                </tr>
+                <?php $i ++; ?>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+
+        <div class="contenttitle2">
+            <h3><?php if(isset($coloredit)): ?> Chỉnh sửa <?php else: ?> Thêm mới <?php endif; ?></h3>
+        </div>
+        <form class="stdform stdform2" method="post" action="<?php if(isset($coloredit)): ?><?php echo URL::action("ColorController@postEditColor"); ?><?php else: ?><?php echo URL::action("ColorController@postAddColor"); ?><?php endif; ?>">
+
+            <p>
+                <input type="hidden" value="<?php if(isset($coloredit)): ?><?php echo $coloredit->id; ?><?php endif; ?>" name="idcolor"/>
+                <label>Tên màu</label>
+                <span class="field">
+                    <input type="text" name="colorname" id="colorname" placeholder="Nhập tên màu" value="<?php if(isset($coloredit)): ?><?php echo $coloredit->colorName; ?><?php endif; ?>" class="longinput"></span>
+            </p>
+            <p>
+                <label>Mã màu</label>
+                <span class="field">
+                    <input type="text" name="colorpicker" class="width100" id="colorpicker" value="<?php if(isset($coloredit)): ?><?php echo $coloredit->colorCode; ?><?php endif; ?>">
+                    <span id="colorSelector" class="colorselector">
+                        <span style="background: <?php if(isset($coloredit)): ?><?php echo $coloredit->colorCode; ?><?php endif; ?>;"></span>
+                    </span>
+                </span>
+            </p>
+            <p class="stdformbutton">
+                <button class="submit radius2" value=" Thêm mới  "><?php if(isset($coloredit)): ?> Cập nhật <?php else: ?> Thêm mới <?php endif; ?> </button>
+                <input type="reset" class="reset radius2" value="Làm mới">
+            </p>
+        </form>
+    </div>
+</div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("templateadmin2.mainfire", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
