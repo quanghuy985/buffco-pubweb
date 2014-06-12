@@ -1,0 +1,39 @@
+<?php $selectData = Lang::get('general.data_status'); ?>
+<?php foreach($arrPage as $item): ?>
+<tr> 
+    <td>
+        <input name="checkboxidfile" type="checkbox" value="<?php echo $item->id; ?>"></td> 
+    <td><label value="page"><?php echo str_limit($item->pageName, 30, '...'); ?></label></td> 
+    <td><label value="page"><?php echo str_limit($item->pageKeywords, 30, '...'); ?> </label></td> 
+    <td><label value="page"><?php echo str_limit($item->pageTag, 30, '...'); ?> </label></td> 
+    <td><label value="page"><?php echo str_limit($item->pageSlug, 30, '...'); ?> </label></td> 
+    <td><label value="page"></label><?php echo date('d/m/Y h:i:s', $item->time); ?></td> 
+    <td><label value="page">
+            <?php
+            if (array_key_exists($item->status, $selectData)) {
+                echo $selectData[$item->status];
+            }
+            ?>
+        </label>
+    </td> 
+    <td>
+        <a href="<?php echo URL::action('\BackEnd\PageController@getPageEdit',$item->id); ?>" class="btn btn4 btn_book" title="<?php echo Lang::get('button.btn.book'); ?>"></a>
+        <?php if($item->status=='2'): ?>
+        <a href="javascript: void(0)" onclick="kichhoat(<?php echo $item->id; ?>, 0)" class="btn btn4 btn_flag" title="<?php echo Lang::get('button.btn.flag'); ?>"></a>
+        <?php endif; ?>
+        <?php if($item->status=='0'): ?>
+        <a href="javascript: void(0)" onclick="kichhoat(<?php echo $item->id; ?>, 1)" class="btn btn4 btn_world" title="<?php echo Lang::get('button.btn.world'); ?>"></a>
+        <?php endif; ?>
+        <?php if($item->status!='2'): ?>
+        <a href="javascript: void(0)" onclick="xoasanpham(<?php echo $item->id; ?>)" class="btn btn4 btn_trash" title="<?php echo Lang::get('button.btn.trash'); ?>"></a>
+        <?php endif; ?>
+    </td> 
+</tr> 
+<?php endforeach; ?>
+<script>
+            jQuery('input:checkbox').uniform();</script>
+<?php if($link!=''): ?>
+<tr>
+    <td colspan="8"><?php echo $link; ?></td>
+</tr>
+<?php endif; ?>

@@ -1,0 +1,587 @@
+<!doctype html>
+<!--[if IE 9 ]><html class="ie9" lang="en"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en"><!--<![endif]-->
+    <head>
+        <title>Flatastic - Home</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <!--meta info-->
+        <meta name="author" content="">
+        <meta name="keywords" content="">
+        <meta name="description" content="">
+        <link rel="icon" type="image/ico" href="<?php echo Asset('fontendlib'); ?>/images/fav.ico">
+        <!--stylesheet include-->
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Asset('fontendlib'); ?>/css/jquery.fancybox-1.3.4.css">
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Asset('fontendlib'); ?>/css/colorpicker.css">
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Asset('fontendlib'); ?>/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Asset('fontendlib'); ?>/css/settings.css">
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Asset('fontendlib'); ?>/css/owl.carousel.css">
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Asset('fontendlib'); ?>/css/owl.transitions.css">
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Asset('fontendlib'); ?>/css/jquery.custom-scrollbar.css">
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo Asset('fontendlib'); ?>/css/style.css">
+        <!--font include-->
+        <link href="<?php echo Asset('fontendlib'); ?>/css/font-awesome.min.css" rel="stylesheet">
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script>
+var j110 = jQuery.noConflict(true);
+        </script>
+    </head>
+    <body>
+        <!--boxed layout-->
+        <div class="wide_layout relative w_xs_auto">
+            <!--markup header-->
+            <header role="banner">
+                <!--header top part-->
+                <section class="h_top_part">
+                    <div class="container">
+                        <div class="row clearfix">
+                            <div class="col-lg-4 col-md-4 col-sm-5 t_xs_align_c">
+                                <ul class="d_inline_b horizontal_list clearfix f_size_small users_nav">
+                                    <li><a href="#" class="default_t_color" data-popup="#login_popup">Log in</a></li>
+                                    <li><a href="#" class="default_t_color">My Account</a></li>
+                                    <li><a href="orders_list.html" class="default_t_color">List Orders</a></li>
+                                    <li><a href="checkout.html" class="default_t_color">Checkout</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-2 t_align_c t_xs_align_c">
+                                <p class="f_size_small">Call us toll free: <b class="color_dark">(123) 456-7890</b></p>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-5 t_align_r t_xs_align_c">
+                                <ul class="horizontal_list clearfix d_inline_b t_align_l f_size_small site_settings type_2">
+                                    <li class="container3d relative">
+                                        <a role="button" href="#" class="color_dark" id="lang_button"><img class="d_inline_middle m_right_10" src="<?php echo Asset('fontendlib'); ?>/images/flag_vi.gif" alt="">Tiếng Việt</a>
+                                    </li>
+                                    <li class="m_left_20 relative container3d">
+                                        <a role="button" href="#" class="color_dark" id="currency_button"><span class="scheme_color">đ</span> VNĐ</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!--header bottom part-->
+                <section class="h_bot_part container">
+                    <div class="clearfix row">
+                        <div class="col-lg-3 t_md_align_c m_md_bottom_15">
+                            <a href="index.html" class="logo d_md_inline_b">
+                                <h1>
+                                    <img src="<?php echo Asset('fontendlib'); ?>/images/logo.png" alt="">
+                                </h1>
+                            </a>
+                        </div>
+                        <div class="col-lg-9 clearfix t_sm_align_c">
+                            <div class="clearfix t_sm_align_l f_left f_sm_none relative s_form_wrap w_inherit m_sm_bottom_15 p_xs_hr_0 m_xs_bottom_5">
+                                <!--button for responsive menu-->
+                                <button id="menu_button" class="r_corners centered_db d_none tr_all_hover d_xs_block m_xs_bottom_5">
+                                    <span class="centered_db r_corners"></span>
+                                    <span class="centered_db r_corners"></span>
+                                    <span class="centered_db r_corners"></span>
+                                </button>
+                                <!--main menu-->
+                                <nav role="navigation" class="f_left f_xs_none d_xs_none m_right_20 m_xs_right_0">	
+                                    <ul class="horizontal_list main_menu type_2 clearfix">
+                                        <li class="current relative f_xs_none m_xs_bottom_5 m_left_10 m_xs_left_0"><a href="index.html" class="tr_delay_hover color_dark tt_uppercase r_corners"><b>Home</b></a>
+                                            <!--sub menu-->
+                                            <div class="sub_menu_wrap top_arrow d_xs_none type_2 tr_all_hover clearfix r_corners">
+                                                <ul class="sub_menu">
+                                                    <li><a class="color_dark tr_delay_hover" href="index.html">Home Variant 1</a></li>
+                                                    <li><a class="color_dark tr_delay_hover" href="index_layout_2.html">Home Variant 2</a></li>
+                                                    <li><a class="color_dark tr_delay_hover" href="index_layout_wide.html">Home Variant 3</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="relative f_xs_none m_xs_bottom_5 m_left_10 m_xs_left_0"><a href="index_layout_wide.html" class="tr_delay_hover color_dark tt_uppercase r_corners"><b>Sliders</b></a>
+                                            <!--sub menu-->
+                                            <div class="sub_menu_wrap top_arrow d_xs_none type_2 tr_all_hover clearfix r_corners">
+                                                <ul class="sub_menu">
+                                                    <li><a class="color_dark tr_delay_hover" href="index_layout_wide.html">Revolution Slider</a></li>
+                                                    <li><a class="color_dark tr_delay_hover" href="index.html">Camera Slider</a></li>
+                                                    <li><a class="color_dark tr_delay_hover" href="index_layout_2.html">Flex Slider</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="relative f_xs_none m_xs_bottom_5 m_left_10 m_xs_left_0"><a href="category_grid.html" class="tr_delay_hover color_dark tt_uppercase r_corners"><b>Women</b></a>
+                                            <!--sub menu-->
+                                            <div class="sub_menu_wrap top_arrow d_xs_none tr_all_hover clearfix r_corners w_xs_auto">
+                                                <div class="f_left f_xs_none">
+                                                    <b class="color_dark m_left_20 m_bottom_5 m_top_5 d_inline_b">Dresses</b>
+                                                    <ul class="sub_menu first">
+                                                        <li><a class="color_dark tr_delay_hover" href="#">Evening Dresses</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="#">Casual Dresses</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="#">Party Dresses</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="#">Maxi Dresses</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="#">Midi Dresses</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="#">Strapless Dresses</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="#">Day Dresses</a></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="f_left m_left_10 m_xs_left_0 f_xs_none">
+                                                    <b class="color_dark m_left_20 m_bottom_5 m_top_5 d_inline_b">Accessories</b>
+                                                    <ul class="sub_menu">
+                                                        <li><a class="color_dark tr_delay_hover" href="#">Bags and Purces</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="#">Belts</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="#">Scarves</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="#">Gloves</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="#">Jewellery</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="#">Sunglasses</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="#">Hair Accessories</a></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="f_left m_left_10 m_xs_left_0 f_xs_none">
+                                                    <b class="color_dark m_left_20 m_bottom_5 m_top_5 d_inline_b">Tops</b>
+                                                    <ul class="sub_menu">
+                                                        <li><a class="color_dark tr_delay_hover" href="#">Evening Tops</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="#">Long Sleeved</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="#">Short Sleeved</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="#">Sleeveless</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="#">Tanks</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="#">Tunics</a></li>
+                                                    </ul>
+                                                </div>
+                                                <img src="<?php echo Asset('fontendlib'); ?>/images/woman_image_1.jpg" class="d_sm_none f_right m_bottom_10" alt="">
+                                            </div>
+                                        </li>
+                                        <li class="relative f_xs_none m_xs_bottom_5 m_left_10 m_xs_left_0"><a href="#" class="tr_delay_hover color_dark tt_uppercase r_corners"><b>Men</b></a>
+                                            <!--sub menu-->
+                                            <div class="sub_menu_wrap top_arrow d_xs_none type_2 tr_all_hover clearfix r_corners">
+                                                <ul class="sub_menu">
+                                                    <li><a class="color_dark tr_delay_hover" href="#">Accessories</a></li>
+                                                    <li><a class="color_dark tr_delay_hover" href="#">Blazers</a></li>
+                                                    <li><a class="color_dark tr_delay_hover" href="#">Hoodies</a></li>
+                                                    <li><a class="color_dark tr_delay_hover" href="#">Jeans</a></li>
+                                                    <li><a class="color_dark tr_delay_hover" href="#">Shirts</a></li>
+                                                    <li><a class="color_dark tr_delay_hover" href="#">Shoes</a></li>
+                                                    <li><a class="color_dark tr_delay_hover" href="#">Underwear</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="relative f_xs_none m_xs_bottom_5 m_left_10 m_xs_left_0"><a href="category_grid.html" class="tr_delay_hover color_dark tt_uppercase r_corners"><b>Pages</b></a>
+                                            <!--sub menu-->
+                                            <div class="sub_menu_wrap top_arrow d_xs_none type_2 tr_all_hover clearfix r_corners">
+                                                <ul class="sub_menu">
+                                                    <li><a class="color_dark tr_delay_hover" href="category_grid.html">Grid View Category Page</a></li>
+                                                    <li><a class="color_dark tr_delay_hover" href="category_list.html">List View Category Page</a></li>
+                                                    <li><a class="color_dark tr_delay_hover" href="category_no_products.html">Category Page Without Products</a></li>
+                                                    <li><a class="color_dark tr_delay_hover" href="product_page_sidebar.html">Product Page With Sidebar</a></li>
+                                                    <li><a class="color_dark tr_delay_hover" href="full_width_product_page.html">Full Width Product Page</a></li>
+                                                    <li><a class="color_dark tr_delay_hover" href="wishlist.html">Wishlist</a></li>
+                                                    <li><a class="color_dark tr_delay_hover" href="compare_products.html">Compare Products</a></li>
+                                                    <li><a class="color_dark tr_delay_hover" href="checkout.html">Checkout</a></li>
+                                                    <li><a class="color_dark tr_delay_hover" href="manufacturers.html">Manufacturers</a></li>
+                                                    <li><a class="color_dark tr_delay_hover" href="manufacturer_details.html">Manufacturer Page</a></li>
+                                                    <li><a class="color_dark tr_delay_hover" href="orders_list.html">Orders List</a></li>
+                                                    <li><a class="color_dark tr_delay_hover" href="order_details.html">Order Details</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="relative f_xs_none m_xs_bottom_5 m_left_10 m_xs_left_0"><a href="blog.html" class="tr_delay_hover color_dark tt_uppercase r_corners"><b>Blog</b></a>
+                                            <!--sub menu-->
+                                            <div class="sub_menu_wrap top_arrow d_xs_none type_2 tr_all_hover clearfix r_corners">
+                                                <ul class="sub_menu">
+                                                    <li><a class="color_dark tr_delay_hover" href="blog.html">Blog page</a></li>
+                                                    <li><a class="color_dark tr_delay_hover" href="blog_post.html">Single Blog Post page</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="relative f_xs_none m_xs_bottom_5 m_left_10 m_xs_left_0"><a href="contact.html" class="tr_delay_hover color_dark tt_uppercase r_corners"><b>Contact</b></a></li>
+                                    </ul>
+                                </nav>
+                                <button class="f_right search_button tr_all_hover f_xs_none d_xs_none">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <!--search form-->
+                                <div class="searchform_wrap type_2 bg_tr tf_xs_none tr_all_hover w_inherit">
+                                    <div class="container vc_child h_inherit relative w_inherit">
+                                        <form role="search" class="d_inline_middle full_width">
+                                            <input type="text" name="search" placeholder="Nhập từ khóa tìm kiếm" class="f_size_large p_hr_0">
+                                        </form>
+                                        <button class="close_search_form tr_all_hover d_xs_none color_dark">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="f_right horizontal_list d_sm_inline_b f_sm_none clearfix t_align_l site_settings">
+                                <!--like-->
+                                <li>
+                                    <a role="button" href="#" class="button_type_1 color_dark d_block bg_light_color_1 r_corners tr_delay_hover box_s_none"><i class="fa fa-heart-o f_size_ex_large"></i><span class="count circle t_align_c">0</span></a>
+                                </li>
+
+                                <!--shopping cart-->
+                                <li class="m_left_5 relative container3d">
+                                    <a role="button" href="#" class="button_type_3 color_light bg_scheme_color d_block r_corners tr_delay_hover box_s_none" id="shopping_button">
+                                        <span class="d_inline_middle shop_icon">
+                                            <i class="fa fa-shopping-cart"></i>
+                                            <span class="count tr_delay_hover type_2 circle t_align_c"><?php
+                                                $total = 0;
+                                                foreach (Cart::contents() as $item) {
+                                                    $total = $total + $item->quantity;
+                                                }
+                                                echo $total;
+                                                ?></span>
+                                        </span>
+                                    </a>
+
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </header>
+
+            <!--content-->
+            <div class="page_content_offset">
+                <div class="container">
+                    <?php echo $__env->yieldContent("contentfontend"); ?>
+                </div>
+            </div>
+            <!--markup footer-->
+            <footer id="footer">
+                <div class="footer_top_part p_vr_0">
+                    <div class="container">
+                        <div class="row clearfix">
+                            <div class="col-lg-3 col-md-3 col-sm-3 m_xs_bottom_30 m_bottom_40">
+                                <h3 class="color_light_2 m_bottom_20">About</h3>
+                                <p class="m_bottom_15">Ut pharetra augue nec augue. Nam elit agna, endrerit sit amet, tincidunt ac, viverra sed, nulla. Donec porta diam eu massa. Quisque diam lorem, interdum vitae, dapibus ac, scelerisque.</p>
+                                <a href="#" class="color_light">Read More <i class="fa fa-angle-right m_left_5"></i></a>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 m_xs_bottom_30 m_bottom_40">
+                                <h3 class="color_light_2 m_bottom_20">The Service</h3>
+                                <ul class="vertical_list">
+                                    <li><a class="color_light tr_delay_hover" href="#">My account<i class="fa fa-angle-right"></i></a></li>
+                                    <li><a class="color_light tr_delay_hover" href="#">Order history<i class="fa fa-angle-right"></i></a></li>
+                                    <li><a class="color_light tr_delay_hover" href="#">Wishlist<i class="fa fa-angle-right"></i></a></li>
+                                    <li><a class="color_light tr_delay_hover" href="#">Categories<i class="fa fa-angle-right"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 m_xs_bottom_30 m_bottom_40">
+                                <h3 class="color_light_2 m_bottom_20">Information</h3>
+                                <ul class="vertical_list">
+                                    <li><a class="color_light tr_delay_hover" href="#">About us<i class="fa fa-angle-right"></i></a></li>
+                                    <li><a class="color_light tr_delay_hover" href="#">Delivery<i class="fa fa-angle-right"></i></a></li>
+                                    <li><a class="color_light tr_delay_hover" href="#">Privacy policy<i class="fa fa-angle-right"></i></a></li>
+                                    <li><a class="color_light tr_delay_hover" href="#">Terms &amp; condition<i class="fa fa-angle-right"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 m_bottom_40 m_xs_bottom_30">
+                                <h3 class="color_light_2 m_bottom_20">Catalog</h3>
+                                <ul class="vertical_list">
+                                    <li><a class="color_light tr_delay_hover" href="#">New collection<i class="fa fa-angle-right"></i></a></li>
+                                    <li><a class="color_light tr_delay_hover" href="#">Best sellers<i class="fa fa-angle-right"></i></a></li>
+                                    <li><a class="color_light tr_delay_hover" href="#">Specials<i class="fa fa-angle-right"></i></a></li>
+                                    <li><a class="color_light tr_delay_hover" href="#">Manufacturers<i class="fa fa-angle-right"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="divider_type_4 m_bottom_25">
+                    <div class="container">
+                        <div class="row clearfix">
+                            <div class="col-lg-6 col-md-6 col-sm-6 m_bottom_20 m_xs_bottom_10">
+                                <!--social icons-->
+                                <ul class="clearfix horizontal_list social_icons">
+                                    <li class="facebook m_bottom_5 relative">
+                                        <span class="tooltip tr_all_hover r_corners color_dark f_size_small">Facebook</span>
+                                        <a href="#" class="r_corners t_align_c tr_delay_hover f_size_ex_large">
+                                            <i class="fa fa-facebook"></i>
+                                        </a>
+                                    </li>
+                                    <li class="twitter m_left_5 m_bottom_5 relative">
+                                        <span class="tooltip tr_all_hover r_corners color_dark f_size_small">Twitter</span>
+                                        <a href="#" class="r_corners f_size_ex_large t_align_c tr_delay_hover">
+                                            <i class="fa fa-twitter"></i>
+                                        </a>
+                                    </li>
+                                    <li class="google_plus m_left_5 m_bottom_5 relative">
+                                        <span class="tooltip tr_all_hover r_corners color_dark f_size_small">Google Plus</span>
+                                        <a href="#" class="r_corners f_size_ex_large t_align_c tr_delay_hover">
+                                            <i class="fa fa-google-plus"></i>
+                                        </a>
+                                    </li>
+                                    <li class="rss m_left_5 m_bottom_5 relative">
+                                        <span class="tooltip tr_all_hover r_corners color_dark f_size_small">Rss</span>
+                                        <a href="#" class="r_corners f_size_ex_large t_align_c tr_delay_hover">
+                                            <i class="fa fa-rss"></i>
+                                        </a>
+                                    </li>
+                                    <li class="pinterest m_left_5 m_bottom_5 relative">
+                                        <span class="tooltip tr_all_hover r_corners color_dark f_size_small">Pinterest</span>
+                                        <a href="#" class="r_corners f_size_ex_large t_align_c tr_delay_hover">
+                                            <i class="fa fa-pinterest"></i>
+                                        </a>
+                                    </li>
+                                    <li class="instagram m_left_5 m_bottom_5 relative">
+                                        <span class="tooltip tr_all_hover r_corners color_dark f_size_small">Instagram</span>
+                                        <a href="#" class="r_corners f_size_ex_large t_align_c tr_delay_hover">
+                                            <i class="fa fa-instagram"></i>
+                                        </a>
+                                    </li>
+                                    <li class="linkedin m_bottom_5 m_left_5 m_sm_left_5 relative">
+                                        <span class="tooltip tr_all_hover r_corners color_dark f_size_small">LinkedIn</span>
+                                        <a href="#" class="r_corners f_size_ex_large t_align_c tr_delay_hover">
+                                            <i class="fa fa-linkedin"></i>
+                                        </a>
+                                    </li>
+                                    <li class="vimeo m_left_5 m_bottom_5 relative">
+                                        <span class="tooltip tr_all_hover r_corners color_dark f_size_small">Vimeo</span>
+                                        <a href="#" class="r_corners f_size_ex_large t_align_c tr_delay_hover">
+                                            <i class="fa fa-vimeo-square"></i>
+                                        </a>
+                                    </li>
+                                    <li class="youtube m_left_5 m_bottom_5 relative">
+                                        <span class="tooltip tr_all_hover r_corners color_dark f_size_small">Youtube</span>
+                                        <a href="#" class="r_corners f_size_ex_large t_align_c tr_delay_hover">
+                                            <i class="fa fa-youtube-play"></i>
+                                        </a>
+                                    </li>
+                                    <li class="flickr m_left_5 m_bottom_5 relative">
+                                        <span class="tooltip tr_all_hover r_corners color_dark f_size_small">Flickr</span>
+                                        <a href="#" class="r_corners f_size_ex_large t_align_c tr_delay_hover">
+                                            <i class="fa fa-flickr"></i>
+                                        </a>
+                                    </li>
+                                    <li class="envelope m_left_5 m_bottom_5 relative">
+                                        <span class="tooltip tr_all_hover r_corners color_dark f_size_small">Contact Us</span>
+                                        <a href="#" class="r_corners f_size_ex_large t_align_c tr_delay_hover">
+                                            <i class="fa fa-envelope-o"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 m_bottom_20 m_xs_bottom_30">
+                                <h3 class="color_light_2 d_inline_middle m_md_bottom_15 d_xs_block">Newsletter</h3>
+                                <form id="newsletter" class="d_inline_middle m_left_5 subscribe_form_2 m_md_left_0">
+                                    <input type="email" placeholder="Your email address" class="r_corners f_size_medium w_sm_auto m_mxs_bottom_15" name="newsletter-email">
+                                    <button type="submit" class="button_type_8 r_corners bg_scheme_color color_light tr_all_hover m_left_5 m_mxs_left_0">Subscribe</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--copyright part-->
+                <div class="footer_bottom_part">
+                    <div class="container clearfix t_mxs_align_c">
+                        <p class="f_left f_mxs_none m_mxs_bottom_10">&copy; 2014 <span class="color_light">Flatastic</span>. All Rights Reserved.</p>
+                        <ul class="f_right horizontal_list clearfix f_mxs_none d_mxs_inline_b">
+                            <li><img src="<?php echo Asset('fontendlib'); ?>/images/payment_img_1.png" alt=""></li>
+                            <li class="m_left_5"><img src="<?php echo Asset('fontendlib'); ?>/images/payment_img_2.png" alt=""></li>
+                            <li class="m_left_5"><img src="<?php echo Asset('fontendlib'); ?>/images/payment_img_3.png" alt=""></li>
+                            <li class="m_left_5"><img src="<?php echo Asset('fontendlib'); ?>/images/payment_img_4.png" alt=""></li>
+                            <li class="m_left_5"><img src="<?php echo Asset('fontendlib'); ?>/images/payment_img_5.png" alt=""></li>
+                        </ul>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <!--social widgets-->
+        <ul class="social_widgets d_xs_none">
+            <!--facebook-->
+            <li class="relative">
+                <button class="sw_button t_align_c facebook"><i class="fa fa-facebook"></i></button>
+                <div class="sw_content">
+                    <h3 class="color_dark m_bottom_20">Kết nối Facebook</h3>
+                    <iframe src="//www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2Fpubweb.vn&amp;width=235&amp;height=258&amp;colorscheme=light&amp;show_faces=true&amp;header=false&amp;stream=false&amp;show_border=false" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:235px; height:258px;" allowTransparency="true"></iframe>
+                </div>
+            </li>
+            <!--contact form-->
+            <li class="relative">
+                <button class="sw_button t_align_c contact"><i class="fa fa-envelope-o"></i></button>
+                <div class="sw_content">
+                    <h3 class="color_dark m_bottom_20">Contact Us</h3>
+                    <p class="f_size_medium m_bottom_15">Lorem ipsum dolor sit amet, consectetuer adipis mauris</p>
+                    <form id="contactform" class="mini">
+                        <input class="f_size_medium m_bottom_10 r_corners full_width" type="text" name="cf_name" placeholder="Your name">
+                        <input class="f_size_medium m_bottom_10 r_corners full_width" type="email" name="cf_email" placeholder="Email">
+                        <textarea class="f_size_medium r_corners full_width m_bottom_20" placeholder="Message" name="cf_message"></textarea>
+                        <button type="submit" class="button_type_4 r_corners mw_0 tr_all_hover color_dark bg_light_color_2">Send</button>
+                    </form>
+                </div>	
+            </li>
+            <!--contact info-->
+            <li class="relative">
+                <button class="sw_button t_align_c googlemap"><i class="fa fa-map-marker"></i></button>
+                <div class="sw_content">
+                    <h3 class="color_dark m_bottom_20">Store Location</h3>
+                    <ul class="c_info_list">
+                        <li class="m_bottom_10">
+                            <div class="clearfix m_bottom_15">
+                                <i class="fa fa-map-marker f_left color_dark"></i>
+                                <p class="contact_e">8901 Marmora Road,<br> Glasgow, D04 89GR.</p>
+                            </div>
+
+
+                        </li>
+                        <li class="m_bottom_10">
+                            <div class="clearfix m_bottom_10">
+                                <i class="fa fa-phone f_left color_dark"></i>
+                                <p class="contact_e">800-559-65-80</p>
+                            </div>
+                        </li>
+                        <li class="m_bottom_10">
+                            <div class="clearfix m_bottom_10">
+                                <i class="fa fa-envelope f_left color_dark"></i>
+                                <a class="contact_e default_t_color" href="mailto:#">info@companyname.com</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="clearfix">
+                                <i class="fa fa-clock-o f_left color_dark"></i>
+                                <p class="contact_e">Monday - Friday: 08.00-20.00 <br>Saturday: 09.00-15.00<br> Sunday: closed</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>	
+            </li>
+        </ul>
+
+        <!--login popup-->
+        <div class="popup_wrap d_none" id="login_popup">
+            <section class="popup r_corners shadow">
+                <button class="bg_tr color_dark tr_all_hover text_cs_hover close f_size_large"><i class="fa fa-times"></i></button>
+                <h3 class="m_bottom_20 color_dark">Log In</h3>
+                <form>
+                    <ul>
+                        <li class="m_bottom_15">
+                            <label for="username" class="m_bottom_5 d_inline_b">Username</label><br>
+                            <input type="text" name="" id="username" class="r_corners full_width">
+                        </li>
+                        <li class="m_bottom_25">
+                            <label for="password" class="m_bottom_5 d_inline_b">Password</label><br>
+                            <input type="password" name="" id="password" class="r_corners full_width">
+                        </li>
+                        <li class="m_bottom_15">
+                            <input type="checkbox" class="d_none" id="checkbox_10"><label for="checkbox_10">Remember me</label>
+                        </li>
+                        <li class="clearfix m_bottom_30">
+                            <button class="button_type_4 tr_all_hover r_corners f_left bg_scheme_color color_light f_mxs_none m_mxs_bottom_15">Log In</button>
+                            <div class="f_right f_size_medium f_mxs_none">
+                                <a href="#" class="color_dark">Forgot your password?</a><br>
+                                <a href="#" class="color_dark">Forgot your username?</a>
+                            </div>
+                        </li>
+                    </ul>
+                </form>
+                <footer class="bg_light_color_1 t_mxs_align_c">
+                    <h3 class="color_dark d_inline_middle d_mxs_block m_mxs_bottom_15">New Customer?</h3>
+                    <a href="#" role="button" class="tr_all_hover r_corners button_type_4 bg_dark_color bg_cs_hover color_light d_inline_middle m_mxs_left_0">Create an Account</a>
+                </footer>
+            </section>
+        </div>
+        <button class="t_align_c r_corners type_2 tr_all_hover animate_ftl" id="go_to_top"><i class="fa fa-angle-up"></i></button>
+        <!--scripts include-->
+        <script src="<?php echo Asset('fontendlib'); ?>/js/jquery-2.1.0.min.js"></script>
+        <script src="<?php echo Asset('fontendlib'); ?>/js/jquery-ui.min.js"></script>
+        <script src="<?php echo Asset('fontendlib'); ?>/js/jquery-migrate-1.2.1.min.js"></script>
+        <script src="<?php echo Asset('fontendlib'); ?>/js/retina.js"></script>
+        <script src="<?php echo Asset('fontendlib'); ?>/js/elevatezoom.min.js"></script>
+        <script src="<?php echo Asset('fontendlib'); ?>/js/waypoints.min.js"></script>
+        <script src="<?php echo Asset('fontendlib'); ?>/js/jquery.themepunch.plugins.min.js"></script>
+        <script src="<?php echo Asset('fontendlib'); ?>/js/jquery.themepunch.revolution.min.js"></script>
+        <script src="<?php echo Asset('fontendlib'); ?>/js/jquery.isotope.min.js"></script>
+        <script src="<?php echo Asset('fontendlib'); ?>/js/jquery.tweet.min.js"></script>
+        <script src="<?php echo Asset('fontendlib'); ?>/js/owl.carousel.min.js"></script>
+        <script src="<?php echo Asset('fontendlib'); ?>/js/jquery.custom-scrollbar.js"></script>
+        <script src="<?php echo Asset('fontendlib'); ?>/js/jquery.easing.1.3.js"></script>
+        <script src="<?php echo Asset('fontendlib'); ?>/js/jquery.fancybox-1.3.4.js"></script>
+        <script type="text/javascript" src="<?php echo Asset('assets/js/jquery.validate.js'); ?>"></script>
+        <script src="<?php echo Asset('fontendlib'); ?>/js/custom.js"></script>
+        <script src="<?php echo Asset('fontendlib'); ?>/js/scripts.js"></script>
+        <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js"></script>
+        <script>
+jQuery(document).ready(function() {
+    jQuery("#dateofbith").datepicker();
+    jQuery("#fdangnhap").validate({
+        rules: {
+            username: {
+                required: true,
+                email: true
+            },
+            password: {
+                required: true,
+                minlength: 6
+            }
+        },
+        messages: {
+            username: {
+                required: 'Email là trường bắt buộc',
+                email: 'Email chưa đúng định dạng'
+            },
+            password: {
+                required: "Mật khẩu là trường bắt buộc",
+                minlength: "Mật khẩu không ngắn hơn 6 ký tự"
+            }
+        }
+    });
+    jQuery("#fdangky").validate({
+        rules: {
+            fname: {
+                required: true
+            },
+            lname: {
+                required: true
+            },
+            phonenumber: {
+                required: true
+            },
+            dateofbith: {
+                required: true
+            },
+            u_email: {
+                required: true,
+                email: true,
+                remote: {
+                    url: "<?php echo action('UserController@postCheckExist'); ?>",
+                    type: "POST"
+                }
+            },
+            u_pass: {
+                required: true,
+                minlength: 6
+            },
+            u_pass_confirmation: {
+                equalTo: "#u_pass"
+            },
+            uaddress: {
+                required: true
+            },
+            captchacode: {
+                required: true
+            }
+        },
+        messages: {
+            fname: {
+                required: 'Vui lòng nhập họ tên.'
+            },
+            lname: {
+                required: 'Vui lòng nhập họ tên.'
+            },
+            phonenumber: {
+                required: 'Vui lòng nhập số điện thoại.'
+            },
+            dateofbith: {
+                required: 'Vui lòng nhập ngày sinh.'
+            },
+            u_email: {
+                required: 'Vui lòng nhập địa chỉ e-mail.',
+                email: 'E-mail chưa đúng định dạng.',
+                remote: 'E-mail đã có người sử dụng.'
+            },
+            u_pass: {
+                required: 'Vui lòng nhập mật khẩu.',
+                minlength: 'Mật khẩu phải lớn hơn 6 ký tự.'
+            },
+            u_pass_confirmation: {
+                equalTo: 'Mật khẩu không khớp.'
+            },
+            uaddress: {
+                required: "Vui lòng nhập địa chỉ."
+            },
+            captchacode: {
+                required: "Vui lòng nhập mã bảo vệ."
+            }
+        }
+    });
+});
+        </script>
+    </body>
+</html>

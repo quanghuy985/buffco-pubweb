@@ -1,0 +1,36 @@
+<?php $i = ($arrayFeedback->getCurrentPage() - 1) * 1 + 1;$feedback_status = Lang::get('general.feedback_status'); ?>
+<?php foreach($arrayFeedback as $item): ?>
+<tr> 
+    <td><label value="cateNews"><?php echo $i++; ?></label></td> 
+    <td><label value="cateNews"><?php echo str_limit( $item->feedbackUserEmail, 30, '...'); ?></label></td> 
+    <td><label value="cateNews"><?php echo str_limit($item->feedbackUserName,30,'...' ); ?></label></td> 
+    <td><label value="cateNews"><?php echo str_limit($item->feedbackSubject, 30, '...'); ?> </label></td>
+    <td><label value="cateNews"><?php echo str_limit($item->feedbackContent, 30, '...'); ?> </label></td> 
+    <td><label value="cateNews"><?php echo date('d/m/Y h:i:s', $item->time); ?></label></td> 
+    <td><label value="cateNews">
+            <?php
+            if(array_key_exists($item->status, $feedback_status)){
+                echo $feedback_status[$item->status];
+            }
+            ?>
+        </label>
+    </td> 
+    <td>
+        <a href="<?php echo URL::action('\BackEnd\FeedbackController@getRepFeedBack', $item->id); ?>" class="btn btn4 btn_mail" title="<?php echo Lang::get('general.reply'); ?>"></a>
+        <?php if($item->status!='2'): ?>
+        <a href="javascript:void(0)" onclick="xoasanpham(<?php echo $item->id; ?>)" class="btn btn4 btn_trash" title="<?php echo Lang::get('button.delete'); ?>"></a>
+        <?php endif; ?>
+
+    </td> 
+</tr> 
+<?php endforeach; ?>
+<?php if($links!=''): ?>
+<tr>
+    <td colspan="8"><?php echo $links; ?></td>
+</tr>
+<?php endif; ?>
+<?php if(count($arrayFeedback)==0): ?>
+<tr>
+    <td colspan="8" style="text-align: center;"><span class="center"><?php echo Lang::get('general.data_empty'); ?></span></td>
+</tr>
+<?php endif; ?>

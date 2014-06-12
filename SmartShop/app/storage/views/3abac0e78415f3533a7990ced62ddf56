@@ -1,0 +1,129 @@
+<?php $__env->startSection("contentfontend"); ?>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+<section class="breadcrumbs">
+    <div class="container">
+        <ul class="horizontal_list clearfix bc_list f_size_medium">
+            <li class="m_right_10 current"><a href="#" class="default_t_color">Home<i class="fa fa-angle-right d_inline_middle m_left_10"></i></a></li>
+            <li class="m_right_10 current"><a href="#" class="default_t_color">Checkout<i class="fa fa-angle-right d_inline_middle m_left_10"></i></a></li>
+            <li><a href="#" class="default_t_color">Shopping Cart</a></li>
+        </ul>
+    </div>
+</section>
+<div class="row clearfix">
+    <section class="col-lg-6 col-md-6 col-sm-6 m_xs_bottom_30">
+        <h2 class="color_dark tt_uppercase m_bottom_25">Đăng nhập</h2>
+
+        <div class="bs_inner_offsets bg_light_color_3 shadow r_corners m_bottom_45">
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <?php if(Session::has('msglogin')): ?> 
+                    <h5 class="fw_medium m_bottom_15 scheme_color"><?php echo Session::get('msglogin'); ?></h5>
+                    <?php endif; ?>
+                    <?php echo Form::open(array('action' => 'UserController@postDangNhap','id'=>'fdangnhap')); ?>
+                    <ul>
+                        <li class="clearfix m_bottom_15">
+                            <div class="half_column type_2 f_left">
+                                <?php echo Form::label('username', 'E-mail', array('class' => 'm_bottom_5 d_inline_b')); ?>
+                                <?php echo Form::email('username','', array('class' => 'r_corners full_width m_bottom_5','id'=>'username','placeholder'=>'E-mail...')); ?>      
+                            </div>
+                            <div class="half_column type_2 f_left">
+                                <?php echo Form::label('pass', 'Mật khẩu', array('class' => 'm_bottom_5 d_inline_b')); ?>
+                                <?php echo Form::password('password', array('class' => 'r_corners full_width m_bottom_5','id'=>'pass','placeholder'=>'Mật khẩu...')); ?>      
+                                <br/>
+                                <a href="#" class="color_dark f_size_medium">Quên mật khẩu ?</a>
+                            </div>
+                        </li>
+                        <li class="m_bottom_15">
+                            <?php echo Form::checkbox('checkbox_4', 'ghinho',false, array('class' => 'd_none','id' => 'checkbox_4')); ?>
+                            <?php echo Form::label('checkbox_4', 'Ghi nhớ tài khoản'); ?>
+                        </li>
+                        <li>
+                            <?php echo Form::submit('Đăng nhập', array('class' => 'button_type_4 r_corners bg_scheme_color color_light tr_all_hover')); ?>
+                        </li>
+                    </ul>
+                    <?php echo Form::close(); ?>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <section class="col-lg-6 col-md-6 col-sm-6 m_xs_bottom_30">
+        <h2 class="color_dark tt_uppercase m_bottom_25">Đăng ký</h2>
+
+        <div class="bs_inner_offsets bg_light_color_3 shadow r_corners m_bottom_45">
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <?php if(Session::has('thongbao')): ?> 
+                    <h5 class="fw_medium m_bottom_15 scheme_color"><?php echo Session::get('thongbao'); ?></h5>
+                    <?php endif; ?>
+                    <?php echo Form::open(array('action' => 'UserController@postDangKy','id'=>'fdangky')); ?>
+                    <ul>
+                        <li class="clearfix m_bottom_15">
+                            <div class="half_column type_2 f_left">
+                                <?php echo Form::label('fname', 'Họ', array('class' => 'm_bottom_5 d_inline_b required')); ?>
+                                <?php echo Form::text('fname','', array('class' => 'r_corners full_width','id'=>'fname','placeholder'=>'Họ...')); ?> 
+                            </div>
+                            <div class="half_column type_2 f_left">
+                                <?php echo Form::label('lname', 'Tên', array('class' => 'm_bottom_5 d_inline_b required')); ?>
+                                <?php echo Form::text('lname','', array('class' => 'r_corners full_width','id'=>'lname','placeholder'=>'Tên...')); ?> 
+                            </div>
+                        </li>
+                        <li class="m_bottom_15">
+                            <?php echo Form::label('uaddress', 'Địa chỉ', array('class' => 'd_inline_b m_bottom_5 required')); ?>
+                            <?php echo Form::text('uaddress','', array('class' => 'r_corners notes full_width','id'=>'uaddress','placeholder'=>'Địa chỉ...')); ?>
+                        </li>
+                        <li class="m_bottom_15">
+                            <?php echo Form::label('dateofbith', 'Ngày sinh', array('class' => 'd_inline_b m_bottom_5 required')); ?>
+                            <?php echo Form::text('dateofbith','', array('class' => 'r_corners notes full_width','id'=>'dateofbith','placeholder'=>'Ngày sinh ...')); ?>
+                        </li>
+                        <li class="m_bottom_15">
+                            <?php echo Form::label('phonenumber', 'Điện thoại', array('class' => 'd_inline_b m_bottom_5 required')); ?>
+                            <?php echo Form::text('phonenumber','', array('class' => 'r_corners full_width','id'=>'phonenumber','placeholder'=>'Điện thoại...')); ?>      
+                        </li>
+                        <li class="m_bottom_15">
+                            <?php echo Form::label('u_email', 'E-mail', array('class' => 'd_inline_b m_bottom_5 required')); ?>
+                            <?php echo Form::email('u_email','', array('class' => 'r_corners full_width','id'=>'u_email','placeholder'=>'E-mail...')); ?> 
+                        </li>
+                        <li class="m_bottom_15">
+                            <?php echo Form::label('u_pass', 'Mật khẩu', array('class' => 'd_inline_b m_bottom_5 required')); ?>
+                            <?php echo Form::password('u_pass', array('class' => 'r_corners full_width','id'=>'u_pass','placeholder'=>'Mật khẩu...')); ?>      
+                        </li>
+                        <li>
+                            <?php echo Form::label('u_pass_confirmation', 'Nhập lại mật khẩu', array('class' => 'd_inline_b m_bottom_5 required')); ?>
+                            <?php echo Form::password('u_pass_confirmation', array('class' => 'r_corners full_width','id'=>'u_pass_confirmation','placeholder'=>'Nhập lại mật khẩu...')); ?>      
+                        </li>
+                        <li class="m_bottom_15 m_top_20">
+                            <div class="half_column type_2 f_left">      
+                                <?php echo Form::text('captchacode','', array('class' => 'r_corners full_width m_bottom_5','id'=>'captchacode','placeholder'=>'Mã xác nhận...')); ?>                            
+                            </div>
+                            <div class="half_column type_2 f_left">
+                                <label></label>
+                                <img id="captchaimg" style="-webkit-user-select: none" src="<?php echo Asset('securimage/securimage_show.php'); ?>"/>
+                                <a href="javascript:void(0)" style="color: #3b6f85;font-size: 13px;" onclick="document.getElementById('captchaimg').src = '<?php echo Asset('securimage/securimage_show.php'); ?>?' + Math.random();
+                                                    return false"><img src="<?php echo Asset('timthumb.php'); ?>?src=<?php echo Asset('fontendlib/images/refresh.png'); ?>&w=30&h=30&zc=0&q=100"/></a>
+                                <script>
+
+                                            setInterval(function(){
+                                            document.getElementById('captchaimg').src = "<?php echo Asset('securimage/securimage_show.php'); ?>?" + Math.random()
+                                            }, 60000);
+                                </script>
+                            </div>
+                        </li>
+                        <li class="m_bottom_15 m_top_20">
+                            <input type="checkbox" class="d_none" name="checkbox_6" id="checkbox_6"><label for="checkbox_6">Tôi đồng ý với các quy định của của trang website</label>
+                        </li>
+                        <li>
+                            <?php echo Form::submit('Đăng ký', array('class' => 'button_type_4 r_corners bg_scheme_color color_light tr_all_hover')); ?>
+                        </li>
+                    </ul>
+                    <?php echo Form::close(); ?>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<?php $__env->stopSection(); ?>
+
+
+
+<?php echo $__env->make("fontend.templatemain", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -1,0 +1,159 @@
+<?php $__env->startSection('titleAdmin'); ?>
+<?php echo Lang::get('backend/title.news.add'); ?>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection("contentadmin"); ?>
+<script>
+    function toSlug(e) {
+        var str = e.value;
+        str = str.toLowerCase();
+        str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+        str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+        str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+        str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+        str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+        str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+        str = str.replace(/đ/g, "d");
+        str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'| |\"|\&|\#|\[|\]|~|$|_/g, "-");
+        str = str.replace(/-+-/g, "-");
+        str = str.replace(/^\-+|\-+$/g, "");
+        document.getElementById("newsSlug").value = str;
+    }
+    jQuery(document).ready(function() {
+        jQuery("#newsAddFrom").validate({
+            rules: {
+                newsName: {required: true, maxlength: 255},
+                newsImg: {required: true, maxlength: 255},
+                newsDescription: {required: true, maxlength: 255},
+                newsContent: {required: true},
+                newsKeywords: {required: true, maxlength: 255},
+                newsSlug: {required: true, maxlength: 255}
+            }
+        });
+    });
+
+</script>
+<div class="pageheader notab">
+    <h1 class="pagetitle"><?php echo Lang::get('backend/title.news.heading'); ?></h1>
+</div>
+<div class="contentwrapper">
+    <?php if(isset($objNews)): ?>
+    <?php echo Form::model($objNews, array('action'=>'\BackEnd\NewsController@postUpdateNews', 'class'=>'stdform','id'=>'newsAddFrom' )); ?>
+    <?php else: ?>
+    <?php echo Form::open(array('action'=>'\BackEnd\NewsController@postAddNews', 'class'=>'stdform', 'id'=>'newsAddFrom')); ?>
+    <?php endif; ?>
+    <?php echo Form::hidden('id'); ?>
+    <div class="two_third photosharing_wrapper">
+        <?php echo $__env->make('backend.alert', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+        <div class="contenttitle2">
+            <h3> <?php if(isset($objNews)): ?><?php echo Lang::get('backend/title.news.update'); ?><?php else: ?><?php echo Lang::get('backend/title.news.add'); ?>    <?php endif; ?></h3>
+        </div>
+        <p>
+            <label><?php echo Lang::get('general.news_name'); ?></label>
+            <span class="field">
+                <?php echo Form::text('newsName', null, array('onkeyup'=>'toSlug(this);', 'onchange'=>'toSlug(this);', 'class'=>'longinput')); ?>
+            </span>
+        </p>
+        <p>
+            <label><?php echo Lang::get('general.slug'); ?></label>
+            <span class="field">
+                <?php echo Form::text('newsSlug', null, array('id'=>'newsSlug', 'class'=>'longinput', 'placeholder'=>Lang::get('placeholder.slug'), 'onchange'=>'toSlug(this);')); ?>
+            </span>
+        </p>
+        <script type="text/javascript">
+
+            function BrowseServer() {
+                var finder = new CKFinder();
+                finder.basePath = '../';
+                finder.selectActionFunction = SetFileField;
+                finder.popup();
+            }
+            function SetFileField(fileUrl) {
+                document.getElementById('xFilePath').value = fileUrl;
+            }
+
+        </script>
+        <p>
+            <label><?php echo Lang::get('general.avatar'); ?></label>
+            <span class="field">
+                <?php echo Form::text('newsImg', null, array('placeholder'=>Lang::get('placeholder.filePath'),'size'=>60,'id'=>'xFilePath', 'class'=>'smallinput')); ?>
+                <input type="button" class="stdbtn btn_orange" value="<?php echo Lang::get('button.upload'); ?>" onclick="BrowseServer();" />
+            </span>
+        </p>
+        <p>
+            <label><?php echo Lang::get('general.description'); ?></label>
+            <span class="field">
+                <?php echo Form::textarea('newsDescription', null, array('class'=>'longinput', 'cols'=>80, 'rows'=>4)); ?>
+            </span>
+        </p>
+
+        <p>
+            <label><?php echo Lang::get('general.content'); ?></label>
+            <span class="field">
+                <?php echo Form::textarea('newsContent', null, array('class'=>'ckeditor', 'cols'=>80, 'rows'=>10)); ?>
+            </span>
+        </p>
+    </div>
+    <div class="one_third last ps_sidebar">
+        <div class="contenttitle3">
+            <h3>Đăng</h3>
+        </div>
+        <?php
+        $data_status = Lang::get('general.data_status2');
+        unset($data_status[3]);
+        echo Form::select('status', $data_status);
+        ?>
+        <button class="submit radius2"><?php if(isset($objNews)): ?><?php echo Lang::get('button.update'); ?> <?php else: ?><?php echo Lang::get('button.add'); ?><?php endif; ?> </button>
+
+        <br clear="all">
+        <div class="contenttitle3">
+            <h3><?php echo Lang::get('general.select_cate'); ?></h3>
+        </div>
+        <div id="scroll1" class="mousescroll">
+            <ul class="cateaddproduct" id="cateaddproduct">
+                <?php echo $__env->make('backend.news.listcateAjax', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+            </ul>
+        </div>
+        <br clear="all">
+        <a href="<?php echo URL::action('\BackEnd\CateNewsController@getCateNewsView'); ?>" ><button type="button" class="stdbtn btn_orange"><?php echo Lang::get('button.add'); ?>?</button></a>
+
+        <br clear="all">
+        <div class="contenttitle3">
+            <h3><?php echo Lang::get('general.tag'); ?></h3>
+        </div>
+        <?php echo Form::text('newsTag', null, array('class'=>'longinput', 'id'=>'tags', 'placeholder'=>Lang::get('placeholder.tags'))); ?>
+        <br clear="all">
+        <div class="contenttitle3">
+            <h3><?php echo Lang::get('general.keyword'); ?></h3>
+        </div>
+        <?php echo Form::text('newsKeywords', null, array('class'=>'longinput','id'=>'tags1', 'placeholder'=>Lang::get('placeholder.keywords'))); ?>
+    </div>
+
+
+    <?php echo Form::close(); ?>
+    <style>
+        div.tagsinput{
+            width: 100% !important;
+        }
+        .cateaddproduct {
+            list-style: none outside none;
+            padding-left: 15px;
+        }
+
+        .cateaddproduct ul {
+            list-style: none outside none;
+            padding-left: 20px;
+        }
+    </style>
+    <script>
+        jQuery('#scroll1').slimscroll({
+            color: '#666',
+            size: '10px',
+            width: '100%',
+            height: '200px',
+            border: 'medium none'
+        });
+    </script>
+</div>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make("backend.template", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
