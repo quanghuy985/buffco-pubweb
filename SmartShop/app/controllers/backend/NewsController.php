@@ -33,12 +33,19 @@ class NewsController extends \BaseController {
     }
 
     public function getNewsFillterView($one = '', $two = '') {
-        $tblNewModel = new tblNewsModel();
-        $tableCateModel = new tblCategoryNewsModel();
-        $arrCate = $tableCateModel->allCateNew();
-        $check = $tblNewModel->getAllFillterByCatStatus($one, $two);
-        $link = $check->links();
-        return View::make('backend.news.newsManage')->with('arrayNews', $check)->with('link', $link)->with('arrayCate', $arrCate);
+        if (\Request::ajax()) {
+            $tblNewModel = new tblNewsModel();
+            $check = $tblNewModel->getAllFillterByCatStatus($one, $two, 1);
+            $link = $check->links();
+            return View::make('backend.news.newsAjax')->with('arrayNews', $check)->with('link', $link);
+        } else {
+            $tblNewModel = new tblNewsModel();
+            $tableCateModel = new tblCategoryNewsModel();
+            $arrCate = $tableCateModel->allCateNew();
+            $check = $tblNewModel->getAllFillterByCatStatus($one, $two, 1);
+            $link = $check->links();
+            return View::make('backend.news.newsManage')->with('arrayNews', $check)->with('link', $link)->with('arrayCate', $arrCate);
+        }
     }
 
     public function getNewsView() {
@@ -105,7 +112,6 @@ class NewsController extends \BaseController {
         $id = Input::get('id');
         $rules = array(
             'id' => 'required|integer',
-            "cbCateNews" => "required|integer",
             'newsImg' => "required|max:255",
             "newsName" => "required|max:255",
             "newsDescription" => "required|max:255",
@@ -116,7 +122,7 @@ class NewsController extends \BaseController {
         );
         $validate = Validator::make(Input::all(), $rules, Lang::get('messages.validator'), Lang::get('backend/attributes.news'));
         if (!$validate->fails()) {
-            $tblNewsModel->updateNew($id, Input::get('cbCateNews'), Input::get('newsName'), Input::get('newsImg'), Input::get('newsDescription'), Input::get('newsKeywords'), Input::get('newsContent'), Input::get('newsTag'), Input::get('newsSlug'), '', Input::get('status'));
+            $tblNewsModel->updateNew($id, Input::get('catlist'), Input::get('newsName'), Input::get('newsImg'), Input::get('newsDescription'), Input::get('newsKeywords'), Input::get('newsContent'), Input::get('newsTag'), Input::get('newsSlug'), '', Input::get('status'));
             $historyContent = Lang::get('backend/history.news.create') . Input::get('newsName');
             $objAdmin = \Auth::user();
 //            $tblHistoryAdminModel = new tblHistoryAdminModel();

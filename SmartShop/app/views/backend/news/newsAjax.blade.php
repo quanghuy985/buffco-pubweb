@@ -1,17 +1,17 @@
 <?php
-$i = 1;
+$i = ($arrayNews->getCurrentPage() - 1) * 10 + 1;
 $data_status = Lang::get('general.data_status2');
-unset($data_status[3]);
+unset($data_status['']);
 ?>
 @foreach($arrayNews as $item)
 <tr>
-    <td><label value="cateNews">{{$i++}}</label></td>
+    <td class="text-center"><label value="cateNews">{{$i++}}</label></td>
     <td><label value="cateNews"><a href="{{URL::action('\BackEnd\NewsController@getNewsEdit')}}/{{$item->id}}">{{str_limit( $item->newsName, 30, '...')}}</a></label></td>
     <td><label value="cateNews">{{str_limit($item->newsDescription, 30, '...')}} </label></td>
     <td><label value="cateNews"><?php echo date('d/m/Y h:i:s', $item->time); ?></label></td>
     <td><label value="cateNews">
             <?php
-            if(array_key_exists($item->status, $data_status)){
+            if (array_key_exists($item->status, $data_status)) {
                 echo $data_status[$item->status];
             }
             ?>
