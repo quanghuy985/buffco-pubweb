@@ -52,9 +52,6 @@ class tblNewsModel extends \Eloquent {
         // $tableAdmin = new TblAdminModel();
         $tableNew = $this->where('id', '=', $newID);
         $arraysql = array('id' => $newID);
-        if ($catenewsID != '') {
-            $arraysql = array_merge($arraysql, array("catenewsID" => $catenewsID));
-        }
         if ($newsName != '') {
             $arraysql = array_merge($arraysql, array("newsName" => $newsName));
         }
@@ -83,6 +80,10 @@ class tblNewsModel extends \Eloquent {
             $arraysql = array_merge($arraysql, array("status" => $tagStatus));
         }
         $checku = $tableNew->update($arraysql);
+        DB::table('tbl_news_views')->where('news_id', '=', $newID)->delete();
+        foreach ($catenewsID as $value) {
+            $check = DB::table('tbl_news_views')->insert(array('news_id' => $newID, 'cat_news_id' => $value));
+        }
         if ($checku > 0) {
             return TRUE;
         } else {

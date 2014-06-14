@@ -15,7 +15,7 @@ return array(
     ),
 //    news
     'data_status2'      => array(
-        3 => 'Tất cả',
+        '' => 'Tất cả',
         0 => 'Chờ đăng',
         1 => 'Đã đăng',
         2 => 'Xoá',
