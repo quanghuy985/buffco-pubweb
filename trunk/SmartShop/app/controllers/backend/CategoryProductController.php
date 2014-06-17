@@ -20,7 +20,7 @@ class CategoryProductController extends \BaseController {
 
     public function getCateProductView($thongbao = '') {
         if (\Request::ajax()) {
-            $tblCateProduct = new tblCategoryProductModel();
+            $tblCateProduct = new tblCategoryproductModel();
             $link = $tblCateProduct->getAllCategoryProductPaginate(10);
             $links = $link->links();
             $start = $link->getCurrentPage() * 10 - 10;
@@ -30,7 +30,7 @@ class CategoryProductController extends \BaseController {
             $data = $tblCateProduct->getAllCategoryProduct($start, 10);
             return View::make('backend.product.cateProductAjax')->with('arrCateProduct', $data)->with('link', $links);
         } else {
-            $tblCateProduct = new tblCategoryProductModel();
+            $tblCateProduct = new tblCategoryproductModel();
             $link = $tblCateProduct->getAllCategoryProductPaginate(10);
             $links = $link->links();
             $start = $link->getCurrentPage() * 10 - 10;
@@ -55,13 +55,13 @@ class CategoryProductController extends \BaseController {
     }
 
     public function getCategoryProductBySlugCate($slug) {
-        $tblCateProduct = new tblCategoryProductModel();
+        $tblCateProduct = new tblCategoryproductModel();
         $data = $tblPage->getCateProductBySlug($slug);
         return View::make('fontend.page.PageManage')->with('arrayPage', $data[0]);
     }
 
     public function postAjaxpagion() {
-        $tblCateProduct = new tblCategoryProductModel();
+        $tblCateProduct = new tblCategoryproductModel();
         $link = $tblCateProduct->getAllCategoryProductPaginate(10);
         $links = $link->links();
         $start = $link->getCurrentPage() * 10 - 10;
@@ -73,7 +73,7 @@ class CategoryProductController extends \BaseController {
     }
 
     public function postDeleteCateProduct() {
-        $tblCateProduct = new tblCategoryProductModel();
+        $tblCateProduct = new tblCategoryproductModel();
         $dataedit = $tblCateProduct->findCateProductByID(Input::get('id'));
         if ($dataedit[0]->cateParent == 0) {
             $tblCateProduct->deleteCateProductChild($dataedit[0]->id);
@@ -91,7 +91,7 @@ class CategoryProductController extends \BaseController {
 
     public function getCateProductEdit($id = '') {
         if (\Request::ajax()) {
-            $tblCateProduct = new tblCategoryProductModel();
+            $tblCateProduct = new tblCategoryproductModel();
             $link = $tblCateProduct->getAllCategoryProductPaginate(10);
             $links = $link->links();
             $start = $link->getCurrentPage() * 10 - 10;
@@ -101,7 +101,7 @@ class CategoryProductController extends \BaseController {
             $data = $tblCateProduct->getAllCategoryProduct($start, 10);
             return View::make('backend.product.cateProductAjax')->with('arrCateProduct', $data)->with('link', $links);
         } else {
-            $tblCateProduct = new tblCategoryProductModel();
+            $tblCateProduct = new tblCategoryproductModel();
             $link = $tblCateProduct->getAllCategoryProductPaginate(10);
             $links = $link->links();
             $start = $link->getCurrentPage() * 10 - 10;
@@ -123,7 +123,7 @@ class CategoryProductController extends \BaseController {
     }
 
     public function postCateProductActive() {
-        $tblCateProduct = new tblCategoryProductModel();
+        $tblCateProduct = new tblCategoryproductModel();
         $tblCateProduct->updateCateProduct(Input::get('id'), '', '', '', '', Input::get('status'));
         $link = $tblCateProduct->getAllCategoryProductPaginate(10);
         $links = $link->links();
@@ -140,7 +140,7 @@ class CategoryProductController extends \BaseController {
             "cateName" => "required",
             "cateSlug" => "required"
         );
-        $tblCateProduct = new tblCategoryProductModel();
+        $tblCateProduct = new tblCategoryproductModel();
         $inputs = Input::all();
         $validate = Validator::make(Input::all(), $rules, Lang::get('messages.validator'), Lang::get('backend/attributes.category-product'));
         if (!$validate->fails()) {
@@ -158,13 +158,13 @@ class CategoryProductController extends \BaseController {
             "cateName" => "required",
             "cateSlug" => "required|unique:tbl_product_category"
         );
-        $tblCateProduct = new tblCategoryProductModel();
+        $tblCateProduct = new tblCategoryproductModel();
         $inputs = Input::all();
         $validate = Validator::make(Input::all(), $rules, Lang::get('messages.validator'), Lang::get('backend/attributes.category-product'));
         if (!$validate->fails()) {
             $check = $tblCateProduct->addnewCateProduct(Input::get('cateName'), Input::get('cateParent'), Input::get('cateSlug'), Input::get('cateDescription'));
             if (\Request::ajax()) {
-                $tblCateProduct = new tblCategoryProductModel();
+                $tblCateProduct = new tblCategoryproductModel();
                 $allcatelist = $tblCateProduct->allCateProductList();
                 $htmlcontent = View::make('backend.product.listcateAjax')->with('listallcate', $allcatelist)->render();
                 $mess = array('id' => $check->id, 'content' => Input::get('cateName'), 'htmlcontent' => $htmlcontent);
@@ -186,7 +186,7 @@ class CategoryProductController extends \BaseController {
     }
 
     public function postCheckSlug() {
-        $tblCate = new tblCategoryProductModel();
+        $tblCate = new tblCategoryproductModel();
         $slugcheck = Input::get('slug');
         $count = $tblCate->countSlug($slugcheck);
         return $count;

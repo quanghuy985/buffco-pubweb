@@ -34,7 +34,6 @@ class ManufacturerController extends \BaseController {
                 $manuPlace = \Input::get('manufacturerPlace');
                 $respon = $objManufactuer->addManufacturer($manuName, '', $manuPlace, 1);
                 $value = array('id' => $respon->id, 'manufacturerName' => $respon->manufacturerName);
-                header('Content-type: application/json');
                 echo json_encode($value);
             } else {
                 $mess = $validate->messages();

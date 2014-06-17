@@ -643,62 +643,6 @@
         "description": "Tax calculation"
     },
     {
-        "name": "swiftmailer/swiftmailer",
-        "version": "v5.2.0",
-        "version_normalized": "5.2.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/swiftmailer/swiftmailer.git",
-            "reference": "043e336b871f17a117f76ef8e190eddfc04c8d48"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/043e336b871f17a117f76ef8e190eddfc04c8d48",
-            "reference": "043e336b871f17a117f76ef8e190eddfc04c8d48",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.2.4"
-        },
-        "require-dev": {
-            "mockery/mockery": "~0.9.1"
-        },
-        "time": "2014-05-08 08:11:19",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "5.2-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "files": [
-                "lib/swift_required.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Fabien Potencier",
-                "email": "fabien@symfony.com",
-                "homepage": "http://fabien.potencier.org",
-                "role": "Lead Developer"
-            },
-            {
-                "name": "Chris Corbyn"
-            }
-        ],
-        "description": "Swiftmailer, free feature-rich PHP mailer",
-        "homepage": "http://swiftmailer.org",
-        "keywords": [
-            "mail",
-            "mailer"
-        ]
-    },
-    {
         "name": "greggilbert/recaptcha",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
@@ -1944,56 +1888,6 @@
         ]
     },
     {
-        "name": "way/generators",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/JeffreyWay/Laravel-4-Generators.git",
-            "reference": "3d631c483849005005620a117624c39ad611a5d4"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/JeffreyWay/Laravel-4-Generators/zipball/3d631c483849005005620a117624c39ad611a5d4",
-            "reference": "3d631c483849005005620a117624c39ad611a5d4",
-            "shasum": ""
-        },
-        "require": {
-            "illuminate/support": "~4.0",
-            "php": ">=5.4.0"
-        },
-        "require-dev": {
-            "behat/behat": "~2.5.1",
-            "behat/mink": "~1.5.0",
-            "behat/mink-extension": "~1.2.0",
-            "behat/mink-goutte-driver": "~1.0.9",
-            "behat/mink-selenium2-driver": "~1.1.1",
-            "phpspec/phpspec": "~2.0",
-            "phpunit/phpunit": "~3.7"
-        },
-        "time": "2014-06-02 14:21:07",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "Way\\Generators": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Jeffrey Way",
-                "email": "jeffrey@jeffrey-way.com",
-                "homepage": "http://jeffrye-way.com",
-                "role": "Developer"
-            }
-        ],
-        "description": "Rapidly generate resources, migrations, models, and much more."
-    },
-    {
         "name": "monolog/monolog",
         "version": "1.10.0",
         "version_normalized": "1.10.0.0",
@@ -2104,6 +1998,62 @@
             }
         ],
         "description": "Shopping cart package"
+    },
+    {
+        "name": "swiftmailer/swiftmailer",
+        "version": "v5.2.1",
+        "version_normalized": "5.2.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/swiftmailer/swiftmailer.git",
+            "reference": "2b9af56cc676c338d52fca4c657e5bdff73bb7af"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/2b9af56cc676c338d52fca4c657e5bdff73bb7af",
+            "reference": "2b9af56cc676c338d52fca4c657e5bdff73bb7af",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.2.4"
+        },
+        "require-dev": {
+            "mockery/mockery": "~0.9.1"
+        },
+        "time": "2014-06-13 11:44:54",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "5.2-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "lib/swift_required.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com",
+                "homepage": "http://fabien.potencier.org",
+                "role": "Lead Developer"
+            },
+            {
+                "name": "Chris Corbyn"
+            }
+        ],
+        "description": "Swiftmailer, free feature-rich PHP mailer",
+        "homepage": "http://swiftmailer.org",
+        "keywords": [
+            "mail",
+            "mailer"
+        ]
     },
     {
         "name": "doctrine/lexer",
@@ -2592,6 +2542,56 @@
             "persistence",
             "queryobject"
         ]
+    },
+    {
+        "name": "way/generators",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/JeffreyWay/Laravel-4-Generators.git",
+            "reference": "3d631c483849005005620a117624c39ad611a5d4"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/JeffreyWay/Laravel-4-Generators/zipball/3d631c483849005005620a117624c39ad611a5d4",
+            "reference": "3d631c483849005005620a117624c39ad611a5d4",
+            "shasum": ""
+        },
+        "require": {
+            "illuminate/support": "~4.0",
+            "php": ">=5.4.0"
+        },
+        "require-dev": {
+            "behat/behat": "~2.5.1",
+            "behat/mink": "~1.5.0",
+            "behat/mink-extension": "~1.2.0",
+            "behat/mink-goutte-driver": "~1.0.9",
+            "behat/mink-selenium2-driver": "~1.1.1",
+            "phpspec/phpspec": "~2.0",
+            "phpunit/phpunit": "~3.7"
+        },
+        "time": "2014-06-02 14:21:07",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Way\\Generators": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Jeffrey Way",
+                "email": "jeffrey@jeffrey-way.com",
+                "homepage": "http://jeffrye-way.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Rapidly generate resources, migrations, models, and much more."
     },
     {
         "name": "symfony/class-loader",
