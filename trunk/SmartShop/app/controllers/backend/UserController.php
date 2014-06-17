@@ -21,7 +21,7 @@ class UserController extends \BaseController {
             return View::make('backend.user.Userajax')->with('arrUser', $check)->with('link', $link);
         } else {
             $tblUserModel = new tblUserModel();
-            $check = $tblUserModel->getAllUsers(10, 'id','');
+            $check = $tblUserModel->getAllUsers(10, 'id', '');
             $link = $check->links();
             return View::make('backend.user.UserManage')->with('arrUser', $check)->with('link', $link);
         }
@@ -30,7 +30,7 @@ class UserController extends \BaseController {
     public function getUserDetail() {
         $tblUserModel = new tblUserModel();
         $email = \Input::get('email');
-        $data = $tblUserModel->getUserByEmail($email,0);
+        $data = $tblUserModel->getUserByEmail($email, 0);
         return View::make('backend.user.UserDetail')->with('data', $data);
     }
 
@@ -49,7 +49,7 @@ class UserController extends \BaseController {
             return View::make('backend.user.Userajax')->with('arrUser', $check)->with('link', $link);
         } else {
             $tblUserModel = new tblUserModel();
-            $check = $tblUserModel->getAllUsers(10, 'id','');
+            $check = $tblUserModel->getAllUsers(10, 'id', '');
             $link = $check->links();
             $userdata = $tblUserModel->getUserByEmail(\Input::get('id'), 0);
             return View::make('backend.user.UserManage')->with('arrayUsers', $userdata)->with('arrUser', $check)->with('link', $link);
@@ -58,7 +58,7 @@ class UserController extends \BaseController {
 
     public function postUpdateUser() {
         $tblAdminModel = new \BackEnd\tblUserModel();
-        $tblAdminModel->UpdateUser(\Input::get('id'), \Input::get('email'), \Input::get('password'), \Input::get('firstname'), \Input::get('lastname'), \Input::get('dateofbirth'), \Input::get('address'), \Input::get('phone'), \Input::get('status'), 0, \Input::get('group_admin_id'));
+        $tblAdminModel->UpdateUser(\Input::get('id'), \Input::get('email'), \Input::get('password'), \Input::get('firstname'), \Input::get('lastname'), \Input::get('dateofbirth'), \Input::get('address'), \Input::get('phone'), \Input::get('status'), 0, '');
         \Session::flash('alert_success', \Lang::get('messages.update.success'));
         return \Redirect::action('\BackEnd\UserController@getUserView');
     }
@@ -134,7 +134,7 @@ class UserController extends \BaseController {
             return View::make('backend.user.Userajax')->with('arrUser', $check)->with('link', $link);
         } else {
             $tblUserModel = new tblUserModel();
-            $check = $tblUserModel->getAllUsers(10, 'id',\Input::get('orderby'));
+            $check = $tblUserModel->getAllUsers(10, 'id', \Input::get('orderby'));
             $link = $check->links();
             return View::make('backend.user.UserManage')->with('arrUser', $check)->with('link', $link);
         }

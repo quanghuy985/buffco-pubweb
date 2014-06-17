@@ -39,10 +39,13 @@ return array(
         'feedbackReplyContent' => 'Nội dung trả lời'
     ),
     'admin' => array(
-        'adminName' => 'Họ và tên',
-        'adminEmail' => 'Email',
-        'adminPassword' => 'Mật khẩu',
-        'adminRoles' => 'Nhóm quyền'
+        'email' => 'email',
+        'firstname' => 'họ và đệm',
+        'lastname' => 'tên',
+        'dateofbirth' => 'ngày sinh',
+        'address' => 'địa chỉ',
+        'phone' => 'số điện thoại',
+        'password' => 'mật khẩu'
     ),
     'supporter' => array(
         'supporterGroupName' => 'Nhóm hỗ trợ viên',
@@ -67,21 +70,21 @@ return array(
         'manufacturerDescription' => 'Mô tả',
         'manufacturerPlace' => 'Nơi sản xuất',
     ),
-       'category-product' => array(
-                'cateName' => 'Tên danh mục sản phẩm',
-                'cateParent' => 'Danh mục cha',
-                'cateSlug' => 'Đường dẫn tĩnh',
-                'cateDescription' => 'Mô tả',
+    'category-product' => array(
+        'cateName' => 'Tên danh mục sản phẩm',
+        'cateParent' => 'Danh mục cha',
+        'cateSlug' => 'Đường dẫn tĩnh',
+        'cateDescription' => 'Mô tả',
     ),
-       'products' => array(
-                                         'productCode' => 'Mã sản phẩm',
-                                         'productName' => 'Tên sản phẩm',
-                                         'productDescription' => 'Chi tiết sản phẩm',
-                                         'productAttributes' => 'Thuộc tính sản phẩm',
-                                         'productPrice' => 'Giá sảm phẩm',
-                                         'salesPrice' => 'Giá khuyến mại',
-                                         'startSales' => 'Ngày bắt đầu',
-                                         'endSales' => 'Ngày kết thúc',
-                                         'quantity' => 'Số lượng',
+    'products' => array(
+        'productCode' => 'Mã sản phẩm',
+        'productName' => 'Tên sản phẩm',
+        'productDescription' => 'Chi tiết sản phẩm',
+        'productAttributes' => 'Thuộc tính sản phẩm',
+        'productPrice' => 'Giá sảm phẩm',
+        'salesPrice' => 'Giá khuyến mại',
+        'startSales' => 'Ngày bắt đầu',
+        'endSales' => 'Ngày kết thúc',
+        'quantity' => 'Số lượng',
     ),
 );

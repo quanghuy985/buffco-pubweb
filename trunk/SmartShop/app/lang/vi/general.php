@@ -33,6 +33,7 @@ return array(
     ),
     //admin
     'user_status'      => array(
+         '' => 'Tất cả',
         0 => 'Khóa',
         1 => 'Đã kích hoạt',
         2 => 'Xoá',
@@ -61,6 +62,7 @@ return array(
     'public'            => 'Đẵ đăng',
     'pending'           => 'Chờ đăng',
     'delete'            => 'Xoá',
+    'active'            => 'Kích hoạt',
     'delete_select'     => 'Xóa đã chọn',
     'date_from'         => 'Từ',
     'date_to'           => 'Đến',
@@ -160,5 +162,7 @@ return array(
     'group_acl'=>'Nhóm quyền',
     'group_support'=>'Nhóm hỗ trợ viên',
     'group_support_name'=>'Tên nhóm hỗ trợ viên',
-    'supporterName'=>'Tên hỗ trợ viên'
+    'supporterName'=>'Tên hỗ trợ viên',
+    //Admin 
+     'admin_roles'=>'Phân quyền'
 );

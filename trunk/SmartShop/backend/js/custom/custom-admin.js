@@ -45,7 +45,7 @@ jQuery(document).ready(function() {
         var url = jQuery(this).attr('href');
         event.preventDefault();
         event.stopPropagation();
-            url = pathname + '?' + url.split(/\?(.+)?/)[1];
+        url = pathname + '?' + url.split(/\?(.+)?/)[1];
         NProgress.start();
         jQuery.ajax({
             url: url,
@@ -61,8 +61,29 @@ jQuery(document).ready(function() {
 
     });
 });
-
-function deleteproduct(url, id) {
+function kickhoat(url, id, curentpage) {
+    var the = jQuery(this);
+    jConfirm('Bạn có chắc chắn muốn kích hoạt nhân viên này ?', 'Thông báo', function(r) {
+        if (r == true) {
+            NProgress.start();
+            var request = jQuery.ajax({
+                url: url,
+                type: "POST",
+                data: {id: id, page: curentpage},
+                dataType: "html"
+            });
+            request.done(function(msg) {
+                jQuery('.tabledataajax').html(msg);
+                NProgress.done();
+            });
+            return false;
+        } else
+        {
+            return false;
+        }
+    });
+}
+function deleteproduct(url, id, curentpage) {
     var the = jQuery(this);
     jConfirm('Bạn có chắc chắn muốn xóa ?', 'Thông báo', function(r) {
         if (r == true) {
@@ -70,7 +91,7 @@ function deleteproduct(url, id) {
             var request = jQuery.ajax({
                 url: url,
                 type: "POST",
-                data: {id: id},
+                data: {id: id, page: curentpage},
                 dataType: "html"
             });
             request.done(function(msg) {
