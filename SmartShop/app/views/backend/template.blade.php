@@ -131,7 +131,7 @@
                         <span class="arrow"></span>
                         <ul id="adminSub">
                             <li><a href="{{URL::action('\BackEnd\AdminController@getAdminView')}}">{{Lang::get('backend/dashboard.management_user')}}</a></li>
-                            <li><a href="">{{Lang::get('backend/dashboard.management_acl')}}</a></li>
+                 
                         </ul>
                     </li>
                 </ul>

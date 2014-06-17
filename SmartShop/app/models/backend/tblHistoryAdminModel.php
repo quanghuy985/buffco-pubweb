@@ -2,9 +2,11 @@
 
 namespace BackEnd;
 
+use DB;
+
 class tblHistoryAdminModel extends \Eloquent {
 
-    protected $table = 'tbladminhistory';
+    protected $table = 'tbl_admin_history';
     public $timestamps = false;
 
     public function addHistory($userID, $content, $status) {
@@ -37,15 +39,15 @@ class tblHistoryAdminModel extends \Eloquent {
 
     public function findHistory($per_page, $from, $to, $status) {
         if ($status == 3 && $from != '' && $to != '') {
-            $historyarray = DB::table('tbladminhistory')->join('tbladmin', 'tbladminhistory.adminID', '=', 'tbladmin.id')->select('tbladminhistory.id', 'tbladminhistory.historyContent', 'tbladminhistory.time', 'tbladminhistory.status', 'tbladmin.adminEmail', 'tbladmin.adminName')->whereBetween('tbladminhistory.time', array($from, $to))->orderBy('tbladminhistory.time', 'desc')->paginate($per_page);
+            $historyarray = DB::table('tbl_admin_history')->join('tbladmin', 'tbl_admin_history.adminID', '=', 'tbladmin.id')->select('tbl_admin_history.id', 'tbl_admin_history.historyContent', 'tbl_admin_history.time', 'tbl_admin_history.status', 'tbladmin.adminEmail', 'tbladmin.adminName')->whereBetween('tbl_admin_history.time', array($from, $to))->orderBy('tbl_admin_history.time', 'desc')->paginate($per_page);
         } else {
-            $historyarray = DB::table('tbladminhistory')->join('tbladmin', 'tbladminhistory.adminID', '=', 'tbladmin.id')->select('tbladminhistory.id', 'tbladminhistory.historyContent', 'tbladminhistory.time', 'tbladminhistory.status', 'tbladmin.adminEmail', 'tbladmin.adminName')->where('tbladminhistory.status', '=', $status)->orderBy('tbladminhistory.time', 'desc')->paginate($per_page);
+            $historyarray = DB::table('tbl_admin_history')->join('tbladmin', 'tbl_admin_history.adminID', '=', 'tbladmin.id')->select('tbl_admin_history.id', 'tbl_admin_history.historyContent', 'tbl_admin_history.time', 'tbl_admin_history.status', 'tbladmin.adminEmail', 'tbladmin.adminName')->where('tbl_admin_history.status', '=', $status)->orderBy('tbl_admin_history.time', 'desc')->paginate($per_page);
         }
         if ($from == '' || $to == '') {
             if ($status == 3) {
-                $historyarray = DB::table('tbladminhistory')->join('tbladmin', 'tbladminhistory.adminID', '=', 'tbladmin.id')->select('tbladminhistory.id', 'tbladminhistory.historyContent', 'tbladminhistory.time', 'tbladminhistory.status', 'tbladmin.adminEmail', 'tbladmin.adminName')->orderBy('tbladminhistory.time', 'desc')->paginate($per_page);
+                $historyarray = DB::table('tbl_admin_history')->join('tbladmin', 'tbl_admin_history.adminID', '=', 'tbladmin.id')->select('tbl_admin_history.id', 'tbl_admin_history.historyContent', 'tbl_admin_history.time', 'tbl_admin_history.status', 'tbladmin.adminEmail', 'tbladmin.adminName')->orderBy('tbl_admin_history.time', 'desc')->paginate($per_page);
             } else {
-                $historyarray = DB::table('tbladminhistory')->join('tbladmin', 'tbladminhistory.adminID', '=', 'tbladmin.id')->select('tbladminhistory.id', 'tbladminhistory.historyContent', 'tbladminhistory.time', 'tbladminhistory.status', 'tbladmin.adminEmail', 'tbladmin.adminName')->where('tbladminhistory.status', '=', $status)->orderBy('tbladminhistory.time', 'desc')->paginate($per_page);
+                $historyarray = DB::table('tbl_admin_history')->join('tbladmin', 'tbl_admin_history.adminID', '=', 'tbladmin.id')->select('tbl_admin_history.id', 'tbl_admin_history.historyContent', 'tbl_admin_history.time', 'tbl_admin_history.status', 'tbladmin.adminEmail', 'tbladmin.adminName')->where('tbl_admin_history.status', '=', $status)->orderBy('tbl_admin_history.time', 'desc')->paginate($per_page);
             }
         }
         return $historyarray;
@@ -54,7 +56,7 @@ class tblHistoryAdminModel extends \Eloquent {
     public function SearchHistory($keyword, $per_page, $orderby) {
         $historyarray = '';
 
-        $historyarray = DB::table('tbladminhistory')->join('tbladmin', 'tbladminhistory.adminID', '=', 'tbladmin.id')->select('tbladminhistory.id', 'tbladminhistory.historyContent', 'tbladminhistory.time', 'tbladminhistory.status', 'tbladmin.adminEmail', 'tbladmin.adminName')->where('tbladmin.adminEmail', 'LIKE', '%' . $keyword . '%')->orwhere('tbladmin.adminName', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);
+        $historyarray = DB::table('tbl_admin_history')->join('tbladmin', 'tbl_admin_history.adminID', '=', 'tbladmin.id')->select('tbl_admin_history.id', 'tbl_admin_history.historyContent', 'tbl_admin_history.time', 'tbl_admin_history.status', 'tbladmin.adminEmail', 'tbladmin.adminName')->where('tbladmin.adminEmail', 'LIKE', '%' . $keyword . '%')->orwhere('tbladmin.adminName', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);
 
         return $historyarray;
     }
@@ -62,25 +64,25 @@ class tblHistoryAdminModel extends \Eloquent {
     public function findHistoryByDate($from, $to, $per_page, $orderby) {
         $historyarray = '';
         if ($from == '' || $to == '') {
-            $historyarray = DB::table('tbladminhistory')->join('tbladmin', 'tbladminhistory.adminID', '=', 'tbladmin.id')->select('tbladminhistory.id', 'tbladminhistory.historyContent', 'tbladminhistory.time', 'tbladminhistory.status', 'tbladmin.adminEmail', 'tbladmin.adminName')->orderBy($orderby, 'desc')->paginate($per_page);
+            $historyarray = DB::table('tbl_admin_history')->join('tbladmin', 'tbl_admin_history.adminID', '=', 'tbladmin.id')->select('tbl_admin_history.id', 'tbl_admin_history.historyContent', 'tbl_admin_history.time', 'tbl_admin_history.status', 'tbladmin.adminEmail', 'tbladmin.adminName')->orderBy($orderby, 'desc')->paginate($per_page);
         } else {
-            $historyarray = DB::table('tbladminhistory')->join('tbladmin', 'tbladminhistory.adminID', '=', 'tbladmin.id')->select('tbladminhistory.id', 'tbladminhistory.historyContent', 'tbladminhistory.time', 'tbladminhistory.status', 'tbladmin.adminEmail', 'tbladmin.adminName')->whereBetween('tbladminhistory.time', array($from, $to))->orderBy($orderby, 'desc')->paginate($per_page);
+            $historyarray = DB::table('tbl_admin_history')->join('tbladmin', 'tbl_admin_history.adminID', '=', 'tbladmin.id')->select('tbl_admin_history.id', 'tbl_admin_history.historyContent', 'tbl_admin_history.time', 'tbl_admin_history.status', 'tbladmin.adminEmail', 'tbladmin.adminName')->whereBetween('tbl_admin_history.time', array($from, $to))->orderBy($orderby, 'desc')->paginate($per_page);
         }
         return $historyarray;
     }
 
     public function selectAllHistory($per_page, $orderby) {
-        $allHistory = DB::table('tbladminhistory')->join('tbladmin', 'tbladminhistory.adminID', '=', 'tbladmin.id')->select('tbladminhistory.id', 'tbladminhistory.historyContent', 'tbladminhistory.time', 'tbladminhistory.status', 'tbladmin.adminEmail', 'tbladmin.adminName')->orderBy($orderby, 'desc')->paginate($per_page);
+        $allHistory = DB::table('tbl_admin_history')->join('tbladmin', 'tbl_admin_history.adminID', '=', 'tbladmin.id')->select('tbl_admin_history.id', 'tbl_admin_history.historyContent', 'tbl_admin_history.time', 'tbl_admin_history.status', 'tbladmin.adminEmail', 'tbladmin.adminName')->orderBy($orderby, 'desc')->paginate($per_page);
         return $allHistory;
     }
 
     public function selectAll($per_page) {
-        $allHistory = DB::table('tbladminhistory')->paginate($per_page);
+        $allHistory = DB::table('tbl_admin_history')->paginate($per_page);
         return $allHistory;
     }
 
     public function getHistoryById($id) {
-        $allHistory = DB::table('tbladminhistory')->where('id', '=', $id)->get();
+        $allHistory = DB::table('tbl_admin_history')->where('id', '=', $id)->get();
         return $allHistory[0];
     }
 
