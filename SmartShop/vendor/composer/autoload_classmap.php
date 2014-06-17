@@ -44,7 +44,7 @@ return array(
     'BackEnd\\tblAttachmentProjectModel' => $baseDir . '/app/models/backend/tblAttachmentProjectModel.php',
     'BackEnd\\tblCategoryNewsModel' => $baseDir . '/app/models/backend/tblCategoryNewsModel.php',
     'BackEnd\\tblCategoryTagModel' => $baseDir . '/app/models/backend/tblCategoryTagModel.php',
-    'BackEnd\\tblCategoryproductModel' => $baseDir . '/app/models/backend/tblCategoryProductModel.php',
+    'BackEnd\\tblCategoryproductModel' => $baseDir . '/app/models/backend/tblCategoryproductModel.php',
     'BackEnd\\tblColorModel' => $baseDir . '/app/models/backend/tblColorModel.php',
     'BackEnd\\tblFeedbackModel' => $baseDir . '/app/models/backend/tblFeedbackModel.php',
     'BackEnd\\tblGroupAdminModel' => $baseDir . '/app/models/backend/tblGroupAdminModel.php',

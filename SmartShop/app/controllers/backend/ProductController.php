@@ -13,7 +13,7 @@ use BackEnd,
 class ProductController extends \BaseController {
 
     public function getProductAdd() {
-        $tblCateProduct = new tblCategoryProductModel();
+        $tblCateProduct = new tblCategoryproductModel();
         $catlist = $tblCateProduct->allCateProductParent();
         $catlistrt = array('' => 'Không');
         foreach ($catlist as $value) {
@@ -36,7 +36,7 @@ class ProductController extends \BaseController {
             "productDescription" => "required"
         );
         $slug = new SlugGen();
-        $tblCateProduct = new tblCategoryProductModel();
+        $tblCateProduct = new tblCategoryproductModel();
         $inputs = Input::all();
         $validate = Validator::make(Input::all(), $rules, Lang::get('messages.validator'), Lang::get('backend/attributes.products'));
         if (!$validate->fails()) {
@@ -51,7 +51,7 @@ class ProductController extends \BaseController {
     }
 
     public function getProductEdit($id = '') {
-        $tblCateProduct = new tblCategoryProductModel();
+        $tblCateProduct = new tblCategoryproductModel();
         $catlist = $tblCateProduct->allCateProductParent();
         $catlistrt = array('' => 'Không');
         foreach ($catlist as $value) {
@@ -77,7 +77,7 @@ class ProductController extends \BaseController {
             "productDescription" => "required"
         );
         $slug = new SlugGen();
-        $tblCateProduct = new tblCategoryProductModel();
+        $tblCateProduct = new tblCategoryproductModel();
         $inputs = Input::all();
         $validate = Validator::make(Input::all(), $rules, Lang::get('messages.validator'), Lang::get('backend/attributes.products'));
         if (!$validate->fails()) {
@@ -93,7 +93,7 @@ class ProductController extends \BaseController {
     }
 
     public function getProductView($cat_id = '') {
-        $tblCateProduct = new tblCategoryProductModel();
+        $tblCateProduct = new tblCategoryproductModel();
         $allcatelist = $tblCateProduct->allCateProductList();
         $tblProduct = new TblProductModel();
         if ($cat_id != '') {
@@ -109,7 +109,7 @@ class ProductController extends \BaseController {
     }
 
     public function getFillterProduct($cat_id = '') {
-        $tblCateProduct = new tblCategoryProductModel();
+        $tblCateProduct = new tblCategoryproductModel();
         $allcatelist = $tblCateProduct->allCateProductList();
         $tblProduct = new TblProductModel();
         if ($cat_id != '') {
@@ -164,7 +164,7 @@ class ProductController extends \BaseController {
 //    public function getAddProduct($thongbao = '') {
 //        $tblManu = new tblManufacturerModel();
 //        $arrManu = $tblManu->selectAll();
-//        $tblCateProduct = new tblCategoryProductModel();
+//        $tblCateProduct = new tblCategoryproductModel();
 //        $arrCatProduct = $tblCateProduct->allCateProduct(1000);
 //        $tblColor = new tblColorModel();
 //        $arrColor = $tblColor->selectAll();
@@ -261,7 +261,7 @@ class ProductController extends \BaseController {
 //        $dataimg = $tblAttach->getAttachmentByProductId($id); //  
 //        $tblManu = new tblManufacturerModel();
 //        $arrManu = $tblManu->selectAll();
-//        $tblCateProduct = new tblCategoryProductModel();
+//        $tblCateProduct = new tblCategoryproductModel();
 //        $arrCatProduct = $tblCateProduct->allCateProduct(1000);
 //        $tblColor = new tblColorModel();
 //        $arrColor = $tblColor->selectAll();
@@ -360,7 +360,7 @@ class ProductController extends \BaseController {
 //    }
 //
 //    public function postCateAjax() {
-//        $tblCateProduct = new tblCategoryProductModel();
+//        $tblCateProduct = new tblCategoryproductModel();
 //        $arrCatProduct = $tblCateProduct->allCateProduct(1000);
 //        return View::make('backend.product.categoryAjax')->with('arrCatProduct', $arrCatProduct);
 //    }
