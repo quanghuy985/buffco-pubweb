@@ -2,12 +2,16 @@
 
 namespace BackEnd;
 
-use DB;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
 class tblRolesModel extends \Eloquent {
 
     protected $guarded = array();
-    protected $table = 'tbl_admin_roles';
+    protected $table = 'tblRoles';
     public $timestamps = false;
     public static $rules = array();
 
@@ -41,27 +45,17 @@ class tblRolesModel extends \Eloquent {
     }
 
     public function findRolesByID($id) {
-        $objRoles = DB::table('tbl_admin_roles')->where('id', '=', $id)->get();
+        $objRoles = DB::table('tblRoles')->where('id', '=', $id)->get();
         return $objRoles;
-    }
-
-    public function findRolesByAdminID($id) {
-        $objRoles = DB::table('tbl_admin_roles_group')->select('tbl_admin_roles_group.rolesID')->where('adminID', '=', $id)->get();
-        return $objRoles;
-    }
-
-    public function deleteRolesByAdminID($id) {
-        $check = DB::table('tbl_admin_roles_group')->where('adminID', '=', $id)->delete();
-        return $check;
     }
 
     public function allRoles($per_page) {
-        $arrRoles = DB::table('tbl_admin_roles')->paginate($per_page);
+        $arrRoles = DB::table('tblRoles')->paginate($per_page);
         return $arrRoles;
     }
 
     public function allRolesList() {
-        $arrRoles = DB::table('tbl_admin_roles')->select('tbl_admin_roles.*')->where('tbl_admin_roles.status', '=', 1)->where('tbl_admin_roles.rolesCode', '!=', 'Quan-Ly-Admin')->where('tbl_admin_roles.rolesCode', '!=', 'Quan-Ly-Cau-Hinh')->get();
+        $arrRoles = DB::table('tblRoles')->select('tblRoles.*')->where('tblRoles.status', '=', 1)->where('tblRoles.rolesCode', '!=', 'Quan-Ly-Admin')->where('tblRoles.rolesCode', '!=', 'Quan-Ly-Cau-Hinh')->get();
         return $arrRoles;
     }
 

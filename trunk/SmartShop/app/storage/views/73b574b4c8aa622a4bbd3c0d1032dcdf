@@ -1,7 +1,0 @@
-<h2><?php echo Lang::get('backend/title.menu.title-add-group-menu'); ?></h2>
-<form method="post" action="<?php echo action('\BackEnd\MenusController@postAddGroupMenu'); ?>">
-    <p>
-        <label for="menu-group-title"><?php echo Lang::get('backend/title.menu.group-title'); ?></label>
-        <input type="text" name="title" id="menu-group-title">
-    </p>
-</form>

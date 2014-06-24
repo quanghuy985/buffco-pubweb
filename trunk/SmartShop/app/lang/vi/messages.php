@@ -1,6 +1,7 @@
 <?php
 
 return array(
+    'error'=>'Có lỗi xảy ra trong quá trình quy xuất dữ liệu',
     'alert' => 'Thông báo!',
     'delete_confirm' => 'Bạn có chắc chắn muốn xóa ?',
     'data_loading' => 'Đang tải dữ liệu ...',

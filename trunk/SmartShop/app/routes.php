@@ -35,7 +35,7 @@ Route::controller('taikhoan', '\FontEnd\UsersController');
 
 
 //BackEnd
-Route::group(array('prefix' => 'admin'), function() {
+Route::group(array('prefix' => 'admin', 'before' => 'csrf'), function() {
     Route::controller('users', '\BackEnd\LoginController');
     Route::controller('setting', '\BackEnd\SettingController');
     Route::controller('admin', '\BackEnd\AdminController');
@@ -54,5 +54,6 @@ Route::group(array('prefix' => 'admin'), function() {
     Route::controller('menunew', '\BackEnd\MenusController');
     Route::controller('products', '\BackEnd\ProductController');
     Route::controller('category-products', '\BackEnd\CategoryProductController');
+     Route::controller('files', '\BackEnd\FilemanagerController');
     Route::controller('/', '\BackEnd\HomeController');
 });

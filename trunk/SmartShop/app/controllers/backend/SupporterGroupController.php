@@ -22,48 +22,38 @@ class SupporterGroupController extends \BaseController {
             $tblSupporterGroup = new tblSupporterGroupModel();
             $objSupporterGroup = $tblSupporterGroup->getAllSupportGroup(10);
             $link = $objSupporterGroup->links();
-            return View::make('backend.SupporterGroup.supporterGroupAjax')->with('arrSupporterGroup', $objSupporterGroup)->with('link', $link);
+            return View::make('backend.supportergroup.supporterGroupAjax')->with('arrSupporterGroup', $objSupporterGroup)->with('link', $link);
         } else {
             $tblSupporterGroup = new tblSupporterGroupModel();
             $objSuppoerterGroup = $tblSupporterGroup->getAllSupportGroup(10);
             $link = $objSuppoerterGroup->links();
             if ($thongbao != '') {
-                return View::make('backend.SupporterGroup.supporterGroupManage')->with('arrSupporterGroup', $objSuppoerterGroup)->with('link', $link)->with('thongbao', $thongbao);
+                return View::make('backend.supportergroup.supporterGroupManage')->with('arrSupporterGroup', $objSuppoerterGroup)->with('link', $link)->with('thongbao', $thongbao);
             } else {
-                return View::make('backend.SupporterGroup.supporterGroupManage')->with('arrSupporterGroup', $objSuppoerterGroup)->with('link', $link);
+                return View::make('backend.supportergroup.supporterGroupManage')->with('arrSupporterGroup', $objSuppoerterGroup)->with('link', $link);
             }
         }
-    }
-
-    public function postAjaxpagion() {
-        $tblSupporterGroup = new tblSupporterGroupModel();
-        $objSupporterGroup = $tblSupporterGroup->getAllSupportGroup(10);
-        $link = $objSupporterGroup->links();
-        return View::make('backend.SupporterGroup.supporterGroupAjax')->with('arrSupporterGroup', $objSupporterGroup)->with('link', $link);
     }
 
     public function postDeleteSupporterGroup() {
         $tblSupporterGroup = new tblSupporterGroupModel();
         $tblSupporterGroup->deleteSupportGroup(Input::get('id'));
-        $supporterGroupData = $tblSupporterGroup->getAllSupportGroup(10);
-        $link = $supporterGroupData->links();
-        return View::make('backend.SupporterGroup.supporterGroupAjax')->with('arrSupporterGroup', $supporterGroupData)->with('link', $link);
+        return \Redirect::action('\BackEnd\SupporterGroupController@getSupporterGroupView');
     }
 
-    public function getSupporterGroupEdit() {
-        $tblSupporterGroup = new tblSupporterGroupModel();
-        $supporterGroupData = $tblSupporterGroup->getAllSupportGroup(10);
-        $link = $supporterGroupData->links();
-        $dataedit = $tblSupporterGroup->getSupportGroupByID(Input::get('id'));
-        return View::make('backend.SupporterGroup.supporterGroupManage')->with('SupporterGroupData', $dataedit[0])->with('arrSupporterGroup', $supporterGroupData)->with('link', $link);
-    }
-
-    public function postSupporterGroupActive() {
-        $tblSupporterGroup = new tblSupporterGroupModel();
-        $tblSupporterGroup->updateSupportGroup(Input::get('id'), '', Input::get('status'));
-        $supporterGroupData = $tblSupporterGroup->getAllSupportGroup(10);
-        $link = $supporterGroupData->links();
-        return View::make('backend.SupporterGroup.supporterGroupAjax')->with('arrSupporterGroup', $supporterGroupData)->with('link', $link);
+    public function getSupporterGroupEdit($id = '') {
+        if (\Request::ajax()) {
+            $tblSupporterGroup = new tblSupporterGroupModel();
+            $objSupporterGroup = $tblSupporterGroup->getAllSupportGroup(10);
+            $link = $objSupporterGroup->links();
+            return View::make('backend.supportergroup.supporterGroupAjax')->with('arrSupporterGroup', $objSupporterGroup)->with('link', $link);
+        } else {
+            $tblSupporterGroup = new tblSupporterGroupModel();
+            $supporterGroupData = $tblSupporterGroup->getAllSupportGroup(10);
+            $link = $supporterGroupData->links();
+            $dataedit = $tblSupporterGroup->getSupportGroupByID($id);
+            return View::make('backend.supportergroup.supporterGroupManage')->with('SupporterGroupData', $dataedit)->with('arrSupporterGroup', $supporterGroupData)->with('link', $link);
+        }
     }
 
     public function postUpdateSupporterGroup() {
@@ -73,7 +63,7 @@ class SupporterGroupController extends \BaseController {
         $tblSupporterGroup = new tblSupporterGroupModel();
         $valid = Validator::make(Input::all(), $rules, array(), Lang::get('backend/attributes.supporter'));
         if (!$valid->fails()) {
-            $tblSupporterGroup->updateSupportGroup(Input::get('id'), Input::get('supporterGroupName'), Input::get('status'));
+            $tblSupporterGroup->updateSupportGroup(Input::get('id'), Input::get('supporterGroupName'));
             Session::flash('alert_success', Lang::get('messages.update.success'));
             return Redirect::action('\BackEnd\SupporterGroupController@getSupporterGroupView');
         } else {
@@ -89,7 +79,7 @@ class SupporterGroupController extends \BaseController {
         $tblSupporterGroup = new tblSupporterGroupModel();
         $valid = Validator::make(Input::all(), $rules, array(), Lang::get('backend/attributes.supporter'));
         if (!$valid->fails()) {
-            $tblSupporterGroup->insertSupportGroup(Input::get('supporterGroupName'), Input::get('status'));
+            $tblSupporterGroup->insertSupportGroup(Input::get('supporterGroupName'));
             Session::flash('alert_success', Lang::get('messages.add.success'));
             return Redirect::action('\BackEnd\SupporterGroupController@getSupporterGroupView');
         } else {

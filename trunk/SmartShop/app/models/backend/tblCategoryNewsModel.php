@@ -73,6 +73,15 @@ class tblCategoryNewsModel extends \Eloquent {
         }
     }
 
+    public function getCatByNews($id) {
+        $cateArray = DB::table('tbl_news_views')->where('news_id', '=', $id)->select('cat_news_id')->get();
+        $listreturn = array();
+        foreach ($cateArray as $value) {
+            $listreturn[] = $value->cat_news_id;
+        }
+        return $listreturn;
+    }
+
     public function findCateNews($keyword, $per_page) {
         $cateArray = DB::table('tbl_news_category')->where('catenewsName', 'LIKE', '%' . $keyword . '%')->orWhere('catenewsSlug', 'LIKE', '%' . $keyword . '%')->orWhere('catenewsTime', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
         return $cateArray;

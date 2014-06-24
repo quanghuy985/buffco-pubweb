@@ -105,32 +105,54 @@ function deleteproduct(url, id, curentpage) {
         }
     });
 }
-function ajaxfillter_all(url, value1, value2) {
-    var data;
-    if (value1 != '' && value2 == '') {
-        data = {value1: value1};
-    }
-    if (value1 == '' && value2 != '') {
-        data = {value2: value2};
-    }
-    if (value1 != '' && value2 != '') {
-        data = {value1: value1, value2: value2};
-    }
-    if (value1 == '' && value2 == '') {
-        data = '';
-    }
-    NProgress.start();
-    var request = jQuery.ajax({
-        url: url,
-        type: "POST",
-        data: data,
-        dataType: "html"
-    });
-    request.done(function(msg) {
-        window.history.pushState({
-            path: url
-        }, '', url);
-        jQuery('.tabledataajax').html(msg);
-        NProgress.done();
+function active_element(url, id) {
+    var the = jQuery(this);
+    jConfirm('Bạn có chắc chắn  ?', 'Thông báo', function(r) {
+        if (r == true) {
+            NProgress.start();
+            var request = jQuery.ajax({
+                url: url,
+                type: "POST",
+                data: {id: id},
+                dataType: "html"
+            });
+            request.done(function(msg) {
+                jQuery('.tabledataajax').html(msg);
+                NProgress.done();
+            });
+            return false;
+        } else
+        {
+            return false;
+        }
     });
 }
+//function ajaxfillter_all(url, value1, value2) {
+//    var data;
+//    if (value1 != '' && value2 == '') {
+//        data = {value1: value1};
+//    }
+//    if (value1 == '' && value2 != '') {
+//        data = {value2: value2};
+//    }
+//    if (value1 != '' && value2 != '') {
+//        data = {value1: value1, value2: value2};
+//    }
+//    if (value1 == '' && value2 == '') {
+//        data = '';
+//    }
+//    NProgress.start();
+//    var request = jQuery.ajax({
+//        url: url,
+//        type: "POST",
+//        data: data,
+//        dataType: "html"
+//    });
+//    request.done(function(msg) {
+//        window.history.pushState({
+//            path: url
+//        }, '', url);
+//        jQuery('.tabledataajax').html(msg);
+//        NProgress.done();
+//    });
+//}

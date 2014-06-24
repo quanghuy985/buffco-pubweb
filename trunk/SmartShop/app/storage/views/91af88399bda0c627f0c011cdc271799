@@ -12,52 +12,51 @@
             <h3><?php echo Lang::get('backend/title.feedback.reply'); ?></h3>
         </div>
         <?php echo $__env->make('backend.alert', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-        <form class="stdform stdform2" method="post" action="<?php echo URL::action('\BackEnd\FeedbackController@postTraLoi'); ?>">
-            <p>
-                <input type="hidden" id="feedbackID" name="id" value="<?php echo $feedbackdata->id; ?>"/>
-            </p>
-            <p>
-                <label><?php echo Lang::get('general.email'); ?></label>
-                <span class="field">
-                    <input type="hidden" name="userEmail"    value="<?php echo $feedbackdata->feedbackUserEmail; ?>" class="longinput"/>
-                           <input type="text" name="userEmail1" disabled   value="<?php echo $feedbackdata->feedbackUserEmail; ?>" class="longinput"/>
-                </span>
-            </p>
-            <p>
-                <label><?php echo Lang::get('general.feedback_user'); ?></label>
-                <input type="hidden" name="feedbackUserName" value="<?php echo $feedbackdata->feedbackUserName; ?>" class="longinput">
-                <span class="field"><input type="text" name="feedbackUserName1" disabled  value="<?php echo $feedbackdata->feedbackUserName; ?>" class="longinput"></span>
-            </p>
-            <p>
-                <label><?php echo Lang::get('general.feedback_subject'); ?></label>
-                <span class="field">
-                    <input type="hidden" name="feedbackSubject" value="<?php echo $feedbackdata->feedbackSubject; ?>" class="longinput">
-                    <input type="text" name="feedbackSubject1" disabled   value="<?php echo $feedbackdata->feedbackSubject; ?>" class="longinput">
-                </span>
-            </p>
-            <p>
-                <label><?php echo Lang::get('general.feedback_content'); ?></label>
-                <span class="field"><textarea cols="80" rows="5" id="location2" name="feedbackContent1" disabled ><?php echo $feedbackdata->feedbackContent; ?></textarea></span>
-                    <textarea cols="80" style="display: none" rows="5" id="" name="feedbackContent" ><?php echo $feedbackdata->feedbackContent; ?></textarea>
-            </p>
+        <?php echo Form::open(array('action'=>'\BackEnd\FeedbackController@postTraLoi', 'class'=>'stdform','id'=>'fillterfrom')); ?>
+        <p>
+            <input type="hidden" id="feedbackID" name="id" value="<?php echo $feedbackdata->id; ?>"/>
+        </p>
+        <p>
+            <label><?php echo Lang::get('general.email'); ?></label>
+            <span class="field">
+                <input type="hidden" name="userEmail"    value="<?php echo $feedbackdata->feedbackUserEmail; ?>" class="longinput"/>
+                <input type="text" name="userEmail1" disabled   value="<?php echo $feedbackdata->feedbackUserEmail; ?>" class="longinput"/>
+            </span>
+        </p>
+        <p>
+            <label><?php echo Lang::get('general.feedback_user'); ?></label>
+            <input type="hidden" name="feedbackUserName" value="<?php echo $feedbackdata->feedbackUserName; ?>" class="longinput">
+            <span class="field"><input type="text" name="feedbackUserName1" disabled  value="<?php echo $feedbackdata->feedbackUserName; ?>" class="longinput"></span>
+        </p>
+        <p>
+            <label><?php echo Lang::get('general.feedback_subject'); ?></label>
+            <span class="field">
+                <input type="hidden" name="feedbackSubject" value="<?php echo $feedbackdata->feedbackSubject; ?>" class="longinput">
+                <input type="text" name="feedbackSubject1" disabled   value="<?php echo $feedbackdata->feedbackSubject; ?>" class="longinput">
+            </span>
+        </p>
+        <p>
+            <label><?php echo Lang::get('general.feedback_content'); ?></label>
+            <span class="field"><textarea cols="80" rows="5" id="location2" name="feedbackContent1" disabled ><?php echo $feedbackdata->feedbackContent; ?></textarea></span>
+            <textarea cols="80" style="display: none" rows="5" id="" name="feedbackContent" ><?php echo $feedbackdata->feedbackContent; ?></textarea>
+        </p>
 
-            <p>
-                <label><?php echo Lang::get('general.time_send'); ?></label>
-                <span class="field">
-                    <input type="hidden" name="time" value="<?php echo date('d/m/Y h:i:s', $feedbackdata->time); ?>" class="longinput">
-                    <input type="text" name="time1" disabled  value="<?php echo date('d/m/Y h:i:s', $feedbackdata->time); ?>" class="longinput">
-                </span>
-            </p>
-            <p>
-                <label><?php echo Lang::get('general.reply_content'); ?></label>
-                <span class="field"><textarea cols="80" rows="5" id="location3" class="ckeditor" name="feedbackReplyContent"><?php echo Input::old('feedbackReplyContent'); ?></textarea></span>
-            </p>
-
-            <p class="stdformbutton">
-                <label>&nbsp;</label>
-                <button class="submit radius2"><?php echo Lang::get('general.reply'); ?></button>
-            </p>
-        </form>
+        <p>
+            <label><?php echo Lang::get('general.time_send'); ?></label>
+            <span class="field">
+                <input type="hidden" name="time" value="<?php echo date('d/m/Y h:i:s', $feedbackdata->time); ?>" class="longinput">
+                <input type="text" name="time1" disabled  value="<?php echo date('d/m/Y h:i:s', $feedbackdata->time); ?>" class="longinput">
+            </span>
+        </p>
+        <p>
+            <label><?php echo Lang::get('general.reply_content'); ?></label>
+            <span class="field"><textarea cols="80" rows="5" id="location3" class="ckeditor" name="feedbackReplyContent"><?php echo Input::old('feedbackReplyContent'); ?></textarea></span>
+        </p>
+        <p class="stdformbutton">
+            <button class="submit radius2" style=" margin-left: 30px;"><?php echo Lang::get('general.reply'); ?></button>
+            <input type="reset" class="reset radius2" value="<?php echo Lang::get('button.reset'); ?>">
+        </p>
+        <?php echo Form::close(); ?>
     </div>
 </div>
 <?php $__env->stopSection(); ?>

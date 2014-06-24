@@ -11,7 +11,7 @@
         <h3><?php echo Lang::get('backend/title.profile.caption'); ?></h3>
     </div>
     <?php echo $__env->make('backend.alert', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-    <?php echo Form::model($dataProfile, array('action'=>'\BackEnd\AdminController@postProfileAdmin', 'class'=>'stdform stdform2')); ?>
+    <?php echo Form::model($dataProfile, array('action'=>'\BackEnd\AdminController@postProfileAdmin', 'class'=>'stdform')); ?>
     <p></p>
     <p>
         <label><?php echo Lang::get('general.email'); ?></label>
@@ -57,8 +57,7 @@
     </p>      
 
     <p class="stdformbutton">
-        <label></label>
-        <button class="submit radius2"><?php if(isset($dataProfile)): ?><?php echo Lang::get('button.update'); ?><?php else: ?> <?php echo Lang::get('button.add'); ?> <?php endif; ?> </button>
+        <button class="submit radius2" style="margin-left: 30px;"><?php if(isset($dataProfile)): ?><?php echo Lang::get('button.update'); ?><?php else: ?> <?php echo Lang::get('button.add'); ?> <?php endif; ?> </button>
         <input type="reset" class="reset radius2" value="<?php echo Lang::get('button.reset'); ?>">
     </p>
     <?php echo Form::close(); ?>

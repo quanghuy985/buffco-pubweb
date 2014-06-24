@@ -23,40 +23,66 @@ class FeedbackController extends \BaseController {
         $tblFeedbackModel = new tblFeedbackModel();
         $arrFeedback = $tblFeedbackModel->allFeedback(1);
         $link = $arrFeedback->links();
-        return View::make('backend.feedback.feedbackManage')->with('arrayFeedback', $arrFeedback)->with('links', $link);
+        if (\Request::ajax()) {
+            return View::make('backend.feedback.AjaxFeedbackManage')->with('arrayFeedback', $arrFeedback)->with('links', $link);
+        } else {
+
+            return View::make('backend.feedback.feedbackManage')->with('arrayFeedback', $arrFeedback)->with('links', $link);
+        }
     }
 
-    public function postAjaxPhanHoi() {
-        $tblFeedbackModel = new tblFeedbackModel();
-        $arrFeedback = $tblFeedbackModel->allFeedback(1);
-        $link = $arrFeedback->links();
-        return View::make('backend.feedback.AjaxFeedbackManage')->with('arrayFeedback', $arrFeedback)->with('links', $link);
+    public function postSearchFeedBack() {
+        $one = \Input::get('searchblur');
+        if ($one == '') {
+            $one = 'null';
+        }
+        return \Redirect::action('\BackEnd\FeedbackController@getSearchFeedBack', array($one));
     }
 
-    public function postAjaxSearchPhanHoi() {
+    public function getSearchFeedBack($one = '') {
+        if ($one == 'null') {
+            $one = '';
+        }
         $tblFeedbackModel = new tblFeedbackModel();
-        $arrFeedback = $tblFeedbackModel->searchFeedback(1, trim(Input::get('keyword')));
+        $arrFeedback = $tblFeedbackModel->searchFeedback(1, $one);
         $link = $arrFeedback->links();
-        return View::make('backend.feedback.AjaxFeedbackManage')->with('arrayFeedback', $arrFeedback)->with('links', $link);
+        if (\Request::ajax()) {
+            return View::make('backend.feedback.AjaxFeedbackManage')->with('arrayFeedback', $arrFeedback)->with('links', $link);
+        } else {
+            return View::make('backend.feedback.feedbackManage')->with('arrayFeedback', $arrFeedback)->with('links', $link);
+        }
     }
 
-    public function postAjaxLocPhanHoi() {
-        $from = strtotime(Input::get('fromtime'));
-        $to = strtotime(Input::get('totime'));
-        $tblFeedbackModel = new tblFeedbackModel();
-        $arrFeedback = $tblFeedbackModel->fillterFeedback(1, $from, $to);
-        $link = $arrFeedback->links();
-        return View::make('backend.feedback.AjaxFeedbackManage')->with('arrayFeedback', $arrFeedback)->with('links', $link);
+    public function postFillterFeedBack() {
+        $one = \Input::get('timeform');
+        $two = \Input::get('timeto');
+        $three = \Input::get('fillter_status');
+        if ($one == '') {
+            $one = 'null';
+        } else {
+            $one = strtotime($one);
+        }
+        if ($two == '') {
+            $two = 'null';
+        } else {
+            $two = strtotime($two);
+        }
+        if ($three == '') {
+            $three = 'null';
+        }
+        return \Redirect::action('\BackEnd\FeedbackController@getFillterFeedBack', array($one, $two, $three));
     }
 
-    public function postAjaxSearchLocPhanHoi() {
-        $keyword = trim(Input::get('keyword'));
-        $from = strtotime(Input::get('fromtime'));
-        $to = strtotime(Input::get('totime'));
+    public function getFillterFeedBack($one = '', $two = '', $three = '') {
         $tblFeedbackModel = new tblFeedbackModel();
-        $arrFeedback = $tblFeedbackModel->searchFillterFeedback(1, $keyword, $from, $to);
+        $arrFeedback = $tblFeedbackModel->searchFillterFeedback(1, $one, $two, $three);
         $link = $arrFeedback->links();
-        return View::make('backend.feedback.AjaxFeedbackManage')->with('arrayFeedback', $arrFeedback)->with('links', $link);
+        if (\Request::ajax()) {
+            return View::make('backend.feedback.AjaxFeedbackManage')->with('arrayFeedback', $arrFeedback)->with('links', $link);
+        } else {
+
+            return View::make('backend.feedback.feedbackManage')->with('arrayFeedback', $arrFeedback)->with('links', $link);
+        }
     }
 
     public function getRepFeedBack($id) {
@@ -92,10 +118,8 @@ class FeedbackController extends \BaseController {
 
     public function postXoaPhanHoi() {
         $tblFeedbackModel = new tblFeedbackModel();
-        $tblFeedbackModel->updateFeedback(Input::get('id'), '2');
-        $arrFeedback = $tblFeedbackModel->allFeedback(1);
-        $link = $arrFeedback->links();
-        return View::make('backend.feedback.AjaxFeedbackManage')->with('arrayFeedback', $arrFeedback)->with('links', $link);
+        $tblFeedbackModel->deleteFeedback(Input::get('id'));
+        return \Redirect::action('\BackEnd\FeedbackController@getFeedBack');
     }
 
 }

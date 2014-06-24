@@ -9,52 +9,21 @@ class tblUserModel extends \Eloquent {
     protected $table = 'tbl_users';
 
     // public $timestamps = false;
-    public function getAllAdmin($per_page, $status = '') {
+    public function getAllAdmin($per_page) {
         $useradmin = \Auth::user();
-        if ($status != 'null') {
-            $arrAdmin = DB::table('tbl_users')->select('tbl_users.*')->orderBy('tbl_users.id', 'desc')->where('tbl_users.admin', '=', 1)->where('tbl_users.id', '!=', $useradmin->id)->where('tbl_users.status', '=', $status)->paginate($per_page);
-        }
-        if ($status == 'null' || $status == '') {
-            $arrAdmin = DB::table('tbl_users')->select('tbl_users.*')->orderBy('tbl_users.id', 'desc')->where('tbl_users.admin', '=', 1)->where('tbl_users.id', '!=', $useradmin->id)->paginate($per_page);
-        }
+        $arrAdmin = DB::table('tbl_users')->leftJoin('tbl_admin_group', 'tbl_users.group_admin_id', '=', 'tbl_admin_group.id')->select('tbl_users.*', 'tbl_admin_group.groupadminName')->orderBy('tbl_users.id', 'desc')->where('tbl_users.admin', '=', 1)->where('tbl_users.id', '!=', $useradmin->id)->paginate($per_page);
         return $arrAdmin;
     }
 
-    public function addAdmin($allinput, $admin) {
-        $this->email = $allinput['email'];
-        $this->password = \Hash::make($allinput['password']);
-        $this->firstname = $allinput['firstname'];
-        $this->lastname = $allinput['lastname'];
-        $this->dateofbirth = strtotime($allinput['dateofbirth']);
-        $this->address = $allinput['address'];
-        $this->phone = $allinput['phone'];
-        $this->verify = '';
-        $this->remember_token = '';
-        $this->time = time();
-        $this->status = 1;
-        $this->admin = $admin;
-        $this->save();
-        $adminID = $this->id;
-        if (isset($allinput['roles'])) {
-            foreach ($allinput['roles'] as $item) {
-                DB::table('tbl_admin_roles_group')->insert(
-                        array('adminID' => $adminID, 'rolesID' => $item, 'time' => time(), 'status' => 1)
-                );
-            }
+    public function getAllUsers($per_page, $orderby = 'id', $status = '', $keysearch = '') {
+        $arrAdmin = DB::table('tbl_users')->where('admin', '=', 0)->orderBy($orderby, 'desc');
+        if ($status != '') {
+            $arrAdmin->where('status', '=', $status);
         }
-        return true;
-    }
-
-    public function getAllUsers($per_page, $orderby = 'id', $status = '1', $keysearch = '') {
-        if ($status == '') {
-            if ($keysearch == '') {
-                $arrAdmin = DB::table('tbl_users')->where('admin', '=', 0)->orderBy($orderby, 'desc')->paginate($per_page);
-            } else {
-                $arrAdmin = DB::table('tbl_users')->where('admin', '=', 0)->where('email', 'LIKE', '%' . $keysearch . '%')->orWhere('phone', 'LIKE', '%' . $keysearch . '%')->orWhere('address', 'LIKE', '%' . $keysearch . '%')->orWhere('lastname', 'LIKE', '%' . $keysearch . '%')->orWhere('firstname', 'LIKE', '%' . $keysearch . '%')->orderBy($orderby, 'desc')->paginate($per_page);
-            }
-        } else {
-            $arrAdmin = DB::table('tbl_users')->where('status', '=', $status)->where('admin', '=', 0)->orderBy($orderby, 'desc')->paginate($per_page);
+        if ($keysearch != '') {
+            $arrAdmin->where('email', 'LIKE', '%' . $keysearch . '%')->orWhere('phone', 'LIKE', '%' . $keysearch . '%')->orWhere('address', 'LIKE', '%' . $keysearch . '%')->orWhere('lastname', 'LIKE', '%' . $keysearch . '%')->orWhere('firstname', 'LIKE', '%' . $keysearch . '%');
         }
+        $arrAdmin = $arrAdmin->paginate($per_page);
         return $arrAdmin;
     }
 
@@ -68,7 +37,7 @@ class tblUserModel extends \Eloquent {
     }
 
     public function UpdateStatus($id, $status) {
-        $checkdel = $this->where('email', '=', $id)->update(array('status' => $status));
+        $checkdel = $this->where('id', '=', $id)->update(array('status' => $status));
         if ($checkdel > 0) {
             return TRUE;
         } else {
@@ -77,17 +46,13 @@ class tblUserModel extends \Eloquent {
     }
 
     public function getUserByEmail($email, $admin) {
-        $user = DB::table('tbl_users')->select('tbl_users.*')->where('tbl_users.email', '=', $email)->where('tbl_users.admin', '=', $admin)->first();
+        $user = DB::table('tbl_users')->leftJoin('tbl_admin_group', 'tbl_users.group_admin_id', '=', 'tbl_admin_group.id')->select('tbl_users.*', 'tbl_admin_group.groupadminName')->where('tbl_users.email', '=', $email)->where('tbl_users.admin', '=', $admin)->first();
         return $user;
     }
 
     public function RegisterUser($allinput, $admin) {
         $rules = array(
             'email' => 'required|email|unique:tbl_users',
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'dateofbirth' => 'required',
-            'address' => 'required',
             'phone' => 'required|between:10,12',
             'password' => 'required|between:6,20',
         );
@@ -105,24 +70,17 @@ class tblUserModel extends \Eloquent {
             $this->time = time();
             $this->status = 1;
             $this->admin = $admin;
-            $this->save();
-            $adminID = $this->id;
             if ($admin == 1) {
-                if (isset($allinput['roles'])) {
-                    foreach ($allinput['roles'] as $item) {
-                        DB::table('tbl_admin_roles_group')->insert(
-                                array('adminID' => $adminID, 'rolesID' => $item, 'time' => time(), 'status' => 1)
-                        );
-                    }
-                }
+                $this->group_admin_id = $allinput['group_admin_id'];
             }
+            $this->save();
             return true;
         } else {
             return $validator->messages();
         }
     }
 
-    public function UpdateUser($id, $email, $password, $firstname, $lastname, $dateofbirth, $address, $phone, $status, $admin, $arrRoles) {
+    public function UpdateUser($id, $email, $password, $firstname, $lastname, $dateofbirth, $address, $phone, $status, $admin, $group_admin_id) {
         $user = $this->where('id', '=', $id);
         $arraysql = array('id' => $id);
         if ($email != '') {
@@ -153,14 +111,8 @@ class tblUserModel extends \Eloquent {
         if ($admin != '') {
             $arraysql = array_merge($arraysql, array("admin" => $admin));
         }
-        if ($admin == 1) {
-            if ($arrRoles != '') {
-                foreach ($arrRoles as $item) {
-                    DB::table('tbl_admin_roles_group')->insert(
-                            array('adminID' => $id, 'rolesID' => $item, 'time' => time(), 'status' => 1)
-                    );
-                }
-            }
+        if ($group_admin_id != '') {
+            $arraysql = array_merge($arraysql, array("group_admin_id" => $group_admin_id));
         }
         $checku = $user->update($arraysql);
         if ($checku > 0) {
@@ -208,7 +160,7 @@ class tblUserModel extends \Eloquent {
     }
 
     public function FindUserRow($keyword, $per_page) {
-        $adminarray = DB::table('tbl_users')->where('email', 'LIKE', '%' . $keyword . '%')->orWhere('phone', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
+        $adminarray = DB::table('tbl_users')->where('email', 'LIKE', '%' . $keyword . '%')->orWhere('userAddress', 'LIKE', '%' . $keyword . '%')->orWhere('userPhone', 'LIKE', '%' . $keyword . '%')->orWhere('userFirstName', 'LIKE', '%' . $keyword . '%')->orWhere('userLastName', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
         return $adminarray;
     }
 

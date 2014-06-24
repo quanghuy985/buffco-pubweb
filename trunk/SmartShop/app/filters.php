@@ -73,9 +73,19 @@ Route::filter('guest', function() {
  */
 
 Route::filter('csrf', function() {
-    if (Session::token() != Input::get('_token')) {
-        // throw new Illuminate\Session\TokenMismatchException;
-        return Redirect::back()->withInput();
+    if (Request::isMethod('post')) {
+        if (!Request::ajax()) {
+            if (Session::token() != Input::get('_token')) {
+                Session::flash('alert_error', Lang::get('messages.error'));
+                return Redirect::back()->withInput();
+            } else {
+                if (Input::get('_token') != '') {
+                    if (Session::token() != Input::get('_token')) {
+                        return FALSE;
+                    }
+                }
+            }
+        }
     }
 });
 Route::filter('checklogin', function() {
