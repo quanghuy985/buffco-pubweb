@@ -6,14 +6,17 @@
     </tr>
     <?php
 } else {
+
+    $i = ($arrProduct->getCurrentPage() - 1) * 10 + 1;
     foreach ($arrProduct as $item) {
         ?>
         <tr>
+            <td class="text-center"><label value="cateNews">{{$i++}}</label></td>
             <td class="head0">
                 <?php
                 $pieces = explode(",", $item->images);
                 ?>
-                <?php $url = Timthumb::link($pieces[0], 40, 40, 0); ?>
+                <?php $url = Timthumb::link($pieces[0], 40, 15, 0); ?>
                 <a title="{{Lang::get('general.edit')}}" href="<?php echo action('\BackEnd\ProductController@postProductEdit') ?>/{{$item->id}}"> <img src="{{Asset($url)}}" /></a>
             </td>        
             <td class="head1"> <a title="{{Lang::get('general.edit')}}" href="<?php echo action('\BackEnd\ProductController@postProductEdit') ?>/{{$item->id}}"> <?php echo $item->productName ?></a></td>
@@ -59,7 +62,7 @@
 ?>
 <?php if ($link != '' && isset($link)) { ?>
     <tr>
-        <td colspan="8">
+        <td colspan="9">
             <?php echo $link; ?>
         </td>
     </tr>

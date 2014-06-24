@@ -1162,12 +1162,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/moltin/laravel-cart.git",
-                "reference": "5a63e83fd69f1f22a00f56488a7e689e287bacb1"
+                "reference": "470b2650d4d25be51b5ff783100ba9f02564b2e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/moltin/laravel-cart/zipball/5a63e83fd69f1f22a00f56488a7e689e287bacb1",
-                "reference": "5a63e83fd69f1f22a00f56488a7e689e287bacb1",
+                "url": "https://api.github.com/repos/moltin/laravel-cart/zipball/470b2650d4d25be51b5ff783100ba9f02564b2e0",
+                "reference": "470b2650d4d25be51b5ff783100ba9f02564b2e0",
                 "shasum": ""
             },
             "require": {
@@ -1194,7 +1194,7 @@
                 }
             ],
             "description": "Shopping cart package",
-            "time": "2014-06-07 17:15:32"
+            "time": "2014-06-17 09:59:26"
         },
         {
             "name": "moltin/tax",
@@ -1397,16 +1397,16 @@
         },
         {
             "name": "patchwork/utf8",
-            "version": "v1.1.23",
+            "version": "v1.1.24",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nicolas-grekas/Patchwork-UTF8.git",
-                "reference": "c1edbc82aed49ff2bdef0a0f659bf69e3f7b14cc"
+                "reference": "40f552c019956f446553b19f7de2da2f9c74d730"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nicolas-grekas/Patchwork-UTF8/zipball/c1edbc82aed49ff2bdef0a0f659bf69e3f7b14cc",
-                "reference": "c1edbc82aed49ff2bdef0a0f659bf69e3f7b14cc",
+                "url": "https://api.github.com/repos/nicolas-grekas/Patchwork-UTF8/zipball/40f552c019956f446553b19f7de2da2f9c74d730",
+                "reference": "40f552c019956f446553b19f7de2da2f9c74d730",
                 "shasum": ""
             },
             "require": {
@@ -1444,7 +1444,7 @@
                 "utf-8",
                 "utf8"
             ],
-            "time": "2014-05-22 13:59:09"
+            "time": "2014-06-17 08:23:06"
         },
         {
             "name": "phpdocumentor/reflection-docblock",

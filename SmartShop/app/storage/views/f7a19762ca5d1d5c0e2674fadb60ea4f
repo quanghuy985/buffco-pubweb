@@ -98,7 +98,11 @@
             <h3>Đăng</h3>
         </div>
         <?php
-        $data_status = Lang::get('general.data_status2');
+        if (isset($objNews)) {
+            $data_status = Lang::get('general.data_status_edit');
+        } else {
+            $data_status = Lang::get('general.data_status_add');
+        }
         unset($data_status[3]);
         echo Form::select('status', $data_status);
         ?>

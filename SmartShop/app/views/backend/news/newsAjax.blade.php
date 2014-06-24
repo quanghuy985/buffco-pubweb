@@ -5,11 +5,11 @@ unset($data_status['']);
 ?>
 @foreach($arrayNews as $item)
 <tr>
-    <td class="text-center"><label value="cateNews">{{$i++}}</label></td>
-    <td><label value="cateNews"><a href="{{URL::action('\BackEnd\NewsController@getNewsEdit')}}/{{$item->id}}">{{str_limit( $item->newsName, 30, '...')}}</a></label></td>
-    <td><label value="cateNews">{{str_limit($item->newsDescription, 30, '...')}} </label></td>
-    <td><label value="cateNews"><?php echo date('d/m/Y h:i:s', $item->time); ?></label></td>
-    <td><label value="cateNews">
+    <td class="text-center" class="head0"><label value="cateNews">{{$i++}}</label></td>
+    <td class="head1"><label value="cateNews"><a href="{{URL::action('\BackEnd\NewsController@getNewsEdit')}}/{{$item->id}}">{{str_limit( $item->newsName, 30, '...')}}</a></label></td>
+    <td class="head0"><label value="cateNews">{{str_limit($item->newsDescription, 30, '...')}} </label></td>
+    <td class="head1"><label value="cateNews"><?php echo date('d/m/Y h:i:s', $item->time); ?></label></td>
+    <td class="head0"> <label value="cateNews">
             <?php
             if (array_key_exists($item->status, $data_status)) {
                 echo $data_status[$item->status];
@@ -17,16 +17,16 @@ unset($data_status['']);
             ?>
         </label>
     </td>
-    <td>
-        <a href="{{URL::action('\BackEnd\NewsController@getNewsEdit')}}/{{$item->id}}" class="btn btn4 btn_book" title="{{Lang::get('button.btn.book')}}"></a>
+    <td class="head1">
+        <a href="{{URL::action('\BackEnd\NewsController@getNewsEdit')}}/{{$item->id}}"  title="{{Lang::get('general.edit')}}">{{Lang::get('general.edit')}}</a>
         @if($item->status=='2')
-        <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 0)" class="btn btn4 btn_flag" title="{{Lang::get('button.btn.flag')}}"></a>
+        &nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript: void(0)" onclick="active_element('{{URL::action('\BackEnd\NewsController@postActiveNews')}}',{{$item->id}})" class="" title="{{Lang::get('button.btn.flag')}}">{{Lang::get('button.btn.flag')}}</a>
         @endif
         @if($item->status=='0')
-        <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 1)" class="btn btn4 btn_world" title="{{Lang::get('button.btn.world')}}"></a>
+        &nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript: void(0)" onclick="active_element('{{URL::action('\BackEnd\NewsController@postPublicNews')}}',{{$item->id}})" class="" title="{{Lang::get('button.btn.world')}}">{{Lang::get('button.btn.world')}}</a>
         @endif
         @if($item->status!='2')
-        <a href="javascript: void(0)" onclick="xoasanpham({{$item->id}})" class="btn btn4 btn_trash" title="{{Lang::get('button.btn.trash')}}"></a>
+        &nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript: void(0)" onclick="deleteproduct('{{URL::action('\BackEnd\NewsController@postDeleteNews')}}',{{$item->id}})" title="{{Lang::get('general.delete')}}">{{Lang::get('general.delete')}}</a>
         @endif
     </td>
 </tr>

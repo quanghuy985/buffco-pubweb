@@ -1941,6 +1941,10 @@ a.btn_orderdetail{
 #thumbnails  div {
     float: left;
 }
+#thumbnails a.delete { 
+    height: 21px;
+    line-height: 20px;
+}
 #thumbnails .delete {
     background: none repeat scroll 0 0 #000000;
     border-radius: 100%;
@@ -1952,7 +1956,7 @@ a.btn_orderdetail{
     border: 1px solid #C0C0C0;
 }
 #thumbnails .delete:hover {
-    background: none repeat scroll 0 0 #ff6666;
+    background: none repeat scroll 0 0 #fb9337;
 }
 .clear{clear: both;}
 .bodywrapper{min-width:1345px}
@@ -2066,6 +2070,6 @@ td.text-center, td.text-center, .stdtable thead th.text-center{text-align:center
 .ui-dialog .stdform .field {
     margin-left: 35% !important;
 }
-td >a{
+td  a{
     color: #0074A2 !important;
 }

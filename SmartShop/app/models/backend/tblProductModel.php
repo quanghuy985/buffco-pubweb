@@ -128,6 +128,11 @@ class TblProductModel extends \Eloquent {
         return $arrProduct;
     }
 
+    public function getAllProductSearch($keyword, $per_page) {
+        $arrProduct = DB::table('tbl_product')->select('tbl_product.*')->orderBy('id', 'desc')->where('productCode', 'LIKE', '%' . $keyword . '%')->orWhere('productName', 'LIKE', '%' . $keyword . '%')->orWhere('productDescription', 'LIKE', '%' . $keyword . '%')->orWhere('productAttributes', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
+        return $arrProduct;
+    }
+
     public function deleteProduct($productID) {
         $checkdel = $this->where('id', '=', $productID)->update(array('status' => 2));
         if ($checkdel > 0) {

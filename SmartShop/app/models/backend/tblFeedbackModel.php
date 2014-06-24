@@ -34,6 +34,16 @@ class tblFeedbackModel extends \Eloquent {
         }
     }
 
+    public function deleteFeedback($feedbackID) {
+        // $tableAdmin = new TblAdminModel();
+        $checkdel = $this->where('id', '=', $feedbackID)->delete();
+        if ($checkdel > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
     public function selectFeedback($sqlfun) {
         $results = \DB::select($sqlfun);
         return ($results);
@@ -54,9 +64,19 @@ class tblFeedbackModel extends \Eloquent {
         return $arrFeedback;
     }
 
-    public function searchFillterFeedback($per_page, $keyword, $from, $to) {
-        $arrFeedback = $this->orderBy('time', 'desc')->where('feedbackUserEmail', 'LIKE', '%' . $keyword . '%')->orWhere('feedbackUserName', 'LIKE', '%' . $keyword . '%')->orWhere('feedbackSubject', 'LIKE', '%' . $keyword . '%')->orWhere('feedbackContent', 'LIKE', '%' . $keyword . '%')->whereBetween('time', array($from, $to))->paginate($per_page);
-        return $arrFeedback;
+    public function searchFillterFeedback($per_page, $from, $to, $status) {
+        $arrFeedback = \DB::table('tbl_feed_back');
+        if ($from != 'null') {
+            $arrFeedback->where('time', '>', $from);
+        }
+        if ($to != 'null') {
+            $arrFeedback->where('time', '<', $to);
+        }
+        if ($status != 'null') {
+            $arrFeedback->where('status', '=', $status);
+        }
+        $arrFeedbackRt = $arrFeedback->orderBy('status')->orderBy('time', 'desc')->paginate($per_page);
+        return $arrFeedbackRt;
     }
 
     public function getFeedbackbyID($feedbackID) {

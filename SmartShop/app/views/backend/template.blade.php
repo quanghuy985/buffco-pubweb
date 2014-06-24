@@ -68,7 +68,7 @@
             @include('backend.header')
             <div class="vernav2 iconmenu">
                 <ul>
-                    <li><a href="" class="gallery">{{Lang::get('backend/dashboard.management_file')}}</a>
+                    <li><a href="{{action('\BackEnd\FilemanagerController@getFileManager')}}" class="gallery">{{Lang::get('backend/dashboard.management_file')}}</a>
                     </li>
                     <li><a href="#newsSub" class="editor">{{Lang::get('backend/dashboard.news')}}</a>
                         <span class="arrow"></span>
@@ -131,7 +131,7 @@
                         <span class="arrow"></span>
                         <ul id="adminSub">
                             <li><a href="{{URL::action('\BackEnd\AdminController@getAdminView')}}">{{Lang::get('backend/dashboard.management_user')}}</a></li>
-                 
+                            <li><a href="">{{Lang::get('backend/dashboard.management_acl')}}</a></li>
                         </ul>
                     </li>
                 </ul>

@@ -138,7 +138,7 @@ class CategoryProductController extends \BaseController {
     public function postUpdateCateProduct() {
         $rules = array(
             "cateName" => "required",
-            "cateSlug" => "required"
+            "cateSlug" => 'required|unique:tbl_product_category,cateSlug,' . Input::get('id') . ',id'
         );
         $tblCateProduct = new tblCategoryproductModel();
         $inputs = Input::all();

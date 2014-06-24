@@ -34,37 +34,27 @@ class SupporterController extends \BaseController {
         }
     }
 
-    public function postAjaxpagion() {
-        $tblSupporterModel = new tblSupporterModel();
-        $check = $tblSupporterModel->getAllSupporter(10);
-        $link = $check->links();
-        return View::make('backend.supporter.supporterAjax')->with('arrSupporter', $check)->with('link', $link);
+    public function getSupporterEdit($id = '') {
+        if (\Request::ajax()) {
+            $tblSupporterModel = new tblSupporterModel();
+            $check = $tblSupporterModel->getAllSupporter(10);
+            $link = $check->links();
+            return View::make('backend.supporter.supporterAjax')->with('arrSupporter', $check)->with('link', $link);
+        } else {
+            $tblSupporter = new tblSupporterModel();
+            $data = $tblSupporter->getAllSupporter(10);
+            $link = $data->links();
+            $tblSupporterGroupModel = new tblSupporterGroupModel();
+            $arrSupporterGroup = $tblSupporterGroupModel->getAllSupportGroup(100);
+            $dataedit = $tblSupporter->getSupportByID($id);
+            return View::make('backend.supporter.supporterManage')->with('supportData', $dataedit)->with('arrSupporter', $data)->with('link', $link)->with('arrSupporterGroup', $arrSupporterGroup);
+        }
     }
 
     public function postDeleteSupporter() {
         $tblSupporter = new tblSupporterModel();
         $tblSupporter->deleteSupporter(Input::get('id'));
-        $data = $tblSupporter->getAllSupporter(10);
-        $link = $data->links();
-        return View::make('backend.supporter.supporterAjax')->with('arrSupporter', $data)->with('link', $link);
-    }
-
-    public function getSupporterEdit() {
-        $tblSupporter = new tblSupporterModel();
-        $data = $tblSupporter->getAllSupporter(10);
-        $link = $data->links();
-        $tblSupporterGroupModel = new tblSupporterGroupModel();
-        $arrSupporterGroup = $tblSupporterGroupModel->getAllSupportGroup(100);
-        $dataedit = $tblSupporter->getSupportByID(Input::get('id'));
-        return View::make('backend.supporter.supporterManage')->with('supportData', $dataedit[0])->with('arrSupporter', $data)->with('link', $link)->with('arrSupporterGroup', $arrSupporterGroup);
-    }
-
-    public function postSupporterActive() {
-        $tblSupporter = new tblSupporterModel();
-        $tblSupporter->updateSupport(Input::get('id'), '', '', '', '', '', Input::get('status'));
-        $data = $tblSupporter->getAllSupporter(10);
-        $link = $data->links();
-        return View::make('backend.supporter.supporterAjax')->with('arrSupporter', $data)->with('link', $link);
+        return \Redirect::action('\BackEnd\SupporterController@getSupporterView');
     }
 
     public function postUpdateSupport() {
@@ -77,7 +67,7 @@ class SupporterController extends \BaseController {
         $valid = Validator::make(Input::all(), $rules, array(), Lang::get('backend/attributes.supporter'));
         if (!$valid->fails()) {
             $tblSupporter = new tblSupporterModel();
-            $tblSupporter->updateSupport(Input::get('id'), Input::get('cbSupportGroup'), Input::get('supporterName'), Input::get('supporterNickSkype'), Input::get('supporterNickYH'), Input::get('supporterPhone'), Input::get('status'));
+            $tblSupporter->updateSupport(Input::get('id'), Input::get('cbSupportGroup'), Input::get('supporterName'), Input::get('supporterNickSkype'), Input::get('supporterNickYH'), Input::get('supporterPhone'));
             Session::flash('alert_success', Lang::get('messages.update.success'));
             return Redirect::action('\BackEnd\SupporterController@getSupporterView');
         } else {

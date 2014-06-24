@@ -555,94 +555,6 @@
         ]
     },
     {
-        "name": "moltin/currency",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/moltin/currency.git",
-            "reference": "643e1c865d9b02826d4667488339b8e2517e848b"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/moltin/currency/zipball/643e1c865d9b02826d4667488339b8e2517e848b",
-            "reference": "643e1c865d9b02826d4667488339b8e2517e848b",
-            "shasum": ""
-        },
-        "require": {
-            "guzzle/guzzle": "~3.8.0",
-            "php": ">=5.3.0"
-        },
-        "require-dev": {
-            "mockery/mockery": "0.7.*",
-            "phpunit/phpunit": "3.7.*"
-        },
-        "time": "2014-01-14 13:48:07",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "Moltin": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "proprietary"
-        ],
-        "authors": [
-            {
-                "name": "Moltin Ltd",
-                "email": "support@molt.in",
-                "homepage": "http://molt.in",
-                "role": "Vendor"
-            }
-        ],
-        "description": "Currency conversion and formatting"
-    },
-    {
-        "name": "moltin/tax",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/moltin/tax.git",
-            "reference": "865b67f063018383a3366cf27beebfc4bf8949ab"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/moltin/tax/zipball/865b67f063018383a3366cf27beebfc4bf8949ab",
-            "reference": "865b67f063018383a3366cf27beebfc4bf8949ab",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.0"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "3.7.*"
-        },
-        "time": "2013-10-09 11:57:44",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "Moltin": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "proprietary"
-        ],
-        "authors": [
-            {
-                "name": "Moltin Ltd",
-                "email": "support@molt.in",
-                "homepage": "http://molt.in",
-                "role": "Vendor"
-            }
-        ],
-        "description": "Tax calculation"
-    },
-    {
         "name": "greggilbert/recaptcha",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
@@ -840,104 +752,6 @@
         "description": "Builder for stack middlewares based on HttpKernelInterface.",
         "keywords": [
             "stack"
-        ]
-    },
-    {
-        "name": "moltin/cart",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/moltin/cart.git",
-            "reference": "b7aafadda056571d233d0ae1d9398b1e158f9289"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/moltin/cart/zipball/b7aafadda056571d233d0ae1d9398b1e158f9289",
-            "reference": "b7aafadda056571d233d0ae1d9398b1e158f9289",
-            "shasum": ""
-        },
-        "require": {
-            "moltin/currency": "dev-master",
-            "moltin/tax": "dev-master",
-            "php": ">=5.3.0"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "3.7.*"
-        },
-        "time": "2014-05-21 17:26:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "Moltin": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "proprietary"
-        ],
-        "authors": [
-            {
-                "name": "Moltin Ltd",
-                "email": "support@molt.in",
-                "homepage": "http://molt.in",
-                "role": "Vendor"
-            }
-        ],
-        "description": "Shopping cart package"
-    },
-    {
-        "name": "patchwork/utf8",
-        "version": "v1.1.23",
-        "version_normalized": "1.1.23.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/nicolas-grekas/Patchwork-UTF8.git",
-            "reference": "c1edbc82aed49ff2bdef0a0f659bf69e3f7b14cc"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/nicolas-grekas/Patchwork-UTF8/zipball/c1edbc82aed49ff2bdef0a0f659bf69e3f7b14cc",
-            "reference": "c1edbc82aed49ff2bdef0a0f659bf69e3f7b14cc",
-            "shasum": ""
-        },
-        "require": {
-            "lib-pcre": ">=7.3",
-            "php": ">=5.3.0"
-        },
-        "suggest": {
-            "ext-iconv": "Use iconv for best performance",
-            "ext-intl": "Use Intl for best performance",
-            "ext-mbstring": "Use Mbstring for best performance"
-        },
-        "time": "2014-05-22 13:59:09",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "Patchwork": "class/",
-                "Normalizer": "class/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "(Apache-2.0 or GPL-2.0)"
-        ],
-        "authors": [
-            {
-                "name": "Nicolas Grekas",
-                "email": "p@tchwork.com",
-                "role": "Developer"
-            }
-        ],
-        "description": "Extensive, portable and performant handling of UTF-8 and grapheme clusters for PHP",
-        "homepage": "https://github.com/nicolas-grekas/Patchwork-UTF8",
-        "keywords": [
-            "i18n",
-            "unicode",
-            "utf-8",
-            "utf8"
         ]
     },
     {
@@ -1958,48 +1772,6 @@
         ]
     },
     {
-        "name": "moltin/laravel-cart",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/moltin/laravel-cart.git",
-            "reference": "5a63e83fd69f1f22a00f56488a7e689e287bacb1"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/moltin/laravel-cart/zipball/5a63e83fd69f1f22a00f56488a7e689e287bacb1",
-            "reference": "5a63e83fd69f1f22a00f56488a7e689e287bacb1",
-            "shasum": ""
-        },
-        "require": {
-            "laravel/framework": "4.*",
-            "moltin/cart": "dev-master",
-            "php": ">=5.3.0"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "3.7.*"
-        },
-        "time": "2014-06-07 17:15:32",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "Moltin": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "authors": [
-            {
-                "name": "Moltin Ltd",
-                "email": "support@molt.in",
-                "homepage": "http://molt.in",
-                "role": "Vendor"
-            }
-        ],
-        "description": "Shopping cart package"
-    },
-    {
         "name": "swiftmailer/swiftmailer",
         "version": "v5.2.1",
         "version_normalized": "5.2.1.0",
@@ -2808,5 +2580,233 @@
             "phpstorm",
             "sublime"
         ]
+    },
+    {
+        "name": "patchwork/utf8",
+        "version": "v1.1.24",
+        "version_normalized": "1.1.24.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/nicolas-grekas/Patchwork-UTF8.git",
+            "reference": "40f552c019956f446553b19f7de2da2f9c74d730"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/nicolas-grekas/Patchwork-UTF8/zipball/40f552c019956f446553b19f7de2da2f9c74d730",
+            "reference": "40f552c019956f446553b19f7de2da2f9c74d730",
+            "shasum": ""
+        },
+        "require": {
+            "lib-pcre": ">=7.3",
+            "php": ">=5.3.0"
+        },
+        "suggest": {
+            "ext-iconv": "Use iconv for best performance",
+            "ext-intl": "Use Intl for best performance",
+            "ext-mbstring": "Use Mbstring for best performance"
+        },
+        "time": "2014-06-17 08:23:06",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Patchwork": "class/",
+                "Normalizer": "class/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "(Apache-2.0 or GPL-2.0)"
+        ],
+        "authors": [
+            {
+                "name": "Nicolas Grekas",
+                "email": "p@tchwork.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Extensive, portable and performant handling of UTF-8 and grapheme clusters for PHP",
+        "homepage": "https://github.com/nicolas-grekas/Patchwork-UTF8",
+        "keywords": [
+            "i18n",
+            "unicode",
+            "utf-8",
+            "utf8"
+        ]
+    },
+    {
+        "name": "moltin/currency",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/moltin/currency.git",
+            "reference": "643e1c865d9b02826d4667488339b8e2517e848b"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/moltin/currency/zipball/643e1c865d9b02826d4667488339b8e2517e848b",
+            "reference": "643e1c865d9b02826d4667488339b8e2517e848b",
+            "shasum": ""
+        },
+        "require": {
+            "guzzle/guzzle": "~3.8.0",
+            "php": ">=5.3.0"
+        },
+        "require-dev": {
+            "mockery/mockery": "0.7.*",
+            "phpunit/phpunit": "3.7.*"
+        },
+        "time": "2014-01-14 13:48:07",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Moltin": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "proprietary"
+        ],
+        "authors": [
+            {
+                "name": "Moltin Ltd",
+                "email": "support@molt.in",
+                "homepage": "http://molt.in",
+                "role": "Vendor"
+            }
+        ],
+        "description": "Currency conversion and formatting"
+    },
+    {
+        "name": "moltin/tax",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/moltin/tax.git",
+            "reference": "865b67f063018383a3366cf27beebfc4bf8949ab"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/moltin/tax/zipball/865b67f063018383a3366cf27beebfc4bf8949ab",
+            "reference": "865b67f063018383a3366cf27beebfc4bf8949ab",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "3.7.*"
+        },
+        "time": "2013-10-09 11:57:44",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Moltin": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "proprietary"
+        ],
+        "authors": [
+            {
+                "name": "Moltin Ltd",
+                "email": "support@molt.in",
+                "homepage": "http://molt.in",
+                "role": "Vendor"
+            }
+        ],
+        "description": "Tax calculation"
+    },
+    {
+        "name": "moltin/cart",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/moltin/cart.git",
+            "reference": "b7aafadda056571d233d0ae1d9398b1e158f9289"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/moltin/cart/zipball/b7aafadda056571d233d0ae1d9398b1e158f9289",
+            "reference": "b7aafadda056571d233d0ae1d9398b1e158f9289",
+            "shasum": ""
+        },
+        "require": {
+            "moltin/currency": "dev-master",
+            "moltin/tax": "dev-master",
+            "php": ">=5.3.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "3.7.*"
+        },
+        "time": "2014-05-21 17:26:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Moltin": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "proprietary"
+        ],
+        "authors": [
+            {
+                "name": "Moltin Ltd",
+                "email": "support@molt.in",
+                "homepage": "http://molt.in",
+                "role": "Vendor"
+            }
+        ],
+        "description": "Shopping cart package"
+    },
+    {
+        "name": "moltin/laravel-cart",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/moltin/laravel-cart.git",
+            "reference": "470b2650d4d25be51b5ff783100ba9f02564b2e0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/moltin/laravel-cart/zipball/470b2650d4d25be51b5ff783100ba9f02564b2e0",
+            "reference": "470b2650d4d25be51b5ff783100ba9f02564b2e0",
+            "shasum": ""
+        },
+        "require": {
+            "laravel/framework": "4.*",
+            "moltin/cart": "dev-master",
+            "php": ">=5.3.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "3.7.*"
+        },
+        "time": "2014-06-17 09:59:26",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Moltin": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "authors": [
+            {
+                "name": "Moltin Ltd",
+                "email": "support@molt.in",
+                "homepage": "http://molt.in",
+                "role": "Vendor"
+            }
+        ],
+        "description": "Shopping cart package"
     }
 ]

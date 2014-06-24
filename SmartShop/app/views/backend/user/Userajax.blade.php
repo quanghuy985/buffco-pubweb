@@ -1,11 +1,12 @@
+
+<?php
+$i = ($arrUser->getCurrentPage() - 1) * 10 + 1;
+?>
 @foreach($arrUser as $item)
 <tr>
-    <td><input name="checkboxidfile" type="checkbox" value="{{$item->id}}"></td>
-    <td><a href="{{URL::action('\BackEnd\UserController@getUserDetail')}}?email={{$item->email}}">{{str_limit(
-                        $item->email, 10, '...')}}</a></td>
-    <td><label value="user">{{str_limit( $item->address, 10, '...')}}</label></td>
+    <td class="text-center"><label value="cateNews">{{$i++}}</label></td>
+    <td><a href="{{URL::action('\BackEnd\UserController@getUserDetail')}}?email={{$item->email}}">{{$item->email}}</a></td>
     <td><label value="user">{{str_limit($item->phone, 10, '...')}} </label></td>
-    <td><label value="user"></label><?php echo date('d/m/Y h:i:s', $item->time); ?></td>
     <td><label value="user">
             <?php
             if ($item->status == 0) {
@@ -19,28 +20,26 @@
         </label>
     </td>
     <td>
-        <a href="{{URL::action('\BackEnd\UserController@getUserEdit')}}?id={{$item->id}}" class="btn btn4 btn_book"
-           title="Sửa" onclick="focus()"></a>
+        <a href="{{URL::action('\BackEnd\UserController@getUserEdit')}}?id={{$item->email}}"
+           title="Sửa">{{Lang::get('general.edit')}}</a>
         @if($item->status=='2')
-        <a href="javascript: void(0)" onclick="kichhoat({{$item -> id}}, 0)" class="btn btn4 btn_flag"
-           title="Chờ kích hoạt"></a>
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+        <a href="javascript: void(0)" onclick="active_element('{{URL::action('\BackEnd\UserController@postActiveUsers')}}',{{$item->id}})" title="{{Lang::get('general.lock')}}">{{Lang::get('general.lock')}}</a>
         @endif
         @if($item->status=='0')
-        <a href="javascript: void(0)" onclick="kichhoat({{$item -> id}}, 1)" class="btn btn4 btn_world"
-           title="Kích hoạt"></a>
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+        <a href="javascript: void(0)" onclick="active_element('{{URL::action('\BackEnd\UserController@postPublicUsers')}}',{{$item->id}})" title="{{Lang::get('general.world')}}">{{Lang::get('general.world')}}</a>
         @endif
         @if($item->status!='2')
-        <a href="javascript: void(0)" onclick="xoasanpham({{$item -> id}})" class="btn btn4 btn_trash"
-           title="Xóa"></a>
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+        <a href="javascript: void(0)" onclick="deleteproduct('{{URL::action('\BackEnd\UserController@postDeleteUsers')}}',{{$item->id}})" title="{{Lang::get('general.delete')}}">{{Lang::get('general.delete')}}</a>
         @endif
     </td>
 </tr>
 @endforeach
-<script>
-        jQuery('input:checkbox').uniform();              </script>
 @if($link!='')
 <tr>
-    <td colspan="7">{{$link}}</td>
+    <td colspan="5">{{$link}}</td>
 </tr>
 @endif
 

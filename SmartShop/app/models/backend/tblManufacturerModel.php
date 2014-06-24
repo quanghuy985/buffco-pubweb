@@ -10,20 +10,20 @@ class tblManufacturerModel extends \Eloquent {
     protected $table = 'tbl_product_manufacturer';
     public $timestamps = false;
 
-    public function addManufacturer($Name, $Description, $Place, $status) {
+    public function addManufacturer($Name, $Description, $Place) {
         $this->manufacturerName = $Name;
         $this->manufacturerDescription = $Description;
         $this->manufacturerPlace = $Place;
         $this->time = time();
-        $this->status = $status;
+        $this->status = 1;
         $result = $this->save();
         return $this;
     }
 
-    public function updateManufacturer($Id, $Name, $Description, $Place, $status) {
+    public function updateManufacturer($id, $Name, $Description, $Place) {
         // $tableAdmin = new TblAdminModel();
-        $tableManufacturer = $this->where('id', '=', $Id);
-        $arraysql = array('id' => $Id);
+        $tableManufacturer = $this->where('id', '=', $id);
+        $arraysql = array('id' => $id);
         if ($Name != '') {
             $arraysql = array_merge($arraysql, array("manufacturerName" => $Name));
         }
@@ -32,15 +32,13 @@ class tblManufacturerModel extends \Eloquent {
         }
         if ($Place != '') {
             $arraysql = array_merge($arraysql, array("manufacturerPlace" => $Place));
-        }if ($status != '') {
-            $arraysql = array_merge($arraysql, array("status" => $status));
         }
         $checkupdate = $tableManufacturer->update($arraysql);
         return $checkupdate;
     }
 
     public function deleteManufacturer($manufacturerId) {
-        $checkdel = $this->where('id', '=', $manufacturerId)->update(array('status' => 2));
+        $checkdel = $this->where('id', '=', $manufacturerId)->delete();
 
         if ($checkdel > 0) {
             return TRUE;
@@ -67,8 +65,8 @@ class tblManufacturerModel extends \Eloquent {
         return $manufarray;
     }
 
-    public function selectAllManufacturer($per_page, $orderby) {
-        $allManufacturer = DB::table('tbl_product_manufacturer')->orderBy($orderby, 'desc')->paginate($per_page);
+    public function selectAllManufacturer($per_page) {
+        $allManufacturer = DB::table('tbl_product_manufacturer')->orderBy('manufacturerName')->paginate($per_page);
         return $allManufacturer;
     }
 
@@ -78,8 +76,8 @@ class tblManufacturerModel extends \Eloquent {
     }
 
     public function getManufacturerById($id) {
-        $arrManufacturer = DB::table('tbl_product_manufacturer')->where('id', '=', $id)->get();
-        return $arrManufacturer[0];
+        $arrManufacturer = DB::table('tbl_product_manufacturer')->where('id', '=', $id)->first();
+        return $arrManufacturer;
     }
 
 }

@@ -68,7 +68,7 @@
             <?php echo $__env->make('backend.header', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
             <div class="vernav2 iconmenu">
                 <ul>
-                    <li><a href="" class="gallery"><?php echo Lang::get('backend/dashboard.management_file'); ?></a>
+                    <li><a href="<?php echo action('\BackEnd\FilemanagerController@getFileManager'); ?>" class="gallery"><?php echo Lang::get('backend/dashboard.management_file'); ?></a>
                     </li>
                     <li><a href="#newsSub" class="editor"><?php echo Lang::get('backend/dashboard.news'); ?></a>
                         <span class="arrow"></span>
