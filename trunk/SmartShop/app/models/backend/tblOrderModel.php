@@ -56,27 +56,33 @@ class tblOrderModel extends \Eloquent {
         return $allOrder;
     }
 
-    public function fillterOrder($keyword, $per_page, $orderby) {
-        if (Session::get('orderfillter') != '') {
-            $orderby = Session::get('orderfillter');
-            $allOrder = DB::table('tbl_product_order')->join('tbl_users', 'tbl_product_order.user_id', '=', 'tbl_users.id')->join('tblproduct', 'tbl_product_order.productID', '=', 'tblproduct.id')->select('tbl_product_order.*', 'tbl_users.email', 'tblproduct.productName')->where('tbl_users.email', 'LIKE', '%' . $keyword . '%')->where('tbl_product_order.status', '=', $orderby)->paginate($per_page);
-        }
-        if ($orderby == '') {
+    public function getAllOrderByEmail($email, $per_page) {
+        $allOrder = DB::table('tbl_product_order')->join('tbl_users', 'tbl_product_order.user_id', '=', 'tbl_users.id')->select('tbl_product_order.*', 'tbl_users.email', 'tbl_users.firstname', 'tbl_users.lastname')->where('tbl_users.email', '=', $email)->paginate($per_page);
+        return $allOrder;
+    }
 
-            $allOrder = DB::table('tbl_product_order')->join('tbl_users', 'tbl_product_order.user_id', '=', 'tbl_users.id')->join('tblproduct', 'tbl_product_order.productID', '=', 'tblproduct.id')->select('tbl_product_order.*', 'tbl_users.email', 'tblproduct.productName')->where('tbl_users.email', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
-        } else {
-            $allOrder = DB::table('tbl_product_order')->join('tbl_users', 'tbl_product_order.user_id', '=', 'tbl_users.id')->join('tblproduct', 'tbl_product_order.productID', '=', 'tblproduct.id')->select('tbl_product_order.*', 'tbl_users.email', 'tblproduct.productName')->where('tbl_users.email', 'LIKE', '%' . $keyword . '%')->where('tbl_product_order.status', '=', $orderby)->paginate($per_page);
+    public function getAllOrderFilter($one, $two, $three, $per_page) {
+        $querry = DB::table('tbl_product_order')->join('tbl_users', 'tbl_product_order.user_id', '=', 'tbl_users.id');
+        if ($one != '') {
+            $querry->where('tbl_product_order.time', '>', $one);
         }
+        if ($two != '') {
+            $querry->where('tbl_product_order.time', '<', $two);
+        }
+        if ($three != '') {
+            $querry->where('tbl_product_order.status', '=', $three);
+        }
+        $allOrder = $querry->select('tbl_product_order.*', 'tbl_users.email', 'tbl_users.firstname', 'tbl_users.lastname')->paginate($per_page);
         return $allOrder;
     }
 
     public function getOrderByOrderCode($orderCode) {
-        $allOrderDetail = DB::table('tbl_product_orderdetail')->join('tblSize', 'tbl_product_orderdetail.sizeID', '=', 'tblSize.id')->join('tblColor', 'tbl_product_orderdetail.colorID', '=', 'tblColor.id')->join('tblproduct', 'tbl_product_orderdetail.productID', '=', 'tblproduct.id')->join('tbl_product_order', 'tbl_product_orderdetail.orderCode', '=', 'tbl_product_order.orderCode')->join('tbl_users', 'tbl_product_order.user_id', '=', 'tbl_users.id')->select('tbl_product_orderdetail.*', 'tbl_users.email', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.userPhone', 'tblproduct.productCode', 'tblproduct.productName', 'tblSize.sizeName', 'tblColor.colorName', 'tbl_product_order.status as orderStatus', 'tbl_product_order.receiverName', 'tbl_product_order.orderAddress', 'tbl_product_order.receiverPhone')->orderBy('tbl_product_orderdetail.orderCode')->where('tbl_product_orderdetail.orderCode', '=', $orderCode)->get();
+        $allOrderDetail = DB::table('tbl_product_order_detail')->leftjoin('tbl_product', 'tbl_product_order_detail.product_id', '=', 'tbl_product.id')->leftjoin('tbl_product_order', 'tbl_product_order_detail.order_id', '=', 'tbl_product_order.id')->leftjoin('tbl_users', 'tbl_product_order.user_id', '=', 'tbl_users.id')->select('tbl_product_order_detail.*', 'tbl_users.email', 'tbl_users.firstname', 'tbl_users.lastname', 'tbl_users.phone', 'tbl_product.productCode', 'tbl_product.productName', 'tbl_product.quantity', 'tbl_product.quantity_sold', 'tbl_product_order.status as orderStatus', 'tbl_product_order.orderCode', 'tbl_product_order.receiverName', 'tbl_product_order.orderAddress', 'tbl_product_order.receiverPhone')->orderBy('tbl_product_order_detail.order_id')->where('tbl_product_order.orderCode', '=', $orderCode)->get();
         return $allOrderDetail;
     }
 
     public function findOrderByID($id) {
-        $objOrder = DB::table('tbl_product_order')->where('tbl_product_order.id', '=', $id)->get();
+        $objOrder = DB::table('tbl_product_order')->where('tbl_product_order.id', '=', $id)->first();
         return $objOrder;
     }
 
@@ -103,8 +109,8 @@ class tblOrderModel extends \Eloquent {
         return $arrOrder;
     }
 
-    public function searchOrders($per_page, $keyword) {
-        $arrOrder = DB::table('tbl_product_order')->join('tbl_users', 'tbl_product_order.user_id', '=', 'tbl_users.id')->select('tbl_product_order.*', 'tbl_users.email', 'tbl_users.firstname', 'tbl_users.lastname')->orderBy('status')->orderBy('time', 'desc')->where('tbl_product_order.orderCode', 'LIKE', '%' . $keyword . '%')->orWhere('tbl_users.email', 'LIKE', '%' . $keyword . '%')->orWhere('tbl_users.firstname', 'LIKE', '%' . $keyword . '%')->orWhere('tbl_users.lastname', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
+    public function getAllOrderSearch($keyword, $per_page) {
+        $arrOrder = DB::table('tbl_product_order')->join('tbl_users', 'tbl_product_order.user_id', '=', 'tbl_users.id')->select('tbl_product_order.*', 'tbl_users.email', 'tbl_users.firstname', 'tbl_users.lastname')->orderBy('tbl_product_order.status')->orderBy('time', 'desc')->where('tbl_product_order.orderCode', 'LIKE', '%' . $keyword . '%')->orWhere('tbl_users.email', 'LIKE', '%' . $keyword . '%')->orWhere('tbl_users.firstname', 'LIKE', '%' . $keyword . '%')->orWhere('tbl_users.lastname', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
         return $arrOrder;
     }
 
@@ -137,17 +143,17 @@ class tblOrderModel extends \Eloquent {
     //thong ke
 
     public function getCountOrderOnDay($from, $to) {
-        $allorder = DB::table('tbl_product_order')->leftJoin('tbl_product_orderdetail', 'tbl_product_order.orderCode', '=', 'tbl_product_orderdetail.orderCode')->select('tbl_product_order.*', 'tbl_product_orderdetail.total')->whereBetween('tbl_product_order.time', array($from, $to))->count();
+        $allorder = DB::table('tbl_product_order')->leftJoin('tbl_product_order_detail', 'tbl_product_order.id', '=', 'tbl_product_order_detail.order_id')->select('tbl_product_order.*', 'tbl_product_order_detail.total')->whereBetween('tbl_product_order.time', array($from, $to))->count();
         return $allorder;
     }
 
     public function getTotalOrderOnDay($from, $to) {
-        $alltotal = DB::table('tbl_product_order')->leftJoin('tbl_product_orderdetail', 'tbl_product_order.orderCode', '=', 'tbl_product_orderdetail.orderCode')->select('tbl_product_order.*', DB::raw('SUM(tbl_product_orderdetail.total) as total'))->whereBetween('tbl_product_order.time', array($from, $to))->get();
+        $alltotal = DB::table('tbl_product_order')->leftJoin('tbl_product_order_detail', 'tbl_product_order.id', '=', 'tbl_product_order_detail.order_id')->select('tbl_product_order.*', DB::raw('SUM(tbl_product_order_detail.total) as total'))->whereBetween('tbl_product_order.time', array($from, $to))->get();
         return $alltotal;
     }
 
     public function getOrderByDate($from, $to, $per_page) {
-        $alltotal = DB::table('tbl_product_order')->leftJoin('tbl_product_orderdetail', 'tbl_product_order.orderCode', '=', 'tbl_product_orderdetail.orderCode')->select('tbl_product_order.*', 'tbl_product_orderdetail.total')->whereBetween('tbl_product_order.time', array($from, $to))->paginate($per_page);
+        $alltotal = DB::table('tbl_product_order')->leftJoin('tbl_product_order_detail', 'tbl_product_order.id', '=', 'tbl_product_order_detail.order_id')->select('tbl_product_order.*', 'tbl_product_order_detail.total')->whereBetween('tbl_product_order.time', array($from, $to))->paginate($per_page);
         return $alltotal;
     }
 

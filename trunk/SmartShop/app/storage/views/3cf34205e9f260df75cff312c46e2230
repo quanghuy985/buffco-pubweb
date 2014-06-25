@@ -1,7 +1,0 @@
-<?php $__env->startSection("titleAdmin"); ?>
-kjahkjd
-<?php $__env->stopSection(); ?>
-<?php $__env->startSection("contentadmin"); ?>
-
-<?php $__env->stopSection(); ?>
-<?php echo $__env->make("backend.template", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -26,11 +26,21 @@ class MenusController extends \BaseController {
     public function postUpdateMenu() {
         $menus = new \BackEnd\Menu();
         $menus->save_position(\Input::get('easymm'));
+
+        $objAdmin = \Auth::user();
+        $historyContent = Lang::get('backend/history.menu.update') . \Input::get('easymm');
+        $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
     }
 
     public function postDeleteMenu() {
         $menus = new \BackEnd\Menu();
         $response = $menus->deletemenu(\Input::get('id'));
+
+        $objAdmin = \Auth::user();
+        $historyContent = Lang::get('backend/history.menu.delete') . \Input::get('title');
+        $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
 
         echo json_encode($response);
     }
@@ -44,6 +54,11 @@ class MenusController extends \BaseController {
         $menus = new \BackEnd\Menu();
         $response = $menus->saveedit(\Input::get('title'), \Input::get('menu_id'), \Input::get('url'), \Input::get('class'));
 
+        $objAdmin = \Auth::user();
+        $historyContent = Lang::get('backend/history.menu.update') . \Input::get('title');
+        $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+
         echo json_encode($response);
     }
 
@@ -55,12 +70,22 @@ class MenusController extends \BaseController {
         $menus = new \BackEnd\Menu();
         $response = $menus->add_group(\Input::get('title'));
 
+        $objAdmin = \Auth::user();
+        $historyContent = Lang::get('backend/history.menu.addGroup') . \Input::get('title');
+        $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+
         echo json_encode($response);
     }
 
     public function postUpdateGroupMenu() {
         $menus = new \BackEnd\Menu();
         $response = $menus->edit_group(\Input::get('id'), \Input::get('title'));
+
+        $objAdmin = \Auth::user();
+        $historyContent = Lang::get('backend/history.menu.updateGroup') . \Input::get('title');
+        $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
 
         echo json_encode($response);
     }
@@ -69,12 +94,23 @@ class MenusController extends \BaseController {
         $menus = new \BackEnd\Menu();
         $response = $menus->delete_group(\Input::get('id'));
 
+
+        $objAdmin = \Auth::user();
+        $historyContent = Lang::get('backend/history.menu.deleteGroup') . \Input::get('title');
+        $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+
         echo json_encode($response);
     }
 
     public function postAddMenu() {
         $menus = new \BackEnd\Menu();
         $response = $menus->add_menu(\Input::get('title'), \Input::get('url'), \Input::get('class'), \Input::get('group_id'));
+
+        $objAdmin = \Auth::user();
+        $historyContent = Lang::get('backend/history.menu.add') . \Input::get('title');
+        $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
 
         echo json_encode($response);
     }

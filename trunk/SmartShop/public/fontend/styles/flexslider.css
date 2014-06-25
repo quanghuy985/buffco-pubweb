@@ -1,0 +1,124 @@
+/*
+ * jQuery FlexSlider v1.8
+ * http://www.woothemes.com/flexslider/
+ *
+ * Copyright 2012 WooThemes
+ * Free to use under the MIT license.
+ * http://www.opensource.org/licenses/mit-license.php
+ */
+
+/* Browser Resets */
+.flex-container a:active,
+.flexslider a:active,
+.flex-container a:focus,
+.flexslider a:focus  {outline: none;}
+.slides,
+.flex-control-nav,
+.flex-direction-nav {margin: 0; padding: 0; list-style: none;}
+
+/* FlexSlider Necessary Styles
+*********************************/
+.flexslider {margin: 0; padding: 0;}
+.flexslider .slides > li {display: none; -webkit-backface-visibility: hidden; padding:0; margin:0} /* Hide the slides before the JS is loaded. Avoids image jumping */
+.flexslider .slides img {max-width: 100%; display: block; position:relative; }
+.flex-pauseplay span {text-transform: capitalize;}
+
+/* Clearfix for the .slides element */
+.slides:after {content: "."; display: block; clear: both; visibility: hidden; line-height: 0; height: 0;}
+html[xmlns] .slides {display: block;}
+* html .slides {height: 1%;}
+
+/* No JavaScript Fallback */
+/* If you are not using another script, such as Modernizr, make sure you
+ * include js that eliminates this class on page load */
+.no-js .slides > li:first-child {display: block;}
+
+
+/* FlexSlider Default Theme
+*********************************/
+.flexslider {position: relative; zoom: 1;}
+.flexslider .slides {zoom: 1;}
+.flexslider .slides > li {position: relative;}
+/* Suggested container for "Slide" animation setups. Can replace this with your own, if you wish */
+.flex-container {zoom: 1; position: relative;}
+
+/* Caption style */
+.flex-caption{width:38%; position: absolute; right:10px; top:20%;}
+.flex-caption h1{font-size:36px; line-height:normal; font-weight:700; }
+
+/* Direction Nav */
+.flexslider .flex-direction-nav { display:none;}
+.flexslider .flex-direction-nav li a {width: 42px; height: 42px; display: block; position: absolute; bottom:30px; cursor: pointer; text-indent: -999em;}
+.flexslider .flex-direction-nav li .next {background: url(../images/slidenext.png) no-repeat; right:30px}
+.flexslider .flex-direction-nav li .next:hover{background-position:0 -42px;}
+.flexslider .flex-direction-nav li .prev {background: url(../images/slideprev.png) no-repeat; right:80px}
+.flexslider .flex-direction-nav li .prev:hover{background-position:0 -42px;}
+.flexslider .flex-direction-nav li .disabled {opacity: .3; filter:alpha(opacity=30); cursor: default;}
+
+/* Control Nav */
+.flexslider .flex-control-nav {width: 100%; position: absolute; bottom: -2px; height:3px; line-height:3px;}
+.flexslider .flex-control-nav li {margin: 0 0 0 0px; display: inline-block; zoom: 1; *display: inline;}
+.flexslider .flex-control-nav li:first-child {margin: 0;}
+.flexslider .flex-control-nav li a {width:235px; height: 1px; line-height:1px; display: block; background:#ededed; cursor: pointer; text-indent: -999em;}
+.flexslider .flex-control-nav li a:hover { background:#4e4e4e; height: 3px; line-height:3px;}
+.flexslider .flex-control-nav li a.flex-active {background:#4e4e4e; height: 3px; line-height:3px;}
+
+/* will be red only in google chrome */
+@media screen and (-webkit-min-device-pixel-ratio:0) {    
+	.flexslider .flex-control-nav {bottom:1px;}
+	.flexslider .flex-control-nav li a {background:#fff;}     
+}
+
+
+/*=============================================== Carousel ================================================================*/
+/* FlexCarousel Default Theme
+*********************************/
+.flexslider-carousel {margin: 0 0 20px; position: relative;}
+.flex-viewport {max-height: 2000px; -webkit-transition: all 1s ease; -moz-transition: all 1s ease; transition: all 1s ease;}
+.loading .flex-viewport {max-height: 300px;}
+
+
+.flexslider-carousel .slides li{position: relative; display:none;}
+.flexslider-carousel .slides li h2{ font-size:13px;}
+.flexslider-carousel .slides li .price{ font-size:16px; font-family: 'Droid Sans', Arial, Helvetica, sans-serif; font-weight:400;}
+.flexslider-carousel .slides li img{ border:1px solid #e7e7e7; border-bottom:2px solid #cdcdcd; width:218px;}
+
+
+/* Direction Nav */
+.flexslider-carousel .flex-direction-nav a {width: 30px; height: 30px; margin: -20px 0 0; display: block; background: url(../images/bg_direction_nav.png) no-repeat 0 0; position: absolute; top: 50%; cursor: pointer; text-indent: -9999px; opacity: 0; -webkit-transition: all .3s ease; display:none;}
+.flexslider-carousel .flex-direction-nav .flex-next {background-position: 100% 0; right: -36px; }
+.flexslider-carousel .flex-direction-nav .flex-prev {left: -36px;}
+.flexslider-carousel:hover .flex-next {opacity: 0.8; right: 5px;}
+.flexslider-carousel:hover .flex-prev {opacity: 0.8; left: 5px;}
+.flexslider-carousel:hover .flex-next:hover, .flexslider-carousel:hover .flex-prev:hover {opacity: 1;}
+.flexslider-carousel .flex-direction-nav .disabled {opacity: .3!important; filter:alpha(opacity=30); cursor: default;}
+
+/* Control Nav */
+.flexslider-carousel .flex-control-nav {width: 100%; position: absolute; bottom: -15px; text-align: center;}
+.flexslider-carousel .flex-control-nav li {margin: 0 6px; display: inline-block; zoom: 1; *display: inline;}
+.flexslider-carousel .flex-control-paging li a {
+	width: 13px; 
+	height: 13px; 
+	display: block; 
+	background: #f3f3f3; 
+	cursor: pointer; 
+	text-indent: -9999px; 
+	-webkit-border-radius: 20px; 
+	-moz-border-radius: 20px; 
+	-o-border-radius: 20px; 
+	border-radius: 20px; 
+	box-shadow: inset 0px 1px 1px #a0a0a0;
+	}
+.flexslider-carousel .flex-control-paging li a:hover { background:#e4e4e4; }
+.flexslider-carousel .flex-control-paging li a.flex-active { background:#e4e4e4; cursor: default;  }
+
+.flexslider-carousel .flex-control-thumbs {margin: 5px 0 0; position: static; overflow: hidden;}
+.flexslider-carousel .flex-control-thumbs li {width: 25%; float: left; margin: 0;}
+.flexslider-carousel .flex-control-thumbs img {width: 100%; display: block; opacity: .7; cursor: pointer;}
+.flexslider-carousel .flex-control-thumbs img:hover {opacity: 1;}
+.flexslider-carousel .flex-control-thumbs .active {opacity: 1; cursor: default;}
+
+@media screen and (max-width: 860px) {
+  .flexslider-carousel .flex-direction-nav .flex-prev {opacity: 1; left: 0;}
+  .flexslider-carousel .flex-direction-nav .flex-next {opacity: 1; right: 0;}
+}

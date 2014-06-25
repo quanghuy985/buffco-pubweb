@@ -77,6 +77,11 @@ class LoginController extends \BaseController {
                     $user->password = Hash::make($password);
 
                     $user->save();
+
+                    $objAdmin = \Auth::user();
+                    $historyContent = Lang::get('backend/history.login.update') . ' ' . $user->email;
+                    $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+                    $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
                 });
 
         switch ($response) {
@@ -93,6 +98,11 @@ class LoginController extends \BaseController {
     public function postForgot() {
         $response = Password::remind(Input::only('email'), function($message) {
                     $message->subject(Lang::get('emails.forgot_password_title'));
+               
+                    $objAdmin = \Auth::user();
+                    $historyContent = Lang::get('backend/history.login.forgot') . ' ' . Input::only('email');
+                    $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+                    $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
                 });
         switch ($response) {
             case Password::INVALID_USER:
@@ -108,3 +118,4 @@ class LoginController extends \BaseController {
     }
 
 }
+

@@ -59,17 +59,16 @@ class ProjectController extends \BaseController {
         if (!$validate->fails()) {
             $from = strtotime(Input::get('from'));
             $to = strtotime(Input::get('to'));
-            $objHistoryAdmin = new tblHistoryAdminModel();
             if ($from > $to) {
                 Session::flash('alert_error', Lang::get('messages.date_begin_end'));
                 return Redirect::back()->withInput(Input::all());
             } else {
-
-                $objadmin = \Auth::user();
-                $id = $objadmin->id;
                 $attList = Input::get('ImagePath');
                 $objProject->updateProject($pid, Input::get('projectName'), $from, $to, Input::get('projectDescription'), Input::get('projectContent'), $attList, Input::get('status'));
-                //  $objHistoryAdmin->addHistory($id, Lang::get('backend/history.project.update') . Input::get('projectDescription'), 0);
+              $objAdmin = \Auth::user();
+                $historyContent = Lang::get('backend/history.project.update') . Input::get('projectName');
+                $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+                $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
                 Session::flash('alert_success', Lang::get('messages.update.success'));
                 return Redirect::back();
             }
@@ -98,19 +97,17 @@ class ProjectController extends \BaseController {
         if (!$validate->fails()) {
             $from = strtotime(Input::get('from'));
             $to = strtotime(Input::get('to'));
-            $objHistoryAdmin = new tblHistoryAdminModel();
-
             if ($from > $to) {
                 Session::flash('alert_error', Lang::get('messages.date_begin_end'));
                 return Redirect::back()->withInput(Input::all());
             } else {
-
-                $objadmin = \Auth::user();
-                $id = $objadmin->id;
                 $attList = Input::get('ImagePath');
                 $idproject = $objProject->addProject(Input::get('projectName'), $from, $to, Input::get('projectDescription'), Input::get('projectContent'), $attList, Input::get('status'));
 
-                //     $objHistoryAdmin->addHistory($id, Lang::get('backend/history.project.create') . Input::get('projectDescription'), 0);
+                $objAdmin = \Auth::user();
+                $historyContent = Lang::get('backend/history.project.create') . Input::get('projectName');
+                $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+                $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
                 Session::flash('alert_success', Lang::get('messages.add.success'));
                 return Redirect::action('\BackEnd\ProjectController@getProjectView');
             }
@@ -128,9 +125,10 @@ class ProjectController extends \BaseController {
                 $objProject = new tblProjectModel();
                 $objProject->deleteProject($item);
 
-                $objadmin = Session::get('adminSession');
-                $id = $objadmin[0]->id;
-                $objHistoryAdmin->addHistory($id, Lang::get('backend/history.project.delete'), 0);
+               $objAdmin = \Auth::user();
+                $historyContent = Lang::get('backend/history.project.delete') . $item;
+                $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+                $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
             }
         }
         $objProject = new tblProjectModel();
@@ -142,11 +140,11 @@ class ProjectController extends \BaseController {
     public function postDeleteProject() {
         $objProject = new tblProjectModel();
         $objProject->deleteProject(Input::get('id'));
-
-        $objadmin = \Auth::user();
-        $id = $objadmin->id;
-        $objHistoryAdmin = new tblHistoryAdminModel();
-        // $objHistoryAdmin->addHistory($id, Lang::get('backend/history.project.delete'), 0);
+            $project = $objProject->getProjectById(Input::get('id'));
+    $objAdmin = \Auth::user();
+        $historyContent = Lang::get('backend/history.project.delete') . $project->projectName;
+        $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
 
         $arrayProject = $objProject->selectAllProject(5, 'id');
         $link = $arrayProject->links();
@@ -156,11 +154,12 @@ class ProjectController extends \BaseController {
     public function postProjectActive() {
         $objProject = new tblProjectModel();
         $objProject->updateProject(Input::get('id'), '', '', '', '', '', '', Input::get('status'));
-        $objHistoryAdmin = new tblHistoryAdminModel();
-        $objadmin = \Auth::user();
-        $id = $objadmin->id;
-        //    $objHistoryAdmin->addHistory($id, Lang::get('backend/history.project.active'), 0);
+         $project = $objProject->getProjectById(Input::get('id'));
 
+        $objAdmin = \Auth::user();
+        $historyContent = Lang::get('backend/history.project.update') . $project->projectName;
+        $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
         $arrayProject = $objProject->selectAllProject(5, 'id');
         $link = $arrayProject->links();
         return View::make('backend.project.Projectajax')->with('dataProject', $arrayProject)->with('link', $link);
@@ -191,3 +190,4 @@ class ProjectController extends \BaseController {
     }
 
 }
+

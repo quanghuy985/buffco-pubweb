@@ -16,6 +16,13 @@ return array(
         'success' => 'Cập nhật thành công.',
         'error' => 'Có lỗi xảy ra trong quá trình cập nhật.'
     ),
+    'order' => array(
+        'do_nothing' => 'Bạn chưa update đơn hàng.',
+        'success' => 'Xử lý thành công đơn hàng.',
+        'not_enough' => 'Lượng hàng trong kho không đủ để thực hiện đơn hàng này.',
+        'done' => 'Không thể xử lý đơn hàng đã hoàn thành.',
+        'delete' => 'Xóa thành công đơn hàng.'
+    ),
     'delete' => array(
         'success' => 'Xoá thành công.',
         'error' => 'Có lỗi xảy ra trong quá trình xoá.'

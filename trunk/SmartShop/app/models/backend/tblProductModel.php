@@ -30,7 +30,7 @@ class TblProductModel extends \Eloquent {
                 ->where('id', $pid)
                 ->update(array('productSlug' => $productSlug . "-" . $pid));
 
-        if (isset($listcateID)) {
+        if ($listcateID != '') {
             foreach ($listcateID as $item) {
                 DB::table('tbl_product_views')->insert(
                         array('product_id' => $pid, 'category_product_id' => $item)
@@ -87,7 +87,7 @@ class TblProductModel extends \Eloquent {
             $arraysql = array_merge($arraysql, array("images" => $images));
         }
         DB::table('tbl_product_views')->where('product_id', '=', $id)->delete();
-        if (isset($listcateID)) {
+        if ($listcateID != '') {
             foreach ($listcateID as $item) {
                 DB::table('tbl_product_views')->insert(
                         array('product_id' => $id, 'category_product_id' => $item)
@@ -110,7 +110,6 @@ class TblProductModel extends \Eloquent {
 
     public function getCatProductById($productID) {
         $arrProduct = DB::table('tbl_product_category')->join('tbl_product_views', 'tbl_product_category.id', '=', 'tbl_product_views.category_product_id')->select('tbl_product_category.*')->where('tbl_product_views.product_id', '=', $productID)->get();
-
         $listreturn = array();
         foreach ($arrProduct as $value) {
             $listreturn[] = $value->id;
@@ -142,83 +141,4 @@ class TblProductModel extends \Eloquent {
         }
     }
 
-//    // Version cũ
-//    public function deleteProduct($productID) {
-//        $checkdel = $this->where('id', '=', $productID)->update(array('status' => 2));
-//        if ($checkdel > 0) {
-//            return TRUE;
-//        } else {
-//            return FALSE;
-//        }
-//    }
-//
-//    public function getAllProduct($from, $to, $status, $keyword, $per_page) {
-//        $query = DB::table('tbl_product')->leftJoin('tblcategoryproduct', 'tbl_product.cateID', '=', 'tblcategoryproduct.id')->leftJoin('tblstore', 'tbl_product.id', '=', 'tblstore.productID')->select('tbl_product.*', 'tblcategoryproduct.cateName', DB::raw('SUM(tblstore.soluongnhap) as soluong'), DB::raw('SUM(tblstore.soluongban) as daban'));
-//        if ($from != null && $to != null && $from != 0 && $to != 0) {
-//            $query->whereBetween('tbl_product.time', array($from, $to));
-//        }
-//        if ($status != null) {
-//            $query->where('tbl_product.status', '=', $status);
-//        }
-//        if ($keyword != null) {
-//            $query->where('tbl_product.productCode', 'LIKE', '%' . $keyword . '%')->orWhere('tbl_product.productCode', 'LIKE', '%' . $keyword . '%')->orWhere('tbl_product.productName', 'LIKE', '%' . $keyword . '%')->orWhere('tbl_product.productDescription', 'LIKE', '%' . $keyword . '%')->orWhere('tbl_product.attributes', 'LIKE', '%' . $keyword . '%');
-//        }
-//        $results = $query->orderBy('tbl_product.id', 'desc')->groupBy('tbl_product.id')->paginate($per_page);
-//        return $results;
-//    }
-//
-//    public function getAllProductFillter($fromdate, $todate, $status, $per_page) {
-//        if ($status == '') {
-//            if ($fromdate == '' || $todate == '') {
-//                $arrProduct = DB::table('tbl_product')->join('tblcategoryproduct', 'tbl_product.cateID', '=', 'tblcategoryproduct.id')->join('tblstore', 'tbl_product.id', '=', 'tblstore.productID')->select('tbl_product.*', 'tblcategoryproduct.cateName', DB::raw('SUM(tblstore.soluongnhap) as soluong'), DB::raw('SUM(tblstore.soluongban) as daban'))->orderBy('tbl_product.id', 'desc')->groupBy('tbl_product.id')->paginate($per_page);
-//            } else {
-//                $arrProduct = DB::table('tbl_product')->join('tblcategoryproduct', 'tbl_product.cateID', '=', 'tblcategoryproduct.id')->join('tblstore', 'tbl_product.id', '=', 'tblstore.productID')->select('tbl_product.*', 'tblcategoryproduct.cateName', DB::raw('SUM(tblstore.soluongnhap) as soluong'), DB::raw('SUM(tblstore.soluongban) as daban'))->orderBy('tbl_product.id', 'desc')->groupBy('tbl_product.id')->whereBetween('tbl_product.time', array($fromdate, $todate))->paginate($per_page);
-//            }
-//        } else {
-//            if ($fromdate == '' || $todate == '') {
-//                $arrProduct = DB::table('tbl_product')->join('tblcategoryproduct', 'tbl_product.cateID', '=', 'tblcategoryproduct.id')->join('tblstore', 'tbl_product.id', '=', 'tblstore.productID')->select('tbl_product.*', 'tblcategoryproduct.cateName', DB::raw('SUM(tblstore.soluongnhap) as soluong'), DB::raw('SUM(tblstore.soluongban) as daban'))->orderBy('tbl_product.id', 'desc')->groupBy('tbl_product.id')->where('tbl_product.status', '=', $status)->paginate($per_page);
-//            } else {
-//                $arrProduct = DB::table('tbl_product')->join('tblcategoryproduct', 'tbl_product.cateID', '=', 'tblcategoryproduct.id')->join('tblstore', 'tbl_product.id', '=', 'tblstore.productID')->select('tbl_product.*', 'tblcategoryproduct.cateName', DB::raw('SUM(tblstore.soluongnhap) as soluong'), DB::raw('SUM(tblstore.soluongban) as daban'))->orderBy('tbl_product.id', 'desc')->groupBy('tbl_product.id')->where('tbl_product.status', '=', $status)->whereBetween('tbl_product.time', array($fromdate, $todate))->paginate($per_page);
-//            }
-//        }
-//
-//        return $arrProduct;
-//    }
-//
-//    public function getAllProductSearch($keyword, $per_page) {
-//        $arrProduct = DB::table('tbl_product')->join('tblcategoryproduct', 'tbl_product.cateID', '=', 'tblcategoryproduct.id')->join('tblstore', 'tbl_product.id', '=', 'tblstore.productID')->select('tbl_product.*', 'tblcategoryproduct.cateName', DB::raw('SUM(tblstore.soluongnhap) as soluong'), DB::raw('SUM(tblstore.soluongban) as daban'))->orderBy('tbl_product.id', 'desc')->groupBy('tbl_product.id')->where('tbl_product.productCode', 'LIKE', '%' . $keyword . '%')->orWhere('tbl_product.productCode', 'LIKE', '%' . $keyword . '%')->orWhere('tbl_product.productName', 'LIKE', '%' . $keyword . '%')->orWhere('tbl_product.productDescription', 'LIKE', '%' . $keyword . '%')->orWhere('tbl_product.attributes', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
-//        return $arrProduct;
-//    }
-//
-//    public function FindProduct($keyword, $per_page, $orderby, $status) {
-//        $arrProduct = '';
-//        if ($status == '') {
-//            $arrProduct = DB::table('tbl_product')->join('tblcategoryproduct', 'tbl_product.cateID', '=', 'tblcategoryproduct.id')->select('tbl_product.*', 'tblcategoryproduct.cateName')->where('tbl_product.productName', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);
-//        } else {
-//            $arrProduct = DB::table('tbl_product')->join('tblcategoryproduct', 'tbl_product.cateID', '=', 'tblcategoryproduct.id')->select('tbl_product.*', 'tblcategoryproduct.cateName')->where('tbl_product.productName', 'LIKE', '%' . $keyword . '%')->where('tbl_product.status', '=', $status)->orderBy($orderby, 'desc')->paginate($per_page);
-//        }
-//        return $arrProduct;
-//    }
-//
-//    //Thá»‘ng kÃª sáº£n pháº©m theo tráº¡ng thÃ¡i
-//    public function getProductByStt($status) {
-//        $arrProduct = DB::table('tbl_product')->where('status', '=', $status)->count();
-//        return $arrProduct;
-//    }
-//
-//    //Thá»‘ng kÃª sáº£n pháº©m Ä‘Æ°á»£c mua nhiá»�u nháº¥t
-//    public function getTopTenProduct() {
-//        $arrProduct = DB::table('tbl_product')->join('tblorder', 'tbl_product.id', '=', 'tblorder.productID')->select('tbl_product.*')->distinct()->orderBy('id', 'desc')->limit(5)->get();
-//        return $arrProduct;
-//    }
-//
-//    public function countSlug($slug) {
-//        $objProduct = DB::table('tbl_product')->where('productSlug', 'LIKE', $slug . '%')->count();
-//        return $objProduct;
-//    }
-//
-//    public function getProductByCode($code) {
-//        $objProduct = DB::table('tbl_product')->where('productCode', '=', $code)->get();
-//        return $objProduct;
-//    }
 }

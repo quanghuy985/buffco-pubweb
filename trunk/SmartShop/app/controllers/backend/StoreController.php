@@ -8,6 +8,14 @@ namespace BackEnd;
  * and open the template in the editor.
  */
 
+use BackEnd,
+    View,
+    Lang,
+    Redirect,
+    Session,
+    Input,
+    Validator;
+
 class StoreController extends \BaseController {
 
     public function getView() {
@@ -47,6 +55,12 @@ class StoreController extends \BaseController {
         if (!Validator::make(Input::all(), $rules)->fails()) {
             $tblStore = new tblStoreModel();
             $tblStore->addStore(Input::get('productID'), Input::get('sizeID'), Input::get('colorID'), Input::get('soluongnhap'), 1);
+
+            $objAdmin = \Auth::user();
+            $historyContent = Lang::get('backend/history.store.add') . Input::get('productID');
+            $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+
             $tblStore1 = new tblStoreModel();
             $arrStore = $tblStore1->getStoreByProductID(Input::get('productID'));
             $link = $arrStore->links();
@@ -80,6 +94,12 @@ class StoreController extends \BaseController {
         if (!Validator::make(Input::all(), $rules)->fails()) {
             $tblStore = new tblStoreModel();
             $tblStore->updateStore(Input::get('id'), '', Input::get('colorID'), Input::get('sizeID'), Input::get('soluongnhap'), '', '');
+
+            $objAdmin = \Auth::user();
+            $historyContent = Lang::get('backend/history.store.update') . Input::get('id');
+            $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+
             return 'true';
         } else {
             return 'false';
@@ -93,6 +113,12 @@ class StoreController extends \BaseController {
         if (!Validator::make(Input::all(), $rules)->fails()) {
             $tblStore = new tblStoreModel();
             $tblStore->updateStore(Input::get('id'), '', '', '', '', '', 2);
+
+            $objAdmin = \Auth::user();
+            $historyContent = Lang::get('backend/history.store.delete') . Input::get('id');
+            $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+
             $tblStore1 = new tblStoreModel();
             $arrStore = $tblStore1->getStoreByProductID(Input::get('productID'));
             $link = $arrStore->links();

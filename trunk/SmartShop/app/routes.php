@@ -39,7 +39,6 @@ Route::group(array('prefix' => 'admin', 'before' => 'csrf'), function() {
     Route::controller('users', '\BackEnd\LoginController');
     Route::controller('setting', '\BackEnd\SettingController');
     Route::controller('admin', '\BackEnd\AdminController');
-    Route::controller('group-admin', '\BackEnd\GroupAdminController');
     Route::controller('customer', '\BackEnd\UserController');
     Route::controller('feedbacks', '\BackEnd\FeedbackController');
     Route::controller('news', '\BackEnd\NewsController');
@@ -48,9 +47,9 @@ Route::group(array('prefix' => 'admin', 'before' => 'csrf'), function() {
     Route::controller('orders', '\BackEnd\OrderController');
     Route::controller('supporter', '\BackEnd\SupporterController');
     Route::controller('group-supporter', '\BackEnd\SupporterGroupController');
+    Route::controller('history-user', '\BackEnd\HistoryUserController');
     Route::controller('pages', '\BackEnd\PageController');
     Route::controller('projects', '\BackEnd\ProjectController');
-    Route::controller('menus', '\BackEnd\MenuController');
     Route::controller('menunew', '\BackEnd\MenusController');
     Route::controller('products', '\BackEnd\ProductController');
     Route::controller('category-products', '\BackEnd\CategoryProductController');

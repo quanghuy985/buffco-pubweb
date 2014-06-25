@@ -8,6 +8,14 @@ namespace BackEnd;
  * and open the template in the editor.
  */
 
+use BackEnd,
+    View,
+    Redirect,
+    Validator,
+    Input,
+    Session,
+    Lang;
+
 class ColorController extends \BaseController {
 
     public function getAddColor() {
@@ -19,6 +27,12 @@ class ColorController extends \BaseController {
     public function postAddColor() {
         $tblColorModel = new tblColorModel();
         $check = $tblColorModel->addColor(Input::get('colorname'), Input::get('colorpicker'));
+
+        $historyContent = Lang::get('backend/history.color.add') . ' ' . Input::get('colorname');
+        $objAdmin = \Auth::user();
+        $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+
         $tblColorModel = new tblColorModel();
         $arrColor = $tblColorModel->selectAll(10);
         return Redirect::action('ColorController@getAddColor');
@@ -28,6 +42,14 @@ class ColorController extends \BaseController {
         try {
             $tblColorModel = new tblColorModel();
             $check = $tblColorModel->addColor(Input::get('colorName'), Input::get('colorCode'));
+
+
+            $historyContent = Lang::get('backend/history.color.add') . ' ' . Input::get('colorname');
+            $objAdmin = \Auth::user();
+            $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+
+
             $tblColorModel = new tblColorModel();
             $arrColor = $tblColorModel->selectAll(100);
 
@@ -53,7 +75,15 @@ class ColorController extends \BaseController {
 
     public function postDelColor() {
         $tblColorModel = new tblColorModel();
+
         $check = $tblColorModel->deleteColor(Input::get('id'));
+
+        $color = $tblColorModel->selectColorbyId(Input::get('id'));
+        $historyContent = Lang::get('backend/history.color.delete') . ' ' . $color->colorName;
+        $objAdmin = \Auth::user();
+        $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+
         return 'true';
     }
 
@@ -68,6 +98,12 @@ class ColorController extends \BaseController {
     public function postEditColor() {
         $tblColorModel = new tblColorModel();
         $check = $tblColorModel->editColor(Input::get('idcolor'), Input::get('colorname'), Input::get('colorpicker'), 1);
+
+        $historyContent = Lang::get('backend/history.color.update') . ' ' . Input::get('colorname');
+        $objAdmin = \Auth::user();
+        $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+
         return Redirect::action('ColorController@getAddColor');
     }
 
