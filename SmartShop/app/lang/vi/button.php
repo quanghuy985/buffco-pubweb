@@ -19,6 +19,7 @@ return array(
     'forgot_password' => 'Quên mật khẩu',
     'click_here' => 'Click vào đây',
     'send_email' => 'Gửi email',
+    'btHistory' => 'Lịch sử hoạt động',
     'choose_image' => 'Chọn hình ảnh',
     'jAlertCancel' => 'Hủy',
     'jAlertOk' => 'Đồng ý',
@@ -57,3 +58,4 @@ return array(
         'trash' => 'Xoá'
     ),
 );
+

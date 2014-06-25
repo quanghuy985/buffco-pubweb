@@ -8,105 +8,140 @@ namespace BackEnd;
  * and open the template in the editor.
  */
 
+use View;
+
 class HistoryUserController extends \BaseController {
 
-    public function getHistoryView($msg = '') {
-        $objHistory = new tblHistoryUserModel();
-
-        $check = $objHistory->selectAllHistory(5, 'id');
+    public function getUserHistory($user_id = '') {
+        $objHistory = new \BackEnd\tblHistoryUserModel();
+        $tblUserModel = new \BackEnd\tblUserModel();
+        $objUser = $tblUserModel->getUserById($user_id);
+        $admin = $objUser->admin;
+        $check = $objHistory->getHistoryByUserIDPagination($user_id, $admin, 10);
         //var_dump($check);
         $link = $check->links();
-        if ($msg != '') {
-            return View::make('backend.historyuser.HistoryManage')->with('arrHistory', $check)->with('link', $link)->with('msg', $msg);
+
+        return View::make('backend.historyuser.HistoryManage')->with('objUser', $objUser)->with('arrHistory', $check)->with('link', $link);
+    }
+
+    public function getHistoryUserSearchView($user_id = '', $two = '') {
+        if ($user_id == 'null') {
+            $user_id = '';
+        }
+        if ($two == 'null') {
+            $two = '';
+        }
+        $tblUserModel = new \BackEnd\tblUserModel();
+        $objUser = $tblUserModel->getUserById($user_id);
+        $admin = $objUser->admin;
+        $objHistory = new \BackEnd\tblHistoryUserModel();
+        $arrHistory = $objHistory->FindHistoryUserRow($two, $user_id, $admin, 10);
+
+
+        $link = $arrHistory->links();
+        if (\Request::ajax()) {
+            return View::make('backend.historyuser.HistoryUserajax')->with('arrHistory', $arrHistory)->with('link', $link);
         } else {
-            return View::make('backend.historyuser.HistoryManage')->with('arrHistory', $check)->with('link', $link);
+            return View::make('backend.historyuser.HistoryManage')->with('objUser', $objUser)->with('arrHistory', $arrHistory)->with('link', $link);
+        }
+    }
+
+    public function postHistoryUserSearchView() {
+        $user_id = \Input::get('user_id');
+        $two = \Input::get('searchblur');
+        if ($user_id == '') {
+            $user_id = 'null';
+        }
+        if ($two == '') {
+            $two = 'null';
+        }
+        return \Redirect::action('\BackEnd\HistoryUserController@getHistoryUserSearchView', array($user_id, $two));
+    }
+
+    public function postHistoryUserFillterView() {
+        $one = strtotime(\Input::get('from'));
+        $two = strtotime(\Input::get('to'));
+        $three = \Input::get('fillter_status');
+        $user_id = \Input::get('user_id');
+        if ($one == '') {
+            $one = 'null';
+        }
+        if ($two == '') {
+            $two = 'null';
+        }
+        if ($three == '') {
+            $three = 'null';
+        }
+        return \Redirect::action('\BackEnd\HistoryUserController@getHistoryUserFillterView', array($one, $two, $three, $user_id));
+    }
+
+    public function getHistoryUserFillterView($one = '', $two = '', $three = '', $user_id = '') {
+        if ($one == 'null') {
+            $one = '';
+        }
+        if ($two == 'null') {
+            $two = '';
+        }
+        if ($three == 'null') {
+            $three = '';
+        }
+        $tblUserModel = new \BackEnd\tblUserModel();
+        $objUser = $tblUserModel->getUserById($user_id);
+        $admin = $objUser->admin;
+        $objHistory = new \BackEnd\tblHistoryUserModel();
+        $arrHistory = $objHistory->getAllHistoryUser($one, $two, $three, $user_id, $admin, 10);
+        $link = $arrHistory->links();
+        if (\Request::ajax()) {
+            return View::make('backend.historyuser.HistoryUserajax')->with('arrHistory', $arrHistory)->with('link', $link);
+        } else {
+            return View::make('backend.historyuser.HistoryManage')->with('objUser', $objUser)->with('arrHistory', $arrHistory)->with('link', $link);
         }
     }
 
     public function postDelmulte() {
-        $pieces1 = explode(",", Input::get('multiid'));
+        $objHistory = new \BackEnd\tblHistoryUserModel();
+        $user_id = \Input::get('user');
+        $pieces1 = explode(",", \Input::get('multiid'));
         foreach ($pieces1 as $item) {
             if ($item != '') {
-                $objHistory = new tblHistoryUserModel();
                 $objHistory->deleteHistory($item);
             }
         }
-        $objHistory = new tblHistoryUserModel();
-        $data = $objHistory->findHistory('', 5, 'id', '');
-        $link = $data->links();
-        return View::make('backend.historyuser.HistoryUserajax')->with('arrayHistory', $data)->with('link', $link);
-    }
 
-    public function postDeleteHistory() {
-        $objHistory = new tblHistoryUserModel();
-        $objHistory->deleteHistory(Input::get('id'));
-        //echo $tblPageModel;
-        $arrhistory = $objHistory->selectAllHistory(5, 'id');
-        $link = $arrhistory->links();
-        return View::make('backend.historyuser.HistoryUserajax')->with('arrayHistory', $arrhistory)->with('link', $link);
+        $tblUserModel = new \BackEnd\tblUserModel();
+        $objUser = $tblUserModel->getUserById($user_id);
+        $admin = $objUser->admin;
+        $check = $objHistory->getHistoryByUserIDPagination($user_id, $admin, 10);
+        //var_dump($check);
+        $link = $check->links();
+        if (\Request::ajax()) {
+            return View::make('backend.historyuser.HistoryUserajax')->with('arrHistory', $check)->with('link', $link);
+        } else {
+            return View::make('backend.historyuser.HistoryManage')->with('objUser', $objUser)->with('arrHistory', $check)->with('link', $link);
+        }
     }
 
     public function postHistoryActive() {
-        $objHistory = new tblHistoryUserModel();
-        $objHistory->updateHistory(Input::get('id'), Input::get('status'));
-        $arrhistory = $objHistory->selectAllHistory(5, 'id');
-        $link = $arrhistory->links();
-        return View::make('backend.historyuser.HistoryUserajax')->with('arrayHistory', $arrhistory)->with('link', $link);
-    }
-
-    public function postAjaxhistoryuser() {
-        $objHistory = new tblHistoryUserModel();
-        $data = $objHistory->selectAllHistory(5, 'id');
-        $link = $data->links();
-        return View::make('backend.historyuser.HistoryUserajax')->with('arrayHistory', $data)->with('link', $link);
-    }
-
-    public function postAjaxsearch() {
-        $objHistory = new tblHistoryUserModel();
-        $data = $objHistory->SearchHistory(trim(Input::get('keyword')), 5, 'id');
-        $link = $data->links();
-        return View::make('backend.historyuser.HistoryUserajax')->with('arrayHistory', $data)->with('link', $link);
-    }
-
-    public function postFillterHistory() {
-
-        $objHistory = new tblHistoryUserModel();
-        $from = strtotime(Input::get('from'));
-        $to = strtotime(Input::get('to'));
-        $data = $objHistory->findHistory(5, $from, $to, Input::get('status'));
-        $link = $data->links();
-        return View::make('backend.historyuser.HistoryUserajax')->with('arrayHistory', $data)->with('link', $link);
-    }
-
-    public function getSearchDateHistory() {
-
-        $objHistory = new tblHistoryUserModel();
-        $from = strtotime(Input::get('from'));
-        $to = strtotime(Input::get('to'));
-
-        if (isset($from) && isset($to)) {
-            $data = $objHistory->findHistoryByDate($from, $to, 5, 'id');
+        $tblUserModel = new \BackEnd\tblUserModel();
+        $user_id = \Input::get('user');
+        $objUser = $tblUserModel->getUserById($user_id);
+        $admin = $objUser->admin;
+        $objHistory = new \BackEnd\tblHistoryUserModel();
+        if ($admin == 0) {
+            $objHistory->updateHistory(\Input::get('id'), $admin, \Input::get('status'));
+        } else {
+            $objHistory->updateHistory(\Input::get('id'), $admin, \Input::get('status'));
         }
-        //echo count($data);
-        $link = $data->links();
-
-        return View::make('backend.historyuser.HistoryManage')->with('arrHistory', $data)->with('link', $link);
+        $check = $objHistory->getHistoryByUserIDPagination($user_id, $admin, 10);
+        //var_dump($check);
+        $link = $check->links();
+        if (\Request::ajax()) {
+            return View::make('backend.historyuser.HistoryUserajax')->with('arrHistory', $check)->with('link', $link);
+        } else {
+            return View::make('backend.historyuser.HistoryManage')->with('objUser', $objUser)->with('arrHistory', $check)->with('link', $link);
+        }
     }
 
-    public function postSearchDateHistory() {
 
-        $objHistory = new tblHistoryUserModel();
-
-        $from = strtotime(Input::get('from'));
-        $to = strtotime(Input::get('to'));
-
-
-        $data = $objHistory->findHistoryByDate($from, $to, 5, 'id');
-
-        //echo count($data);
-        $link = $data->links();
-
-        return View::make('backend.historyuser.HistoryUserajax')->with('arrayHistory', $data)->with('link', $link);
-    }
-
+    // Phiên bản chưa sửa ----------------->
 }

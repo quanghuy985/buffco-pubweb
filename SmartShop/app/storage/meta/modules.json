@@ -1,9 +1,0 @@
-{
-    "fontend": {
-        "enabled": true,
-        "provider": "App\\Modules\\Fontend\\FontendServiceProvider",
-        "name": "fontend",
-        "order": 0,
-        "group": "app\/modules"
-    }
-}

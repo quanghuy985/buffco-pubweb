@@ -49,6 +49,7 @@ return array(
     ),
     //admin
     'user_status' => array(
+         '' => 'Tất cả',
         0 => 'Khóa',
         1 => 'Đã kích hoạt',
         2 => 'Xoá',
@@ -65,6 +66,13 @@ return array(
         0 => 'Chưa xem',
         1 => 'Đã xem',
         2 => 'Xoá',
+    ),
+     'order_status' => array(
+        '' => 'Tất cả',
+        0 => 'Chờ xử lý',
+        1 => 'Hoàn tất',
+        2 => 'Xoá',
+        3 => 'Đã thanh toán',
     ),
     'action' => 'Chức năng',
     'edit' => 'Sửa',
@@ -150,11 +158,18 @@ return array(
     'imported' => 'Số lượng nhập',
     'sold' => 'Số lượng bán',
     'order' => array(
-        'code' => 'Mã sản phẩm',
-        'user' => '',
-        'name' => 'Họ tên người nhận hàng',
-        'phone' => 'Số điện thoại người nhận hàng',
-        'address' => 'Địa chỉ nhận hàng',
+       'stt' => 'STT',
+        'code' => 'Mã đơn hàng :',
+        'time' => 'Mua ngày',
+        'status' => 'Trạng thái',
+        'detail' => 'Chi tiết đơn hàng',
+        'productDetail' => 'Thông tin sản phẩm',
+        'user' => 'Tài khoản người mua: ',
+        'name' => 'Người nhận hàng :',
+        'buyername' => 'Người mua hàng :',
+        'buyerphone' => 'Điện thoại người mua :',
+        'phone' => 'Điện thoại người nhận :',
+        'address' => 'Địa chỉ giao hàng :',
         'total_price' => 'Thành tiền',
         'total_grand' => 'Tổng tiền'
     ),
@@ -178,5 +193,7 @@ return array(
     'group_acl' => 'Nhóm quyền',
     'group_support' => 'Nhóm hỗ trợ viên',
     'group_support_name' => 'Tên nhóm hỗ trợ viên',
-    'supporterName' => 'Tên hỗ trợ viên'
+    'supporterName' => 'Tên hỗ trợ viên',
+     'admin_roles' => 'Phân quyền'
 );
+

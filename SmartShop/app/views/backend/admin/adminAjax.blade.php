@@ -8,12 +8,10 @@ $user_status = Lang::get('general.user_status');
 @foreach($arrayAdmin as $item)
 <tr>
     <td><label value="cateMenuer">{{$i++ }}</label></td>
-    <td><label value="cateMenuer">{{str_limit( $item->email, 30, '...')}}</label></td>
+    <td><label value="cateMenuer"><a href="{{URL::action('\BackEnd\AdminController@getAdminDetail')}}?email={{$item->email}}">{{str_limit( $item->email, 30, '...')}}</a></label></td>
     <td><label value="cateMenuer">{{str_limit( $item->firstname.' '.$item->lastname, 30, '...')}}</label></td>
-    <td><label value="cateMenuer"><a href="{{URL::action('\BackEnd\GroupAdminController@getGroupAdminEdit')}}?id={{$item->group_admin_id}}">{{str_limit( $item->groupadminName, 30, '...')}}</a> </label>
-
+    <td><label value="cateMenuer">{{str_limit( $item->phone, 30, '...')}} </label>
     </td>
-    <td><label value="cateMenuer"><?php echo date('d/m/Y h:i:s', $item->time); ?></label></td>
     <td><label value="cateMenuer">
             <?php
             if (array_key_exists($item->status, $user_status)) {
@@ -23,15 +21,16 @@ $user_status = Lang::get('general.user_status');
         </label>
     </td>
     <td>
-        <a href="{{URL::action('\BackEnd\AdminController@getAdminEdit')}}?id={{$item->email}}" class="btn btn4 btn_book" title="{{Lang::get('button.btn2.book')}}"></a>
+        <a title="{{Lang::get('general.edit')}}" href="<?php echo action('\BackEnd\AdminController@getAdminEdit') ?>/{{$item->email}}"> {{Lang::get('general.edit')}}</a>
         @if($item->status=='2')
-        <a href="javascript: void(0)" onclick="kichhoat('{{$item->id}}', 0)" class="btn btn4 btn_flag" title="{{Lang::get('button.btn2.flag')}}"></a>
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+        <a title="{{Lang::get('general.active')}}" href="javascript:void(0);" onclick="kickhoat('{{URL::action('\BackEnd\AdminController@postAdminActive')}}','{{$item->email}}',{{$arrayAdmin->getCurrentPage()}});"> {{Lang::get('general.active')}}</a>
         @endif
         @if($item->status=='0')
-        <a href="javascript: void(0)" onclick="kichhoat('{{$item->id}}', 1)" class="btn btn4 btn_world" title="{{Lang::get('button.btn2.world')}}"></a>
         @endif
         @if($item->status!='2')
-        <a href="javascript: void(0)" onclick="xoasanpham('{{$item->email}}')" class="btn btn4 btn_trash" title="{{Lang::get('button.btn2.trash')}}"></a>
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+        <a title="{{Lang::get('general.delete')}}" href="javascript:void(0);" onclick="deleteproduct('{{URL::action('\BackEnd\AdminController@postDeleteAdmin')}}','{{$item->email}}',{{$arrayAdmin->getCurrentPage()}});"> {{Lang::get('general.delete')}}</a>
         @endif
 
     </td>
@@ -39,6 +38,6 @@ $user_status = Lang::get('general.user_status');
 @endforeach
 @if($link!='')
 <tr>
-    <td colspan="7">{{$link}}</td>
+    <td colspan="6">{{$link}}</td>
 </tr>
 @endif

@@ -46,6 +46,7 @@
             <label>{{Lang::get('general.email')}}</label>
             <span class="field">
                 {{Form::text('email', null, array('id'=>'email','class'=>'longinput', 'placeholder'=>Lang::get('placeholder.email')))}}
+                
             </span>
         </p>
         <p>

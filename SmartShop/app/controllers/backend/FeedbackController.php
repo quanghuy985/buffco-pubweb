@@ -105,8 +105,10 @@ class FeedbackController extends \BaseController {
         }
         $tblFeedbackModel = new tblFeedbackModel();
         $tblFeedbackModel->updateFeedback(Input::get('id'), 1);
-        $objAdmin = Session::get('adminSession');
-        $historyContent = Lang::get('backend/history.feedback.reply') . ':' . Input::get('feedbackSubject');
+            $objAdmin = \Auth::user();
+        $historyContent = Lang::get('backend/history.feedback.reply') . ' ' . Input::get('userEmail');
+        $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
         Mail::send('emails.feedback.feedback', array('noidung' => $contentFeedback, 'traloi' => $contentReply), function($message) {
             $message->from('no-rep@pubweb.vn', 'Pubweb.vn');
             $message->to(Input::get('userEmail'));
@@ -119,7 +121,13 @@ class FeedbackController extends \BaseController {
     public function postXoaPhanHoi() {
         $tblFeedbackModel = new tblFeedbackModel();
         $tblFeedbackModel->deleteFeedback(Input::get('id'));
+        
+        $objAdmin = \Auth::user();
+        $historyContent = Lang::get('backend/history.feedback.delete') . ' ' . Input::get('id');
+        $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
         return \Redirect::action('\BackEnd\FeedbackController@getFeedBack');
     }
 
 }
+

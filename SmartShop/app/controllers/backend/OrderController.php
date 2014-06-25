@@ -2,7 +2,13 @@
 
 namespace BackEnd;
 
-use View;
+use BackEnd,
+    View,
+    Input,
+    Validator,
+    Lang,
+    Session,
+    Redirect;
 
 class OrderController extends \BaseController {
     /*
@@ -14,78 +20,108 @@ class OrderController extends \BaseController {
       | based routes. That's great! Here is an example controller method to
       | get you started. To route to this controller, just add the route:
       |
-      |	Route::get('/', 'HomeController@showWelcome');
+      | Route::get('/', 'HomeController@showWelcome');
       |
      */
 
-    public function getViewAll($thongbao = '') {
-        $tblOderModel = new tblOrderModel();
-        $orderdata = $tblOderModel->allOrder(10, 'time');
-        $page = $orderdata->links();
+    public function postOrderFillterView() {
+        $one = strtotime(\Input::get('from'));
+        $two = strtotime(\Input::get('to'));
+        $three = \Input::get('fillter_status');
+        if ($one == '') {
+            $one = 'null';
+        }
+        if ($two == '') {
+            $two = 'null';
+        }
+        if ($three == '') {
+            $three = 'null';
+        }
+        return \Redirect::action('\BackEnd\OrderController@getOrderFillterView', array($one, $two, $three));
+    }
 
-        if ($thongbao == '') {
-            return View::make('backend.order.orderproduct')->with('arrOrder', $orderdata)->with('page', $page);
+    public function getOrderFillterView($one = '', $two = '', $three = '') {
+        if ($one == 'null') {
+            $one = '';
+        }
+        if ($two == 'null') {
+            $two = '';
+        }
+        if ($three == 'null') {
+            $three = '';
+        }
+        $tblOderModel = new \BackEnd\tblOrderModel();
+
+        $arrOrder = $tblOderModel->getAllOrderFilter($one, $two, $three, 10);
+        $page = $arrOrder->links();
+        if (\Request::ajax()) {
+            return View::make('backend.order.orderproductajax')->with('arrOrder', $arrOrder)->with('page', $page);
         } else {
-            return View::make('backend.order.orderproduct')->with('arrOrder', $orderdata)->with('page', $page)->with('thongbao', $thongbao);
+            return View::make('backend.order.orderproduct')->with('arrOrder', $arrOrder)->with('page', $page);
+        }
+    }
+
+    public function postOrderSearchView() {
+        $two = \Input::get('searchblur');
+        if ($two == '') {
+            $two = 'null';
+        }
+        return \Redirect::action('\BackEnd\OrderController@getOrderSearchView', array($two));
+    }
+
+    public function getOrderSearchView($two = '') {
+
+        if ($two == 'null') {
+            $two = '';
+        }
+        $tblOderModel = new \BackEnd\tblOrderModel();
+
+        $arrOrder = $tblOderModel->getAllOrderSearch($two, 10);
+        $page = $arrOrder->links();
+        if (\Request::ajax()) {
+            return View::make('backend.order.orderproductajax')->with('arrOrder', $arrOrder)->with('page', $page);
+        } else {
+            return View::make('backend.order.orderproduct')->with('arrOrder', $arrOrder)->with('page', $page);
         }
     }
 
     public function getEdit($orderCode) {
         $tblOderModel = new tblOrderModel();
         $objOrder = $tblOderModel->getOrderByOrderCode($orderCode);
-        $arrayStore = array();
-        foreach ($objOrder as $item) {
-            $productID = $item->productID;
-            $sizeID = $item->sizeID;
-            $colorID = $item->colorID;
-            $amount = $item->amount;
-
-            $tblStoreModel = new tblStoreModel();
-            $store = $tblStoreModel->findStoreByProductIDAndType($productID, $sizeID, $colorID);
-
-            array_push($arrayStore, $store[0]);
-        }
-        // var_dump($objOrder);
-        return View::make('backend.donhang.orderproductedit')->with('objOrder', $objOrder)->with('arrayStore', $arrayStore);
+        return View::make('backend.order.orderproductedit')->with('objOrder', $objOrder);
     }
 
-    public function postAjaxOrder() {
+    public function getViewAll() {
         $tblOderModel = new tblOrderModel();
         $orderdata = $tblOderModel->allOrder(10, 'time');
         $page = $orderdata->links();
-        return View::make('backend.donhang.orderproduct')->with('arrOrder', $orderdata)->with('page', $page);
+        return View::make('backend.order.orderproduct')->with('arrOrder', $orderdata)->with('page', $page);
     }
 
-    public function postAjaxSearchOrder() {
-        $tblOderModel = new tblOrderModel();
-        $orderdata = $tblOderModel->searchOrders(10, trim(Input::get('keyword')));
-        $link = $orderdata->links();
-        return View::make('backend.donhang.orderproductajax')->with('arrOrder', $orderdata)->with('page', $link);
-    }
+    public function postDeleteOrderFromHistoryUser() {
+        $page = \Input::get('page');
+        $tblOrderModel = new \BackEnd\tblOrderModel();
+        $tblOrderModel->deleteOrder(\Input::get('id'));
+        // Lưu lại lịch sử
+        $objAdmin = \Auth::user();
+        $historyContent = \Lang::get('backend/history.order.delete') . ' ' . \Input::get('id');
+        $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+        // Quay lại địa chỉ cũ 
+        $objOrder = $tblOrderModel->findOrderByID(\Input::get('id'));
 
-    public function postAjaxOrderFilter() {
-        $from = strtotime(Input::get('fromtime'));
-        $to = strtotime(Input::get('totime'));
-        $status = Input::get('status');
+        // Lấy lại data để truyền đi
 
-        $tblOderModel = new tblOrderModel();
-        $arrOrder = $tblOderModel->fillterOrders(10, $from, $to, $status);
-        // var_dump($arrNews);
-        $link = $arrOrder->links();
-        return View::make('backend.donhang.orderproductajax')->with('arrOrder', $arrOrder)->with('page', $link);
-    }
+        $tblUserModel = new \BackEnd\tblUserModel();
+        $data = $tblUserModel->getUserById($objOrder->user_id);
 
-    public function postDel() {
-        $objGsp = new tblOrderModel();
-        $data = $objGsp->DeleteOrder(Input::get('id'));
-        $objOrder = $objGsp->findOrderByID(Input::get('id'));
-        $historyContent = 'Xóa thành công đơn hàng : ' . $objOrder->orderCode;
-        $objAdmin = Session::get('adminSession');
-        $tblHistoryAdminModel = new tblHistoryAdminModel();
-        $tblHistoryAdminModel->addHistory($objAdmin[0]->id, $historyContent, '0');
-        $orderdata = $objGsp->allOrder(10, 'time');
-        $page = $orderdata->links();
-        return View::make('backend.donhang.orderproductajax')->with('arrOrder', $orderdata)->with('page', $page);
+        $order = $tblOrderModel->getAllOrderByEmail($data->email, 10);
+
+        $tbluserHistory = new \BackEnd\tblHistoryUserModel();
+        $history = $tbluserHistory->getHistoryByUserID($data->id);
+
+        return View::make('backend.user.UserDetail')->with('data', $data)->with('arrorder', $order)->with('arrhistory', $history);
+        return \Redirect::to(action('\BackEnd\UserController@getUserDetail') . '?page=' . $page);
     }
 
     public function postUpdateOrder() {
@@ -94,7 +130,8 @@ class OrderController extends \BaseController {
         $status = Input::get('status');
         $arrayStore = array();
         if ($status == 0) {
-            return Redirect::action('OrderController@getViewAll', array('thongbao' => 'Bạn chưa xử lý đơn hàng!'));
+            \Session::flash('alert_info', \Lang::get('messages.order.do_nothing'));
+            return Redirect::action('\BackEnd\\BackEnd\OrderController@getViewAll');
         }
         if ($status == 1) {
             $arrOrder = $tblOderModel->getOrderByOrderCode($orderCode);
@@ -102,71 +139,75 @@ class OrderController extends \BaseController {
                 // Kiem tra xem tat ca san pham trong don hang co con hang hay khong
                 $check = False;
                 foreach ($arrOrder as $item) {
-                    $productID = $item->productID;
-                    $sizeID = $item->sizeID;
-                    $colorID = $item->colorID;
-                    $amount = $item->amount;
-
-                    $tblStoreModel = new tblStoreModel();
-                    $store = $tblStoreModel->findStoreByProductIDAndType($productID, $sizeID, $colorID);
-
-                    $soluongton = $store[0]->soluongnhap - $store[0]->soluongban;
-
-                    if ($amount > $soluongton) {
+                    if ($item->quantity <= $item->quantity_sold) {
                         $check = False;
-//                        array_push($arrayStore, $store[0]);
-//                        $objOrder = $tblOderModel->getOrderByOrderCode($orderCode);
-//                        return View::make('backend.donhang.orderproductedit')->with('objOrder', $objOrder)->with('arrayStore', $arrayStore)->with('thongbao', 'Số lượng hàng trong kho không đủ để thực hiện đơn hàng này!');
                     } else {
                         $check = TRUE;
-//                        $newAmount = $store[0]->soluongban + $amount;
-//                        $tblStoreModel->updateStore($store[0]->id, '', '', '', $newAmount, '');
-//                        $tblOderModel->updateStatusOrderByOrderCode($orderCode, $status);
                     }
                 }
                 // Kiem tra hoan tat neu check == true cho thuc hien don hang neu bang false khong xu ly
                 if ($check) {
                     foreach ($arrOrder as $item) {
-                        $productID = $item->productID;
-                        $sizeID = $item->sizeID;
-                        $colorID = $item->colorID;
-                        $amount = $item->amount;
-
-                        $tblStoreModel = new tblStoreModel();
-                        $store = $tblStoreModel->findStoreByProductIDAndType($productID, $sizeID, $colorID);
-
-                        $soluongton = $store[0]->soluongnhap - $store[0]->soluongban;
-
-                        $newAmount = $store[0]->soluongban + $amount;
-                        $tblStoreModel->updateStoreBanHang($store[0]->id, '', '', '', $newAmount, '');
                         $tblOderModel->updateStatusOrderByOrderCode($orderCode, $status);
+                        $tblProductModel = new TblProductModel();
+                        $tblProductModel->updateProduct($item->product_id, '', '', '', '', '', '', '', '', $item->quantity + $item->amount, '', '', '', '', '', '');
                     }
+                    $objAdmin = \Auth::user();
+                    $historyContent = \Lang::get('backend/history.order.active') . ' ' . $orderCode;
+                    $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+                    $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
 
-                    $historyContent = 'Xử lý thành công đơn hàng : ' . $orderCode;
-                    $objAdmin = Session::get('adminSession');
-                    $tblHistoryAdminModel = new tblHistoryAdminModel();
-                    $tblHistoryAdminModel->addHistory($objAdmin[0]->id, $historyContent, '0');
-                    return Redirect::action('OrderController@getViewAll', array('thongbao' => 'Đã xử lý đơn đặt hàng thành công!'));
+                    \Session::flash('alert_success', \Lang::get('messages.order.success'));
+                    return Redirect::action('\BackEnd\OrderController@getViewAll');
                 }
                 // Luong hang trong khoa thoa man don hang nay cho update don hang
                 else {
-                    array_push($arrayStore, $store[0]);
-                    $objOrder = $tblOderModel->getOrderByOrderCode($orderCode);
-                    return View::make('backend.donhang.orderproductedit')->with('objOrder', $objOrder)->with('arrayStore', $arrayStore)->with('thongbao', 'Số lượng hàng trong kho không đủ để thực hiện đơn hàng này!');
+                    \Session::flash('alert_error', \Lang::get('messages.order.not_enough'));
+                    return Redirect::action('\BackEnd\OrderController@getViewAll');
                 }
+            }
+            if ($arrOrder[0]->orderStatus == 3) {
+
+                $tblOderModel->updateStatusOrderByOrderCode($orderCode, $status);
+                $objAdmin = \Auth::user();
+                $historyContent = \Lang::get('backend/history.order.update_3') . ' ' . $orderCode;
+                $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+                $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
             } else {
-                return Redirect::action('OrderController@getViewAll', array('thongbao' => 'Không thể cập nhật đơn hàng!'));
+                \Session::flash('alert_info', \Lang::get('messages.order.done'));
+                return Redirect::action('\BackEnd\OrderController@getViewAll');
             }
         }
         if ($status == 2) {
             $tblOderModel->updateStatusOrderByOrderCode($orderCode, $status);
-            $historyContent = 'Xóa thành công đơn hàng : ' . $orderCode;
-            $objAdmin = Session::get('adminSession');
-            $tblHistoryAdminModel = new tblHistoryAdminModel();
-            $tblHistoryAdminModel->addHistory($objAdmin[0]->id, $historyContent, '0');
-            return Redirect::action('OrderController@getViewAll', array('thongbao' => 'Đã xóa đơn đặt hàng!'));
+            // Lưu lịch sử
+            $objAdmin = \Auth::user();
+            $historyContent = \Lang::get('backend/history.order.delete') . ' ' . $orderCode;
+            $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+
+            \Session::flash('alert_success', \Lang::get('messages.order.delete'));
+            return Redirect::action('\BackEnd\OrderController@getViewAll');
+        }
+        if ($status == 3) {
+            foreach ($arrOrder as $item) {
+                $tblOderModel->updateStatusOrderByOrderCode($orderCode, $status);
+                $tblProductModel = new TblProductModel();
+                $tblProductModel->updateProduct($item->product_id, '', '', '', '', '', '', '', '', $item->quantity + $item->amount, '', '', '', '', '', '');
+            }
+            $objAdmin = \Auth::user();
+            $historyContent = \Lang::get('backend/history.order.active') . ' ' . $orderCode;
+            $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+
+            \Session::flash('alert_success', \Lang::get('messages.order.success'));
+            return Redirect::action('\BackEnd\OrderController@getViewAll');
         }
     }
+
+    // Phần chưa sửa ----------------------------------->
+    // phiên bản chưa sửa
+
 
     public function getThongKe() {
         $tblOderModel = new tblOrderModel();

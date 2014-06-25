@@ -46,23 +46,15 @@ class CateNewsController extends \BaseController {
         }
     }
 
-    public function postAjaxpagion() {
-        $tblCateNewsModel = new tblCategoryNewsModel();
-        $cateNewsData = $tblCateNewsModel->getAllCategoryNewPaginate(10);
-        $links = $cateNewsData->links();
-        $start = $cateNewsData->getCurrentPage() * 10 - 10;
-        if ($start < 0) {
-            $start = 0;
-        }
-        $data = $tblCateNewsModel->getAllCategoryNew($start, 10);
-        return View::make('backend.news.cateNewsAjax')->with('arrayCateNews', $data)->with('link', $links);
-    }
-
     public function postDeleteCateNews() {
         $tblCateNewsModel = new tblCategoryNewsModel();
         $tblCateNewsModel->deleteCateNews(Input::get('id'));
         $tblCateNewsModel->deleteCateNewsChild(Input::get('id'));
 
+        $objAdmin = \Auth::user();
+        $historyContent = Lang::get('backend/history.cateNews.delete') . $dataedit[0]->catenewsName;
+        $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
         $cateNewsData = $tblCateNewsModel->getAllCategoryNewPaginate(10);
         $start = $cateNewsData->getCurrentPage() * 10 - 10;
         if ($start < 0) {
@@ -102,10 +94,12 @@ class CateNewsController extends \BaseController {
         $tblCateNews = new tblCategoryNewsModel();
         $tblCateNews->updateCategoryNews(Input::get('id'), '', '', '', '', Input::get('status'));
         $dataedit = $tblCateNews->findCateNewsByID(Input::get('id'));
+  
         $historyContent = Lang::get('backend/history.cateNews.active') . $dataedit[0]->catenewsName;
         $objAdmin = \Auth::user();
-//        $tblHistoryAdminModel = new tblHistoryAdminModel();
-//        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
+        $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+        
         $cateNewsData = $tblCateNews->getAllCategoryNewPaginate(10);
 
         $start = $cateNewsData->getCurrentPage() * 10 - 10;
@@ -130,10 +124,11 @@ class CateNewsController extends \BaseController {
         if (!$validate->fails()) {
             $tblCateNewsModel = new tblCategoryNewsModel();
             $tblCateNewsModel->updateCategoryNews(Input::get('id'), trim(Input::get('catenewsName')), trim(Input::get('catenewsDescription')), trim(Input::get('catenewsParent')), trim(Input::get('catenewsSlug')), 1);
-            $historyContent = Lang::get('backend/history.cateNews.update') . Input::get('catenewsName');
+                   $historyContent = Lang::get('backend/history.cateNews.update') . Input::get('catenewsName');
+
             $objAdmin = \Auth::user();
-//            $tblHistoryAdminModel = new tblHistoryAdminModel();
-//            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
+            $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
             Session::flash('alert_success', Lang::get('messages.update.success'));
             return Redirect::action('\BackEnd\CateNewsController@getCateNewsView');
         } else {
@@ -153,10 +148,11 @@ class CateNewsController extends \BaseController {
         if (!$validate->fails()) {
             $tblCateNewsModel = new tblCategoryNewsModel();
             $tblCateNewsModel->addCategoryNews(trim(Input::get('catenewsName')), trim(Input::get('catenewsDescription')), trim(Input::get('catenewsParent')), trim(Input::get('catenewsSlug')));
+   
             $historyContent = Lang::get('backend/history.cateNews.create') . Input::get('catenewsSlug');
             $objAdmin = \Auth::user();
-//            $tblHistoryAdminModel = new tblHistoryAdminModel();
-//            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
+            $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
             Session::flash('alert_success', Lang::get('messages.add.success'));
             return Redirect::action('\BackEnd\CateNewsController@getCateNewsView');
         } else {
@@ -174,3 +170,4 @@ class CateNewsController extends \BaseController {
     }
 
 }
+
