@@ -91,6 +91,14 @@ return array(
         'delete' => 'Xóa nhân viên: ',
         'add' => 'Thêm mới nhân viên: '
     ),
+    'users' => array(
+        'profile' => 'Cập nhật thông tin cá nhân: ',
+        'update' => 'Cập nhật thông tin khách hàng: ',
+        'lock' => 'Khóa tài khoản: ',
+        'active' => 'Kích hoạt khách hàng: ',
+        'delete' => 'Xóa khách hàng: ',
+        'add' => 'Thêm mới khách hàng: '
+    ),
     'order' => array(
         'update_3' => 'Đã giao đơn hàng : ',
         'active' => 'Xử lý đơn hàng: ',

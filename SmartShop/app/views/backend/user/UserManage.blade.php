@@ -135,12 +135,12 @@
         </div>
         <div class="tableoptions">
             {{Form::open(array('action'=>'\BackEnd\UserController@postFillterUsers', 'class'=>'stdform stdform2','id'=>'fillterfrom'))}}
-            <select class="radius3" name="fillter_status" id="fillter_status">
-                <option value="">Tất cả</option>
-                <option value="0">Chờ kích hoạt</option>
-                <option value="1">Đã kích hoạt</option>
-                <option value="2">Xóa</option>
-            </select>&nbsp;
+           
+            <?php
+            $data_status = Lang::get('general.user_status');
+            echo Form::select('fillter_status', $data_status, '', array('id' => 'fillter_status'));
+            ?>
+            
             <input type="submit" value="{{Lang::get('general.filter')}}" class="radius3"/>
             {{Form::close()}}
             {{Form::open(array('action'=>'\BackEnd\UserController@postSearchUsers','id'=>'searchaction'))}}

@@ -42,7 +42,7 @@ class ProductController extends \BaseController {
         if (!$validate->fails()) {
             $tblProduct = new TblProductModel();
             $idp = $tblProduct->insertProduct($inputs['productCode'], $inputs['productName'], $inputs['productDescription'], $inputs['productAttributes'], str_replace(',', '', $inputs['productPrice']), str_replace(',', '', $inputs['salesPrice']), strtotime($inputs['startSales']), strtotime($inputs['endSales']), $inputs['quantity'], $slug->makeSlugs($inputs['productName']), $inputs['productTag'], $inputs['manufactureID'], 1, $inputs['check2'], $inputs['images']);
-           $objAdmin = \Auth::user();
+            $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.product.active') . $inputs['productCode'];
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
             $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
@@ -89,7 +89,7 @@ class ProductController extends \BaseController {
 
             $tblProduct = new TblProductModel();
             $idp = $tblProduct->updateProduct($inputs['id'], $inputs['productCode'], $inputs['productName'], $inputs['productDescription'], $inputs['productAttributes'], str_replace(',', '', $inputs['productPrice']), str_replace(',', '', $inputs['salesPrice']), strtotime($inputs['startSales']), strtotime($inputs['endSales']), $inputs['quantity'], $slug->makeSlugs($inputs['productName'] . '-' . $inputs['id']), $inputs['productTag'], $inputs['manufactureID'], 1, $inputs['check2'], $inputs['images']);
-           $objAdmin = \Auth::user();
+            $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.product.update') . $inputs['productCode'];
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
             $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
@@ -165,10 +165,10 @@ class ProductController extends \BaseController {
     public function postDeleteProduct() {
         $id = \Input::get('id');
         $tblProduct = new TblProductModel();
-         $product = $tblProduct->getProductById($id)
+        $product = $tblProduct->getProductById($id);
         $check = $tblProduct->deleteProduct($id);
         $arrProduct = $tblProduct->getAllProductNew('id', 'desc', 5, 1);
-               $objAdmin = \Auth::user();
+        $objAdmin = \Auth::user();
         $historyContent = Lang::get('backend/history.product.delete') . $product->productCode;
         $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
         $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
@@ -176,4 +176,3 @@ class ProductController extends \BaseController {
     }
 
 }
-

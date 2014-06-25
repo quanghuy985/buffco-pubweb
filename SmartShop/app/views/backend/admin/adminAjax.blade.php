@@ -5,6 +5,7 @@ if (Input::get('page') > 1) {
 }
 $user_status = Lang::get('general.user_status');
 ?>
+@if(count($arrayAdmin)>0)
 @foreach($arrayAdmin as $item)
 <tr>
     <td><label value="cateMenuer">{{$i++ }}</label></td>
@@ -24,7 +25,7 @@ $user_status = Lang::get('general.user_status');
         <a title="{{Lang::get('general.edit')}}" href="<?php echo action('\BackEnd\AdminController@getAdminEdit') ?>/{{$item->email}}"> {{Lang::get('general.edit')}}</a>
         @if($item->status=='2')
         &nbsp;&nbsp;|&nbsp;&nbsp;
-        <a title="{{Lang::get('general.active')}}" href="javascript:void(0);" onclick="kickhoat('{{URL::action('\BackEnd\AdminController@postAdminActive')}}','{{$item->email}}',{{$arrayAdmin->getCurrentPage()}});"> {{Lang::get('general.active')}}</a>
+        <a title="{{Lang::get('general.active')}}" href="javascript:void(0);" onclick="kickhoat('{{URL::action('\BackEnd\AdminController@postAdminActive')}}','{{$item->email}}',{{$arrayAdmin->getCurrentPage()}});"> {{Lang::get('general.world')}}</a>
         @endif
         @if($item->status=='0')
         @endif
@@ -39,5 +40,10 @@ $user_status = Lang::get('general.user_status');
 @if($link!='')
 <tr>
     <td colspan="6">{{$link}}</td>
+</tr>
+@endif
+@else
+<tr>
+    <td colspan="6">{{Lang::get('general.data_empty')}}</td>
 </tr>
 @endif

@@ -68,6 +68,8 @@ class HistoryUserController extends \BaseController {
         }
         if ($two == '') {
             $two = 'null';
+        } else {
+            $two = $two + 24 * 60 * 60;
         }
         if ($three == '') {
             $three = 'null';
@@ -141,7 +143,6 @@ class HistoryUserController extends \BaseController {
             return View::make('backend.historyuser.HistoryManage')->with('objUser', $objUser)->with('arrHistory', $check)->with('link', $link);
         }
     }
-
 
     // Phiên bản chưa sửa ----------------->
 }

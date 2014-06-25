@@ -1,7 +1,7 @@
 <?php
 
 return array(
-    'error'=>'Có lỗi xảy ra trong quá trình quy xuất dữ liệu',
+    'error' => 'Có lỗi xảy ra trong quá trình quy xuất dữ liệu',
     'alert' => 'Thông báo!',
     'delete_confirm' => 'Bạn có chắc chắn muốn xóa ?',
     'data_loading' => 'Đang tải dữ liệu ...',
@@ -19,6 +19,7 @@ return array(
     'order' => array(
         'do_nothing' => 'Bạn chưa update đơn hàng.',
         'success' => 'Xử lý thành công đơn hàng.',
+        'wait' => 'Đơn hàng chuyển sang trạng thái chờ xử lý.',
         'not_enough' => 'Lượng hàng trong kho không đủ để thực hiện đơn hàng này.',
         'done' => 'Không thể xử lý đơn hàng đã hoàn thành.',
         'delete' => 'Xóa thành công đơn hàng.'

@@ -31,7 +31,7 @@ return array(
         2 => 'Xoá',
     ),
     'feedback_fillter_status' => array(
-           '' => 'Tất cả',
+        '' => 'Tất cả',
         0 => 'Chờ phản hồi',
         1 => 'Đã trả lời',
         2 => 'Đã xoá',
@@ -49,10 +49,14 @@ return array(
     ),
     //admin
     'user_status' => array(
-         '' => 'Tất cả',
+        '' => 'Tất cả',
         0 => 'Khóa',
         1 => 'Đã kích hoạt',
         2 => 'Xoá',
+    ),
+     'payment_type' => array(
+        0 => 'Đặt hàng',
+        1 => 'Thanh toán online',
     ),
     'data_status3' => array(
         3 => 'Tất cả',
@@ -62,23 +66,23 @@ return array(
     ),
     //history
     'data_status1' => array(
-        3 => 'Tất cả',
+        '' => 'Tất cả',
         0 => 'Chưa xem',
         1 => 'Đã xem',
         2 => 'Xoá',
     ),
-     'order_status' => array(
+    'order_status' => array(
         '' => 'Tất cả',
         0 => 'Chờ xử lý',
         1 => 'Hoàn tất',
-        2 => 'Xoá',
-        3 => 'Đã thanh toán',
+        2 => 'Hủy',
+        3 => 'Đang giao hàng',
     ),
     'action' => 'Chức năng',
     'edit' => 'Sửa',
     'delete' => 'Xóa',
     'lock' => 'Khóa',
-       'world' => 'Kich hoạt',
+    'world' => 'Kich hoạt',
     'unread' => 'Chưa xem',
     'viewed' => 'Đã xem',
     'all' => 'Tất cả',
@@ -158,10 +162,12 @@ return array(
     'imported' => 'Số lượng nhập',
     'sold' => 'Số lượng bán',
     'order' => array(
-       'stt' => 'STT',
-        'code' => 'Mã đơn hàng :',
+        'stt' => 'STT',
+        'code' => 'Mã đơn hàng',
         'time' => 'Mua ngày',
+        'payment' => 'Hình thức thanh toán',
         'status' => 'Trạng thái',
+        'action' => 'Chức năng',
         'detail' => 'Chi tiết đơn hàng',
         'productDetail' => 'Thông tin sản phẩm',
         'user' => 'Tài khoản người mua: ',
@@ -194,6 +200,6 @@ return array(
     'group_support' => 'Nhóm hỗ trợ viên',
     'group_support_name' => 'Tên nhóm hỗ trợ viên',
     'supporterName' => 'Tên hỗ trợ viên',
-     'admin_roles' => 'Phân quyền'
+    'admin_roles' => 'Phân quyền'
 );
 

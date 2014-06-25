@@ -53,6 +53,6 @@ Route::group(array('prefix' => 'admin', 'before' => 'csrf'), function() {
     Route::controller('menunew', '\BackEnd\MenusController');
     Route::controller('products', '\BackEnd\ProductController');
     Route::controller('category-products', '\BackEnd\CategoryProductController');
-     Route::controller('files', '\BackEnd\FilemanagerController');
+    Route::controller('files', '\BackEnd\FilemanagerController');
     Route::controller('/', '\BackEnd\HomeController');
 });

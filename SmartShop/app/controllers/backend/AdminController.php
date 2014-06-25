@@ -39,14 +39,15 @@ class AdminController extends \BaseController {
 
     public function postAddAdmin() {
         $tblAdminModel = new tblUserModel();
-        $objAdmin = \Auth::user();
+
         //Thêm admin vào bảng user
         $check = $tblAdminModel->RegisterUser(\Input::all(), 1);
         if ($check == 'true') {
+            $objAdmin = \Auth::user();
             $historyContent = \Lang::get('backend/history.admin.add') . ' ' . \Input::get('email');
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel;
             $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
-            \Session::flash('alert_success', Lang::get('messages.add.success'));
+            \Session::flash('alert_success', \Lang::get('messages.add.success'));
             return \Redirect::action('\BackEnd\AdminController@getAdminAddForm');
         } else {
             \Session::flash('alert_error', \Lang::get('messages.add.error'));
@@ -181,11 +182,13 @@ class AdminController extends \BaseController {
 
     public function postProfileAdmin() {
         $tblAdminModel = new \BackEnd\tblUserModel();
-        $tblAdminModel->UpdateUser(\Auth::user()->id, \Auth::user()->mail, \Input::get('password'), \Input::get('firstname'), \Input::get('lastname'), \Input::get('dateofbirth'), \Input::get('address'), \Input::get('phone'), \Input::get('status'), 1, '');
+        $tblAdminModel->UpdateUser(\Auth::user()->id, \Auth::user()->mail, \Input::get('password'), \Input::get('firstname'), \Input::get('lastname'), strtotime(\Input::get('dateofbirth')), \Input::get('address'), \Input::get('phone'), \Input::get('status'), 1, '');
+
         $objAdmin = \Auth::user();
         $historyContent = \Lang::get('backend/history.admin.profile') . ' ' . \Input::get('email');
         $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel;
         $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+
         \Session::flash('alert_success', \Lang::get('messages.update.success'));
         return \Redirect::action('\BackEnd\AdminController@getProfileAdmin');
     }

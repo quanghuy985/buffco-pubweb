@@ -62,7 +62,7 @@
 
 
     function kichhoat(id, stus, user_id) {
-        
+
         var request = jQuery.ajax({
             url: "{{URL::action('\BackEnd\HistoryUserController@postHistoryActive')}}?id=" + id + '&status=' + stus + '&user=' + user_id,
             type: "POST",
@@ -89,30 +89,30 @@
 
         <br class='clearall'>
         <div class="tableoptions">
+            {{Form::open(array('action'=>'\BackEnd\HistoryUserController@postHistoryUserFillterView','id'=>'filterHistory'))}}
 
-            <form id="filterHistory" action="{{URL::action('\BackEnd\HistoryUserController@postHistoryUserFillterView')}}" method="post">
-                <input  type="button" class="anchorbutton" id="deletepromulti" title="table1" value="{{Lang::get('general.delete_select')}}"/>
-                <label>{{Lang::get('general.date_from')}}: <input id="datepicker" name="from"
-                                                                  style="border: 1px solid #ddd;padding: 7px 5px 8px 5px;background: #fff;"
-                                                                  type="text"/></label>
-                <label>{{Lang::get('general.date_to')}}: <input id="datepicker1" name="to"
-                                                                style="border: 1px solid #ddd;padding: 7px 5px 8px 5px;background: #fff;"
-                                                                type="text"/></label>
-                <input type="hidden" id="user_id" value="{{$objUser->id}}" name="user_id"/>
-                <?php
-                $data_status = Lang::get('general.data_status1');
-                echo Form::select('fillter_status', $data_status, 3, array('id' => 'fillter_status'));
-                ?>
-                &nbsp; &nbsp; <button class="anchorbutton" id="loctheotieuchi" type="submit" >{{Lang::get('general.filter')}}</button>
-            </form>
-            <form id="searchHistory" action="{{URL::action('\BackEnd\HistoryUserController@postHistoryUserSearchView')}}" method="post">
-                <div class="dataTables_filter1" id="searchformfile" style=" margin-top: -32px !important;">
-                    <label>{{Lang::get('general.search')}}:
-                        <input type="hidden" value="{{$objUser->id}}" name="user_id"/>
-                        <input class="longinput" id="searchblur"  name="searchblur" style="-moz-border-radius: 2px;-webkit-border-radius: 2px;border-radius: 2px;border: 1px solid #ddd;padding: 7px 5px 8px 5px;width: 200px;background: #fcfcfc;color: #666;-moz-box-shadow: inset 0 1px 3px #ddd;-webkit-box-shadow: inset 0 1px 3px #ddd;box-shadow: inset 0 1px 3px #ddd;" type="text"><a href="javascript:void(0)" class="btn btn4 btn_search" onclick="jQuery('#searchHistory').submit();" style=" float: right;    height: 30px;   margin-left: 10px;"></a>
-                    </label>
-                </div>
-            </form>
+            <input  type="button" class="anchorbutton" id="deletepromulti" title="table1" value="{{Lang::get('general.delete_select')}}"/>
+            <label>{{Lang::get('general.date_from')}}: <input id="datepicker" name="from"
+                                                              style="border: 1px solid #ddd;padding: 7px 5px 8px 5px;background: #fff;"
+                                                              type="text"/></label>
+            <label>{{Lang::get('general.date_to')}}: <input id="datepicker1" name="to"
+                                                            style="border: 1px solid #ddd;padding: 7px 5px 8px 5px;background: #fff;"
+                                                            type="text"/></label>
+            <input type="hidden" id="user_id" value="{{$objUser->id}}" name="user_id"/>
+            <?php
+            $data_status = Lang::get('general.data_status1');
+            echo Form::select('fillter_status', $data_status, 3, array('id' => 'fillter_status'));
+            ?>
+            &nbsp; &nbsp; <button class="anchorbutton" id="loctheotieuchi" type="submit" >{{Lang::get('general.filter')}}</button>
+            {{Form::close()}}
+            {{Form::open(array('action'=>'\BackEnd\HistoryUserController@postHistoryUserSearchView','id'=>'searchHistory'))}}
+            <div class="dataTables_filter1" id="searchformfile" style=" margin-top: -32px !important;">
+                <label>{{Lang::get('general.search')}}:
+                    <input type="hidden" value="{{$objUser->id}}" name="user_id"/>
+                    <input class="longinput" id="searchblur"  name="searchblur" style="-moz-border-radius: 2px;-webkit-border-radius: 2px;border-radius: 2px;border: 1px solid #ddd;padding: 7px 5px 8px 5px;width: 200px;background: #fcfcfc;color: #666;-moz-box-shadow: inset 0 1px 3px #ddd;-webkit-box-shadow: inset 0 1px 3px #ddd;box-shadow: inset 0 1px 3px #ddd;" type="text"><a href="javascript:void(0)" class="btn btn4 btn_search" onclick="jQuery('#searchHistory').submit();" style=" float: right;    height: 30px;   margin-left: 10px;"></a>
+                </label>
+            </div>
+            {{Form::close()}}
         </div>
         <table cellpadding="0" cellspacing="0" border="0" id="table2" class="stdtable stdtablecb">
             <colgroup>

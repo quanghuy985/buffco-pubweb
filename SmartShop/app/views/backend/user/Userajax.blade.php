@@ -2,10 +2,11 @@
 <?php
 $i = ($arrUser->getCurrentPage() - 1) * 10 + 1;
 ?>
+@if(count($arrUser)>0)
 @foreach($arrUser as $item)
 <tr>
     <td class="text-center"><label value="cateNews">{{$i++}}</label></td>
-    <td><a href="{{URL::action('\BackEnd\UserController@getUserDetail')}}?email={{$item->email}}">{{$item->email}}</a></td>
+    <td><a href="{{URL::action('\BackEnd\UserController@getUserDetail')}}/{{$item->email}}">{{$item->email}}</a></td>
     <td><label value="user">{{str_limit($item->phone, 10, '...')}} </label></td>
     <td><label value="user">
             <?php
@@ -40,6 +41,11 @@ $i = ($arrUser->getCurrentPage() - 1) * 10 + 1;
 @if($link!='')
 <tr>
     <td colspan="5">{{$link}}</td>
+</tr>
+@endif
+@else
+<tr>
+    <td colspan="5">{{Lang::get('general.data_empty')}}</td>
 </tr>
 @endif
 

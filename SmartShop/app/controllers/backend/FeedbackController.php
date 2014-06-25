@@ -65,7 +65,7 @@ class FeedbackController extends \BaseController {
         if ($two == '') {
             $two = 'null';
         } else {
-            $two = strtotime($two);
+            $two = strtotime($two) + 24 * 60 * 60;
         }
         if ($three == '') {
             $three = 'null';
@@ -105,7 +105,7 @@ class FeedbackController extends \BaseController {
         }
         $tblFeedbackModel = new tblFeedbackModel();
         $tblFeedbackModel->updateFeedback(Input::get('id'), 1);
-            $objAdmin = \Auth::user();
+        $objAdmin = \Auth::user();
         $historyContent = Lang::get('backend/history.feedback.reply') . ' ' . Input::get('userEmail');
         $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
         $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
@@ -121,7 +121,7 @@ class FeedbackController extends \BaseController {
     public function postXoaPhanHoi() {
         $tblFeedbackModel = new tblFeedbackModel();
         $tblFeedbackModel->deleteFeedback(Input::get('id'));
-        
+
         $objAdmin = \Auth::user();
         $historyContent = Lang::get('backend/history.feedback.delete') . ' ' . Input::get('id');
         $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
@@ -130,4 +130,3 @@ class FeedbackController extends \BaseController {
     }
 
 }
-
