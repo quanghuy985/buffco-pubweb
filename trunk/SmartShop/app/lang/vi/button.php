@@ -57,5 +57,10 @@ return array(
         'flag' => 'Kích hoạt',
         'trash' => 'Xoá'
     ),
+    'order' => array(
+        'btAccept' => 'Chấp nhận đơn hàng',
+        'btDelete' => 'Hủy đơn hàng',
+        'btDonothing' => 'Chờ xử lý'
+    ),
 );
 

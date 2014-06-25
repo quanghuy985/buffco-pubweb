@@ -67,10 +67,10 @@ class tblFeedbackModel extends \Eloquent {
     public function searchFillterFeedback($per_page, $from, $to, $status) {
         $arrFeedback = \DB::table('tbl_feed_back');
         if ($from != 'null') {
-            $arrFeedback->where('time', '>', $from);
+            $arrFeedback->where('time', '>=', $from);
         }
         if ($to != 'null') {
-            $arrFeedback->where('time', '<', $to);
+            $arrFeedback->where('time', '<=', $to);
         }
         if ($status != 'null') {
             $arrFeedback->where('status', '=', $status);

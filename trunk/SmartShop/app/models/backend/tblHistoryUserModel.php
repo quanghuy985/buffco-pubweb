@@ -28,13 +28,14 @@ class tblHistoryUserModel extends \Eloquent {
     }
 
     public function getAllHistoryUser($one, $two, $three, $user_id, $admin, $per_page) {
+
         if ($admin == 0) {
             $querry = DB::table('tbl_users_history')->leftJoin('tbl_users', 'tbl_users_history.user_id', '=', 'tbl_users.id')->where('tbl_users_history.user_id', '=', $user_id);
             if ($one != '') {
-                $querry->where('tbl_users_history.time', '>', $one);
+                $querry->where('tbl_users_history.time', '>=', $one);
             }
             if ($two != '') {
-                $querry->where('tbl_users_history.time', '<', $two);
+                $querry->where('tbl_users_history.time', '<=', $two);
             }
             if ($three != '') {
                 $querry->where('tbl_users_history.status', '=', $three);
@@ -43,10 +44,10 @@ class tblHistoryUserModel extends \Eloquent {
         } else {
             $querry = DB::table('tbl_admin_history')->leftJoin('tbl_users', 'tbl_admin_history.adminID', '=', 'tbl_users.id')->where('tbl_admin_history.adminID', '=', $user_id);
             if ($one != '') {
-                $querry->where('tbl_admin_history.time', '>', $one);
+                $querry->where('tbl_admin_history.time', '>=', $one);
             }
             if ($two != '') {
-                $querry->where('tbl_admin_history.time', '<', $two);
+                $querry->where('tbl_admin_history.time', '<=', $two);
             }
             if ($three != '') {
                 $querry->where('tbl_admin_history.status', '=', $three);
@@ -60,17 +61,9 @@ class tblHistoryUserModel extends \Eloquent {
 
     public function addHistory($user_id, $content, $admin, $status) {
         if ($admin == 0) {
-            \DB::table('tbl_users_history')->user_id = $user_id;
-            \DB::table('tbl_users_history')->historyContent = $content;
-            \DB::table('tbl_users_history')->time = time();
-            \DB::table('tbl_users_history')->status = 0;
-            $result = \DB::table('tbl_users_history')->save();
+            $result = \DB::table('tbl_users_history')->insert(array('user_id' => $user_id, 'historyContent' => $content, 'time' => time(), 'status' => 0));
         } else {
-            \DB::table('tbl_admin_history')->adminID = $user_id;
-            \DB::table('tbl_admin_history')->historyContent = $content;
-            \DB::table('tbl_admin_history')->time = time();
-            \DB::table('tbl_admin_history')->status = 0;
-            $result = \DB::table('tbl_admin_history')->save();
+            $result = \DB::table('tbl_admin_history')->insert(array('adminID' => $user_id, 'historyContent' => $content, 'time' => time(), 'status' => 0));
         }
         return $result;
     }

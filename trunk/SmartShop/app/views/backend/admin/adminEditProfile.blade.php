@@ -12,7 +12,7 @@
         <h3>{{Lang::get('backend/title.profile.caption')}}</h3>
     </div>
     @include('backend.alert')
-    {{Form::model($dataProfile, array('action'=>'\BackEnd\AdminController@postProfileAdmin', 'class'=>'stdform'))}}
+    {{Form::model($dataProfile, array('action'=>'\BackEnd\AdminController@postProfileAdmin', 'class'=>'stdform stdform2'))}}
     <p></p>
     <p>
         <label>{{Lang::get('general.email')}}</label>
@@ -58,7 +58,8 @@
     </p>      
 
     <p class="stdformbutton">
-        <button class="submit radius2" style="margin-left: 30px;">@if(isset($dataProfile)){{Lang::get('button.update')}}@else {{Lang::get('button.add')}} @endif </button>
+        <label></label>
+        <button class="submit radius2">@if(isset($dataProfile)){{Lang::get('button.update')}}@else {{Lang::get('button.add')}} @endif </button>
         <input type="reset" class="reset radius2" value="{{Lang::get('button.reset')}}">
     </p>
     {{Form::close()}}

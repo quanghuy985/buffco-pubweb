@@ -94,23 +94,20 @@
     </table>
     {{Form::model($objOrder,  array('action'=>'\BackEnd\OrderController@postUpdateOrder', 'id'=>'orderUpdateForm'))}}
     <p>
-        <label>{{Lang::get('general.order.status')}}</label>
+
         <span class="field">    
             @if(isset($objOrder))      
             <input type="hidden" name="idOrderCode" placeholder="Nhập trên sản phẩm" class="longinput" value="@if(isset($objOrder)){{$objOrder[0]->orderCode}}@endif">
-            <?php
-            $user_status = Lang::get('general.order_status');
-            echo Form::select('status', $user_status);
-            ?>
+
             @endif
         </span>
     </p>
 
     <p>
-        <input type="button" id="btPrint" class="stdbtn btn_orange" value="In đơn hàng"  />
+
     </p>
     <p>
-
+        <input type="button" id="btPrint" class="stdbtn btn_orange" value="In đơn hàng"  />
         @if(isset($objOrder)&& $objOrder[0]->orderStatus!=1)
         <?php $check = FALSE ?>
         @foreach($objOrder as $item)
@@ -123,7 +120,9 @@
         @if($check==True) 
         <a href="#" class = "stdbtn btn_red">Hết hàng</a>
         @else
-        <input type = "submit" class = "btn" value = "Cập nhật"  >
+        <input type = "submit" name="btSubmit" class = "btn" value = "{{\Lang::get('button.order.btAccept')}}"  >
+        <input type = "submit" name="btSubmit" class = "btn" value = "{{\Lang::get('button.order.btDelete')}}"  >
+        <input type = "submit" name="btSubmit" class = "btn" value = "{{\Lang::get('button.order.btDonothing')}}"  >
         @endif
         <a href = "{{URL::action('\BackEnd\OrderController@getViewAll')}}" class = "stdbtn">Quay lại</a>
         @else

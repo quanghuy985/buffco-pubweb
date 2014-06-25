@@ -9,7 +9,7 @@ class tblUserModel extends \Eloquent {
     protected $table = 'tbl_users';
 
     // public $timestamps = false;
-   public function getAllAdmin($per_page, $status = '') {
+    public function getAllAdmin($per_page, $status = '') {
         $useradmin = \Auth::user();
         if ($status != 'null') {
             $arrAdmin = DB::table('tbl_users')->select('tbl_users.*')->orderBy('tbl_users.id', 'desc')->where('tbl_users.admin', '=', 1)->where('tbl_users.id', '!=', $useradmin->id)->where('tbl_users.status', '=', $status)->paginate($per_page);
@@ -19,7 +19,8 @@ class tblUserModel extends \Eloquent {
         }
         return $arrAdmin;
     }
-     public function addAdmin($allinput, $admin) {
+
+    public function addAdmin($allinput, $admin) {
         $this->email = $allinput['email'];
         $this->password = \Hash::make($allinput['password']);
         $this->firstname = $allinput['firstname'];
@@ -43,6 +44,7 @@ class tblUserModel extends \Eloquent {
         }
         return true;
     }
+
     public function getAllUsers($per_page, $orderby = 'id', $status = '', $keysearch = '') {
         $arrAdmin = DB::table('tbl_users')->where('admin', '=', 0)->orderBy($orderby, 'desc');
         if ($status != '') {
@@ -74,11 +76,10 @@ class tblUserModel extends \Eloquent {
     }
 
     public function getUserByEmail($email, $admin) {
-        $user = DB::table('tbl_users')->leftJoin('tbl_admin_group', 'tbl_users.group_admin_id', '=', 'tbl_admin_group.id')->select('tbl_users.*', 'tbl_admin_group.groupadminName')->where('tbl_users.email', '=', $email)->where('tbl_users.admin', '=', $admin)->first();
+        $user = DB::table('tbl_users')->select('tbl_users.*')->where('tbl_users.email', '=', $email)->where('tbl_users.admin', '=', $admin)->first();
         return $user;
     }
 
-  
     public function RegisterUser($allinput, $admin) {
         $rules = array(
             'email' => 'required|email|unique:tbl_users',
@@ -141,7 +142,6 @@ class tblUserModel extends \Eloquent {
         if ($address != '') {
             $arraysql = array_merge($arraysql, array("address" => $address));
         }
-
         if ($phone != '') {
             $arraysql = array_merge($arraysql, array("phone" => $phone));
         }
@@ -201,7 +201,7 @@ class tblUserModel extends \Eloquent {
     }
 
     public function FindUserRow($keyword, $per_page) {
-        $adminarray = DB::table('tbl_users')->where('email', 'LIKE', '%' . $keyword . '%')->orWhere('userAddress', 'LIKE', '%' . $keyword . '%')->orWhere('userPhone', 'LIKE', '%' . $keyword . '%')->orWhere('userFirstName', 'LIKE', '%' . $keyword . '%')->orWhere('userLastName', 'LIKE', '%' . $keyword . '%')->paginate($per_page);
+        $adminarray = DB::table('tbl_users')->where('email', 'LIKE', '%' . $keyword . '%')->orWhere('address', 'LIKE', '%' . $keyword . '%')->orWhere('phone', 'LIKE', '%' . $keyword . '%')->orWhere('firstname', 'LIKE', '%' . $keyword . '%')->orWhere('lastname', 'LIKE', '%' . $keyword . '%')->where('admin', '=', 1)->paginate($per_page);
         return $adminarray;
     }
 
@@ -215,7 +215,7 @@ class tblUserModel extends \Eloquent {
         return $allProject;
     }
 
-   public function getUserById($userId) {
+    public function getUserById($userId) {
         $objectUser = DB::table('tbl_users')->where('id', '=', $userId)->first();
         return $objectUser;
     }
@@ -263,4 +263,3 @@ class tblUserModel extends \Eloquent {
     }
 
 }
-

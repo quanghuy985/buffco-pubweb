@@ -17,6 +17,13 @@ class UserController extends \BaseController {
         $id = \Input::get('id');
         $tblUserModel = new tblUserModel();
         $tblUserModel->UpdateStatus($id, 2);
+
+        $user = $tblUserModel->getUserById($id);
+        $objAdmin = \Auth::user();
+        $historyContent = \Lang::get('backend/history.users.delete') . ' ' . $user->email;
+        $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel;
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+
         return \Redirect::action('\BackEnd\UserController@getUserView');
     }
 
@@ -24,6 +31,13 @@ class UserController extends \BaseController {
         $id = \Input::get('id');
         $tblUserModel = new tblUserModel();
         $tblUserModel->UpdateStatus($id, 0);
+
+        $user = $tblUserModel->getUserById($id);
+        $objAdmin = \Auth::user();
+        $historyContent = \Lang::get('backend/history.users.lock') . ' ' . $user->email;
+        $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel;
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+
         return \Redirect::action('\BackEnd\UserController@getUserView');
     }
 
@@ -31,6 +45,14 @@ class UserController extends \BaseController {
         $id = \Input::get('id');
         $tblUserModel = new tblUserModel();
         $tblUserModel->UpdateStatus($id, 1);
+
+
+        $user = $tblUserModel->getUserById($id);
+        $objAdmin = \Auth::user();
+        $historyContent = \Lang::get('backend/history.users.active') . ' ' . $user->email;
+        $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel;
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+
         return \Redirect::action('\BackEnd\UserController@getUserView');
     }
 
@@ -98,11 +120,21 @@ class UserController extends \BaseController {
         }
     }
 
-    public function getUserDetail() {
-        $tblUserModel = new tblUserModel();
-        $email = \Input::get('email');
-        $data = $tblUserModel->getUserByEmail($email, 0);
-        return View::make('backend.user.UserDetail')->with('data', $data);
+    public function getUserDetail($email = '') {
+        $tblOrder = new tblOrderModel();
+        if (\Request::ajax()) {
+            $order = $tblOrder->getAllOrderByEmail($email, 10);
+            $orderlink = $order->links();
+            return View::make('backend.order.historyorder')->with('arrorder', $order)->with('orderlink', $orderlink);
+        } else {
+            $tblUserModel = new tblUserModel();
+            $data = $tblUserModel->getUserByEmail($email, 0);
+
+            $order = $tblOrder->getAllOrderByEmail($email, 10);
+
+            $orderlink = $order->links();
+            return View::make('backend.user.UserDetail')->with('data', $data)->with('arrorder', $order)->with('orderlink', $orderlink);
+        }
     }
 
     public function postUserDetail() {
@@ -130,6 +162,12 @@ class UserController extends \BaseController {
     public function postUpdateUser() {
         $tblAdminModel = new \BackEnd\tblUserModel();
         $tblAdminModel->UpdateUser(\Input::get('id'), \ Input::get('email'), \ Input::get('password'), \ Input::get('firstname'), \ Input::get('lastname'), \ Input::get('dateofbirth'), \ Input::get('address'), \ Input::get('phone'), \ Input::get('status'), 0, \ Input::get('group_admin_id'));
+
+        $objAdmin = \Auth::user();
+        $historyContent = \Lang::get('backend/history.users.update') . ' ' . \ Input::get('email');
+        $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel;
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+
         \Session::flash('alert_success', \ Lang::get('messages.update.success'));
         return \Redirect::action('\BackEnd\UserController@getUserView');
     }
@@ -140,6 +178,11 @@ class UserController extends \BaseController {
             if ($item != '') {
                 $tblUserModel = new tblUserModel();
                 $tblUserModel->DeleteUserById($item);
+
+                $objAdmin = \Auth::user();
+                $historyContent = \Lang::get('backend/history.users.delete') . ' ' . $item;
+                $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel;
+                $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
             }
         }
         $tblUserModel = new tblUserModel();
@@ -151,6 +194,13 @@ class UserController extends \BaseController {
     public function postUserActive() {
         $tblUserModel = new tblUserModel();
         $tblUserModel->UpdateStatus(\Input::get('id'), \ Input::get('status'));
+
+        $objAdmin = \Auth::user();
+        $user = $tblUserModel->getUserById(\Input::get('id'));
+        $historyContent = \Lang::get('backend/history.users.active') . ' ' . $user->email;
+        $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel;
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+
         $check = $tblUserModel->getAllUsers(10, 'id');
         $link = $check->links();
         return View::make('backend.user.Userajax')->with('arrUser', $check)->with('link', $link);
@@ -159,6 +209,13 @@ class UserController extends \BaseController {
     public function postDeleteUser() {
         $tblUserModel = new tblUserModel();
         $tblUserModel->DeleteUserById(\Input::get('id'));
+
+        $objAdmin = \Auth::user();
+        $user = $tblUserModel->getUserById(\Input::get('id'));
+        $historyContent = \Lang::get('backend/history.users.delete') . ' ' . $user->email;
+        $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel;
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+
         $check = $tblUserModel->getAllUsers(10, 'id');
         $link = $check->links();
         return View::make('backend.user.Userajax')->with('arrUser', $check)->with('link', $link);
@@ -168,6 +225,12 @@ class UserController extends \BaseController {
         $tblAdminModel = new tblUserModel();
         $check = $tblAdminModel->RegisterUser(\Input::all(), 0);
         if ($check == 'true') {
+
+            $objAdmin = \Auth::user();
+            $historyContent = \Lang::get('backend/history.users.add') . ' ' . \Input::get('email');
+            $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel;
+            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+
             \Session::flash('alert_success', \ Lang::get('messages.add.success'));
             return \Redirect::action('\BackEnd\UserController@getUserView');
         } else {

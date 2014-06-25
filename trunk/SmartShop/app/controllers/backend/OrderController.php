@@ -46,6 +46,8 @@ class OrderController extends \BaseController {
         }
         if ($two == 'null') {
             $two = '';
+        } else {
+            $two = $two + 24 * 60 * 60;
         }
         if ($three == 'null') {
             $three = '';
@@ -125,17 +127,43 @@ class OrderController extends \BaseController {
     }
 
     public function postUpdateOrder() {
+
+        $value = \Input::get('btSubmit');
         $tblOderModel = new tblOrderModel();
         $orderCode = Input::get('idOrderCode');
-        $status = Input::get('status');
-        $arrayStore = array();
-        if ($status == 0) {
-            \Session::flash('alert_info', \Lang::get('messages.order.do_nothing'));
-            return Redirect::action('\BackEnd\\BackEnd\OrderController@getViewAll');
-        }
-        if ($status == 1) {
+
+        // Khách hàng bấm nút chờ xử lý
+        if ($value == \Lang::get('button.order.btDonothing')) {
             $arrOrder = $tblOderModel->getOrderByOrderCode($orderCode);
-            if ($arrOrder[0]->orderStatus == 0 || $arrOrder[0]->orderStatus == 2) {
+            //Kiểm trang trạng thái đơn hàng
+            // Nếu đơn hàng cũng đang ở trạng thái chờ xử lý hiển thị thông báo không làm gì
+            if ($arrOrder[0]->orderStatus == 0) {
+                \Session::flash('alert_info', \Lang::get('messages.order.do_nothing'));
+                return Redirect::action('\BackEnd\OrderController@getViewAll');
+            }
+            //Nếu đơn hàng đang ở trạng thái hoàn tất, thông báo cho khách hàng không thể thay đổi trạng thái đơn hàng đã hoàn tất
+            if ($arrOrder[0]->orderStatus == 1) {
+                \Session::flash('alert_error', \Lang::get('messages.order.done'));
+                return Redirect::action('\BackEnd\OrderController@getViewAll');
+            }
+            // Nếu đơn hàng đang ở trạng thái hủy, update lại trạng thái đơn hàng và lưu lịch sử không thay đổi số lượng hàng hóa trong kho
+            if ($arrOrder[0]->orderStatus == 2 || $arrOrder[0]->orderStatus == 3) {
+                $tblOderModel->updateStatusOrderByOrderCode($orderCode, 0);
+
+                $objAdmin = \Auth::user();
+                $historyContent = \Lang::get('backend/history.order.active') . ' ' . $orderCode;
+                $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+                $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+
+                \Session::flash('alert_success', \Lang::get('messages.order.wait'));
+                return Redirect::action('\BackEnd\OrderController@getViewAll');
+            }
+        }
+        // Khách hàng bấm nút chấp nhận đơn hàng chuyển status = 1
+        if ($value == \Lang::get('button.order.btAccept')) {
+            $arrOrder = $tblOderModel->getOrderByOrderCode($orderCode);
+
+            if ($arrOrder[0]->orderStatus != 1) {
                 // Kiem tra xem tat ca san pham trong don hang co con hang hay khong
                 $check = False;
                 foreach ($arrOrder as $item) {
@@ -148,7 +176,7 @@ class OrderController extends \BaseController {
                 // Kiem tra hoan tat neu check == true cho thuc hien don hang neu bang false khong xu ly
                 if ($check) {
                     foreach ($arrOrder as $item) {
-                        $tblOderModel->updateStatusOrderByOrderCode($orderCode, $status);
+                        $tblOderModel->updateStatusOrderByOrderCode($orderCode, 1);
                         $tblProductModel = new TblProductModel();
                         $tblProductModel->updateProduct($item->product_id, '', '', '', '', '', '', '', '', $item->quantity + $item->amount, '', '', '', '', '', '');
                     }
@@ -165,21 +193,14 @@ class OrderController extends \BaseController {
                     \Session::flash('alert_error', \Lang::get('messages.order.not_enough'));
                     return Redirect::action('\BackEnd\OrderController@getViewAll');
                 }
-            }
-            if ($arrOrder[0]->orderStatus == 3) {
-
-                $tblOderModel->updateStatusOrderByOrderCode($orderCode, $status);
-                $objAdmin = \Auth::user();
-                $historyContent = \Lang::get('backend/history.order.update_3') . ' ' . $orderCode;
-                $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-                $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
             } else {
                 \Session::flash('alert_info', \Lang::get('messages.order.done'));
                 return Redirect::action('\BackEnd\OrderController@getViewAll');
             }
         }
-        if ($status == 2) {
-            $tblOderModel->updateStatusOrderByOrderCode($orderCode, $status);
+        // Nếu khách hàng bấm nút hủy đơn hàng
+        if ($value == \Lang::get('button.order.btDelete')) {
+            $tblOderModel->updateStatusOrderByOrderCode($orderCode, 2);
             // Lưu lịch sử
             $objAdmin = \Auth::user();
             $historyContent = \Lang::get('backend/history.order.delete') . ' ' . $orderCode;
@@ -187,20 +208,6 @@ class OrderController extends \BaseController {
             $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
 
             \Session::flash('alert_success', \Lang::get('messages.order.delete'));
-            return Redirect::action('\BackEnd\OrderController@getViewAll');
-        }
-        if ($status == 3) {
-            foreach ($arrOrder as $item) {
-                $tblOderModel->updateStatusOrderByOrderCode($orderCode, $status);
-                $tblProductModel = new TblProductModel();
-                $tblProductModel->updateProduct($item->product_id, '', '', '', '', '', '', '', '', $item->quantity + $item->amount, '', '', '', '', '', '');
-            }
-            $objAdmin = \Auth::user();
-            $historyContent = \Lang::get('backend/history.order.active') . ' ' . $orderCode;
-            $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
-
-            \Session::flash('alert_success', \Lang::get('messages.order.success'));
             return Redirect::action('\BackEnd\OrderController@getViewAll');
         }
     }

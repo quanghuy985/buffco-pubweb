@@ -5,6 +5,7 @@ if (Input::get('page') > 1) {
 }
 $order_status = Lang::get('general.order_status');
 ?>
+@if(count($arrorder)>0)
 @foreach($arrorder as $item)
 <tr>
     <td><label value="cateMenuer">{{$i++ }}</label></td>
@@ -31,5 +32,10 @@ $order_status = Lang::get('general.order_status');
 @if($orderlink!='')
 <tr>
     <td colspan="5">{{$orderlink}}</td>
+</tr>
+@endif
+@else
+<tr>
+    <td colspan="5">{{Lang::get('general.data_empty')}}</td>
 </tr>
 @endif
