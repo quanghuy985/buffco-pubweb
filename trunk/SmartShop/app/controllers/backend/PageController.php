@@ -21,12 +21,12 @@ class PageController extends \BaseController {
     public function getPageView() {
         if (\Request::ajax()) {
             $tblPageModel = new tblPageModel();
-            $check = $tblPageModel->selectAllPage(1, 'id');
+            $check = $tblPageModel->selectAllPage(10, 'id');
             $link = $check->links();
             return View::make('backend.page.Pageajax')->with('arrPage', $check)->with('link', $link);
         } else {
             $tblPageModel = new tblPageModel();
-            $check = $tblPageModel->selectAllPage(1, 'id');
+            $check = $tblPageModel->selectAllPage(10, 'id');
             $link = $check->links();
             return View::make('backend.page.PageManage')->with('arrPage', $check)->with('link', $link);
         }
@@ -54,10 +54,10 @@ class PageController extends \BaseController {
         );
         $validate = Validator::make(Input::all(), $rules, Lang::get('messages.validator'), Lang::get('backend/attributes.page'));
         if (!$validate->fails()) {
-         $objadmin = \Auth::user();
+            $objadmin = \Auth::user();
             $id = $objadmin->id;
             $tblPageModel->updatePage($pageID, Input::get('pageName'), Input::get('pageContent'), Input::get('pageKeywords'), Input::get('pageTag'), Input::get('slug'), Input::get('status'));
-  $objAdmin = \Auth::user();
+            $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.page.update') . Input::get('pageName');
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
             $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
@@ -91,7 +91,7 @@ class PageController extends \BaseController {
             $id = $objadmin->id;
 
             $tblPageModel->addPage(Input::get('pageName'), Input::get('pageContent'), Input::get('pageKeywords'), Input::get('pageTag'), Input::get('pageSlug'), Input::get('status'));
-        $objAdmin = \Auth::user();
+            $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.page.create') . Input::get('pageName');
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
             $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
@@ -111,14 +111,14 @@ class PageController extends \BaseController {
                 $tblPageModel->deletePage($item);
                 $objadmin = \Auth::user();
                 $id = $objadmin->id;
-$objAdmin = \Auth::user();
+                $objAdmin = \Auth::user();
                 $historyContent = Lang::get('backend/history.page.delete') . $item;
                 $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
                 $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
             }
         }
         $tblPageModel = new tblPageModel();
-        $data = $tblPageModel->selectAllPage(5, 'id');
+        $data = $tblPageModel->selectAllPage(10, 'id');
         $link = $data->links();
         return View::make('backend.page.Pageajax')->with('arrPage', $data)->with('link', $link);
     }
@@ -126,11 +126,11 @@ $objAdmin = \Auth::user();
     public function postDeletePage() {
         $tblPageModel = new tblPageModel();
         $tblPageModel->deletePage(Input::get('id'));
-         $objAdmin = \Auth::user();
+        $objAdmin = \Auth::user();
         $historyContent = Lang::get('backend/history.page.delete') . Input::get('id');
         $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
         $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
-        $arrpage = $tblPageModel->selectAllPage(5, 'id');
+        $arrpage = $tblPageModel->selectAllPage(10, 'id');
         $link = $arrpage->links();
         return View::make('backend.page.Pageajax')->with('arrPage', $arrpage)->with('link', $link);
     }
@@ -138,13 +138,13 @@ $objAdmin = \Auth::user();
     public function postPageActive() {
         $tblPageModel = new tblPageModel();
         $tblPageModel->updatePage(Input::get('id'), '', '', '', '', '', Input::get('status'));
-       
-       
-           $objAdmin = \Auth::user();
+
+
+        $objAdmin = \Auth::user();
         $historyContent = Lang::get('backend/history.page.active') . Input::get('id');
         $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
         $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
-        $arrpage = $tblPageModel->selectAllPage(5, 'id');
+        $arrpage = $tblPageModel->selectAllPage(10, 'id');
 
         $link = $arrpage->links();
         return View::make('backend.page.Pageajax')->with('arrPage', $arrpage)->with('link', $link);
@@ -152,14 +152,14 @@ $objAdmin = \Auth::user();
 
     public function postAjaxpage() {
         $tblPageModel = new tblPageModel();
-        $check = $tblPageModel->selectAllPage(5, 'id');
+        $check = $tblPageModel->selectAllPage(10, 'id');
         $link = $check->links();
         return View::make('backend.page.Pageajax')->with('arrPage', $check)->with('link', $link);
     }
 
     public function postAjaxsearch() {
         $tblPageModel = new tblPageModel();
-        $data = $tblPageModel->SearchPage(trim(Input::get('keyword')), 5, 'id');
+        $data = $tblPageModel->SearchPage(trim(Input::get('keyword')), 10, 'id');
         $link = $data->links();
         return View::make('backend.page.Pageajax')->with('arrPage', $data)->with('link', $link);
     }
@@ -167,7 +167,7 @@ $objAdmin = \Auth::user();
     public function postFillterPage() {
 
         $tblPageModel = new tblPageModel();
-        $data = $tblPageModel->FindPage('', 5, 'id', Input::get('status'));
+        $data = $tblPageModel->FindPage('', 10, 'id', Input::get('status'));
         //echo count($data);
         $link = $data->links();
         return View::make('backend.page.Pageajax')->with('arrPage', $data)->with('link', $link);
@@ -188,4 +188,3 @@ $objAdmin = \Auth::user();
     }
 
 }
-

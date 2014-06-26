@@ -86,8 +86,7 @@ class AdminController extends \BaseController {
         $tblAdminModel->DeleteUserByEmail(\Input::get('id'));
         // Lưu lại lịch sử
         $objAdmin = \Auth::user();
-        $admin = $tblAdminModel->getUserById(\Input::get('id'));
-        $historyContent = \Lang::get('backend/history.admin.delete') . ' ' . $admin->email;
+        $historyContent = \Lang::get('backend/history.admin.delete') . ' ' . \Input::get('id');
         $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel;
         $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
         return \Redirect::to(action('\BackEnd\AdminController@getAdminView') . '?page=' . $page);
@@ -96,10 +95,12 @@ class AdminController extends \BaseController {
     public function postAdminActive() {
         $page = \Input::get('page');
         $tblAdminModel = new \BackEnd\tblUserModel();
-        $tblAdminModel->UpdateStatus(\Input::get('id'), 1);
+        $admin = $tblAdminModel->getUserByEmail(\Input::get('id'), 1);
+
+        $tblAdminModel->UpdateStatus($admin->id, 1);
+
         // Lưu lại lịch sử
         $objAdmin = \Auth::user();
-        $admin = $tblAdminModel->getUserById(\Input::get('id'));
         $historyContent = \Lang::get('backend/history.admin.active') . ' ' . $admin->email;
         $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel;
         $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');

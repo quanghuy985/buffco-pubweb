@@ -51,10 +51,10 @@ class tblUserModel extends \Eloquent {
             $arrAdmin->where('status', '=', $status);
         }
         if ($keysearch != '') {
-            $arrAdmin->whereRaw('(`email` LIKE ? or `phone` LIKE ? or `address` LIKE ? or `lastname` LIKE ? or `firstname` LIKE ?)',array('%'.$keysearch.'%','%'.$keysearch.'%','%'.$keysearch.'%','%'.$keysearch.'%','%'.$keysearch.'%')) ;
+            $arrAdmin->whereRaw('(`email` LIKE ? or `phone` LIKE ? or `address` LIKE ? or `lastname` LIKE ? or `firstname` LIKE ?)', array('%' . $keysearch . '%', '%' . $keysearch . '%', '%' . $keysearch . '%', '%' . $keysearch . '%', '%' . $keysearch . '%'));
         }
         $arrAdmin = $arrAdmin->paginate($per_page);
-       
+
         return $arrAdmin;
     }
 
@@ -202,8 +202,12 @@ class tblUserModel extends \Eloquent {
     }
 
     public function FindUserRow($keyword, $per_page) {
-        $adminarray = DB::table('tbl_users')->where('email', 'LIKE', '%' . $keyword . '%')->orWhere('address', 'LIKE', '%' . $keyword . '%')->orWhere('phone', 'LIKE', '%' . $keyword . '%')->orWhere('firstname', 'LIKE', '%' . $keyword . '%')->orWhere('lastname', 'LIKE', '%' . $keyword . '%')->where('admin', '=', 1)->paginate($per_page);
-        return $adminarray;
+        $arrAdmin = DB::table('tbl_users')->where('admin', '=', 1)->orderBy('id', 'desc');
+        if ($keyword != '') {
+            $arrAdmin->whereRaw('(`email` LIKE ? or `phone` LIKE ? or `address` LIKE ? or `lastname` LIKE ? or `firstname` LIKE ?)', array('%' . $keyword . '%', '%' . $keyword . '%', '%' . $keyword . '%', '%' . $keyword . '%', '%' . $keyword . '%'));
+        }
+        $arrAdmin = $arrAdmin->paginate($per_page);
+        return $arrAdmin;
     }
 
     public function selectAll($per_page) {

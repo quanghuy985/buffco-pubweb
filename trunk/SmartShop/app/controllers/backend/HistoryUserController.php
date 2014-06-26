@@ -19,8 +19,11 @@ class HistoryUserController extends \BaseController {
         $check = $objHistory->getHistoryByUserIDPagination($user_id, 10);
         //var_dump($check);
         $link = $check->links();
-
-        return View::make('backend.historyuser.HistoryManage')->with('objUser', $objUser)->with('arrHistory', $check)->with('link', $link);
+        if (\Request::ajax()) {
+              return View::make('backend.historyuser.HistoryUserajax')->with('arrHistory', $check)->with('link', $link);
+        } else {
+            return View::make('backend.historyuser.HistoryManage')->with('objUser', $objUser)->with('arrHistory', $check)->with('link', $link);
+        }
     }
 
     public function getHistoryUserSearchView($user_id = '', $two = '') {
