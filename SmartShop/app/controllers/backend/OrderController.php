@@ -97,7 +97,11 @@ class OrderController extends \BaseController {
         $tblOderModel = new tblOrderModel();
         $orderdata = $tblOderModel->allOrder(10, 'time');
         $page = $orderdata->links();
-        return View::make('backend.order.orderproduct')->with('arrOrder', $orderdata)->with('page', $page);
+        if (\Request::ajax()) {
+            return View::make('backend.order.orderproductajax')->with('arrOrder', $orderdata)->with('page', $page);
+        } else {
+            return View::make('backend.order.orderproduct')->with('arrOrder', $orderdata)->with('page', $page);
+        }
     }
 
     public function postDeleteOrderFromHistoryUser() {

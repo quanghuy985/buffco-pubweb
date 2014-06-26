@@ -67,7 +67,7 @@
                 </tr>
             </thead>
 
-            <tbody id="tableproduct">
+            <tbody id="tableproduct" class="tabledataajax">
                 <?php $i = 1 ?>
                 @include('backend.order.orderproductajax')
             </tbody>
