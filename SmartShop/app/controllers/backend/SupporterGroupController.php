@@ -38,6 +38,12 @@ class SupporterGroupController extends \BaseController {
     public function postDeleteSupporterGroup() {
         $tblSupporterGroup = new tblSupporterGroupModel();
         $tblSupporterGroup->deleteSupportGroup(Input::get('id'));
+        $supporterGroup = $tblSupporterGroup->getSupportGroupByID(Input::get('id'));
+
+        $objAdmin = \Auth::user();
+        $historyContent = Lang::get('backend/history.supporter.delete_group') . $supporterGroup->supporterGroupName;
+        $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
         return \Redirect::action('\BackEnd\SupporterGroupController@getSupporterGroupView');
     }
 
@@ -64,6 +70,12 @@ class SupporterGroupController extends \BaseController {
         $valid = Validator::make(Input::all(), $rules, array(), Lang::get('backend/attributes.supporter'));
         if (!$valid->fails()) {
             $tblSupporterGroup->updateSupportGroup(Input::get('id'), Input::get('supporterGroupName'));
+
+            $objAdmin = \Auth::user();
+            $historyContent = Lang::get('backend/history.supporter.update_group') . Input::get('supporterGroupName');
+            $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
+
             Session::flash('alert_success', Lang::get('messages.update.success'));
             return Redirect::action('\BackEnd\SupporterGroupController@getSupporterGroupView');
         } else {
@@ -80,6 +92,12 @@ class SupporterGroupController extends \BaseController {
         $valid = Validator::make(Input::all(), $rules, array(), Lang::get('backend/attributes.supporter'));
         if (!$valid->fails()) {
             $tblSupporterGroup->insertSupportGroup(Input::get('supporterGroupName'));
+
+            $objAdmin = \Auth::user();
+            $historyContent = Lang::get('backend/history.supporter.add_group') . Input::get('supporterGroupName');
+            $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
+
             Session::flash('alert_success', Lang::get('messages.add.success'));
             return Redirect::action('\BackEnd\SupporterGroupController@getSupporterGroupView');
         } else {

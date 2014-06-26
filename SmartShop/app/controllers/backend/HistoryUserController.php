@@ -16,8 +16,7 @@ class HistoryUserController extends \BaseController {
         $objHistory = new \BackEnd\tblHistoryUserModel();
         $tblUserModel = new \BackEnd\tblUserModel();
         $objUser = $tblUserModel->getUserById($user_id);
-        $admin = $objUser->admin;
-        $check = $objHistory->getHistoryByUserIDPagination($user_id, $admin, 10);
+        $check = $objHistory->getHistoryByUserIDPagination($user_id, 10);
         //var_dump($check);
         $link = $check->links();
 
@@ -33,9 +32,8 @@ class HistoryUserController extends \BaseController {
         }
         $tblUserModel = new \BackEnd\tblUserModel();
         $objUser = $tblUserModel->getUserById($user_id);
-        $admin = $objUser->admin;
         $objHistory = new \BackEnd\tblHistoryUserModel();
-        $arrHistory = $objHistory->FindHistoryUserRow($two, $user_id, $admin, 10);
+        $arrHistory = $objHistory->FindHistoryUserRow($two, $user_id, 10);
 
 
         $link = $arrHistory->links();
@@ -89,9 +87,8 @@ class HistoryUserController extends \BaseController {
         }
         $tblUserModel = new \BackEnd\tblUserModel();
         $objUser = $tblUserModel->getUserById($user_id);
-        $admin = $objUser->admin;
         $objHistory = new \BackEnd\tblHistoryUserModel();
-        $arrHistory = $objHistory->getAllHistoryUser($one, $two, $three, $user_id, $admin, 10);
+        $arrHistory = $objHistory->getAllHistoryUser($one, $two, $three, $user_id, 10);
         $link = $arrHistory->links();
         if (\Request::ajax()) {
             return View::make('backend.historyuser.HistoryUserajax')->with('arrHistory', $arrHistory)->with('link', $link);
@@ -112,8 +109,7 @@ class HistoryUserController extends \BaseController {
 
         $tblUserModel = new \BackEnd\tblUserModel();
         $objUser = $tblUserModel->getUserById($user_id);
-        $admin = $objUser->admin;
-        $check = $objHistory->getHistoryByUserIDPagination($user_id, $admin, 10);
+        $check = $objHistory->getHistoryByUserIDPagination($user_id, 10);
         //var_dump($check);
         $link = $check->links();
         if (\Request::ajax()) {
@@ -127,14 +123,10 @@ class HistoryUserController extends \BaseController {
         $tblUserModel = new \BackEnd\tblUserModel();
         $user_id = \Input::get('user');
         $objUser = $tblUserModel->getUserById($user_id);
-        $admin = $objUser->admin;
         $objHistory = new \BackEnd\tblHistoryUserModel();
-        if ($admin == 0) {
-            $objHistory->updateHistory(\Input::get('id'), $admin, \Input::get('status'));
-        } else {
-            $objHistory->updateHistory(\Input::get('id'), $admin, \Input::get('status'));
-        }
-        $check = $objHistory->getHistoryByUserIDPagination($user_id, $admin, 10);
+        $objHistory->updateHistory(\Input::get('id'), \Input::get('status'));
+
+        $check = $objHistory->getHistoryByUserIDPagination($user_id, 10);
         //var_dump($check);
         $link = $check->links();
         if (\Request::ajax()) {

@@ -105,4 +105,14 @@ return array(
         'delete' => 'Xóa đơn hàng: ',
         'add' => 'Thêm mới đơn hàng: '
     ),
+    'supporter' => array(
+        'add_group' => 'Thêm nhóm hỗ trợ viên : ',
+        'active_group' => 'Kích hoạt nhóm hỗ trợ viên : ',
+        'delete_group' => 'Xóa nhóm hỗ trợ viên: ',
+        'update_group' => 'Cập nhật nhóm hỗ trợ viên: ',
+        'add' => 'Thêm mới hỗ trợ viên : ',
+        'active' => 'Kích hoạt hỗ trợ viên : ',
+        'delete' => 'Xóa hỗ trợ viên: ',
+        'update' => 'Cập nhật hỗ trợ viên: ',
+    ),
 );

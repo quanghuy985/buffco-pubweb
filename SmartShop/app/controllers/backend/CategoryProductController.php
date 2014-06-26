@@ -82,7 +82,7 @@ class CategoryProductController extends \BaseController {
               $objAdmin = \Auth::user();
         $historyContent = Lang::get('backend/history.cateproduct.delete') . ' ' . $dataedit->cateName;
         $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
         $link = $tblCateProduct->getAllCategoryProductPaginate(10);
         $links = $link->links();
         $start = $link->getCurrentPage() * 10 - 10;
@@ -138,7 +138,7 @@ class CategoryProductController extends \BaseController {
              $objAdmin = \Auth::user();
         $historyContent = Lang::get('backend/history.cateproduct.active') . ' ' . Input::get('id');
         $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
         $cateProductData = $tblCateProduct->getAllCategoryProduct($start, 10);
         return View::make('backend.categoryproduct.cateProductAjax')->with('arrCateProduct', $cateProductData)->with('link', $links);
     }
@@ -157,7 +157,7 @@ class CategoryProductController extends \BaseController {
             $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.cateproduct.update') . ' ' . Input::get('cateName');
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
             Session::flash('alert_success', Lang::get('messages.update.success'));
             return Redirect::action('\BackEnd\CategoryProductController@getCateProductView');
         } else {
@@ -184,7 +184,7 @@ class CategoryProductController extends \BaseController {
                 $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.cateproduct.add') . ' ' . Input::get('cateName');
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
                 echo json_encode($mess);
             } else {
                 Session::flash('alert_success', Lang::get('messages.add.success'));

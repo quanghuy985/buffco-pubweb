@@ -137,7 +137,7 @@ class NewsController extends \BaseController {
             $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.news.create') . Input::get('newsName');
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
 
             Session::flash('alert_success', Lang::get('messages.add.success'));
             return Redirect::action('\BackEnd\NewsController@getNewsView');
@@ -178,7 +178,7 @@ class NewsController extends \BaseController {
         $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.news.update') . Input::get('newsName');
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
             Session::flash('alert_success', Lang::get('messages.update.success'));
             return Redirect::back();
         } else {

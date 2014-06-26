@@ -54,7 +54,7 @@ class SizeController extends \BaseController {
             $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.size.update') . Input::get('sizeName');
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
 
             return Redirect::action('SizeController@getSizeView', array('msg' => 'cap nhat thanh cong'));
         } else {
@@ -82,7 +82,7 @@ class SizeController extends \BaseController {
             $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.size.add') . Input::get('sizeName');
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
 
             return Redirect::action('SizeController@getSizeView', array('msg' => 'them moi thanh cong'));
         } else {
@@ -103,7 +103,7 @@ class SizeController extends \BaseController {
             $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.size.add') . Input::get('sizeName');
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
 
             $tblSize1 = new tblSizeModel();
             $arrSize = $tblSize1->allSize(100);
@@ -138,7 +138,7 @@ class SizeController extends \BaseController {
                 $objAdmin = \Auth::user();
                 $historyContent = Lang::get('backend/history.size.delete') . $size->sizeName;
                 $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-                $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+                $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
             }
         }
         $objSize = new tblSizeModel();
@@ -155,7 +155,7 @@ class SizeController extends \BaseController {
         $objAdmin = \Auth::user();
         $historyContent = Lang::get('backend/history.size.delete') . $size->sizeName;
         $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
 
 
         //echo $tblPageModel;
@@ -172,7 +172,7 @@ class SizeController extends \BaseController {
         $objAdmin = \Auth::user();
         $historyContent = Lang::get('backend/history.size.active') . $size->sizeName;
         $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
 
         $arrsize = $objSize->allSize(5);
         $link = $arrsize->links();

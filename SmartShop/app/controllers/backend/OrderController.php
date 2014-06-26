@@ -108,7 +108,7 @@ class OrderController extends \BaseController {
         $objAdmin = \Auth::user();
         $historyContent = \Lang::get('backend/history.order.delete') . ' ' . \Input::get('id');
         $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
         // Quay lại địa chỉ cũ 
         $objOrder = $tblOrderModel->findOrderByID(\Input::get('id'));
 
@@ -153,7 +153,7 @@ class OrderController extends \BaseController {
                 $objAdmin = \Auth::user();
                 $historyContent = \Lang::get('backend/history.order.active') . ' ' . $orderCode;
                 $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-                $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+                $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
 
                 \Session::flash('alert_success', \Lang::get('messages.order.wait'));
                 return Redirect::action('\BackEnd\OrderController@getViewAll');
@@ -183,7 +183,7 @@ class OrderController extends \BaseController {
                     $objAdmin = \Auth::user();
                     $historyContent = \Lang::get('backend/history.order.active') . ' ' . $orderCode;
                     $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-                    $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+                    $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
 
                     \Session::flash('alert_success', \Lang::get('messages.order.success'));
                     return Redirect::action('\BackEnd\OrderController@getViewAll');
@@ -205,7 +205,7 @@ class OrderController extends \BaseController {
             $objAdmin = \Auth::user();
             $historyContent = \Lang::get('backend/history.order.delete') . ' ' . $orderCode;
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
 
             \Session::flash('alert_success', \Lang::get('messages.order.delete'));
             return Redirect::action('\BackEnd\OrderController@getViewAll');

@@ -51,9 +51,10 @@ class tblUserModel extends \Eloquent {
             $arrAdmin->where('status', '=', $status);
         }
         if ($keysearch != '') {
-            $arrAdmin->where('email', 'LIKE', '%' . $keysearch . '%')->orWhere('phone', 'LIKE', '%' . $keysearch . '%')->orWhere('address', 'LIKE', '%' . $keysearch . '%')->orWhere('lastname', 'LIKE', '%' . $keysearch . '%')->orWhere('firstname', 'LIKE', '%' . $keysearch . '%');
+            $arrAdmin->whereRaw('(`email` LIKE ? or `phone` LIKE ? or `address` LIKE ? or `lastname` LIKE ? or `firstname` LIKE ?)',array('%'.$keysearch.'%','%'.$keysearch.'%','%'.$keysearch.'%','%'.$keysearch.'%','%'.$keysearch.'%')) ;
         }
         $arrAdmin = $arrAdmin->paginate($per_page);
+       
         return $arrAdmin;
     }
 
