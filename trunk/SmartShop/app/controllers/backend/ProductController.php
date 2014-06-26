@@ -45,7 +45,7 @@ class ProductController extends \BaseController {
             $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.product.active') . $inputs['productCode'];
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
             Session::flash('alert_success', Lang::get('messages.add.success'));
             return Redirect::back();
         } else {
@@ -92,7 +92,7 @@ class ProductController extends \BaseController {
             $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.product.update') . $inputs['productCode'];
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
             Session::flash('alert_success', Lang::get('messages.update.success'));
             return Redirect::back();
         } else {
@@ -171,7 +171,7 @@ class ProductController extends \BaseController {
         $objAdmin = \Auth::user();
         $historyContent = Lang::get('backend/history.product.delete') . $product->productCode;
         $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
         return \Redirect::action('\BackEnd\ProductController@getProductView');
     }
 

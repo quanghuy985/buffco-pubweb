@@ -81,7 +81,7 @@ class LoginController extends \BaseController {
                     $objAdmin = \Auth::user();
                     $historyContent = Lang::get('backend/history.login.update') . ' ' . $user->email;
                     $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-                    $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+                    $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
                 });
 
         switch ($response) {
@@ -102,7 +102,7 @@ class LoginController extends \BaseController {
                     $objAdmin = \Auth::user();
                     $historyContent = Lang::get('backend/history.login.forgot') . ' ' . Input::only('email');
                     $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-                    $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+                    $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
                 });
         switch ($response) {
             case Password::INVALID_USER:

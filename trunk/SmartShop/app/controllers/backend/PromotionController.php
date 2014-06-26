@@ -36,7 +36,7 @@ class PromotionController extends \BaseController {
         $objAdmin = \Auth::user();
         $historyContent = Lang::get('backend/history.promotion.delete') . $promotion->promotionName;
         $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
 
         $arrPromotion = $tblPromotion->getAllPromotion(10);
         $link = $arrPromotion->links();
@@ -59,7 +59,7 @@ class PromotionController extends \BaseController {
         $objAdmin = \Auth::user();
         $historyContent = Lang::get('backend/history.promotion.active') . $promotion->promotionName;
         $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
 
         $arrPromotion = $tblPromotion->getAllPromotion(10);
         $link = $arrPromotion->links();
@@ -79,7 +79,7 @@ class PromotionController extends \BaseController {
             $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.promotion.update') . Input::get('promotionName');
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
 
             return Redirect::action('PromotionController@getPromotionView', array('thongbao' => 'Cập nhật thành công .'));
         } else {
@@ -100,7 +100,7 @@ class PromotionController extends \BaseController {
             $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.promotion.add') . Input::get('promotionName');
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
 
 
             return Redirect::action('PromotionController@getPromotionView', array('thongbao' => 'Thêm mới thành công .'));
@@ -122,7 +122,7 @@ class PromotionController extends \BaseController {
             $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.promotion.add') . Input::get('promotionName');
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
 
 
             $arrPromotion = $tblPromotion->getAllPromotion(1000);

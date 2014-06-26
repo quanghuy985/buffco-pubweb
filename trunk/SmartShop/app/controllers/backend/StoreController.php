@@ -59,7 +59,7 @@ class StoreController extends \BaseController {
             $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.store.add') . Input::get('productID');
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
 
             $tblStore1 = new tblStoreModel();
             $arrStore = $tblStore1->getStoreByProductID(Input::get('productID'));
@@ -98,7 +98,7 @@ class StoreController extends \BaseController {
             $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.store.update') . Input::get('id');
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
 
             return 'true';
         } else {
@@ -117,7 +117,7 @@ class StoreController extends \BaseController {
             $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.store.delete') . Input::get('id');
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
 
             $tblStore1 = new tblStoreModel();
             $arrStore = $tblStore1->getStoreByProductID(Input::get('productID'));

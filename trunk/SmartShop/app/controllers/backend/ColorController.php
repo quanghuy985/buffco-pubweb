@@ -31,7 +31,7 @@ class ColorController extends \BaseController {
         $historyContent = Lang::get('backend/history.color.add') . ' ' . Input::get('colorname');
         $objAdmin = \Auth::user();
         $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
 
         $tblColorModel = new tblColorModel();
         $arrColor = $tblColorModel->selectAll(10);
@@ -47,7 +47,7 @@ class ColorController extends \BaseController {
             $historyContent = Lang::get('backend/history.color.add') . ' ' . Input::get('colorname');
             $objAdmin = \Auth::user();
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
 
 
             $tblColorModel = new tblColorModel();
@@ -82,7 +82,7 @@ class ColorController extends \BaseController {
         $historyContent = Lang::get('backend/history.color.delete') . ' ' . $color->colorName;
         $objAdmin = \Auth::user();
         $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
 
         return 'true';
     }
@@ -102,7 +102,7 @@ class ColorController extends \BaseController {
         $historyContent = Lang::get('backend/history.color.update') . ' ' . Input::get('colorname');
         $objAdmin = \Auth::user();
         $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
 
         return Redirect::action('ColorController@getAddColor');
     }

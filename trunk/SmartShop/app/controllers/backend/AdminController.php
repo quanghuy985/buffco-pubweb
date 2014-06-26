@@ -46,7 +46,7 @@ class AdminController extends \BaseController {
             $objAdmin = \Auth::user();
             $historyContent = \Lang::get('backend/history.admin.add') . ' ' . \Input::get('email');
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel;
-            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
             \Session::flash('alert_success', \Lang::get('messages.add.success'));
             return \Redirect::action('\BackEnd\AdminController@getAdminAddForm');
         } else {
@@ -58,12 +58,12 @@ class AdminController extends \BaseController {
     public function getAdminView() {
         if (\Request::ajax()) {
             $tblAdminModel = new \BackEnd\tblUserModel();
-            $arrAdmin = $tblAdminModel->getAllAdmin(2);
+            $arrAdmin = $tblAdminModel->getAllAdmin(10);
             $link = $arrAdmin->links();
             return View::make('backend.admin.adminAjax')->with('arrayAdmin', $arrAdmin)->with('link', $link);
         } else {
             $tblAdminModel = new \BackEnd\tblUserModel();
-            $arrAdmin = $tblAdminModel->getAllAdmin(2);
+            $arrAdmin = $tblAdminModel->getAllAdmin(10);
             $link = $arrAdmin->links();
             return View::make('backend.admin.adminManage')->with('arrayAdmin', $arrAdmin)->with('link', $link);
         }
@@ -86,9 +86,10 @@ class AdminController extends \BaseController {
         $tblAdminModel->DeleteUserByEmail(\Input::get('id'));
         // Lưu lại lịch sử
         $objAdmin = \Auth::user();
-        $historyContent = \Lang::get('backend/history.admin.delete') . ' ' . \Input::get('id');
+        $admin = $tblAdminModel->getUserById(\Input::get('id'));
+        $historyContent = \Lang::get('backend/history.admin.delete') . ' ' . $admin->email;
         $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel;
-        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
         return \Redirect::to(action('\BackEnd\AdminController@getAdminView') . '?page=' . $page);
     }
 
@@ -98,9 +99,10 @@ class AdminController extends \BaseController {
         $tblAdminModel->UpdateStatus(\Input::get('id'), 1);
         // Lưu lại lịch sử
         $objAdmin = \Auth::user();
-        $historyContent = \Lang::get('backend/history.admin.active') . ' ' . \Input::get('id');
+        $admin = $tblAdminModel->getUserById(\Input::get('id'));
+        $historyContent = \Lang::get('backend/history.admin.active') . ' ' . $admin->email;
         $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel;
-        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
         return \Redirect::to(action('\BackEnd\AdminController@getAdminView') . '?page=' . $page);
     }
 
@@ -113,9 +115,10 @@ class AdminController extends \BaseController {
 
         $tblAdminModel->UpdateUser(\Input::get('id'), '', \Input::get('password'), \Input::get('firstname'), \Input::get('lastname'), \Input::get('dateofbirth'), \Input::get('address'), \Input::get('phone'), \Input::get('status'), 1, \Input::get('roles'));
 
-        $historyContent = \Lang::get('backend/history.admin.update') . ' ' . \Input::get('email');
+        $admin = $tblAdminModel->getUserById(\Input::get('id'));
+        $historyContent = \Lang::get('backend/history.admin.update') . ' ' . $admin->email;
         $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel;
-        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
         \Session::flash('alert_success', \Lang::get('messages.update.success'));
         return \Redirect::action('\BackEnd\AdminController@getAdminView');
     }
@@ -153,7 +156,7 @@ class AdminController extends \BaseController {
 
     public function getAdminSearchView($two = '') {
         $tblAdminModel = new \BackEnd\tblUserModel();
-        $arrAdmin = $tblAdminModel->FindUserRow($two, 2);
+        $arrAdmin = $tblAdminModel->FindUserRow($two, 10);
         $link = $arrAdmin->links();
         if (\Request::ajax()) {
             return View::make('backend.admin.adminAjax')->with('arrayAdmin', $arrAdmin)->with('link', $link);
@@ -185,9 +188,9 @@ class AdminController extends \BaseController {
         $tblAdminModel->UpdateUser(\Auth::user()->id, \Auth::user()->mail, \Input::get('password'), \Input::get('firstname'), \Input::get('lastname'), strtotime(\Input::get('dateofbirth')), \Input::get('address'), \Input::get('phone'), \Input::get('status'), 1, '');
 
         $objAdmin = \Auth::user();
-        $historyContent = \Lang::get('backend/history.admin.profile') . ' ' . \Input::get('email');
+        $historyContent = \Lang::get('backend/history.admin.profile');
         $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel;
-        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
 
         \Session::flash('alert_success', \Lang::get('messages.update.success'));
         return \Redirect::action('\BackEnd\AdminController@getProfileAdmin');

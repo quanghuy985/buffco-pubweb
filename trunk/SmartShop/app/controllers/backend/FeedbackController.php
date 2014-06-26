@@ -108,7 +108,7 @@ class FeedbackController extends \BaseController {
         $objAdmin = \Auth::user();
         $historyContent = Lang::get('backend/history.feedback.reply') . ' ' . Input::get('userEmail');
         $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
         Mail::send('emails.feedback.feedback', array('noidung' => $contentFeedback, 'traloi' => $contentReply), function($message) {
             $message->from('no-rep@pubweb.vn', 'Pubweb.vn');
             $message->to(Input::get('userEmail'));
@@ -125,7 +125,7 @@ class FeedbackController extends \BaseController {
         $objAdmin = \Auth::user();
         $historyContent = Lang::get('backend/history.feedback.delete') . ' ' . Input::get('id');
         $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, 1, '0');
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
         return \Redirect::action('\BackEnd\FeedbackController@getFeedBack');
     }
 
