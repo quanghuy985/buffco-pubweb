@@ -21,12 +21,12 @@ class PageController extends \BaseController {
     public function getPageView() {
         if (\Request::ajax()) {
             $tblPageModel = new tblPageModel();
-            $check = $tblPageModel->selectAllPage(10, 'id');
+            $check = $tblPageModel->selectAllPage(1, 'id');
             $link = $check->links();
             return View::make('backend.page.Pageajax')->with('arrPage', $check)->with('link', $link);
         } else {
             $tblPageModel = new tblPageModel();
-            $check = $tblPageModel->selectAllPage(10, 'id');
+            $check = $tblPageModel->selectAllPage(1, 'id');
             $link = $check->links();
             return View::make('backend.page.PageManage')->with('arrPage', $check)->with('link', $link);
         }
@@ -54,10 +54,8 @@ class PageController extends \BaseController {
         );
         $validate = Validator::make(Input::all(), $rules, Lang::get('messages.validator'), Lang::get('backend/attributes.page'));
         if (!$validate->fails()) {
-            $objadmin = \Auth::user();
-            $id = $objadmin->id;
             $tblPageModel->updatePage($pageID, Input::get('pageName'), Input::get('pageContent'), Input::get('pageKeywords'), Input::get('pageTag'), Input::get('slug'), Input::get('status'));
-            $objAdmin = \Auth::user();
+           $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.page.update') . Input::get('pageName');
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
             $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
@@ -89,9 +87,8 @@ class PageController extends \BaseController {
             $tblPageModel = new tblPageModel();
             $objadmin = \Auth::user();
             $id = $objadmin->id;
-
             $tblPageModel->addPage(Input::get('pageName'), Input::get('pageContent'), Input::get('pageKeywords'), Input::get('pageTag'), Input::get('pageSlug'), Input::get('status'));
-            $objAdmin = \Auth::user();
+        $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.page.create') . Input::get('pageName');
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
             $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
@@ -101,90 +98,6 @@ class PageController extends \BaseController {
             Session::flash('alert_error', Lang::get('messages.add.error'));
             return Redirect::back()->withErrors($validate->messages())->withInput($inputs);
         }
-    }
-
-    public function postDelmulte() {
-        $pieces1 = explode(",", Input::get('multiid'));
-        foreach ($pieces1 as $item) {
-            if ($item != '') {
-                $tblPageModel = new tblPageModel();
-                $tblPageModel->deletePage($item);
-                $objadmin = \Auth::user();
-                $id = $objadmin->id;
-                $objAdmin = \Auth::user();
-                $historyContent = Lang::get('backend/history.page.delete') . $item;
-                $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-                $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
-            }
-        }
-        $tblPageModel = new tblPageModel();
-        $data = $tblPageModel->selectAllPage(10, 'id');
-        $link = $data->links();
-        return View::make('backend.page.Pageajax')->with('arrPage', $data)->with('link', $link);
-    }
-
-    public function postDeletePage() {
-        $tblPageModel = new tblPageModel();
-        $tblPageModel->deletePage(Input::get('id'));
-        $objAdmin = \Auth::user();
-        $historyContent = Lang::get('backend/history.page.delete') . Input::get('id');
-        $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
-        $arrpage = $tblPageModel->selectAllPage(10, 'id');
-        $link = $arrpage->links();
-        return View::make('backend.page.Pageajax')->with('arrPage', $arrpage)->with('link', $link);
-    }
-
-    public function postPageActive() {
-        $tblPageModel = new tblPageModel();
-        $tblPageModel->updatePage(Input::get('id'), '', '', '', '', '', Input::get('status'));
-
-
-        $objAdmin = \Auth::user();
-        $historyContent = Lang::get('backend/history.page.active') . Input::get('id');
-        $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
-        $arrpage = $tblPageModel->selectAllPage(10, 'id');
-
-        $link = $arrpage->links();
-        return View::make('backend.page.Pageajax')->with('arrPage', $arrpage)->with('link', $link);
-    }
-
-    public function postAjaxpage() {
-        $tblPageModel = new tblPageModel();
-        $check = $tblPageModel->selectAllPage(10, 'id');
-        $link = $check->links();
-        return View::make('backend.page.Pageajax')->with('arrPage', $check)->with('link', $link);
-    }
-
-    public function postAjaxsearch() {
-        $tblPageModel = new tblPageModel();
-        $data = $tblPageModel->SearchPage(trim(Input::get('keyword')), 10, 'id');
-        $link = $data->links();
-        return View::make('backend.page.Pageajax')->with('arrPage', $data)->with('link', $link);
-    }
-
-    public function postFillterPage() {
-
-        $tblPageModel = new tblPageModel();
-        $data = $tblPageModel->FindPage('', 10, 'id', Input::get('status'));
-        //echo count($data);
-        $link = $data->links();
-        return View::make('backend.page.Pageajax')->with('arrPage', $data)->with('link', $link);
-    }
-
-    public function postCheckSlug() {
-        $tblPageModel = new tblPageModel();
-        $count = 0;
-        $slugcheck = Input::get('slug');
-        $count = $tblPageModel->countSlug($slugcheck);
-        return $count;
-    }
-
-    public function getPageBySlug($slug) {
-        $tblPage = new tblPageModel();
-        $data = $tblPage->getPageBySlug($slug);
-        return View::make('fontend.page.PageManage')->with('arrPage', $data[0]);
     }
 
 }

@@ -98,17 +98,12 @@ class tblCategoryNewsModel extends \Eloquent {
     }
 
     public function allCateNewList() {
-        $arrCateNews = DB::table('tbl_news_category')->where('catenewsParent', '=', '0')->get();
+        $arrCateNews = DB::table('tbl_news_category')->where('catenewsParent', '=', '0')->orderBy('catenewsName')->get();
         return $arrCateNews;
     }
 
     public function countSlug($slug) {
         $objCateNews = DB::table('tbl_news_category')->where('catenewsSlug', 'LIKE', $slug . '%')->count();
-        return $objCateNews;
-    }
-
-    public function getCateNewsBySlug($slug) {
-        $objCateNews = DB::table('tbl_news_category')->where('catenewsSlug', '=', $slug)->get();
         return $objCateNews;
     }
 

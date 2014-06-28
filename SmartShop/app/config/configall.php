@@ -31,5 +31,4 @@ return array(
     'google-maps' => $cauhinhwebsite['googlemaps'],
     'img-slider' => $cauhinhwebsite['slideimg'],
     'menu-header' => $cauhinhwebsite['menuheader'],
-    'alll' => Auth::user()->id
 );
