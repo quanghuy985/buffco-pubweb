@@ -139,11 +139,7 @@
         <p>
             <label>Mô tả sản phẩm</label>
             <span class="field">
-                <textarea cols="80" rows="5" required title="Trường này không được để trống"  id="productDescription" class="ckeditor" name="productDescription" placeholder="Mô tả sản phẩm">
-                @if(isset($productedit))
-                    {{$productedit->productDescription}}
-                @endif
-                </textarea>
+                {{Form::textarea('productDescription', null, array('class'=>'ckeditor', 'cols'=>80, 'rows'=>5,'id'=>'productDescription'))}}
             </span>
 
         </p>
@@ -198,31 +194,13 @@
                     </div>
                     <div id="tabs-2">
                         <p>
-                            <textarea cols="80" rows="3"  id="productAttributes" class="ckeditor" name="productAttributes">              
-         @if(isset($productedit))
-                    {{$productedit->productAttributes}}
-                @endif
-                            </textarea>
+                            {{Form::textarea('productAttributes', null, array('class'=>'ckeditor', 'cols'=>80, 'rows'=>5,'id'=>'productAttributes'))}}
                         </p>
                     </div>
                 </div>
 
             </div>
         </div> 
-        </p>
-        <p>
-            <!--        <div id="accordion1" class="accordion">
-                        <h3><a href="#"><strong><i>Kho hàng</i></strong></a></h3>
-                        <div>
-                            <p>
-                                Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
-                                ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
-                                amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
-                                odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
-                            </p>
-                        </div>
-                    </div>-->
-
         </p>
     </div><!--photosharing_wrapper-->
 
@@ -231,8 +209,8 @@
             <h3>Đăng</h3>
         </div><!--contenttitle-->
         <button value="Thêm mới" type="submit" class="stdbtn btn_orange"> 
- @if(isset($productedit)){{Lang::get('button.update')}}@else{{Lang::get('button.add')}}    @endif 
-          </button>
+            @if(isset($productedit)){{Lang::get('button.update')}}@else{{Lang::get('button.add')}}    @endif 
+        </button>
         <button value="Thêm mới" type="reset" class="stdbtn btn_world "> Làm lại  </button>
         <div class="contenttitle3">
             <h3>Chuyên mục sản phẩm</h3>

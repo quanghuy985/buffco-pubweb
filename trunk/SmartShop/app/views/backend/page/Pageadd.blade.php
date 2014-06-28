@@ -44,81 +44,75 @@
 </script>
 <div class="contentwrapper">
     <div class="subcontent">
-        <div class="contenttitle2" id="editPage">
-            <h3>
-                @if(!isset($arrayPage))
-                {{Lang::get('backend/title.page.add')}}
-                @else
-                {{Lang::get('backend/title.page.edit')}}
-                @endif
-            </h3>
-        </div>
+
         @include('backend.alert')
         @if(!isset($arrayPage))
-        {{Form::open(array('action'=>'\BackEnd\PageController@postAddPage', 'id'=>'addPage', 'class'=>'stdform stdform2'))}}
+        {{Form::open(array('action'=>'\BackEnd\PageController@postAddPage', 'id'=>'addPage', 'class'=>'stdform'))}}
         @else
-        {{Form::model($arrayPage, array('action'=>'\BackEnd\PageController@postUpdatePage', 'id'=>'addPage', 'class'=>'stdform stdform2'))}}
+        {{Form::model($arrayPage, array('action'=>'\BackEnd\PageController@postUpdatePage', 'id'=>'addPage', 'class'=>'stdform'))}}
         @endif
+        <div class="two_third photosharing_wrapper">
+            <div class="contenttitle2" id="editPage">
+                <h3>
+                    @if(!isset($arrayPage))
+                    {{Lang::get('backend/title.page.add')}}
+                    @else
+                    {{Lang::get('backend/title.page.edit')}}
+                    @endif
+                </h3>
+            </div>
+            <p>
+                {{Form::hidden('id', null, array('id'=>'id'))}}
+            </p>
 
+            <p>
+                <label>{{Lang::get('general.page_name')}}</label>
+                <span class="field">
+                    {{Form::text('pageName', null, array('id'=>'pageName', 'class'=>'longinput', 'onkeyup'=>'toSlug(this)', 'onchange'=>'toSlug(this)'))}}
+                </span>
+            </p>
+            <p>
+                <label>{{Lang::get('general.slug')}}</label>
+                <span class="field">
+                    {{Form::text('pageSlug', null, array('id'=>'pageSlug', 'class'=>'longinput', 'onchange'=>'toSlug(this)', 'placeholder'=>Lang::get('placeholder.slug')))}}
+                </span>
+            </p>
+            <p>
+                <label>{{Lang::get('general.content')}}</label>
+                <span class="field">
+                    {{Form::textarea('pageContent', null, array('id'=>'location2', 'class'=>'ckeditor'))}}
+                </span>
+            </p>
 
-        <p>
-            {{Form::hidden('id', null, array('id'=>'id'))}}
-        </p>
-
-        <p>
-            <label>{{Lang::get('general.page_name')}}</label>
-            <span class="field">
-                {{Form::text('pageName', null, array('id'=>'pageName', 'class'=>'longinput', 'onkeyup'=>'toSlug(this)', 'onchange'=>'toSlug(this)'))}}
-            </span>
-        </p>
-
-        <p>
-            <label>{{Lang::get('general.content')}}</label>
-            <span class="field">
-                {{Form::textarea('pageContent', null, array('id'=>'location2', 'class'=>'ckeditor'))}}
-            </span>
-        </p>
-
-        <p>
-            <label>{{Lang::get('general.keyword')}}</label>
-            <span class="field">
-                {{Form::text('pageKeywords', null, array('id'=>'pageKeywords', 'class'=>'longinput', 'placeholder'=>Lang::get('placeholder.keywords')))}}
-            </span>
-        </p>
-
-        <p>
-            <label>{{Lang::get('general.tag')}}</label>
-            <span class="field">
-                {{Form::text('pageTag', null, array('id'=>'tags', 'class'=>'longinput', 'placeholder'=>Lang::get('placeholder.tags')))}}
-                <span class="small">{{Lang::get('placeholder.tags')}}</span>
-            </span>
-        </p>
-
-        <p>
-            <label>{{Lang::get('general.slug')}}</label>
-            <span class="field">
-                {{Form::text('pageSlug', null, array('id'=>'pageSlug', 'class'=>'longinput', 'onchange'=>'toSlug(this)', 'placeholder'=>Lang::get('placeholder.slug')))}}
-            </span>
-        </p>
-
-        <p>
-            <label>{{Lang::get('general.status')}}</label>
-
-            <span class="field">
-                <?php
-                $dataStatus = Lang::get('general.data_status');
-                unset($dataStatus['']);
-                echo Form::select('status', $dataStatus);
-                ?>
-            </span>
-        </p>
-
-        <p class="stdformbutton">
+        </div>
+        <div class="one_third last ps_sidebar">
+            <div class="contenttitle3">
+                <h3>Đăng</h3>
+            </div>
+            <?php
+            $dataStatus = Lang::get('general.data_status');
+            unset($dataStatus['']);
+            echo Form::select('status', $dataStatus);
+            ?>
             <button class="submit radius2">
                 @if(isset($arrayPage)){{Lang::get('button.update')}} @else {{Lang::get('button.add')}} @endif
             </button>
-            <input type="reset" class="reset radius2" value="Làm lại">
-        </p>
+            <br clear="all">
+            <div class="contenttitle3">
+                <h3>{{Lang::get('general.tag')}}</h3>
+            </div>
+            {{Form::text('pageTag', null, array('id'=>'tags', 'class'=>'longinput', 'placeholder'=>Lang::get('placeholder.tags')))}}
+            <br clear="all">
+            <div class="contenttitle3">
+                <h3>{{Lang::get('general.keyword')}}</h3>
+            </div>
+            {{Form::text('pageKeywords', null, array('id'=>'tags1', 'class'=>'longinput', 'placeholder'=>Lang::get('placeholder.keywords')))}}
+        </div>
+        <style>
+            div.tagsinput{
+                width: 100% !important;
+            }
+        </style>
         {{Form::close()}}
     </div>
 </div>

@@ -122,9 +122,16 @@ class TblProductModel extends \Eloquent {
         return $arrProduct;
     }
 
-    public function getAllProductNewByCatId($id_cat, $per_page = 5, $status) {
-        $arrProduct = DB::table('tbl_product')->leftJoin('tbl_product_manufacturer', 'tbl_product.manufactureID', '=', 'tbl_product_manufacturer.id')->leftJoin('tbl_product_views', 'tbl_product.id', '=', 'tbl_product_views.product_id')->leftJoin('tbl_product_category', 'tbl_product_views.category_product_id', '=', 'tbl_product_category.id')->orderBy('tbl_product.id', 'desc')->where('tbl_product_views.category_product_id', '=', $id_cat)->where('tbl_product.status', $status)->select('tbl_product.*', 'tbl_product_manufacturer.manufacturerName', \DB::raw('GROUP_CONCAT(tbl_product_category.id) as IdCatNameProduct'), \DB::raw('GROUP_CONCAT(tbl_product_category.cateName) as CatNameProduct'))->groupBy('tbl_product.id')->paginate($per_page);
-        return $arrProduct;
+    public function getAllProductNewByCatId($id_cat, $per_page = 5, $status = '') {
+        $arrProduct = DB::table('tbl_product')->leftJoin('tbl_product_views', 'tbl_product.id', '=', 'tbl_product_views.product_id')->orderBy('tbl_product.id', 'desc');
+        if ($id_cat != 'null') {
+            $arrProduct->where('tbl_product_views.category_product_id', '=', $id_cat);
+        }
+        if ($status != 'null') {
+            $arrProduct->where('tbl_product.status', $status);
+        }
+        $arrProduct1 = $arrProduct->select('tbl_product.*')->groupBy('tbl_product.id')->paginate($per_page);
+        return $arrProduct1;
     }
 
     public function getAllProductSearch($keyword, $per_page) {

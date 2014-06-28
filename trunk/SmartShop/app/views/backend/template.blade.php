@@ -49,7 +49,12 @@
         <script type="text/javascript" src="{{Asset('backend')}}/js/plugins/ui.spinner.min.js"></script>
         <script type="text/javascript" src="{{Asset('backend')}}/js/custom/forms.js"></script>
         <script type="text/javascript" src="{{Asset('backend')}}/js/plugins/nprogress.js"></script>
-        <script>        NProgress.start();</script>
+        <script>
+            NProgress.start();
+            window.onload = function() {
+                NProgress.done();
+            }
+        </script>
         <script type="text/javascript" src="{{Asset('backend')}}/js/custom/custom-admin.js"></script>
 <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="{{Asset('backend')}}/js/plugins/excanvas.min.js"></script><![endif]-->
         <!--[if IE 9]>

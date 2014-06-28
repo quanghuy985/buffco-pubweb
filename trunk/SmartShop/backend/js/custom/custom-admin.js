@@ -33,9 +33,6 @@ function isset()
 }
 
 jQuery(document).ready(function() {
-    window.onload = function() {
-        NProgress.done();
-    }
     jQuery('.pagination li a').live('click', function(event) {
         var elem = jQuery(this);
         var cat_product = jQuery("#cat_product_id").val();

@@ -38,10 +38,11 @@ class CateNewsController extends \BaseController {
                 $start = 0;
             }
             $data = $tblCateNewsModel->getAllCategoryNew($start, 10);
+            $datalist = $tblCateNewsModel->allCateNewList();
             if (count($data) != 0) {
-                return View::make('backend.news.cateNewsManage')->with('arrayCateNews', $data)->with('link', $links);
+                return View::make('backend.news.cateNewsManage')->with('arrayCateNewslist', $datalist)->with('arrayCateNews', $data)->with('link', $links);
             } else {
-                return View::make('backend.news.cateNewsManage')->with('arrayCateNews', $data);
+                return View::make('backend.news.cateNewsManage')->with('arrayCateNewslist', $datalist)->with('arrayCateNews', $data);
             }
         }
     }
@@ -50,8 +51,7 @@ class CateNewsController extends \BaseController {
         $tblCateNewsModel = new tblCategoryNewsModel();
         $tblCateNewsModel->deleteCateNews(Input::get('id'));
         $tblCateNewsModel->deleteCateNewsChild(Input::get('id'));
-
-        $objAdmin = \Auth::user();
+ $objAdmin = \Auth::user();
         $historyContent = Lang::get('backend/history.cateNews.delete') . $dataedit[0]->catenewsName;
         $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
         $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
@@ -60,9 +60,7 @@ class CateNewsController extends \BaseController {
         if ($start < 0) {
             $start = 0;
         }
-        $arrCateNews = $tblCateNewsModel->getAllCategoryNew($start, 10);
-        $link = $cateNewsData->links();
-        return View::make('backend.news.cateNewsAjax')->with('arrayCateNews', $arrCateNews)->with('link', $link);
+        return  Redirect::action('\BackEnd\CateNewsController@getCateNewsView');
     }
 
     public function getCateNewsEdit($id = '') {
@@ -86,29 +84,10 @@ class CateNewsController extends \BaseController {
             }
             $arrCateNews = $tblCateNewsModel->getAllCategoryNew($start, 10);
             $dataedit = $tblCateNewsModel->findCateNewsByID($id);
-            return View::make('backend.news.cateNewsManage')->with('cateNewsData', $dataedit)->with('arrayCateNews', $arrCateNews)->with('link', $links);
+            $data = $tblCateNewsModel->getAllCategoryNew($start, 10);
+            $datalist = $tblCateNewsModel->allCateNewList();
+            return View::make('backend.news.cateNewsManage')->with('arrayCateNewslist', $datalist)->with('cateNewsData', $dataedit)->with('arrayCateNews', $arrCateNews)->with('link', $links);
         }
-    }
-
-    public function postCateNewsActive() {
-        $tblCateNews = new tblCategoryNewsModel();
-        $tblCateNews->updateCategoryNews(Input::get('id'), '', '', '', '', Input::get('status'));
-        $dataedit = $tblCateNews->findCateNewsByID(Input::get('id'));
-
-        $historyContent = Lang::get('backend/history.cateNews.active') . $dataedit[0]->catenewsName;
-        $objAdmin = \Auth::user();
-        $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
-
-        $cateNewsData = $tblCateNews->getAllCategoryNewPaginate(10);
-
-        $start = $cateNewsData->getCurrentPage() * 10 - 10;
-        if ($start < 0) {
-            $start = 0;
-        }
-        $arrCateNews = $tblCateNews->getAllCategoryNew($start, 10);
-        $link = $cateNewsData->links();
-        return View::make('backend.news.cateNewsAjax')->with('arrayCateNews', $arrCateNews)->with('link', $link);
     }
 
     public function postUpdateCateNews() {
@@ -125,7 +104,6 @@ class CateNewsController extends \BaseController {
             $tblCateNewsModel = new tblCategoryNewsModel();
             $tblCateNewsModel->updateCategoryNews(Input::get('id'), trim(Input::get('catenewsName')), trim(Input::get('catenewsDescription')), trim(Input::get('catenewsParent')), trim(Input::get('catenewsSlug')), 1);
             $historyContent = Lang::get('backend/history.cateNews.update') . Input::get('catenewsName');
-
             $objAdmin = \Auth::user();
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
             $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
@@ -148,7 +126,6 @@ class CateNewsController extends \BaseController {
         if (!$validate->fails()) {
             $tblCateNewsModel = new tblCategoryNewsModel();
             $tblCateNewsModel->addCategoryNews(trim(Input::get('catenewsName')), trim(Input::get('catenewsDescription')), trim(Input::get('catenewsParent')), trim(Input::get('catenewsSlug')));
-
             $historyContent = Lang::get('backend/history.cateNews.create') . Input::get('catenewsSlug');
             $objAdmin = \Auth::user();
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();

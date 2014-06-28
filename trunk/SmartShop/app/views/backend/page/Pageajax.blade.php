@@ -1,11 +1,17 @@
-<?php $selectData = Lang::get('general.data_status'); ?>
+@if(count($arrPage)==0)
+<tr>
+    <td colspan="8">{{Lang::get('general.data_empty')}}</td>
+</tr>
+@endif
+
+<?php
+$i = ($arrPage->getCurrentPage() - 1) * 10 + 1;
+$selectData = Lang::get('general.data_status');
+?>
 @foreach($arrPage as $item)
 <tr> 
-    <td>
-        <input name="checkboxidfile" type="checkbox" value="{{$item->id}}"></td> 
+    <td>{{$i++}}</td> 
     <td><label value="page">{{str_limit($item->pageName, 30, '...')}}</label></td> 
-    <td><label value="page">{{str_limit($item->pageKeywords, 30, '...')}} </label></td> 
-    <td><label value="page">{{str_limit($item->pageTag, 30, '...')}} </label></td> 
     <td><label value="page">{{str_limit($item->pageSlug, 30, '...')}} </label></td> 
     <td><label value="page"></label><?php echo date('d/m/Y h:i:s', $item->time); ?></td> 
     <td><label value="page">
@@ -17,15 +23,15 @@
         </label>
     </td> 
     <td>
-        <a href="{{URL::action('\BackEnd\PageController@getPageEdit',$item->id)}}" class="btn btn4 btn_book" title="{{Lang::get('button.btn.book')}}"></a>
+        <a href="{{URL::action('\BackEnd\PageController@getPageEdit',$item->id)}}"  title="{{Lang::get('general.edit')}}">{{Lang::get('general.edit')}}</a>
         @if($item->status=='2')
-        <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 0)" class="btn btn4 btn_flag" title="{{Lang::get('button.btn.flag')}}"></a>
+        &nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 0)"  title="{{Lang::get('button.btn.flag')}}">{{Lang::get('button.btn.flag')}}</a>
         @endif
         @if($item->status=='0')
-        <a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 1)" class="btn btn4 btn_world" title="{{Lang::get('button.btn.world')}}"></a>
+        &nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 1)" title="{{Lang::get('button.btn.world')}}">{{Lang::get('button.btn.world')}}</a>
         @endif
         @if($item->status!='2')
-        <a href="javascript: void(0)" onclick="xoasanpham({{$item->id}})" class="btn btn4 btn_trash" title="{{Lang::get('button.btn.trash')}}"></a>
+        &nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript: void(0)" onclick="xoasanpham({{$item->id}})" title="{{Lang::get('general.delete')}}">{{Lang::get('general.delete')}}</a>
         @endif
     </td> 
 </tr> 

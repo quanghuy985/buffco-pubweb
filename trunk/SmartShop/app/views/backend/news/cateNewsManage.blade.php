@@ -92,18 +92,16 @@
                     <option value="0">{{Lang::get('general.parent')}}</option>
 
                     <?php
-                    if (isset($arrayCateNews)) {
-                        foreach ($arrayCateNews as $item) {
-                            if ($item->catenewsParent == 0) {
-                                $selec = '';
-                                if (isset($cateNewsData) && $item->id == $cateNewsData->catenewsParent) {
-                                    $selec = 'selected';
-                                }
-                                if (isset($cateNewsData) && $cateNewsData->id == $item->id) {
-                                    
-                                } else {
-                                    echo '<option value="' . $item->id . '" ' . $selec . '> ' . $item->catenewsName . '</option>';
-                                }
+                    if (isset($arrayCateNewslist)) {
+                        foreach ($arrayCateNewslist as $item) {
+                            $selec = '';
+                            if (isset($cateNewsData) && $item->id == $cateNewsData->catenewsParent) {
+                                $selec = 'selected';
+                            }
+                            if (isset($cateNewsData) && $cateNewsData->id == $item->id) {
+                                
+                            } else {
+                                echo '<option value="' . $item->id . '" ' . $selec . '> ' . $item->catenewsName . '</option>';
                             }
                         }
                     }

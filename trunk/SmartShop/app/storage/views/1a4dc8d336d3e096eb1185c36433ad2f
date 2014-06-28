@@ -1,0 +1,45 @@
+<?php if(count($arrPage)==0): ?>
+<tr>
+    <td colspan="8"><?php echo Lang::get('general.data_empty'); ?></td>
+</tr>
+<?php endif; ?>
+
+<?php
+$i = ($arrPage->getCurrentPage() - 1) * 10 + 1;
+$selectData = Lang::get('general.data_status');
+?>
+<?php foreach($arrPage as $item): ?>
+<tr> 
+    <td><?php echo $i++; ?></td> 
+    <td><label value="page"><?php echo str_limit($item->pageName, 30, '...'); ?></label></td> 
+    <td><label value="page"><?php echo str_limit($item->pageSlug, 30, '...'); ?> </label></td> 
+    <td><label value="page"></label><?php echo date('d/m/Y h:i:s', $item->time); ?></td> 
+    <td><label value="page">
+            <?php
+            if (array_key_exists($item->status, $selectData)) {
+                echo $selectData[$item->status];
+            }
+            ?>
+        </label>
+    </td> 
+    <td>
+        <a href="<?php echo URL::action('\BackEnd\PageController@getPageEdit',$item->id); ?>"  title="<?php echo Lang::get('general.edit'); ?>"><?php echo Lang::get('general.edit'); ?></a>
+        <?php if($item->status=='2'): ?>
+        &nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript: void(0)" onclick="kichhoat(<?php echo $item->id; ?>, 0)"  title="<?php echo Lang::get('button.btn.flag'); ?>"><?php echo Lang::get('button.btn.flag'); ?></a>
+        <?php endif; ?>
+        <?php if($item->status=='0'): ?>
+        &nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript: void(0)" onclick="kichhoat(<?php echo $item->id; ?>, 1)" title="<?php echo Lang::get('button.btn.world'); ?>"><?php echo Lang::get('button.btn.world'); ?></a>
+        <?php endif; ?>
+        <?php if($item->status!='2'): ?>
+        &nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript: void(0)" onclick="xoasanpham(<?php echo $item->id; ?>)" title="<?php echo Lang::get('general.delete'); ?>"><?php echo Lang::get('general.delete'); ?></a>
+        <?php endif; ?>
+    </td> 
+</tr> 
+<?php endforeach; ?>
+<script>
+            jQuery('input:checkbox').uniform();</script>
+<?php if($link!=''): ?>
+<tr>
+    <td colspan="8"><?php echo $link; ?></td>
+</tr>
+<?php endif; ?>

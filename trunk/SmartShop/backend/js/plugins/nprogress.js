@@ -238,7 +238,7 @@
       spinner && removeElement(spinner);
     }
 
-    document.body.appendChild(progress);
+    document.documentElement.appendChild(progress);
     return progress;
   };
 
@@ -265,8 +265,8 @@
    */
 
   NProgress.getPositioningCSS = function() {
-    // Sniff on document.body.style
-    var bodyStyle = document.body.style;
+    // Sniff on document.documentElement.style
+    var bodyStyle = document.documentElement.style;
 
     // Sniff prefixes
     var vendorPrefix = ('WebkitTransform' in bodyStyle) ? 'Webkit' :
@@ -366,7 +366,7 @@
     }
 
     function getVendorProp(name) {
-      var style = document.body.style;
+      var style = document.documentElement.style;
       if (name in style) return name;
 
       var i = cssPrefixes.length,

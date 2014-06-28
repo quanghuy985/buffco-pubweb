@@ -133,13 +133,11 @@ class NewsController extends \BaseController {
             $tblNewsModel = new tblNewsModel();
             $objAdmin = \Auth::user();
             $check = $tblNewsModel->insertNew($inputs['catlist'], $inputs['newsName'], $inputs['newsImg'], $inputs['newsDescription'], $inputs['newsKeywords'], $inputs['newsContent'], $inputs['newsTag'], $inputs['newsSlug'], $inputs['status'], $objAdmin->id);
-
-            $objAdmin = \Auth::user();
+          $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.news.create') . Input::get('newsName');
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
-
-            Session::flash('alert_success', Lang::get('messages.add.success'));
+            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');          
+		  Session::flash('alert_success', Lang::get('messages.add.success'));
             return Redirect::action('\BackEnd\NewsController@getNewsView');
         } else {
             Session::flash('alert_error', Lang::get('messages.add.error'));
@@ -150,9 +148,6 @@ class NewsController extends \BaseController {
     public function getNewsEdit($id = '') {
         $tblNewsModel = new tblNewsModel();
         $objNews = $tblNewsModel->getNewsByID($id);
-        if (empty($objNews)) {
-            return Response::view('backend.404Page', array(), 404);
-        }
         $tableCateModel = new tblCategoryNewsModel();
         $arrCate = $tableCateModel->allCateNew();
         $catselect = $tableCateModel->getCatByNews($id);
@@ -188,4 +183,3 @@ class NewsController extends \BaseController {
     }
 
 }
-
