@@ -25,19 +25,19 @@ $selectData = Lang::get('general.data_status');
     <td>
         <a href="{{URL::action('\BackEnd\PageController@getPageEdit',$item->id)}}"  title="{{Lang::get('general.edit')}}">{{Lang::get('general.edit')}}</a>
         @if($item->status=='2')
-        &nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 0)"  title="{{Lang::get('button.btn.flag')}}">{{Lang::get('button.btn.flag')}}</a>
+        &nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript: void(0)" onclick="active_element('{{URL::action('\BackEnd\PageController@postActivePages')}}',{{$item->id}})"  title="{{Lang::get('button.btn.flag')}}">{{Lang::get('button.btn.flag')}}</a>
         @endif
         @if($item->status=='0')
-        &nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript: void(0)" onclick="kichhoat({{$item->id}}, 1)" title="{{Lang::get('button.btn.world')}}">{{Lang::get('button.btn.world')}}</a>
+        &nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript: void(0)" onclick="active_element('{{URL::action('\BackEnd\PageController@postPublicPages')}}',{{$item->id}})" title="{{Lang::get('button.btn.world')}}">{{Lang::get('button.btn.world')}}</a>
         @endif
         @if($item->status!='2')
-        &nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript: void(0)" onclick="xoasanpham({{$item->id}})" title="{{Lang::get('general.delete')}}">{{Lang::get('general.delete')}}</a>
+        &nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript: void(0)" onclick="deleteproduct('{{URL::action('\BackEnd\PageController@postDeletePages')}}',{{$item->id}})" title="{{Lang::get('general.delete')}}">{{Lang::get('general.delete')}}</a>
         @endif
     </td> 
 </tr> 
 @endforeach
 <script>
-            jQuery('input:checkbox').uniform();</script>
+                            jQuery('input:checkbox').uniform();</script>
 @if($link!='')
 <tr>
     <td colspan="8">{{$link}}</td>

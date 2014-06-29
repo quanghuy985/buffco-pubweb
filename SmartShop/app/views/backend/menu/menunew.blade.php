@@ -87,13 +87,53 @@
                                     <option value="saab">Saab</option>
                                 </optgroup>
                                 <optgroup label="Chuyên mục sản phẩm">
-                                    <option value="saab">Saab</option>
+                                    <?php
+                                    foreach ($catprolist as $item) {
+                                        if ($item->cateParent == 0) {
+                                            ?>
+                                            <option value="{{$item->cateSlug}}">{{$item->cateName}}</option>
+                                            <?php
+                                            foreach ($catprolist as $item1) {
+                                                if ($item1->cateParent == $item->id) {
+                                                    ?>
+                                                    <option value="{{$item1->cateSlug}}"> — {{$item1->cateName}}</option>
+                                                    <?php
+                                                }
+                                            }
+                                            ?>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
+
                                 </optgroup>
                                 <optgroup label="Trang tĩnh">
-                                    <option value="saab">Saab</option>
+                                    <?php foreach ($pageslist as $item) {
+                                        ?>
+                                        <option value="{{$item->pageSlug}}">{{$item->pageName}}</option>
+                                        <?php
+                                    }
+                                    ?>
                                 </optgroup>  
                                 <optgroup label="Chuyên mục tin tức">
-                                    <option value="saab">Saab</option>
+                                    <?php
+                                    foreach ($catnewlist as $item) {
+                                        if ($item->catenewsParent == 0) {
+                                            ?>
+                                            <option value="{{$item->catenewsSlug}}">{{$item->catenewsName}}</option>
+                                            <?php
+                                            foreach ($catnewlist as $item1) {
+                                                if ($item1->catenewsParent == $item->id) {
+                                                    ?>
+                                                    <option value="{{$item1->catenewsSlug}}"> — {{$item1->catenewsName}}</option>
+                                                    <?php
+                                                }
+                                            }
+                                            ?>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
                                 </optgroup>  
                             </select>
                         </p>

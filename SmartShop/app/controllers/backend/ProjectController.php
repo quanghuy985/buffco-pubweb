@@ -20,19 +20,36 @@ class ProjectController extends \BaseController {
 
     public static $rules = array();
 
+    public function postDeleteProject() {
+        $id = \Input::get('id');
+        $objProject = new tblProjectModel();
+        $objProject->ChangStatusProject($id, 2);
+        return \Redirect::action('\BackEnd\ProjectController@getProjectView');
+    }
+
+    public function postActiveProject() {
+        $id = \Input::get('id');
+        $objProject = new tblProjectModel();
+        $objProject->ChangStatusProject($id, 0);
+        return \Redirect::action('\BackEnd\ProjectController@getProjectView');
+    }
+
+    public function postPublicProject() {
+        $id = \Input::get('id');
+        $objProject = new tblProjectModel();
+        $objProject->ChangStatusProject($id, 1);
+        return \Redirect::action('\BackEnd\ProjectController@getProjectView');
+    }
+
     public function getProjectView() {
         if (\Request::ajax()) {
             $objProject = new tblProjectModel();
             $check = $objProject->selectAllProject(1, 'id');
-            //var_dump($check);
-            $link = $check->links();
-            return View::make('backend.project.Projectajax')->with('dataProject', $check)->with('link', $link);
+            return View::make('backend.project.Projectajax')->with('arrayProject', $check)->with('link', $check->links());
         } else {
             $objProject = new tblProjectModel();
             $check = $objProject->selectAllProject(1, 'id');
-            //var_dump($check);
-            $link = $check->links();
-            return View::make('backend.project.ProjectManage')->with('arrayProject', $check)->with('link', $link);
+            return View::make('backend.project.ProjectManage')->with('arrayProject', $check)->with('link', $check->links());
         }
     }
 
@@ -65,7 +82,7 @@ class ProjectController extends \BaseController {
             } else {
                 $attList = Input::get('ImagePath');
                 $objProject->updateProject($pid, Input::get('projectName'), $from, $to, Input::get('projectDescription'), Input::get('projectContent'), $attList, Input::get('status'));
-              $objAdmin = \Auth::user();
+                $objAdmin = \Auth::user();
                 $historyContent = Lang::get('backend/history.project.update') . Input::get('projectName');
                 $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
                 $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
@@ -117,77 +134,48 @@ class ProjectController extends \BaseController {
         }
     }
 
-    public function postDelmulte() {
-        $objHistoryAdmin = new tblHistoryAdminModel();
-        $pieces1 = explode(",", Input::get('multiid'));
-        foreach ($pieces1 as $item) {
-            if ($item != '') {
-                $objProject = new tblProjectModel();
-                $objProject->deleteProject($item);
-
-               $objAdmin = \Auth::user();
-                $historyContent = Lang::get('backend/history.project.delete') . $item;
-                $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-                $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
-            }
+    public function postFillterProjectView() {
+        $one = Input::get('fillter_status');
+        if ($one == '') {
+            $one = 'null';
         }
-        $objProject = new tblProjectModel();
-        $data = $objProject->selectAllProject(5, 'id');
-        $link = $data->links();
-        return View::make('backend.project.Projectajax')->with('dataProject', $data)->with('link', $link);
+        return \Redirect::action('\BackEnd\ProjectController@getFillterProjectView', array($one));
     }
 
-    public function postDeleteProject() {
-        $objProject = new tblProjectModel();
-        $objProject->deleteProject(Input::get('id'));
-            $project = $objProject->getProjectById(Input::get('id'));
-    $objAdmin = \Auth::user();
-        $historyContent = Lang::get('backend/history.project.delete') . $project->projectName;
-        $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
+    public function getFillterProjectView($one = '') {
+        if ($one == 'null') {
+            $one = '';
+        }
 
-        $arrayProject = $objProject->selectAllProject(5, 'id');
-        $link = $arrayProject->links();
-        return View::make('backend.project.Projectajax')->with('dataProject', $arrayProject)->with('link', $link);
+        $tblProjectModel = new tblProjectModel();
+        $check = $tblProjectModel->FillterAllProject(1, 'id', $one);
+        if (\Request::ajax()) {
+            return View::make('backend.project.Projectajax')->with('arrayProject', $check)->with('link', $check->links());
+        } else {
+            return View::make('backend.project.ProjectManage')->with('arrayProject', $check)->with('link', $check->links());
+        }
     }
 
-    public function postProjectActive() {
-        $objProject = new tblProjectModel();
-        $objProject->updateProject(Input::get('id'), '', '', '', '', '', '', Input::get('status'));
-         $project = $objProject->getProjectById(Input::get('id'));
-
-        $objAdmin = \Auth::user();
-        $historyContent = Lang::get('backend/history.project.update') . $project->projectName;
-        $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
-        $arrayProject = $objProject->selectAllProject(5, 'id');
-        $link = $arrayProject->links();
-        return View::make('backend.project.Projectajax')->with('dataProject', $arrayProject)->with('link', $link);
+    public function postSeaechProjectView() {
+        $one = Input::get('key_word');
+        if ($one == '') {
+            $one = 'null';
+        }
+        return \Redirect::action('\BackEnd\ProjectController@getSeaechProjectView', array($one));
     }
 
-    public function postAjaxsearch() {
-        $objProject = new tblProjectModel();
-        $data = $objProject->SearchProject(trim(Input::get('keyword')), 5, 'id');
-        $link = $data->links();
-        return View::make('backend.project.Projectajax')->with('dataProject', $data)->with('link', $link);
-    }
+    public function getSeaechProjectView($one = '') {
+        if ($one == 'null') {
+            $one = '';
+        }
 
-    public function postFillterProject() {
-
-        $objProject = new tblProjectModel();
-        //echo Input::get('status');
-        $data = $objProject->findProject('', 5, 'id', Input::get('status'));
-        //echo count($data);
-        $link = $data->links();
-        return View::make('backend.project.Projectajax')->with('dataProject', $data)->with('link', $link);
-    }
-
-    public function postAjaxproject() {
-        $objProject = new tblProjectModel();
-        $check = $objProject->selectAllProject(5, 'id');
-        $link = $check->links();
-        return View::make('backend.project.Projectajax')->with('dataProject', $check)->with('link', $link);
+        $tblProjectModel = new tblProjectModel();
+        $check = $tblProjectModel->SearchAllProject(1, 'id', $one);
+        if (\Request::ajax()) {
+            return View::make('backend.project.Projectajax')->with('arrayProject', $check)->with('link', $check->links());
+        } else {
+            return View::make('backend.project.ProjectManage')->with('arrayProject', $check)->with('link', $check->links());
+        }
     }
 
 }
-

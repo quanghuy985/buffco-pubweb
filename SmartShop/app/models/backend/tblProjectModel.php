@@ -54,31 +54,31 @@ class tblProjectModel extends \Eloquent {
         return $checkupdate;
     }
 
-    public function deleteProject($projectId) {
-        $checkdel = $this->where('id', '=', $projectId)->update(array('status' => 2));
+    public function ChangStatusProject($projectId, $status) {
+        $checkdel = $this->where('id', '=', $projectId)->update(array('status' => $status));
         return $checkdel;
     }
 
-    public function findProject($keyword, $per_page, $orderby, $status) {
-        $projectfarray = '';
-        if ($status == '') {
-            $projectfarray = DB::table('tbl_projects')->select('tbl_projects.*')->orderBy($orderby, 'desc')->paginate($per_page);
-        } else {
-            $projectfarray = DB::table('tbl_projects')->select('tbl_projects.*')->where('tbl_projects.status', '=', $status)->orderBy($orderby, 'desc')->paginate($per_page);
-        }
-        return $projectfarray;
-    }
-
-    public function SearchProject($keyword, $per_page, $orderby) {
-        $projectfarray = '';
-
-        $projectfarray = DB::table('tbl_projects')->select('tbl_projects.*')->where('tbl_projects.projectDescription', 'LIKE', '%' . $keyword . '%')->orwhere('tbl_projects.projectContent', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);
-
-        return $projectfarray;
-    }
-
     public function selectAllProject($per_page, $orderby) {
-        $allProject = DB::table('tbl_projects')->select('tbl_projects.*')->orderBy($orderby, 'desc')->paginate($per_page);
+        $allProject = DB::table('tbl_projects')->select('tbl_projects.*')->where('status', 1)->orderBy($orderby, 'desc')->paginate($per_page);
+        return $allProject;
+    }
+
+    public function FillterAllProject($per_page, $orderby, $status) {
+        $allProject = DB::table('tbl_projects')->select('tbl_projects.*')->orderBy($orderby, 'desc');
+        if ($status != '') {
+            $allProject->where('status', $status);
+        }
+        $allProject = $allProject->paginate($per_page);
+        return $allProject;
+    }
+
+    public function SearchAllProject($per_page, $orderby, $keyword) {
+        $allProject = DB::table('tbl_projects')->select('tbl_projects.*')->orderBy($orderby, 'desc');
+        if ($keyword != '') {
+            $allProject->whereRaw('(`projectName` LIKE ? or `projectDescription` LIKE ? or `projectContent` LIKE ? )', array('%' . $keyword . '%', '%' . $keyword . '%', '%' . $keyword . '%'));
+        }
+        $allProject = $allProject->paginate($per_page);
         return $allProject;
     }
 
