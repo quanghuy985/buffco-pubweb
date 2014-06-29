@@ -55,7 +55,7 @@ class PageController extends \BaseController {
         $validate = Validator::make(Input::all(), $rules, Lang::get('messages.validator'), Lang::get('backend/attributes.page'));
         if (!$validate->fails()) {
             $tblPageModel->updatePage($pageID, Input::get('pageName'), Input::get('pageContent'), Input::get('pageKeywords'), Input::get('pageTag'), Input::get('slug'), Input::get('status'));
-           $objAdmin = \Auth::user();
+            $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.page.update') . Input::get('pageName');
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
             $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
@@ -83,12 +83,11 @@ class PageController extends \BaseController {
         $inputs = Input::all();
         $validate = Validator::make($inputs, $rules, Lang::get('messages.validator'), Lang::get('backend/attributes.page'));
         if (!$validate->fails()) {
-
             $tblPageModel = new tblPageModel();
             $objadmin = \Auth::user();
             $id = $objadmin->id;
             $tblPageModel->addPage(Input::get('pageName'), Input::get('pageContent'), Input::get('pageKeywords'), Input::get('pageTag'), Input::get('pageSlug'), Input::get('status'));
-        $objAdmin = \Auth::user();
+            $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.page.create') . Input::get('pageName');
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
             $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
@@ -98,6 +97,72 @@ class PageController extends \BaseController {
             Session::flash('alert_error', Lang::get('messages.add.error'));
             return Redirect::back()->withErrors($validate->messages())->withInput($inputs);
         }
+    }
+
+    public function postFillterPageView() {
+        $one = Input::get('fillter_status');
+        if ($one == '') {
+            $one = 'null';
+        }
+        return \Redirect::action('\BackEnd\PageController@getFillterPageView', array($one));
+    }
+
+    public function getFillterPageView($one = '') {
+        if ($one == 'null') {
+            $one = '';
+        }
+
+        $tblPageModel = new tblPageModel();
+        $check = $tblPageModel->FilterAllPage(1, 'id', $one);
+        $link = $check->links();
+        if (\Request::ajax()) {
+            return View::make('backend.page.Pageajax')->with('arrPage', $check)->with('link', $link);
+        } else {
+            return View::make('backend.page.PageManage')->with('arrPage', $check)->with('link', $link);
+        }
+    }
+
+    public function postSeaechPageView() {
+        $one = Input::get('key_word');
+        if ($one == '') {
+            $one = 'null';
+        }
+        return \Redirect::action('\BackEnd\PageController@getSeaechPageView', array($one));
+    }
+
+    public function getSeaechPageView($one = '') {
+        if ($one == 'null') {
+            $one = '';
+        }
+        $tblPageModel = new tblPageModel();
+        $check = $tblPageModel->SearchAllPage(1, 'id', $one);
+        $link = $check->links();
+        if (\Request::ajax()) {
+            return View::make('backend.page.Pageajax')->with('arrPage', $check)->with('link', $link);
+        } else {
+            return View::make('backend.page.PageManage')->with('arrPage', $check)->with('link', $link);
+        }
+    }
+
+    public function postDeletePages() {
+        $id = \Input::get('id');
+        $tblPageModel = new tblPageModel();
+        $tblPageModel->changeStatusPage($id, 2);
+        return \Redirect::action('\BackEnd\PageController@getPageView');
+    }
+
+    public function postActivePages() {
+        $id = \Input::get('id');
+        $tblPageModel = new tblPageModel();
+        $tblPageModel->changeStatusPage($id, 0);
+        return \Redirect::action('\BackEnd\PageController@getPageView');
+    }
+
+    public function postPublicPages() {
+        $id = \Input::get('id');
+        $tblPageModel = new tblPageModel();
+        $tblPageModel->changeStatusPage($id, 1);
+        return \Redirect::action('\BackEnd\PageController@getPageView');
     }
 
 }

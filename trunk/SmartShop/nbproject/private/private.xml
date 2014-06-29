@@ -3,26 +3,32 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/LOCALHOST/www/SmartShop/app/controllers/backend/CateNewsController.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/config/database.php</file>
-            <file>file:/D:/LOCALHOST/www/SmartShop/backend/js/plugins/nprogress.js</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/backend/js/plugins/jquery.uniform.min.js</file>
-            <file>file:/D:/LOCALHOST/www/SmartShop/backend/ckfinder/config.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/vendor/autoload.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/bootstrap/autoload.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/config/app.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/views/backend/product/addproduct.blade.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/backend/js/custom/general.js</file>
-            <file>file:/D:/LOCALHOST/www/SmartShop/index.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/controllers/backend/NewsController.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/views/backend/news/cateNewsManage.blade.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/backend/js/custom/custom-admin.js</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/backend/ckfinder/ckfinder.php</file>
+            <file>file:/D:/LOCALHOST/www/SmartShop/app/controllers/backend/ProjectController.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/backend/css/style.default.css</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/models/backend/tblCategoryNewsModel.php</file>
+            <file>file:/D:/LOCALHOST/www/SmartShop/vendor/spescina/timthumb/src/Spescina/Timthumb/Timthumb.php</file>
+            <file>file:/D:/LOCALHOST/www/SmartShop/app/controllers/backend/CateNewsController.php</file>
+            <file>file:/D:/LOCALHOST/www/SmartShop/app/controllers/backend/PageController.php</file>
+            <file>file:/D:/LOCALHOST/www/SmartShop/backend/js/plugins/nprogress.js</file>
+            <file>file:/D:/LOCALHOST/www/SmartShop/backend/ckfinder/config.php</file>
+            <file>file:/D:/LOCALHOST/www/SmartShop/index.php</file>
+            <file>file:/D:/LOCALHOST/www/SmartShop/app/views/backend/project/Projectajax.blade.php</file>
+            <file>file:/D:/LOCALHOST/www/SmartShop/app/models/backend/tblProjectModel.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/bootstrap/start.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/bootstrap/paths.php</file>
-            <file>file:/D:/LOCALHOST/www/SmartShop/vendor/spescina/timthumb/src/Spescina/Timthumb/Timthumb.php</file>
+            <file>file:/D:/LOCALHOST/www/SmartShop/app/views/backend/news/newsAjax.blade.php</file>
+            <file>file:/D:/LOCALHOST/www/SmartShop/app/views/backend/page/Pageajax.blade.php</file>
         </group>
     </open-files>
 </project-private>

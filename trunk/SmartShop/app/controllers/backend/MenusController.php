@@ -20,7 +20,13 @@ class MenusController extends \BaseController {
 
     public function getMenus($id = 1) {
         $menus = new \BackEnd\Menu();
-        return \View::make('backend.menu.menunew')->with('menu', $menus->index($id))->with('jsmenu', 'haha');
+        $catProduct = new tblCategoryproductModel();
+        $allcatpeoduct = $catProduct->allCateProductList();
+        $catnews = new tblCategoryNewsModel();
+        $alltnews = $catnews->allCateNew();
+        $pages = new tblPageModel();
+        $allpage = $pages->getAllPage();
+        return \View::make('backend.menu.menunew')->with('catprolist', $allcatpeoduct)->with('catnewlist', $alltnews)->with('pageslist', $allpage)->with('menu', $menus->index($id))->with('jsmenu', 'haha');
     }
 
     public function postUpdateMenu() {

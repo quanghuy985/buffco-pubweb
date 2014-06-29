@@ -15,7 +15,7 @@ if (isset($dataProject)) {
     foreach ($tag as $item) {
         ?>
                 var urlImg = '<span style="padding-top:10px" id="image-{{$item}}">' +
-                        '<img src="{{Asset('pubweb.vn/100/100/0')}}/{{$item}}" width="100" height="100"/>' +
+                        '<img src="{{Asset('pubweb.vn / 100 / 100 / 0')}}/{{$item}}" width="100" height="100"/>' +
                         '<a href="javascript:void(0);" ' +
                         'onclick="xoaanhthum(\'image-{{$item}}\');" class="delete" title="{{Lang::get("button.delete")}}">x</a></span>';
                 var urlImgno = '<span style="padding-top:10px" id="n-image-{{$item}}">' +
@@ -101,13 +101,13 @@ if (isset($dataProject)) {
         </div>
         @include('backend.alert')
         @if(isset($dataProject))
-        {{Form::model($dataProject, array('action'=>array('\BackEnd\ProjectController@postUpdateProject', $dataProject->id), 'id'=>'addProjectForm', 'class'=>'stdform stdform2'))}}
+        {{Form::model($dataProject, array('action'=>array('\BackEnd\ProjectController@postUpdateProject', $dataProject->id), 'id'=>'addProjectForm', 'class'=>'stdform'))}}
         <?php
         $dataProject->from = date('m/d/Y', $dataProject->from);
         $dataProject->to = date('m/d/Y', $dataProject->to);
         ?>
         @else
-        {{Form::open(array('action'=>'\BackEnd\ProjectController@postAddProject', 'id'=>'addProjectForm', 'class'=>'stdform stdform2'))}}
+        {{Form::open(array('action'=>'\BackEnd\ProjectController@postAddProject', 'id'=>'addProjectForm', 'class'=>'stdform'))}}
         @endif
         <p>
             {{Form::hidden('id', null, array('id'=>'idproject'))}}
@@ -169,7 +169,7 @@ if (isset($dataProject)) {
             </span>
         </p>
         <p class="stdformbutton">
-            <button class="submit radius2">@if(isset($dataProject)){{Lang::get('button.update')}} @else{{Lang::get('button.add')}} @endif</button>
+            <button style="margin-left: 30px;" class="submit radius2">@if(isset($dataProject)){{Lang::get('button.update')}} @else{{Lang::get('button.add')}} @endif</button>
             <input type="reset" class="reset radius2" value="{{Lang::get('button.reset')}}">
         </p>
         {{Form::close()}}

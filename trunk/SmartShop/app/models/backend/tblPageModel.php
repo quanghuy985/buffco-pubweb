@@ -42,8 +42,6 @@ class tblPageModel extends \Eloquent {
         } if ($pageStatus != '') {
             $arraysql = array_merge($arraysql, array("status" => $pageStatus));
         }
-
-
         $check = $tablePage->update($arraysql);
         if ($check > 0) {
             return TRUE;
@@ -52,8 +50,8 @@ class tblPageModel extends \Eloquent {
         }
     }
 
-    public function deletePage($pageID) {
-        $checkdel = $this->where('id', '=', $pageID)->update(array('status' => 2));
+    public function changeStatusPage($pageID, $status) {
+        $checkdel = $this->where('id', '=', $pageID)->update(array('status' => $status));
         if ($checkdel > 0) {
             return TRUE;
         } else {
@@ -66,55 +64,31 @@ class tblPageModel extends \Eloquent {
         return $allPage;
     }
 
-    public function getAllPage() {
-        $allPage = DB::table('tbl_pages')->get();
+    public function FilterAllPage($per_page, $orderby, $status) {
+        $allPage = DB::table('tbl_pages')->orderBy($orderby, 'desc');
+        if ($status != '') {
+            $allPage->where('status', '=', $status);
+        }
+        $allPage = $allPage->paginate($per_page);
         return $allPage;
     }
 
-    public function allPage($per_page) {
-        $allPage = DB::table('tbl_pages')->paginate($per_page);
+    public function SearchAllPage($per_page, $orderby, $keyword) {
+        $allPage = DB::table('tbl_pages')->orderBy($orderby, 'desc');
+        if ($keyword != '') {
+            $allPage->whereRaw('(`pageName` LIKE ? or `pageContent` LIKE ? )', array('%' . $keyword . '%', '%' . $keyword . '%'));
+        }
+        $allPage = $allPage->paginate($per_page);
+        return $allPage;
+    }
+
+    public function getAllPage() {
+        $allPage = DB::table('tbl_pages')->where('status', 1)->orderBy('pageName')->get();
         return $allPage;
     }
 
     public function getPageByID($pageID) {
         $objectPage = $this->find($pageID);
-        return $objectPage;
-    }
-
-    public function getPageBySlug($slug) {
-        $objectPage = DB::table('tbl_pages')->where('pageSlug', '=', $slug)->get();
-        return $objectPage;
-    }
-
-    public function FindPage($keyword, $per_page, $orderby, $status) {
-        $pagearray = '';
-        if ($status == '') {
-            $pagearray = DB::table('tbl_pages')->select('tbl_pages.*')->orderBy($orderby, 'desc')->paginate($per_page);
-        } else {
-            $pagearray = DB::table('tbl_pages')->select('tbl_pages.*')->where('tbl_pages.status', '=', $status)->orderBy($orderby, 'desc')->paginate($per_page);
-        }
-        return $pagearray;
-    }
-
-    public function SearchPage($keyword, $per_page, $orderby) {
-        $pagearray = '';
-
-        $pagearray = DB::table('tbl_pages')->select('tbl_pages.*')->where('tbl_pages.pageName', 'LIKE', '%' . $keyword . '%')->orwhere('tbl_pages.pageKeywords', 'LIKE', '%' . $keyword . '%')->orwhere('tbl_pages.pageTag', 'LIKE', '%' . $keyword . '%')->orwhere('tbl_pages.pageSlug', 'LIKE', '%' . $keyword . '%')->orderBy($orderby, 'desc')->paginate($per_page);
-
-        return $pagearray;
-    }
-
-    public function checkSlug($slug) {
-        $checkslug = $this->where('pageSlug', '=', $slug)->count();
-        if ($checkslug > 0) {
-            return TRUE;
-        } else {
-            return FALSE;
-        }
-    }
-
-    public function countSlug($slug) {
-        $objectPage = DB::table('tbl_pages')->where('pageSlug', 'LIKE', $slug . '%')->count();
         return $objectPage;
     }
 

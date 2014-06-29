@@ -88,7 +88,7 @@ class tblCategoryNewsModel extends \Eloquent {
     }
 
     public function allCateNew() {
-        $arrCateNews = DB::table('tbl_news_category')->get();
+        $arrCateNews = DB::table('tbl_news_category')->orderBy('catenewsName')->where('status', 1)->get();
         return $arrCateNews;
     }
 
