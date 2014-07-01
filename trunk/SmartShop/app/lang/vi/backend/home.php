@@ -2,7 +2,9 @@
 return array(
     'user'           => 'Người dùng',
     'order'          => 'Đơn hàng',
+        'profit'          => 'Lợi nhuận',
     'months'         => 'Tháng',
+      'money_format'          => 'nghìn VNĐ',
     'days'           => 'ngày',
     'setting'        => 'Cài đặt',
     'users'          => 'Người dùng',

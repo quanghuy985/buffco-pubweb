@@ -115,4 +115,9 @@ class tblNewsModel extends \Eloquent {
         return $objNews;
     }
 
+    public function selectLastNews() {
+        $allNews = DB::table('tbl_news')->where('status', '=', '1')->orderBy('time', 'desc')->limit(5)->get();
+        return $allNews;
+    }
+
 }

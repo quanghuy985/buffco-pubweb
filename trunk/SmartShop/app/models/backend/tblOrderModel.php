@@ -141,20 +141,25 @@ class tblOrderModel extends \Eloquent {
     }
 
     //thong ke
-
-    public function getCountOrderOnDay($from, $to) {
-        $allorder = DB::table('tbl_product_order')->leftJoin('tbl_product_order_detail', 'tbl_product_order.id', '=', 'tbl_product_order_detail.order_id')->select('tbl_product_order.*', 'tbl_product_order_detail.total')->whereBetween('tbl_product_order.time', array($from, $to))->count();
+    public function CountOrderOk($status) {
+        $allorder = DB::table('tbl_product_order')->where('status', $status)->count();
         return $allorder;
     }
 
-    public function getTotalOrderOnDay($from, $to) {
-        $alltotal = DB::table('tbl_product_order')->leftJoin('tbl_product_order_detail', 'tbl_product_order.id', '=', 'tbl_product_order_detail.order_id')->select('tbl_product_order.*', DB::raw('SUM(tbl_product_order_detail.total) as total'))->whereBetween('tbl_product_order.time', array($from, $to))->get();
-        return $alltotal;
+    public function GetNewOrderPen($status, $limit) {
+        $allorder = DB::table('tbl_product_order')->join('tbl_users', 'tbl_product_order.user_id', '=', 'tbl_users.id')->leftJoin('tbl_product_order_detail', 'tbl_product_order.id', '=', 'tbl_product_order_detail.order_id')->select('tbl_product_order.*', 'tbl_users.email', DB::raw('SUM(tbl_product_order_detail.total*tbl_product_order_detail.amount) as total'))->groupBy('tbl_product_order.id')->orderBy('tbl_product_order.id', 'desc')->where('tbl_product_order.status', $status)->limit($limit)->get();
+        return $allorder;
     }
 
-    public function getOrderByDate($from, $to, $per_page) {
-        $alltotal = DB::table('tbl_product_order')->leftJoin('tbl_product_order_detail', 'tbl_product_order.id', '=', 'tbl_product_order_detail.order_id')->select('tbl_product_order.*', 'tbl_product_order_detail.total')->whereBetween('tbl_product_order.time', array($from, $to))->paginate($per_page);
-        return $alltotal;
+    public function getCountOrderOnDay($from, $to, $status = '') {
+        $allorder = DB::table('tbl_product_order')->join('tbl_users', 'tbl_product_order.user_id', '=', 'tbl_users.id')->leftJoin('tbl_product_order_detail', 'tbl_product_order.id', '=', 'tbl_product_order_detail.order_id')->leftJoin('tbl_product', 'tbl_product.id', '=', 'tbl_product_order_detail.product_id')->select('tbl_product_order.*', 'tbl_users.email', DB::raw('SUM((tbl_product_order_detail.total-tbl_product.import_prices)*tbl_product_order_detail.amount) as loinhuan'))->groupBy('tbl_product_order.id')->whereBetween('tbl_product_order.time', array($from, $to));
+        if ($status != '') {
+            $allorder->where('tbl_product_order.status', '=', $status);
+        } else {
+            $allorder->where('tbl_product_order.status', '!=', 2);
+        }
+        $allorder = $allorder->get();
+        return $allorder;
     }
 
 }

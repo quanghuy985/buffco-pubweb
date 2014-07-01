@@ -36,6 +36,8 @@ Route::controller('taikhoan', '\FontEnd\UsersController');
 
 //BackEnd
 Route::group(array('prefix' => 'admin', 'before' => 'csrf'), function() {
+ //   Route::get('/', '\BackEnd\HomeController@getHome');
+    Route::get('', '\BackEnd\HomeController');
     Route::controller('users', '\BackEnd\LoginController');
     Route::controller('setting', '\BackEnd\SettingController');
     Route::controller('admin', '\BackEnd\AdminController');

@@ -2073,3 +2073,13 @@ td.text-center, td.text-center, .stdtable thead th.text-center{text-align:center
 td  a{
     color: #0074A2 !important;
 }
+.shortcuts h3{
+    font-size: 35px;
+    margin-bottom: -50px;
+    margin-top: 25px;
+    text-align: center;
+}
+
+.shortcuts li a span {
+    font-weight: bold;
+}

@@ -247,8 +247,13 @@ class tblUserModel extends \Eloquent {
     }
 
     public function selectNewUser() {
-        $allProject = DB::table('tbl_users')->where('status', '=', '1')->orderBy('time', 'desc')->limit(5)->get();
-        return $allProject;
+        $allUser = DB::table('tbl_users')->where('status', '=', '1')->orderBy('time', 'desc')->limit(5)->get();
+        return $allUser;
+    }
+
+    public function selectCoutUser() {
+        $allUser = DB::table('tbl_users')->where('status', '=', '1')->count();
+        return $allUser;
     }
 
     public function getNewUserOnDay($from, $to) {
