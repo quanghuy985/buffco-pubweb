@@ -98,6 +98,7 @@ return array(
     'date_end' => 'Ngày kết thúc',
     'filter' => 'Lọc',
     'search' => 'Tìm kiếm',
+        'views-aly' => 'Xem thông kê',
     'data_empty' => 'Không có dữ liệu trả về.',
     'alert' => 'Thông báo',
     'select_cate' => 'Chọn mục hiển thị',

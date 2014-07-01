@@ -9,11 +9,12 @@ class TblProductModel extends \Eloquent {
     protected $table = 'tbl_product';
     public $timestamps = false;
 
-    public function insertProduct($productCode, $productName, $productDescription, $productAttributes, $productPrice, $salesPrice, $startSales, $endSales, $quantity, $productSlug, $productTag, $manufactureID, $status, $listcateID, $images) {
+    public function insertProduct($productCode, $productName, $productDescription, $productAttributes, $import_prices, $productPrice, $salesPrice, $startSales, $endSales, $quantity, $productSlug, $productTag, $manufactureID, $status, $listcateID, $images) {
         $this->productCode = $productCode;
         $this->productName = $productName;
         $this->productDescription = $productDescription;
         $this->productAttributes = $productAttributes;
+        $this->import_prices = $import_prices;
         $this->productPrice = $productPrice;
         $this->salesPrice = $salesPrice;
         $this->startSales = $startSales;
@@ -40,7 +41,7 @@ class TblProductModel extends \Eloquent {
         return $pid;
     }
 
-    public function updateProduct($id, $productCode, $productName, $productDescription, $productAttributes, $productPrice, $salesPrice, $startSales, $endSales, $quantity, $productSlug, $productTag, $manufactureID, $status, $listcateID, $images) {
+    public function updateProduct($id, $productCode, $productName, $productDescription, $productAttributes, $import_prices, $productPrice, $salesPrice, $startSales, $endSales, $quantity, $productSlug, $productTag, $manufactureID, $status, $listcateID, $images) {
         $supporter = $this->where('id', '=', $id);
         $arraysql = array('id' => $id);
         if ($productCode != '') {
@@ -54,6 +55,9 @@ class TblProductModel extends \Eloquent {
         }
         if ($productAttributes != '') {
             $arraysql = array_merge($arraysql, array("productAttributes" => $productAttributes));
+        }
+        if ($import_prices != '') {
+            $arraysql = array_merge($arraysql, array("import_prices" => $import_prices));
         }
         if ($productPrice != '') {
             $arraysql = array_merge($arraysql, array("productPrice" => $productPrice));

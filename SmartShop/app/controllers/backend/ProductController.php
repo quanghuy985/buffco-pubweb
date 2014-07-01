@@ -46,12 +46,12 @@ class ProductController extends \BaseController {
                 $listcateid = '';
             }
             $tblProduct = new TblProductModel();
-            $idp = $tblProduct->insertProduct($inputs['productCode'], $inputs['productName'], $inputs['productDescription'], $inputs['productAttributes'], str_replace(',', '', $inputs['productPrice']), str_replace(',', '', $inputs['salesPrice']), strtotime($inputs['startSales']), strtotime($inputs['endSales']), $inputs['quantity'], $slug->makeSlugs($inputs['productName']), $inputs['productTag'], $inputs['manufactureID'], 1, $listcateid, $inputs['images']);
- $objAdmin = \Auth::user();
+            $idp = $tblProduct->insertProduct($inputs['productCode'], $inputs['productName'], $inputs['productDescription'], $inputs['productAttributes'], str_replace(',', '', $inputs['import_prices']), str_replace(',', '', $inputs['productPrice']), str_replace(',', '', $inputs['salesPrice']), strtotime($inputs['startSales']), strtotime($inputs['endSales']), $inputs['quantity'], $slug->makeSlugs($inputs['productName']), $inputs['productTag'], $inputs['manufactureID'], 1, $listcateid, $inputs['images']);
+            $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.product.active') . $inputs['productCode'];
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');			
-		  Session::flash('alert_success', Lang::get('messages.add.success'));
+            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
+            Session::flash('alert_success', Lang::get('messages.add.success'));
             return Redirect::back();
         } else {
             Session::flash('alert_error', Lang::get('messages.add.error'));
@@ -97,13 +97,13 @@ class ProductController extends \BaseController {
                 $listcateid = '';
             }
             $tblProduct = new TblProductModel();
-            $idp = $tblProduct->updateProduct($inputs['id'], $inputs['productCode'], $inputs['productName'], $inputs['productDescription'], $inputs['productAttributes'], str_replace(',', '', $inputs['productPrice']), str_replace(',', '', $inputs['salesPrice']), strtotime($inputs['startSales']), strtotime($inputs['endSales']), $inputs['quantity'], $slug->makeSlugs($inputs['productName'] . '-' . $inputs['id']), $inputs['productTag'], $inputs['manufactureID'], 1, $listcateid, $inputs['images']);
+            $idp = $tblProduct->updateProduct($inputs['id'], $inputs['productCode'], $inputs['productName'], $inputs['productDescription'], $inputs['productAttributes'], str_replace(',', '', $inputs['import_prices']), str_replace(',', '', $inputs['productPrice']), str_replace(',', '', $inputs['salesPrice']), strtotime($inputs['startSales']), strtotime($inputs['endSales']), $inputs['quantity'], $slug->makeSlugs($inputs['productName'] . '-' . $inputs['id']), $inputs['productTag'], $inputs['manufactureID'], 1, $listcateid, $inputs['images']);
             Session::flash('alert_success', Lang::get('messages.update.success'));
-    $objAdmin = \Auth::user();
+            $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.product.update') . $inputs['productCode'];
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');           
-		   return Redirect::back();
+            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
+            return Redirect::back();
         } else {
             Session::flash('alert_error', Lang::get('messages.update.error'));
             return Redirect::back()->withInput($inputs)->withErrors($validate->messages());
@@ -176,7 +176,7 @@ class ProductController extends \BaseController {
         $tblProduct = new TblProductModel();
         $check = $tblProduct->deleteProduct($id);
         $arrProduct = $tblProduct->getAllProductNew('id', 'desc', 5, 1);
-              $objAdmin = \Auth::user();
+        $objAdmin = \Auth::user();
         $historyContent = Lang::get('backend/history.product.delete') . $product->productCode;
         $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
         $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');

@@ -161,7 +161,13 @@
                             </span>.
                         </p>
                         <p>
-                            <label>Giá sản phẩm</label>
+                            <label>Giá nhập</label>
+                            <span class="field">
+                                {{Form::text('import_prices', null, array('class'=>'smallinput', 'id'=>'import_prices',  'placeholder'=>Lang::get('placeholder.product_code')))}}&nbsp; {{Config::get('configall.pay-tiente')}}
+                            </span>.
+                        </p>
+                        <p>
+                            <label>Giá bán</label>
                             <span class="field">
                                 {{Form::text('productPrice', null, array('class'=>'smallinput', 'id'=>'productPrice',  'placeholder'=>Lang::get('placeholder.product_code')))}}&nbsp; {{Config::get('configall.pay-tiente')}}
                             </span>.
@@ -449,6 +455,7 @@
 <script src="{{Asset('backend/js/plugins/autoNumeric.js')}}" type=text/javascript></script>
 <script>
     jQuery(function(cash) {
+        jQuery('#import_prices').autoNumeric('init', {pSign: 's', dGroup: '2'});
         jQuery('#productPrice').autoNumeric('init', {pSign: 's', dGroup: '2'});
         jQuery('#salesPrice').autoNumeric('init', {pSign: 's', dGroup: '2'});
     });
