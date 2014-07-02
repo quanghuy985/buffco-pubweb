@@ -43,7 +43,7 @@ foreach ($arrreturn as $key => $value) {
 
 
     var plot = jQuery.plot(jQuery("#chartplace"),
-            [{data: flash, label: "{{Lang::get('backend/home.order')}} (Số lương)", color: "#069"}, {data: html5, label: "{{Lang::get('backend/home.profit')}} ({{Lang::get('backend/home.money_format')}})", color: "#FF6600"}], {
+            [{data: flash, label: "{{Lang::get('backend/home.order')}} ({{Lang::get('backend/home.number')}})", color: "#069"}, {data: html5, label: "{{Lang::get('backend/home.profit')}} ({{Lang::get('backend/home.money_format')}})", color: "#FF6600"}], {
         series: {
             lines: {show: true, fill: true, fillColor: {colors: [{opacity: 0.05}, {opacity: 0.15}]}},
             points: {show: true}
@@ -95,16 +95,16 @@ foreach ($arrreturn as $key => $value) {
         </div>
         <div class="two_third dashboard_left">
             <ul class="shortcuts">
-                <li><a href="#"><h3>{{$countall['CountNews']}}</h3><span>Tin tức</span></a></li>
-                <li><a href="#"><h3>{{$countall['CountProduct']}}</h3><span>Sản phẩm</span></a></li>
-                <li><a href="#"><h3>{{$countall['CountOrder']}}</h3><span>Đơn hàng</span></a></li>
-                <li><a href="#"><h3>{{$countall['CountCustomer']}}</h3><span>Khách hàng</span></a></li>
-                <li><a href="#"><h3>{{$countall['CountSupporter']}}</h3><span>Hỗ trợ viên</span></a></li>
-                <li><a href="#"><h3>{{$countall['CountFeedBack']}}</h3><span>Phản hồi</span></a></li>
-                <li><a href="#"><h3>{{$countall['CountProject']}}</h3><span>Dự án</span></a></li>
-                <li><a href="#"><h3>{{$countall['CountPage']}}</h3><span>Trang tĩnh</span></a></li>
-                <li><a href="#"><h3>{{$countall['CountAdmin']}}</h3><span>Nhân viên</span></a></li>
-                <li><a href="#"><h3>{{$countall['CountMenu']}}</h3><span>Menu</span></a></li>
+                <li><a href="#"><h3>{{$countall['CountNews']}}</h3><span>{{Lang::get('backend/home.count_news')}}</span></a></li>
+                <li><a href="#"><h3>{{$countall['CountProduct']}}</h3><span>{{Lang::get('backend/home.count_product')}}</span></a></li>
+                <li><a href="#"><h3>{{$countall['CountOrder']}}</h3><span>{{Lang::get('backend/home.count_order')}}</span></a></li>
+                <li><a href="#"><h3>{{$countall['CountCustomer']}}</h3><span>{{Lang::get('backend/home.count_customer')}}</span></a></li>
+                <li><a href="#"><h3>{{$countall['CountSupporter']}}</h3><span>{{Lang::get('backend/home.count_support')}}</span></a></li>
+                <li><a href="#"><h3>{{$countall['CountFeedBack']}}</h3><span>{{Lang::get('backend/home.count_feedback')}}</span></a></li>
+                <li><a href="#"><h3>{{$countall['CountProject']}}</h3><span>{{Lang::get('backend/home.count_project')}}</span></a></li>
+                <li><a href="#"><h3>{{$countall['CountPage']}}</h3><span>{{Lang::get('backend/home.count_pages')}}</span></a></li>
+                <li><a href="#"><h3>{{$countall['CountAdmin']}}</h3><span>{{Lang::get('backend/home.count_admins')}}</span></a></li>
+                <li><a href="#"><h3>{{$countall['CountMenu']}}</h3><span>{{Lang::get('backend/home.count_menus')}}</span></a></li>
             </ul>
             <br clear="all" />
             <div class="contenttitle2 nomargintop">
@@ -121,10 +121,10 @@ foreach ($arrreturn as $key => $value) {
                 <thead>
                     <tr>
 
-                        <th class="head1">Mã đơn hàng</th>
-                        <th class="head0">Email</th>
-                        <th class="head0">Tổng tiền</th>
-                        <th class="head1">Thời gian</th>
+                        <th class="head1">{{Lang::get('backend/home.order_code')}}</th>
+                        <th class="head0">{{Lang::get('backend/home.order_email')}}</th>
+                        <th class="head0">{{Lang::get('backend/home.order_total')}}</th>
+                        <th class="head1">{{Lang::get('backend/home.order_times')}}</th>
                     </tr>
                 </thead>
                 @if(isset($arrOrdernew))
@@ -153,9 +153,9 @@ foreach ($arrreturn as $key => $value) {
             {{Form::close()}}
             <br clear="all" />
             <blockquote>
-                <span>  Thời gian từ  : <strong> {{date('d/m/Y',$arrstatic['timeformanaly'])}}</strong> đến : <strong> {{date('d/m/Y',$arrstatic['timetoanaly'])}}</strong></span>
-                <br><span>  Tổng đơn hàng : <strong> {{$arrstatic['totalorder']}}</strong> ( Đơn hàng )</span>
-                <br><span>  Tổng đơn Lãi suất thu về : <strong> {{number_format($arrstatic['totalai']*1000)}}</strong> ( {{Config::get('configall.pay-tiente')}} )</span>
+                <span>  {{Lang::get('backend/home.order_anly_from')}}  : <strong> {{date('d/m/Y',$arrstatic['timeformanaly'])}}</strong> {{Lang::get('backend/home.order_anly_to')}} : <strong> {{date('d/m/Y',$arrstatic['timetoanaly'])}}</strong></span>
+                <br><span>  {{Lang::get('backend/home.order_anly_total')}} : <strong> {{$arrstatic['totalorder']}}</strong> ( Đơn hàng )</span>
+                <br><span>  {{Lang::get('backend/home.order_anly_lai')}} : <strong> {{number_format($arrstatic['totalai']*1000)}}</strong> ( {{Config::get('configall.pay-tiente')}} )</span>
             </blockquote>
             <br clear="all" />
             <div id="chartplace" style="height:300px;"></div>
@@ -164,15 +164,15 @@ foreach ($arrreturn as $key => $value) {
         </div>
         <div class="one_third last dashboard_right">
             <div class="contenttitle2 nomargintop">
-                <h3>Đơn hàng</h3>
+                <h3>{{Lang::get('backend/home.order')}}</h3>
             </div>
             <ul class="toplist">
                 <li>
                     <div>
                         <span class="three_fifth">
                             <span class="left">
-                                <span class="title"><a href="{{URL::action('\BackEnd\OrderController@getOrderFillterView', array('null', 'null', 1))}}">Thành công</a></span>
-                                <span class="desc">Đơn hàng đã thành công</span>
+                                <span class="title"><a href="{{URL::action('\BackEnd\OrderController@getOrderFillterView', array('null', 'null', 1))}}">{{Lang::get('backend/home.order_ok')}}</a></span>
+                                <span class="desc">{{Lang::get('backend/home.order_ok_detail')}}</span>
                             </span><!--left-->
                         </span><!--three_fourth-->
                         <span class="two_fifth last">
@@ -187,8 +187,8 @@ foreach ($arrreturn as $key => $value) {
                     <div>
                         <span class="three_fifth">
                             <span class="left">
-                                <span class="title"><a href="{{URL::action('\BackEnd\OrderController@getOrderFillterView', array('null', 'null', '0'))}}">Chờ xử lý</a></span>
-                                <span class="desc">Đơn hàng đang chờ xử lý</span>
+                                <span class="title"><a href="{{URL::action('\BackEnd\OrderController@getOrderFillterView', array('null', 'null', '0'))}}">{{Lang::get('backend/home.order_pending')}}</a></span>
+                                <span class="desc">{{Lang::get('backend/home.order_pending_detail')}}</span>
                             </span><!--left-->
                         </span><!--three_fourth-->
                         <span class="two_fifth last">
@@ -203,8 +203,8 @@ foreach ($arrreturn as $key => $value) {
                     <div>
                         <span class="three_fifth">
                             <span class="left">
-                                <span class="title"><a href="{{URL::action('\BackEnd\OrderController@getOrderFillterView', array('null', 'null', 2))}}">Đã huy</a></span>
-                                <span class="desc">Đơn hàng đã hủy</span>
+                                <span class="title"><a href="{{URL::action('\BackEnd\OrderController@getOrderFillterView', array('null', 'null', 2))}}">{{Lang::get('backend/home.order_cancel')}}</a></span>
+                                <span class="desc">{{Lang::get('backend/home.order_cancel_detail')}}</span>
                             </span><!--left-->
                         </span><!--three_fourth-->
                         <span class="two_fifth last">
