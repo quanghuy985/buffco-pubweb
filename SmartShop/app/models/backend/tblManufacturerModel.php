@@ -10,17 +10,18 @@ class tblManufacturerModel extends \Eloquent {
     protected $table = 'tbl_product_manufacturer';
     public $timestamps = false;
 
-    public function addManufacturer($Name, $Description, $Place) {
+    public function addManufacturer($Name, $Description, $logo, $Place) {
         $this->manufacturerName = $Name;
         $this->manufacturerDescription = $Description;
         $this->manufacturerPlace = $Place;
+        $this->manufacturerLogo = $logo;
         $this->time = time();
         $this->status = 1;
         $result = $this->save();
         return $this;
     }
 
-    public function updateManufacturer($id, $Name, $Description, $Place) {
+    public function updateManufacturer($id, $Name, $Description, $logo, $Place) {
         // $tableAdmin = new TblAdminModel();
         $tableManufacturer = $this->where('id', '=', $id);
         $arraysql = array('id' => $id);
@@ -32,6 +33,9 @@ class tblManufacturerModel extends \Eloquent {
         }
         if ($Place != '') {
             $arraysql = array_merge($arraysql, array("manufacturerPlace" => $Place));
+        }
+        if ($logo != '') {
+            $arraysql = array_merge($arraysql, array("manufacturerLogo" => $logo));
         }
         $checkupdate = $tableManufacturer->update($arraysql);
         return $checkupdate;

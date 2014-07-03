@@ -2082,4 +2082,5 @@ td  a{
 
 .shortcuts li a span {
     font-weight: bold;
+    border-radius: 40px;
 }

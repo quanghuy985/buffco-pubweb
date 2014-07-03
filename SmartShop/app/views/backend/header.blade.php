@@ -11,14 +11,15 @@
         </div>           
         <div class="userinfo" style="float: right;">
             <img src="http://www.gravatar.com/avatar/{{md5(Auth::user()->email)}}?s=25" alt="" />
-            <span>{{Auth::user()->firstname}} {{Auth::user()->lastname}}</span>
+            <span>{{str_limit(Auth::user()->firstname.' '.Auth::user()->lastname,10)}}</span>
         </div><!--userinfo-->
         <div class="userinfodrop" >
             <div class="avatar">
                 <a href="#"><img src="http://www.gravatar.com/avatar/{{md5(Auth::user()->email)}}?s=100" alt="" /></a>
             </div><!--avatar-->
-            <div class="userdata" style="float: right !important;">
+            <div class="userdata">
                 <h4>{{Auth::user()->firstname}} {{Auth::user()->lastname}}</h4>
+                <br/>
                 <span class="email">{{Auth::user()->email}}</span>
                 <ul>
                     <li><a href="{{action('\BackEnd\AdminController@getProfileAdmin')}}">{{Lang::get('backend/dashboard.edit_profile')}}</a></li>

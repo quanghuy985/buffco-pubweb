@@ -44,10 +44,10 @@ class LoginController extends \BaseController {
         if (Auth::attempt(array('email' => Input::get('email'), 'password' => Input::get('password'), 'status' => 1, 'admin' => 1), false)) {
             session_start();
             $_SESSION['urlfolderupload'] = Auth::user()->email;
-            if (Session::has('urlBack')) {
-                $urlBack = Session::get('urlBack');
+            if (Session::has('urlBackAdmin')) {
+                $urlBack = Session::get('urlBackAdmin');
                 return Redirect::to($urlBack[0]);
-                Session::forget('urlBack');
+                Session::forget('urlBackAdmin');
             } else {
                 return Redirect::action('\BackEnd\HomeController@getHome');
             }
@@ -98,7 +98,7 @@ class LoginController extends \BaseController {
     public function postForgot() {
         $response = Password::remind(Input::only('email'), function($message) {
                     $message->subject(Lang::get('emails.forgot_password_title'));
-               
+
                     $objAdmin = \Auth::user();
                     $historyContent = Lang::get('backend/history.login.forgot') . ' ' . Input::only('email');
                     $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
@@ -118,4 +118,3 @@ class LoginController extends \BaseController {
     }
 
 }
-

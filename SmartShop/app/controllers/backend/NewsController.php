@@ -18,6 +18,11 @@ use BackEnd,
 
 class NewsController extends \BaseController {
 
+    public function __construct() {
+        parent::__construct();
+        $this->beforeFilter('checkrole');
+    }
+
     public static $rules = array();
 
     public function postDeleteNews() {
@@ -133,11 +138,11 @@ class NewsController extends \BaseController {
             $tblNewsModel = new tblNewsModel();
             $objAdmin = \Auth::user();
             $check = $tblNewsModel->insertNew($inputs['catlist'], $inputs['newsName'], $inputs['newsImg'], $inputs['newsDescription'], $inputs['newsKeywords'], $inputs['newsContent'], $inputs['newsTag'], $inputs['newsSlug'], $inputs['status'], $objAdmin->id);
-          $objAdmin = \Auth::user();
+            $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.news.create') . Input::get('newsName');
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');          
-		  Session::flash('alert_success', Lang::get('messages.add.success'));
+            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
+            Session::flash('alert_success', Lang::get('messages.add.success'));
             return Redirect::action('\BackEnd\NewsController@getNewsView');
         } else {
             Session::flash('alert_error', Lang::get('messages.add.error'));
@@ -170,7 +175,7 @@ class NewsController extends \BaseController {
         $validate = Validator::make(Input::all(), $rules, Lang::get('messages.validator'), Lang::get('backend/attributes.news'));
         if (!$validate->fails()) {
             $tblNewsModel->updateNew($id, Input::get('catlist'), Input::get('newsName'), Input::get('newsImg'), Input::get('newsDescription'), Input::get('newsKeywords'), Input::get('newsContent'), Input::get('newsTag'), Input::get('newsSlug'), '', Input::get('status'));
-        $objAdmin = \Auth::user();
+            $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.news.update') . Input::get('newsName');
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
             $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');

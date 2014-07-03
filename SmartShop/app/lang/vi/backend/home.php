@@ -48,7 +48,9 @@ return array(
                     'order_pending_detail'    => 'Đơn hàng đang chờ xử lý',
                         'order_cancel_detail'    => 'Đơn hàng đã hủy',
                         'order_anly_from'    => 'Thời gian từ',
+                             'order_anly_from_t'    => 'Từ',
                 'order_anly_to'    => 'Đến',
                     'order_anly_total'    => 'Tổng đơn hàng',
                      'order_anly_lai'    => 'Tổng lãi suất',
+                               'order_anly_tongtien'    => 'Tổng tiền bán được',
 );

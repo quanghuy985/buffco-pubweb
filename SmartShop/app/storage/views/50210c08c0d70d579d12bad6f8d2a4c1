@@ -89,6 +89,8 @@
                             <li><a href="<?php echo URL::action('\BackEnd\ProductController@getProductView'); ?>" ><?php echo Lang::get('backend/dashboard.all_products'); ?></a></li>
                             <li><a href="<?php echo URL::action('\BackEnd\ProductController@getProductAdd'); ?>" ><?php echo Lang::get('backend/dashboard.add_product'); ?></a></li>
                             <li><a href="<?php echo URL::action('\BackEnd\CategoryProductController@getCateProductView'); ?>"><?php echo Lang::get('backend/dashboard.group_product'); ?></a></li>
+                            <li><a href="<?php echo URL::action('\BackEnd\CategoryProductController@getCateProductView'); ?>"><?php echo Lang::get('backend/dashboard.management_size'); ?></a></li>
+                            <li><a href="<?php echo URL::action('\BackEnd\CategoryProductController@getCateProductView'); ?>"><?php echo Lang::get('backend/dashboard.management_color'); ?></a></li>
                             <li><a href="<?php echo URL::action('\BackEnd\ManufacturerController@getManufactureView'); ?>"><?php echo Lang::get('backend/dashboard.management_manufacturers'); ?></a></li>
                         </ul>
                     </li>

@@ -69,7 +69,7 @@ class HomeController extends \BaseController {
         }
 
 
-        $arrloinhuan = $tblOrderModel->getCountOrderOnDay($from, $to);
+        $arrloinhuan1 = $tblOrderModel->getCountOrderOnDay($from, $to);
         $numdate1 = intval(($to - $from) / 60 / 60 / 24);
         $dateti1 = array();
         $arrdateti1 = array();
@@ -79,7 +79,7 @@ class HomeController extends \BaseController {
             if (strtotime(date('m/d/Y', strtotime("-" . $y . "days", $to))) <= $to) {
                 $dateti1[] = strtotime(date('m/d/Y', strtotime("-" . $y . "days", $to)));
                 $lai = 0;
-                foreach ($arrloinhuan as $item) {
+                foreach ($arrloinhuan1 as $item) {
                     if ($i == 0) {
                         if ($item->time >= $from && $item->time <= $dateti[$i]) {
                             $lai = $lai + 1;
@@ -106,11 +106,16 @@ class HomeController extends \BaseController {
         foreach ($arrdateti as $item) {
             $totalai+=$item;
         }
+        $tongtien = 0;
+        foreach ($arrloinhuan1 as $item) {
+            $tongtien+=$item->totalmoney;
+        }
         $static = array(
             'timeformanaly' => $timeformanaly,
             'timetoanaly' => $timetoanaly,
             'totalorder' => $totalorder,
             'totalai' => $totalai,
+            'tongtien' => $tongtien,
         );
         $count = new tblCountAll();
         return View::make('backend.admin-home')->with('countall', $count->CountAll())->with('arrstatic', $static)->with('arrreturn1', $arrreturn1)->with('arrreturn', $arrreturn)->with('arrOrdernew', $arrOrdernew)->with('arrNewUsers', $arrNewUsers)->with('CountUsers', $count->CountOrder(1))->with('arrLastNew', $arrLastNew)->with('CountOrderOk', $count->CountOrder('0'))->with('CountOrderPen', $count->CountOrder(2));

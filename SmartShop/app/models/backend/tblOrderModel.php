@@ -152,7 +152,7 @@ class tblOrderModel extends \Eloquent {
     }
 
     public function getCountOrderOnDay($from, $to, $status = '') {
-        $allorder = DB::table('tbl_product_order')->join('tbl_users', 'tbl_product_order.user_id', '=', 'tbl_users.id')->leftJoin('tbl_product_order_detail', 'tbl_product_order.id', '=', 'tbl_product_order_detail.order_id')->leftJoin('tbl_product', 'tbl_product.id', '=', 'tbl_product_order_detail.product_id')->select('tbl_product_order.*', 'tbl_users.email', DB::raw('SUM((tbl_product_order_detail.total-tbl_product.import_prices)*tbl_product_order_detail.amount) as loinhuan'))->groupBy('tbl_product_order.id')->whereBetween('tbl_product_order.time', array($from, $to));
+        $allorder = DB::table('tbl_product_order')->join('tbl_users', 'tbl_product_order.user_id', '=', 'tbl_users.id')->leftJoin('tbl_product_order_detail', 'tbl_product_order.id', '=', 'tbl_product_order_detail.order_id')->leftJoin('tbl_product', 'tbl_product.id', '=', 'tbl_product_order_detail.product_id')->select('tbl_product_order.*', 'tbl_users.email', DB::raw('SUM(tbl_product_order_detail.total*tbl_product_order_detail.amount) as totalmoney'), DB::raw('SUM((tbl_product_order_detail.total-tbl_product.import_prices)*tbl_product_order_detail.amount) as loinhuan'))->groupBy('tbl_product_order.id')->whereBetween('tbl_product_order.time', array($from, $to));
         if ($status != '') {
             $allorder->where('tbl_product_order.status', '=', $status);
         } else {

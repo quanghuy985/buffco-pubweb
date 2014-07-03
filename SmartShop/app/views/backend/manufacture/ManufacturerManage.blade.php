@@ -62,6 +62,26 @@
             </span>
         </p>
         <p>
+            <script type="text/javascript">
+
+                function BrowseServer() {
+                    var finder = new CKFinder();
+                    finder.basePath = '../';
+                    finder.selectActionFunction = SetFileField;
+                    finder.popup();
+                }
+                function SetFileField(fileUrl) {
+                    document.getElementById('xFilePath').value = fileUrl;
+                }
+
+            </script>
+            <label>Logo nhà sản xuât</label>
+            <span class="field">
+                {{Form::text('manufacturerLogo', null, array('placeholder'=>Lang::get('placeholder.filePath'),'id'=>'xFilePath', 'class'=>'smallinput'))}}
+                <input type="button" class="stdbtn btn_orange" value="{{Lang::get('button.upload')}}" onclick="BrowseServer();" />
+            </span>
+        </p>
+        <p>
             <label>Mô tả</label>
             <span class="field">                    
                 <textarea id="des" style="resize: vertical;" rows="5" name="manufDescription" class="longinput">@if(isset($arrayManuf)){{$arrayManuf->manufacturerDescription}}@endif</textarea>
