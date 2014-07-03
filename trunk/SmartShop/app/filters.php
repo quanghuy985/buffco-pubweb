@@ -21,7 +21,7 @@ App::before(function($request) {
 
 
 App::after(function($request, $response) {
-    //
+//
 });
 
 /*
@@ -39,8 +39,6 @@ Route::filter('auth', function() {
     if (Auth::guest())
         return Redirect::guest('login');
 });
-
-
 Route::filter('auth.basic', function() {
     return Auth::basic();
 });
@@ -86,6 +84,35 @@ Route::filter('csrf', function() {
                 }
             }
         }
+    }
+});
+Route::filter('checkrole', function($route) {
+    $controllername = $route->getAction()['controller'];
+    $controllername = substr($controllername, 9);
+    $pattern = '/(\w+)(@\w+)/i';
+    $replacement = '${1}';
+    $controllername = preg_replace($pattern, $replacement, $controllername);
+    $role = new BackEnd\tblRolesModel();
+    $arrrole = $role->getRolesByAdminID(Auth::user()->id);
+    $check = false;
+
+    foreach ($arrrole as $item) {
+        if (strpos($item->rolesCode, $controllername) >= 0 && strpos($item->rolesCode, $controllername) !== false) {
+            $check = true;
+        } else {
+            $check = false;
+        }
+    }
+
+    if ($check == false) {
+        return View::make('backend.errors.AccessDeny');
+    }
+});
+Route::filter('loginAdmin', function() {
+    if (Auth::guest()) {
+        Session::forget('urlBackAdmin');
+        Session::push('urlBackAdmin', URL::current());
+        return Redirect::action('\BackEnd\LoginController@getLogin');
     }
 });
 Route::filter('checklogin', function() {

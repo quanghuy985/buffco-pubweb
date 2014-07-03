@@ -34,18 +34,15 @@ require __DIR__ . '/../../bootstrap/autoload.php';
 require_once __DIR__ . '/../../bootstrap/start.php';
 
 function CheckAuthentication() {
-    // WARNING : DO NOT simply return "true". By doing so, you are allowing
-    // "anyone" to upload and list the files in your server. You must implement
-    // some kind of session validation here. Even something very simple as...
-    // return isset($_SESSION['IsAuthorized']) && $_SESSION['IsAuthorized'];
-    // ... where $_SESSION['IsAuthorized'] is set to "true" as soon as the
-    // user logs in your system. To be able to use session variables don't
-    // forget to add session_start() at the top of this file.
-    if (isset($_SESSION['urlfolderupload'])) {
-        setcookie('urlupload_img', $_SESSION['urlfolderupload'], time() + 60 * 60 * 60 * 60);
+    if (isset($_COOKIE['urlupload_img'])) {
         return true;
     } else {
-        return false;
+        if (isset($_SESSION['urlfolderupload'])) {
+            setcookie('urlupload_img', $_SESSION['urlfolderupload'], time() + 60 * 60 * 60 * 60);
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 

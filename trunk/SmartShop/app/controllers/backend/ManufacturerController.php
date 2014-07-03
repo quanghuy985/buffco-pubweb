@@ -32,7 +32,8 @@ class ManufacturerController extends \BaseController {
                 $objManufactuer = new tblManufacturerModel();
                 $manuName = \Input::get('manufacturerName');
                 $manuPlace = \Input::get('manufacturerPlace');
-                $respon = $objManufactuer->addManufacturer($manuName, '', $manuPlace, 1);
+                $logo = \Input::get('manufacturerLogo');
+                $respon = $objManufactuer->addManufacturer($manuName, '', $logo, $manuPlace, 1);
                 $objAdmin = \Auth::user();
                 $historyContent = Lang::get('backend/history.manufacture.add') . $manuName;
                 $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
@@ -78,8 +79,8 @@ class ManufacturerController extends \BaseController {
             "manufacturerPlace" => "required"
         );
         if (!Validator::make(Input::all(), $rules)->fails()) {
-            $objManufactuer->updateManufacturer(Input::get('id'), Input::get('manufacturerName'), Input::get('manufDescription'), Input::get('manufacturerPlace'));
-          
+            $objManufactuer->updateManufacturer(Input::get('id'), Input::get('manufacturerName'), Input::get('manufDescription'), Input::get('manufacturerLogo'), Input::get('manufacturerPlace'));
+
             $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.manufacture.update') . Input::get('manufacturerName');
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
@@ -101,7 +102,7 @@ class ManufacturerController extends \BaseController {
         $objManufactuer = new tblManufacturerModel();
         if (!Validator::make(Input::all(), $rules)->fails()) {
             $objManufactuer->addManufacturer(Input::get('manufacturerName'), Input::get('manufDescription'), Input::get('manufacturerPlace'));
-         
+
             $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.manufacture.add') . Input::get('manufacturerName');
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
@@ -118,11 +119,10 @@ class ManufacturerController extends \BaseController {
         $objManufactuer = new tblManufacturerModel();
         $objManufactuer->deleteManufacturer(Input::get('id'));
         $objAdmin = \Auth::user();
-         $historyContent = Lang::get('backend/history.manufacture.delete') . Input::get('id');
+        $historyContent = Lang::get('backend/history.manufacture.delete') . Input::get('id');
         $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
         $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
         return Redirect::action('\BackEnd\ManufacturerController@getManufactureView');
     }
 
 }
-

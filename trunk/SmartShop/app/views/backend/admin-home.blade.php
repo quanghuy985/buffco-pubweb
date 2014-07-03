@@ -156,6 +156,7 @@ foreach ($arrreturn as $key => $value) {
                 <span>  {{Lang::get('backend/home.order_anly_from')}}  : <strong> {{date('d/m/Y',$arrstatic['timeformanaly'])}}</strong> {{Lang::get('backend/home.order_anly_to')}} : <strong> {{date('d/m/Y',$arrstatic['timetoanaly'])}}</strong></span>
                 <br><span>  {{Lang::get('backend/home.order_anly_total')}} : <strong> {{$arrstatic['totalorder']}}</strong> ( Đơn hàng )</span>
                 <br><span>  {{Lang::get('backend/home.order_anly_lai')}} : <strong> {{number_format($arrstatic['totalai']*1000)}}</strong> ( {{Config::get('configall.pay-tiente')}} )</span>
+                <br><span>  {{Lang::get('backend/home.order_anly_tongtien')}} : <strong> {{number_format($arrstatic['tongtien'])}}</strong> ( {{Config::get('configall.pay-tiente')}} )</span>
             </blockquote>
             <br clear="all" />
             <div id="chartplace" style="height:300px;"></div>

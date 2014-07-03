@@ -89,6 +89,8 @@
                             <li><a href="{{URL::action('\BackEnd\ProductController@getProductView')}}" >{{Lang::get('backend/dashboard.all_products')}}</a></li>
                             <li><a href="{{URL::action('\BackEnd\ProductController@getProductAdd')}}" >{{Lang::get('backend/dashboard.add_product')}}</a></li>
                             <li><a href="{{URL::action('\BackEnd\CategoryProductController@getCateProductView')}}">{{Lang::get('backend/dashboard.group_product')}}</a></li>
+                            <li><a href="{{URL::action('\BackEnd\CategoryProductController@getCateProductView')}}">{{Lang::get('backend/dashboard.management_size')}}</a></li>
+                            <li><a href="{{URL::action('\BackEnd\CategoryProductController@getCateProductView')}}">{{Lang::get('backend/dashboard.management_color')}}</a></li>
                             <li><a href="{{URL::action('\BackEnd\ManufacturerController@getManufactureView')}}">{{Lang::get('backend/dashboard.management_manufacturers')}}</a></li>
                         </ul>
                     </li>

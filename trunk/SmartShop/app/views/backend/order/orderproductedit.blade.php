@@ -139,44 +139,45 @@
         {{Form::model($objOrder[0],  array( 'class'=>'stdform','accept-charset'=>'UTF-8', 'id'=>'orderViewForm'))}}
 
         <p>
-            <label>{{Lang::get('general.order.user')}}:</label>
+            <label>{{Lang::get('general.order.user')}} :</label>
             <span class="field">         
-                <strong>@if(isset($objOrder)){{$objOrder[0]->email}}@endif</strong></span>
-        </p>
-        <p>
-            <label>{{Lang::get('general.order.code')}}</label>
-            <span class="field">
-                <strong>@if(isset($objOrder)){{$objOrder[0]->orderCode}}@endif</strong>
+                <strong>&nbsp;@if(isset($objOrder)){{$objOrder[0]->email}}@endif</strong>
             </span>
         </p>
         <p>
-            <label>{{Lang::get('general.order.buyername')}}</label>
+            <label>{{Lang::get('general.order.code')}} :</label>
+            <span class="field">
+               <strong> &nbsp;@if(isset($objOrder)){{$objOrder[0]->orderCode}}@endif</strong>
+            </span>
+        </p>
+        <p>
+            <label>{{Lang::get('general.order.buyername')}} :</label>
             <span class="field">         
-                <strong>@if(isset($objOrder)){{$objOrder[0]->lastname.' '.$objOrder[0]->firstname}}@endif</strong>
+                <strong>&nbsp;@if(isset($objOrder)){{$objOrder[0]->lastname.' '.$objOrder[0]->firstname}}@endif</strong>
             </span>
         </p>
         <p>
-            <label>{{Lang::get('general.order.buyerphone')}}</label>
+            <label>{{Lang::get('general.order.buyerphone')}} :</label>
             <span class="field">
-                <strong>@if(isset($objOrder)){{$objOrder[0]->phone}}@endif</strong>
+                 <strong>&nbsp;@if(isset($objOrder)){{$objOrder[0]->phone}}@endif</strong>
             </span>
         </p>
         <p>
-            <label>{{Lang::get('general.order.name')}}</label>
+            <label>{{Lang::get('general.order.name')}} :</label>
             <span class="field">
-                <strong>@if(isset($objOrder)){{$objOrder[0]->receiverName}}@endif</strong>
+                <strong>&nbsp;@if(isset($objOrder)){{$objOrder[0]->receiverName}}@endif</strong>
             </span>
         </p>
         <p>
-            <label>{{Lang::get('general.order.phone')}}</label>
+            <label>{{Lang::get('general.order.phone')}} :</label>
             <span class="field">
-                <strong>@if(isset($objOrder)){{$objOrder[0]->receiverPhone}}@endif</strong>
+                <strong>&nbsp;@if(isset($objOrder)){{$objOrder[0]->receiverPhone}}@endif</strong>
             </span>
         </p>
         <p>
-            <label>{{Lang::get('general.order.address')}}</label>
+            <label>{{Lang::get('general.order.address')}} :</label>
             <span class="field">
-                <strong>@if(isset($objOrder)){{$objOrder[0]->orderAddress}}@endif</strong>
+                <strong>&nbsp;@if(isset($objOrder)){{$objOrder[0]->orderAddress}}@endif</strong>
             </span>
         </p>
         {{Form::close()}}

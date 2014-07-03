@@ -12,6 +12,19 @@ use BackEnd,
 
 class ProductController extends \BaseController {
 
+    public function __construct() {
+        parent::__construct();
+        $this->beforeFilter('checkrole');
+    }
+
+    public function getProductColorView() {
+        return View::make('backend.product.colorManage');
+    }
+
+    public function getProductSizeView() {
+        return View::make('backend.product.sizeManage');
+    }
+
     public function getProductAdd() {
         $tblCateProduct = new tblCategoryproductModel();
         $catlist = $tblCateProduct->allCateProductParent();

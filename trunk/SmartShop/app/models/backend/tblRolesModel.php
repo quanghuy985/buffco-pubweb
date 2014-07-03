@@ -50,6 +50,11 @@ class tblRolesModel extends \Eloquent {
         return $objRoles;
     }
 
+    public function getRolesByAdminID($id) {
+        $objRoles = DB::table('tbl_admin_roles_group')->join('tbl_admin_roles', 'tbl_admin_roles.id', '=', 'tbl_admin_roles_group.rolesID')->select('tbl_admin_roles.*')->where('tbl_admin_roles_group.adminID', '=', $id)->get();
+        return $objRoles;
+    }
+
     public function deleteRolesByAdminID($id) {
         $check = DB::table('tbl_admin_roles_group')->where('adminID', '=', $id)->delete();
         return $check;
