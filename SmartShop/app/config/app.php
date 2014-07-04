@@ -12,6 +12,7 @@ return array(
       |
      */
     'urlbasesite' => 'http://localhost/',
+    'urlbasesitefolder' => 'SmartShop',
     'debug' => true,
     /*
       |--------------------------------------------------------------------------
