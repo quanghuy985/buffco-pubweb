@@ -88,7 +88,7 @@ class tblUserModel extends \Eloquent {
             'lastname' => 'required',
             'dateofbirth' => 'required',
             'address' => 'required',
-            'phone' => 'required|numeric|between:10,12',
+            'phone' => 'numeric',
             'password' => 'required|between:6,20',
         );
         $validator = \Validator::make($allinput, $rules);
@@ -106,7 +106,14 @@ class tblUserModel extends \Eloquent {
             $this->time = time();
             $this->status = 1;
             $this->admin = $admin;
-            $this->roles = serialize($allinput['roles']);
+            if (isset($allinput['roles'])) {
+                $listrole = $allinput['roles'];
+            } else {
+                $listrole = '';
+            }
+
+            $this->roles = serialize($listrole);
+
             $this->save();
             $adminID = $this->id;
 
@@ -149,9 +156,8 @@ class tblUserModel extends \Eloquent {
         }
         if ($admin == 1) {
             if ($arrRoles != '') {
-              
-                    $arraysql = array_merge($arraysql, array("roles" => serialize($arrRoles)));
-                
+
+                $arraysql = array_merge($arraysql, array("roles" => serialize($arrRoles)));
             }
         }
         $checku = $user->update($arraysql);
