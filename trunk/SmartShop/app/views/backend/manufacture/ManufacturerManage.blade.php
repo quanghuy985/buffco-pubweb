@@ -106,19 +106,21 @@
         </div>
         <table cellpadding="0" cellspacing="0" border="0" id="table2" class="stdtable stdtablecb" style="margin-top: 20px;">
             <colgroup>
-                <col class="con0" style="width: 1%">
-                <col class="con1" style="width: 30%">
-                <col class="con0" style="width: 30%">
-                <col class="con1" style="width: 20%">
-                <col class="con0" style="width: 18%">
+                <col class="con0" style="width: 2%">
+                <col class="con1" style="width: 10%">
+                <col class="con0" style="width: 25%">
+                <col class="con1" style="width: 25%">
+                <col class="con0" style="width: 20%">
+                <col class="con1" style="width: 18%">
             </colgroup>
             <thead>
                 <tr>
                     <th class="head0">{{Lang::get('general.stt')}}</th> 
-                    <th class="head1">Tên nhà sản xuất</th>
-                    <th class="head0">Nơi sản xuất</th>
-                    <th class="head1">Khởi tạo</th>
-                    <th class="head0">Chức năng</th>
+                    <th class="head1">{{Lang::get('general.product.img')}}</th>
+                    <th class="head0">Tên nhà sản xuất</th>
+                    <th class="head1">Nơi sản xuất</th>
+                    <th class="head0">Khởi tạo</th>
+                    <th class="head1">Chức năng</th>
                 </tr>  
             </thead>
 

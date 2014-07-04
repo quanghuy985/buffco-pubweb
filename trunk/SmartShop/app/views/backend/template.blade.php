@@ -89,14 +89,10 @@
                             <li><a href="{{URL::action('\BackEnd\ProductController@getProductView')}}" >{{Lang::get('backend/dashboard.all_products')}}</a></li>
                             <li><a href="{{URL::action('\BackEnd\ProductController@getProductAdd')}}" >{{Lang::get('backend/dashboard.add_product')}}</a></li>
                             <li><a href="{{URL::action('\BackEnd\CategoryProductController@getCateProductView')}}">{{Lang::get('backend/dashboard.group_product')}}</a></li>
-                            <li><a href="{{URL::action('\BackEnd\CategoryProductController@getCateProductView')}}">{{Lang::get('backend/dashboard.management_size')}}</a></li>
-                            <li><a href="{{URL::action('\BackEnd\CategoryProductController@getCateProductView')}}">{{Lang::get('backend/dashboard.management_color')}}</a></li>
                             <li><a href="{{URL::action('\BackEnd\ManufacturerController@getManufactureView')}}">{{Lang::get('backend/dashboard.management_manufacturers')}}</a></li>
                         </ul>
                     </li>
                     <li><a href="{{URL::action('\BackEnd\OrderController@getViewAll')}}" class="widgets">{{Lang::get('backend/dashboard.order')}}</a>
-                    </li>
-                    <li><a href="" class="tables">{{Lang::get('backend/dashboard.store')}}</a>
                     </li>
                     <li><a href="{{URL::action('\BackEnd\UserController@getUserView')}}" class="user">{{Lang::get('backend/dashboard.customer')}}</a>
                     </li>
@@ -125,13 +121,7 @@
                         </ul>
                     </li>
                     <li><a href="{{URL::action('\BackEnd\MenusController@getMenus')}}" class="settings">{{Lang::get('backend/dashboard.management_menu')}}</a> </li>
-                    <li><a href="#statisticSub" class="settings">{{Lang::get('backend/dashboard.statistic')}}</a>
-                        <span class="arrow"></span>
-                        <ul id="statisticSub">
-                            <li><a href="">{{Lang::get('backend/dashboard.statistic_user')}}</a></li>
-                            <li><a href="">{{Lang::get('backend/dashboard.statistic_order')}}</a></li>
-                        </ul>
-                    </li>
+                    
                     <li><a href="{{URL::action('\BackEnd\SettingController@getUpdateSetting')}}" class="error">{{Lang::get('backend/dashboard.setting')}}</a>
                     </li>
                     <li><a href="#adminSub" class="addons">{{Lang::get('backend/dashboard.user')}}</a>

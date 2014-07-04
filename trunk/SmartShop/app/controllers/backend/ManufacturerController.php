@@ -20,6 +20,11 @@ class ManufacturerController extends \BaseController {
 
     public static $rules = array();
 
+    public function __construct() {
+        parent::__construct();
+        $this->beforeFilter('checkrole');
+    }
+
     public function postAddFastManufacturer() {
         if (\Request::ajax()) {
             $rules = array(

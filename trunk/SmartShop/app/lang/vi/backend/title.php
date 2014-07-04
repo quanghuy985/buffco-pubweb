@@ -74,6 +74,7 @@ return array(
         'description' => 'Quản lý nhân viên',
         'caption' => 'Bảng danh sách các nhân viên',
         'add' => 'Thêm  nhân viên mới',
+        'detail' => 'Thông tin chi tiết nhân viên',
         'edit' => 'Chỉnh sửa thông tin nhân viên'
     ),
     'profile' => array(
@@ -100,7 +101,7 @@ return array(
     ),
     'user' => array(
         'title' => 'Quản lý khách hàng',
-        'heading' => 'Quản khách hàng',
+        'heading' => 'Quản lý khách hàng',
         'description' => 'Quản lý khách hàng',
         'caption' => 'Bảng danh sách các khách hàng',
         'add' => 'Thêm khách hàng mới',

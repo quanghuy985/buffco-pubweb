@@ -10,6 +10,11 @@ namespace BackEnd;
 
 class StatisticController extends \BaseController {
 
+    public function __construct() {
+        parent::__construct();
+        $this->beforeFilter('checkrole');
+    }
+
     public function getThongKeOrder() {
         $tblOderModel = new tblOrderModel();
 

@@ -18,6 +18,11 @@ use BackEnd,
 
 class CategoryProductController extends \BaseController {
 
+    public function __construct() {
+        parent::__construct();
+        $this->beforeFilter('checkrole');
+    }
+
     public function getCateProductView($thongbao = '') {
         if (\Request::ajax()) {
             $tblCateProduct = new tblCategoryproductModel();
@@ -48,12 +53,6 @@ class CategoryProductController extends \BaseController {
         }
     }
 
-    public function getTagByCateID($cateID) {
-        $tblTagModel = new tblTagModel();
-        $arrTag = $tblTagModel->getTagByCateID($cateID);
-        return $arrTag;
-    }
-
     public function getCategoryProductBySlugCate($slug) {
         $tblCateProduct = new tblCategoryproductModel();
         $data = $tblPage->getCateProductBySlug($slug);
@@ -79,7 +78,7 @@ class CategoryProductController extends \BaseController {
             $tblCateProduct->deleteCateProductChild($dataedit[0]->id);
         }
         $tblCateProduct->deleteCateProduct(Input::get('id'));
-              $objAdmin = \Auth::user();
+        $objAdmin = \Auth::user();
         $historyContent = Lang::get('backend/history.cateproduct.delete') . ' ' . $dataedit->cateName;
         $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
         $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
@@ -135,7 +134,7 @@ class CategoryProductController extends \BaseController {
         if ($start < 0) {
             $start = 0;
         }
-             $objAdmin = \Auth::user();
+        $objAdmin = \Auth::user();
         $historyContent = Lang::get('backend/history.cateproduct.active') . ' ' . Input::get('id');
         $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
         $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
@@ -153,7 +152,7 @@ class CategoryProductController extends \BaseController {
         $validate = Validator::make(Input::all(), $rules, Lang::get('messages.validator'), Lang::get('backend/attributes.category-product'));
         if (!$validate->fails()) {
             $tblCateProduct->updateCateProduct(Input::get('id'), Input::get('cateName'), Input::get('cateParent'), Input::get('cateSlug'), Input::get('cateDescription'), 1);
-          
+
             $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.cateproduct.update') . ' ' . Input::get('cateName');
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
@@ -182,9 +181,9 @@ class CategoryProductController extends \BaseController {
                 $htmlcontent = View::make('backend.product.listcateAjax')->with('listallcate', $allcatelist)->render();
                 $mess = array('id' => $check->id, 'content' => Input::get('cateName'), 'htmlcontent' => $htmlcontent);
                 $objAdmin = \Auth::user();
-            $historyContent = Lang::get('backend/history.cateproduct.add') . ' ' . Input::get('cateName');
-            $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
-            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
+                $historyContent = Lang::get('backend/history.cateproduct.add') . ' ' . Input::get('cateName');
+                $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+                $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
                 echo json_encode($mess);
             } else {
                 Session::flash('alert_success', Lang::get('messages.add.success'));
@@ -210,4 +209,3 @@ class CategoryProductController extends \BaseController {
     }
 
 }
-

@@ -11,42 +11,10 @@ class tblRolesModel extends \Eloquent {
     public $timestamps = false;
     public static $rules = array();
 
-    public function addRoles($rolesCode, $rolesDescription) {
-        $this->rolesCode = $rolesCode;
-        $this->rolesDescription = $rolesDescription;
-        $this->time = time();
-        $this->status = 0;
-        $result = $this->save();
-        return $result;
-    }
 
-    public function updateRoles($id, $rolesCode, $rolesDescription, $status) {
-        $objRoles = $this->where('id', '=', $id);
-        $arraysql = array('id' => $id);
-        if ($rolesCode != '') {
-            $arraysql = array_merge($arraysql, array("rolesCode" => $rolesCode));
-        }
-        if ($rolesDescription != '') {
-            $arraysql = array_merge($arraysql, array("rolesDescription" => $rolesDescription));
-        }
-        if ($status != '') {
-            $arraysql = array_merge($arraysql, array("status" => $status));
-        }
-        $checku = $objRoles->update($arraysql);
-        if ($checku > 0) {
-            return TRUE;
-        } else {
-            return FALSE;
-        }
-    }
 
     public function findRolesByID($id) {
         $objRoles = DB::table('tbl_admin_roles')->where('id', '=', $id)->get();
-        return $objRoles;
-    }
-
-    public function findRolesByAdminID($id) {
-        $objRoles = DB::table('tbl_admin_roles_group')->select('tbl_admin_roles_group.rolesID')->where('adminID', '=', $id)->get();
         return $objRoles;
     }
 

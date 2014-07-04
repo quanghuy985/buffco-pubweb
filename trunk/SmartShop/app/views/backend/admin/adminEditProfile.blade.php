@@ -12,7 +12,7 @@
         <h3>{{Lang::get('backend/title.profile.caption')}}</h3>
     </div>
     @include('backend.alert')
-    {{Form::model($dataProfile, array('action'=>'\BackEnd\AdminController@postProfileAdmin', 'class'=>'stdform'))}}
+    {{Form::model($dataProfile, array('action'=>'\BackEnd\HomeController@postProfileAdmin', 'class'=>'stdform'))}}
     <p></p>
     <p>
         <label>{{Lang::get('general.email')}}</label>

@@ -18,6 +18,11 @@ use View,
 
 class SupporterController extends \BaseController {
 
+    public function __construct() {
+        parent::__construct();
+        $this->beforeFilter('checkrole');
+    }
+
     public function getSupporterView() {
         if (\Request::ajax()) {
             $tblSupporterModel = new tblSupporterModel();

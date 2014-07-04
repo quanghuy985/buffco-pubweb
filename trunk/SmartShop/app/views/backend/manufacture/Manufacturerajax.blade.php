@@ -6,6 +6,13 @@ $i = ($arrayManufacturer->getCurrentPage() - 1) * 10 + 1;
 
 <tr> 
     <td><label value="cateSupporter">{{$i++ }}</label></td>
+    <td>
+        <?php
+        $pieces = explode(",", $item->manufacturerLogo);
+        ?>
+        <?php $url = Timthumb::link($pieces[0], 30, 30, 0); ?>
+        <a title="{{Lang::get('general.edit')}}" href="<?php echo action('\BackEnd\ManufacturerController@getManufacturerEdit') ?>/{{$item->id}}"> <img src="{{Asset($url)}}" /></a>
+    </td>    
     <td><label value="manuf">{{$item->manufacturerName}}</label></td> 
     <td><label value="manuf">{{$item->manufacturerPlace}} </label></td> 
     <td><label value="manuf"></label><?php echo date('d/m/Y', $item->time); ?></td>  

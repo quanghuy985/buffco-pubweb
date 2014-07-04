@@ -3,15 +3,15 @@
 @section("contentadmin")
 
 <div class="pageheader notab">
-    <h1 class="pagetitle">{{Lang::get('backend/title.user.detail')}}</h1>
-    <span class="pagedesc"> {{Lang::get('backend/title.user.heading')}}</span>
+    <h1 class="pagetitle">@if($data->admin==1){{Lang::get('backend/title.admin.detail')}} @else {{Lang::get('backend/title.user.detail')}}@endif</h1>
+    <span class="pagedesc"> @if($data->admin==1){{Lang::get('backend/title.admin.heading')}} @else{{Lang::get('backend/title.user.heading')}}@endif</span>
 </div>
 <div class="contentwrapper">
     <div class="subcontent">
 
         <div class="one_half">
             <div class="contenttitle2">
-                <h3>{{Lang::get('backend/title.user.detail')}}</h3>
+                <h3>@if($data->admin==1){{Lang::get('backend/title.admin.detail')}} @else{{Lang::get('backend/title.user.detail')}}@endif</h3>
 
             </div>
             @if(isset($data))

@@ -46,7 +46,7 @@
             <label>{{Lang::get('general.email')}}</label>
             <span class="field">
                 {{Form::text('email', null, array('id'=>'email','class'=>'longinput', 'placeholder'=>Lang::get('placeholder.email')))}}
-                
+
             </span>
         </p>
         <p>
@@ -64,7 +64,14 @@
         <p>
             <label>{{Lang::get('general.date_of_birth')}}</label>
             <span class="field">
-                <input id="datepicker" name="dateofbirth" type="text" class="longinput" value="@if(isset($AdminData)&&$AdminData->dateofbirth!=''){{date('d/m/Y',$AdminData->dateofbirth)}}@endif" />
+                <?php
+                $time = '';
+                if (isset($AdminData) && $AdminData->dateofbirth != '') {
+                    $time = date('d/m/Y', $AdminData->dateofbirth);
+                }
+                ?>
+                {{Form::text('dateofbirth', $time, array('id'=>'datepicker'))}}
+
             </span>
         </p>
         <p>
@@ -93,10 +100,17 @@
         <div id="scroll1" class="mousescroll">
             <ul class="cateaddproduct" id="cateaddproduct">
                 @foreach($arrRoles as $itemRoles)
-                &nbsp &nbsp &nbsp<input style="float: left;width: 100px;" type="checkbox" name="roles[]" @if(isset($listRolesSelect))  @foreach($listRolesSelect as $itemRolesExist)
-                                        @if($itemRolesExist->rolesID == $itemRoles->id)checked @endif
-                                        @endforeach @endif id="checkboktest" value="{{$itemRoles->id}}"  \>{{$itemRoles->rolesDescription}}
-                                        <br/> 
+                <?php
+                $rolelist = unserialize($AdminData->roles);
+                $check = '';
+                if ($rolelist != '') {
+                    if (in_array($itemRoles->rolesCode, $rolelist)) {
+                        $check = 'checked';
+                    }
+                }
+                ?>
+                &nbsp &nbsp &nbsp<input style="float: left;width: 100px;" type="checkbox" name="roles[]" {{$check}} id="checkboktest" value="{{$itemRoles->rolesCode}}"  \>{{$itemRoles->rolesDescription}}
+                <br/> 
                 @endforeach
                 <br>
             </ul>
@@ -133,12 +147,12 @@
         }
     </style>
     <script>
-        jQuery('#scroll1').slimscroll({
+            jQuery('#scroll1').slimscroll({
             color: '#666',
             size: '10px',
             width: '100%',
-            height: '300px',
-            border: 'medium none'
+        height: '300px',
+        border: 'medium none'
         });
     </script>
 </div>

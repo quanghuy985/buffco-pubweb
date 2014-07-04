@@ -56,6 +56,7 @@ class tblHistoryUserModel extends \Eloquent {
         if ($status != '') {
             $arraysql = array_merge($arraysql, array("status" => $status));
         }
+        $checkupdate = $tableHistory->update($arraysql);
         return $checkupdate;
     }
 

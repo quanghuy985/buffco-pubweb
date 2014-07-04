@@ -18,6 +18,11 @@ use View,
 
 class CateNewsController extends \BaseController {
 
+    public function __construct() {
+        parent::__construct();
+        $this->beforeFilter('checkrole');
+    }
+
     public function getCateNewsView() {
         if (\Request::ajax()) {
             $tblCateNewsModel = new tblCategoryNewsModel();
@@ -51,7 +56,7 @@ class CateNewsController extends \BaseController {
         $tblCateNewsModel = new tblCategoryNewsModel();
         $tblCateNewsModel->deleteCateNews(Input::get('id'));
         $tblCateNewsModel->deleteCateNewsChild(Input::get('id'));
- $objAdmin = \Auth::user();
+        $objAdmin = \Auth::user();
         $historyContent = Lang::get('backend/history.cateNews.delete') . $dataedit[0]->catenewsName;
         $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
         $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
@@ -60,7 +65,7 @@ class CateNewsController extends \BaseController {
         if ($start < 0) {
             $start = 0;
         }
-        return  Redirect::action('\BackEnd\CateNewsController@getCateNewsView');
+        return Redirect::action('\BackEnd\CateNewsController@getCateNewsView');
     }
 
     public function getCateNewsEdit($id = '') {

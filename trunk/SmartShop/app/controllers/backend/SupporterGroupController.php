@@ -17,6 +17,11 @@ use View,
 
 class SupporterGroupController extends \BaseController {
 
+    public function __construct() {
+        parent::__construct();
+        $this->beforeFilter('checkrole');
+    }
+
     public function getSupporterGroupView($thongbao = '') {
         if (\Request::ajax()) {
             $tblSupporterGroup = new tblSupporterGroupModel();

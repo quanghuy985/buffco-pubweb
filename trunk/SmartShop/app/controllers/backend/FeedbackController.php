@@ -18,7 +18,10 @@ use BackEnd,
     Redirect;
 
 class FeedbackController extends \BaseController {
-
+public function __construct() {
+        parent::__construct();
+        $this->beforeFilter('checkrole');
+    }
     public function getFeedBack() {
         $tblFeedbackModel = new tblFeedbackModel();
         $arrFeedback = $tblFeedbackModel->allFeedback(1);

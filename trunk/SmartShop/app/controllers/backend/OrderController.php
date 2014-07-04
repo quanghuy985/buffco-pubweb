@@ -23,7 +23,10 @@ class OrderController extends \BaseController {
       | Route::get('/', 'HomeController@showWelcome');
       |
      */
-
+public function __construct() {
+        parent::__construct();
+        $this->beforeFilter('checkrole');
+    }
     public function postOrderFillterView() {
         $one = strtotime(\Input::get('from'));
         $two = strtotime(\Input::get('to'));

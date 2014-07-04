@@ -22,8 +22,8 @@
                 <br/>
                 <span class="email">{{Auth::user()->email}}</span>
                 <ul>
-                    <li><a href="{{action('\BackEnd\AdminController@getProfileAdmin')}}">{{Lang::get('backend/dashboard.edit_profile')}}</a></li>
-                    <li><a href="{{action('\BackEnd\HistoryUserController@getUserHistory')}}/{{Auth::user()->id}}">{{Lang::get('backend/dashboard.history')}}</a></li>
+                    <li><a href="{{action('\BackEnd\HomeController@getProfileAdmin')}}">{{Lang::get('backend/dashboard.edit_profile')}}</a></li>
+                    <li><a href="{{action('\BackEnd\HomeController@getUserHistory')}}/{{Auth::user()->id}}">{{Lang::get('backend/dashboard.history')}}</a></li>
                     <li><a href="{{action('\BackEnd\LoginController@getLogOut')}}">{{Lang::get('backend/dashboard.sign_out')}}</a></li>
                 </ul>
             </div><!--userdata-->
