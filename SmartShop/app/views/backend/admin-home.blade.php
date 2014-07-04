@@ -18,74 +18,150 @@
     }
 </style>
 <script>
-jQuery(document).ready(function() {
+        jQuery(document).ready(function() {
 
 
-    /*****SIMPLE CHART*****/
-    var flash = [<?php
+/*****SIMPLE CHART*****/
+var flash = [<?php
 foreach ($arrreturn1 as $key => $value) {
     echo '[' . $key . '000,' . $value . '],';
 }
 ?>];
-    var html5 = [<?php
+        var html5 = [<?php
 foreach ($arrreturn as $key => $value) {
     echo '[' . $key . '000,' . $value . '],';
 }
 ?>];
-    function showTooltip(x, y, contents) {
+        function showTooltip(x, y, contents) {
         jQuery('<div id="tooltip" class="tooltipflot">' + contents + '</div>').css({
-            position: 'absolute',
-            display: 'none',
-            top: y + 5,
-            left: x + 5
+        position: 'absolute',
+                display: 'none',
+                top: y + 5,
+                left: x + 5
         }).appendTo("body").fadeIn(200);
-    }
+        }
 
 
-    var plot = jQuery.plot(jQuery("#chartplace"),
-            [{data: flash, label: "{{Lang::get('backend/home.order')}} ({{Lang::get('backend/home.number')}})", color: "#069"}, {data: html5, label: "{{Lang::get('backend/home.profit')}} ({{Lang::get('backend/home.money_format')}})", color: "#FF6600"}], {
-        series: {
-            lines: {show: true, fill: true, fillColor: {colors: [{opacity: 0.05}, {opacity: 0.15}]}},
-            points: {show: true}
-        },
+var plot = jQuery.plot(jQuery("#chartplace"),
+        [{data: flash, label: "{{Lang::get('backend/home.order')}} ({{Lang::get('backend/home.number')}})", color: "#069"}, {data: html5, label: "{{Lang::get('backend/home.order_anly_users')}} ({{Lang::get('backend/home.order_anly_users_count')}})", color: "#FF6600"}], {
+series: {
+lines: {show: true, fill: true, fillColor: {colors: [{opacity: 0.05}, {opacity: 0.15}]}},
+        points: {show: true}
+},
         legend: {position: 'nw'},
         grid: {hoverable: true, clickable: true, borderColor: '#ccc', borderWidth: 1, labelMargin: 10},
         xaxis: {mode: "time", timeformat: "%d/%m/%y"},
         yaxis: {min: 0}
-    });
-    var previousPoint = null;
-    jQuery("#chartplace").bind("plothover", function(event, pos, item) {
-        jQuery("#x").text(pos.x.toFixed(2));
+});
+        var previousPoint = null;
+        jQuery("#chartplace").bind("plothover", function(event, pos, item) {
+jQuery("#x").text(pos.x.toFixed(2));
         jQuery("#y").text(pos.y.toFixed(2));
-
         if (item) {
-            if (previousPoint != item.dataIndex) {
-                previousPoint = item.dataIndex;
+if (previousPoint != item.dataIndex) {
+previousPoint = item.dataIndex;
+        jQuery("#tooltip").remove();
+        var x = '{{Lang::get('backend / home.months')}}' + item.datapoint[0].toFixed(0),
+        y = item.datapoint[1].toFixed(0);
+        showTooltip(item.pageX, item.pageY,
+                item.series.label + " : " + y);
+}
 
-                jQuery("#tooltip").remove();
-                var x = '{{Lang::get('backend / home.months')}}' + item.datapoint[0].toFixed(0),
-                        y = item.datapoint[1].toFixed(0);
-
-                showTooltip(item.pageX, item.pageY,
-                        item.series.label + " : " + y);
-            }
-
-        } else {
-            jQuery("#tooltip").remove();
-            previousPoint = null;
-        }
-
-    });
-
-    jQuery("#chartplace").bind("plotclick", function(event, pos, item) {
-        if (item) {
-            jQuery("#clickdata").text("You clicked point " + item.dataIndex + " in " + item.series.label + ".");
-            plot.highlight(item.series, item.datapoint);
-        }
-    });
+} else {
+jQuery("#tooltip").remove();
+        previousPoint = null;
+}
 
 });
-</script>
+        jQuery("#chartplace").bind("plotclick", function(event, pos, item) {
+if (item) {
+jQuery("#clickdata").text("You clicked point " + item.dataIndex + " in " + item.series.label + ".");
+        plot.highlight(item.series, item.datapoint);
+}
+});
+        });</script>
+
+<?php
+$rolelist = unserialize(Auth::user()->roles);
+$check = false;
+if (is_array($rolelist)) {
+    foreach ($rolelist as $item) {
+        if (strpos($item, 'StatisticView') >= 0 && strpos($item, 'StatisticView') !== false) {
+            $check = true;
+            break;
+        } else {
+            $check = false;
+        }
+    }
+}
+if ($check == true) {
+    ?>
+    <script>
+                jQuery(document).ready(function() {
+
+
+        /*****SIMPLE CHART*****/
+        var flash = [<?php
+    foreach ($arrreturn3 as $key => $value) {
+        echo '[' . $key . '000,' . $value . '],';
+    }
+    ?>];
+                var html5 = [<?php
+    foreach ($arrreturn2 as $key => $value) {
+        echo '[' . $key . '000,' . $value . '],';
+    }
+    ?>];
+                function showTooltip(x, y, contents) {
+                jQuery('<div id="tooltip1" class="tooltipflot1">' + contents + '</div>').css({
+                position: 'absolute',
+                        display: 'none',
+                        top: y + 5,
+                        left: x + 5
+                }).appendTo("body").fadeIn(200);
+                }
+
+
+        var plot = jQuery.plot(jQuery("#chartplace1"),
+                [{data: flash, label: "{{Lang::get('backend/home.order_anly_tongtien')}} ({{Lang::get('backend/home.money_format')}})", color: "#069"}, {data: html5, label: "{{Lang::get('backend/home.order_anly_lai')}} ({{Lang::get('backend/home.money_format')}})", color: "#FF6600"}], {
+        series: {
+        lines: {show: true, fill: true, fillColor: {colors: [{opacity: 0.05}, {opacity: 0.15}]}},
+                points: {show: true}
+        },
+                legend: {position: 'nw'},
+                grid: {hoverable: true, clickable: true, borderColor: '#ccc', borderWidth: 1, labelMargin: 10},
+                xaxis: {mode: "time", timeformat: "%d/%m/%y"}
+        });
+                var previousPoint = null;
+                jQuery("#chartplace1").bind("plothover", function(event, pos, item) {
+        jQuery("#x").text(pos.x.toFixed(2));
+                jQuery("#y").text(pos.y.toFixed(2));
+                if (item) {
+        if (previousPoint != item.dataIndex) {
+        previousPoint = item.dataIndex;
+                jQuery("#tooltip1").remove();
+                var x = '{{Lang::get('backend / home.months')}}' + item.datapoint[0].toFixed(0),
+                y = item.datapoint[1].toFixed(0);
+                showTooltip(item.pageX, item.pageY,
+                        item.series.label + " : " + y);
+        }
+
+        } else {
+        jQuery("#tooltip1").remove();
+                previousPoint = null;
+        }
+
+        });
+                jQuery("#chartplace1").bind("plotclick", function(event, pos, item) {
+        if (item) {
+        jQuery("#clickdata").text("You clicked point " + item.dataIndex + " in " + item.series.label + ".");
+                plot.highlight(item.series, item.datapoint);
+        }
+        });
+        });
+    </script>
+    <?php
+}
+?>
 <div id="contentwrapper" class="contentwrapper">
     <div class="subcontent">
         <div class="notibar announcement">
@@ -155,12 +231,23 @@ foreach ($arrreturn as $key => $value) {
             <blockquote>
                 <span>  {{Lang::get('backend/home.order_anly_from')}}  : <strong> {{date('d/m/Y',$arrstatic['timeformanaly'])}}</strong> {{Lang::get('backend/home.order_anly_to')}} : <strong> {{date('d/m/Y',$arrstatic['timetoanaly'])}}</strong></span>
                 <br><span>  {{Lang::get('backend/home.order_anly_total')}} : <strong> {{$arrstatic['totalorder']}}</strong> ( Đơn hàng )</span>
-                <br><span>  {{Lang::get('backend/home.order_anly_lai')}} : <strong> {{number_format($arrstatic['totalai']*1000)}}</strong> ( {{Config::get('configall.pay-tiente')}} )</span>
-                <br><span>  {{Lang::get('backend/home.order_anly_tongtien')}} : <strong> {{number_format($arrstatic['tongtien'])}}</strong> ( {{Config::get('configall.pay-tiente')}} )</span>
+                <br><span>  {{Lang::get('backend/home.order_anly_users')}} : <strong> {{number_format($arrstatic['totauser'])}}</strong> ( {{Lang::get('backend/home.order_anly_users_count')}} )</span>
             </blockquote>
             <br clear="all" />
             <div id="chartplace" style="height:300px;"></div>
-
+            <?php
+            if ($check == true) {
+                ?>
+                <br clear="all" />
+                <blockquote>
+                    <span>  {{Lang::get('backend/home.order_anly_from')}}  : <strong> {{date('d/m/Y',$arrstatic['timeformanaly'])}}</strong> {{Lang::get('backend/home.order_anly_to')}} : <strong> {{date('d/m/Y',$arrstatic['timetoanaly'])}}</strong></span>
+                    <br><span>  {{Lang::get('backend/home.order_anly_lai')}} : <strong> {{number_format($arrstatic['totalai'])}}</strong> (  {{Config::get('configall.pay-tiente')}} )</span>
+                    <br><span>  {{Lang::get('backend/home.order_anly_tongtien')}} : <strong> {{number_format($arrstatic['tongtien'])}}</strong> (  {{Config::get('configall.pay-tiente')}} )</span>
+                </blockquote>
+                <div id="chartplace1" style="height:300px;"></div>
+                <?php
+            }
+            ?>
             <br clear="all" />
         </div>
         <div class="one_third last dashboard_right">

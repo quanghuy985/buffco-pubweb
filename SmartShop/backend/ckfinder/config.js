@@ -12,6 +12,6 @@
             // Sample configuration options:
             // config.uiColor = '#BDE31E';
              config.language = 'vi';
-            config.removePlugins = 'basket';
+            config.removePlugins = 'basket,help';
 
         };

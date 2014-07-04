@@ -12,7 +12,7 @@ return array(
       |
      */
     'urlbasesite' => 'http://localhost/',
-    'urlbasesitefolder' => 'SmartShop',
+    'urlbasesitefolder' => '/SmartShop/',
     'debug' => true,
     /*
       |--------------------------------------------------------------------------

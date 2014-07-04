@@ -271,4 +271,15 @@ class tblUserModel extends \Eloquent {
         return $alluser;
     }
 
+    public function getUserByDateAnly($from, $to, $status = '') {
+        $alluser = DB::table('tbl_users')->whereBetween('tbl_users.time', array($from, $to))->where('admin', 0);
+        if ($status != '') {
+            $alluser->where('status', '=', $status);
+        } else {
+            $alluser->where('status', '!=', 2);
+        }
+        $alluser = $alluser->get();
+        return $alluser;
+    }
+
 }
