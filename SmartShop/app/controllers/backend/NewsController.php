@@ -136,7 +136,6 @@ class NewsController extends \BaseController {
         $validate = Validator::make(Input::all(), $rules, Lang::get('messages.validator'), Lang::get('backend/attributes.news'));
         if (!$validate->fails()) {
             $tblNewsModel = new tblNewsModel();
-            $objAdmin = \Auth::user();
             $check = $tblNewsModel->insertNew($inputs['catlist'], $inputs['newsName'], $inputs['newsImg'], $inputs['newsDescription'], $inputs['newsKeywords'], $inputs['newsContent'], $inputs['newsTag'], $inputs['newsSlug'], $inputs['status'], $objAdmin->id);
             $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.news.create') . Input::get('newsName');
