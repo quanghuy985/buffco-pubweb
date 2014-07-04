@@ -3,6 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< .mine
+            <file>file:/C:/wamp/www/SmartShop/app/models/backend/tblHistoryUserModel.php</file>
+            <file>file:/C:/wamp/www/SmartShop/app/models/backend/tblFeedbackModel.php</file>
+            <file>file:/C:/wamp/www/SmartShop/app/controllers/backend/FeedbackController.php</file>
+            <file>file:/C:/wamp/www/SmartShop/app/controllers/backend/HistoryUserController.php</file>
+            <file>file:/C:/wamp/www/SmartShop/app/views/backend/feedback/feedbackManage.blade.php</file>
+=======
             <file>file:/D:/LOCALHOST/www/SmartShop/app/models/backend/tblOrderDetailModel.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/config/database.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/backend/js/plugins/jquery.uniform.min.js</file>
@@ -46,6 +53,7 @@
             <file>file:/D:/LOCALHOST/www/SmartShop/bootstrap/paths.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/views/backend/news/newsAjax.blade.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/views/backend/page/Pageajax.blade.php</file>
+>>>>>>> .r230
         </group>
     </open-files>
 </project-private>

@@ -101,11 +101,14 @@
             <ul class="cateaddproduct" id="cateaddproduct">
                 @foreach($arrRoles as $itemRoles)
                 <?php
-                $rolelist = unserialize($AdminData->roles);
                 $check = '';
-                if ($rolelist != '') {
-                    if (in_array($itemRoles->rolesCode, $rolelist)) {
-                        $check = 'checked';
+                if (isset($AdminData)) {
+                    $rolelist = unserialize($AdminData->roles);
+
+                    if ($rolelist != '') {
+                        if (in_array($itemRoles->rolesCode, $rolelist)) {
+                            $check = 'checked';
+                        }
                     }
                 }
                 ?>
@@ -147,12 +150,12 @@
         }
     </style>
     <script>
-            jQuery('#scroll1').slimscroll({
+        jQuery('#scroll1').slimscroll({
             color: '#666',
             size: '10px',
             width: '100%',
-        height: '300px',
-        border: 'medium none'
+            height: '300px',
+            border: 'medium none'
         });
     </script>
 </div>

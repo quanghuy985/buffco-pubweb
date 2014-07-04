@@ -58,9 +58,8 @@ class SupporterController extends \BaseController {
 
     public function postDeleteSupporter() {
         $tblSupporter = new tblSupporterModel();
-        $tblSupporter->deleteSupporter(Input::get('id'));
-
         $supporter = $tblSupporter->getSupportByID(Input::get('id'));
+        $tblSupporter->deleteSupporter(Input::get('id'));
 
         $objAdmin = \Auth::user();
         $historyContent = Lang::get('backend/history.supporter.update') . $supporter->supporterName;
