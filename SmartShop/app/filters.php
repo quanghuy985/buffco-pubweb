@@ -94,15 +94,16 @@ Route::filter('checkrole', function($route) {
     $controllername = preg_replace($pattern, $replacement, $controllername);
     $rolelist = unserialize(Auth::user()->roles);
     $check = false;
-    foreach ($rolelist as $item) {
-        if (strpos($item, $controllername) >= 0 && strpos($item, $controllername) !== false) {
-            $check = true;
-            break;
-        } else {
-            $check = false;
+    if (is_array($rolelist)) {
+        foreach ($rolelist as $item) {
+            if (strpos($item, $controllername) >= 0 && strpos($item, $controllername) !== false) {
+                $check = true;
+                break;
+            } else {
+                $check = false;
+            }
         }
     }
-
     if ($check == false) {
         return View::make('backend.errors.AccessDeny');
     }
