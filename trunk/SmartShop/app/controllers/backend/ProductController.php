@@ -187,6 +187,7 @@ class ProductController extends \BaseController {
     public function postDeleteProduct() {
         $id = \Input::get('id');
         $tblProduct = new TblProductModel();
+        $product = $tblProduct->getProductById($id);
         $check = $tblProduct->deleteProduct($id);
         $arrProduct = $tblProduct->getAllProductNew('id', 'desc', 5, 1);
         $objAdmin = \Auth::user();

@@ -54,12 +54,16 @@ class CateNewsController extends \BaseController {
 
     public function postDeleteCateNews() {
         $tblCateNewsModel = new tblCategoryNewsModel();
+
+        $dataedit = $tblCateNewsModel->findCateNewsByID(Input::get('id'));
         $tblCateNewsModel->deleteCateNews(Input::get('id'));
         $tblCateNewsModel->deleteCateNewsChild(Input::get('id'));
         $objAdmin = \Auth::user();
-        $historyContent = Lang::get('backend/history.cateNews.delete') . $dataedit[0]->catenewsName;
+
+        $historyContent = Lang::get('backend/history.cateNews.delete') . $dataedit->catenewsName;
         $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
         $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
+
         $cateNewsData = $tblCateNewsModel->getAllCategoryNewPaginate(10);
         $start = $cateNewsData->getCurrentPage() * 10 - 10;
         if ($start < 0) {

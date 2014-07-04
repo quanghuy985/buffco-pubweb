@@ -88,7 +88,7 @@ class tblUserModel extends \Eloquent {
             'lastname' => 'required',
             'dateofbirth' => 'required',
             'address' => 'required',
-            'phone' => 'required|between:10,12',
+            'phone' => 'required|numeric|between:10,12',
             'password' => 'required|between:6,20',
         );
         $validator = \Validator::make($allinput, $rules);

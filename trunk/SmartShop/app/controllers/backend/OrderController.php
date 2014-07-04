@@ -23,10 +23,12 @@ class OrderController extends \BaseController {
       | Route::get('/', 'HomeController@showWelcome');
       |
      */
-public function __construct() {
+
+    public function __construct() {
         parent::__construct();
         $this->beforeFilter('checkrole');
     }
+
     public function postOrderFillterView() {
         $one = strtotime(\Input::get('from'));
         $two = strtotime(\Input::get('to'));
@@ -185,7 +187,7 @@ public function __construct() {
                     foreach ($arrOrder as $item) {
                         $tblOderModel->updateStatusOrderByOrderCode($orderCode, 1);
                         $tblProductModel = new TblProductModel();
-                        $tblProductModel->updateProduct($item->product_id, '', '', '', '', '', '', '', '', $item->quantity + $item->amount, '', '', '', '', '', '');
+                        $tblProductModel->updateProduct($item->product_id, '', '', '', '', '', '', '', '', '', $item->quantity + $item->amount, '', '', '', '', '', '');
                     }
                     $objAdmin = \Auth::user();
                     $historyContent = \Lang::get('backend/history.order.active') . ' ' . $orderCode;

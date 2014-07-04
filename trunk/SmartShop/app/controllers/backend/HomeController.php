@@ -166,15 +166,28 @@ class HomeController extends \BaseController {
 
     public function postProfileAdmin() {
         $tblAdminModel = new \BackEnd\tblUserModel();
-        $tblAdminModel->UpdateUser(\Auth::user()->id, \Auth::user()->mail, \Input::get('password'), \Input::get('firstname'), \Input::get('lastname'), \Input::get('dateofbirth'), \Input::get('address'), \Input::get('phone'), \Input::get('status'), 1, '');
+        $rules = array(
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'dateofbirth' => 'required',
+            'address' => 'required',
+            'phone' => 'numeric'
+        );
+        $validator = \Validator::make(\Input::all(), $rules, Lang::get('messages.validator'), Lang::get('backend/attributes.admin'));
+        if ($validator->passes()) {
+            $tblAdminModel->UpdateUser(\Auth::user()->id, \Auth::user()->mail, \Input::get('password'), \Input::get('firstname'), \Input::get('lastname'), \Input::get('dateofbirth'), \Input::get('address'), \Input::get('phone'), \Input::get('status'), 1, '');
 
-        $objAdmin = \Auth::user();
-        $historyContent = \Lang::get('backend/history.admin.profile');
-        $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel;
-        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
+            $objAdmin = \Auth::user();
+            $historyContent = \Lang::get('backend/history.admin.profile');
+            $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel;
+            $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
 
-        \Session::flash('alert_success', \Lang::get('messages.update.success'));
-        return \Redirect::action('\BackEnd\HomeController@getProfileAdmin');
+            \Session::flash('alert_success', \Lang::get('messages.update.success'));
+            return \Redirect::action('\BackEnd\HomeController@getProfileAdmin');
+        } else {
+            \Session::flash('alert_error', \Lang::get('messages.update.error'));
+            return \Redirect::action('\BackEnd\HomeController@getProfileAdmin')->withErrors($validator->messages());
+        }
     }
 
     public function getUserHistory($user_id = '') {

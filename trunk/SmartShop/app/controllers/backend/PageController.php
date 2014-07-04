@@ -24,12 +24,12 @@ public function __construct() {
     public function getPageView() {
         if (\Request::ajax()) {
             $tblPageModel = new tblPageModel();
-            $check = $tblPageModel->selectAllPage(1, 'id');
+            $check = $tblPageModel->selectAllPage(10, 'id');
             $link = $check->links();
             return View::make('backend.page.Pageajax')->with('arrPage', $check)->with('link', $link);
         } else {
             $tblPageModel = new tblPageModel();
-            $check = $tblPageModel->selectAllPage(1, 'id');
+            $check = $tblPageModel->selectAllPage(10, 'id');
             $link = $check->links();
             return View::make('backend.page.PageManage')->with('arrPage', $check)->with('link', $link);
         }
@@ -116,7 +116,7 @@ public function __construct() {
         }
 
         $tblPageModel = new tblPageModel();
-        $check = $tblPageModel->FilterAllPage(1, 'id', $one);
+        $check = $tblPageModel->FilterAllPage(10, 'id', $one);
         $link = $check->links();
         if (\Request::ajax()) {
             return View::make('backend.page.Pageajax')->with('arrPage', $check)->with('link', $link);
@@ -138,7 +138,7 @@ public function __construct() {
             $one = '';
         }
         $tblPageModel = new tblPageModel();
-        $check = $tblPageModel->SearchAllPage(1, 'id', $one);
+        $check = $tblPageModel->SearchAllPage(10, 'id', $one);
         $link = $check->links();
         if (\Request::ajax()) {
             return View::make('backend.page.Pageajax')->with('arrPage', $check)->with('link', $link);
