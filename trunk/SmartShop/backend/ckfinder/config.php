@@ -80,7 +80,7 @@ if (isset($_COOKIE['urlupload_img'])) {
     $userfolder = 'defaul';
 }
 $baseUrl = Config::get('app.url') . 'files/' . md5(sha1(md5($userfolder))) . '/';
-$baseUrlCrop = '/' . Config::get('app.urlbasesitefolder') . '/' . md5(sha1(md5($userfolder))) . '/';
+$baseUrlCrop = Config::get('app.urlbasesitefolder') . md5(sha1(md5($userfolder))) . '/';
 /*
   $baseDir : the path to the local directory (in the server) which points to the
   above $baseUrl URL. This is the path used by CKFinder to handle the files in
@@ -210,18 +210,19 @@ $config['AccessControl'][] = Array(
 $config['DefaultResourceTypes'] = '';
 
 $config['ResourceType'][] = Array(
-    'name' => 'Tệp tin', // Single quotes not allowed
+    'name' => 'Tệp tin (Tài liệu,phim ảnh...)', // Single quotes not allowed
     'url' => $baseUrl . 'files',
     'directory' => $baseDir . 'files',
-    'maxSize' => 0,
-    'allowedExtensions' => '7z,aiff,asf,avi,bmp,csv,doc,docx,fla,flv,gif,gz,gzip,jpeg,jpg,mid,mov,mp3,mp4,mpc,mpeg,mpg,ods,odt,pdf,png,ppt,pptx,pxd,qt,ram,rar,rm,rmi,rmvb,rtf,sdc,sitd,swf,sxc,sxw,tar,tgz,tif,tiff,txt,vsd,wav,wma,wmv,xls,xlsx,zip',
+    'maxSize' => '10M',
+    //'allowedExtensions' => '7z,aiff,asf,avi,bmp,csv,doc,docx,fla,flv,gif,gz,gzip,jpeg,jpg,mid,mov,mp3,mp4,mpc,mpeg,mpg,ods,odt,pdf,png,ppt,pptx,pxd,qt,ram,rar,rm,rmi,rmvb,rtf,sdc,sitd,swf,sxc,sxw,tar,tgz,tif,tiff,txt,vsd,wav,wma,wmv,xls,xlsx,zip',
+    'allowedExtensions' => 'aiff,asf,avi,bmp,csv,doc,docx,fla,flv,gif,jpeg,jpg,mid,mov,mp3,mp4,mpc,mpeg,mpg,ods,odt,pdf,png,ppt,pptx,pxd,qt,ram,rm,rmi,rmvb,rtf,sdc,sitd,swf,sxc,sxw,tif,tiff,txt,vsd,wav,wma,wmv,xls,xlsx',
     'deniedExtensions' => '');
 
 $config['ResourceType'][] = Array(
     'name' => 'Ảnh',
     'url' => $baseUrl . 'images',
     'directory' => $baseDir . 'images',
-    'maxSize' => 0,
+    'maxSize' => '5M',
     'allowedExtensions' => 'bmp,gif,jpeg,jpg,png',
     'deniedExtensions' => '');
 //

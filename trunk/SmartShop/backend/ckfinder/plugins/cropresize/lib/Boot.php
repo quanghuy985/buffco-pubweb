@@ -96,10 +96,10 @@ class Image {
         $targ_h = $_POST['h'];
         $jpeg_quality = (int) $_POST['imageQuality'];
         $ext_files = pathinfo($this->imageUrl, PATHINFO_EXTENSION);
-        $imageUrl1 = '/' . Config::get('app.urlbasesitefolder') . '/' . str_replace(Config::get('app.url'), '', $this->imageUrl);
+        $imageUrl1 = Config::get('app.urlbasesitefolder') . str_replace(Config::get('app.url'), '', $this->imageUrl);
         if ($ext_files == "jpg" || $ext_files == "jpeg" || $ext_files == "JPG" || $ext_files == "JPEG") {
             $img_r = imagecreatefromjpeg($this->baseDir . $imageUrl1);
-        } else if ($ext_files == "png"||$ext_files == "PNG") {
+        } else if ($ext_files == "png" || $ext_files == "PNG") {
             $img_r = imagecreatefrompng($this->baseDir . $imageUrl1);
         } else {
             $img_r = imagecreatefromgif($this->baseDir . $imageUrl1);

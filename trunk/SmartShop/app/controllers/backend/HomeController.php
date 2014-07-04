@@ -40,7 +40,7 @@ class HomeController extends \BaseController {
             $from = strtotime(date('m/d/Y', strtotime("-7days", $to)));
         }
 
-        $arrloinhuan = $tblOrderModel->getCountOrderOnDay($from, $to, 1);
+        $arrloinhuan = $tblUserModel->getUserByDateAnly($from, $to);
         $numdate = intval(($to - $from) / 60 / 60 / 24);
         $dateti = array();
         $arrdateti = array();
@@ -54,16 +54,16 @@ class HomeController extends \BaseController {
                 foreach ($arrloinhuan as $item) {
                     if ($i == 0) {
                         if ($item->time >= $from && $item->time <= $dateti[$i]) {
-                            $lai = $lai + $item->loinhuan;
+                            $lai = $lai + 1;
                         }
                     } else {
                         $j = $i - 1;
                         if ($item->time >= $dateti[$j] && $item->time <= $dateti[$i]) {
-                            $lai = $lai + $item->loinhuan;
+                            $lai = $lai + 1;
                         }
                     }
                 }
-                $arrdateti[] = $lai / 1000;
+                $arrdateti[] = $lai;
                 $arrreturn+=array($dateti[$i] => $arrdateti[$i]);
             }
         }
@@ -95,30 +95,66 @@ class HomeController extends \BaseController {
                 $arrreturn1+=array($dateti1[$i] => $arrdateti1[$i]);
             }
         }
+        $arrloinhuan2 = $tblOrderModel->getCountOrderOnDay($from, $to, 1);
+        $numdate2 = intval(($to - $from) / 60 / 60 / 24);
+        $dateti2 = array();
+        $arrdateti2 = array();
+        $arrreturn2 = array();
+        $arrdateti3 = array();
+        $arrreturn3 = array();
+        for ($i = 0; $i < $numdate2; $i ++) {
+            $y = $numdate2 - $i;
 
+            if (strtotime(date('m/d/Y', strtotime("-" . $y . "days", $to))) <= $to) {
+                $dateti[] = strtotime(date('m/d/Y', strtotime("-" . $y . "days", $to)));
+                $lai = 0;
+                $lai1 = 0;
+                foreach ($arrloinhuan2 as $item) {
+                    if ($i == 0) {
+                        if ($item->time >= $from && $item->time <= $dateti[$i]) {
+                            $lai = $lai + $item->loinhuan;
+                            $lai1 = $lai1 + $item->totalmoney;
+                        }
+                    } else {
+                        $j = $i - 1;
+                        if ($item->time >= $dateti[$j] && $item->time <= $dateti[$i]) {
+                            $lai = $lai + $item->loinhuan;
+                            $lai1 = $lai1 + $item->totalmoney;
+                        }
+                    }
+                }
+                $arrdateti2[] = $lai / 1000;
+                $arrreturn2+=array($dateti[$i] => $arrdateti2[$i]);
+                $arrdateti3[] = $lai1 / 1000;
+                $arrreturn3+=array($dateti[$i] => $arrdateti3[$i]);
+            }
+        }
         $timeformanaly = $this->first($arrreturn1);
         $timetoanaly = $this->last($arrreturn1);
         $totalorder = 0;
         foreach ($arrdateti1 as $item) {
             $totalorder+=$item;
         }
-        $totalai = 0;
+        $totauser = 0;
         foreach ($arrdateti as $item) {
-            $totalai+=$item;
+            $totauser+=$item;
         }
         $tongtien = 0;
-        foreach ($arrloinhuan1 as $item) {
+        $totalai = 0;
+        foreach ($arrloinhuan2 as $item) {
             $tongtien+=$item->totalmoney;
+            $totalai+=$item->loinhuan;
         }
         $static = array(
             'timeformanaly' => $timeformanaly,
             'timetoanaly' => $timetoanaly,
             'totalorder' => $totalorder,
+            'totauser' => $totauser,
             'totalai' => $totalai,
             'tongtien' => $tongtien,
         );
         $count = new tblCountAll();
-        return View::make('backend.admin-home')->with('countall', $count->CountAll())->with('arrstatic', $static)->with('arrreturn1', $arrreturn1)->with('arrreturn', $arrreturn)->with('arrOrdernew', $arrOrdernew)->with('arrNewUsers', $arrNewUsers)->with('CountUsers', $count->CountOrder(1))->with('arrLastNew', $arrLastNew)->with('CountOrderOk', $count->CountOrder('0'))->with('CountOrderPen', $count->CountOrder(2));
+        return View::make('backend.admin-home')->with('arrreturn2', $arrreturn2)->with('arrreturn3', $arrreturn3)->with('countall', $count->CountAll())->with('arrstatic', $static)->with('arrreturn1', $arrreturn1)->with('arrreturn', $arrreturn)->with('arrOrdernew', $arrOrdernew)->with('arrNewUsers', $arrNewUsers)->with('CountUsers', $count->CountOrder(1))->with('arrLastNew', $arrLastNew)->with('CountOrderOk', $count->CountOrder('0'))->with('CountOrderPen', $count->CountOrder(2));
     }
 
     public function first($array) {
