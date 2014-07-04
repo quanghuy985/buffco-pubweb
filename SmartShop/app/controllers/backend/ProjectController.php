@@ -20,6 +20,11 @@ class ProjectController extends \BaseController {
 
     public static $rules = array();
 
+    public function __construct() {
+        parent::__construct();
+        $this->beforeFilter('checkrole');
+    }
+
     public function postDeleteProject() {
         $id = \Input::get('id');
         $objProject = new tblProjectModel();
@@ -44,11 +49,11 @@ class ProjectController extends \BaseController {
     public function getProjectView() {
         if (\Request::ajax()) {
             $objProject = new tblProjectModel();
-            $check = $objProject->selectAllProject(1, 'id');
+            $check = $objProject->selectAllProject(10, 'id');
             return View::make('backend.project.Projectajax')->with('arrayProject', $check)->with('link', $check->links());
         } else {
             $objProject = new tblProjectModel();
-            $check = $objProject->selectAllProject(1, 'id');
+            $check = $objProject->selectAllProject(10, 'id');
             return View::make('backend.project.ProjectManage')->with('arrayProject', $check)->with('link', $check->links());
         }
     }
@@ -148,7 +153,7 @@ class ProjectController extends \BaseController {
         }
 
         $tblProjectModel = new tblProjectModel();
-        $check = $tblProjectModel->FillterAllProject(1, 'id', $one);
+        $check = $tblProjectModel->FillterAllProject(10, 'id', $one);
         if (\Request::ajax()) {
             return View::make('backend.project.Projectajax')->with('arrayProject', $check)->with('link', $check->links());
         } else {
@@ -170,7 +175,7 @@ class ProjectController extends \BaseController {
         }
 
         $tblProjectModel = new tblProjectModel();
-        $check = $tblProjectModel->SearchAllProject(1, 'id', $one);
+        $check = $tblProjectModel->SearchAllProject(10, 'id', $one);
         if (\Request::ajax()) {
             return View::make('backend.project.Projectajax')->with('arrayProject', $check)->with('link', $check->links());
         } else {

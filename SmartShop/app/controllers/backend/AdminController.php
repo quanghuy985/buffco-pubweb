@@ -73,9 +73,8 @@ class AdminController extends \BaseController {
         $tblAdminModel = new \BackEnd\tblUserModel();
         $objAdmin = $tblAdminModel->getUserByEmail($id, 1);
         $tblRolesModel = new tblRolesModel();
-        $listRolesSelect = $tblRolesModel->findRolesByAdminID($objAdmin->id);
         $arrRoles = $tblRolesModel->allRolesList();
-        return View::make('backend.admin.adminAdd')->with('AdminData', $objAdmin)->with('listRolesSelect', $listRolesSelect)->with('arrRoles', $arrRoles);
+        return View::make('backend.admin.adminAdd')->with('AdminData', $objAdmin)->with('arrRoles', $arrRoles);
     }
 
     public function postDeleteAdmin() {
@@ -109,10 +108,7 @@ class AdminController extends \BaseController {
 
     public function postUpdateAdmin() {
         $tblAdminModel = new \BackEnd\tblUserModel();
-        $tblRolesModel = new tblRolesModel();
         $objAdmin = \Auth::user();
-        //xóa hết quyền cũ update quyền mới
-        $check = $tblRolesModel->deleteRolesByAdminID(\Input::get('id'));
 
         $tblAdminModel->UpdateUser(\Input::get('id'), '', \Input::get('password'), \Input::get('firstname'), \Input::get('lastname'), \Input::get('dateofbirth'), \Input::get('address'), \Input::get('phone'), \Input::get('status'), 1, \Input::get('roles'));
 
@@ -174,27 +170,4 @@ class AdminController extends \BaseController {
     }
 
 // Phiên bản trước khi sửa : -------------------------->
-
-
-    public function getProfileAdmin() {
-
-        $email = \Auth::user()->email;
-        $tblAdminModel = new \BackEnd\tblUserModel();
-        $data = $tblAdminModel->getUserByEmail($email, 1);
-        return View::make('backend.admin.adminEditProfile')->with('dataProfile', $data);
-    }
-
-    public function postProfileAdmin() {
-        $tblAdminModel = new \BackEnd\tblUserModel();
-        $tblAdminModel->UpdateUser(\Auth::user()->id, \Auth::user()->mail, \Input::get('password'), \Input::get('firstname'), \Input::get('lastname'), strtotime(\Input::get('dateofbirth')), \Input::get('address'), \Input::get('phone'), \Input::get('status'), 1, '');
-
-        $objAdmin = \Auth::user();
-        $historyContent = \Lang::get('backend/history.admin.profile');
-        $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel;
-        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
-
-        \Session::flash('alert_success', \Lang::get('messages.update.success'));
-        return \Redirect::action('\BackEnd\AdminController@getProfileAdmin');
-    }
-
 }

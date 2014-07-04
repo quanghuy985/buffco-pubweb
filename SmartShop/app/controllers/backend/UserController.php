@@ -13,6 +13,10 @@ use BackEnd,
 
 class UserController extends \BaseController {
 
+    public function __construct() {
+        parent::__construct();
+        $this->beforeFilter('checkrole');
+    }
     public function postDeleteUsers() {
         $id = \Input::get('id');
         $tblUserModel = new tblUserModel();

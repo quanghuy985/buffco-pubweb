@@ -15,7 +15,7 @@ class tblUserModel extends \Eloquent {
             $arrAdmin = DB::table('tbl_users')->select('tbl_users.*')->orderBy('tbl_users.id', 'desc')->where('tbl_users.admin', '=', 1)->where('tbl_users.id', '!=', $useradmin->id)->where('tbl_users.status', '=', $status)->paginate($per_page);
         }
         if ($status == 'null' || $status == '') {
-            $arrAdmin = DB::table('tbl_users')->select('tbl_users.*')->orderBy('tbl_users.id', 'desc')->where('tbl_users.admin', '=', 1)->where('tbl_users.id', '!=', $useradmin->id)->paginate($per_page);
+            $arrAdmin = DB::table('tbl_users')->select('tbl_users.*')->orderBy('tbl_users.id', 'desc')->where('tbl_users.admin', '=', 1)->where('tbl_users.id', '!=', $useradmin->id)->where('tbl_users.status', '!=', 2)->paginate($per_page);
         }
         return $arrAdmin;
     }
@@ -93,6 +93,7 @@ class tblUserModel extends \Eloquent {
         );
         $validator = \Validator::make($allinput, $rules);
         if ($validator->passes()) {
+            $listrole = '';
             $this->email = $allinput['email'];
             $this->password = \Hash::make($allinput['password']);
             $this->firstname = $allinput['firstname'];
@@ -105,17 +106,11 @@ class tblUserModel extends \Eloquent {
             $this->time = time();
             $this->status = 1;
             $this->admin = $admin;
+            $this->roles = serialize($allinput['roles']);
             $this->save();
             $adminID = $this->id;
-            if ($admin == 1) {
-                if (isset($allinput['roles'])) {
-                    foreach ($allinput['roles'] as $item) {
-                        DB::table('tbl_admin_roles_group')->insert(
-                                array('adminID' => $adminID, 'rolesID' => $item, 'time' => time(), 'status' => 1)
-                        );
-                    }
-                }
-            }
+
+
             return true;
         } else {
             return $validator->messages();
@@ -154,11 +149,9 @@ class tblUserModel extends \Eloquent {
         }
         if ($admin == 1) {
             if ($arrRoles != '') {
-                foreach ($arrRoles as $item) {
-                    DB::table('tbl_admin_roles_group')->insert(
-                            array('adminID' => $id, 'rolesID' => $item, 'time' => time(), 'status' => 1)
-                    );
-                }
+              
+                    $arraysql = array_merge($arraysql, array("roles" => serialize($arrRoles)));
+                
             }
         }
         $checku = $user->update($arraysql);

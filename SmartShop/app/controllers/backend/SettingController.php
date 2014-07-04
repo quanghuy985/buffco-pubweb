@@ -10,6 +10,11 @@ namespace BackEnd;
 
 class SettingController extends \BaseController {
 
+    public function __construct() {
+        parent::__construct();
+        $this->beforeFilter('checkrole');
+    }
+
     public function postUpdateSetting() {
         $paramseting = array(
             'titlewebsite' => \Input::get('titlewebsite'),

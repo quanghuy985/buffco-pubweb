@@ -92,13 +92,12 @@ Route::filter('checkrole', function($route) {
     $pattern = '/(\w+)(@\w+)/i';
     $replacement = '${1}';
     $controllername = preg_replace($pattern, $replacement, $controllername);
-    $role = new BackEnd\tblRolesModel();
-    $arrrole = $role->getRolesByAdminID(Auth::user()->id);
+    $rolelist = unserialize(Auth::user()->roles);
     $check = false;
-
-    foreach ($arrrole as $item) {
-        if (strpos($item->rolesCode, $controllername) >= 0 && strpos($item->rolesCode, $controllername) !== false) {
+    foreach ($rolelist as $item) {
+        if (strpos($item, $controllername) >= 0 && strpos($item, $controllername) !== false) {
             $check = true;
+            break;
         } else {
             $check = false;
         }

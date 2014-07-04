@@ -17,7 +17,10 @@ use BackEnd,
     Lang;
 
 class MenusController extends \BaseController {
-
+public function __construct() {
+        parent::__construct();
+        $this->beforeFilter('checkrole');
+    }
     public function getMenus($id = 1) {
         $menus = new \BackEnd\Menu();
         $catProduct = new tblCategoryproductModel();

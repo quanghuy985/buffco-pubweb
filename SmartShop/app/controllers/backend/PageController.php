@@ -17,7 +17,10 @@ use BackEnd,
     Validator;
 
 class PageController extends \BaseController {
-
+public function __construct() {
+        parent::__construct();
+        $this->beforeFilter('checkrole');
+    }
     public function getPageView() {
         if (\Request::ajax()) {
             $tblPageModel = new tblPageModel();

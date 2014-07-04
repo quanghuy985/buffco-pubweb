@@ -12,6 +12,11 @@ use View;
 
 class HistoryUserController extends \BaseController {
 
+    public function __construct() {
+        parent::__construct();
+        $this->beforeFilter('checkrole');
+    }
+
     public function getUserHistory($user_id = '') {
         $objHistory = new \BackEnd\tblHistoryUserModel();
         $tblUserModel = new \BackEnd\tblUserModel();
@@ -20,7 +25,7 @@ class HistoryUserController extends \BaseController {
         //var_dump($check);
         $link = $check->links();
         if (\Request::ajax()) {
-              return View::make('backend.historyuser.HistoryUserajax')->with('arrHistory', $check)->with('link', $link);
+            return View::make('backend.historyuser.HistoryUserajax')->with('arrHistory', $check)->with('link', $link);
         } else {
             return View::make('backend.historyuser.HistoryManage')->with('objUser', $objUser)->with('arrHistory', $check)->with('link', $link);
         }
