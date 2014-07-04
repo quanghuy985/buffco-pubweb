@@ -9,7 +9,7 @@ CKEDITOR.editorConfig = function(config) {
     config.skin = 'office2013';
     // config.uiColor = '#AADC6E';
     config.toolbar = 'MyToolbar';
-
+    config.enterMode = CKEDITOR.ENTER_BR;
     config.toolbar = [
         {name: 'document', groups: ['mode', 'document', 'doctools'], items: ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
         {name: 'clipboard', groups: ['clipboard', 'undo'], items: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},

@@ -80,7 +80,7 @@ if (isset($_COOKIE['urlupload_img'])) {
     $userfolder = 'defaul';
 }
 $baseUrl = Config::get('app.url') . 'files/' . md5(sha1(md5($userfolder))) . '/';
-
+$baseUrlCrop = '/' . Config::get('app.urlbasesitefolder') . '/' . md5(sha1(md5($userfolder))) . '/';
 /*
   $baseDir : the path to the local directory (in the server) which points to the
   above $baseUrl URL. This is the path used by CKFinder to handle the files in
@@ -135,7 +135,7 @@ $config['Images'] = Array(
   To be able to use this feature, you must initialize the session data by
   uncommenting the following "session_start()" call.
  */
-$config['RoleSessionVar'] = 'CKFinder_UserRole';
+$config['RoleSessionVar'] = 'AccessControl';
 //session_start();
 
 /*
@@ -157,7 +157,7 @@ $config['AccessControl'][] = Array(
     'folderView' => true,
     'folderCreate' => true,
     'folderRename' => true,
-    'folderDelete' => true,
+    'folderDelete' => false,
     'fileView' => true,
     'fileUpload' => true,
     'fileRename' => true,
@@ -210,7 +210,7 @@ $config['AccessControl'][] = Array(
 $config['DefaultResourceTypes'] = '';
 
 $config['ResourceType'][] = Array(
-    'name' => 'Files', // Single quotes not allowed
+    'name' => 'Tệp tin', // Single quotes not allowed
     'url' => $baseUrl . 'files',
     'directory' => $baseDir . 'files',
     'maxSize' => 0,
@@ -218,20 +218,20 @@ $config['ResourceType'][] = Array(
     'deniedExtensions' => '');
 
 $config['ResourceType'][] = Array(
-    'name' => 'Images',
+    'name' => 'Ảnh',
     'url' => $baseUrl . 'images',
     'directory' => $baseDir . 'images',
     'maxSize' => 0,
     'allowedExtensions' => 'bmp,gif,jpeg,jpg,png',
     'deniedExtensions' => '');
-
-$config['ResourceType'][] = Array(
-    'name' => 'Flash',
-    'url' => $baseUrl . 'flash',
-    'directory' => $baseDir . 'flash',
-    'maxSize' => 0,
-    'allowedExtensions' => 'swf,flv',
-    'deniedExtensions' => '');
+//
+//$config['ResourceType'][] = Array(
+//    'name' => 'Flash',
+//    'url' => $baseUrl . 'flash',
+//    'directory' => $baseDir . 'flash',
+//    'maxSize' => 0,
+//    'allowedExtensions' => 'swf,flv',
+//    'deniedExtensions' => '');
 
 /*
   Due to security issues with Apache modules, it is recommended to leave the
@@ -343,10 +343,10 @@ $config['ForceAscii'] = false;
 $config['XSendfile'] = false;
 
 
-include_once "plugins/imageresize/plugin.php";
+//include_once "plugins/imageresize/plugin.php";
 include_once "plugins/fileeditor/plugin.php";
 include_once "plugins/zip/plugin.php";
-
-$config['plugin_imageresize']['smallThumb'] = '90x90';
-$config['plugin_imageresize']['mediumThumb'] = '120x120';
-$config['plugin_imageresize']['largeThumb'] = '180x180';
+//include_once "plugins/cropresize/plugin.php";
+//$config['plugin_imageresize']['smallThumb'] = '90x90';
+//$config['plugin_imageresize']['mediumThumb'] = '120x120';
+//$config['plugin_imageresize']['largeThumb'] = '180x180';

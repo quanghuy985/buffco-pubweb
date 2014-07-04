@@ -37,7 +37,7 @@ public function __construct() {
         $menus->save_position(\Input::get('easymm'));
 
         $objAdmin = \Auth::user();
-        $historyContent = Lang::get('backend/history.menu.update') . \Input::get('easymm');
+        $historyContent = Lang::get('backend/history.menu.update');
         $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
         $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
     }
