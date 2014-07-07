@@ -45,9 +45,9 @@ class CateNewsController extends \BaseController {
             $data = $tblCateNewsModel->getAllCategoryNew($start, 10);
             $datalist = $tblCateNewsModel->allCateNewList();
             if (count($data) != 0) {
-                return View::make('backend.news.cateNewsManage')->with('arrayCateNewslist', $datalist)->with('arrayCateNews', $data)->with('link', $links);
+                return View::make('backend.news.cateNewsManage')->with('arrayCateNewslist', $datalist)->with('arrayCateNews', $data)->with('link', $links)->with('active_menu', 'newcate');
             } else {
-                return View::make('backend.news.cateNewsManage')->with('arrayCateNewslist', $datalist)->with('arrayCateNews', $data);
+                return View::make('backend.news.cateNewsManage')->with('arrayCateNewslist', $datalist)->with('arrayCateNews', $data)->with('active_menu', 'newcate');
             }
         }
     }
@@ -95,7 +95,7 @@ class CateNewsController extends \BaseController {
             $dataedit = $tblCateNewsModel->findCateNewsByID($id);
             $data = $tblCateNewsModel->getAllCategoryNew($start, 10);
             $datalist = $tblCateNewsModel->allCateNewList();
-            return View::make('backend.news.cateNewsManage')->with('arrayCateNewslist', $datalist)->with('cateNewsData', $dataedit)->with('arrayCateNews', $arrCateNews)->with('link', $links);
+            return View::make('backend.news.cateNewsManage')->with('arrayCateNewslist', $datalist)->with('cateNewsData', $dataedit)->with('arrayCateNews', $arrCateNews)->with('link', $links)->with('active_menu', 'newcate');
         }
     }
 

@@ -64,7 +64,7 @@ class OrderController extends \BaseController {
         if (\Request::ajax()) {
             return View::make('backend.order.orderproductajax')->with('arrOrder', $arrOrder)->with('page', $page);
         } else {
-            return View::make('backend.order.orderproduct')->with('arrOrder', $arrOrder)->with('page', $page);
+            return View::make('backend.order.orderproduct')->with('arrOrder', $arrOrder)->with('page', $page)->with('active_menu', 'orderview');
         }
     }
 
@@ -88,14 +88,14 @@ class OrderController extends \BaseController {
         if (\Request::ajax()) {
             return View::make('backend.order.orderproductajax')->with('arrOrder', $arrOrder)->with('page', $page);
         } else {
-            return View::make('backend.order.orderproduct')->with('arrOrder', $arrOrder)->with('page', $page);
+            return View::make('backend.order.orderproduct')->with('arrOrder', $arrOrder)->with('page', $page)->with('active_menu', 'orderview');
         }
     }
 
     public function getEdit($orderCode) {
         $tblOderModel = new tblOrderModel();
         $objOrder = $tblOderModel->getOrderByOrderCode($orderCode);
-        return View::make('backend.order.orderproductedit')->with('objOrder', $objOrder);
+        return View::make('backend.order.orderproductedit')->with('objOrder', $objOrder)->with('active_menu', 'orderview');
     }
 
     public function getViewAll() {
@@ -105,7 +105,7 @@ class OrderController extends \BaseController {
         if (\Request::ajax()) {
             return View::make('backend.order.orderproductajax')->with('arrOrder', $orderdata)->with('page', $page);
         } else {
-            return View::make('backend.order.orderproduct')->with('arrOrder', $orderdata)->with('page', $page);
+            return View::make('backend.order.orderproduct')->with('arrOrder', $orderdata)->with('page', $page)->with('active_menu', 'orderview');
         }
     }
 

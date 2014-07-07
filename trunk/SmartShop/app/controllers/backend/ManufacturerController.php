@@ -59,7 +59,7 @@ class ManufacturerController extends \BaseController {
         if (\Request::ajax()) {
             return View::make('backend.manufacture.Manufacturerajax')->with('arrayManufacturer', $arrManu)->with('link', $arrManu->links());
         } else {
-            return View::make('backend.manufacture.ManufacturerManage')->with('arrayManufacturer', $arrManu)->with('link', $arrManu->links());
+            return View::make('backend.manufacture.ManufacturerManage')->with('arrayManufacturer', $arrManu)->with('link', $arrManu->links())->with('active_menu', 'manuview');
         }
     }
 
@@ -72,7 +72,7 @@ class ManufacturerController extends \BaseController {
             $objManufactuer = new tblManufacturerModel();
             $data = $objManufactuer->getManufacturerById($id);
             $arrManu = $objManufactuer->selectAllManufacturer(10);
-            return View::make('backend.manufacture.ManufacturerManage')->with('arrayManuf', $data)->with('arrayManufacturer', $arrManu)->with('link', $arrManu->links());
+            return View::make('backend.manufacture.ManufacturerManage')->with('arrayManuf', $data)->with('arrayManufacturer', $arrManu)->with('link', $arrManu->links())->with('active_menu', 'manuview');
         }
     }
 

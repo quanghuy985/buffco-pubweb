@@ -21,7 +21,7 @@ $i = ($arrUser->getCurrentPage() - 1) * 10 + 1;
         </label>
     </td>
     <td>
-        <a href="{{URL::action('\BackEnd\UserController@getUserEdit')}}?id={{$item->id}}"
+        <a href="{{URL::action('\BackEnd\UserController@getUserEdit')}}/{{$item->id}}"
            title="Sửa">{{Lang::get('general.edit')}}</a>
         @if($item->status=='2')
         &nbsp;&nbsp;|&nbsp;&nbsp;

@@ -85,59 +85,159 @@
                     }
                     ?>"><a href="{{action('\BackEnd\FilemanagerController@getFileManager')}}" class="gallery">{{Lang::get('backend/dashboard.management_file')}}</a>
                     </li>
-                    <li><a href="#newsSub" class="editor">{{Lang::get('backend/dashboard.news')}}</a>
+                    <li class="<?php
+                    if ($menuselect == 'newview' || $menuselect == 'newadd' || $menuselect == 'newcate') {
+                        echo 'current';
+                    }
+                    ?>"><a href="#newsSub" class="editor">{{Lang::get('backend/dashboard.news')}}</a>
                         <span class="arrow"></span>
                         <ul id="newsSub">
-                            <li><a href="{{action('\BackEnd\NewsController@getNewsView')}}">{{Lang::get('backend/dashboard.all_news')}}</a></li>
-                            <li><a href="{{URL::action('\BackEnd\NewsController@getAddNews')}}">{{Lang::get('backend/dashboard.add_news')}}</a></li>
-                            <li><a href="{{URL::action('\BackEnd\CateNewsController@getCateNewsView')}}">{{Lang::get('backend/dashboard.group_news')}}</a></li>
+                            <li class="<?php
+                            if ($menuselect == 'newview') {
+                                echo 'current';
+                            }
+                            ?>"><a href="{{action('\BackEnd\NewsController@getNewsView')}}">{{Lang::get('backend/dashboard.all_news')}}</a></li>
+                            <li class="<?php
+                            if ($menuselect == 'newadd') {
+                                echo 'current';
+                            }
+                            ?>"><a href="{{URL::action('\BackEnd\NewsController@getAddNews')}}">{{Lang::get('backend/dashboard.add_news')}}</a></li>
+                            <li class="<?php
+                            if ($menuselect == 'newcate') {
+                                echo 'current';
+                            }
+                            ?>"><a href="{{URL::action('\BackEnd\CateNewsController@getCateNewsView')}}">{{Lang::get('backend/dashboard.group_news')}}</a></li>
                         </ul>
                     </li>
-                    <li><a href="#productsub" class="elements">{{Lang::get('backend/dashboard.product')}}</a>
+                    <li class="<?php
+                    if ($menuselect == 'productview' || $menuselect == 'productadd' || $menuselect == 'productcate' || $menuselect == 'manuview') {
+                        echo 'current';
+                    }
+                    ?>"><a href="#productsub" class="elements">{{Lang::get('backend/dashboard.product')}}</a>
                         <span class="arrow"></span>
                         <ul id="productsub">
-                            <li><a href="{{URL::action('\BackEnd\ProductController@getProductView')}}" >{{Lang::get('backend/dashboard.all_products')}}</a></li>
-                            <li><a href="{{URL::action('\BackEnd\ProductController@getProductAdd')}}" >{{Lang::get('backend/dashboard.add_product')}}</a></li>
-                            <li><a href="{{URL::action('\BackEnd\CategoryProductController@getCateProductView')}}">{{Lang::get('backend/dashboard.group_product')}}</a></li>
-                            <li><a href="{{URL::action('\BackEnd\ManufacturerController@getManufactureView')}}">{{Lang::get('backend/dashboard.management_manufacturers')}}</a></li>
+                            <li class="<?php
+                            if ($menuselect == 'productview') {
+                                echo 'current';
+                            }
+                            ?>"><a href="{{URL::action('\BackEnd\ProductController@getProductView')}}" >{{Lang::get('backend/dashboard.all_products')}}</a></li>
+                            <li class="<?php
+                            if ($menuselect == 'productadd') {
+                                echo 'current';
+                            }
+                            ?>"><a href="{{URL::action('\BackEnd\ProductController@getProductAdd')}}" >{{Lang::get('backend/dashboard.add_product')}}</a></li>
+                            <li class="<?php
+                            if ($menuselect == 'productcate') {
+                                echo 'current';
+                            }
+                            ?>"><a href="{{URL::action('\BackEnd\CategoryProductController@getCateProductView')}}">{{Lang::get('backend/dashboard.group_product')}}</a></li>
+                            <li class="<?php
+                            if ($menuselect == 'manuview') {
+                                echo 'current';
+                            }
+                            ?>"><a href="{{URL::action('\BackEnd\ManufacturerController@getManufactureView')}}">{{Lang::get('backend/dashboard.management_manufacturers')}}</a></li>
                         </ul>
                     </li>
-                    <li><a href="{{URL::action('\BackEnd\OrderController@getViewAll')}}" class="widgets">{{Lang::get('backend/dashboard.order')}}</a>
+                    <li class="<?php
+                    if ($menuselect == 'orderview') {
+                        echo 'current';
+                    }
+                    ?>"><a href="{{URL::action('\BackEnd\OrderController@getViewAll')}}" class="widgets">{{Lang::get('backend/dashboard.order')}}</a>
                     </li>
-                    <li><a href="{{URL::action('\BackEnd\UserController@getUserView')}}" class="user">{{Lang::get('backend/dashboard.customer')}}</a>
+                    <li class="<?php
+                    if ($menuselect == 'userview') {
+                        echo 'current';
+                    }
+                    ?>"><a href="{{URL::action('\BackEnd\UserController@getUserView')}}" class="user">{{Lang::get('backend/dashboard.customer')}}</a>
                     </li>
-                    <li><a href="#supportSub" class="support">{{Lang::get('backend/dashboard.management_supporter')}}</a>
+                    <li class="<?php
+                    if ($menuselect == 'supporterview' || $menuselect == 'groupsupporterview') {
+                        echo 'current';
+                    }
+                    ?>"><a href="#supportSub" class="support">{{Lang::get('backend/dashboard.management_supporter')}}</a>
                         <span class="arrow"></span>
                         <ul id="supportSub">
-                            <li><a href="{{URL::action('\BackEnd\SupporterController@getSupporterView')}}">{{Lang::get('backend/dashboard.management_supporter')}}</a>
+                            <li class="<?php
+                            if ($menuselect == 'supporterview') {
+                                echo 'current';
+                            }
+                            ?>"><a href="{{URL::action('\BackEnd\SupporterController@getSupporterView')}}">{{Lang::get('backend/dashboard.management_supporter')}}</a>
                             </li>
-                            <li><a href="{{URL::action('\BackEnd\SupporterGroupController@getSupporterGroupView')}}">{{Lang::get('backend/dashboard.group_supporter')}}</a>
+                            <li class="<?php
+                            if ($menuselect == 'groupsupporterview') {
+                                echo 'current';
+                            }
+                            ?>"><a href="{{URL::action('\BackEnd\SupporterGroupController@getSupporterGroupView')}}">{{Lang::get('backend/dashboard.group_supporter')}}</a>
                             </li>
                         </ul>
                     </li>
-                    <li><a href="{{URL::action('\BackEnd\FeedbackController@getFeedBack')}}" class="buttons">{{Lang::get('backend/dashboard.feedback')}}</a> </li>
-                    <li><a href="#projectSub" class="calendar new">{{Lang::get('backend/dashboard.management_project')}}</a>
+                    <li class="<?php
+                    if ($menuselect == 'feedbackview') {
+                        echo 'current';
+                    }
+                    ?>"><a href="{{URL::action('\BackEnd\FeedbackController@getFeedBack')}}" class="buttons">{{Lang::get('backend/dashboard.feedback')}}</a> </li>
+                    <li class="<?php
+                    if ($menuselect == 'projectview' || $menuselect == 'projectadd') {
+                        echo 'current';
+                    }
+                    ?>"><a href="#projectSub" class="calendar new">{{Lang::get('backend/dashboard.management_project')}}</a>
                         <span class="arrow"></span>
                         <ul id="projectSub">
-                            <li><a href="{{URL::action('\BackEnd\ProjectController@getProjectView')}}">{{Lang::get('backend/dashboard.management_project')}}</a></li>
-                            <li><a href="{{URL::action('\BackEnd\ProjectController@getAddProject')}}">{{Lang::get('backend/dashboard.add_project')}}</a></li>
+                            <li class="<?php
+                            if ($menuselect == 'projectview') {
+                                echo 'current';
+                            }
+                            ?>"><a href="{{URL::action('\BackEnd\ProjectController@getProjectView')}}">{{Lang::get('backend/dashboard.management_project')}}</a></li>
+                            <li class="<?php
+                            if ($menuselect == 'projectadd') {
+                                echo 'current';
+                            }
+                            ?>"><a href="{{URL::action('\BackEnd\ProjectController@getAddProject')}}">{{Lang::get('backend/dashboard.add_project')}}</a></li>
                         </ul>
                     </li>
-                    <li><a href="#pageSub" class="buttons">{{Lang::get('backend/dashboard.management_page')}}</a>
+                    <li class="<?php
+                    if ($menuselect == 'pageview' || $menuselect == 'pageadd') {
+                        echo 'current';
+                    }
+                    ?>"><a href="#pageSub" class="buttons">{{Lang::get('backend/dashboard.management_page')}}</a>
                         <span class="arrow"></span>
                         <ul id="pageSub">
-                            <li><a href="{{URL::action('\BackEnd\PageController@getPageView')}}">{{Lang::get('backend/dashboard.management_page')}}</a></li>
-                            <li><a href="{{URL::action('\BackEnd\PageController@getAddPage')}}">{{Lang::get('backend/dashboard.add_page')}}</a></li>
+                            <li class="<?php
+                            if ($menuselect == 'pageview') {
+                                echo 'current';
+                            }
+                            ?>"><a href="{{URL::action('\BackEnd\PageController@getPageView')}}">{{Lang::get('backend/dashboard.management_page')}}</a></li>
+                            <li class="<?php
+                            if ($menuselect == 'pageadd') {
+                                echo 'current';
+                            }
+                            ?>"><a href="{{URL::action('\BackEnd\PageController@getAddPage')}}">{{Lang::get('backend/dashboard.add_page')}}</a></li>
                         </ul>
                     </li>
-                    <li><a href="{{URL::action('\BackEnd\MenusController@getMenus')}}" class="settings">{{Lang::get('backend/dashboard.management_menu')}}</a> </li>
+                    <li class="<?php
+                    if ($menuselect == 'menuview') {
+                        echo 'current';
+                    }
+                    ?>"><a href="{{URL::action('\BackEnd\MenusController@getMenus')}}" class="settings">{{Lang::get('backend/dashboard.management_menu')}}</a> </li>
 
-                    <li><a href="{{URL::action('\BackEnd\SettingController@getUpdateSetting')}}" class="error">{{Lang::get('backend/dashboard.setting')}}</a>
+                    <li class="<?php
+                    if ($menuselect == 'settingview') {
+                        echo 'current';
+                    }
+                    ?>"><a href="{{URL::action('\BackEnd\SettingController@getUpdateSetting')}}" class="error">{{Lang::get('backend/dashboard.setting')}}</a>
                     </li>
-                    <li><a href="#adminSub" class="addons">{{Lang::get('backend/dashboard.user')}}</a>
+                    <li class="<?php
+                    if ($menuselect == 'adminview') {
+                        echo 'current';
+                    }
+                    ?>"><a href="#adminSub" class="addons">{{Lang::get('backend/dashboard.user')}}</a>
                         <span class="arrow"></span>
                         <ul id="adminSub">
-                            <li><a href="{{URL::action('\BackEnd\AdminController@getAdminView')}}">{{Lang::get('backend/dashboard.management_user')}}</a></li>
+                            <li class="<?php
+                            if ($menuselect == 'adminview') {
+                                echo 'current';
+                            }
+                            ?>"><a href="{{URL::action('\BackEnd\AdminController@getAdminView')}}">{{Lang::get('backend/dashboard.management_user')}}</a></li>
                         </ul>
                     </li>
                 </ul>

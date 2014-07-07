@@ -49,7 +49,7 @@ class CategoryProductController extends \BaseController {
             foreach ($catlist as $value) {
                 $catlistrt = $catlistrt + array($value->id => $value->cateName);
             }
-            return View::make('backend.product.cateProductManage')->with('arrCateProduct', $data)->with('link', $links)->with('listcate', $catlistrt);
+            return View::make('backend.product.cateProductManage')->with('arrCateProduct', $data)->with('link', $links)->with('listcate', $catlistrt)->with('active_menu', 'productcate');
         }
     }
 
@@ -121,7 +121,7 @@ class CategoryProductController extends \BaseController {
                     $catlistrt = $catlistrt + array($value->id => $value->cateName);
                 }
             }
-            return View::make('backend.product.cateProductManage')->with('cateProductData', $dataedit)->with('arrCateProduct', $cateProductData)->with('link', $links)->with('listcate', $catlistrt);
+            return View::make('backend.product.cateProductManage')->with('cateProductData', $dataedit)->with('arrCateProduct', $cateProductData)->with('link', $links)->with('listcate', $catlistrt)->with('active_menu', 'productcate');
         }
     }
 

@@ -39,7 +39,7 @@ class ProductController extends \BaseController {
         foreach ($listmanu as $item) {
             $listmanuarray = $listmanuarray + array($item->id => $item->manufacturerName);
         }
-        return View::make('backend.product.addproduct')->with('listcate', $catlistrt)->with('listallcate', $allcatelist)->with('arraymanu', $listmanuarray);
+        return View::make('backend.product.addproduct')->with('listcate', $catlistrt)->with('listallcate', $allcatelist)->with('arraymanu', $listmanuarray)->with('active_menu', 'productadd');
     }
 
     public function postProductAdd() {
@@ -89,7 +89,7 @@ class ProductController extends \BaseController {
         $tblProduct = new TblProductModel();
         $product = $tblProduct->getProductById($id);
         $catlist = $tblProduct->getCatProductById($id);
-        return View::make('backend.product.addproduct')->with('productedit', $product)->with('listcate', $catlistrt)->with('listallcate', $allcatelist)->with('arraymanu', $listmanuarray)->with('catlistselect', $catlist);
+        return View::make('backend.product.addproduct')->with('productedit', $product)->with('listcate', $catlistrt)->with('listallcate', $allcatelist)->with('arraymanu', $listmanuarray)->with('catlistselect', $catlist)->with('active_menu', 'productadd');
     }
 
     public function postProductEdit() {
@@ -136,7 +136,7 @@ class ProductController extends \BaseController {
         } else {
             $tblCateProduct = new tblCategoryproductModel();
             $allcatelist = $tblCateProduct->allCateProductList();
-            return View::make('backend.product.viewproduct')->with('allcatelist', $allcatelist)->with('arrProduct', $arrProduct)->with('link', $arrProduct->links());
+            return View::make('backend.product.viewproduct')->with('allcatelist', $allcatelist)->with('arrProduct', $arrProduct)->with('link', $arrProduct->links())->with('active_menu', 'productview');
         }
     }
 
@@ -154,13 +154,13 @@ class ProductController extends \BaseController {
 
     public function getProductFillterView($one = '', $two = '') {
         $tblProduct = new TblProductModel();
-        $arrProduct = $tblProduct->getAllProductNewByCatId($one, 1, $two);
+        $arrProduct = $tblProduct->getAllProductNewByCatId($one, 10, $two);
         if (\Request::ajax()) {
             return View::make('backend.product.productajax')->with('arrProduct', $arrProduct)->with('link', $arrProduct->links());
         } else {
             $tblCateProduct = new tblCategoryproductModel();
             $allcatelist = $tblCateProduct->allCateProductList();
-            return View::make('backend.product.viewproduct')->with('allcatelist', $allcatelist)->with('arrProduct', $arrProduct)->with('link', $arrProduct->links());
+            return View::make('backend.product.viewproduct')->with('allcatelist', $allcatelist)->with('arrProduct', $arrProduct)->with('link', $arrProduct->links())->with('active_menu', 'productview');
         }
     }
 
@@ -180,7 +180,7 @@ class ProductController extends \BaseController {
         } else {
             $tblCateProduct = new tblCategoryproductModel();
             $allcatelist = $tblCateProduct->allCateProductList();
-            return View::make('backend.product.viewproduct')->with('allcatelist', $allcatelist)->with('arrProduct', $arrProduct)->with('link', $arrProduct->links());
+            return View::make('backend.product.viewproduct')->with('allcatelist', $allcatelist)->with('arrProduct', $arrProduct)->with('link', $arrProduct->links())->with('active_menu', 'productview');
         }
     }
 

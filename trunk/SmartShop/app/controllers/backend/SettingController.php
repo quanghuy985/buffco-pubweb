@@ -56,7 +56,7 @@ class SettingController extends \BaseController {
         $arrSetting = unserialize($arrSetting->settingValue);
         $tblMenu = new \BackEnd\Menu();
         $arrGroupMenu = $tblMenu->get_menu_groups();
-        return \View::make('backend.setting.setting')->with('arrSetting', $arrSetting)->with('arrgmenu', $arrGroupMenu);
+        return \View::make('backend.setting.setting')->with('arrSetting', $arrSetting)->with('arrgmenu', $arrGroupMenu)->with('active_menu', 'settingview');
     }
 
 }

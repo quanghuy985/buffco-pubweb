@@ -90,7 +90,7 @@ class UserController extends \BaseController {
             $tblUserModel = new tblUserModel();
             $check = $tblUserModel->getAllUsers(10, 'id', $status);
             $link = $check->links();
-            return View::make('backend.user.UserManage')->with('arrUser', $check)->with('link', $link);
+            return View::make('backend.user.UserManage')->with('arrUser', $check)->with('link', $link)->with('active_menu', 'userview');
         }
     }
 
@@ -107,7 +107,7 @@ class UserController extends \BaseController {
             $tblUserModel = new tblUserModel();
             $check = $tblUserModel->getAllUsers(10, 'id', '', $keyword);
             $link = $check->links();
-            return View::make('backend.user.UserManage')->with('arrUser', $check)->with('link', $link);
+            return View::make('backend.user.UserManage')->with('arrUser', $check)->with('link', $link)->with('active_menu', 'userview');
         }
     }
 
@@ -121,7 +121,7 @@ class UserController extends \BaseController {
             $tblUserModel = new tblUserModel();
             $check = $tblUserModel->getAllUsers(10, 'id');
             $link = $check->links();
-            return View::make('backend.user.UserManage')->with('arrUser', $check)->with('link', $link);
+            return View::make('backend.user.UserManage')->with('arrUser', $check)->with('link', $link)->with('active_menu', 'userview');
         }
     }
 
@@ -138,7 +138,7 @@ class UserController extends \BaseController {
             $order = $tblOrder->getAllOrderByID($id, 10);
 
             $orderlink = $order->links();
-            return View::make('backend.user.UserDetail')->with('data', $data)->with('arrorder', $order)->with('orderlink', $orderlink);
+            return View::make('backend.user.UserDetail')->with('data', $data)->with('arrorder', $order)->with('orderlink', $orderlink)->with('active_menu', 'userview');
         }
     }
 
@@ -160,7 +160,7 @@ class UserController extends \BaseController {
             $check = $tblUserModel->getAllUsers(10, 'id', '');
             $link = $check->links();
             $userdata = $tblUserModel->getUserByEmail($id, 0);
-            return View::make('backend.user.UserManage')->with('arrayUsers', $userdata)->with('arrUser', $check)->with('link', $link);
+            return View::make('backend.user.UserManage')->with('arrayUsers', $userdata)->with('arrUser', $check)->with('link', $link)->with('active_menu', 'userview');
         }
     }
 
@@ -254,7 +254,7 @@ class UserController extends \BaseController {
             $tblUserModel = new tblUserModel();
             $check = $tblUserModel->getAllUsers(10, 'id', '', \ Input::get('keywordsearch'));
             $link = $check->links();
-            return View::make('backend.user.UserManage')->with('arrUser', $check)->with('link', $link);
+            return View::make('backend.user.UserManage')->with('arrUser', $check)->with('link', $link)->with('active_menu', 'userview');
         }
     }
 
@@ -275,7 +275,7 @@ class UserController extends \BaseController {
             $tblUserModel = new tblUserModel();
             $check = $tblUserModel->getAllUsers(10, 'id', \ Input::get('orderby'));
             $link = $check->links();
-            return View::make('backend.user.UserManage')->with('arrUser', $check)->with('link', $link);
+            return View::make('backend.user.UserManage')->with('arrUser', $check)->with('link', $link)->with('active_menu', 'userview');
         }
     }
 

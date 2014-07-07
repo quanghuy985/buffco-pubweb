@@ -54,7 +54,7 @@ class ProjectController extends \BaseController {
         } else {
             $objProject = new tblProjectModel();
             $check = $objProject->selectAllProject(10, 'id');
-            return View::make('backend.project.ProjectManage')->with('arrayProject', $check)->with('link', $check->links());
+            return View::make('backend.project.ProjectManage')->with('arrayProject', $check)->with('link', $check->links())->with('active_menu', 'projectview');
         }
     }
 
@@ -64,7 +64,7 @@ class ProjectController extends \BaseController {
         if (empty($data)) {
             return Response::view('backend.404Page', array(), 404);
         }
-        return View::make('backend.project.Projectadd')->with('dataProject', $data);
+        return View::make('backend.project.Projectadd')->with('dataProject', $data)->with('active_menu', 'projectview');
     }
 
     public function postUpdateProject($pid) {
@@ -101,7 +101,7 @@ class ProjectController extends \BaseController {
     }
 
     public function getAddProject() {
-        return View::make('backend.project.Projectadd');
+        return View::make('backend.project.Projectadd')->with('active_menu', 'projectadd');
     }
 
     public function postAddProject() {
@@ -157,7 +157,7 @@ class ProjectController extends \BaseController {
         if (\Request::ajax()) {
             return View::make('backend.project.Projectajax')->with('arrayProject', $check)->with('link', $check->links());
         } else {
-            return View::make('backend.project.ProjectManage')->with('arrayProject', $check)->with('link', $check->links());
+            return View::make('backend.project.ProjectManage')->with('arrayProject', $check)->with('link', $check->links())->with('active_menu', 'projectview');
         }
     }
 
@@ -179,7 +179,7 @@ class ProjectController extends \BaseController {
         if (\Request::ajax()) {
             return View::make('backend.project.Projectajax')->with('arrayProject', $check)->with('link', $check->links());
         } else {
-            return View::make('backend.project.ProjectManage')->with('arrayProject', $check)->with('link', $check->links());
+            return View::make('backend.project.ProjectManage')->with('arrayProject', $check)->with('link', $check->links())->with('active_menu', 'projectview');
         }
     }
 

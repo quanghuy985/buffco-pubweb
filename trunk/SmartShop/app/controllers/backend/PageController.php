@@ -17,10 +17,12 @@ use BackEnd,
     Validator;
 
 class PageController extends \BaseController {
-public function __construct() {
+
+    public function __construct() {
         parent::__construct();
         $this->beforeFilter('checkrole');
     }
+
     public function getPageView() {
         if (\Request::ajax()) {
             $tblPageModel = new tblPageModel();
@@ -31,7 +33,7 @@ public function __construct() {
             $tblPageModel = new tblPageModel();
             $check = $tblPageModel->selectAllPage(10, 'id');
             $link = $check->links();
-            return View::make('backend.page.PageManage')->with('arrPage', $check)->with('link', $link);
+            return View::make('backend.page.PageManage')->with('arrPage', $check)->with('link', $link)->with('active_menu', 'pageview');
         }
     }
 
@@ -41,7 +43,7 @@ public function __construct() {
         if (empty($data)) {
             return Response::view('backend.404Page', array(), 404);
         }
-        return View::make('backend.page.Pageadd')->with('arrayPage', $data);
+        return View::make('backend.page.Pageadd')->with('arrayPage', $data)->with('active_menu', 'pageview');
     }
 
     public function postUpdatePage() {
@@ -71,7 +73,7 @@ public function __construct() {
     }
 
     public function getAddPage() {
-        return View::make('backend.page.Pageadd');
+        return View::make('backend.page.Pageadd')->with('active_menu', 'pageadd');
     }
 
     public function postAddPage() {
@@ -121,7 +123,7 @@ public function __construct() {
         if (\Request::ajax()) {
             return View::make('backend.page.Pageajax')->with('arrPage', $check)->with('link', $link);
         } else {
-            return View::make('backend.page.PageManage')->with('arrPage', $check)->with('link', $link);
+            return View::make('backend.page.PageManage')->with('arrPage', $check)->with('link', $link)->with('active_menu', 'pageview');
         }
     }
 
@@ -143,7 +145,7 @@ public function __construct() {
         if (\Request::ajax()) {
             return View::make('backend.page.Pageajax')->with('arrPage', $check)->with('link', $link);
         } else {
-            return View::make('backend.page.PageManage')->with('arrPage', $check)->with('link', $link);
+            return View::make('backend.page.PageManage')->with('arrPage', $check)->with('link', $link)->with('active_menu', 'pageview');
         }
     }
 

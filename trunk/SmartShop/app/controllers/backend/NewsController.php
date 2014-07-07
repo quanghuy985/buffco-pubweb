@@ -61,16 +61,16 @@ class NewsController extends \BaseController {
     public function getNewsFillterView($one = '', $two = '') {
         if (\Request::ajax()) {
             $tblNewModel = new tblNewsModel();
-            $check = $tblNewModel->getAllFillterByCatStatus($one, $two, 1);
+            $check = $tblNewModel->getAllFillterByCatStatus($one, $two, 10);
             $link = $check->links();
             return View::make('backend.news.newsAjax')->with('arrayNews', $check)->with('link', $link);
         } else {
             $tblNewModel = new tblNewsModel();
             $tableCateModel = new tblCategoryNewsModel();
             $arrCate = $tableCateModel->allCateNew();
-            $check = $tblNewModel->getAllFillterByCatStatus($one, $two, 1);
+            $check = $tblNewModel->getAllFillterByCatStatus($one, $two, 10);
             $link = $check->links();
-            return View::make('backend.news.newsManage')->with('cateselectfillter', $one)->with('statusselectfillter', $two)->with('arrayNews', $check)->with('link', $link)->with('arrayCate', $arrCate);
+            return View::make('backend.news.newsManage')->with('cateselectfillter', $one)->with('statusselectfillter', $two)->with('arrayNews', $check)->with('link', $link)->with('arrayCate', $arrCate)->with('active_menu', 'newview');
         }
     }
 
@@ -88,16 +88,16 @@ class NewsController extends \BaseController {
         }
         if (\Request::ajax()) {
             $tblNewModel = new tblNewsModel();
-            $check = $tblNewModel->searchNews($one, 1);
+            $check = $tblNewModel->searchNews($one, 10);
             $link = $check->links();
             return View::make('backend.news.newsAjax')->with('arrayNews', $check)->with('link', $link);
         } else {
             $tblNewModel = new tblNewsModel();
             $tableCateModel = new tblCategoryNewsModel();
             $arrCate = $tableCateModel->allCateNew();
-            $check = $tblNewModel->searchNews($one, 1);
+            $check = $tblNewModel->searchNews($one, 10);
             $link = $check->links();
-            return View::make('backend.news.newsManage')->with('arrayNews', $check)->with('link', $link)->with('arrayCate', $arrCate);
+            return View::make('backend.news.newsManage')->with('arrayNews', $check)->with('link', $link)->with('arrayCate', $arrCate)->with('active_menu', 'newview');
         }
     }
 
@@ -113,14 +113,14 @@ class NewsController extends \BaseController {
             $arrCate = $tableCateModel->allCateNew();
             $check = $tblNewsModel->allNews(10, 'id');
             $link = $check->links();
-            return View::make('backend.news.newsManage')->with('arrayNews', $check)->with('link', $link)->with('arrayCate', $arrCate);
+            return View::make('backend.news.newsManage')->with('arrayNews', $check)->with('link', $link)->with('arrayCate', $arrCate)->with('active_menu', 'newview');
         }
     }
 
     public function getAddNews() {
         $tableCateModel = new tblCategoryNewsModel();
         $arrCate = $tableCateModel->allCateNew();
-        return View::make('backend.news.newsAdd')->with('arrayCate', $arrCate);
+        return View::make('backend.news.newsAdd')->with('arrayCate', $arrCate)->with('active_menu', 'newadd');
     }
 
     public function postAddNews() {
@@ -155,7 +155,7 @@ class NewsController extends \BaseController {
         $tableCateModel = new tblCategoryNewsModel();
         $arrCate = $tableCateModel->allCateNew();
         $catselect = $tableCateModel->getCatByNews($id);
-        return View::make('backend.news.newsAdd')->with('arrayCate', $arrCate)->with('objNews', $objNews)->with('catlistselect', $catselect);
+        return View::make('backend.news.newsAdd')->with('arrayCate', $arrCate)->with('objNews', $objNews)->with('catlistselect', $catselect)->with('active_menu', 'newview');
     }
 
     public function postUpdateNews() {

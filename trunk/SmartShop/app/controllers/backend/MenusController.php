@@ -29,7 +29,7 @@ public function __construct() {
         $alltnews = $catnews->allCateNew();
         $pages = new tblPageModel();
         $allpage = $pages->getAllPage();
-        return \View::make('backend.menu.menunew')->with('catprolist', $allcatpeoduct)->with('catnewlist', $alltnews)->with('pageslist', $allpage)->with('menu', $menus->index($id))->with('jsmenu', 'haha');
+        return \View::make('backend.menu.menunew')->with('catprolist', $allcatpeoduct)->with('catnewlist', $alltnews)->with('pageslist', $allpage)->with('menu', $menus->index($id))->with('jsmenu', 'haha')->with('active_menu', 'menuview');
     }
 
     public function postUpdateMenu() {
@@ -56,7 +56,7 @@ public function __construct() {
 
     public function getEditMenu() {
         $menus = new \BackEnd\Menu();
-        return \View::make('backend.menu.menu_edit')->with('menu_edit', $menus->edit(\Input::get('id')));
+        return \View::make('backend.menu.menu_edit')->with('menu_edit', $menus->edit(\Input::get('id')))->with('active_menu', 'menuview');
     }
 
     public function postEditMenuEdit() {

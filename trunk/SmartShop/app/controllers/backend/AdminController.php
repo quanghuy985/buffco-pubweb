@@ -34,7 +34,7 @@ class AdminController extends \BaseController {
     public function getAdminAddForm() {
         $tblRolesModel = new tblRolesModel();
         $arrRoles = $tblRolesModel->allRolesList();
-        return View::make('backend.admin.adminAdd')->with('arrRoles', $arrRoles);
+        return View::make('backend.admin.adminAdd')->with('arrRoles', $arrRoles)->with('active_menu', 'adminview');
     }
 
     public function postAddAdmin() {
@@ -65,16 +65,16 @@ class AdminController extends \BaseController {
             $tblAdminModel = new \BackEnd\tblUserModel();
             $arrAdmin = $tblAdminModel->getAllAdmin(10);
             $link = $arrAdmin->links();
-            return View::make('backend.admin.adminManage')->with('arrayAdmin', $arrAdmin)->with('link', $link);
+            return View::make('backend.admin.adminManage')->with('arrayAdmin', $arrAdmin)->with('link', $link)->with('active_menu', 'adminview');
         }
     }
 
-    public function getAdminEdit($id='') {
+    public function getAdminEdit($id = '') {
         $tblAdminModel = new \BackEnd\tblUserModel();
         $objAdmin = $tblAdminModel->getUserByEmail($id, 1);
         $tblRolesModel = new tblRolesModel();
         $arrRoles = $tblRolesModel->allRolesList();
-        return View::make('backend.admin.adminAdd')->with('AdminData', $objAdmin)->with('arrRoles', $arrRoles);
+        return View::make('backend.admin.adminAdd')->with('AdminData', $objAdmin)->with('arrRoles', $arrRoles)->with('active_menu', 'adminview');
     }
 
     public function postDeleteAdmin() {
@@ -137,7 +137,7 @@ class AdminController extends \BaseController {
         if (\Request::ajax()) {
             return View::make('backend.admin.adminAjax')->with('arrayAdmin', $arrAdmin)->with('link', $link);
         } else {
-            return View::make('backend.admin.adminManage')->with('arrayAdmin', $arrAdmin)->with('link', $link);
+            return View::make('backend.admin.adminManage')->with('arrayAdmin', $arrAdmin)->with('link', $link)->with('active_menu', 'adminview');
         }
     }
 
@@ -158,14 +158,14 @@ class AdminController extends \BaseController {
         if (\Request::ajax()) {
             return View::make('backend.admin.adminAjax')->with('arrayAdmin', $arrAdmin)->with('link', $link);
         } else {
-            return View::make('backend.admin.adminManage')->with('arrayAdmin', $arrAdmin)->with('link', $link);
+            return View::make('backend.admin.adminManage')->with('arrayAdmin', $arrAdmin)->with('link', $link)->with('active_menu', 'adminview');
         }
     }
 
-    public function getAdminDetail($id='') {
+    public function getAdminDetail($id = '') {
         $tblAdminModel = new \BackEnd\tblUserModel();
         $data = $tblAdminModel->getUserByEmail($id, 1);
-        return View::make('backend.user.UserDetail')->with('data', $data);
+        return View::make('backend.user.UserDetail')->with('data', $data)->with('active_menu', 'adminview');
     }
 
 // Phiên bản trước khi sửa : -------------------------->

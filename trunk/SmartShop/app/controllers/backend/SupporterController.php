@@ -35,7 +35,7 @@ class SupporterController extends \BaseController {
             $arrSupporter = $tblSupporterModel->getAllSupporter(10);
             $arrSupporterGroup = $tblSupporterGroupModel->getAllSupportGroup(100);
             $link = $arrSupporter->links();
-            return View::make('backend.supporter.supporterManage')->with('arrSupporter', $arrSupporter)->with('link', $link)->with('arrSupporterGroup', $arrSupporterGroup);
+            return View::make('backend.supporter.supporterManage')->with('arrSupporter', $arrSupporter)->with('link', $link)->with('arrSupporterGroup', $arrSupporterGroup)->with('active_menu', 'supporterview');
         }
     }
 
@@ -52,7 +52,7 @@ class SupporterController extends \BaseController {
             $tblSupporterGroupModel = new tblSupporterGroupModel();
             $arrSupporterGroup = $tblSupporterGroupModel->getAllSupportGroup(100);
             $dataedit = $tblSupporter->getSupportByID($id);
-            return View::make('backend.supporter.supporterManage')->with('supportData', $dataedit)->with('arrSupporter', $data)->with('link', $link)->with('arrSupporterGroup', $arrSupporterGroup);
+            return View::make('backend.supporter.supporterManage')->with('supportData', $dataedit)->with('arrSupporter', $data)->with('link', $link)->with('arrSupporterGroup', $arrSupporterGroup)->with('active_menu', 'supporterview');
         }
     }
 

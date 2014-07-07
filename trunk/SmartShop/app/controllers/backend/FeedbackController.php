@@ -18,10 +18,12 @@ use BackEnd,
     Redirect;
 
 class FeedbackController extends \BaseController {
-public function __construct() {
+
+    public function __construct() {
         parent::__construct();
         $this->beforeFilter('checkrole');
     }
+
     public function getFeedBack() {
         $tblFeedbackModel = new tblFeedbackModel();
         $arrFeedback = $tblFeedbackModel->allFeedback(1);
@@ -30,7 +32,7 @@ public function __construct() {
             return View::make('backend.feedback.AjaxFeedbackManage')->with('arrayFeedback', $arrFeedback)->with('links', $link);
         } else {
 
-            return View::make('backend.feedback.feedbackManage')->with('arrayFeedback', $arrFeedback)->with('links', $link);
+            return View::make('backend.feedback.feedbackManage')->with('arrayFeedback', $arrFeedback)->with('links', $link)->with('active_menu', 'feedbackview');
         }
     }
 
@@ -52,7 +54,7 @@ public function __construct() {
         if (\Request::ajax()) {
             return View::make('backend.feedback.AjaxFeedbackManage')->with('arrayFeedback', $arrFeedback)->with('links', $link);
         } else {
-            return View::make('backend.feedback.feedbackManage')->with('arrayFeedback', $arrFeedback)->with('links', $link);
+            return View::make('backend.feedback.feedbackManage')->with('arrayFeedback', $arrFeedback)->with('links', $link)->with('active_menu', 'feedbackview');
         }
     }
 
@@ -84,7 +86,7 @@ public function __construct() {
             return View::make('backend.feedback.AjaxFeedbackManage')->with('arrayFeedback', $arrFeedback)->with('links', $link);
         } else {
 
-            return View::make('backend.feedback.feedbackManage')->with('arrayFeedback', $arrFeedback)->with('links', $link);
+            return View::make('backend.feedback.feedbackManage')->with('arrayFeedback', $arrFeedback)->with('links', $link)->with('active_menu', 'feedbackview');
         }
     }
 
@@ -94,7 +96,7 @@ public function __construct() {
         if (empty($feedbackData)) {
             return Response::view('backend.404Page', array(), 404);
         }
-        return View::make('backend.feedback.repFeedback')->with('feedbackdata', $feedbackData[0]);
+        return View::make('backend.feedback.repFeedback')->with('feedbackdata', $feedbackData[0])->with('active_menu', 'feedbackview');
     }
 
     public function postTraLoi() {
