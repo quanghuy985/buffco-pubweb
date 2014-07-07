@@ -12,17 +12,21 @@
 <?php
 if (isset($dataProject)) {
     $tag = explode(',', $dataProject->img);
+    $i = 1;
     foreach ($tag as $item) {
+        $urlimg = Timthumb::link($item, 100, 100, 0);
         ?>
-                var urlImg = '<span style="padding-top:10px" id="image-{{$item}}">' +
-                        '<img src="{{Asset('pubweb.vn / 100 / 100 / 0')}}/{{$item}}" width="100" height="100"/>' +
+                var urlImg = '<span style="padding-top:10px" id="image-{{$i}}">' +
+                        '<img src="<?php echo Asset($urlimg); ?>" width="100" height="100"/>' +
                         '<a href="javascript:void(0);" ' +
-                        'onclick="xoaanhthum(\'image-{{$item}}\');" class="delete" title="{{Lang::get("button.delete")}}">x</a></span>';
-                var urlImgno = '<span style="padding-top:10px" id="n-image-{{$item}}">' +
-                        '<img src="{{$item}}" width="100" height="100"/></span>';
+                        'onclick="xoaanhthum(\'image-{{$i}}\');" class="delete" title="{{Lang::get("button.delete")}}">x</a></span>';
+                var urlImgno = '<span style="padding-top:10px" id="n-image-{{$i}}">' +
+                        '<a href="{{$item}}"></a></span>';
                 document.getElementById('thumbnails').innerHTML += urlImg;
                 document.getElementById('noThumb').innerHTML += urlImgno;
-    <?php }
+        <?php
+        $i++;
+    }
     ?>
             returnurlimg();
 <?php }
@@ -57,15 +61,16 @@ if (isset($dataProject)) {
         // Launch CKFinder
         finder.popup();
     }
-
+    var i = 0;
 // This is a sample function which is called when a file is selected in CKFinder.
     function SetFileField(fileUrl, data)
     {
-        var sFileName = this.getSelectedFile().name;
+        var sFileName = this.getSelectedFile().name + i;
         var urlImg = '<span id="image-' + sFileName + '"><img src="<?php echo Asset('pubweb.vn/100/100/0') ?>/' + fileUrl + '" width="100" height="100"/><a href="javascript:void(0); " onclick="xoaanhthum(\'image-' + sFileName + '\');" class="delete" title="Delete image">x</a></span>';
         document.getElementById('thumbnails').innerHTML += urlImg;
-        var urlImgNoThumb = '<span id="n-image-' + sFileName + '"><img src="' + fileUrl + '" width="100" height="100"/></span>';
+        var urlImgNoThumb = '<span id="n-image-' + sFileName + '"><a href="' + fileUrl + '"></a></span>';
         document.getElementById('noThumb').innerHTML += urlImgNoThumb;
+        i++;
         returnurlimg();
         //   document.getElementById(data["selectActionData"]).value = fileUrl;
     }
@@ -77,8 +82,8 @@ if (isset($dataProject)) {
     }
 
     function returnurlimg() {
-        var images = jQuery("#noThumb").find("img").map(function() {
-            return this.src;
+        var images = jQuery("#noThumb").find("a").map(function() {
+            return this.href;
         }).get();
         jQuery("#xImagePath").val(images);
     }

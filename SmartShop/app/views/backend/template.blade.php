@@ -71,9 +71,19 @@
 
         <div class="bodywrapper">
             @include('backend.header')
+            <?php
+            $menuselect = '';
+            if (isset($active_menu)) {
+                $menuselect = $active_menu;
+            }
+            ?>
             <div class="vernav2 iconmenu">
                 <ul>
-                    <li><a href="{{action('\BackEnd\FilemanagerController@getFileManager')}}" class="gallery">{{Lang::get('backend/dashboard.management_file')}}</a>
+                    <li class="<?php
+                    if ($menuselect == 'filemanager') {
+                        echo 'current';
+                    }
+                    ?>"><a href="{{action('\BackEnd\FilemanagerController@getFileManager')}}" class="gallery">{{Lang::get('backend/dashboard.management_file')}}</a>
                     </li>
                     <li><a href="#newsSub" class="editor">{{Lang::get('backend/dashboard.news')}}</a>
                         <span class="arrow"></span>
@@ -121,7 +131,7 @@
                         </ul>
                     </li>
                     <li><a href="{{URL::action('\BackEnd\MenusController@getMenus')}}" class="settings">{{Lang::get('backend/dashboard.management_menu')}}</a> </li>
-                    
+
                     <li><a href="{{URL::action('\BackEnd\SettingController@getUpdateSetting')}}" class="error">{{Lang::get('backend/dashboard.setting')}}</a>
                     </li>
                     <li><a href="#adminSub" class="addons">{{Lang::get('backend/dashboard.user')}}</a>

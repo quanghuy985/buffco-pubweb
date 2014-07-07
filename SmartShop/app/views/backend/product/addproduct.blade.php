@@ -262,18 +262,24 @@
 </style>
 <script>
     //lọc dấu tạo slug
-    var listurl = jQuery("#images").val();
-    listurl = listurl.split(",");
-    var i = 0;
-    if (listurl != '') {
-        for (i = 0; i < listurl.length; i++) {
-            var urlImg = '<li id="image-' + listurl[i] + i + '"><a href="javascript:void(0);"><img src="<?php echo Asset('pubweb.vn/100/60/0'); ?>/' + listurl[i] + '"/> </a> <a href="javascript:void(0);" onclick="xoaanhthum1(\'image-' + listurl[i] + i + '\');" class="delete" title="Delete image"><img alt="Xóa" src="http://localhost/SmartShop/backend/templates/images/cross.png"></a></li>';
-            var urlImgNo = '<li id="no-image-' + listurl[i] + i + '"><img src="' + listurl[i] + '"/></li>';
+<?php
+if (isset($productedit)) {
+    $itemimage = explode(",", $productedit->images);
+    $i = 0;
+    foreach ($itemimage as $value) {
+        ?>
+        <?php $url = Timthumb::link($value, 100, 60, 0); ?>
+            var urlImg = '<li id="image-<?php echo $value . $i; ?>"><a href="javascript:void(0);"><img src="<?php echo Asset($url); ?>"/> </a> <a href="javascript:void(0);" onclick="xoaanhthum1(\'image-<?php echo $value . $i; ?>\');" class="delete" title="Delete image"><img alt="Xóa" src="<?php echo Asset(''); ?>backend/templates/images/cross.png"></a></li>';
+            var urlImgNo = '<li id="no-image-<?php echo $value . $i; ?>"><a href="<?php echo $value; ?> "></a></li>';
             document.getElementById('morephotolist').innerHTML += urlImg;
             document.getElementById('morephotolist-no').innerHTML += urlImgNo;
             returnurlimg1();
-        }
+        <?php
+        $i++;
     }
+}
+?>
+
     function locdau(id) {
         var str = (document.getElementById(id).value); // lấy chuỗi dữ liệu nhập vào
         str = str.toLowerCase(); // chuyển chuỗi sang chữ thường để xử lý
@@ -336,7 +342,7 @@
     {
         var sFileName = this.getSelectedFile().name + i;
         var urlImg = '<li id="image-' + sFileName + '"><a href="javascript:void(0);"><img src="<?php echo Asset('pubweb.vn/100/60/0'); ?>/' + fileUrl + '"/> </a> <a href="javascript:void(0);" onclick="xoaanhthum1(\'image-' + sFileName + '\');" class="delete" title="Delete image"><img alt="Xóa" src="http://localhost/SmartShop/backend/templates/images/cross.png"></a></li>';
-        var urlImgNo = '<li id="no-image-' + sFileName + '"><img src="' + fileUrl + '"/></li>';
+        var urlImgNo = '<li id="no-image-' + sFileName + '"><a href="' + fileUrl + '"></a></li>';
         document.getElementById('morephotolist').innerHTML += urlImg;
         document.getElementById('morephotolist-no').innerHTML += urlImgNo;
         i++;
@@ -348,8 +354,8 @@
         returnurlimg1()
     }
     function returnurlimg1() {
-        var images = jQuery("#morephotolist-no").find("img").map(function() {
-            return this.src;
+        var images = jQuery("#morephotolist-no").find("a").map(function() {
+            return this.href;
         }).get();
         jQuery("#images").val(images);
     }
