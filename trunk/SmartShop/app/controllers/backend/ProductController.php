@@ -197,4 +197,12 @@ class ProductController extends \BaseController {
         return \Redirect::action('\BackEnd\ProductController@getProductView');
     }
 
+    public function getColorView() {
+        return View::make('backend.product.colorManage');
+    }
+
+    public function getSizeView() {
+        return View::make('backend.product.sizeManage');
+    }
+
 }

@@ -977,9 +977,9 @@ form label.error {
 
 .stdform p, .stdform div.par { margin: 20px 0; }
 .stdform div.par { overflow: hidden; }
-.stdform span.field, .stdform div.field { margin-left: 23%; display: block; position: relative; }
+.stdform span.field, .stdform div.field { margin-left: 17%; display: block; position: relative; }
 .stdform .formwrapper { display: block; padding-top: 5px; margin-left: 220px; line-height: 25px; }
-.stdform label { float: left; width: 20%; text-align: right; padding: 5px 20px 0 0; }
+.stdform label { float: left; width: 15%; text-align: right; padding: 5px 20px 0 0; }
 
 .stdform button.cancel { background: #eee; color: #666; border: 1px solid #ddd; }
 .stdform button.cancel:hover { background: #ddd; border: 1px solid #ccc; }
@@ -1243,7 +1243,7 @@ form label.error {
 }
 .colorselector span { 
     display: block; height: 28px; width: 28px; position: absolute; left: 0; top: 0; cursor: pointer;
-    background: #000 url(../../images/colorpicker/select2.html) no-repeat -4px -4px; 
+    background: #000 url(../images/colorpicker/select2.png) no-repeat -4px -4px; 
 }
 
 
@@ -1959,7 +1959,9 @@ a.btn_orderdetail{
     background: none repeat scroll 0 0 #fb9337;
 }
 .clear{clear: both;}
-.bodywrapper{min-width:1345px}
+.bodywrapper{
+    min-width:1345px;
+    padding-bottom: 50px;}
 .uppercase{text-transform: uppercase;}
 td.text-center, td.text-center, .stdtable thead th.text-center{text-align:center}
 
