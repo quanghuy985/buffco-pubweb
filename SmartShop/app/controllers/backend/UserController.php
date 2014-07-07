@@ -17,6 +17,7 @@ class UserController extends \BaseController {
         parent::__construct();
         $this->beforeFilter('checkrole');
     }
+
     public function postDeleteUsers() {
         $id = \Input::get('id');
         $tblUserModel = new tblUserModel();
@@ -124,17 +125,17 @@ class UserController extends \BaseController {
         }
     }
 
-    public function getUserDetail($email = '') {
+    public function getUserDetail($id = '') {
         $tblOrder = new tblOrderModel();
         if (\Request::ajax()) {
-            $order = $tblOrder->getAllOrderByEmail($email, 10);
+            $order = $tblOrder->getAllOrderByID($id, 10);
             $orderlink = $order->links();
             return View::make('backend.order.historyorder')->with('arrorder', $order)->with('orderlink', $orderlink);
         } else {
             $tblUserModel = new tblUserModel();
-            $data = $tblUserModel->getUserByEmail($email, 0);
+            $data = $tblUserModel->getUserByEmail($id, 0);
 
-            $order = $tblOrder->getAllOrderByEmail($email, 10);
+            $order = $tblOrder->getAllOrderByID($id, 10);
 
             $orderlink = $order->links();
             return View::make('backend.user.UserDetail')->with('data', $data)->with('arrorder', $order)->with('orderlink', $orderlink);
@@ -148,7 +149,7 @@ class UserController extends \BaseController {
         return View::make('backend.user.UserManage')->with('arrUser', $check)->with('link', $link);
     }
 
-    public function getUserEdit() {
+    public function getUserEdit($id = '') {
         if (\Request::ajax()) {
             $tblUserModel = new tblUserModel();
             $check = $tblUserModel->getAllUsers(10, 'id', \ Input::get('orderby'));
@@ -158,7 +159,7 @@ class UserController extends \BaseController {
             $tblUserModel = new tblUserModel();
             $check = $tblUserModel->getAllUsers(10, 'id', '');
             $link = $check->links();
-            $userdata = $tblUserModel->getUserByEmail(\Input::get('id'), 0);
+            $userdata = $tblUserModel->getUserByEmail($id, 0);
             return View::make('backend.user.UserManage')->with('arrayUsers', $userdata)->with('arrUser', $check)->with('link', $link);
         }
     }

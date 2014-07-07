@@ -69,7 +69,7 @@ class AdminController extends \BaseController {
         }
     }
 
-    public function getAdminEdit($id) {
+    public function getAdminEdit($id='') {
         $tblAdminModel = new \BackEnd\tblUserModel();
         $objAdmin = $tblAdminModel->getUserByEmail($id, 1);
         $tblRolesModel = new tblRolesModel();
@@ -162,10 +162,9 @@ class AdminController extends \BaseController {
         }
     }
 
-    public function getAdminDetail() {
+    public function getAdminDetail($id='') {
         $tblAdminModel = new \BackEnd\tblUserModel();
-        $email = \Input::get('email');
-        $data = $tblAdminModel->getUserByEmail($email, 1);
+        $data = $tblAdminModel->getUserByEmail($id, 1);
         return View::make('backend.user.UserDetail')->with('data', $data);
     }
 

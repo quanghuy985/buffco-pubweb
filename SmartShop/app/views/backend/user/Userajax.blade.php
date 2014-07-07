@@ -6,7 +6,7 @@ $i = ($arrUser->getCurrentPage() - 1) * 10 + 1;
 @foreach($arrUser as $item)
 <tr>
     <td class="text-center"><label value="cateNews">{{$i++}}</label></td>
-    <td><a href="{{URL::action('\BackEnd\UserController@getUserDetail')}}/{{$item->email}}">{{$item->email}}</a></td>
+    <td><a href="{{URL::action('\BackEnd\UserController@getUserDetail')}}/{{$item->id}}">{{$item->email}}</a></td>
     <td><label value="user">{{str_limit($item->phone, 10, '...')}} </label></td>
     <td><label value="user">
             <?php
@@ -21,7 +21,7 @@ $i = ($arrUser->getCurrentPage() - 1) * 10 + 1;
         </label>
     </td>
     <td>
-        <a href="{{URL::action('\BackEnd\UserController@getUserEdit')}}?id={{$item->email}}"
+        <a href="{{URL::action('\BackEnd\UserController@getUserEdit')}}?id={{$item->id}}"
            title="Sửa">{{Lang::get('general.edit')}}</a>
         @if($item->status=='2')
         &nbsp;&nbsp;|&nbsp;&nbsp;

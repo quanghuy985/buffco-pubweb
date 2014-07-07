@@ -194,9 +194,9 @@ class HomeController extends \BaseController {
 
     public function getProfileAdmin() {
 
-        $email = \Auth::user()->email;
+        $id = \Auth::user()->id;
         $tblAdminModel = new \BackEnd\tblUserModel();
-        $data = $tblAdminModel->getUserByEmail($email, 1);
+        $data = $tblAdminModel->getProfileByID($id, 1);
         return View::make('backend.admin.adminEditProfile')->with('dataProfile', $data);
     }
 
