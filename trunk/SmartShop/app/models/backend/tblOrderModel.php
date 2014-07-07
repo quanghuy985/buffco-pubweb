@@ -56,8 +56,8 @@ class tblOrderModel extends \Eloquent {
         return $allOrder;
     }
 
-    public function getAllOrderByEmail($email, $per_page) {
-        $allOrder = DB::table('tbl_product_order')->join('tbl_users', 'tbl_product_order.user_id', '=', 'tbl_users.id')->select('tbl_product_order.*', 'tbl_users.email', 'tbl_users.firstname', 'tbl_users.lastname')->where('tbl_users.email', '=', $email)->paginate($per_page);
+    public function getAllOrderByID($id, $per_page) {
+        $allOrder = DB::table('tbl_product_order')->join('tbl_users', 'tbl_product_order.user_id', '=', 'tbl_users.id')->select('tbl_product_order.*', 'tbl_users.email', 'tbl_users.firstname', 'tbl_users.lastname')->where('tbl_users.id', '=', $id)->paginate($per_page);
         return $allOrder;
     }
 

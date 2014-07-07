@@ -12,10 +12,10 @@ class tblUserModel extends \Eloquent {
     public function getAllAdmin($per_page, $status = '') {
         $useradmin = \Auth::user();
         if ($status != 'null') {
-            $arrAdmin = DB::table('tbl_users')->select('tbl_users.*')->orderBy('tbl_users.id', 'desc')->where('tbl_users.admin', '=', 1)->where('tbl_users.id', '!=', $useradmin->id)->where('tbl_users.status', '=', $status)->paginate($per_page);
+            $arrAdmin = DB::table('tbl_users')->select('tbl_users.*')->orderBy('tbl_users.id', 'desc')->where('tbl_users.admin', '=', 1)->where('tbl_users.id', '!=', $useradmin->id)->where('tbl_users.status', '=', $status)->where('tbl_users.status', '!=', 5)->paginate($per_page);
         }
         if ($status == 'null' || $status == '') {
-            $arrAdmin = DB::table('tbl_users')->select('tbl_users.*')->orderBy('tbl_users.id', 'desc')->where('tbl_users.admin', '=', 1)->where('tbl_users.id', '!=', $useradmin->id)->where('tbl_users.status', '!=', 2)->paginate($per_page);
+            $arrAdmin = DB::table('tbl_users')->select('tbl_users.*')->orderBy('tbl_users.id', 'desc')->where('tbl_users.admin', '=', 1)->where('tbl_users.id', '!=', $useradmin->id)->where('tbl_users.status', '!=', 2)->where('tbl_users.status', '!=', 5)->paginate($per_page);
         }
         return $arrAdmin;
     }
@@ -77,7 +77,12 @@ class tblUserModel extends \Eloquent {
     }
 
     public function getUserByEmail($email, $admin) {
-        $user = DB::table('tbl_users')->select('tbl_users.*')->where('tbl_users.email', '=', $email)->where('tbl_users.admin', '=', $admin)->first();
+        $user = DB::table('tbl_users')->select('tbl_users.*')->where('tbl_users.id', '=', $email)->where('tbl_users.admin', '=', $admin)->where('tbl_users.status', '!=', 5)->first();
+        return $user;
+    }
+
+    public function getProfileByID($id, $admin) {
+        $user = DB::table('tbl_users')->select('tbl_users.*')->where('tbl_users.id', '=', $id)->where('tbl_users.admin', '=', $admin)->first();
         return $user;
     }
 

@@ -11,14 +11,14 @@ class tblHistoryUserModel extends \Eloquent {
 
     public function getHistoryByUserIDPagination($user_id, $per_page) {
 
-        $arrHistory = DB::table('tbl_users_history')->leftJoin('tbl_users', 'tbl_users_history.user_id', '=', 'tbl_users.id')->select('tbl_users_history.*', 'tbl_users.email', 'tbl_users.firstname', 'tbl_users.lastname')->where('user_id', '=', $user_id)->where('tbl_users_history.status', '!=', 2)->paginate($per_page);
+        $arrHistory = DB::table('tbl_users_history')->leftJoin('tbl_users', 'tbl_users_history.user_id', '=', 'tbl_users.id')->select('tbl_users_history.*', 'tbl_users.email', 'tbl_users.firstname', 'tbl_users.lastname')->where('user_id', '=', $user_id)->where('tbl_users_history.status', '!=', 2)->orderBy('id','desc')->paginate($per_page);
 
         return $arrHistory;
     }
 
     public function FindHistoryUserRow($keyword, $user_id, $per_page) {
 
-        $arrHistory = DB::table('tbl_users_history')->leftJoin('tbl_users', 'tbl_users_history.user_id', '=', 'tbl_users.id')->select('tbl_users_history.*', 'tbl_users.email', 'tbl_users.firstname', 'tbl_users.lastname')->where('tbl_users_history.historyContent', 'LIKE', '%' . $keyword . '%')->where('tbl_users_history.user_id', '=', $user_id)->paginate($per_page);
+        $arrHistory = DB::table('tbl_users_history')->leftJoin('tbl_users', 'tbl_users_history.user_id', '=', 'tbl_users.id')->select('tbl_users_history.*', 'tbl_users.email', 'tbl_users.firstname', 'tbl_users.lastname')->where('tbl_users_history.historyContent', 'LIKE', '%' . $keyword . '%')->where('tbl_users_history.user_id', '=', $user_id)->orderBy('id','desc')->paginate($per_page);
 
         return $arrHistory;
     }
@@ -35,7 +35,7 @@ class tblHistoryUserModel extends \Eloquent {
         if ($three != '') {
             $querry->where('tbl_users_history.status', '=', $three);
         }
-        $arrHistory = $querry->select('tbl_users_history.*', 'tbl_users.email', 'tbl_users.firstname', 'tbl_users.lastname')->paginate($per_page);
+        $arrHistory = $querry->select('tbl_users_history.*', 'tbl_users.email', 'tbl_users.firstname', 'tbl_users.lastname')->orderBy('id','desc')->paginate($per_page);
 
         return $arrHistory;
     }

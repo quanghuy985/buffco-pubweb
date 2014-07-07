@@ -9,7 +9,7 @@ $user_status = Lang::get('general.user_status');
 @foreach($arrayAdmin as $item)
 <tr>
     <td><label value="cateMenuer">{{$i++ }}</label></td>
-    <td><label value="cateMenuer"><a href="{{URL::action('\BackEnd\AdminController@getAdminDetail')}}?email={{$item->email}}">{{str_limit( $item->email, 30, '...')}}</a></label></td>
+    <td><label value="cateMenuer"><a href="{{URL::action('\BackEnd\AdminController@getAdminDetail')}}/{{$item->id}}">{{str_limit( $item->email, 30, '...')}}</a></label></td>
     <td><label value="cateMenuer">{{str_limit( $item->firstname.' '.$item->lastname, 30, '...')}}</label></td>
     <td><label value="cateMenuer">{{str_limit( $item->phone, 30, '...')}} </label>
     </td>
@@ -22,7 +22,7 @@ $user_status = Lang::get('general.user_status');
         </label>
     </td>
     <td>
-        <a title="{{Lang::get('general.edit')}}" href="<?php echo action('\BackEnd\AdminController@getAdminEdit') ?>/{{$item->email}}"> {{Lang::get('general.edit')}}</a>
+        <a title="{{Lang::get('general.edit')}}" href="<?php echo action('\BackEnd\AdminController@getAdminEdit') ?>/{{$item->id}}"> {{Lang::get('general.edit')}}</a>
         @if($item->status=='2')
         &nbsp;&nbsp;|&nbsp;&nbsp;
         <a title="{{Lang::get('general.active')}}" href="javascript:void(0);" onclick="kickhoat('{{URL::action('\BackEnd\AdminController@postAdminActive')}}','{{$item->email}}',{{$arrayAdmin->getCurrentPage()}});"> {{Lang::get('general.world')}}</a>
