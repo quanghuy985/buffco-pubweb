@@ -33,9 +33,9 @@ class SupporterGroupController extends \BaseController {
             $objSuppoerterGroup = $tblSupporterGroup->getAllSupportGroup(10);
             $link = $objSuppoerterGroup->links();
             if ($thongbao != '') {
-                return View::make('backend.supportergroup.supporterGroupManage')->with('arrSupporterGroup', $objSuppoerterGroup)->with('link', $link)->with('thongbao', $thongbao);
+                return View::make('backend.supportergroup.supporterGroupManage')->with('arrSupporterGroup', $objSuppoerterGroup)->with('link', $link)->with('thongbao', $thongbao)->with('active_menu', 'groupsupporterview');
             } else {
-                return View::make('backend.supportergroup.supporterGroupManage')->with('arrSupporterGroup', $objSuppoerterGroup)->with('link', $link);
+                return View::make('backend.supportergroup.supporterGroupManage')->with('arrSupporterGroup', $objSuppoerterGroup)->with('link', $link)->with('active_menu', 'groupsupporterview');
             }
         }
     }
@@ -63,7 +63,7 @@ class SupporterGroupController extends \BaseController {
             $supporterGroupData = $tblSupporterGroup->getAllSupportGroup(10);
             $link = $supporterGroupData->links();
             $dataedit = $tblSupporterGroup->getSupportGroupByID($id);
-            return View::make('backend.supportergroup.supporterGroupManage')->with('SupporterGroupData', $dataedit)->with('arrSupporterGroup', $supporterGroupData)->with('link', $link);
+            return View::make('backend.supportergroup.supporterGroupManage')->with('SupporterGroupData', $dataedit)->with('arrSupporterGroup', $supporterGroupData)->with('link', $link)->with('active_menu', 'groupsupporterview');
         }
     }
 
