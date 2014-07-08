@@ -142,13 +142,13 @@
                     if ($menuselect == 'orderview') {
                         echo 'current';
                     }
-                    ?>"><a href="{{URL::action('\BackEnd\OrderController@getViewAll')}}" class="widgets">{{Lang::get('backend/dashboard.order')}}</a>
+                    ?>"><a href="{{URL::action('\BackEnd\OrderController@getViewAll')}}" class="orders">{{Lang::get('backend/dashboard.order')}}</a>
                     </li>
                     <li class="<?php
                     if ($menuselect == 'userview') {
                         echo 'current';
                     }
-                    ?>"><a href="{{URL::action('\BackEnd\UserController@getUserView')}}" class="user">{{Lang::get('backend/dashboard.customer')}}</a>
+                    ?>"><a href="{{URL::action('\BackEnd\UserController@getUserView')}}" class="customer">{{Lang::get('backend/dashboard.customer')}}</a>
                     </li>
                     <li class="<?php
                     if ($menuselect == 'supporterview' || $menuselect == 'groupsupporterview') {
@@ -175,7 +175,7 @@
                     if ($menuselect == 'feedbackview') {
                         echo 'current';
                     }
-                    ?>"><a href="{{URL::action('\BackEnd\FeedbackController@getFeedBack')}}" class="buttons">{{Lang::get('backend/dashboard.feedback')}}</a> </li>
+                    ?>"><a href="{{URL::action('\BackEnd\FeedbackController@getFeedBack')}}" class="feedback">{{Lang::get('backend/dashboard.feedback')}}</a> </li>
                     <li class="<?php
                     if ($menuselect == 'projectview' || $menuselect == 'projectadd') {
                         echo 'current';
@@ -199,7 +199,7 @@
                     if ($menuselect == 'pageview' || $menuselect == 'pageadd') {
                         echo 'current';
                     }
-                    ?>"><a href="#pageSub" class="buttons">{{Lang::get('backend/dashboard.management_page')}}</a>
+                    ?>"><a href="#pageSub" class="page">{{Lang::get('backend/dashboard.management_page')}}</a>
                         <span class="arrow"></span>
                         <ul id="pageSub">
                             <li class="<?php
@@ -218,7 +218,7 @@
                     if ($menuselect == 'menuview') {
                         echo 'current';
                     }
-                    ?>"><a href="{{URL::action('\BackEnd\MenusController@getMenus')}}" class="settings">{{Lang::get('backend/dashboard.management_menu')}}</a> </li>
+                    ?>"><a href="{{URL::action('\BackEnd\MenusController@getMenus')}}" class="menu">{{Lang::get('backend/dashboard.management_menu')}}</a> </li>
 
                     <li class="<?php
                     if ($menuselect == 'settingview') {
@@ -230,7 +230,7 @@
                     if ($menuselect == 'adminview') {
                         echo 'current';
                     }
-                    ?>"><a href="#adminSub" class="addons">{{Lang::get('backend/dashboard.user')}}</a>
+                    ?>"><a href="#adminSub" class="agents">{{Lang::get('backend/dashboard.user')}}</a>
                         <span class="arrow"></span>
                         <ul id="adminSub">
                             <li class="<?php
