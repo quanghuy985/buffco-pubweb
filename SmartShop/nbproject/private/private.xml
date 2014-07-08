@@ -5,6 +5,8 @@
         <group>
             <file>file:/D:/LOCALHOST/www/SmartShop/backend/ckfinder/core/connector/php/php5/Core/AccessControlConfig.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/views/backend/admin/adminHistory.blade.php</file>
+            <file>file:/D:/LOCALHOST/www/SmartShop/app/views/backend/project/Projectadd.blade.php</file>
+            <file>file:/D:/LOCALHOST/www/SmartShop/app/views/backend/page/Pageadd.blade.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/backend/js/plugins/jquery.uniform.min.js</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/models/backend/Menu.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/vendor/autoload.php</file>
@@ -34,7 +36,10 @@
             <file>file:/D:/LOCALHOST/www/SmartShop/backend/ckfinder/ckfinder.js</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/models/backend/tblNewsModel.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/views/backend/feedback/feedbackManage.blade.php</file>
+            <file>file:/D:/LOCALHOST/www/SmartShop/app/views/backend/product/colorAjax.blade.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/filters.php</file>
+            <file>file:/D:/LOCALHOST/www/SmartShop/app/models/backend/tblSizeModel.php</file>
+            <file>file:/D:/LOCALHOST/www/SmartShop/app/views/backend/product/sizeAjax.blade.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/backend/ckfinder/core/connector/php/connector.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/models/backend/tblProjectModel.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/bootstrap/start.php</file>
@@ -48,34 +53,45 @@
             <file>file:/D:/LOCALHOST/www/SmartShop/app/models/backend/tblOrderModel.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/backend/ckfinder/plugins/cropresize/lib/Process.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/models/backend/tblUserModel.php</file>
+            <file>file:/D:/LOCALHOST/www/SmartShop/app/models/backend/tblColorModel.php</file>
+            <file>file:/D:/LOCALHOST/www/SmartShop/app/controllers/backend/CategoryProductController.php</file>
+            <file>file:/D:/LOCALHOST/www/SmartShop/app/views/backend/product/sizeManage.blade.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/controllers/backend/NewsController.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/models/backend/tblProductModel.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/controllers/backend/ProductController.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/backend/js/custom/custom-admin.js</file>
-            <file>file:/D:/LOCALHOST/www/SmartShop/app/models/backend/tblManufacturerModel.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/backend/ckeditor/config.js</file>
+            <file>file:/D:/LOCALHOST/www/SmartShop/app/models/backend/tblManufacturerModel.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/backend/ckfinder/ckfinder.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/controllers/BaseController.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/backend/ckfinder/core/connector/php/constants.php</file>
+            <file>file:/D:/LOCALHOST/www/SmartShop/app/controllers/backend/FilemanagerController.php</file>
+            <file>file:/D:/LOCALHOST/www/SmartShop/backend/js/custom/elements.js</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/controllers/backend/HomeController.php</file>
-            <file>file:/D:/LOCALHOST/www/SmartShop/app/controllers/backend/CateNewsController.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/views/backend/setting/setting.blade.php</file>
+            <file>file:/D:/LOCALHOST/www/SmartShop/app/controllers/backend/CateNewsController.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/backend/ckfinder/plugins/cropresize/plugin.js</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/controllers/backend/PageController.php</file>
+            <file>file:/D:/LOCALHOST/www/SmartShop/app/views/backend/product/listcateAjax.blade.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/backend/js/plugins/nprogress.js</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/backend/ckfinder/config.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/backend/ckfinder/plugins/imageresize/plugin.php</file>
+            <file>file:/D:/LOCALHOST/www/SmartShop/app/views/backend/product/cateProductAjax.blade.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/lang/vi/backend/home.php</file>
+            <file>file:/D:/LOCALHOST/www/SmartShop/app/views/backend/product/viewproduct.blade.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/index.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/models/backend/tblRolesModel.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/controllers/backend/LoginController.php</file>
+            <file>file:/D:/LOCALHOST/www/SmartShop/app/views/backend/product/cateProductManage.blade.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/views/backend/admin/adminEditProfile.blade.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/controllers/backend/OrderController.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/views/backend/project/Projectajax.blade.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/views/backend/header.blade.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/controllers/backend/ManufacturerController.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/views/backend/product/productajax.blade.php</file>
+            <file>file:/D:/LOCALHOST/www/SmartShop/app/views/backend/product/colorManage.blade.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/controllers/backend/MenusController.php</file>
+            <file>file:/D:/LOCALHOST/www/SmartShop/app/models/backend/tblCategoryproductModel.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/views/backend/manufacture/ManufacturerManage.blade.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/views/backend/page/Pageajax.blade.php</file>
         </group>

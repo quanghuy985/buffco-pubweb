@@ -86,5 +86,9 @@ return array(
         'startSales' => 'Ngày bắt đầu',
         'endSales' => 'Ngày kết thúc',
         'quantity' => 'Số lượng',
+               'color_name' => 'Tên màu',
+                      'color_code' => 'Mã màu',
+                       'size_name' => 'Tên kích cỡ',
+                        'size_description' => 'Mô tả',
     ),
 );

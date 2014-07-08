@@ -17,52 +17,10 @@
     }
 </style>
 <script>
-    function phantrang(page) {
-        var request = jQuery.ajax({
-            url: "{{URL::action('\BackEnd\CategoryProductController@postAjaxpagion')}}?page=" + page,
-            type: "POST",
-            dataType: "html"
-        });
-        request.done(function(msg) {
-            jQuery('#tableproduct').html(msg);
-        });
-    }
-    function xoasanpham(id) {
-        jConfirm('Bạn có chắc chắn muốn xóa ?', 'Thông báo', function(r) {
-            if (r == true) {
-                var request = jQuery.ajax({
-                    url: "{{URL::action('\BackEnd\CategoryProductController@postDeleteCateProduct')}}?id=" + id,
-                    type: "POST",
-                    dataType: "html"
-                });
-                request.done(function(msg) {
-                    jQuery('#tableproduct').html(msg);
-                    jQuery('#messages1').empty().html(" <div class='notibar msgsuccess'><a class='close'></a><p>Cập nhật thành công.</p> </div>");
-                });
-                return true;
-            } else {
-                return false;
-            }
-        })
-    }
-    function kichhoat(id, stus) {
-        var request = jQuery.ajax({
-            url: "{{URL::action('\BackEnd\CategoryProductController@postCateProductActive')}}?id=" + id + '&status=' + stus,
-            type: "POST",
-            dataType: "html"
-        });
-        request.done(function(msg) {
-            jQuery('#tableproduct').html(msg);
-            jQuery('#messages1').empty().html(" <div class='notibar msgsuccess'><a class='close'></a><p>Cập nhật thành công.</p> </div>");
-        });
-        return true;
-    }
-    //lọc dấu tạo slug
     function toSlug(e) {
         var str = e.value;
         if (str != '') {
-        str = str.toLowerCase(); // chuyển chuỗi sang chữ thường để xử lý
-                /* tìm kiếm và thay thế tất cả các nguyên âm có dấu sang không dấu*/
+        str = str.toLowerCase(); 
                 str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
                 str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
                 str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
@@ -71,13 +29,21 @@
                 str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
                 str = str.replace(/đ/g, "d");
                 str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'| |\"|\&|\#|\[|\]|~|$|_/g, "-");
-                /* tìm và thay thế các kí tự đặc biệt trong chuỗi sang kí tự - */
-                str = str.replace(/-+-/g, "-"); //thay thế 2- thành 1-
-                str = str.replace(/^\-+|\-+$/g, ""); //cắt bỏ ký tự - ở đầu và cuối chuỗi
+                str = str.replace(/-+-/g, "-"); 
+                str = str.replace(/^\-+|\-+$/g, ""); 
                 document.getElementById("cateSlug").value = str;
         }
     }
+    jQuery(document).ready(function() {
+        jQuery("#edit-cat-products").validate({
+            rules: {
+                cateName: {required: true},
+                cateSlug: {required: true},
+            }
+        });
+    });
 </script>
+
 <div class="pageheader notab">
     <h1 class="pagetitle">QUẢN LÝ DANH MỤC SẢN PHẨM</h1>
     <span class="pagedesc">Quản lý danh mục</span>
@@ -89,8 +55,6 @@
         </div>
         @if(isset($cateProductData)) <a class="btn btn_orange btn_link" href="{{action('\BackEnd\CategoryProductController@getCateProductView')}}"><span>Thêm mới</span></a>        @endif
         @include('backend.alert')
-        <!--        <form class="stdform" method="post" action="@if(isset($cateProductData)) {{URL::action('\BackEnd\CategoryProductController@postUpdateCateProduct')}} @else {{URL::action('\BackEnd\CategoryProductController@postAddCateProduct')}}@endif">-->
-
         @if(isset($cateProductData))
         {{Form::model($cateProductData, array('action'=>'\BackEnd\CategoryProductController@postUpdateCateProduct', 'class'=>'stdform','id'=>'edit-cat-products' ))}}
         @else
@@ -134,14 +98,6 @@
             <h3>Bảng danh mục sản phẩm</h3>
         </div>  
         <div class="subcontent">
-            <div id="messages1">
-                @if(isset($thongbao))
-                <div class="notibar msgalert">
-                    <a class="close"></a>
-                    <p>{{$thongbao}}</p>
-                </div>
-                @endif
-            </div>
             <table cellpadding="0" cellspacing="0" border="0" id="table2" class="stdtable stdtablecb" style="margin-top: 20px">
                 <colgroup>
                     <col style="width: 30%" class="con0">
