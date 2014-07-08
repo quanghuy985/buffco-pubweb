@@ -41,7 +41,14 @@ class ProductController extends \BaseController {
         foreach ($listmanu as $item) {
             $listmanuarray = $listmanuarray + array($item->id => $item->manufacturerName);
         }
-        return View::make('backend.product.addproduct')->with('listcate', $catlistrt)->with('listallcate', $allcatelist)->with('arraymanu', $listmanuarray)->with('active_menu', 'productadd');
+
+        $tblColor = new tblColorModel();
+        $listcolor = $tblColor->selectAllColorNoPaginate();
+        $listcolorarray = array();
+        foreach ($listcolor as $item) {
+            $listcolorarray = $listcolorarray + array($item->id => $item->color_name);
+        }
+        return View::make('backend.product.addproduct')->with('arraycolor', $listcolorarray)->with('listcate', $catlistrt)->with('listallcate', $allcatelist)->with('arraymanu', $listmanuarray)->with('active_menu', 'productadd');
     }
 
     public function postProductAdd() {

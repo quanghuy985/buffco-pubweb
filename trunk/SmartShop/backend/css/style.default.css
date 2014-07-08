@@ -2204,3 +2204,34 @@ td  a{
     font-weight: bold;
     border-radius: 40px;
 }
+.search_div_ajax{
+    display: none;
+    background: none repeat scroll 0 0 #fb9337;
+    border-radius: 5px;
+    margin-left: 192px;
+    margin-top: -18px;
+    padding: 10px;
+    position: absolute;
+    width: 360px;
+    z-index: 9999;
+}
+.search_div_ajax > ul {
+    list-style: none outside none;
+}
+.search_div_ajax span:first-child {
+    float: left;
+    width: 50%;
+}
+
+.search_div_ajax span:last-child {
+    float: left;
+    width: 50%;
+}
+.search_div_ajax li{
+    border-bottom: 1px solid #FFFFFF;
+    float: left;
+    line-height: 15px;
+    margin-top: 5px;
+    padding-bottom: 5px;
+    width: 100%;
+}

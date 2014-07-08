@@ -58,6 +58,11 @@ class tblUserModel extends \Eloquent {
         return $arrAdmin;
     }
 
+    public function SearchUsersKey($keysearch = '') {
+        $arrAdmin = DB::table('tbl_users')->where('admin', '=', 0)->orderBy('email')->whereRaw('(`email` LIKE ? or `phone` LIKE ? or `address` LIKE ? or `lastname` LIKE ? or `firstname` LIKE ?)', array('%' . $keysearch . '%', '%' . $keysearch . '%', '%' . $keysearch . '%', '%' . $keysearch . '%', '%' . $keysearch . '%'))->limit(10)->get();
+        return $arrAdmin;
+    }
+
     public function DeleteUserByEmail($uemailf) {
         $checkdel = $this->where('email', '=', $uemailf)->update(array('status' => 2));
         if ($checkdel > 0) {
