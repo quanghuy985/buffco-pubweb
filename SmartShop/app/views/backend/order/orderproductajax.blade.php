@@ -33,7 +33,7 @@ $payment_type = Lang::get('general.payment_type');
 
     </td>
     <td class="center">
-        <a class="btn btn4 btn_orderdetail" title="{{Lang::get('general.order.detail')}}" href="<?php echo action('\BackEnd\OrderController@getEdit') ?>/{{$item->orderCode}}"> </a>
+        <a title="{{Lang::get('general.order.detail')}}" href="<?php echo action('\BackEnd\OrderController@getEdit') ?>/{{$item->orderCode}}">{{Lang::get('general.order.detail')}} </a>
     </td>
 </tr>
 @endforeach
