@@ -98,7 +98,7 @@
                                 NProgress.start();
                                 var postform = jQuery('#form-add-category-product').serialize();
                                 var request = jQuery.ajax({
-                                    url: "{{URL::action('\BackEnd\CategoryProductController@postAddCateProduct')}}",
+                                    url: "{{URL::action('\BackEnd\ProductController@postAddCateProduct')}}",
                                     type: "POST",
                                     data: postform
                                 });
@@ -314,7 +314,7 @@ if (isset($productedit)) {
         str = str.replace(/-+-/g, "-"); //thay thế 2- thành 1-
         str = str.replace(/^\-+|\-+$/g, ""); //cắt bỏ ký tự - ở đầu và cuối chuỗi
         var request = jQuery.ajax({
-            url: "{{URL::action('\BackEnd\CategoryProductController@postCheckSlug')}}?slug=" + str,
+            url: "{{URL::action('\BackEnd\ProductController@postCheckSlug')}}?slug=" + str,
             type: "POST"
         });
         request.done(function(msg) {

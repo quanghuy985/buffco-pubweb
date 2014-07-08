@@ -119,7 +119,7 @@
             </ul>
         </div>
         <br clear="all">
-        <a href="{{URL::action('\BackEnd\CateNewsController@getCateNewsView')}}" ><button type="button" class="stdbtn btn_orange">{{Lang::get('button.add')}}?</button></a>
+        <a href="{{URL::action('\BackEnd\NewsController@getCateNewsView')}}" ><button type="button" class="stdbtn btn_orange">{{Lang::get('button.add')}}?</button></a>
 
         <br clear="all">
         <div class="contenttitle3">

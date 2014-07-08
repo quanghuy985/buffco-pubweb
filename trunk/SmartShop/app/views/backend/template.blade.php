@@ -106,7 +106,7 @@
                             if ($menuselect == 'newcate') {
                                 echo 'current';
                             }
-                            ?>"><a href="{{URL::action('\BackEnd\CateNewsController@getCateNewsView')}}">{{Lang::get('backend/dashboard.group_news')}}</a></li>
+                            ?>"><a href="{{URL::action('\BackEnd\NewsController@getCateNewsView')}}">{{Lang::get('backend/dashboard.group_news')}}</a></li>
                         </ul>
                     </li>
                     <li class="<?php
@@ -130,12 +130,12 @@
                             if ($menuselect == 'productcate') {
                                 echo 'current';
                             }
-                            ?>"><a href="{{URL::action('\BackEnd\CategoryProductController@getCateProductView')}}">{{Lang::get('backend/dashboard.group_product')}}</a></li>
+                            ?>"><a href="{{URL::action('\BackEnd\ProductController@getCateProductView')}}">{{Lang::get('backend/dashboard.group_product')}}</a></li>
                             <li class="<?php
                             if ($menuselect == 'manuview') {
                                 echo 'current';
                             }
-                            ?>"><a href="{{URL::action('\BackEnd\ManufacturerController@getManufactureView')}}">{{Lang::get('backend/dashboard.management_manufacturers')}}</a></li>
+                            ?>"><a href="{{URL::action('\BackEnd\ProductController@getManufactureView')}}">{{Lang::get('backend/dashboard.management_manufacturers')}}</a></li>
                         </ul>
                     </li>
                     <li class="<?php
@@ -167,7 +167,7 @@
                             if ($menuselect == 'groupsupporterview') {
                                 echo 'current';
                             }
-                            ?>"><a href="{{URL::action('\BackEnd\SupporterGroupController@getSupporterGroupView')}}">{{Lang::get('backend/dashboard.group_supporter')}}</a>
+                            ?>"><a href="{{URL::action('\BackEnd\SupporterController@getSupporterGroupView')}}">{{Lang::get('backend/dashboard.group_supporter')}}</a>
                             </li>
                         </ul>
                     </li>
