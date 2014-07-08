@@ -44,7 +44,7 @@
                                 NProgress.start();
                                 var postform = jQuery('#form-add-manufacturer').serialize();
                                 var request = jQuery.ajax({
-                                    url: "{{URL::action('\BackEnd\ManufacturerController@postAddFastManufacturer')}}",
+                                    url: "{{URL::action('\BackEnd\ProductController@postAddFastManufacturer')}}",
                                     type: "POST",
                                     data: postform
                                 });
