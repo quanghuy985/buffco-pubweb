@@ -18,6 +18,10 @@ use BackEnd,
 
 class HomeController extends \BaseController {
 
+    public function getSearch() {
+       return View::make('backend.searach')  ;
+    }
+
     public function getHome($from = '', $to = '') {
         $tblUserModel = new tblUserModel();
         $arrNewUsers = $tblUserModel->selectNewUser();

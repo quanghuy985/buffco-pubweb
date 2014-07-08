@@ -30,6 +30,17 @@
         </p>
         <p>
             <script>
+                function addstore_product() {
+                    jQuery("#dialog-form-add-store").dialog({
+                        resizable: true,
+                        width: 400,
+                        modal: true,
+                        buttons: {
+                            "Thêm": function(e) {
+                            }
+                        },
+                    });
+                }
                 function addmanufact() {
                     jQuery("#error_add_manufacturer").css('display', 'none');
                     jQuery("#error_add_manufacturer").html('');
@@ -155,12 +166,6 @@
                     </ul>
                     <div id="tabs-1">
                         <p>
-                            <label>Số lượng</label>
-                            <span class="field">
-                                {{Form::text('quantity', null, array('class'=>'smallinput', 'id'=>'quantity', 'placeholder'=>Lang::get('placeholder.product_code')))}}
-                            </span>.
-                        </p>
-                        <p>
                             <label>Giá nhập</label>
                             <span class="field">
                                 {{Form::text('import_prices', null, array('class'=>'smallinput', 'id'=>'import_prices',  'placeholder'=>Lang::get('placeholder.product_code')))}}&nbsp; {{Config::get('configall.pay-tiente')}}
@@ -197,6 +202,36 @@
                                 &nbsp;&nbsp;Đến&nbsp;
                                 {{Form::text('endSales', $enddate, array('class'=>'smallinput', 'id'=>'datepickerend','onchange'=>'checkngaykhuyenmai()'))}}&nbsp; 
                         </p>
+                        <div class="contenttitle2">
+                            <h3>Kho hàng</h3>
+                        </div><input style=" margin-left: 25px;" type="button" onclick="addstore_product()" class="stdbtn btn_orange" value="Thêm kho hàng">
+                        <table cellpadding="0" cellspacing="0" border="0" class="stdtable">
+                            <colgroup>
+                                <col class="con0" style="width: 1%;" />
+                                <col class="con1" style="width: 20%;" />
+                                <col class="con0" style="width: 32%;" />
+                                <col class="con1" style="width: 32%;" />
+                                <col class="con0" style="width: 15%;" />
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th class="head0">STT</th>
+                                    <th class="head1">Số lượng</th>
+                                    <th class="head0">Màu sắc</th>
+                                    <th class="head1">Kích cỡ</th>
+                                    <th class="head0">Chức năng</th>
+                                </tr>
+                            </thead>
+                            <tbody class="datastore">
+                                <tr>
+                                    <td>1</td>
+                                    <td>Internet Explorer 4.0</td>
+                                    <td>Win 95+</td>
+                                    <td class="center">4</td>
+                                    <td class="center">X</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                     <div id="tabs-2">
                         <p>
@@ -424,7 +459,41 @@ if (isset($productedit)) {
         </p>
     </form>
 </div>
+<div id="dialog-form-add-store" title="Thêm kho hàng" style="display: none">
+    <script>
+        jQuery(document).ready(function() {
+            jQuery("#form-add-store").validate({
+                rules: {
+                    quantity_product: {required: true},
+                    cateSlug: {required: true},
+                }
+            });
+        });
+    </script>
+    <form id="form-add-store" class="stdform ">
+        <div class="notibar announcement" id="error_add_manufacturer" style="display: none">
 
+        </div>
+        <p>
+            <label>Số lượng</label>
+            <span class="field">
+                {{Form::text('quantity_product[]', null, array('class'=>'longinput', 'id'=>'quantity_product', 'placeholder'=>Lang::get('placeholder.product_name')))}}
+            </span>
+        </p>
+        <p>
+            <label>Màu sắc</label>
+            <span class="field">
+                {{Form::select('color_list[]', $arraycolor,null,array('id'=>'color_list'))}}
+            </span>
+        </p>
+        <p>
+            <label>Nơi sản xuât</label>
+            <span class="field">
+                {{Form::text('manufacturerPlace', null, array('class'=>'longinput', 'id'=>'manufacturerPlace', 'placeholder'=>Lang::get('placeholder.product_name')))}}
+            </span>
+        </p>
+    </form>
+</div>
 <div id="dialog-form-add-category-product" title="Thêm danh mục sản phẩm" style="display: none">
     <form id="form-add-category-product" class="stdform ">
         <div class="notibar announcement" id="error_add_category_product" style="display: none">
@@ -460,10 +529,10 @@ if (isset($productedit)) {
 
 <script src="{{Asset('backend/js/plugins/autoNumeric.js')}}" type=text/javascript></script>
 <script>
-    jQuery(function(cash) {
-        jQuery('#import_prices').autoNumeric('init', {pSign: 's', dGroup: '2'});
-        jQuery('#productPrice').autoNumeric('init', {pSign: 's', dGroup: '2'});
-        jQuery('#salesPrice').autoNumeric('init', {pSign: 's', dGroup: '2'});
-    });
+        jQuery(function(cash) {
+            jQuery('#import_prices').autoNumeric('init', {pSign: 's', dGroup: '2'});
+            jQuery('#productPrice').autoNumeric('init', {pSign: 's', dGroup: '2'});
+            jQuery('#salesPrice').autoNumeric('init', {pSign: 's', dGroup: '2'});
+        });
 </script>
 @endsection

@@ -124,32 +124,3 @@ function active_element(url, id) {
         }
     });
 }
-//function ajaxfillter_all(url, value1, value2) {
-//    var data;
-//    if (value1 != '' && value2 == '') {
-//        data = {value1: value1};
-//    }
-//    if (value1 == '' && value2 != '') {
-//        data = {value2: value2};
-//    }
-//    if (value1 != '' && value2 != '') {
-//        data = {value1: value1, value2: value2};
-//    }
-//    if (value1 == '' && value2 == '') {
-//        data = '';
-//    }
-//    NProgress.start();
-//    var request = jQuery.ajax({
-//        url: url,
-//        type: "POST",
-//        data: data,
-//        dataType: "html"
-//    });
-//    request.done(function(msg) {
-//        window.history.pushState({
-//            path: url
-//        }, '', url);
-//        jQuery('.tabledataajax').html(msg);
-//        NProgress.done();
-//    });
-//}

@@ -323,4 +323,20 @@ class UserController extends \BaseController {
         return View::make('backend.thongke.Userajax')->with('user', $data)->with('link', $link);
     }
 
+    public function postSearchUserByKeyword() {
+        $tblUserModel = new tblUserModel();
+        $keyw = \Input::get('keyword');
+        $data = $tblUserModel->SearchUsersKey($keyw);
+        $html = '';
+        foreach ($data as $item) {
+            $html = $html . '
+                <a href="javascript:void(0);" onclick="addvaluebox(\'' . $item->email . '\')"> <li>
+                    <span>' . $item->email . '</span>
+                    <span>' . $item->firstname . ' ' . $item->lastname . '</span>
+                </li>
+            </a>';
+        }
+        echo $html;
+    }
+
 }
