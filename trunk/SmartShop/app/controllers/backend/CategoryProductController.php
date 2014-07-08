@@ -74,22 +74,15 @@ class CategoryProductController extends \BaseController {
     public function postDeleteCateProduct() {
         $tblCateProduct = new tblCategoryproductModel();
         $dataedit = $tblCateProduct->findCateProductByID(Input::get('id'));
-        if ($dataedit[0]->cateParent == 0) {
-            $tblCateProduct->deleteCateProductChild($dataedit[0]->id);
+        if ($dataedit->cateParent == 0) {
+            $tblCateProduct->deleteCateProductChild($dataedit->id);
         }
         $tblCateProduct->deleteCateProduct(Input::get('id'));
         $objAdmin = \Auth::user();
         $historyContent = Lang::get('backend/history.cateproduct.delete') . ' ' . $dataedit->cateName;
         $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
         $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
-        $link = $tblCateProduct->getAllCategoryProductPaginate(10);
-        $links = $link->links();
-        $start = $link->getCurrentPage() * 10 - 10;
-        if ($start < 0) {
-            $start = 0;
-        }
-        $cateProductData = $tblCateProduct->getAllCategoryProduct($start, 10);
-        return View::make('backend.categoryproduct.cateProductAjax')->with('arrCateProduct', $cateProductData)->with('link', $links);
+        return Redirect::action('\BackEnd\CategoryProductController@getCateProductView');
     }
 
     public function getCateProductEdit($id = '') {

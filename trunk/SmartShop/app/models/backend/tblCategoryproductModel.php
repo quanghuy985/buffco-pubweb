@@ -62,7 +62,7 @@ class tblCategoryproductModel extends \Eloquent {
     }
 
     public function deleteCateProduct($cateProductID) {
-        $checkdel = $this->where('id', '=', $cateProductID)->update(array('status' => 2));
+        $checkdel = $this->where('id', '=', $cateProductID)->delete();
         if ($checkdel > 0) {
             return TRUE;
         } else {
@@ -71,7 +71,7 @@ class tblCategoryproductModel extends \Eloquent {
     }
 
     public function deleteCateProductChild($id) {
-        $checkdel = $this->where('cateParent', '=', $id)->update(array('status' => 2));
+        $checkdel = $this->where('cateParent', '=', $id)->delete();
         if ($checkdel > 0) {
             return TRUE;
         } else {

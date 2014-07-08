@@ -22,7 +22,6 @@ class tblManufacturerModel extends \Eloquent {
     }
 
     public function updateManufacturer($id, $Name, $Description, $logo, $Place) {
-        // $tableAdmin = new TblAdminModel();
         $tableManufacturer = $this->where('id', '=', $id);
         $arraysql = array('id' => $id);
         if ($Name != '') {

@@ -198,11 +198,125 @@ class ProductController extends \BaseController {
     }
 
     public function getColorView() {
-        return View::make('backend.product.colorManage');
+        $tblColor = new tblColorModel();
+        $arrColor = $tblColor->selectAllColor(1);
+        if (\Request::ajax()) {
+            return View::make('backend.product.colorAjax')->with('arrColor', $arrColor)->with('link', $arrColor->links());
+        } else {
+            return View::make('backend.product.colorManage')->with('arrColor', $arrColor)->with('link', $arrColor->links());
+        }
+    }
+
+    public function getColorEdit($id = '') {
+        $tblColor = new tblColorModel();
+        $arrColor = $tblColor->selectAllColor(1);
+        $colorEdit = $tblColor->selectColorEdit($id);
+        if (\Request::ajax()) {
+            return View::make('backend.product.colorAjax')->with('arrColor', $arrColor)->with('link', $arrColor->links());
+        } else {
+            return View::make('backend.product.colorManage')->with('arrColor', $arrColor)->with('link', $arrColor->links())->with('colorEdit', $colorEdit);
+        }
+    }
+
+    public function postAddColor() {
+        $rules = array(
+            "color_name" => "required|max:255",
+            "color_code" => "required:max:255",
+        );
+        $validate = Validator::make(Input::all(), $rules, Lang::get('messages.validator'), Lang::get('backend/attributes.products'));
+        if (!$validate->fails()) {
+            $tblColor = new tblColorModel();
+            $tblColor->addColor(trim(Input::get('color_name')), trim(Input::get('color_code')));
+            Session::flash('alert_success', Lang::get('messages.add.success'));
+            return Redirect::action('\BackEnd\ProductController@getColorView');
+        } else {
+            Session::flash('alert_error', Lang::get('messages.add.error'));
+            return Redirect::back()->withInput(Input::all())->withErrors($validate->messages());
+        }
+    }
+
+    public function postEditColor() {
+        $rules = array(
+            "color_name" => "required|max:255",
+            "color_code" => "required:max:255",
+        );
+        $validate = Validator::make(Input::all(), $rules, Lang::get('messages.validator'), Lang::get('backend/attributes.products'));
+        if (!$validate->fails()) {
+            $tblColor = new tblColorModel();
+            $tblColor->updateColor(Input::get('id'), trim(Input::get('color_name')), trim(Input::get('color_code')));
+            Session::flash('alert_success', Lang::get('messages.update.success'));
+            return Redirect::action('\BackEnd\ProductController@getColorView');
+        } else {
+            Session::flash('alert_error', Lang::get('messages.update.error'));
+            return Redirect::back()->withInput(Input::all())->withErrors($validate->messages());
+        }
+    }
+
+    public function postDeleteColor() {
+        $tblColor = new tblColorModel();
+        $tblColor->deleteColor(Input::get('id'));
+        return Redirect::action('\BackEnd\ProductController@getColorView');
     }
 
     public function getSizeView() {
-        return View::make('backend.product.sizeManage');
+        $tblSize = new tblSizeModel();
+        $arrSize = $tblSize->selectAllSize(1);
+        if (\Request::ajax()) {
+            return View::make('backend.product.sizeAjax')->with('arrSize', $arrSize)->with('link', $arrSize->links());
+        } else {
+            return View::make('backend.product.sizeManage')->with('arrSize', $arrSize)->with('link', $arrSize->links());
+        }
+    }
+
+    public function getSizeEdit($id = '') {
+        $tblSize = new tblSizeModel();
+        $arrSize = $tblSize->selectAllSize(1);
+        $sizeEdit = $tblSize->selectSizeEdit($id);
+        if (\Request::ajax()) {
+            return View::make('backend.product.sizeAjax')->with('arrSize', $arrSize)->with('link', $arrSize->links());
+        } else {
+            return View::make('backend.product.sizeManage')->with('arrSize', $arrSize)->with('link', $arrSize->links())->with('sizeEdit', $sizeEdit);
+        }
+    }
+
+    public function postAddSize() {
+        $rules = array(
+            "size_name" => "required|max:255",
+            "size_description" => "required:max:255",
+        );
+        $validate = Validator::make(Input::all(), $rules, Lang::get('messages.validator'), Lang::get('backend/attributes.products'));
+        if (!$validate->fails()) {
+            $tblSize = new tblSizeModel();
+            $tblSize->addSize(trim(Input::get('size_name')), trim(Input::get('size_description')));
+            Session::flash('alert_success', Lang::get('messages.add.success'));
+            return Redirect::action('\BackEnd\ProductController@getSizeView');
+        } else {
+            Session::flash('alert_error', Lang::get('messages.add.error'));
+            return Redirect::back()->withInput(Input::all())->withErrors($validate->messages());
+        }
+    }
+
+    public function postEditSize() {
+        $rules = array(
+            "size_name" => "required|max:255",
+            "size_description" => "required:max:255",
+        );
+        $validate = Validator::make(Input::all(), $rules, Lang::get('messages.validator'), Lang::get('backend/attributes.products'));
+        if (!$validate->fails()) {
+            $tblSize = new tblSizeModel();
+            $tblSize->updateSize(Input::get('id'), trim(Input::get('size_name')), trim(Input::get('size_description')));
+            Session::flash('alert_success', Lang::get('messages.update.success'));
+            return Redirect::action('\BackEnd\ProductController@getSizeView');
+        } else {
+            Session::flash('alert_error', Lang::get('messages.update.error'));
+            return Redirect::back()->withInput(Input::all())->withErrors($validate->messages());
+        }
+    }
+
+    public function postDeleteSize() {
+        $tblSize = new tblSizeModel();
+        $tblSize->deleteSize(Input::get('id'));
+        return Redirect::action('\BackEnd\ProductController@getSizeView');
     }
 
 }
