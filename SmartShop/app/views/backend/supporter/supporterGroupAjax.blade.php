@@ -6,9 +6,9 @@
     <td><label value="cateMenuer">{{str_limit( $item->supporterGroupName, 30, '...')}}</label></td>
     <td><label value="cateMenuer"><?php echo date('d/m/Y h:i:s', $item->time); ?></label></td>
     <td>
-        <a href="{{URL::action('\BackEnd\SupporterGroupController@getSupporterGroupEdit')}}/{{$item->id}}"  title="{{Lang::get('general.edit')}}">{{Lang::get('general.edit')}}</a>
+        <a href="{{URL::action('\BackEnd\SupporterController@getSupporterGroupEdit')}}/{{$item->id}}"  title="{{Lang::get('general.edit')}}">{{Lang::get('general.edit')}}</a>
         &nbsp;&nbsp;|&nbsp;&nbsp;
-        <a href="javascript: void(0)" onclick="deleteproduct('{{URL::action('\BackEnd\SupporterGroupController@postDeleteSupporterGroup')}}',{{$item->id}})"  title="{{Lang::get('general.delete')}}">{{Lang::get('general.delete')}}</a>
+        <a href="javascript: void(0)" onclick="deleteproduct('{{URL::action('\BackEnd\SupporterController@postDeleteSupporterGroup')}}',{{$item->id}})"  title="{{Lang::get('general.delete')}}">{{Lang::get('general.delete')}}</a>
     </td>
 </tr>
 @endforeach

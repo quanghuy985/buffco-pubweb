@@ -47,9 +47,9 @@
         </div>
         @include('backend.alert')
         @if(isset($arrayManuf))
-        {{Form::model($arrayManuf, array('action'=>'\BackEnd\ManufacturerController@postUpdateManufacturer','class'=>'stdform ', 'id'=>'addManufacture'))}}
+        {{Form::model($arrayManuf, array('action'=>'\BackEnd\ProductController@postUpdateManufacturer','class'=>'stdform ', 'id'=>'addManufacture'))}}
         @else
-        {{Form::open(array('action'=>'\BackEnd\ManufacturerController@postAddManufaturer','class'=>'stdform', 'id'=>'addManufacture'))}}
+        {{Form::open(array('action'=>'\BackEnd\ProductController@postAddManufaturer','class'=>'stdform', 'id'=>'addManufacture'))}}
         @endif
         <p>
             {{Form::hidden('id')}}

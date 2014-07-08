@@ -70,11 +70,11 @@
                 @endif
             </h3>
         </div>
-        @if(isset($cateNewsData)) <a class="btn btn_orange btn_link" href="{{action('\BackEnd\CateNewsController@getCateNewsView')}}"><span>Thêm mới</span></a>        @endif
+        @if(isset($cateNewsData)) <a class="btn btn_orange btn_link" href="{{action('\BackEnd\NewsController@getCateNewsView')}}"><span>Thêm mới</span></a>        @endif
         @if(isset($cateNewsData))
-        {{Form::model($cateNewsData, array('action'=>'\BackEnd\CateNewsController@postUpdateCateNews','class'=>'stdform', 'id'=>'addCateForm'))}}
+        {{Form::model($cateNewsData, array('action'=>'\BackEnd\NewsController@postUpdateCateNews','class'=>'stdform', 'id'=>'addCateForm'))}}
         @else
-        {{Form::open(array('action'=>'\BackEnd\CateNewsController@postAddCateNews','class'=>'stdform', 'id'=>'addCateForm'))}}
+        {{Form::open(array('action'=>'\BackEnd\NewsController@postAddCateNews','class'=>'stdform', 'id'=>'addCateForm'))}}
         @endif
         <P>
             {{Form::hidden('id')}}

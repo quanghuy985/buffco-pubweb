@@ -20,18 +20,18 @@
     function toSlug(e) {
         var str = e.value;
         if (str != '') {
-        str = str.toLowerCase(); 
-                str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
-                str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
-                str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
-                str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
-                str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
-                str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
-                str = str.replace(/đ/g, "d");
-                str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'| |\"|\&|\#|\[|\]|~|$|_/g, "-");
-                str = str.replace(/-+-/g, "-"); 
-                str = str.replace(/^\-+|\-+$/g, ""); 
-                document.getElementById("cateSlug").value = str;
+            str = str.toLowerCase();
+            str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+            str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+            str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+            str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+            str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+            str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+            str = str.replace(/đ/g, "d");
+            str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'| |\"|\&|\#|\[|\]|~|$|_/g, "-");
+            str = str.replace(/-+-/g, "-");
+            str = str.replace(/^\-+|\-+$/g, "");
+            document.getElementById("cateSlug").value = str;
         }
     }
     jQuery(document).ready(function() {
@@ -53,12 +53,12 @@
         <div class="contenttitle2">
             <h3>Bảng thêm và chỉnh sửa</h3>
         </div>
-        @if(isset($cateProductData)) <a class="btn btn_orange btn_link" href="{{action('\BackEnd\CategoryProductController@getCateProductView')}}"><span>Thêm mới</span></a>        @endif
+        @if(isset($cateProductData)) <a class="btn btn_orange btn_link" href="{{action('\BackEnd\ProductController@getCateProductView')}}"><span>Thêm mới</span></a>        @endif
         @include('backend.alert')
         @if(isset($cateProductData))
-        {{Form::model($cateProductData, array('action'=>'\BackEnd\CategoryProductController@postUpdateCateProduct', 'class'=>'stdform','id'=>'edit-cat-products' ))}}
+        {{Form::model($cateProductData, array('action'=>'\BackEnd\ProductController@postUpdateCateProduct', 'class'=>'stdform','id'=>'edit-cat-products' ))}}
         @else
-        {{Form::open(array('action'=>'\BackEnd\CategoryProductController@postAddCateProduct', 'class'=>'stdform', 'id'=>'edit-cat-products'))}}
+        {{Form::open(array('action'=>'\BackEnd\ProductController@postAddCateProduct', 'class'=>'stdform', 'id'=>'edit-cat-products'))}}
         @endif
         <p>
             {{Form::hidden('id')}}
@@ -115,24 +115,7 @@
                 </thead>
 
                 <tbody id="tableproduct" class="tabledataajax">
-                    @foreach($arrCateProduct as $item)
-                    <tr> 
-                        <td><label value="cateMenuer">@if($item->cateParent!=0) — @endif @if($item->cateParent==0) <strong> @endif{{ $item->cateName}} @if($item->cateParent==0) </strong> @endif</label></td> 
-                        <td><label value="cateMenuer">{{str_limit($item->cateDescription , 30, '...')}}</label></td>
-                        <td><label value="cateMenuer">{{$item->cateSlug}}</label></td> 
-                        <td>
-                            <a href="{{URL::action('\BackEnd\CategoryProductController@getCateProductEdit')}}/{{$item->id}}"  title="Sửa"> Sửa</a>
-                            &nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript: void(0)" onclick="xoasanpham({{$item->id}})"title="Xóa">Xóa</a>
-
-                        </td> 
-                    </tr> 
-
-                    @endforeach
-                    @if($link!='')
-                    <tr>
-                        <td colspan="7">{{$link}}</td>
-                    </tr>
-                    @endif
+                    @include('backend.product.cateProductAjax')
                 </tbody>
             </table>
 

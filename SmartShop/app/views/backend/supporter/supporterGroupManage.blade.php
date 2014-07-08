@@ -50,12 +50,9 @@
         </div>
         @include('backend.alert')
         @if(isset($SupporterGroupData))
-        <script>jQuery(document).ready(function() {
-                jQuery('html, body').animate({scrollTop: jQuery("#formSubmit").offset().top}, 2000);
-            })</script>
-        {{Form::model($SupporterGroupData, array('action'=>'\BackEnd\SupporterGroupController@postUpdateSupporterGroup', 'class'=>'stdform ', 'id'=>'formSubmit'))}}
+        {{Form::model($SupporterGroupData, array('action'=>'\BackEnd\SupporterController@postUpdateSupporterGroup', 'class'=>'stdform ', 'id'=>'formSubmit'))}}
         @else
-        {{Form::open(array('action'=>'\BackEnd\SupporterGroupController@postAddSupporterGroup', 'class'=>'stdform', 'id'=>'formSubmit'))}}
+        {{Form::open(array('action'=>'\BackEnd\SupporterController@postAddSupporterGroup', 'class'=>'stdform', 'id'=>'formSubmit'))}}
         @endif
         <p></p>
         <p>
@@ -92,7 +89,7 @@
             </thead>
             <?php $i = 1; ?>
             <tbody id="tableproduct" class="tabledataajax">
-                @include('backend.supportergroup.supporterGroupAjax')
+                @include('backend.supporter.supporterGroupAjax')
             </tbody>
         </table>
     </div>
