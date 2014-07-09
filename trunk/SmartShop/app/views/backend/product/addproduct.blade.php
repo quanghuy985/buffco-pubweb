@@ -42,7 +42,16 @@
             <script>
 
                         function addstore_product() {
-                        jQuery("#quantity_product").val('');
+                        NProgress.start();
+                                var request = jQuery.ajax({
+                                url: "{{URL::action('\BackEnd\ProductController@postDialogGetcolorsize')}}",
+                                        type: "POST"
+                                });
+                                request.done(function(msg) {
+                                NProgress.done();
+                                        jQuery("#form-add-store").html(msg);
+                                });
+                                jQuery("#quantity_product").val('');
                                 jQuery("#dialog-form-add-store").dialog({
                         resizable: true,
                                 width: 400,
@@ -532,14 +541,14 @@ if (isset($productedit)) {
             <label>Màu sắc</label>
             <span class="field">
                 {{Form::select('color_list[]', $arraycolor,null,array('id'=>'color_list'))}}
-                <a style="color: #00F;text-decoration: underline;" href="javascript:void{0}" onclick="window.open('{{URL::action('\BackEnd\ProductController@getColorView')}}', '_newtab');" class="submit radius2" >{{Lang::get('button.add').'?'}}</a>
+                <a style="color: #00F;text-decoration: underline;" href="{{URL::action('\BackEnd\ProductController@getColorView')}}" target="_blank" class="submit radius2" >{{Lang::get('button.add').'?'}}</a>
             </span>
         </p>
         <p>
             <label>Size</label>
             <span class="field">
                 {{Form::select('size_list[]', $arraysize,null,array('id'=>'size_list'))}}
-                <a style="color: #00F;text-decoration: underline;" href="javascript:void{0}" onclick="window.open('{{URL::action('\BackEnd\ProductController@getSizeView')}}', '_newtab');" class="submit radius2" >{{Lang::get('button.add').'?'}}</a>
+                <a style="color: #00F;text-decoration: underline;" href="{{URL::action('\BackEnd\ProductController@getSizeView')}}" target="_blank" class="submit radius2" >{{Lang::get('button.add').'?'}}</a>
             </span>
 
         </p>

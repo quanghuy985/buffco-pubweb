@@ -19,6 +19,41 @@ class ProductController extends \BaseController {
         $this->beforeFilter('checkrole');
     }
 
+    public function postDialogGetcolorsize() {
+        $tblColor = new tblColorModel();
+        $listcolor = $tblColor->selectAllColorNoPaginate();
+        $listcolorarray = array();
+        foreach ($listcolor as $item) {
+            $listcolorarray = $listcolorarray + array($item->id => $item->color_name);
+        }
+        $tblSize = new tblSizeModel();
+        $listsize = $tblSize->selectAllSizeNoPaginate();
+        $listsizearray = array();
+        foreach ($listsize as $item) {
+            $listsizearray = $listsizearray + array($item->id => $item->size_name);
+        }
+        echo '<p>
+            <label>Số lượng</label>
+            <span class="field">'
+        . \Form::text('quantity_product[]', null, array('class' => 'longinput', 'id' => 'quantity_product', 'placeholder' => Lang::get('placeholder.product_name'))) . '          
+</span>
+        </p>
+        <p>
+            <label>Màu sắc</label>
+            <span class="field">
+                ' . \Form::select('color_list[]', $listcolorarray, null, array('id' => 'color_list')) . '
+                <a style="color: #00F;text-decoration: underline;" href="' . \URL::action('\BackEnd\ProductController@getColorView') . '" target="_blank" class="submit radius2" >' . \Lang::get('button.add') . '?' . '</a>             
+</span>
+        </p>
+        <p>
+            <label>Nơi sản xuât</label>
+            <span class="field">
+                ' . \Form::select('size_list[]', $listsizearray, null, array('id' => 'size_list')) . '
+                <a style="color: #00F;text-decoration: underline;" href="' . \URL::action('\BackEnd\ProductController@getSizeView') . '" target="_blank" class="submit radius2" >' . \Lang::get('button.add') . '?' . '</a>             
+</span>
+        </p>';
+    }
+
     public function getProductAdd() {
         $tblCateProduct = new tblCategoryproductModel();
         $catlist = $tblCateProduct->allCateProductParent();
