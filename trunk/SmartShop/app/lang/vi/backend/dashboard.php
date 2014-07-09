@@ -37,6 +37,8 @@ return array(
     'user'                     => 'Nhân viên',
     'management_user'          => 'Quản lý nhân viên',
     'management_acl'    => 'Quản lý quyền',
+     'management_color'    => 'Quản lý màu',
+     'management_size'    => 'Quản lý size',
 
 
     //    ''=>'',
