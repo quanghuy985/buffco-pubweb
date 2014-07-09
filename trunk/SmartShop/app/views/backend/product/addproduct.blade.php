@@ -541,20 +541,20 @@ if (isset($productedit)) {
 
         </div>
         <p>
-            <label>Số lượng</label> 
+            <label>{{Lang::get('general.product.quantity')}}</label> 
             <span class="field">
                 {{Form::text('quantity_product[]', null, array('class'=>'longinput', 'id'=>'quantity_product', 'placeholder'=>Lang::get('placeholder.product_name')))}}
             </span>
         </p>
         <p>
-            <label>Màu sắc</label>
+            <label>{{Lang::get('general.product.color')}}</label>
             <span class="field">
                 {{Form::select('color_list[]', $arraycolor,null,array('id'=>'color_list'))}}
                 <a style="color: #00F;text-decoration: underline;" href="javascript:void(0);" onclick="closeDialogStore('color');" target="_blank" class="submit radius2" >{{Lang::get('button.add').'?'}}</a>
             </span>
         </p>
         <p>
-            <label>Size</label>
+            <label>{{Lang::get('general.product.size')}}</label>
             <span class="field">
                 {{Form::select('size_list[]', $arraysize,null,array('id'=>'size_list'))}}
                 <a style="color: #00F;text-decoration: underline;" href="javascript:void(0);" onclick="closeDialogStore('size')" target="_blank" class="submit radius2" >{{Lang::get('button.add').'?'}}</a>
