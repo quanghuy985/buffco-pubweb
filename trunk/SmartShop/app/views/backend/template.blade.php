@@ -110,7 +110,7 @@
                         </ul>
                     </li>
                     <li class="<?php
-                    if ($menuselect == 'productview' || $menuselect == 'productadd' || $menuselect == 'productcate' || $menuselect == 'manuview' || $menuselect == 'colorview') {
+                    if ($menuselect == 'productview' || $menuselect == 'productadd' || $menuselect == 'productcate' || $menuselect == 'manuview' || $menuselect == 'colorview'||$menuselect == 'sizeview') {
                         echo 'current';
                     }
                     ?>"><a href="#productsub" class="elements">{{Lang::get('backend/dashboard.product')}}</a>
