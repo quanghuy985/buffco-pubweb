@@ -147,7 +147,9 @@ return array(
         'slug' => 'Slug',
         'tag' => 'Tag',
         'manufacture' => 'Nhà sản xuất',
-        'action' => 'Chức năng'
+        'action' => 'Chức năng',
+        'color' => 'Màu sắc',
+        'size' => 'Size',
     ),
     'size' => array(
         'name' => 'Tên size',
