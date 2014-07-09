@@ -42,14 +42,14 @@ class ProductController extends \BaseController {
             <label>Màu sắc</label>
             <span class="field">
                 ' . \Form::select('color_list[]', $listcolorarray, null, array('id' => 'color_list')) . '
-                <a style="color: #00F;text-decoration: underline;" href="' . \URL::action('\BackEnd\ProductController@getColorView') . '" target="_blank" class="submit radius2" >' . \Lang::get('button.add') . '?' . '</a>             
+                <a style="color: #00F;text-decoration: underline;"  href="javascript:void(0);" onclick="closeDialogStore(\'color\');" class="submit radius2" >' . \Lang::get('button.add') . '?' . '</a>             
 </span>
         </p>
         <p>
             <label>Nơi sản xuât</label>
             <span class="field">
                 ' . \Form::select('size_list[]', $listsizearray, null, array('id' => 'size_list')) . '
-                <a style="color: #00F;text-decoration: underline;" href="' . \URL::action('\BackEnd\ProductController@getSizeView') . '" target="_blank" class="submit radius2" >' . \Lang::get('button.add') . '?' . '</a>             
+                <a style="color: #00F;text-decoration: underline;"  href="javascript:void(0);" onclick="closeDialogStore(\'size\');" class="submit radius2" >' . \Lang::get('button.add') . '?' . '</a>             
 </span>
         </p>';
     }
@@ -100,11 +100,16 @@ class ProductController extends \BaseController {
             } else {
                 $listcateid = '';
             }
+            $quantityrarr = Input::get('quantity');
+            $quantityinsert = 0;
+            foreach ($quantityrarr as $value) {
+                $quantityinsert = $quantityinsert + $value;
+            }
             $tblProduct = new TblProductModel();
-            $idp = $tblProduct->insertProduct($inputs['productCode'], $inputs['productName'], $inputs['productDescription'], $inputs['productAttributes'], str_replace(',', '', $inputs['import_prices']), str_replace(',', '', $inputs['productPrice']), str_replace(',', '', $inputs['salesPrice']), strtotime($inputs['startSales']), strtotime($inputs['endSales']), $slug->makeSlugs($inputs['productName']), $inputs['productTag'], $inputs['manufactureID'], 1, $listcateid, $inputs['images']);
+            $idp = $tblProduct->insertProduct($inputs['productCode'], $inputs['productName'], $inputs['productDescription'], $inputs['productAttributes'], str_replace(',', '', $inputs['import_prices']), str_replace(',', '', $inputs['productPrice']), str_replace(',', '', $inputs['salesPrice']), strtotime($inputs['startSales']), strtotime($inputs['endSales']), $slug->makeSlugs($inputs['productName']), $inputs['productTag'], $inputs['manufactureID'], 1, $listcateid, $inputs['images'], $quantityinsert);
             $colorarr = Input::get('color');
             $sizearr = Input::get('size');
-            $quantityrarr = Input::get('quantity');
+
             for ($i = 0; $i < count($colorarr); $i++) {
                 $tblProductMeta = new tblProductMeta();
                 $meta_values = array(
@@ -177,13 +182,17 @@ class ProductController extends \BaseController {
             } else {
                 $listcateid = '';
             }
+            $quantityrarr = Input::get('quantity');
+            $quantityinsert = 0;
+            foreach ($quantityrarr as $value) {
+                $quantityinsert = $quantityinsert + $value;
+            }
             $tblProduct = new TblProductModel();
-            $idp = $tblProduct->updateProduct($inputs['id'], $inputs['productCode'], $inputs['productName'], $inputs['productDescription'], $inputs['productAttributes'], str_replace(',', '', $inputs['import_prices']), str_replace(',', '', $inputs['productPrice']), str_replace(',', '', $inputs['salesPrice']), strtotime($inputs['startSales']), strtotime($inputs['endSales']), $slug->makeSlugs($inputs['productName'] . '-' . $inputs['id']), $inputs['productTag'], $inputs['manufactureID'], 1, $listcateid, $inputs['images']);
+            $idp = $tblProduct->updateProduct($inputs['id'], $inputs['productCode'], $inputs['productName'], $inputs['productDescription'], $inputs['productAttributes'], str_replace(',', '', $inputs['import_prices']), str_replace(',', '', $inputs['productPrice']), str_replace(',', '', $inputs['salesPrice']), strtotime($inputs['startSales']), strtotime($inputs['endSales']), $slug->makeSlugs($inputs['productName'] . '-' . $inputs['id']), $inputs['productTag'], $inputs['manufactureID'], 1, $listcateid, $inputs['images'], $quantityinsert);
             $tblProductMeta = new tblProductMeta();
             $tblProductMeta->deleteProductMeta($inputs['id']);
             $colorarr = Input::get('color');
             $sizearr = Input::get('size');
-            $quantityrarr = Input::get('quantity');
             for ($i = 0; $i < count($colorarr); $i++) {
                 $tblProductMeta = new tblProductMeta();
                 $meta_values = array(
