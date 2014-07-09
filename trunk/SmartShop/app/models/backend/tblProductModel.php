@@ -9,7 +9,7 @@ class TblProductModel extends \Eloquent {
     protected $table = 'tbl_product';
     public $timestamps = false;
 
-    public function insertProduct($productCode, $productName, $productDescription, $productAttributes, $import_prices, $productPrice, $salesPrice, $startSales, $endSales, $quantity, $productSlug, $productTag, $manufactureID, $status, $listcateID, $images) {
+    public function insertProduct($productCode, $productName, $productDescription, $productAttributes, $import_prices, $productPrice, $salesPrice, $startSales, $endSales, $productSlug, $productTag, $manufactureID, $status, $listcateID, $images) {
         $this->productCode = $productCode;
         $this->productName = $productName;
         $this->productDescription = $productDescription;
@@ -19,7 +19,7 @@ class TblProductModel extends \Eloquent {
         $this->salesPrice = $salesPrice;
         $this->startSales = $startSales;
         $this->endSales = $endSales;
-        $this->quantity = $quantity;
+        $this->quantity = 0;
         $this->images = $images;
         $this->productTag = $productTag;
         $this->manufactureID = $manufactureID;
@@ -41,7 +41,7 @@ class TblProductModel extends \Eloquent {
         return $pid;
     }
 
-    public function updateProduct($id, $productCode, $productName, $productDescription, $productAttributes, $import_prices, $productPrice, $salesPrice, $startSales, $endSales, $quantity, $productSlug, $productTag, $manufactureID, $status, $listcateID, $images) {
+    public function updateProduct($id, $productCode, $productName, $productDescription, $productAttributes, $import_prices, $productPrice, $salesPrice, $startSales, $endSales, $productSlug, $productTag, $manufactureID, $status, $listcateID, $images) {
         $supporter = $this->where('id', '=', $id);
         $arraysql = array('id' => $id);
         if ($productCode != '') {
@@ -71,9 +71,9 @@ class TblProductModel extends \Eloquent {
         if ($endSales != '') {
             $arraysql = array_merge($arraysql, array("endSales" => $endSales));
         }
-        if ($quantity != '') {
-            $arraysql = array_merge($arraysql, array("quantity" => $quantity));
-        }
+//        if ($quantity != '') {
+//            $arraysql = array_merge($arraysql, array("quantity" => $quantity));
+//        }
         if ($productSlug != '') {
             $arraysql = array_merge($arraysql, array("productSlug" => $productSlug));
         }
