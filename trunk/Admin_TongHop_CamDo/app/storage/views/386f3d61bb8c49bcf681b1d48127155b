@@ -1,0 +1,28 @@
+<?php foreach($listallcate as $item): ?>
+<?php if($item->cateParent==0): ?>
+<li class="checkboxselect">
+    <?php
+    $checked = false;
+    if (isset($catlistselect)) {
+        $checked = in_array($item->id, $catlistselect);
+    }
+    ?>
+    <?php echo Form::checkbox('check2[]', $item->id,$checked); ?><?php echo $item->cateName; ?><br />
+    <ul>
+        <?php foreach($listallcate as $item1): ?>
+        <?php if($item->id==$item1->cateParent): ?>
+        <?php
+        $checked2 = false;
+        if (isset($catlistselect)) {
+            $checked2 = in_array($item1->id, $catlistselect);
+        }
+        ?>
+        <li><?php echo Form::checkbox('check2[]', $item1->id,$checked2); ?><?php echo $item1->cateName; ?><br /></li>
+        <?php endif; ?>
+        <?php endforeach; ?>
+    </ul>
+</li>
+<?php endif; ?>
+<?php endforeach; ?>
+<script>
+    jQuery('input:checkbox').uniform();</script>

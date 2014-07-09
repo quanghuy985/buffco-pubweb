@@ -1,0 +1,127 @@
+<?php $__env->startSection("contentadmin"); ?>
+<style>
+    .stdform label {
+        float: left;
+        padding: 5px 20px 0 0;
+        text-align: right;
+        width: 35%;
+    }
+    .stdform span.field, .stdform div.field {
+        display: block;
+        margin-left: 35%;
+        position: relative;
+    }
+    .three_fifth {
+        width: 55.9%;
+    }
+</style>
+<script>
+    function toSlug(e) {
+        var str = e.value;
+        if (str != '') {
+            str = str.toLowerCase();
+            str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+            str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+            str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+            str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+            str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+            str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+            str = str.replace(/đ/g, "d");
+            str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'| |\"|\&|\#|\[|\]|~|$|_/g, "-");
+            str = str.replace(/-+-/g, "-");
+            str = str.replace(/^\-+|\-+$/g, "");
+            document.getElementById("cateSlug").value = str;
+        }
+    }
+    jQuery(document).ready(function() {
+        jQuery("#edit-cat-products").validate({
+            rules: {
+                cateName: {required: true},
+                cateSlug: {required: true},
+            }
+        });
+    });
+</script>
+
+<div class="pageheader notab">
+    <h1 class="pagetitle">QUẢN LÝ DANH MỤC SẢN PHẨM</h1>
+    <span class="pagedesc">Quản lý danh mục</span>
+</div>
+<div class="contentwrapper">
+    <div class="two_fifth">
+        <div class="contenttitle2">
+            <h3>Bảng thêm và chỉnh sửa</h3>
+        </div>
+        <?php if(isset($cateProductData)): ?> <a class="btn btn_orange btn_link" href="<?php echo action('\BackEnd\ProductController@getCateProductView'); ?>"><span>Thêm mới</span></a>        <?php endif; ?>
+        <?php echo $__env->make('backend.alert', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+        <?php if(isset($cateProductData)): ?>
+        <?php echo Form::model($cateProductData, array('action'=>'\BackEnd\ProductController@postUpdateCateProduct', 'class'=>'stdform','id'=>'edit-cat-products' )); ?>
+        <?php else: ?>
+        <?php echo Form::open(array('action'=>'\BackEnd\ProductController@postAddCateProduct', 'class'=>'stdform', 'id'=>'edit-cat-products')); ?>
+        <?php endif; ?>
+        <p>
+            <?php echo Form::hidden('id'); ?>
+            <label>Tên danh mục sản phẩm</label>
+            <span class="field">
+                <?php echo Form::text('cateName', null, array('class'=>'longinput', 'id'=>'cateName', 'placeholder'=>Lang::get('placeholder.product_cateName'),"onkeyup"=>"toSlug(this)", "onchange"=>"toSlug(this)")); ?>
+            </span>
+        </p>
+        <p>
+            <label>Danh mục Cha</label>
+            <span class="field">
+                <?php echo Form::select('cateParent',$listcate); ?>
+            </span>
+        </p>
+        <p>
+            <label>Đường dẫn</label>
+            <span class="field">
+                <?php echo Form::text('cateSlug', null, array('class'=>'longinput', 'id'=>'cateSlug', 'placeholder'=>Lang::get('placeholder.product_cateName'), "onchange"=>"toSlug(this)")); ?>     
+            </span>
+        </p>       
+        <p>
+            <label>Mô tả</label>
+            <span class="field">
+                <textarea  id="cateDescription" rows="5" name="cateDescription" placeholder="Nhập mô tả"><?php if(isset($cateProductData)): ?><?php echo $cateProductData->cateDescription; ?><?php endif; ?></textarea>                
+            </span>
+        </p>
+        <p class="stdformbutton">
+            <button class="submit radius2" value="<?php if(isset($cateProductData)): ?>Cập nhật <?php else: ?> Thêm mới <?php endif; ?> "><?php if(isset($cateProductData)): ?>Cập nhật <?php else: ?> Thêm mới <?php endif; ?> </button>
+            <?php if(isset($cateProductData)): ?>
+            <input type="reset" class="reset radius2" value="Làm mới" >      
+            <?php endif; ?>
+        </p>
+        <?php echo Form::close(); ?>
+    </div>
+    <div class="three_fifth">
+        <div class="contenttitle2">
+            <h3>Bảng danh mục sản phẩm</h3>
+        </div>  
+        <div class="subcontent">
+            <table cellpadding="0" cellspacing="0" border="0" id="table2" class="stdtable stdtablecb" style="margin-top: 20px">
+                <colgroup>
+                    <col style="width: 30%" class="con0">
+                    <col style="width: 25%" class="con1">
+                    <col style="width: 25%" class="con0">
+                    <col style="width: 20%" class="con1">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="head0">Tên</th>
+                        <th class="head1">Mô tả</th>
+                        <th class="head0">Đường dẫn tĩnh</th>
+                        <th class="head1">Chức năng</th>
+                    </tr>  
+                </thead>
+
+                <tbody id="tableproduct" class="tabledataajax">
+                    <?php echo $__env->make('backend.product.cateProductAjax', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</div>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make("backend.template", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
