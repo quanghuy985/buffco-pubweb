@@ -110,7 +110,7 @@
                         </ul>
                     </li>
                     <li class="<?php
-                    if ($menuselect == 'productview' || $menuselect == 'productadd' || $menuselect == 'productcate' || $menuselect == 'manuview') {
+                    if ($menuselect == 'productview' || $menuselect == 'productadd' || $menuselect == 'productcate' || $menuselect == 'manuview' || $menuselect == 'colorview') {
                         echo 'current';
                     }
                     ?>"><a href="#productsub" class="elements">{{Lang::get('backend/dashboard.product')}}</a>
@@ -136,6 +136,17 @@
                                 echo 'current';
                             }
                             ?>"><a href="{{URL::action('\BackEnd\ProductController@getManufactureView')}}">{{Lang::get('backend/dashboard.management_manufacturers')}}</a></li>
+                            <li class="<?php
+                            if ($menuselect == 'colorview') {
+                                echo 'current';
+                            }
+                            ?>"><a href="{{URL::action('\BackEnd\ProductController@getColorView')}}">{{Lang::get('backend/dashboard.management_color')}}</a></li>
+                            <li class="<?php
+                            if ($menuselect == 'sizeview') {
+                                echo 'current';
+                            }
+                            ?>"><a href="{{URL::action('\BackEnd\ProductController@getSizeView')}}">{{Lang::get('backend/dashboard.management_size')}}</a></li>
+
                         </ul>
                     </li>
                     <li class="<?php

@@ -19,14 +19,6 @@ class ProductController extends \BaseController {
         $this->beforeFilter('checkrole');
     }
 
-    public function getProductColorView() {
-        return View::make('backend.product.colorManage');
-    }
-
-    public function getProductSizeView() {
-        return View::make('backend.product.sizeManage');
-    }
-
     public function getProductAdd() {
         $tblCateProduct = new tblCategoryproductModel();
         $catlist = $tblCateProduct->allCateProductParent();
@@ -254,17 +246,17 @@ class ProductController extends \BaseController {
 
     public function getColorView() {
         $tblColor = new tblColorModel();
-        $arrColor = $tblColor->selectAllColor(1);
+        $arrColor = $tblColor->selectAllColor(5);
         if (\Request::ajax()) {
             return View::make('backend.product.colorAjax')->with('arrColor', $arrColor)->with('link', $arrColor->links());
         } else {
-            return View::make('backend.product.colorManage')->with('arrColor', $arrColor)->with('link', $arrColor->links());
+            return View::make('backend.product.colorManage')->with('arrColor', $arrColor)->with('link', $arrColor->links())->with('active_menu', 'colorview');
         }
     }
 
     public function getColorEdit($id = '') {
         $tblColor = new tblColorModel();
-        $arrColor = $tblColor->selectAllColor(1);
+        $arrColor = $tblColor->selectAllColor(5);
         $colorEdit = $tblColor->selectColorEdit($id);
         if (\Request::ajax()) {
             return View::make('backend.product.colorAjax')->with('arrColor', $arrColor)->with('link', $arrColor->links());
@@ -315,17 +307,17 @@ class ProductController extends \BaseController {
 
     public function getSizeView() {
         $tblSize = new tblSizeModel();
-        $arrSize = $tblSize->selectAllSize(1);
+        $arrSize = $tblSize->selectAllSize(5);
         if (\Request::ajax()) {
             return View::make('backend.product.sizeAjax')->with('arrSize', $arrSize)->with('link', $arrSize->links());
         } else {
-            return View::make('backend.product.sizeManage')->with('arrSize', $arrSize)->with('link', $arrSize->links());
+            return View::make('backend.product.sizeManage')->with('arrSize', $arrSize)->with('link', $arrSize->links())->with('active_menu', 'sizeview');
         }
     }
 
     public function getSizeEdit($id = '') {
         $tblSize = new tblSizeModel();
-        $arrSize = $tblSize->selectAllSize(1);
+        $arrSize = $tblSize->selectAllSize(5);
         $sizeEdit = $tblSize->selectSizeEdit($id);
         if (\Request::ajax()) {
             return View::make('backend.product.sizeAjax')->with('arrSize', $arrSize)->with('link', $arrSize->links());
