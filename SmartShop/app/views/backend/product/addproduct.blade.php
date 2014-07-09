@@ -4,6 +4,17 @@
     <h1 class="pagetitle">Quản lý sản phẩm</h1>
     <span class="pagedesc">Thêm sản phẩm mới</span>
 </div>
+<script>
+    jQuery(document).ready(function() {
+        jQuery("#edit-products").validate({
+            rules: {
+                productName: {required: true, maxlength: 255},
+                productCode: {required: true, maxlength: 255},
+                productDescription: {required: true},
+            }
+        });
+    });
+</script>
 <div id="contentwrapper" class="contentwrapper nopadding">
     @if(isset($productedit))      
     {{Form::model($productedit, array('action'=>'\BackEnd\ProductController@postProductEdit', 'class'=>'stdform','id'=>'edit-products' ))}}
@@ -30,16 +41,50 @@
         </p>
         <p>
             <script>
+
                 function addstore_product() {
+                    jQuery("#quantity_product").val('');
                     jQuery("#dialog-form-add-store").dialog({
                         resizable: true,
                         width: 400,
                         modal: true,
                         buttons: {
                             "Thêm": function(e) {
+                                var quantity = jQuery("#quantity_product").val();
+                                var color = jQuery("#color_list").val();
+                                var color_text = jQuery("#color_list option:selected").text();
+                                var size = jQuery("#size_list").val();
+                                var size_text = jQuery("#size_list option:selected").text();
+                                var rowCount = jQuery('.datastore tr').length + 1;
+                                var colorlist = new Array()
+                                jQuery('input[name="color[]"]').each(function() {
+                                    var aValue = jQuery(this).val();
+                                    colorlist[colorlist.length] = aValue;
+                                });
+                                var sizelist = new Array()
+                                jQuery('input[name="size[]"]').each(function() {
+                                    var aValue = jQuery(this).val();
+                                    sizelist[sizelist.length] = aValue;
+                                });
+                                var check = false;
+                                for (var i = 0; i < colorlist.length; i++) {
+                                    if (color == colorlist[i] && size == sizelist[i]) {
+                                        check = true;
+                                    }
+                                }
+                                if (check == true) {
+                                    alert('Màu sắc và size muốn thêm đã tồn tại ');
+                                } else {
+                                    var html = '<tr><td><input type="text" name="quantity[]" value="' + quantity + '"/></td><td>' + color_text + '<input type="hidden" name="color[]" value="' + color + '"/></td><td class="center">' + size_text + '<input type="hidden" name="size[]" value="' + size + '"/></td><td class="center"><a href="javascript:void(0);" onclick="removeThis(this);">X</a></td></tr>';
+                                    jQuery(".datastore").append(html);
+                                    jQuery("#dialog-form-add-store").dialog("close");
+                                }
                             }
                         },
                     });
+                }
+                function removeThis(field) {
+                    jQuery(field).parent().parent().remove();
                 }
                 function addmanufact() {
                     jQuery("#error_add_manufacturer").css('display', 'none');
@@ -155,7 +200,6 @@
 
         </p>
         <p>
-
         <div id="accordion" class="accordion">
             <h3><a href="#"><strong><i>Chi tiết sản phẩm</i></strong></a></h3>
             <div>
@@ -163,7 +207,44 @@
                     <ul>
                         <li><a href="#tabs-1">Giá</a></li>
                         <li><a href="#tabs-2">Thuộc tính sản phẩm</a></li>
+                        <li><a href="#tabs-3">Kho hàng</a></li>
                     </ul>
+                    <div id="tabs-3">
+                        <input type="button" onclick="addstore_product()" class="stdbtn btn_orange" value="Thêm kho hàng">
+                        <table cellpadding="0" cellspacing="0" border="0" class="stdtable" style="margin-top: 20px;">
+                            <colgroup>
+                                <col class="con1" style="width: 20%;" />
+                                <col class="con0" style="width: 33%;" />
+                                <col class="con1" style="width: 32%;" />
+                                <col class="con0" style="width: 15%;" />
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th class="head1">Số lượng</th>
+                                    <th class="head0">Màu sắc</th>
+                                    <th class="head1">Kích cỡ</th>
+                                    <th class="head0">Chức năng</th>
+                                </tr>
+                            </thead>
+                            <tbody class="datastore">
+                                <?php
+                                if (isset($productmeta)) {
+                                    foreach ($productmeta as $item) {
+                                        $itemmeta = unserialize($item->meta_values);
+                                        ?>
+                                        <tr>
+                                            <td><input type="text" name="quantity[]" value="{{$itemmeta['quantity']}}"/></td>
+                                            <td>{{$arraycolor[$itemmeta['color']]}}<input type="hidden" name="color[]" value="{{$itemmeta['color']}}"/>
+                                            </td><td class="center">{{$arraysize[$itemmeta['size']]}}<input type="hidden" name="size[]" value="{{$itemmeta['size']}}"/></td>
+                                            <td class="center"><a href="javascript:void(0);" onclick="removeThis(this);">X</a></td>
+                                        </tr>
+                                        <?php
+                                    }
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
                     <div id="tabs-1">
                         <p>
                             <label>Giá nhập</label>
@@ -202,36 +283,6 @@
                                 &nbsp;&nbsp;Đến&nbsp;
                                 {{Form::text('endSales', $enddate, array('class'=>'smallinput', 'id'=>'datepickerend','onchange'=>'checkngaykhuyenmai()'))}}&nbsp; 
                         </p>
-                        <div class="contenttitle2">
-                            <h3>Kho hàng</h3>
-                        </div><input style=" margin-left: 25px;" type="button" onclick="addstore_product()" class="stdbtn btn_orange" value="Thêm kho hàng">
-                        <table cellpadding="0" cellspacing="0" border="0" class="stdtable">
-                            <colgroup>
-                                <col class="con0" style="width: 1%;" />
-                                <col class="con1" style="width: 20%;" />
-                                <col class="con0" style="width: 32%;" />
-                                <col class="con1" style="width: 32%;" />
-                                <col class="con0" style="width: 15%;" />
-                            </colgroup>
-                            <thead>
-                                <tr>
-                                    <th class="head0">STT</th>
-                                    <th class="head1">Số lượng</th>
-                                    <th class="head0">Màu sắc</th>
-                                    <th class="head1">Kích cỡ</th>
-                                    <th class="head0">Chức năng</th>
-                                </tr>
-                            </thead>
-                            <tbody class="datastore">
-                                <tr>
-                                    <td>1</td>
-                                    <td>Internet Explorer 4.0</td>
-                                    <td>Win 95+</td>
-                                    <td class="center">4</td>
-                                    <td class="center">X</td>
-                                </tr>
-                            </tbody>
-                        </table>
                     </div>
                     <div id="tabs-2">
                         <p>
@@ -489,7 +540,7 @@ if (isset($productedit)) {
         <p>
             <label>Nơi sản xuât</label>
             <span class="field">
-                {{Form::text('manufacturerPlace', null, array('class'=>'longinput', 'id'=>'manufacturerPlace', 'placeholder'=>Lang::get('placeholder.product_name')))}}
+                {{Form::select('size_list[]', $arraysize,null,array('id'=>'size_list'))}}
             </span>
         </p>
     </form>
@@ -521,7 +572,7 @@ if (isset($productedit)) {
         <p>
             <label>Mô tả</label>
             <span class="field">
-                <textarea  id="cateDescription" rows="5" name="cateDescription" placeholder="Nhập mô tả"></textarea>                
+                {{Form::textarea('cateDescription', null, array('id'=>'cateDescription','rows'=>'5'))}}
             </span>
         </p>
     </form>

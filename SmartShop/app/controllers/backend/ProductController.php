@@ -48,7 +48,13 @@ class ProductController extends \BaseController {
         foreach ($listcolor as $item) {
             $listcolorarray = $listcolorarray + array($item->id => $item->color_name);
         }
-        return View::make('backend.product.addproduct')->with('arraycolor', $listcolorarray)->with('listcate', $catlistrt)->with('listallcate', $allcatelist)->with('arraymanu', $listmanuarray)->with('active_menu', 'productadd');
+        $tblSize = new tblSizeModel();
+        $listsize = $tblSize->selectAllSizeNoPaginate();
+        $listsizearray = array();
+        foreach ($listsize as $item) {
+            $listsizearray = $listsizearray + array($item->id => $item->size_name);
+        }
+        return View::make('backend.product.addproduct')->with('arraysize', $listsizearray)->with('arraycolor', $listcolorarray)->with('listcate', $catlistrt)->with('listallcate', $allcatelist)->with('arraymanu', $listmanuarray)->with('active_menu', 'productadd');
     }
 
     public function postProductAdd() {
@@ -68,7 +74,19 @@ class ProductController extends \BaseController {
                 $listcateid = '';
             }
             $tblProduct = new TblProductModel();
-            $idp = $tblProduct->insertProduct($inputs['productCode'], $inputs['productName'], $inputs['productDescription'], $inputs['productAttributes'], str_replace(',', '', $inputs['import_prices']), str_replace(',', '', $inputs['productPrice']), str_replace(',', '', $inputs['salesPrice']), strtotime($inputs['startSales']), strtotime($inputs['endSales']), $inputs['quantity'], $slug->makeSlugs($inputs['productName']), $inputs['productTag'], $inputs['manufactureID'], 1, $listcateid, $inputs['images']);
+            $idp = $tblProduct->insertProduct($inputs['productCode'], $inputs['productName'], $inputs['productDescription'], $inputs['productAttributes'], str_replace(',', '', $inputs['import_prices']), str_replace(',', '', $inputs['productPrice']), str_replace(',', '', $inputs['salesPrice']), strtotime($inputs['startSales']), strtotime($inputs['endSales']), $slug->makeSlugs($inputs['productName']), $inputs['productTag'], $inputs['manufactureID'], 1, $listcateid, $inputs['images']);
+            $colorarr = Input::get('color');
+            $sizearr = Input::get('size');
+            $quantityrarr = Input::get('quantity');
+            for ($i = 0; $i < count($colorarr); $i++) {
+                $tblProductMeta = new tblProductMeta();
+                $meta_values = array(
+                    'color' => $colorarr[$i],
+                    'size' => $sizearr[$i],
+                    'quantity' => $quantityrarr[$i]
+                );
+                $tblProductMeta->insertProductMeta($idp, '', serialize($meta_values));
+            }
             $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.product.active') . $inputs['productCode'];
             $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
@@ -98,7 +116,21 @@ class ProductController extends \BaseController {
         $tblProduct = new TblProductModel();
         $product = $tblProduct->getProductById($id);
         $catlist = $tblProduct->getCatProductById($id);
-        return View::make('backend.product.addproduct')->with('productedit', $product)->with('listcate', $catlistrt)->with('listallcate', $allcatelist)->with('arraymanu', $listmanuarray)->with('catlistselect', $catlist)->with('active_menu', 'productadd');
+        $tblColor = new tblColorModel();
+        $listcolor = $tblColor->selectAllColorNoPaginate();
+        $listcolorarray = array();
+        foreach ($listcolor as $item) {
+            $listcolorarray = $listcolorarray + array($item->id => $item->color_name);
+        }
+        $tblSize = new tblSizeModel();
+        $listsize = $tblSize->selectAllSizeNoPaginate();
+        $listsizearray = array();
+        foreach ($listsize as $item) {
+            $listsizearray = $listsizearray + array($item->id => $item->size_name);
+        }
+        $tblProductMeta = new tblProductMeta();
+        $productmeta = $tblProductMeta->getProductMeta($id);
+        return View::make('backend.product.addproduct')->with('productmeta', $productmeta)->with('arraysize', $listsizearray)->with('arraycolor', $listcolorarray)->with('productedit', $product)->with('listcate', $catlistrt)->with('listallcate', $allcatelist)->with('arraymanu', $listmanuarray)->with('catlistselect', $catlist)->with('active_menu', 'productadd');
     }
 
     public function postProductEdit() {
@@ -119,7 +151,21 @@ class ProductController extends \BaseController {
                 $listcateid = '';
             }
             $tblProduct = new TblProductModel();
-            $idp = $tblProduct->updateProduct($inputs['id'], $inputs['productCode'], $inputs['productName'], $inputs['productDescription'], $inputs['productAttributes'], str_replace(',', '', $inputs['import_prices']), str_replace(',', '', $inputs['productPrice']), str_replace(',', '', $inputs['salesPrice']), strtotime($inputs['startSales']), strtotime($inputs['endSales']), $inputs['quantity'], $slug->makeSlugs($inputs['productName'] . '-' . $inputs['id']), $inputs['productTag'], $inputs['manufactureID'], 1, $listcateid, $inputs['images']);
+            $idp = $tblProduct->updateProduct($inputs['id'], $inputs['productCode'], $inputs['productName'], $inputs['productDescription'], $inputs['productAttributes'], str_replace(',', '', $inputs['import_prices']), str_replace(',', '', $inputs['productPrice']), str_replace(',', '', $inputs['salesPrice']), strtotime($inputs['startSales']), strtotime($inputs['endSales']), $slug->makeSlugs($inputs['productName'] . '-' . $inputs['id']), $inputs['productTag'], $inputs['manufactureID'], 1, $listcateid, $inputs['images']);
+            $tblProductMeta = new tblProductMeta();
+            $tblProductMeta->deleteProductMeta($inputs['id']);
+            $colorarr = Input::get('color');
+            $sizearr = Input::get('size');
+            $quantityrarr = Input::get('quantity');
+            for ($i = 0; $i < count($colorarr); $i++) {
+                $tblProductMeta = new tblProductMeta();
+                $meta_values = array(
+                    'color' => $colorarr[$i],
+                    'size' => $sizearr[$i],
+                    'quantity' => $quantityrarr[$i]
+                );
+                $tblProductMeta->insertProductMeta($inputs['id'], '', serialize($meta_values));
+            }
             Session::flash('alert_success', Lang::get('messages.update.success'));
             $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.product.update') . $inputs['productCode'];
