@@ -1,0 +1,16 @@
+<?php foreach($arrCateProduct as $item): ?>
+<tr> 
+    <td><label value="cateMenuer"><?php if($item->cateParent!=0): ?> — <?php endif; ?> <?php if($item->cateParent==0): ?> <strong> <?php endif; ?><?php echo $item->cateName; ?> <?php if($item->cateParent==0): ?> </strong> <?php endif; ?></label></td> 
+    <td><label value="cateMenuer"><?php echo str_limit($item->cateDescription , 30, '...'); ?></label></td>
+    <td><label value="cateMenuer"><?php echo $item->cateSlug; ?></label></td> 
+    <td>
+        <a href="<?php echo URL::action('\BackEnd\ProductController@getCateProductEdit'); ?>/<?php echo $item->id; ?>"  title="Sửa"> Sửa</a>
+        &nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript: void(0)" onclick="deleteproduct('<?php echo URL::action('\BackEnd\ProductController@postDeleteCateProduct'); ?>',<?php echo $item->id; ?>)"title="Xóa">Xóa</a>
+    </td> 
+</tr> 
+<?php endforeach; ?>
+<?php if($link!=''): ?>
+<tr>
+    <td colspan="7"><?php echo $link; ?></td>
+</tr>
+<?php endif; ?>
