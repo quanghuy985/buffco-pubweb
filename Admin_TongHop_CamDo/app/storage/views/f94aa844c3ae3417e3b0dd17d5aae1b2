@@ -1,0 +1,355 @@
+<?php $__env->startSection("contentadmin"); ?>
+<script type="text/javascript" src="<?php echo Asset('backend'); ?>/js/plugins/jquery.flot.min.js"></script>
+<script type="text/javascript" src="<?php echo Asset('backend'); ?>/js/plugins/jquery.flot.pie.js"></script>
+<script type="text/javascript" src="<?php echo Asset('backend'); ?>/js/plugins/jquery.flot.resize.min.js"></script>
+<script type="text/javascript" src="<?php echo Asset('backend'); ?>/js/plugins/jquery.slimscroll.js"></script>
+<style>
+    .widgetbox .title h3 {
+        font-family: Arial,Helvetica,sans-serif;
+        font-size: 16px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+    .toplist li a {
+        display: block;
+        font-weight: bold;
+        overflow: hidden;
+    }
+</style>
+<script>
+        jQuery(document).ready(function() {
+
+
+/*****SIMPLE CHART*****/
+var flash = [<?php
+foreach ($arrreturn1 as $key => $value) {
+    echo '[' . $key . '000,' . $value . '],';
+}
+?>];
+        var html5 = [<?php
+foreach ($arrreturn as $key => $value) {
+    echo '[' . $key . '000,' . $value . '],';
+}
+?>];
+        function showTooltip(x, y, contents) {
+        jQuery('<div id="tooltip" class="tooltipflot">' + contents + '</div>').css({
+        position: 'absolute',
+                display: 'none',
+                top: y + 5,
+                left: x + 5
+        }).appendTo("body").fadeIn(200);
+        }
+
+
+var plot = jQuery.plot(jQuery("#chartplace"),
+        [{data: flash, label: "<?php echo Lang::get('backend/home.order'); ?> (<?php echo Lang::get('backend/home.number'); ?>)", color: "#069"}, {data: html5, label: "<?php echo Lang::get('backend/home.order_anly_users'); ?> (<?php echo Lang::get('backend/home.order_anly_users_count'); ?>)", color: "#FF6600"}], {
+series: {
+lines: {show: true, fill: true, fillColor: {colors: [{opacity: 0.05}, {opacity: 0.15}]}},
+        points: {show: true}
+},
+        legend: {position: 'nw'},
+        grid: {hoverable: true, clickable: true, borderColor: '#ccc', borderWidth: 1, labelMargin: 10},
+        xaxis: {mode: "time", timeformat: "%d/%m/%y"},
+        yaxis: {min: 0}
+});
+        var previousPoint = null;
+        jQuery("#chartplace").bind("plothover", function(event, pos, item) {
+jQuery("#x").text(pos.x.toFixed(2));
+        jQuery("#y").text(pos.y.toFixed(2));
+        if (item) {
+if (previousPoint != item.dataIndex) {
+previousPoint = item.dataIndex;
+        jQuery("#tooltip").remove();
+        var x = '<?php echo Lang::get('backend / home.months'); ?>' + item.datapoint[0].toFixed(0),
+        y = item.datapoint[1].toFixed(0);
+        showTooltip(item.pageX, item.pageY,
+                item.series.label + " : " + y);
+}
+
+} else {
+jQuery("#tooltip").remove();
+        previousPoint = null;
+}
+
+});
+        jQuery("#chartplace").bind("plotclick", function(event, pos, item) {
+if (item) {
+jQuery("#clickdata").text("You clicked point " + item.dataIndex + " in " + item.series.label + ".");
+        plot.highlight(item.series, item.datapoint);
+}
+});
+        });</script>
+
+<?php
+$rolelist = unserialize(Auth::user()->roles);
+$check = false;
+if (is_array($rolelist)) {
+    foreach ($rolelist as $item) {
+        if (strpos($item, 'StatisticView') >= 0 && strpos($item, 'StatisticView') !== false) {
+            $check = true;
+            break;
+        } else {
+            $check = false;
+        }
+    }
+}
+if ($check == true) {
+    ?>
+    <script>
+                jQuery(document).ready(function() {
+
+
+        /*****SIMPLE CHART*****/
+        var flash = [<?php
+    foreach ($arrreturn3 as $key => $value) {
+        echo '[' . $key . '000,' . $value . '],';
+    }
+    ?>];
+                var html5 = [<?php
+    foreach ($arrreturn2 as $key => $value) {
+        echo '[' . $key . '000,' . $value . '],';
+    }
+    ?>];
+                function showTooltip(x, y, contents) {
+                jQuery('<div id="tooltip1" class="tooltipflot1">' + contents + '</div>').css({
+                position: 'absolute',
+                        display: 'none',
+                        top: y + 5,
+                        left: x + 5
+                }).appendTo("body").fadeIn(200);
+                }
+
+
+        var plot = jQuery.plot(jQuery("#chartplace1"),
+                [{data: flash, label: "<?php echo Lang::get('backend/home.order_anly_tongtien'); ?> (<?php echo Lang::get('backend/home.money_format'); ?>)", color: "#069"}, {data: html5, label: "<?php echo Lang::get('backend/home.order_anly_lai'); ?> (<?php echo Lang::get('backend/home.money_format'); ?>)", color: "#FF6600"}], {
+        series: {
+        lines: {show: true, fill: true, fillColor: {colors: [{opacity: 0.05}, {opacity: 0.15}]}},
+                points: {show: true}
+        },
+                legend: {position: 'nw'},
+                grid: {hoverable: true, clickable: true, borderColor: '#ccc', borderWidth: 1, labelMargin: 10},
+                xaxis: {mode: "time", timeformat: "%d/%m/%y"}
+        });
+                var previousPoint = null;
+                jQuery("#chartplace1").bind("plothover", function(event, pos, item) {
+        jQuery("#x").text(pos.x.toFixed(2));
+                jQuery("#y").text(pos.y.toFixed(2));
+                if (item) {
+        if (previousPoint != item.dataIndex) {
+        previousPoint = item.dataIndex;
+                jQuery("#tooltip1").remove();
+                var x = '<?php echo Lang::get('backend / home.months'); ?>' + item.datapoint[0].toFixed(0),
+                y = item.datapoint[1].toFixed(0);
+                showTooltip(item.pageX, item.pageY,
+                        item.series.label + " : " + y);
+        }
+
+        } else {
+        jQuery("#tooltip1").remove();
+                previousPoint = null;
+        }
+
+        });
+                jQuery("#chartplace1").bind("plotclick", function(event, pos, item) {
+        if (item) {
+        jQuery("#clickdata").text("You clicked point " + item.dataIndex + " in " + item.series.label + ".");
+                plot.highlight(item.series, item.datapoint);
+        }
+        });
+        });
+    </script>
+    <?php
+}
+?>
+<div id="contentwrapper" class="contentwrapper">
+    <div class="subcontent">
+        <div class="notibar announcement">
+            <a class="close"></a>
+            <h3><?php echo Lang::get('general.alert'); ?></h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </div>
+        <div class="two_third dashboard_left">
+            <ul class="shortcuts">
+                <li><a href="#"><h3><?php echo $countall['CountNews']; ?></h3><span><?php echo Lang::get('backend/home.count_news'); ?></span></a></li>
+                <li><a href="#"><h3><?php echo $countall['CountProduct']; ?></h3><span><?php echo Lang::get('backend/home.count_product'); ?></span></a></li>
+                <li><a href="#"><h3><?php echo $countall['CountOrder']; ?></h3><span><?php echo Lang::get('backend/home.count_order'); ?></span></a></li>
+                <li><a href="#"><h3><?php echo $countall['CountCustomer']; ?></h3><span><?php echo Lang::get('backend/home.count_customer'); ?></span></a></li>
+                <li><a href="#"><h3><?php echo $countall['CountSupporter']; ?></h3><span><?php echo Lang::get('backend/home.count_support'); ?></span></a></li>
+                <li><a href="#"><h3><?php echo $countall['CountFeedBack']; ?></h3><span><?php echo Lang::get('backend/home.count_feedback'); ?></span></a></li>
+                <li><a href="#"><h3><?php echo $countall['CountProject']; ?></h3><span><?php echo Lang::get('backend/home.count_project'); ?></span></a></li>
+                <li><a href="#"><h3><?php echo $countall['CountPage']; ?></h3><span><?php echo Lang::get('backend/home.count_pages'); ?></span></a></li>
+                <li><a href="#"><h3><?php echo $countall['CountAdmin']; ?></h3><span><?php echo Lang::get('backend/home.count_admins'); ?></span></a></li>
+                <li><a href="#"><h3><?php echo $countall['CountMenu']; ?></h3><span><?php echo Lang::get('backend/home.count_menus'); ?></span></a></li>
+            </ul>
+            <br clear="all" />
+            <div class="contenttitle2 nomargintop">
+                <h3><?php echo Lang::get('backend/home.new_order'); ?></h3>
+            </div>
+            <table cellpadding="0" cellspacing="0" border="0" class="stdtable stdtablecb overviewtable2">
+                <colgroup>
+
+                    <col class="con1" />
+                    <col class="con0" />
+                    <col class="con1" />
+                    <col class="con0" />
+                </colgroup>
+                <thead>
+                    <tr>
+
+                        <th class="head1"><?php echo Lang::get('backend/home.order_code'); ?></th>
+                        <th class="head0"><?php echo Lang::get('backend/home.order_email'); ?></th>
+                        <th class="head0"><?php echo Lang::get('backend/home.order_total'); ?></th>
+                        <th class="head1"><?php echo Lang::get('backend/home.order_times'); ?></th>
+                    </tr>
+                </thead>
+                <?php if(isset($arrOrdernew)): ?>
+                <?php foreach($arrOrdernew as $item): ?>
+                <tbody>
+                    <tr>                        
+                        <td><?php echo $item->orderCode; ?></td>
+                        <td><?php echo $item->email; ?></td>
+                        <td><?php echo number_format($item->total); ?>&nbsp; <?php echo Config::get('configall.pay-tiente'); ?></td>
+                        <td><?php echo date('d/m/Y h:m:i',$item->time); ?></td>
+                    </tr>                    
+                </tbody>
+                <?php endforeach; ?>
+                <?php endif; ?>
+            </table>
+
+            <br clear="all" />
+            <div class="contenttitle2 nomargintop">
+                <h3><?php echo Lang::get('backend/home.chart'); ?></h3>
+            </div>
+            <?php echo Form::open(array('action'=>'\BackEnd\HomeController@postHome', 'class'=>'stdform stdform2','id'=>'fillterfrom')); ?>
+            &nbsp;&nbsp; <?php echo Lang::get('general.date_from'); ?> <input id="datepicker" name="timeform" type="text" class="longinput" />&nbsp;
+            &nbsp;<?php echo Lang::get('general.date_to'); ?>&nbsp;&nbsp;<input id="datepicker1"  name="timeto" type="text" class="datepicker"  />
+            &nbsp;
+            <input type="submit" class="radius3" value="<?php echo Lang::get('general.views-aly'); ?>"/>
+            <?php echo Form::close(); ?>
+            <br clear="all" />
+            <blockquote>
+                <span>  <?php echo Lang::get('backend/home.order_anly_from'); ?>  : <strong> <?php echo date('d/m/Y',$arrstatic['timeformanaly']); ?></strong> <?php echo Lang::get('backend/home.order_anly_to'); ?> : <strong> <?php echo date('d/m/Y',$arrstatic['timetoanaly']); ?></strong></span>
+                <br><span>  <?php echo Lang::get('backend/home.order_anly_total'); ?> : <strong> <?php echo $arrstatic['totalorder']; ?></strong> ( Đơn hàng )</span>
+                <br><span>  <?php echo Lang::get('backend/home.order_anly_users'); ?> : <strong> <?php echo number_format($arrstatic['totauser']); ?></strong> ( <?php echo Lang::get('backend/home.order_anly_users_count'); ?> )</span>
+            </blockquote>
+            <br clear="all" />
+            <div id="chartplace" style="height:300px;"></div>
+            <?php
+            if ($check == true) {
+                ?>
+                <br clear="all" />
+                <blockquote>
+                    <span>  <?php echo Lang::get('backend/home.order_anly_from'); ?>  : <strong> <?php echo date('d/m/Y',$arrstatic['timeformanaly']); ?></strong> <?php echo Lang::get('backend/home.order_anly_to'); ?> : <strong> <?php echo date('d/m/Y',$arrstatic['timetoanaly']); ?></strong></span>
+                    <br><span>  <?php echo Lang::get('backend/home.order_anly_lai'); ?> : <strong> <?php echo number_format($arrstatic['totalai']); ?></strong> (  <?php echo Config::get('configall.pay-tiente'); ?> )</span>
+                    <br><span>  <?php echo Lang::get('backend/home.order_anly_tongtien'); ?> : <strong> <?php echo number_format($arrstatic['tongtien']); ?></strong> (  <?php echo Config::get('configall.pay-tiente'); ?> )</span>
+                </blockquote>
+                <div id="chartplace1" style="height:300px;"></div>
+                <?php
+            }
+            ?>
+            <br clear="all" />
+        </div>
+        <div class="one_third last dashboard_right">
+            <div class="contenttitle2 nomargintop">
+                <h3><?php echo Lang::get('backend/home.order'); ?></h3>
+            </div>
+            <ul class="toplist">
+                <li>
+                    <div>
+                        <span class="three_fifth">
+                            <span class="left">
+                                <span class="title"><a href="<?php echo URL::action('\BackEnd\OrderController@getOrderFillterView', array('null', 'null', 1)); ?>"><?php echo Lang::get('backend/home.order_ok'); ?></a></span>
+                                <span class="desc"><?php echo Lang::get('backend/home.order_ok_detail'); ?></span>
+                            </span><!--left-->
+                        </span><!--three_fourth-->
+                        <span class="two_fifth last">
+                            <span class="right">
+                                <span class="h3"><a style="color: #59bf04" href="<?php echo URL::action('\BackEnd\OrderController@getOrderFillterView', array('null', 'null', 1)); ?>"><?php echo $CountUsers; ?></a></span>
+                            </span><!--right-->
+                        </span><!--one_fourth-->
+                        <br clear="all">
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <span class="three_fifth">
+                            <span class="left">
+                                <span class="title"><a href="<?php echo URL::action('\BackEnd\OrderController@getOrderFillterView', array('null', 'null', '0')); ?>"><?php echo Lang::get('backend/home.order_pending'); ?></a></span>
+                                <span class="desc"><?php echo Lang::get('backend/home.order_pending_detail'); ?></span>
+                            </span><!--left-->
+                        </span><!--three_fourth-->
+                        <span class="two_fifth last">
+                            <span class="right">
+                                <span class="h3"><a  style="color:red" href="<?php echo URL::action('\BackEnd\OrderController@getOrderFillterView', array('null', 'null', '0')); ?>"><?php echo $CountOrderOk; ?></a></span>
+                            </span><!--right-->
+                        </span><!--one_fourth-->
+                        <br clear="all">
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <span class="three_fifth">
+                            <span class="left">
+                                <span class="title"><a href="<?php echo URL::action('\BackEnd\OrderController@getOrderFillterView', array('null', 'null', 2)); ?>"><?php echo Lang::get('backend/home.order_cancel'); ?></a></span>
+                                <span class="desc"><?php echo Lang::get('backend/home.order_cancel_detail'); ?></span>
+                            </span><!--left-->
+                        </span><!--three_fourth-->
+                        <span class="two_fifth last">
+                            <span class="right">
+                                <span class="h3"><a style="color:#fbe187" href="<?php echo URL::action('\BackEnd\OrderController@getOrderFillterView', array('null', 'null', 2)); ?>"><?php echo $CountOrderPen; ?></a></span>
+                            </span><!--right-->
+                        </span><!--one_fourth-->
+                        <br clear="all">
+                    </div>
+                </li>
+            </ul>
+            <div class="widgetbox">
+                <div class="title"><h3><?php echo Lang::get('backend/home.latest_account'); ?></h3></div>
+                <div class="widgetcontent userlistwidget nopadding">
+                    <ul>
+                        <?php if(isset($arrNewUsers)): ?>
+                        <?php foreach($arrNewUsers as $item): ?>
+                        <li style="height: 60px;">
+                            <div class="avatar"><img alt="" src="http://www.gravatar.com/avatar/<?php echo md5($item->email); ?>?s=50&d=identicon&r=PG" /></div>
+                            <div class="info">
+                                <a href="#"><?php echo $item->firstname; ?> <?php echo $item->lastname; ?></a> <br />
+                                <?php echo $item->email; ?> <br /><?php echo date('d/m/Y h:m:i', $item->time) ?>
+                            </div><!--info-->
+                        </li>                        
+                        <?php endforeach; ?>
+                        <?php endif; ?>
+                    </ul>
+                    <a class="more" href="<?php echo URL::action('\BackEnd\UserController@getUserView'); ?>"><?php echo Lang::get('backend/home.more'); ?></a>
+                </div><!--widgetcontent-->
+            </div>
+            <div class="widgetbox">
+                <div class="title"><h3><?php echo Lang::get('backend/home.latest_news'); ?></h3></div>
+                <div class="widgetcontent">
+                    <div class="widgetcontent userlistwidget nopadding">
+                        <ul>
+                            <?php if(isset($arrLastNew)): ?>
+                            <?php foreach($arrLastNew as $item): ?>
+                            <li style="height: 60px;">
+                                <?php
+                                $pieces = explode(",", $item->newsImg);
+                                ?>
+                                <?php $url = Timthumb::link($pieces[0], 50, 50, 0); ?>
+                                <div class="avatar"><img alt="" src="<?php echo Asset($url); ?>" /></div>
+                                <div class="info">
+                                    <a href="#"><?php echo $item->newsName; ?></a> <br />
+                                    <?php echo date('d/m/Y h:m:i', $item->time) ?>
+                                </div><!--info-->
+                            </li>                        
+                            <?php endforeach; ?>
+                            <?php endif; ?>
+                        </ul>
+                        <a class="more" href="<?php echo action('\BackEnd\NewsController@getNewsView'); ?>"><?php echo Lang::get('backend/home.more'); ?> </a>
+                    </div>
+
+                </div> <!--widgetcontent-->
+            </div>
+        </div>
+    </div>
+</div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("backend.template", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
