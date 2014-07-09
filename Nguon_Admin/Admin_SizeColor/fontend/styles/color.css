@@ -1,0 +1,291 @@
+/* 
+
+SmartShop - CSS File
+
+CHANGE COLOR STYLE
+
+*/
+
+body {color:#666; }
+#bodychild { background:#fff;}
+
+/* Container */
+#outercontainer{border-top:solid 7px #333333}
+
+#outerfootersidebar{ background:#f6f6f6; border-top:4px solid #e9e9e9; border-bottom:4px solid #e9e9e9;}
+#outerfooter{ background:#fff;}
+
+/*============================================== GENERAL SECTION ==============================================*/
+/* Link color */
+a, a:visited, .colortext, .colortext a, .colortext a:visited{color:#f05117}
+a:hover, .colortext:hover, .colortext:hover{color:#333;}
+
+/* Text color */
+.customcolor{color:#757575;}
+#aftertheheader .pagedesc{color:#888;}
+
+/* Heading */
+h1, h2, h3, h4, h5, h6{color:#333;}
+.title{ border-bottom:1px solid #ededed;}
+
+/*============================================== HEADER AND MENU SECTION ==============================================*/
+
+/* Top chart */
+#chart p{ color:#bbb; }
+.shop-box {
+	background:#fff;
+	border:1px solid #eaeaea;
+	border-width:1px 1px 0px 1px;}
+.shop-box li{border-bottom:1px solid #ededed;}
+.shop-box h2{ color:#f05117;}
+
+/* User Nav */
+#user-nav li a{ color:#888;}
+#user-nav li a:hover, #user-nav li.current a{ color:#333;}
+
+/* Menu top color */
+#navigation{ border:1px solid #cbcbcb;}
+.sf-menu a, .sf-menu a:visited{color:#555555;}/* 1st level */
+.sf-menu a:hover, .sf-menu li.current a{color:#f05117;}/* 1st level */
+.sf-menu li.sfHover a:hover{color:#f05117;}/* 2nd level */
+
+.sf-menu > li {
+    border-right: 1px solid #ddd;
+}
+.sf-menu > li:before {
+    border-right: 1px solid #fff;
+}
+
+.sf-menu li:hover ul,
+.sf-menu li.sfHover ul {
+	background:#fafafa;
+	color:#666;
+	border:1px solid #cbcbcb;
+}
+
+.sf-menu li li{ border-bottom:1px solid #dadada;}
+.sf-menu li li:last-child{border-bottom:0px;}
+
+#topnav li li a, .sf-menu li li a, .sf-menu li li a:visited {color:#666;}
+#topnav li li a:hover{color:#303030; background:#f1f1f1;}
+
+#searchform .bgsearch{background:#fff; border:1px solid #d1d1d1;}
+
+#beforecontent{ border-bottom:1px solid #ededed;}
+
+/*============================================== SLIDER SECTION ==============================================*/
+#slidercontainer{border-bottom:1px solid #ededed;}
+
+
+/*============================================== CONTENT SECTION ==============================================*/
+
+#maincarousel h5{ color:#666;}
+
+/* My Account */
+.my_account_orders thead tr th{border-top:1px solid #e7e7e7; border-left:1px solid #e7e7e7;}
+.my_account_orders thead tr th.no-order{border:1px solid #e7e7e7; border-width:1px 0px 1px 1px; }
+.my_account_orders thead tr th.status{border-right:1px solid #e7e7e7;  }
+.my_account_orders td{ border:1px solid #ededed; border-width:0px 0px 1px 0px;}
+
+
+/* Cart */
+#cart thead tr th{border-top:1px solid #e7e7e7; border-left:1px solid #e7e7e7;}
+#cart thead tr th.remove{border:1px solid #e7e7e7; border-width:1px 0px 1px 1px; }
+#cart thead tr th.total{border-right:1px solid #e7e7e7; }
+#cart td{ border:1px solid #ededed; border-width:0px 0px 1px 0px;}
+.remove{color:#888; border:1px solid #e0e0e0;}
+.remove a{color:#888;}
+
+
+/* Checkout */
+.checkout thead tr th{border-top:1px solid #e7e7e7; border-left:1px solid #e7e7e7; }
+.checkout thead tr th.total{border-right:1px solid #e7e7e7;}
+.checkout td{ border:1px solid #ededed; border-width:0px 0px 1px 0px;}
+
+#payment {background: #f9f9f9;}
+#payment ul.payment_methods {border-bottom: 1px solid #ededed;}
+#payment ul.payment_methods li label{color:#f05117;}
+#payment div.form-row {border-top: 1px solid #FFFFFF;}
+
+
+/* Form */
+input[type="text"],input[type="email"],
+textarea, input[type="password"], select{
+	border:1px solid #d1d1d1;
+	color:#666;
+}
+
+/* Horizontal Line */
+hr {color:#ededed;	background-color:#ededed;}
+.separator.line{ border-bottom:1px solid #ededed}
+
+.imgborder{ border:1px solid #e6e6e6; border-bottom:1px solid #ccc;}
+.frame{ border:1px solid #e7e7e7; border-bottom:2px solid #cbcbcb; padding:1px;}
+.price{ color:#333;}
+
+
+/* Button */
+.button, .button:visited, input[type="submit"]{
+	background: #f05117; /* for non-css3 browsers */
+	background: -webkit-gradient(linear, left top, left bottom, from(#ff703b), to(#f05117)); /* for webkit browsers */
+	background: -moz-linear-gradient(top,  #ff703b,  #f05117); /* for firefox 3.6+ */
+	border:solid 1px #f05117;
+	color:#fff;
+}
+
+.button:hover, input[type="submit"]:hover{
+	background: #ff703b; /* for non-css3 browsers */
+	background: -webkit-gradient(linear, left top, left bottom, from(#f05117), to(#ff703b)); /* for webkit browsers */
+	background: -moz-linear-gradient(top,  #f05117,  #ff703b); /* for firefox 3.6+ */
+	border:solid 1px #f05117;
+	color:#fff;
+}
+
+
+/* Dropcaps */	
+.dropcap1{text-shadow:1px 1px 0 #ededed; color:#f05117}
+.dropcap2, .circle{background:#f05117; color:#fff;}		
+.dropcap3{	background:#f05117; color:#fff;}
+
+/* Highlight */
+.highlight1{background:#333; color:#fff;}	
+.highlight2{background:#ebebeb;  border:solid 1px #f7f7f7}
+
+/* Code */
+code {
+	border-left:4px solid #eaeaea;
+}
+
+		
+/* Tabs */
+ul.tabs li {
+	color:#666;
+	border: 1px solid #e7e7e7;
+	border-width:1px 1px 1px 0px;
+	background: #f5f5f5; /* for non-css3 browsers */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fdfdfd', endColorstr='#f5f5f5'); /* for IE */
+	background: -webkit-gradient(linear, left top, left bottom, from(#fdfdfd), to(#f5f5f5)); /* for webkit browsers */
+	background: -moz-linear-gradient(top,  #fdfdfd,  #f5f5f5); /* for firefox 3.6+ */
+}
+ul.tabs li:first-child{border-left: 1px solid #e7e7e7;}
+ul.tabs li a {color:#666;}
+ul.tabs li.active{background:#fff;}
+html ul.tabs li.active a{ color:#f05117; }
+#tab-body{
+	color:#666;
+	border: 1px solid #e7e7e7;
+	border-bottom:2px solid #cbcbcb;
+	background: #f5f5f5; /* for non-css3 browsers */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fdfdfd', endColorstr='#f5f5f5'); /* for IE */
+	background: -webkit-gradient(linear, left top, left bottom, from(#fdfdfd), to(#f5f5f5)); /* for webkit browsers */
+	background: -moz-linear-gradient(top,  #fdfdfd,  #f5f5f5); /* for firefox 3.6+ */
+}
+
+/* jQuery Toggles */
+h2.trigger span {color:#333;}
+h2.active span{ color:#f05117}
+h2.trigger span:hover {color:#f05117} 
+
+/* Tables */
+th{
+	color:#666;
+	border-bottom: 1px solid #e7e7e7;
+	background: #fcfcfc; /* for non-css3 browsers */
+	background: -webkit-gradient(linear, left top, left bottom, from(#fdfdfd), to(#f7f7f7)); /* for webkit browsers */
+	background: -moz-linear-gradient(top,  #fdfdfd,  #f7f7f7); /* for firefox 3.6+ */
+	}
+table {border: 1px solid #e7e7e7;border-bottom:0;}
+tr td {border-bottom: 1px solid #e7e7e7;}
+tr.odd td {background: #F2F7FC;}
+
+/* Alert */
+.alert {
+    background: #f5f3bb;
+    border: 1px solid #ece7b9;
+    color: #333;
+}
+.alert:before{border: 1px solid #ffffcc;}
+.alert a:link, .alert a:visited{ color:#858585;}
+.alert a:hover{ text-decoration:underline;}
+
+
+/* contact */
+span.required{color:#ff0000;}
+#message{color:#ff0000}
+
+
+/*============================================== BLOG SECTION ==============================================*/
+.post{border-bottom:1px solid #ededed}
+.posttitle a, .posttitle a:visited{color:#333;}
+.posttitle a:hover{color:#f05117}
+.postimg img{border:1px solid #e7e7e7; background:#f7f7f7; border-bottom:2px solid #cbcbcb;}
+.entry-utility a:hover{ color:#333;}
+
+/* Comment */
+.tdate, .reply{ font-size:11px; color:#888; }
+.reply a, .reply a:visited{color:#888;}
+.reply a:hover{color:#f05117;}
+.fn a, .fn a:visited{color:#f05117;}
+.fn a:hover{color:#888;}
+.commenttext{ background:#f9f9f9;}
+
+/* Page Navi*/
+.pagenavi a, .pagenavi a:visited{
+	color:#333;
+	border:1px solid #e7e7e7;
+	border-bottom:2px solid #cbcbcb;
+	background: #f7f7f7; /* for non-css3 browsers */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fdfdfd', endColorstr='#f7f7f7'); /* for IE */
+	background: -webkit-gradient(linear, left top, left bottom, from(#fdfdfd), to(#f7f7f7)); /* for webkit browsers */
+	background: -moz-linear-gradient(top,  #fdfdfd,  #f7f7f7); /* for firefox 3.6+ */
+}
+
+.pagenavi a:hover, .pagenavi .current{
+	background: #e7e7e7; /* for non-css3 browsers */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7f7f7', endColorstr='#e7e7e7'); /* for IE */
+	background: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#e7e7e7)); /* for webkit browsers */
+	background: -moz-linear-gradient(top,  #f7f7f7,  #e7e7e7); /* for firefox 3.6+ */
+	color:#333;
+	border:1px solid #e7e7e7;
+	border-bottom:2px solid #cbcbcb;
+	}
+
+/*============================================== PRODUCTS SECTION ==============================================*/
+
+/* Product detail*/
+.quantity.buttons_added{ border:1px solid #CCCCCC;}
+.quantity input.plus, .quantity input.minus { background:#eee; color: #000;}
+.quantity input.minus:hover, .quantity input.plus:hover { background: #dadada;}
+.quantity input.qty {background:#f8f8f8;}
+
+/* Checkout */
+#shiptobilling label.checkbox {color:#f05117;}
+
+
+/*============================================== PORTFOLIO SECTION ==============================================*/
+.ts-display-pf-text h2 a, .ts-display-pf-text h2 a:visited{color:#f05117;}
+.ts-display-pf-col-4 .ts-display-pf-img{ border:1px solid #e6e6e6; background:#f7f7f7; border-bottom:2px solid #cbcbcb;}
+.ts-display-pf-img a .rollover{background-color:#000;}
+
+/*============================================== SIDEBAR SECTION ==============================================*/
+.widget-title{color:#f05117;}
+#sidebar li, #sidebar li li a{ color:#333; }
+#sidebar li li{border-bottom:solid 1px #f2f2f2;}
+#sidebar li li a:hover{color:#f05117;}
+
+
+#sidebar .lp-widget li h3 a{color:#f05117;}
+#sidebar .lp-widget li h3 a:hover{color:#666}
+
+
+/*============================================== FOOTER SIDEBAR SECTION ==============================================*/
+#footersidebar .widget-title{color:#333333;}
+
+/* Twitter */
+#footersidebar .tweet_list li { border-bottom:1px solid #dcdcdc; }
+.tweet_time a{ color:#999;}
+
+/*============================================== FOOTER SECTION ==============================================*/
+#footer{color:#777;}
+#footer a, #footer a:visited{color:#333333;}
+#footer a:hover{ text-decoration:underline;}
