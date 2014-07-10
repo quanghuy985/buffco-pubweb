@@ -41,7 +41,7 @@ class LoginController extends \BaseController {
     }
 
     public function postDangNhap() {
-        if (Auth::attempt(array('email' => Input::get('email'), 'password' => Input::get('password'), 'status' => 1, 'admin' => 1), false)) {
+        if (Auth::attempt(array('email' => Input::get('email'), 'password' => Input::get('password'), 'status' => 5, 'admin' => 1), false)) {
             session_start();
             $_SESSION['urlfolderupload'] = Auth::user()->email;
             if (Session::has('urlBackAdmin')) {
@@ -52,7 +52,19 @@ class LoginController extends \BaseController {
                 return Redirect::action('\BackEnd\HomeController@getHome');
             }
         } else {
-            return Redirect::back()->withInput()->withErrors(Lang::get('messages.login.error'));
+            if (Auth::attempt(array('email' => Input::get('email'), 'password' => Input::get('password'), 'status' => 1, 'admin' => 1), false)) {
+                session_start();
+                $_SESSION['urlfolderupload'] = Auth::user()->email;
+                if (Session::has('urlBackAdmin')) {
+                    $urlBack = Session::get('urlBackAdmin');
+                    return Redirect::to($urlBack[0]);
+                    Session::forget('urlBackAdmin');
+                } else {
+                    return Redirect::action('\BackEnd\HomeController@getHome');
+                }
+            } else {
+                return Redirect::back()->withInput()->withErrors(Lang::get('messages.login.error'));
+            }
         }
     }
 
