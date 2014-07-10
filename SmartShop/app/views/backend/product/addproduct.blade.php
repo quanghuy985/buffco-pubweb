@@ -43,6 +43,7 @@
 
                 function addstore_product() {
                     NProgress.start();
+                    jQuery("#form-add-store").html('<img src="{{Asset('backend/images/loaders/loader6.gif')}}" alt="" title="" style="margin-left: 47%;margin-top: 25px;"/>');
                     var request = jQuery.ajax({
                         url: "{{URL::action('\BackEnd\ProductController@postDialogGetcolorsize')}}",
                         type: "POST"
@@ -80,13 +81,17 @@
                                         check = true;
                                     }
                                 }
+                                if(!jQuery.isNumeric(quantity)){
+                                    jAlert('Nhập số lượng sản phẩm !', 'Thông báo !');
+                                }else{
                                 if (check == true) {
-                                    alert('Màu sắc và size muốn thêm đã tồn tại ');
+                                  jAlert('Màu sắc và size muốn thêm đã tồn tại !', 'Thông báo !');
                                 } else {
                                     var html = '<tr><td><input type="text" name="quantity[]" value="' + quantity + '"/></td><td>' + color_text + '<input type="hidden" name="color[]" value="' + color + '"/></td><td class="center">' + size_text + '<input type="hidden" name="size[]" value="' + size + '"/></td><td class="center"><a href="javascript:void(0);" onclick="removeThis(this);">X</a></td></tr>';
                                     jQuery(".datastore").append(html);
                                     jQuery("#dialog-form-add-store").dialog("close");
                                 }
+                            }
                             }
                         },
                     });
@@ -527,40 +532,8 @@ if (isset($productedit)) {
     </form>
 </div>
 <div id="dialog-form-add-store" title="Thêm kho hàng" style="display: none">
-    <script>
-        jQuery(document).ready(function() {
-            jQuery("#form-add-store").validate({
-                rules: {
-                    quantity_product: {required: true},
-                    cateSlug: {required: true},
-                }
-            });
-        });</script>
-    <form id="form-add-store" class="stdform ">
-        <div class="notibar announcement" id="error_add_manufacturer" style="display: none">
-
-        </div>
-        <p>
-            <label>{{Lang::get('general.product.quantity')}}</label> 
-            <span class="field">
-                {{Form::text('quantity_product[]', null, array('class'=>'longinput', 'id'=>'quantity_product', 'placeholder'=>Lang::get('placeholder.product_name')))}}
-            </span>
-        </p>
-        <p>
-            <label>{{Lang::get('general.product.color')}}</label>
-            <span class="field">
-                {{Form::select('color_list[]', $arraycolor,null,array('id'=>'color_list'))}}
-                <a style="color: #00F;text-decoration: underline;" href="javascript:void(0);" onclick="closeDialogStore('color');" target="_blank" class="submit radius2" >{{Lang::get('button.add').'?'}}</a>
-            </span>
-        </p>
-        <p>
-            <label>{{Lang::get('general.product.size')}}</label>
-            <span class="field">
-                {{Form::select('size_list[]', $arraysize,null,array('id'=>'size_list'))}}
-                <a style="color: #00F;text-decoration: underline;" href="javascript:void(0);" onclick="closeDialogStore('size')" target="_blank" class="submit radius2" >{{Lang::get('button.add').'?'}}</a>
-            </span>
-
-        </p>
+    <form id="form-add-store" class="stdform">
+        <img src="{{Asset('backend/images/loaders/loader6.gif')}}" alt="" title="" style="margin-left: 47%;margin-top: 25px;"/>
     </form>
 </div>
 <div id="dialog-form-add-category-product" title="Thêm danh mục sản phẩm" style="display: none">

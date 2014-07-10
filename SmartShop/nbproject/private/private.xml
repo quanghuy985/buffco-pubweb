@@ -51,6 +51,7 @@
             <file>file:/D:/LOCALHOST/www/SmartShop/app/views/backend/errors/AccessDeny.blade.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/controllers/backend/UserController.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/backend/ckfinder/plugins/cropresize/plugin.php</file>
+            <file>file:/D:/LOCALHOST/www/SmartShop/app/models/backend/tblPageModel.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/backend/ckfinder/core/connector/php/php5/CommandHandler/FileUpload.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/controllers/backend/ProjectController.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/backend/css/style.default.css</file>
@@ -71,6 +72,7 @@
             <file>file:/D:/LOCALHOST/www/SmartShop/app/config/database.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/bootstrap/autoload.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/views/backend/product/addproduct.blade.php</file>
+            <file>file:/D:/LOCALHOST/www/SmartShop/app/models/backend/tblProductMeta.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/views/backend/manufacture/Manufacturerajax.blade.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/models/backend/tblColorModel.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/views/backend/product/sizeManage.blade.php</file>
@@ -91,6 +93,7 @@
             <file>file:/D:/LOCALHOST/www/SmartShop/app/views/backend/product/cateProductAjax.blade.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/lang/vi/backend/home.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/index.php</file>
+            <file>file:/D:/LOCALHOST/www/SmartShop/app/controllers/backend/SettingController.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/models/backend/tblRolesModel.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/controllers/backend/LoginController.php</file>
             <file>file:/D:/LOCALHOST/www/SmartShop/app/views/backend/product/cateProductManage.blade.php</file>
