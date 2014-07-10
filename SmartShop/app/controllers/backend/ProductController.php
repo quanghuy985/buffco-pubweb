@@ -24,7 +24,7 @@ class ProductController extends \BaseController {
         $listcolor = $tblColor->selectAllColorNoPaginate();
         $listcolorarray = array();
         foreach ($listcolor as $item) {
-            $listcolorarray = $listcolorarray + array($item->id => '<span>' . $item->color_name . '</span>');
+            $listcolorarray = $listcolorarray + array($item->id => $item->color_name);
         }
         $tblSize = new tblSizeModel();
         $listsize = $tblSize->selectAllSizeNoPaginate();
@@ -106,8 +106,10 @@ jQuery(\'select\').uniform();
             }
             $quantityrarr = Input::get('quantity');
             $quantityinsert = 0;
-            foreach ($quantityrarr as $value) {
-                $quantityinsert = $quantityinsert + $value;
+            if ($quantityrarr != null) {
+                foreach ($quantityrarr as $value) {
+                    $quantityinsert = $quantityinsert + $value;
+                }
             }
             $tblProduct = new TblProductModel();
             $idp = $tblProduct->insertProduct($inputs['productCode'], $inputs['productName'], $inputs['productDescription'], $inputs['productAttributes'], str_replace(',', '', $inputs['import_prices']), str_replace(',', '', $inputs['productPrice']), str_replace(',', '', $inputs['salesPrice']), strtotime($inputs['startSales']), strtotime($inputs['endSales']), $slug->makeSlugs($inputs['productName']), $inputs['productTag'], $inputs['manufactureID'], 1, $listcateid, $inputs['images'], $quantityinsert);
@@ -188,8 +190,10 @@ jQuery(\'select\').uniform();
             }
             $quantityrarr = Input::get('quantity');
             $quantityinsert = 0;
-            foreach ($quantityrarr as $value) {
-                $quantityinsert = $quantityinsert + $value;
+            if ($quantityrarr != null) {
+                foreach ($quantityrarr as $value) {
+                    $quantityinsert = $quantityinsert + $value;
+                }
             }
             $tblProduct = new TblProductModel();
             $idp = $tblProduct->updateProduct($inputs['id'], $inputs['productCode'], $inputs['productName'], $inputs['productDescription'], $inputs['productAttributes'], str_replace(',', '', $inputs['import_prices']), str_replace(',', '', $inputs['productPrice']), str_replace(',', '', $inputs['salesPrice']), strtotime($inputs['startSales']), strtotime($inputs['endSales']), $slug->makeSlugs($inputs['productName'] . '-' . $inputs['id']), $inputs['productTag'], $inputs['manufactureID'], 1, $listcateid, $inputs['images'], $quantityinsert);
