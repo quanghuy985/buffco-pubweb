@@ -49,10 +49,15 @@
             <td class="head0">
                 <?php echo date('d/m/Y', $item->time); ?>
             </td>
-            <td class="head1" style="text-align: center;">
+            <td class="head1">
                 <a title="{{Lang::get('general.edit')}}" href="<?php echo action('\BackEnd\ProductController@postProductEdit') ?>/{{$item->id}}"> {{Lang::get('general.edit')}}</a>
-                &nbsp;&nbsp;|&nbsp;&nbsp;
-                <a title="{{Lang::get('general.delete')}}" href="javascript:void(0);" onclick="deleteproduct('{{URL::action('\BackEnd\ProductController@postDeleteProduct')}}',{{$item->id}});"> {{Lang::get('general.delete')}}</a>
+                <?php if ($item->status == 1) { ?>
+                    &nbsp;&nbsp;|&nbsp;&nbsp;
+                    <a title="{{Lang::get('general.delete')}}" href="javascript:void(0);" onclick="deleteproduct('{{URL::action('\BackEnd\ProductController@postDeleteProduct')}}',{{$item->id}});"> {{Lang::get('general.delete')}}</a>
+                <?php } else { ?>
+                    &nbsp;&nbsp;|&nbsp;&nbsp;
+                    <a title="{{Lang::get('general.world')}}" href="javascript:void(0);" onclick="active_element('{{URL::action('\BackEnd\ProductController@postActiveProduct')}}',{{$item->id}});"> {{Lang::get('general.world')}}</a>
+                <?php } ?>
             </td>
         </tr>
 

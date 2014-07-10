@@ -30,6 +30,7 @@ Route::post('/post', function () {
         var_dump($messages);
     }
 });
+Route::controller('tintuc', '\FontEnd\NewsController');
 Route::controller('sanpham', '\FontEnd\ProductController');
 Route::controller('taikhoan', '\FontEnd\UsersController');
 

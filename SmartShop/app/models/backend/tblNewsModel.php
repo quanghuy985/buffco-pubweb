@@ -19,7 +19,13 @@ class tblNewsModel extends \Eloquent {
     public function getAllFillterByCatStatus($id_cat, $status, $per_page = 5) {
         $arrProduct = DB::table('tbl_news')->leftJoin('tbl_news_views', 'tbl_news.id', '=', 'tbl_news_views.news_id')->orderBy('tbl_news.id', 'desc');
         if ($id_cat != 'null' && $id_cat != '') {
-            $arrProduct->where('tbl_news_views.cat_news_id', '=', $id_cat);
+            $catnewlist = DB::table('tbl_news_category')->where('catenewsParent', $id_cat)->get();
+            $listcatid = array();
+            $listcatid[] = $id_cat;
+            foreach ($catnewlist as $value) {
+                $listcatid[] = $value->id;
+            }
+            $arrProduct->whereIn('tbl_news_views.cat_news_id', $listcatid);
         }
         if ($status != 'null' && $status != '') {
             $arrProduct->where('tbl_news.status', '=', $status);
