@@ -24,7 +24,7 @@ class ProductController extends \BaseController {
         $listcolor = $tblColor->selectAllColorNoPaginate();
         $listcolorarray = array();
         foreach ($listcolor as $item) {
-            $listcolorarray = $listcolorarray + array($item->id => $item->color_name);
+            $listcolorarray = $listcolorarray + array($item->id => '<span>' . $item->color_name . '</span>');
         }
         $tblSize = new tblSizeModel();
         $listsize = $tblSize->selectAllSizeNoPaginate();
@@ -33,25 +33,29 @@ class ProductController extends \BaseController {
             $listsizearray = $listsizearray + array($item->id => $item->size_name);
         }
         echo '<p>
-            <label>'. \Lang::get('general.product.quantity') .'</label>
+            <label>' . \Lang::get('general.product.quantity') . '</label>
             <span class="field">'
         . \Form::text('quantity_product[]', null, array('class' => 'longinput', 'id' => 'quantity_product', 'placeholder' => Lang::get('placeholder.product_name'))) . '          
 </span>
         </p>
         <p>
-            <label>'. \Lang::get('general.product.color') .'</label>
+            <label>' . \Lang::get('general.product.color') . '</label>
             <span class="field">
                 ' . \Form::select('color_list[]', $listcolorarray, null, array('id' => 'color_list')) . '
                 <a style="color: #00F;text-decoration: underline;"  href="javascript:void(0);" onclick="closeDialogStore(\'color\');" class="submit radius2" >' . \Lang::get('button.add') . '?' . '</a>             
 </span>
         </p>
         <p>
-            <label>'. \Lang::get('general.product.size') .'</label>
+            <label>' . \Lang::get('general.product.size') . '</label>
             <span class="field">
                 ' . \Form::select('size_list[]', $listsizearray, null, array('id' => 'size_list')) . '
                 <a style="color: #00F;text-decoration: underline;"  href="javascript:void(0);" onclick="closeDialogStore(\'size\');" class="submit radius2" >' . \Lang::get('button.add') . '?' . '</a>             
 </span>
-        </p>';
+        </p>
+        <script>
+jQuery(\'select\').uniform();        
+    </script>
+';
     }
 
     public function getProductAdd() {
@@ -280,9 +284,20 @@ class ProductController extends \BaseController {
         $tblProduct = new TblProductModel();
         $product = $tblProduct->getProductById($id);
         $check = $tblProduct->deleteProduct($id);
-        $arrProduct = $tblProduct->getAllProductNew('id', 'desc', 5, 1);
         $objAdmin = \Auth::user();
         $historyContent = Lang::get('backend/history.product.delete') . $product->productCode;
+        $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
+        $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
+        return \Redirect::action('\BackEnd\ProductController@getProductView');
+    }
+
+    public function postActiveProduct() {
+        $id = \Input::get('id');
+        $tblProduct = new TblProductModel();
+        $product = $tblProduct->getProductById($id);
+        $check = $tblProduct->activeProduct($id);
+        $objAdmin = \Auth::user();
+        $historyContent = Lang::get('backend/history.product.active') . $product->productCode;
         $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
         $tblHistoryAdminModel->addHistory($objAdmin->id, $historyContent, '0');
         return \Redirect::action('\BackEnd\ProductController@getProductView');

@@ -9,7 +9,7 @@ class TblProductModel extends \Eloquent {
     protected $table = 'tbl_product';
     public $timestamps = false;
 
-    public function insertProduct($productCode, $productName, $productDescription, $productAttributes, $import_prices, $productPrice, $salesPrice, $startSales, $endSales, $productSlug, $productTag, $manufactureID, $status, $listcateID, $images,$quantity) {
+    public function insertProduct($productCode, $productName, $productDescription, $productAttributes, $import_prices, $productPrice, $salesPrice, $startSales, $endSales, $productSlug, $productTag, $manufactureID, $status, $listcateID, $images, $quantity) {
         $this->productCode = $productCode;
         $this->productName = $productName;
         $this->productDescription = $productDescription;
@@ -41,7 +41,7 @@ class TblProductModel extends \Eloquent {
         return $pid;
     }
 
-    public function updateProduct($id, $productCode, $productName, $productDescription, $productAttributes, $import_prices, $productPrice, $salesPrice, $startSales, $endSales, $productSlug, $productTag, $manufactureID, $status, $listcateID, $images,$quantity) {
+    public function updateProduct($id, $productCode, $productName, $productDescription, $productAttributes, $import_prices, $productPrice, $salesPrice, $startSales, $endSales, $productSlug, $productTag, $manufactureID, $status, $listcateID, $images, $quantity) {
         $supporter = $this->where('id', '=', $id);
         $arraysql = array('id' => $id);
         if ($productCode != '') {
@@ -129,7 +129,13 @@ class TblProductModel extends \Eloquent {
     public function getAllProductNewByCatId($id_cat, $per_page = 10, $status = '') {
         $arrProduct = DB::table('tbl_product')->leftJoin('tbl_product_views', 'tbl_product.id', '=', 'tbl_product_views.product_id')->orderBy('tbl_product.id', 'desc');
         if ($id_cat != 'null') {
-            $arrProduct->where('tbl_product_views.category_product_id', '=', $id_cat);
+            $catprolist = DB::table('tbl_product_category')->where('cateParent', $id_cat)->get();
+            $listcatid = array();
+            $listcatid[] = $id_cat;
+            foreach ($catprolist as $value) {
+                $listcatid[] = $value->id;
+            }
+            $arrProduct->whereIn('tbl_product_views.category_product_id', $listcatid);
         }
         if ($status != 'null') {
             $arrProduct->where('tbl_product.status', $status);
@@ -145,6 +151,15 @@ class TblProductModel extends \Eloquent {
 
     public function deleteProduct($productID) {
         $checkdel = $this->where('id', '=', $productID)->update(array('status' => 2));
+        if ($checkdel > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
+    public function activeProduct($productID) {
+        $checkdel = $this->where('id', '=', $productID)->update(array('status' => 1));
         if ($checkdel > 0) {
             return TRUE;
         } else {

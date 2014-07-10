@@ -12,9 +12,10 @@ class NewsController extends \BaseController {
 
     public function getChuyenMuc($catslug = '') {
         $NewModel = new \FontEnd\NewsModel();
-        $arrNews = $NewModel->getNewBySlugCate($catslug, 1);
-        $link = $arrNews->links();
-        return View::make('fontend.CategoryNews')->with('arrnews', $arrNews)->with('catslugs', $catslug);
+        $arrNews = $NewModel->getNewBySlugCate($catslug, 10);
+        var_dump($arrNews);
+//        $link = $arrNews->links();
+//        return View::make('fontend.CategoryNews')->with('arrnews', $arrNews)->with('catslugs', $catslug);
     }
 
     public function postChuyenMucAjax() {
