@@ -27,8 +27,18 @@ class NewsModel extends \Eloquent {
         return $datanews;
     }
 
-    public function getNewByTags($tags = '', $per_page) {
-        $datanews = DB::table('tbl_news')->join('tbl_news_category', 'tbl_news_category.id', '=', 'tbl_news.catenewsID')->where('tbl_news.status', '=', 1)->where('tbl_news.newsTag', 'LIKE', '%' . $tags . '%')->select('tblNews.*', 'tbl_news_category.catenewsName', 'tbl_news_category.catenewsSlug')->paginate($per_page);
+    public function getNewByTags($tags_news = '', $per_page) {
+        $arrTags = DB::table('tbl_news')->select('id', 'newsTag')->where('status', '=', 1)->get();
+        $arrayidnew = array();
+        foreach ($arrTags as $value) {
+            $tag = explode(',', $value->newsTag);
+            foreach ($tag as $item) {
+                if ($tags_news == $item) {
+                    $arrayidnew = $value->id;
+                }
+            }
+        }
+        $datanews = DB::table('tbl_news')->where('status', '=', 1)->whereIn('id', $arrayidnew)->paginate($per_page);
         return $datanews;
     }
 
