@@ -13,7 +13,7 @@ use BackEnd,
 class TinDungController extends \BaseController {
 
     public function getThemMoi() {
-        return View::make('backend.camdo.vayTien');
+       echo 'sdfsd';
     }
 
 }
