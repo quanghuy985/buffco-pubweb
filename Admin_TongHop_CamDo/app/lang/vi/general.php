@@ -1,6 +1,13 @@
 <?php
 
 return array(
+    //bat ho function
+    'batho_data_status' => array(
+        '' => 'Tất cả',
+        0 => 'Chưa hết',
+        1 => 'Đã Hết',
+        2 => 'Xoá',
+    ),
     'status' => 'Trạng thái',
     //project, page,
     'data_status' => array(
@@ -54,7 +61,7 @@ return array(
         1 => 'Đã kích hoạt',
         2 => 'Xoá',
     ),
-     'payment_type' => array(
+    'payment_type' => array(
         0 => 'Đặt hàng',
         1 => 'Thanh toán online',
     ),
@@ -98,7 +105,7 @@ return array(
     'date_end' => 'Ngày kết thúc',
     'filter' => 'Lọc',
     'search' => 'Tìm kiếm',
-        'views-aly' => 'Xem thông kê',
+    'views-aly' => 'Xem thông kê',
     'data_empty' => 'Không có dữ liệu trả về.',
     'alert' => 'Thông báo',
     'select_cate' => 'Chọn mục hiển thị',
@@ -201,6 +208,24 @@ return array(
     'group_support' => 'Nhóm hỗ trợ viên',
     'group_support_name' => 'Tên nhóm hỗ trợ viên',
     'supporterName' => 'Tên hỗ trợ viên',
-    'admin_roles' => 'Phân quyền'
+    'admin_roles' => 'Phân quyền',
+    'batho' => array(
+        //bat ho function
+        'userName' => 'Tài khoản người chơi',
+        'fullname' => 'Họ và tên',
+        'description' => 'Mô tả',
+        'name' => 'Bát họ',
+        'giatri' => 'Giá trị bát họ',
+        'thucchi' => 'Thực chi',
+        'dathu' => 'Đã thu',
+        'chuky_heading' => 'Chu kỳ',
+        'chuky' => 'Chu kỳ tính lãi',
+        'laiky' => 'Lãi kỳ',
+        'batho_status' => 'Tình trạng',
+        'action' => 'Chức năng',
+        'from' => 'Từ ngày',
+        'to' => 'Đến ngày',
+        'batho_titleForm' => 'Thêm/Sửa bát họ',
+    ),
 );
 

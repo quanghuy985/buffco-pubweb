@@ -1,25 +1,44 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+namespace BackEnd;
 
-class bathoController extends Controller {
+use BackEnd,
+    View,
+    Lang,
+    Redirect,
+    Session,
+    Input,
+    Validator;
 
-    function getAllBatHo() {
-        $tblBatHoModel = new tblBatHoModel();
-        $arrBatHo = $tblBatHoModel->getAllBatHo('id', 5);
-        $arrTienDoDaThu = $tblBatHoModel->getAllTienDoDaThu(1);
-        $link = $arrBatHo->links();
-        $arrUser = $tblBatHoModel->getAllUser();
+class bathoController extends \BaseController {
 
-
-        return View::make('backend.camdo.bathoManage')->with('arrBatHo', $arrBatHo)->with('link', $link)->with('arrUser', $arrUser)->with('arrTienDoDaThu', $arrTienDoDaThu);
+    public function getTest() {
+        echo 'Test';
     }
 
-    function getBatHoEdit() {
+    public function getBatHoAddForm() {
+        return \View::make('backend.camdo.bathoAdd')->with('active_menu', 'bathoview');
+    }
+
+    public function getAllBatHo() {
+        if (\Request::ajax()) {
+            $tblBatHoModel = new \tblBatHoModel();
+            $arrBatHo = $tblBatHoModel->getAllBatHo('id', 5);
+            $arrTienDoDaThu = $tblBatHoModel->getAllTienDoDaThu(1);
+            $link = $arrBatHo->links();
+            $arrUser = $tblBatHoModel->getAllUser();
+            return \View::make('backend.camdo.bathoManageAjax')->with('arrBatHo', $arrBatHo)->with('link', $link)->with('arrUser', $arrUser)->with('arrTienDoDaThu', $arrTienDoDaThu);
+        } else {
+            $tblBatHoModel = new \tblBatHoModel();
+            $arrBatHo = $tblBatHoModel->getAllBatHo('id', 5);
+            $arrTienDoDaThu = $tblBatHoModel->getAllTienDoDaThu(1);
+            $link = $arrBatHo->links();
+            $arrUser = $tblBatHoModel->getAllUser();
+            return \View::make('backend.camdo.bathoManage')->with('arrBatHo', $arrBatHo)->with('link', $link)->with('arrUser', $arrUser)->with('arrTienDoDaThu', $arrTienDoDaThu)->with('active_menu', 'bathoview');
+        }
+    }
+
+    public function getBatHoEdit() {
         $tblBatHoModel = new tblBatHoModel();
         $arrBatHo = $tblBatHoModel->getAllBatHo('id', 5);
         $link = $arrBatHo->links();
@@ -30,7 +49,7 @@ class bathoController extends Controller {
         return View::make('backend.camdo.bathoManage')->with('arrBatHo', $arrBatHo)->with('link', $link)->with('objBatHo', $objBatHo)->with('arrUser', $arrUser)->with('arrTienDoDaThu', $arrTienDoDaThu);
     }
 
-    function postUpdateBatHo() {
+    public function postUpdateBatHo() {
         $laiky1 = str_replace(',', '', Input::get('laiky'));
         $giatri1 = str_replace(',', '', Input::get('giatri'));
         $thucchi1 = str_replace(',', '', Input::get('thucchi'));
@@ -109,7 +128,7 @@ class bathoController extends Controller {
         }
     }
 
-    function postAddBatHo() {
+    public function postAddBatHo() {
         $laiky = str_replace(',', '', Input::get('laiky'));
         $giatri = str_replace(',', '', Input::get('giatri'));
         $thucchi = str_replace(',', '', Input::get('thucchi'));
@@ -160,13 +179,13 @@ class bathoController extends Controller {
         }
     }
 
-    function postUserAjax() {
+    public function postUserAjax() {
         $tblBatHoModel = new tblBatHoModel();
         $arrUser = $tblBatHoModel->getAllUser();
         return View::make('backend.camdo.UserAjax')->with('arrUser', $arrUser);
     }
 
-    function postAjaxpagion() {
+    public function postAjaxpagion() {
         $fromLoc = strtotime(Input::get('fromLoc'));
         $toLoc = strtotime(Input::get('toLoc'));
         $status = Input::get('status');
@@ -178,9 +197,7 @@ class bathoController extends Controller {
         return View::make('backend.camdo.bathoManageAjax')->with('arrBatHo', $arrBatHo)->with('link', $link)->with('arrTienDoDaThu', $arrTienDoDaThu);
     }
 
-
-
-    function getHuiChiTietByUserID() {
+    public function getHuiChiTietByUserID() {
         $userID = Input::get('userid');
         $tblBatHoModel = new tblBatHoModel();
         $arrBatHoDaChoi = $tblBatHoModel->getBatHoByUserID($userID, '');
@@ -191,7 +208,7 @@ class bathoController extends Controller {
         return View::make('backend.camdo.bathoDetail')->with('arrBatHo', $arrBatHo)->with('arrBatHoDaChoi', $arrBatHoDaChoi)->with('arrBatHoChuaHet', $arrBatHoChuaHet)->with('link', $link);
     }
 
-    function postDeleteBatHo() {
+    public function postDeleteBatHo() {
         $tblBatHoModel = new tblBatHoModel();
         $tblBatHoModel->DeleteBatHoByID(Input::get('id'));
         $arrBatHo = $tblBatHoModel->getAllBatHo('id', 5);
@@ -200,7 +217,7 @@ class bathoController extends Controller {
         return View::make('backend.camdo.bathoManageAjax')->with('arrBatHo', $arrBatHo)->with('link', $link)->with('arrTienDoDaThu', $arrTienDoDaThu);
     }
 
-    function postBatHoActive() {
+    public function postBatHoActive() {
         $tblBatHoModel = new tblBatHoModel();
         $tblBatHoModel->UpdateBatHo(Input::get('id'), '', '', '', '', '', '', '', '', Input::get('status'));
         $arrBatHo = $tblBatHoModel->getAllBatHo('id', 5);
@@ -209,19 +226,19 @@ class bathoController extends Controller {
         return View::make('backend.camdo.bathoManageAjax')->with('arrBatHo', $arrBatHo)->with('link', $link)->with('arrTienDoDaThu', $arrTienDoDaThu);
     }
 
-    function postChiTietBatHo() {
+    public function postChiTietBatHo() {
         $tblBatHoModel = new tblBatHoModel();
         $objBatHo = $tblBatHoModel->getBatHoByID(Input::get('id'));
         return View::make('backend.camdo.ChiTietBatHoByIDAjax')->with('objBatHo', $objBatHo);
     }
 
-    function postCapNhatTienDo() {
+    public function postCapNhatTienDo() {
         $tblBatHoModel = new tblBatHoModel();
         $arrTienDo = $tblBatHoModel->getTienDoByID(Input::get('id'));
         return View::make('backend.camdo.bathoTienDoThanhToan')->with('arrTienDo', $arrTienDo);
     }
 
-    function postUpdateTienDo() {
+    public function postUpdateTienDo() {
         $id = Input::get('id');
         $timetra = strtotime(Input::get('timetra'));
         $sotientra = str_replace(',', '', Input::get('sotientra'));
@@ -232,7 +249,7 @@ class bathoController extends Controller {
         return View::make('backend.camdo.bathoTienDoThanhToanAjax')->with('arrTienDo', $arrTienDo);
     }
 
-    function postTienDoPhaiThu() {
+    public function postTienDoPhaiThu() {
         $tblBatHoModel = new tblBatHoModel();
         $arrTienDoPhaiThu = $tblBatHoModel->getBatHoByDate(time() - 5 * 24 * 60 * 60, time() + 5 * 24 * 60 * 60, 0);
         return View::make('backend.camdo.bathoTienDoThanhToan')->with('arrTienDo', $arrTienDoPhaiThu);

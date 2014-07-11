@@ -62,5 +62,11 @@ return array(
         'btDelete' => 'Hủy đơn hàng',
         'btDonothing' => 'Chờ xử lý'
     ),
+    'batho' => array(
+        'book' => 'Sửa',
+        'world' => 'Tất toán',
+        'flag' => 'Bỏ xóa',
+        'trash' => 'Xoá'
+    ),
 );
 
