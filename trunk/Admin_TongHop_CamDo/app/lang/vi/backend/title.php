@@ -143,4 +143,11 @@ return array(
         'title-edit-menu' => 'Chỉnh sửa trình đơn',
         'group-title' => 'Tên nhóm',
     ),
+    'batho' => array(
+        'title' => 'Quản lý bát họ',
+        'heading' => 'Trình quản lý bát họ',
+        'description' => 'Họ/Hụi được hiển thị ở đây',
+        'caption_view' => 'Bảng quản lý bát họ',
+        'caption_detail' => 'Xem chi tiết bát họ'
+    ),
 );

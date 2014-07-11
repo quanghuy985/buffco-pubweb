@@ -240,6 +240,20 @@
                             ?>"><a href="<?php echo URL::action('\BackEnd\AdminController@getAdminView'); ?>"><?php echo Lang::get('backend/dashboard.management_user'); ?></a></li>
                         </ul>
                     </li>
+                    <li class="<?php
+                    if ($menuselect == 'bathoview') {
+                        echo 'current';
+                    }
+                    ?>"><a href="#camdoSub" class="addons"><?php echo Lang::get('backend/dashboard.camdo'); ?></a>
+                        <span class="arrow"></span>
+                        <ul id="camdoSub">
+                            <li class="<?php
+                            if ($menuselect == 'bathoview') {
+                                echo 'current';
+                            }
+                            ?>"><a href="<?php echo URL::action('\BackEnd\bathoController@getAllBatHo'); ?>"><?php echo Lang::get('backend/dashboard.management_batho'); ?></a></li>
+                        </ul>
+                    </li>
                 </ul>
                 <a class="togglemenu"></a>
                 <br /><br />

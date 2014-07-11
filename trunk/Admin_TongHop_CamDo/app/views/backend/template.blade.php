@@ -240,6 +240,20 @@
                             ?>"><a href="{{URL::action('\BackEnd\AdminController@getAdminView')}}">{{Lang::get('backend/dashboard.management_user')}}</a></li>
                         </ul>
                     </li>
+                    <li class="<?php
+                    if ($menuselect == 'bathoview') {
+                        echo 'current';
+                    }
+                    ?>"><a href="#camdoSub" class="addons">{{Lang::get('backend/dashboard.camdo')}}</a>
+                        <span class="arrow"></span>
+                        <ul id="camdoSub">
+                            <li class="<?php
+                            if ($menuselect == 'bathoview') {
+                                echo 'current';
+                            }
+                            ?>"><a href="{{URL::action('\BackEnd\bathoController@getAllBatHo')}}">{{Lang::get('backend/dashboard.management_batho')}}</a></li>
+                        </ul>
+                    </li>
                 </ul>
                 <a class="togglemenu"></a>
                 <br /><br />
