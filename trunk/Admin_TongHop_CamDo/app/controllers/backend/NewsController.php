@@ -113,6 +113,7 @@ class NewsController extends \BaseController {
             $arrCate = $tableCateModel->allCateNew();
             $check = $tblNewsModel->allNews(10, 'id');
             $link = $check->links();
+
             return View::make('backend.news.newsManage')->with('arrayNews', $check)->with('link', $link)->with('arrayCate', $arrCate)->with('active_menu', 'newview');
         }
     }

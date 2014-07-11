@@ -48,7 +48,7 @@ return array(
         'mysql' => array(
             'driver' => 'mysql',
             'host' => 'localhost',
-            'database' => 'smartshop2',
+            'database' => 'smartshop_camdo',
             'username' => 'root',
             'password' => '',
             'charset' => 'utf8',
