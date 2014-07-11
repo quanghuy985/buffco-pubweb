@@ -55,6 +55,7 @@ Route::group(array('prefix' => 'admin', 'before' => 'csrf'), function() {
         Route::controller('products', '\BackEnd\ProductController');
         Route::controller('files', '\BackEnd\FilemanagerController');
         Route::controller('tindung', '\BackEnd\TinDungController');
+                Route::controller('batho', '\BackEnd\BatHoController');
         Route::controller('/', '\BackEnd\HomeController');
     });
 });
