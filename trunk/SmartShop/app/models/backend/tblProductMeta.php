@@ -14,26 +14,29 @@ class tblProductMeta extends \Eloquent {
         return $arrMeta;
     }
 
-    public function insertProductMeta($product_id, $meta_key, $meta_values) {
+    public function insertProductMeta($product_id, $meta_size, $meta_color, $quantity) {
         $this->product_id = $product_id;
-        $this->meta_key = $meta_key;
-        $this->meta_values = $meta_values;
-        $this->time = time();
+        $this->meta_size = $meta_size;
+        $this->meta_color = $meta_color;
+        $this->quantity = $quantity;
         $check = $this->save();
         return $check;
     }
 
-    public function updateProductMeta($id, $product_id, $meta_key, $meta_values) {
+    public function updateProductMeta($id, $product_id, $meta_size, $meta_color, $quantity) {
         $supporter = $this->where('id', '=', $id);
         $arraysql = array('id' => $id);
         if ($product_id != '') {
             $arraysql = array_merge($arraysql, array("product_id" => $product_id));
         }
-        if ($meta_key != '') {
-            $arraysql = array_merge($arraysql, array("meta_key" => $meta_key));
+        if ($meta_size != '') {
+            $arraysql = array_merge($arraysql, array("meta_size" => $meta_size));
         }
-        if ($meta_values != '') {
-            $arraysql = array_merge($arraysql, array("meta_values" => $meta_values));
+        if ($meta_color != '') {
+            $arraysql = array_merge($arraysql, array("meta_color" => $meta_color));
+        }
+        if ($quantity != '') {
+            $arraysql = array_merge($arraysql, array("quantity" => $quantity));
         }
         $checku = $supporter->update($arraysql);
         if ($checku > 0) {

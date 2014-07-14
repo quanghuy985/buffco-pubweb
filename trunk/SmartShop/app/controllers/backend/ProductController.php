@@ -118,12 +118,7 @@ jQuery(\'select\').uniform();
 
             for ($i = 0; $i < count($colorarr); $i++) {
                 $tblProductMeta = new tblProductMeta();
-                $meta_values = array(
-                    'color' => $colorarr[$i],
-                    'size' => $sizearr[$i],
-                    'quantity' => $quantityrarr[$i]
-                );
-                $tblProductMeta->insertProductMeta($idp, '', serialize($meta_values));
+                $tblProductMeta->insertProductMeta($idp, $sizearr[$i], $colorarr[$i], $quantityrarr[$i]);
             }
             $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.product.active') . $inputs['productCode'];
@@ -203,12 +198,7 @@ jQuery(\'select\').uniform();
             $sizearr = Input::get('size');
             for ($i = 0; $i < count($colorarr); $i++) {
                 $tblProductMeta = new tblProductMeta();
-                $meta_values = array(
-                    'color' => $colorarr[$i],
-                    'size' => $sizearr[$i],
-                    'quantity' => $quantityrarr[$i]
-                );
-                $tblProductMeta->insertProductMeta($inputs['id'], '', serialize($meta_values));
+                $tblProductMeta->insertProductMeta($idp, $sizearr[$i], $colorarr[$i], $quantityrarr[$i]);
             }
             Session::flash('alert_success', Lang::get('messages.update.success'));
             $objAdmin = \Auth::user();
