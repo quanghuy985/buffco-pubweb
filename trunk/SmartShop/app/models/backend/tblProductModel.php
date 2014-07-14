@@ -41,6 +41,15 @@ class TblProductModel extends \Eloquent {
         return $pid;
     }
 
+    public function updateProductQuantity($product_id, $sold_quantity) {
+        $return = DB::update('update tbl_product set quantity_sold = quantity_sold + ? where id = ?', array($sold_quantity, $product_id));
+        if (count($return) > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
     public function updateProduct($id, $productCode, $productName, $productDescription, $productAttributes, $import_prices, $productPrice, $salesPrice, $startSales, $endSales, $productSlug, $productTag, $manufactureID, $status, $listcateID, $images, $quantity) {
         $supporter = $this->where('id', '=', $id);
         $arraysql = array('id' => $id);

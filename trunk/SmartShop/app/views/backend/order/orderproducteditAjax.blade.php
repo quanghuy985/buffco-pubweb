@@ -13,6 +13,8 @@ $hangtrongkho = $item->quantity - $item->quantity_sold;
     <td><label value="cateNews"> {{$i++}} </label></td> 
     <td><label value="cateNews">{{str_limit( $item->productCode, 30, '...')}}</label></td> 
     <td><label value="cateNews">{{str_limit( $item->productName, 30, '...')}}</label></td>
+    <td><label value="cateNews">{{$arraysize[$item->product_size]}}</label></td>
+    <td><label value="cateNews">{{$arraycolor[$item->product_color]}}</label></td>
     <td><label value="cateNews">{{number_format($item->productPrice,0,'.', ',')}}</label></td> 
     <td><label value="cateNews">{{number_format($item->amount,0,'.', ',')}} </label></td>
     <td><label value="cateNews">{{number_format($hangtrongkho,0,'.', ',')}} </label></td>
@@ -20,8 +22,8 @@ $hangtrongkho = $item->quantity - $item->quantity_sold;
 </tr> 
 <?php $tongcong = $tongcong + $item->total ?>
 @endforeach
-
+{{Config::get('configall.pay-tiente')}}
 <tr>
-    <td colspan="6" style="text-align: right;"><strong><label>{{Lang::get('general.order.total_grand')}}</label></strong></td>
+    <td colspan="8" style="text-align: right;"><strong><label>{{Lang::get('general.order.total_grand')}} ({{Config::get('configall.pay-tiente')}})</label></strong></td>
     <td><label value="cateNews">{{number_format($tongcong,0,'.', ',')}} </label></td>
 </tr>

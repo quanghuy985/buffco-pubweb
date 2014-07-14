@@ -66,13 +66,15 @@
     </div>
     <table cellpadding="0" cellspacing="0" border="0"  class="stdtable">
         <colgroup>
-            <col class="con0" style="width: 5%">
-            <col class="con1" style="width: 15%">
-            <col class="con0" style="width: 25%">
-            <col class="con1" style="width: 15%">
+            <col class="con0" style="width: 1%">
+            <col class="con1" style="width: 10%">
+            <col class="con0" style="width: 23%">
+            <col class="con1" style="width: 10%">
             <col class="con0" style="width: 10%">
             <col class="con1" style="width: 10%">
-            <col class="con0" style="width: 20%">
+            <col class="con0" style="width: 10%">
+            <col class="con1" style="width: 10%">
+            <col class="con0" style="width: 15%">
         </colgroup>
         <thead>
             <tr>
@@ -80,6 +82,8 @@
                 <th class="head0">{{Lang::get('general.order.stt')}}</th>
                 <th class="head1">{{Lang::get('general.product.code')}}</th>
                 <th class="head0">{{Lang::get('general.product.name')}}</th>
+                <th class="head0">{{Lang::get('general.product.size')}}</th>
+                <th class="head0">{{Lang::get('general.product.color')}}</th>
                 <th class="head1">{{Lang::get('general.product.price')}}</th>
                 <th class="head0">{{Lang::get('general.quantity')}}</th>
                 <th class="head1">{{Lang::get('general.store')}}</th>
@@ -147,7 +151,7 @@
         <p>
             <label>{{Lang::get('general.order.code')}} :</label>
             <span class="field">
-               <strong> &nbsp;@if(isset($objOrder)){{$objOrder[0]->orderCode}}@endif</strong>
+                <strong> &nbsp;@if(isset($objOrder)){{$objOrder[0]->orderCode}}@endif</strong>
             </span>
         </p>
         <p>
@@ -159,7 +163,7 @@
         <p>
             <label>{{Lang::get('general.order.buyerphone')}} :</label>
             <span class="field">
-                 <strong>&nbsp;@if(isset($objOrder)){{$objOrder[0]->phone}}@endif</strong>
+                <strong>&nbsp;@if(isset($objOrder)){{$objOrder[0]->phone}}@endif</strong>
             </span>
         </p>
         <p>
