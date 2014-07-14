@@ -6,13 +6,13 @@
 </div>
 <script>
     jQuery(document).ready(function() {
-        jQuery("#edit-products").validate({
-            rules: {
-                productName: {required: true, maxlength: 255},
-                productCode: {required: true, maxlength: 255},
-                productDescription: {required: true},
-            }
-        });
+    jQuery("#edit-products").validate({
+    rules: {
+    productName: {required: true, maxlength: 255},
+            productCode: {required: true, maxlength: 255},
+            productDescription: {required: true},
+    }
+    });
     });</script>
 <div id="contentwrapper" class="contentwrapper nopadding">
     @if(isset($productedit))      
@@ -41,172 +41,172 @@
         <p>
             <script>
 
-                function addstore_product() {
-                    NProgress.start();
-                    jQuery("#form-add-store").html('<img src="{{Asset('backend/images/loaders/loader6.gif')}}" alt="" title="" style="margin-left: 47%;margin-top: 25px;"/>');
-                    var request = jQuery.ajax({
-                        url: "{{URL::action('\BackEnd\ProductController@postDialogGetcolorsize')}}",
-                        type: "POST"
-                    });
-                    request.done(function(msg) {
-                        NProgress.done();
-                        jQuery("#form-add-store").html(msg);
-                    });
-                    jQuery("#quantity_product").val('');
-                    jQuery("#dialog-form-add-store").dialog({
+                        function addstore_product() {
+                        NProgress.start();
+                                jQuery("#form-add-store").html('<img src="{{Asset('backend / images / loaders / loader6.gif')}}" alt="" title="" style="margin-left: 47%;margin-top: 25px;"/>');
+                                var request = jQuery.ajax({
+                                url: "{{URL::action('\BackEnd\ProductController@postDialogGetcolorsize')}}",
+                                        type: "POST"
+                                });
+                                request.done(function(msg) {
+                                NProgress.done();
+                                        jQuery("#form-add-store").html(msg);
+                                });
+                                jQuery("#quantity_product").val('');
+                                jQuery("#dialog-form-add-store").dialog({
                         resizable: true,
-                        width: 400,
-                        modal: true,
-                        buttons: {
-                            "Thêm": function(e) {
+                                width: 400,
+                                modal: true,
+                                buttons: {
+                                "Thêm": function(e) {
                                 var quantity = jQuery("#quantity_product").val();
-                                var color = jQuery("#color_list").val();
-                                var color_text = jQuery("#color_list option:selected").text();
-                                var size = jQuery("#size_list").val();
-                                var size_text = jQuery("#size_list option:selected").text();
-                                var rowCount = jQuery('.datastore tr').length + 1;
-                                var colorlist = new Array()
-                                jQuery('input[name="color[]"]').each(function() {
-                                    var aValue = jQuery(this).val();
-                                    colorlist[colorlist.length] = aValue;
+                                        var color = jQuery("#color_list").val();
+                                        var color_text = jQuery("#color_list option:selected").text();
+                                        var size = jQuery("#size_list").val();
+                                        var size_text = jQuery("#size_list option:selected").text();
+                                        var rowCount = jQuery('.datastore tr').length + 1;
+                                        var colorlist = new Array()
+                                        jQuery('input[name="color[]"]').each(function() {
+                                var aValue = jQuery(this).val();
+                                        colorlist[colorlist.length] = aValue;
                                 });
-                                var sizelist = new Array()
-                                jQuery('input[name="size[]"]').each(function() {
-                                    var aValue = jQuery(this).val();
-                                    sizelist[sizelist.length] = aValue;
+                                        var sizelist = new Array()
+                                        jQuery('input[name="size[]"]').each(function() {
+                                var aValue = jQuery(this).val();
+                                        sizelist[sizelist.length] = aValue;
                                 });
-                                var check = false;
-                                for (var i = 0; i < colorlist.length; i++) {
-                                    if (color == colorlist[i] && size == sizelist[i]) {
-                                        check = true;
-                                    }
+                                        var check = false;
+                                        for (var i = 0; i < colorlist.length; i++) {
+                                if (color == colorlist[i] && size == sizelist[i]) {
+                                check = true;
                                 }
-                                if(!jQuery.isNumeric(quantity)){
-                                    jAlert('Nhập số lượng sản phẩm !', 'Thông báo !');
-                                }else{
+                                }
+                                if (!jQuery.isNumeric(quantity)){
+                                jAlert('Nhập số lượng sản phẩm !', 'Thông báo !');
+                                } else{
                                 if (check == true) {
-                                  jAlert('Màu sắc và size muốn thêm đã tồn tại !', 'Thông báo !');
+                                jAlert('Màu sắc và size muốn thêm đã tồn tại !', 'Thông báo !');
                                 } else {
-                                    var html = '<tr><td><input type="text" name="quantity[]" value="' + quantity + '"/></td><td>' + color_text + '<input type="hidden" name="color[]" value="' + color + '"/></td><td class="center">' + size_text + '<input type="hidden" name="size[]" value="' + size + '"/></td><td class="center"><a href="javascript:void(0);" onclick="removeThis(this);">X</a></td></tr>';
-                                    jQuery(".datastore").append(html);
-                                    jQuery("#dialog-form-add-store").dialog("close");
+                                var html = '<tr><td><input type="text" name="quantity[]" value="' + quantity + '"/></td><td>' + color_text + '<input type="hidden" name="color[]" value="' + color + '"/></td><td class="center">' + size_text + '<input type="hidden" name="size[]" value="' + size + '"/></td><td class="center"><a href="javascript:void(0);" onclick="removeThis(this);">X</a></td></tr>';
+                                        jQuery(".datastore").append(html);
+                                        jQuery("#dialog-form-add-store").dialog("close");
                                 }
-                            }
-                            }
-                        },
-                    });
-                }
+                                }
+                                }
+                                },
+                        });
+                        }
                 function closeDialogStore(check) {
-                    jQuery("#dialog-form-add-store").dialog("close");
-                    if(check=='color'){
-                    window.open('{{action('\BackEnd\ProductController@getColorView')}}', '_newtab');
+                jQuery("#dialog-form-add-store").dialog("close");
+                        if (check == 'color'){
+                window.open('{{action('\BackEnd\ProductController@getColorView')}}', '_newtab');
                 }
-                 if(check=='size'){
-                     window.open('{{action('\BackEnd\ProductController@getSizeView')}}', '_newtab');
-                 }
+                if (check == 'size'){
+                window.open('{{action('\BackEnd\ProductController@getSizeView')}}', '_newtab');
+                }
                 }
                 function removeThis(field) {
-                    jQuery(field).parent().parent().remove();
+                jQuery(field).parent().parent().remove();
                 }
                 function addmanufact() {
-                    jQuery("#error_add_manufacturer").css('display', 'none');
-                    jQuery("#error_add_manufacturer").html('');
-                    jQuery("#manufacturerName").val('');
-                    jQuery("#manufacturerPlace").val('');
-                    jQuery("#dialog-form-add-manufacturer").dialog({
-                        resizable: true,
+                jQuery("#error_add_manufacturer").css('display', 'none');
+                        jQuery("#error_add_manufacturer").html('');
+                        jQuery("#manufacturerName").val('');
+                        jQuery("#manufacturerPlace").val('');
+                        jQuery("#dialog-form-add-manufacturer").dialog({
+                resizable: true,
                         width: 400,
                         modal: true,
                         buttons: {
-                            "Thêm": function(e) {
-                                NProgress.start();
+                        "Thêm": function(e) {
+                        NProgress.start();
                                 var postform = jQuery('#form-add-manufacturer').serialize();
                                 var request = jQuery.ajax({
-                                    url: "{{URL::action('\BackEnd\ProductController@postAddFastManufacturer')}}",
-                                    type: "POST",
-                                    data: postform
+                                url: "{{URL::action('\BackEnd\ProductController@postAddFastManufacturer')}}",
+                                        type: "POST",
+                                        data: postform
                                 });
                                 request.done(function(msg) {
-                                    NProgress.done();
-                                    msg = jQuery.parseJSON(msg);
-                                    if (msg.id == '' || msg.id == null) {
-                                        var totalerror = '';
+                                NProgress.done();
+                                        msg = jQuery.parseJSON(msg);
+                                        if (msg.id == '' || msg.id == null) {
+                                var totalerror = '';
                                         if (msg.manufacturerName != '' && msg.manufacturerName != null) {
-                                            totalerror += '<p>' + msg.manufacturerName + '</p>';
-                                        }
-                                        if (msg.manufacturerPlace != '' && msg.manufacturerPlace != null) {
-                                            totalerror += '<p>' + msg.manufacturerPlace + '</p>';
-                                        }
-                                        jQuery("#error_add_manufacturer").css('display', 'block');
+                                totalerror += '<p>' + msg.manufacturerName + '</p>';
+                                }
+                                if (msg.manufacturerPlace != '' && msg.manufacturerPlace != null) {
+                                totalerror += '<p>' + msg.manufacturerPlace + '</p>';
+                                }
+                                jQuery("#error_add_manufacturer").css('display', 'block');
                                         jQuery("#error_add_manufacturer").html(totalerror);
-                                    } else {
-                                        var inserthtml = '<option value="' + msg.id + '">' + msg.manufacturerName + '</option>';
+                                } else {
+                                var inserthtml = '<option value="' + msg.id + '">' + msg.manufacturerName + '</option>';
                                         jQuery("#manufactureID").append(inserthtml);
                                         jQuery("#dialog-form-add-manufacturer").dialog("close");
-                                    }
+                                }
 
 
 
                                 }
                                 );
-                            }
+                        }
                         },
-                    });
+                });
                 }
                 function IsJsonString(str) {
-                    try {
-                        JSON.parse(str);
-                    } catch (e) {
-                        return false;
-                    }
-                    return true;
+                try {
+                JSON.parse(str);
+                } catch (e) {
+                return false;
+                }
+                return true;
                 }
                 function addcateproduct() {
-                    jQuery("#error_add_category_product").css('display', 'none');
-                    jQuery("#error_add_category_product").html('');
-                    jQuery("#cateName").val('');
-                    jQuery("#cateSlug").val('');
-                    jQuery("#cateDescription").val('');
-                    jQuery("#dialog-form-add-category-product").dialog({
-                        resizable: true,
+                jQuery("#error_add_category_product").css('display', 'none');
+                        jQuery("#error_add_category_product").html('');
+                        jQuery("#cateName").val('');
+                        jQuery("#cateSlug").val('');
+                        jQuery("#cateDescription").val('');
+                        jQuery("#dialog-form-add-category-product").dialog({
+                resizable: true,
                         width: 400,
                         modal: true,
                         buttons: {
-                            "Thêm": function(e) {
-                                NProgress.start();
+                        "Thêm": function(e) {
+                        NProgress.start();
                                 var postform = jQuery('#form-add-category-product').serialize();
                                 var request = jQuery.ajax({
-                                    url: "{{URL::action('\BackEnd\ProductController@postAddCateProduct')}}",
-                                    type: "POST",
-                                    data: postform
+                                url: "{{URL::action('\BackEnd\ProductController@postAddCateProduct')}}",
+                                        type: "POST",
+                                        data: postform
                                 });
                                 request.done(function(msg) {
-                                    NProgress.done();
-                                    msg = jQuery.parseJSON(msg);
-                                    if (msg.cateName != null || msg.cateSlug != null) {
-                                        var totalerror = '';
+                                NProgress.done();
+                                        msg = jQuery.parseJSON(msg);
+                                        if (msg.cateName != null || msg.cateSlug != null) {
+                                var totalerror = '';
                                         if (msg.cateName != '' && msg.cateName != null) {
-                                            totalerror += '<p>' + msg.cateName + '</p>';
-                                        }
-                                        if (msg.cateSlug != '' && msg.cateSlug != null) {
-                                            totalerror += '<p>' + msg.cateSlug + '</p>';
-                                        }
-                                        jQuery("#error_add_category_product").css('display', 'block');
+                                totalerror += '<p>' + msg.cateName + '</p>';
+                                }
+                                if (msg.cateSlug != '' && msg.cateSlug != null) {
+                                totalerror += '<p>' + msg.cateSlug + '</p>';
+                                }
+                                jQuery("#error_add_category_product").css('display', 'block');
                                         jQuery("#error_add_category_product").html(totalerror);
-                                    }
-                                    else {
-                                        if (msg.id != '' && msg.content != '' && msg.htmlcontent != '') {
-                                            var inse = '<option value="' + msg.id + '">' + msg.content + '</option>';
-                                            jQuery("#cateaddproduct").html(msg.htmlcontent);
-                                            jQuery("#cateParent").append(inse);
-                                            jQuery("#dialog-form-add-category-product").dialog("close");
-                                        }
-                                    }
+                                }
+                                else {
+                                if (msg.id != '' && msg.content != '' && msg.htmlcontent != '') {
+                                var inse = '<option value="' + msg.id + '">' + msg.content + '</option>';
+                                        jQuery("#cateaddproduct").html(msg.htmlcontent);
+                                        jQuery("#cateParent").append(inse);
+                                        jQuery("#dialog-form-add-category-product").dialog("close");
+                                }
+                                }
                                 }
                                 );
-                            }
+                        }
                         },
-                    });
+                });
                 }
             </script>
             <label>Nhà sẩn xuất</label>
@@ -252,12 +252,11 @@
                                 <?php
                                 if (isset($productmeta)) {
                                     foreach ($productmeta as $item) {
-                                        $itemmeta = unserialize($item->meta_values);
                                         ?>
                                         <tr>
-                                            <td><input type="text" name="quantity[]" value="{{$itemmeta['quantity']}}"/></td>
-                                            <td>{{$arraycolor[$itemmeta['color']]}}<input type="hidden" name="color[]" value="{{$itemmeta['color']}}"/>
-                                            </td><td class="center">{{$arraysize[$itemmeta['size']]}}<input type="hidden" name="size[]" value="{{$itemmeta['size']}}"/></td>
+                                            <td><input type="text" name="quantity[]" value="{{$item->quantity}}"/></td>
+                                            <td>{{$arraycolor[$item->meta_color]}}<input type="hidden" name="color[]" value="{{$item->meta_color}}"/>
+                                            </td><td class="center">{{$arraysize[$item->meta_size]}}<input type="hidden" name="size[]" value="{{$item->meta_size}}"/></td>
                                             <td class="center"><a href="javascript:void(0);" onclick="removeThis(this);">X</a></td>
                                         </tr>
                                         <?php
@@ -369,7 +368,7 @@
     }
 </style>
 <script>
-    //lọc dấu tạo slug
+            //lọc dấu tạo slug
 <?php
 if (isset($productedit)) {
     $itemimage = explode(",", $productedit->images);
@@ -378,10 +377,10 @@ if (isset($productedit)) {
         ?>
         <?php $url = Timthumb::link($value, 100, 60, 0); ?>
             var urlImg = '<li id="image-<?php echo $value . $i; ?>"><a href="javascript:void(0);"><img src="<?php echo Asset($url); ?>"/> </a> <a href="javascript:void(0);" onclick="xoaanhthum1(\'image-<?php echo $value . $i; ?>\');" class="delete" title="Delete image"><img alt="Xóa" src="<?php echo Asset(''); ?>backend/templates/images/cross.png"></a></li>';
-            var urlImgNo = '<li id="no-image-<?php echo $value . $i; ?>"><a href="<?php echo $value; ?> "></a></li>';
-            document.getElementById('morephotolist').innerHTML += urlImg;
-            document.getElementById('morephotolist-no').innerHTML += urlImgNo;
-            returnurlimg1();
+                    var urlImgNo = '<li id="no-image-<?php echo $value . $i; ?>"><a href="<?php echo $value; ?> "></a></li>';
+                    document.getElementById('morephotolist').innerHTML += urlImg;
+                    document.getElementById('morephotolist-no').innerHTML += urlImgNo;
+                    returnurlimg1();
         <?php
         $i++;
     }
@@ -389,127 +388,127 @@ if (isset($productedit)) {
 ?>
 
     function locdau(id) {
-        var str = (document.getElementById(id).value); // lấy chuỗi dữ liệu nhập vào
-        str = str.toLowerCase(); // chuyển chuỗi sang chữ thường để xử lý
-        /* tìm kiếm và thay thế tất cả các nguyên âm có dấu sang không dấu*/
-        str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
-        str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
-        str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
-        str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
-        str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
-        str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
-        str = str.replace(/đ/g, "d");
-        str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'| |\"|\&|\#|\[|\]|~|$|_/g, "-");
-        /* tìm và thay thế các kí tự đặc biệt trong chuỗi sang kí tự - */
-        str = str.replace(/-+-/g, "-"); //thay thế 2- thành 1-
-        str = str.replace(/^\-+|\-+$/g, ""); //cắt bỏ ký tự - ở đầu và cuối chuỗi
-        document.getElementById("cateSlug").value = str; // xuất kết quả xữ lý ra
+    var str = (document.getElementById(id).value); // lấy chuỗi dữ liệu nhập vào
+            str = str.toLowerCase(); // chuyển chuỗi sang chữ thường để xử lý
+            /* tìm kiếm và thay thế tất cả các nguyên âm có dấu sang không dấu*/
+            str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+            str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+            str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+            str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+            str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+            str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+            str = str.replace(/đ/g, "d");
+            str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'| |\"|\&|\#|\[|\]|~|$|_/g, "-");
+            /* tìm và thay thế các kí tự đặc biệt trong chuỗi sang kí tự - */
+            str = str.replace(/-+-/g, "-"); //thay thế 2- thành 1-
+            str = str.replace(/^\-+|\-+$/g, ""); //cắt bỏ ký tự - ở đầu và cuối chuỗi
+            document.getElementById("cateSlug").value = str; // xuất kết quả xữ lý ra
     }
 
     function getCheckSlug(id) {
-        var str = (document.getElementById(id).value); // lấy chuỗi dữ liệu nhập vào
-        str = str.toLowerCase(); // chuyển chuỗi sang chữ thường để xử lý
-        /* tìm kiếm và thay thế tất cả các nguyên âm có dấu sang không dấu*/
-        str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
-        str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
-        str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
-        str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
-        str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
-        str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
-        str = str.replace(/đ/g, "d");
-        str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'| |\"|\&|\#|\[|\]|~|$|_/g, "-");
-        /* tìm và thay thế các kí tự đặc biệt trong chuỗi sang kí tự - */
-        str = str.replace(/-+-/g, "-"); //thay thế 2- thành 1-
-        str = str.replace(/^\-+|\-+$/g, ""); //cắt bỏ ký tự - ở đầu và cuối chuỗi
-        var request = jQuery.ajax({
+    var str = (document.getElementById(id).value); // lấy chuỗi dữ liệu nhập vào
+            str = str.toLowerCase(); // chuyển chuỗi sang chữ thường để xử lý
+            /* tìm kiếm và thay thế tất cả các nguyên âm có dấu sang không dấu*/
+            str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+            str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+            str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+            str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+            str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+            str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+            str = str.replace(/đ/g, "d");
+            str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'| |\"|\&|\#|\[|\]|~|$|_/g, "-");
+            /* tìm và thay thế các kí tự đặc biệt trong chuỗi sang kí tự - */
+            str = str.replace(/-+-/g, "-"); //thay thế 2- thành 1-
+            str = str.replace(/^\-+|\-+$/g, ""); //cắt bỏ ký tự - ở đầu và cuối chuỗi
+            var request = jQuery.ajax({
             url: "{{URL::action('\BackEnd\ProductController@postCheckSlug')}}?slug=" + str,
-            type: "POST"
-        });
-        request.done(function(msg) {
+                    type: "POST"
+            });
+            request.done(function(msg) {
             if (msg != '') {
-                if (msg == '0') {
-                    document.getElementById("cateSlug").value = str;
+            if (msg == '0') {
+            document.getElementById("cateSlug").value = str;
                     return false;
-                } else {
-                    document.getElementById("cateSlug").value = str + '-' + msg;
+            } else {
+            document.getElementById("cateSlug").value = str + '-' + msg;
                     return false;
-                }
             }
-        });
+            }
+            });
     }
 
     function BrowseServer1()
     {
-        var finder = new CKFinder();
-        finder.selectActionFunction = SetFileField1;
-        //   finder.selectActionData = functionData;
-        finder.popup();
+    var finder = new CKFinder();
+            finder.selectActionFunction = SetFileField1;
+            //   finder.selectActionData = functionData;
+            finder.popup();
     }
     var i = 0;
-    function SetFileField1(fileUrl)
-    {
-        var sFileName = this.getSelectedFile().name + i;
-        var urlImg = '<li id="image-' + sFileName + '"><a href="javascript:void(0);"><img src="<?php echo Asset('pubweb.vn/100/60/0'); ?>/' + fileUrl + '"/> </a> <a href="javascript:void(0);" onclick="xoaanhthum1(\'image-' + sFileName + '\');" class="delete" title="Delete image"><img alt="Xóa" src="http://localhost/SmartShop/backend/templates/images/cross.png"></a></li>';
-        var urlImgNo = '<li id="no-image-' + sFileName + '"><a href="' + fileUrl + '"></a></li>';
-        document.getElementById('morephotolist').innerHTML += urlImg;
-        document.getElementById('morephotolist-no').innerHTML += urlImgNo;
-        i++;
-        returnurlimg1();
-    }
+            function SetFileField1(fileUrl)
+            {
+            var sFileName = this.getSelectedFile().name + i;
+                    var urlImg = '<li id="image-' + sFileName + '"><a href="javascript:void(0);"><img src="<?php echo Asset('pubweb.vn/100/60/0'); ?>/' + fileUrl + '"/> </a> <a href="javascript:void(0);" onclick="xoaanhthum1(\'image-' + sFileName + '\');" class="delete" title="Delete image"><img alt="Xóa" src="http://localhost/SmartShop/backend/templates/images/cross.png"></a></li>';
+                    var urlImgNo = '<li id="no-image-' + sFileName + '"><a href="' + fileUrl + '"></a></li>';
+                    document.getElementById('morephotolist').innerHTML += urlImg;
+                    document.getElementById('morephotolist-no').innerHTML += urlImgNo;
+                    i++;
+                    returnurlimg1();
+            }
     function xoaanhthum1(id) {
-        document.getElementById(id).remove();
-        document.getElementById('no-' + id).remove();
-        returnurlimg1()
+    document.getElementById(id).remove();
+            document.getElementById('no-' + id).remove();
+            returnurlimg1()
     }
     function returnurlimg1() {
-        var images = jQuery("#morephotolist-no").find("a").map(function() {
-            return this.href;
-        }).get();
-        jQuery("#images").val(images);
+    var images = jQuery("#morephotolist-no").find("a").map(function() {
+    return this.href;
+    }).get();
+            jQuery("#images").val(images);
     }
     var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth() + 1; //January is 0!
-    var yyyy = today.getFullYear();
-    if (dd < 10) {
-        dd = '0' + dd
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0!
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+    dd = '0' + dd
     }
 
     if (mm < 10) {
-        mm = '0' + mm
+    mm = '0' + mm
     }
     today = mm + '/' + dd + '/' + yyyy;
-    jQuery("#datepickerstart").datepicker();
-    jQuery("#datepickerstart").datepicker("option", "minDate", today);
-    jQuery("#datepickerend").datepicker();
-    jQuery("#datepickerend").datepicker("option", "minDate", today);
-    function showkhuyenmai() {
-        jQuery("#book").slideToggle(1000);
-    }
+            jQuery("#datepickerstart").datepicker();
+            jQuery("#datepickerstart").datepicker("option", "minDate", today);
+            jQuery("#datepickerend").datepicker();
+            jQuery("#datepickerend").datepicker("option", "minDate", today);
+            function showkhuyenmai() {
+            jQuery("#book").slideToggle(1000);
+            }
     function checkngaykhuyenmai() {
-        jQuery("#datepicker1").datepicker("option", "minDate", jQuery("#datepicker").val());
+    jQuery("#datepicker1").datepicker("option", "minDate", jQuery("#datepicker").val());
     }
     jQuery('#accordion').accordion(
-            {collapsible: true,
-                active: false,
-                autoHeight: false,
-                clearStyle: true,
-            }
+    {collapsible: true,
+            active: false,
+            autoHeight: false,
+            clearStyle: true,
+    }
     );
-    jQuery('#accordion1').accordion(
-            {collapsible: true,
-                active: false,
-                autoHeight: false,
-                clearStyle: true,
-            }
+            jQuery('#accordion1').accordion(
+    {collapsible: true,
+            active: false,
+            autoHeight: false,
+            clearStyle: true,
+    }
     );
-    jQuery('#tabs-product').tabs();
-    jQuery('#scroll1').slimscroll({
-        color: '#666',
-        size: '10px',
-        width: '100%',
-        height: '200px',
-        border: 'medium none'
+            jQuery('#tabs-product').tabs();
+            jQuery('#scroll1').slimscroll({
+    color: '#666',
+            size: '10px',
+            width: '100%',
+            height: '200px',
+            border: 'medium none'
     });</script>
 
 <div id="dialog-form-add-manufacturer" title="Thêm nhà sản xuât" style="display: none">
@@ -571,10 +570,10 @@ if (isset($productedit)) {
 
 <script src="{{Asset('backend/js/plugins/autoNumeric.js')}}" type=text/javascript></script>
 <script>
-                    jQuery(function(cash) {
-                        jQuery('#import_prices').autoNumeric('init', {pSign: 's', dGroup: '2'});
-                        jQuery('#productPrice').autoNumeric('init', {pSign: 's', dGroup: '2'});
-                        jQuery('#salesPrice').autoNumeric('init', {pSign: 's', dGroup: '2'});
-                    });
+            jQuery(function(cash) {
+            jQuery('#import_prices').autoNumeric('init', {pSign: 's', dGroup: '2'});
+                    jQuery('#productPrice').autoNumeric('init', {pSign: 's', dGroup: '2'});
+                    jQuery('#salesPrice').autoNumeric('init', {pSign: 's', dGroup: '2'});
+            });
 </script>
 @endsection

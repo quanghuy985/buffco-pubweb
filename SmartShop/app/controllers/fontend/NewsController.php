@@ -12,7 +12,7 @@ class NewsController extends \BaseController {
 
     public function getChuyenMuc($catslug = '') {
         $NewModel = new \FontEnd\NewsModel();
-        $arrNews = $NewModel->getNewBySlugCate($catslug, 10);
+        $arrNews = $NewModel->getNewByTagsList('World cup', 10);
         var_dump($arrNews);
 //        $link = $arrNews->links();
 //        return View::make('fontend.CategoryNews')->with('arrnews', $arrNews)->with('catslugs', $catslug);
