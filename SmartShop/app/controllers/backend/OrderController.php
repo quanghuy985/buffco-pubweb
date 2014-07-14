@@ -93,9 +93,21 @@ class OrderController extends \BaseController {
     }
 
     public function getEdit($orderCode) {
+        $tblColor = new tblColorModel();
+        $listcolor = $tblColor->selectAllColorNoPaginate();
+        $listcolorarray = array();
+        foreach ($listcolor as $item) {
+            $listcolorarray = $listcolorarray + array($item->id => $item->color_name);
+        }
+        $tblSize = new tblSizeModel();
+        $listsize = $tblSize->selectAllSizeNoPaginate();
+        $listsizearray = array();
+        foreach ($listsize as $item) {
+            $listsizearray = $listsizearray + array($item->id => $item->size_name);
+        }
         $tblOderModel = new tblOrderModel();
         $objOrder = $tblOderModel->getOrderByOrderCode($orderCode);
-        return View::make('backend.order.orderproductedit')->with('objOrder', $objOrder)->with('active_menu', 'orderview');
+        return View::make('backend.order.orderproductedit')->with('arraysize', $listsizearray)->with('arraycolor', $listcolorarray)->with('objOrder', $objOrder)->with('active_menu', 'orderview');
     }
 
     public function getViewAll() {
@@ -174,11 +186,9 @@ class OrderController extends \BaseController {
 
             if ($arrOrder[0]->orderStatus != 1) {
                 // Kiem tra xem tat ca san pham trong don hang co con hang hay khong
-                $check = False;
+                $check = FALSE;
                 foreach ($arrOrder as $item) {
-                    if ($item->quantity <= $item->quantity_sold) {
-                        $check = False;
-                    } else {
+                    if ($item->quantity >= $item->quantity_sold) {
                         $check = TRUE;
                     }
                 }
@@ -187,7 +197,9 @@ class OrderController extends \BaseController {
                     foreach ($arrOrder as $item) {
                         $tblOderModel->updateStatusOrderByOrderCode($orderCode, 1);
                         $tblProductModel = new TblProductModel();
-                        $tblProductModel->updateProduct($item->product_id, '', '', '', '', '', '', '', '', '', $item->quantity + $item->amount, '', '', '', '', '', '');
+                        $tblProductModel->updateProductQuantity($item->product_id, $item->amount);
+                        $tblProductMeta = new tblProductMeta();
+                        $tblProductMeta->updateProductMetaByProductID($item->product_id, $item->product_size, $item->product_color, $item->amount);
                     }
                     $objAdmin = \Auth::user();
                     $historyContent = \Lang::get('backend/history.order.active') . ' ' . $orderCode;

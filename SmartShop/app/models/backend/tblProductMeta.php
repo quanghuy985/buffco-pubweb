@@ -23,6 +23,15 @@ class tblProductMeta extends \Eloquent {
         return $check;
     }
 
+    public function updateProductMetaByProductID($product_id, $meta_size, $meta_color, $quantity_sold) {
+        $productmeta = $this->where('product_id', '=', $product_id)->where('meta_size', '=', $meta_size)->where('meta_color', '=', $meta_color)->increment('quantity_sold', $quantity_sold);
+        if ($productmeta > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
     public function updateProductMeta($id, $product_id, $meta_size, $meta_color, $quantity) {
         $supporter = $this->where('id', '=', $id);
         $arraysql = array('id' => $id);
