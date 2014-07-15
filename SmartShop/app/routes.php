@@ -41,7 +41,7 @@ Route::group(array('prefix' => 'admin', 'before' => 'csrf'), function() {
 
     Route::controller('users', '\BackEnd\LoginController');
     Route::group(array('before' => 'loginAdmin'), function() {
-        Route::get('', '\BackEnd\HomeController');
+        Route::get('', '\BackEnd\HomeController@getHome');
         Route::controller('setting', '\BackEnd\SettingController');
         Route::controller('admin', '\BackEnd\AdminController');
         Route::controller('customer', '\BackEnd\UserController');
