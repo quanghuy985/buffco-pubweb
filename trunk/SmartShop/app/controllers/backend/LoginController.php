@@ -34,7 +34,7 @@ class LoginController extends \BaseController {
 
     public function getLogin() {
         if (Auth::check()) {
-            return Redirect::action('\BackEnd\LoginController@getHomeAdmin');
+            return Redirect::action('\BackEnd\HomeController@getHome');
         } else {
             return View::make('backend.login');
         }
