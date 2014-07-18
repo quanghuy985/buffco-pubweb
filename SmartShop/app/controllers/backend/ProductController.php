@@ -198,7 +198,7 @@ jQuery(\'select\').uniform();
             $sizearr = Input::get('size');
             for ($i = 0; $i < count($colorarr); $i++) {
                 $tblProductMeta = new tblProductMeta();
-                $tblProductMeta->insertProductMeta($idp, $sizearr[$i], $colorarr[$i], $quantityrarr[$i]);
+                $tblProductMeta->insertProductMeta($inputs['id'], $sizearr[$i], $colorarr[$i], $quantityrarr[$i]);
             }
             Session::flash('alert_success', Lang::get('messages.update.success'));
             $objAdmin = \Auth::user();
