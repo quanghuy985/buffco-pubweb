@@ -643,7 +643,7 @@ jQuery(\'select\').uniform();
         );
         $objManufactuer = new tblManufacturerModel();
         if (!Validator::make(Input::all(), $rules)->fails()) {
-            $objManufactuer->addManufacturer(Input::get('manufacturerName'), Input::get('manufDescription'), Input::get('manufacturerPlace'));
+            $objManufactuer->addManufacturer(Input::get('manufacturerName'), Input::get('manufDescription'), Input::get('manufacturerLogo'), Input::get('manufacturerPlace'));
 
             $objAdmin = \Auth::user();
             $historyContent = Lang::get('backend/history.manufacture.add') . Input::get('manufacturerName');
