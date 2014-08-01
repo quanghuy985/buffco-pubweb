@@ -1,0 +1,43 @@
+<?php
+$i = ($arrayNews->getCurrentPage() - 1) * 10 + 1;
+$data_status = Lang::get('general.data_status2');
+unset($data_status['']);
+?>
+<?php foreach($arrayNews as $item): ?>
+<tr>
+    <td class="text-center" class="head0"><label value="cateNews"><?php echo $i++; ?></label></td>
+    <td class="head1"><label value="cateNews"><a href="<?php echo URL::action('\BackEnd\NewsController@getNewsEdit'); ?>/<?php echo $item->id; ?>"><?php echo str_limit( $item->newsName, 30, '...'); ?></a></label></td>
+    <td class="head0"><label value="cateNews"><?php echo str_limit($item->newsDescription, 30, '...'); ?> </label></td>
+    <td class="head1"><label value="cateNews"><?php echo date('d/m/Y h:i:s', $item->time); ?></label></td>
+    <td class="head0"> <label value="cateNews">
+            <?php
+            if (array_key_exists($item->status, $data_status)) {
+                echo $data_status[$item->status];
+            }
+            ?>
+        </label>
+    </td>
+    <td class="head1">
+        <a href="<?php echo URL::action('\BackEnd\NewsController@getNewsEdit'); ?>/<?php echo $item->id; ?>"  title="<?php echo Lang::get('general.edit'); ?>"><?php echo Lang::get('general.edit'); ?></a>
+        <?php if($item->status=='2'): ?>
+        &nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript: void(0)" onclick="active_element('<?php echo URL::action('\BackEnd\NewsController@postActiveNews'); ?>',<?php echo $item->id; ?>)" class="" title="<?php echo Lang::get('button.btn.flag'); ?>"><?php echo Lang::get('button.btn.flag'); ?></a>
+        <?php endif; ?>
+        <?php if($item->status=='0'): ?>
+        &nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript: void(0)" onclick="active_element('<?php echo URL::action('\BackEnd\NewsController@postPublicNews'); ?>',<?php echo $item->id; ?>)" class="" title="<?php echo Lang::get('button.btn.world'); ?>"><?php echo Lang::get('button.btn.world'); ?></a>
+        <?php endif; ?>
+        <?php if($item->status!='2'): ?>
+        &nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript: void(0)" onclick="deleteproduct('<?php echo URL::action('\BackEnd\NewsController@postDeleteNews'); ?>',<?php echo $item->id; ?>)" title="<?php echo Lang::get('general.delete'); ?>"><?php echo Lang::get('general.delete'); ?></a>
+        <?php endif; ?>
+    </td>
+</tr>
+<?php endforeach; ?>
+<?php if($link!=''): ?>
+<tr>
+    <td colspan="8"><?php echo $link; ?></td>
+</tr>
+<?php endif; ?>
+<?php if(count($arrayNews)==0): ?>
+<tr>
+    <td colspan="8"><?php echo Lang::get('general.data_empty'); ?></td>
+</tr>
+<?php endif; ?>

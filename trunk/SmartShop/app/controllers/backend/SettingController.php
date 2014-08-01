@@ -16,6 +16,12 @@ class SettingController extends \BaseController {
     }
 
     public function postUpdateSetting() {
+        $imgurlslideimg = \Input::get('slideimg');
+        if (\Config::get('app.urlbasesitefolder') == '') {
+            $imgurlslideimg = str_replace(\Config::get('app.url'), '/', $imgurlslideimg);
+        } else {
+            $imgurlslideimg = str_replace(\Config::get('app.urlbasesite'), '/', $imgurlslideimg);
+        }
         $paramseting = array(
             'titlewebsite' => \Input::get('titlewebsite'),
             'tagline' => \Input::get('tagline'),
@@ -42,7 +48,7 @@ class SettingController extends \BaseController {
             'commentfb' => \Input::get('commentfb'),
             'googleanc' => \Input::get('googleanc'),
             'googlemaps' => \Input::get('googlemaps'),
-            'slideimg' => \Input::get('slideimg'),
+            'slideimg' => $imgurlslideimg,
             'menuheader' => \Input::get('menuheader'),
         );
         $tblSettingModel = new tblSettingModel();

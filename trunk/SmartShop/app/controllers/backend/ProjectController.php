@@ -85,8 +85,13 @@ class ProjectController extends \BaseController {
                 Session::flash('alert_error', Lang::get('messages.date_begin_end'));
                 return Redirect::back()->withInput(Input::all());
             } else {
-                $attList = Input::get('ImagePath');
-                $objProject->updateProject($pid, Input::get('projectName'), $from, $to, Input::get('projectDescription'), Input::get('projectContent'), $attList, Input::get('status'));
+                $imgurl = \Input::get('ImagePath');
+                if (\Config::get('app.urlbasesitefolder') == '') {
+                    $imgurl = str_replace(\Config::get('app.url'), '/', $imgurl);
+                } else {
+                    $imgurl = str_replace(\Config::get('app.urlbasesite'), '/', $imgurl);
+                }
+                $objProject->updateProject($pid, Input::get('projectName'), $from, $to, Input::get('projectDescription'), Input::get('projectContent'), $imgurl, Input::get('status'));
                 $objAdmin = \Auth::user();
                 $historyContent = Lang::get('backend/history.project.update') . Input::get('projectName');
                 $tblHistoryAdminModel = new \BackEnd\tblHistoryUserModel();
@@ -123,8 +128,13 @@ class ProjectController extends \BaseController {
                 Session::flash('alert_error', Lang::get('messages.date_begin_end'));
                 return Redirect::back()->withInput(Input::all());
             } else {
-                $attList = Input::get('ImagePath');
-                $idproject = $objProject->addProject(Input::get('projectName'), $from, $to, Input::get('projectDescription'), Input::get('projectContent'), $attList, Input::get('status'));
+                $imgurl = \Input::get('ImagePath');
+                if (\Config::get('app.urlbasesitefolder') == '') {
+                    $imgurl = str_replace(\Config::get('app.url'), '/', $imgurl);
+                } else {
+                    $imgurl = str_replace(\Config::get('app.urlbasesite'), '/', $imgurl);
+                }
+                $idproject = $objProject->addProject(Input::get('projectName'), $from, $to, Input::get('projectDescription'), Input::get('projectContent'), $imgurl, Input::get('status'));
 
                 $objAdmin = \Auth::user();
                 $historyContent = Lang::get('backend/history.project.create') . Input::get('projectName');

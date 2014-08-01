@@ -79,8 +79,13 @@ if (isset($_COOKIE['urlupload_img'])) {
 } else {
     $userfolder = 'defaul';
 }
-$baseUrl = Config::get('app.url') . 'files/' . md5(sha1(md5($userfolder))) . '/';
-$baseUrlCrop = Config::get('app.urlbasesitefolder') . md5(sha1(md5($userfolder))) . '/';
+$baseUrl = '';
+
+if (Config::get('app.urlbasesitefolder') == '') {
+    $baseUrl = '/files/' . md5(sha1(md5($userfolder))) . '/';
+} else {
+    $baseUrl = Config::get('app.urlbasesitefolder') . 'files/' . md5(sha1(md5($userfolder))) . '/';
+}
 /*
   $baseDir : the path to the local directory (in the server) which points to the
   above $baseUrl URL. This is the path used by CKFinder to handle the files in
@@ -157,11 +162,11 @@ $config['AccessControl'][] = Array(
     'folderView' => true,
     'folderCreate' => true,
     'folderRename' => true,
-    'folderDelete' => false,
+    'folderDelete' => true,
     'fileView' => true,
     'fileUpload' => true,
     'fileRename' => true,
-    'fileDelete' => false);
+    'fileDelete' => true);
 
 /*
   For example, if you want to restrict the upload, rename or delete of files in
@@ -213,7 +218,7 @@ $config['ResourceType'][] = Array(
     'name' => 'Tệp tin (Tài liệu,phim ảnh...)', // Single quotes not allowed
     'url' => $baseUrl . 'files',
     'directory' => $baseDir . 'files',
-    'maxSize' => '10M',
+    'maxSize' => '100M',
     //'allowedExtensions' => '7z,aiff,asf,avi,bmp,csv,doc,docx,fla,flv,gif,gz,gzip,jpeg,jpg,mid,mov,mp3,mp4,mpc,mpeg,mpg,ods,odt,pdf,png,ppt,pptx,pxd,qt,ram,rar,rm,rmi,rmvb,rtf,sdc,sitd,swf,sxc,sxw,tar,tgz,tif,tiff,txt,vsd,wav,wma,wmv,xls,xlsx,zip',
     'allowedExtensions' => 'aiff,asf,avi,bmp,csv,doc,docx,fla,flv,gif,jpeg,jpg,mid,mov,mp3,mp4,mpc,mpeg,mpg,ods,odt,pdf,png,ppt,pptx,pxd,qt,ram,rm,rmi,rmvb,rtf,sdc,sitd,swf,sxc,sxw,tif,tiff,txt,vsd,wav,wma,wmv,xls,xlsx',
     'deniedExtensions' => '');
@@ -222,7 +227,7 @@ $config['ResourceType'][] = Array(
     'name' => 'Ảnh',
     'url' => $baseUrl . 'images',
     'directory' => $baseDir . 'images',
-    'maxSize' => '5M',
+    'maxSize' => '100M',
     'allowedExtensions' => 'bmp,gif,jpeg,jpg,png',
     'deniedExtensions' => '');
 //
@@ -347,7 +352,7 @@ $config['XSendfile'] = false;
 //include_once "plugins/imageresize/plugin.php";
 include_once "plugins/fileeditor/plugin.php";
 include_once "plugins/zip/plugin.php";
-//include_once "plugins/cropresize/plugin.php";
-//$config['plugin_imageresize']['smallThumb'] = '90x90';
-//$config['plugin_imageresize']['mediumThumb'] = '120x120';
-//$config['plugin_imageresize']['largeThumb'] = '180x180';
+include_once "plugins/cropresize/plugin.php";
+$config['plugin_imageresize']['smallThumb'] = '90x90';
+$config['plugin_imageresize']['mediumThumb'] = '120x120';
+$config['plugin_imageresize']['largeThumb'] = '180x180';

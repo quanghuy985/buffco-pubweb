@@ -2,9 +2,6 @@
 
 namespace BackEnd;
 
-use DB,
-    BackEnd;
-
 class tblColorModel extends \Eloquent {
 
     protected $table = 'tbl_product_color';

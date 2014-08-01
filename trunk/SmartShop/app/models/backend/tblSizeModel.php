@@ -2,8 +2,6 @@
 
 namespace BackEnd;
 
-use DB,
-    BackEnd;
 
 class tblSizeModel extends \Eloquent {
 

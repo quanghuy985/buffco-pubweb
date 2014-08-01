@@ -1,0 +1,28 @@
+<?php
+$i = ($arrSupporter->getCurrentPage() - 1) * 10 + 1;
+?>
+<?php foreach($arrSupporter as $item): ?>
+<tr>
+
+    <td><label value="cateSupporter"><?php echo $i++; ?></label></td>
+    <td><label value="cateSupporter"><?php echo $item->supporterName; ?></label></td>
+    <td><label value="cateSupporter"><?php echo $item->supporterGroupName; ?></label></td>
+    <td><label value="cateSupporter"><?php echo date('d/m/Y',$item->time); ?> </label></td>
+    <td>
+        <a href="<?php echo URL::action('\BackEnd\SupporterController@getSupporterEdit'); ?>/<?php echo $item->id; ?>"  title="<?php echo Lang::get('general.edit'); ?>"><?php echo Lang::get('general.edit'); ?></a>
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+        <a href="javascript: void(0)" onclick="deleteproduct('<?php echo URL::action('\BackEnd\SupporterController@postDeleteSupporter'); ?>',<?php echo $item->id; ?>)"  title="<?php echo Lang::get('general.delete'); ?>"><?php echo Lang::get('general.delete'); ?></a>
+    </td>
+
+</tr>
+<?php endforeach; ?>
+<?php if(count($arrSupporter)==0): ?>
+<tr>
+    <td colspan="5"><?php echo Lang::get('general.data_empty'); ?></td>
+</tr>
+<?php endif; ?>
+<?php if($link!=''): ?>
+<tr>
+    <td colspan="5"><?php echo $link; ?></td>
+</tr>
+<?php endif; ?>

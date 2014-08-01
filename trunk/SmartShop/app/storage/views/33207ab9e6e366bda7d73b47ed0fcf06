@@ -1,0 +1,30 @@
+<?php
+if (count($arrayCateNews) == 0 && isset($arrayCateNews)) {
+    ?>
+    <tr>
+        <td colspan="7"><?php echo Lang::get('general.data_empty'); ?></td>
+    </tr>
+    <?php
+} else {
+    ?>
+    <?php foreach($arrayCateNews as $item): ?>
+    <tr>
+        <td><?php if($item->catenewsParent ==0): ?> <strong> <?php endif; ?> <label value="cateMenuer"><?php if($item->catenewsParent!=0): ?> &nbsp;—&nbsp; <?php endif; ?> <a
+                        href="<?php echo URL::action('\BackEnd\NewsController@getCateNewsEdit'); ?>/<?php echo $item->id; ?>"><?php echo str_limit($item->catenewsName, 30, '...'); ?></a></label><?php if($item->catenewsParent ==0): ?>
+            </strong> <?php endif; ?>
+        </td>
+        <td><label value="cateMenuer"><?php echo str_limit( $item->catenewsDescription, 30, '...'); ?></label></td>
+        <td><label value="cateMenuer"><?php echo str_limit($item->catenewsSlug , 30, '...'); ?></label></td>
+        <td>
+            <a href="<?php echo URL::action('\BackEnd\NewsController@getCateNewsEdit'); ?>/<?php echo $item->id; ?>" title="<?php echo Lang::get('general.edit'); ?>"><?php echo Lang::get('general.edit'); ?></a>
+            &nbsp;&nbsp;|&nbsp;&nbsp;
+            <a href="javascript: void(0)" onclick="deleteproduct('<?php echo URL::action('\BackEnd\NewsController@postDeleteCateNews'); ?>',<?php echo $item->id; ?>)" title="<?php echo Lang::get('general.delete'); ?>"><?php echo Lang::get('general.delete'); ?></a>
+        </td>
+    </tr>
+    <?php endforeach; ?>
+    <?php if($link!=''): ?>
+    <tr>
+        <td colspan="7"><?php echo $link; ?></td>
+    </tr>
+    <?php endif; ?>
+<?php } ?>

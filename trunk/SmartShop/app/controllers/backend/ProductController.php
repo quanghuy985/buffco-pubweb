@@ -94,7 +94,6 @@ jQuery(\'select\').uniform();
             "productCode" => "required|unique:tbl_product",
             "productDescription" => "required"
         );
-        $slug = new SlugGen();
         $tblCateProduct = new tblCategoryproductModel();
         $inputs = Input::all();
         $validate = Validator::make(Input::all(), $rules, Lang::get('messages.validator'), Lang::get('backend/attributes.products'));
@@ -111,8 +110,14 @@ jQuery(\'select\').uniform();
                     $quantityinsert = $quantityinsert + $value;
                 }
             }
+            $imgurl = Input::get('images');
+            if (\Config::get('app.urlbasesitefolder') == '') {
+                $imgurl = str_replace(\Config::get('app.url'), '/', $imgurl);
+            } else {
+                $imgurl = str_replace(\Config::get('app.urlbasesite'), '/', $imgurl);
+            }
             $tblProduct = new TblProductModel();
-            $idp = $tblProduct->insertProduct($inputs['productCode'], $inputs['productName'], $inputs['productDescription'], $inputs['productAttributes'], str_replace(',', '', $inputs['import_prices']), str_replace(',', '', $inputs['productPrice']), str_replace(',', '', $inputs['salesPrice']), strtotime($inputs['startSales']), strtotime($inputs['endSales']), $slug->makeSlugs($inputs['productName']), $inputs['productTag'], $inputs['manufactureID'], 1, $listcateid, $inputs['images'], $quantityinsert);
+            $idp = $tblProduct->insertProduct($inputs['productCode'], $inputs['productName'], $inputs['productDescription'], $inputs['productAttributes'], str_replace(',', '', $inputs['import_prices']), str_replace(',', '', $inputs['productPrice']), str_replace(',', '', $inputs['salesPrice']), strtotime($inputs['startSales']), strtotime($inputs['endSales']), \Str::slug($inputs['productName']), $inputs['productTag'], $inputs['manufactureID'], 1, $listcateid, $imgurl, $quantityinsert);
             $colorarr = Input::get('color');
             $sizearr = Input::get('size');
 
@@ -173,7 +178,6 @@ jQuery(\'select\').uniform();
             "productCode" => 'required|unique:tbl_product,productCode,' . $inputs['id'] . ',id',
             "productDescription" => "required"
         );
-        $slug = new SlugGen();
         $tblCateProduct = new tblCategoryproductModel();
 
         $validate = Validator::make(Input::all(), $rules, Lang::get('messages.validator'), Lang::get('backend/attributes.products'));
@@ -190,8 +194,14 @@ jQuery(\'select\').uniform();
                     $quantityinsert = $quantityinsert + $value;
                 }
             }
+            $imgurl = Input::get('images');
+            if (\Config::get('app.urlbasesitefolder') == '') {
+                $imgurl = str_replace(\Config::get('app.url'), '/', $imgurl);
+            } else {
+                $imgurl = str_replace(\Config::get('app.urlbasesite'), '/', $imgurl);
+            }
             $tblProduct = new TblProductModel();
-            $idp = $tblProduct->updateProduct($inputs['id'], $inputs['productCode'], $inputs['productName'], $inputs['productDescription'], $inputs['productAttributes'], str_replace(',', '', $inputs['import_prices']), str_replace(',', '', $inputs['productPrice']), str_replace(',', '', $inputs['salesPrice']), strtotime($inputs['startSales']), strtotime($inputs['endSales']), $slug->makeSlugs($inputs['productName'] . '-' . $inputs['id']), $inputs['productTag'], $inputs['manufactureID'], 1, $listcateid, $inputs['images'], $quantityinsert);
+            $idp = $tblProduct->updateProduct($inputs['id'], $inputs['productCode'], $inputs['productName'], $inputs['productDescription'], $inputs['productAttributes'], str_replace(',', '', $inputs['import_prices']), str_replace(',', '', $inputs['productPrice']), str_replace(',', '', $inputs['salesPrice']), strtotime($inputs['startSales']), strtotime($inputs['endSales']), \Str::slug($inputs['productName'] . '-' . $inputs['id']), $inputs['productTag'], $inputs['manufactureID'], 1, $listcateid, $imgurl, $quantityinsert);
             $tblProductMeta = new tblProductMeta();
             $tblProductMeta->deleteProductMeta($inputs['id']);
             $colorarr = Input::get('color');
