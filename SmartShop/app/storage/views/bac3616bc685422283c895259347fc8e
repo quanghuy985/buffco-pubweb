@@ -1,0 +1,103 @@
+<?php $__env->startSection('titleAdmin'); ?>
+<?php echo Lang::get('backend/title.news.title'); ?>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection("contentadmin"); ?>
+<div class="pageheader notab">
+    <h1 class="pagetitle"><?php echo Lang::get('backend/title.news.heading'); ?></h1>
+    <span class="pagedesc"><?php echo Lang::get('backend/title.news.description'); ?></span>
+</div>
+
+<div class="contentwrapper">
+    <?php echo $__env->make('backend.alert', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <div class="subcontent">
+        <div class="contenttitle2">
+            <h3><?php echo Lang::get('backend/title.news.caption'); ?></h3>
+        </div>
+        &nbsp;&nbsp;&nbsp;<a href="<?php echo URL::action('\BackEnd\NewsController@getAddNews'); ?>" class="btn btn_orange btn_link"><span><?php echo Lang::get('button.add'); ?></span></a>
+        <div class="tableoptions">
+            <?php echo Form::open(array('action'=>'\BackEnd\NewsController@postNewsFillterView', 'class'=>'stdform stdform2','id'=>'fillterfrom')); ?>
+            <select name="fillter_category" id="fillter_category" style="opacity: 0;">
+                <option value=""><?php echo Lang::get('general.all'); ?></option>
+                <?php
+                if (isset($arrayCate)) {
+                    if (isset($cateselectfillter)) {
+                        $status_cate = $cateselectfillter;
+                    } else {
+                        $status_cate = '';
+                    }
+
+                    foreach ($arrayCate as $item) {
+                        if ($item->catenewsParent == 0) {
+                            ?>
+                            <option style="font-size: 13px;font-weight: bold;text-decoration: inherit;"  value="<?php echo $item->id; ?>"  <?php
+                            if ($status_cate == $item->id) {
+                                echo 'selected="selected"';
+                            }
+                            ?> > <?php echo $item->catenewsName; ?></option>
+                                    <?php
+                                    foreach ($arrayCate as $item1) {
+                                        if ($item1->catenewsParent == $item->id) {
+                                            ?>
+                                    <option  value="<?php echo $item1->id; ?>" <?php
+                                    if ($status_cate == $item1->id) {
+                                        echo 'selected="selected"';
+                                    }
+                                    ?>>— <?php echo $item1->catenewsName; ?></option>
+                                             <?php
+                                         }
+                                     }
+                                     ?>
+                                     <?php
+                                 }
+                             }
+                         }
+                         ?>
+            </select>
+            <?php
+            $data_status = Lang::get('general.data_status2');
+            if (isset($statusselectfillter)) {
+                $status_select = $statusselectfillter;
+            } else {
+                $status_select = '';
+            }
+            echo Form::select('fillter_status', $data_status, $status_select, array('id' => 'fillter_status'));
+            ?>
+            &nbsp; <input type="submit" class="radius3" value="<?php echo Lang::get('general.filter'); ?>">
+            <?php echo Form::close(); ?>
+            <?php echo Form::open(array('action'=>'\BackEnd\NewsController@postNewsSearchView','id'=>'searchaction')); ?>
+            <div class="dataTables_filter1"  style=" margin-top: -32px !important;">
+                <label>
+                    <input class="longinput" id="key_word"  name="key_word" style="-moz-border-radius: 2px;-webkit-border-radius: 2px;border-radius: 2px;border: 1px solid #ddd;padding: 7px 5px 8px 5px;width: 200px;background: #fcfcfc;color: #666;-moz-box-shadow: inset 0 1px 3px #ddd;-webkit-box-shadow: inset 0 1px 3px #ddd;box-shadow: inset 0 1px 3px #ddd;" type="text">&nbsp;&nbsp; <input type="submit" value="<?php echo Lang::get('general.search'); ?>" class="radius3"/>
+                </label>
+            </div>
+            <?php echo Form::close(); ?>
+        </div> 
+        <table cellpadding="0" cellspacing="0" border="0" id="table2" class="stdtable stdtablecb">
+            <colgroup>
+                <col class="con0" style="width: 1%">
+                <col class="con1" style="width: 30%">
+                <col class="con0" style="width: 30%">
+                <col class="con1" style="width: 14%">
+                <col class="con0" style="width: 10%">
+                <col class="con1" style="width: 15%">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th class="head0"><?php echo Lang::get('general.stt'); ?></th>
+                    <th class="head1"><?php echo Lang::get('general.title'); ?></th>
+                    <th class="head0"><?php echo Lang::get('general.description'); ?></th>
+                    <th class="head1"><?php echo Lang::get('general.time'); ?></th>
+                    <th class="head0"><?php echo Lang::get('general.status'); ?></th>
+                    <th class="head1"><?php echo Lang::get('general.action'); ?></th>
+                </tr>  
+            </thead>
+
+            <tbody id="tableproduct" class="tabledataajax">
+                <?php echo $__env->make('backend.news.newsAjax', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make("backend.template", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

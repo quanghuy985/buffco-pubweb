@@ -1,0 +1,46 @@
+<?php if(count($arrayProject)>0): ?>
+<?php
+$i = ($arrayProject->getCurrentPage() - 1) * 10 + 1;
+?>
+<?php foreach($arrayProject as $item): ?>
+<tr>
+    <td><?php echo $i++; ?></td>
+    <td><?php echo date('d/m/Y', $item->from); ?></td>
+    <td><?php echo date('d/m/Y', $item->to); ?></td>
+    <td><?php echo $item->projectName; ?></td>
+    <td><?php echo date('d/m/Y h:i:s', $item->time); ?></td>
+    <td>
+        <?php
+        $page_status = Lang::get('general.data_status');
+        if (array_key_exists($item->status, $page_status)) {
+            echo $page_status[$item->status];
+        }
+        ?>
+    </td>
+    <td>
+        <a href="<?php echo URL::action('\BackEnd\ProjectController@getProjectEdit',$item->id); ?>" title="<?php echo Lang::get('general.edit'); ?>"><?php echo Lang::get('general.edit'); ?></a>
+        <?php if($item->status=='2'): ?>
+        &nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:void(0)" onclick="active_element('<?php echo URL::action('\BackEnd\ProjectController@postActiveProject'); ?>',<?php echo $item->id; ?>)" title="<?php echo Lang::get('button.btn.flag'); ?>"><?php echo Lang::get('button.btn.flag'); ?></a>
+        <?php endif; ?>
+        <?php if($item->status=='0'): ?>
+        &nbsp;&nbsp;|&nbsp;&nbsp; <a href="javascript:void(0)" onclick="active_element('<?php echo URL::action('\BackEnd\ProjectController@postPublicProject'); ?>',<?php echo $item->id; ?>)"  title="<?php echo Lang::get('button.btn.world'); ?>"><?php echo Lang::get('button.btn.world'); ?></a>
+        <?php endif; ?>
+        <?php if($item->status!='2'): ?>
+        &nbsp;&nbsp;|&nbsp;&nbsp; <a href="javascript: void(0)" onclick="deleteproduct('<?php echo URL::action('\BackEnd\ProjectController@postDeleteProject'); ?>',<?php echo $item->id; ?>)" title="<?php echo Lang::get('general.delete'); ?>"><?php echo Lang::get('general.delete'); ?></a>
+        <?php endif; ?>
+    </td>
+</tr>
+<?php endforeach; ?>
+<?php if($link!=''): ?>
+<tr>
+    <td colspan="7"><?php echo $link; ?></td>
+</tr>
+<?php endif; ?>
+
+<?php else: ?>
+<tr>
+    <td colspan="7">
+        <?php echo Lang::get('general.data_empty'); ?>
+    </td>
+</tr>
+<?php endif; ?>

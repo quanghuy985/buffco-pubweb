@@ -1,0 +1,264 @@
+<?php $__env->startSection("titleAdmin"); ?>
+<?php echo Lang::get('backend/title.order.title'); ?>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection("contentadmin"); ?>
+<div class="pageheader notab">
+    <h1 class="pagetitle"><?php echo Lang::get('backend/title.order.heading'); ?></h1>
+    <span class="pagedesc"><?php echo Lang::get('backend/title.order.detail'); ?></span>
+</div>
+<div class="contentwrapper">
+    <?php echo $__env->make('backend.alert', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <div class="contenttitle2">
+        <h3><?php echo Lang::get('backend/title.order.detail'); ?></h3>
+    </div>
+    <?php if(isset($objOrder)): ?>
+<!--    <script>jQuery(document).ready(function(){jQuery('html, body').animate({ scrollTop: jQuery("#adminForm").offset().top}, 1000);})</script>-->
+    <?php echo Form::model($objOrder[0],  array( 'class'=>'stdform', 'id'=>'orderViewForm')); ?>
+    <p>
+        <?php echo Form::hidden('orderCode'); ?>
+    </p>
+    <p>
+        <label><?php echo Lang::get('general.order.user'); ?>:</label>
+        <span class="field">         
+            <?php echo Form::text('email', null, array('id'=>'email','class'=>'longinput','disabled'=>'disabled' )); ?>
+        </span>
+    </p>
+    <p>
+        <label><?php echo Lang::get('general.order.code'); ?></label>
+        <span class="field">
+            <?php echo Form::text('orderCode', null, array('id'=>'orderCode','class'=>'longinput','disabled'=>'disabled')); ?>
+        </span>
+    </p>
+    <p>
+        <label><?php echo Lang::get('general.order.buyername'); ?></label>
+        <span class="field">         
+            <input type="text" name="orderCode" placeholder="Nhập tên sản phẩm" class="longinput" value="<?php if(isset($objOrder)): ?><?php echo $objOrder[0]->lastname.' '.$objOrder[0]->firstname; ?><?php endif; ?>" disabled>
+        </span>
+    </p>
+    <p>
+        <label><?php echo Lang::get('general.order.buyerphone'); ?></label>
+        <span class="field">
+            <?php echo Form::text('phone', null, array('id'=>'phone','class'=>'longinput','disabled'=>'disabled'  )); ?>
+        </span>
+    </p>
+    <p>
+        <label><?php echo Lang::get('general.order.name'); ?></label>
+        <span class="field">
+            <?php echo Form::text('receiverName', null, array('id'=>'receiverName','class'=>'longinput','disabled'=>'disabled'  )); ?>
+        </span>
+    </p>
+    <p>
+        <label><?php echo Lang::get('general.order.phone'); ?></label>
+        <span class="field">
+            <?php echo Form::text('receiverPhone', null, array('id'=>'receiverPhone','class'=>'longinput','disabled'=>'disabled'  )); ?>
+        </span>
+    </p>
+    <p>
+        <label><?php echo Lang::get('general.order.address'); ?></label>
+        <span class="field">
+            <?php echo Form::text('orderAddress', null, array('id'=>'orderAddress','class'=>'longinput','disabled'=>'disabled' )); ?>
+        </span>
+    </p>
+    <?php echo Form::close(); ?>
+    <div class="contenttitle2">
+        <h3>Thông tin sản phẩm</h3>
+    </div>
+    <table cellpadding="0" cellspacing="0" border="0"  class="stdtable">
+        <colgroup>
+            <col class="con0" style="width: 1%">
+            <col class="con1" style="width: 10%">
+            <col class="con0" style="width: 23%">
+            <col class="con1" style="width: 10%">
+            <col class="con0" style="width: 10%">
+            <col class="con1" style="width: 10%">
+            <col class="con0" style="width: 10%">
+            <col class="con1" style="width: 10%">
+            <col class="con0" style="width: 15%">
+        </colgroup>
+        <thead>
+            <tr>
+
+                <th class="head0"><?php echo Lang::get('general.order.stt'); ?></th>
+                <th class="head1"><?php echo Lang::get('general.product.code'); ?></th>
+                <th class="head0"><?php echo Lang::get('general.product.name'); ?></th>
+                <th class="head0"><?php echo Lang::get('general.product.size'); ?></th>
+                <th class="head0"><?php echo Lang::get('general.product.color'); ?></th>
+                <th class="head1"><?php echo Lang::get('general.product.price'); ?></th>
+                <th class="head0"><?php echo Lang::get('general.quantity'); ?></th>
+                <th class="head1"><?php echo Lang::get('general.store'); ?></th>
+                <th class="head0"><?php echo Lang::get('general.order.total_price'); ?></th>
+            </tr>
+        </thead>
+        <tbody id="tableproduct">
+            <?php $i = 1; ?>
+            <?php echo $__env->make('backend.order.orderproducteditAjax', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+        </tbody>
+    </table>
+    <?php echo Form::model($objOrder,  array('action'=>'\BackEnd\OrderController@postUpdateOrder', 'id'=>'orderUpdateForm')); ?>
+    <p>
+
+        <span class="field">    
+            <?php if(isset($objOrder)): ?>      
+            <input type="hidden" name="idOrderCode" placeholder="Nhập trên sản phẩm" class="longinput" value="<?php if(isset($objOrder)): ?><?php echo $objOrder[0]->orderCode; ?><?php endif; ?>">
+
+            <?php endif; ?>
+        </span>
+    </p>
+
+    <p>
+
+    </p>
+    <p>
+        <input type="button" id="btPrint" class="stdbtn btn_orange" value="In đơn hàng"  />
+        <?php if(isset($objOrder)&& $objOrder[0]->orderStatus!=1): ?>
+        <?php $check = FALSE ?>
+        <?php foreach($objOrder as $item): ?>
+        <?php
+        if ($item->quantity <= $item->quantity_sold) {
+            $check == True;
+        }
+        ?> 
+        <?php endforeach; ?>
+        <?php if($check==True): ?> 
+        <a href="#" class = "stdbtn btn_red">Hết hàng</a>
+        <?php else: ?>
+        <input type = "submit" name="btSubmit" class = "btn" value = "<?php echo \Lang::get('button.order.btAccept'); ?>"  >
+        <input type = "submit" name="btSubmit" class = "btn" value = "<?php echo \Lang::get('button.order.btDelete'); ?>"  >
+        <input type = "submit" name="btSubmit" class = "btn" value = "<?php echo \Lang::get('button.order.btDonothing'); ?>"  >
+        <?php endif; ?>
+        <a href = "<?php echo URL::action('\BackEnd\OrderController@getViewAll'); ?>" class = "stdbtn">Quay lại</a>
+        <?php else: ?>
+        <a href = "<?php echo URL::action('\BackEnd\OrderController@getViewAll'); ?>" class = "stdbtn">Quay lại</a>
+        <?php endif; ?>
+    </p>
+    <?php echo Form::close(); ?>
+
+
+    <div style="display: none" id="dialog-form" title="Thông tin đơn hàng">
+        <div class="contenttitle2">
+            <h3>Thông tin đơn hàng</h3>
+        </div>
+        <?php echo Form::model($objOrder[0],  array( 'class'=>'stdform','accept-charset'=>'UTF-8', 'id'=>'orderViewForm')); ?>
+
+        <p>
+            <label><?php echo Lang::get('general.order.user'); ?> :</label>
+            <span class="field">         
+                <strong>&nbsp;<?php if(isset($objOrder)): ?><?php echo $objOrder[0]->email; ?><?php endif; ?></strong>
+            </span>
+        </p>
+        <p>
+            <label><?php echo Lang::get('general.order.code'); ?> :</label>
+            <span class="field">
+                <strong> &nbsp;<?php if(isset($objOrder)): ?><?php echo $objOrder[0]->orderCode; ?><?php endif; ?></strong>
+            </span>
+        </p>
+        <p>
+            <label><?php echo Lang::get('general.order.buyername'); ?> :</label>
+            <span class="field">         
+                <strong>&nbsp;<?php if(isset($objOrder)): ?><?php echo $objOrder[0]->lastname.' '.$objOrder[0]->firstname; ?><?php endif; ?></strong>
+            </span>
+        </p>
+        <p>
+            <label><?php echo Lang::get('general.order.buyerphone'); ?> :</label>
+            <span class="field">
+                <strong>&nbsp;<?php if(isset($objOrder)): ?><?php echo $objOrder[0]->phone; ?><?php endif; ?></strong>
+            </span>
+        </p>
+        <p>
+            <label><?php echo Lang::get('general.order.name'); ?> :</label>
+            <span class="field">
+                <strong>&nbsp;<?php if(isset($objOrder)): ?><?php echo $objOrder[0]->receiverName; ?><?php endif; ?></strong>
+            </span>
+        </p>
+        <p>
+            <label><?php echo Lang::get('general.order.phone'); ?> :</label>
+            <span class="field">
+                <strong>&nbsp;<?php if(isset($objOrder)): ?><?php echo $objOrder[0]->receiverPhone; ?><?php endif; ?></strong>
+            </span>
+        </p>
+        <p>
+            <label><?php echo Lang::get('general.order.address'); ?> :</label>
+            <span class="field">
+                <strong>&nbsp;<?php if(isset($objOrder)): ?><?php echo $objOrder[0]->orderAddress; ?><?php endif; ?></strong>
+            </span>
+        </p>
+        <?php echo Form::close(); ?>
+        <div class="contenttitle2">
+            <h3><?php echo Lang::get('general.order.productDetail'); ?></h3>
+        </div>
+        <table cellpadding="0" cellspacing="0" border="0"  class="stdtable">
+            <colgroup>
+                <col class="con0" style="width: 5%">
+                <col class="con1" style="width: 15%">
+                <col class="con0" style="width: 25%">
+                <col class="con1" style="width: 15%">
+                <col class="con0" style="width: 20%">
+                <col class="con1" style="width: 20%">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th class="head0"><?php echo Lang::get('general.order.stt'); ?></th>
+                    <th class="head1"><?php echo Lang::get('general.product.code'); ?></th>
+                    <th class="head0"><?php echo Lang::get('general.product.name'); ?></th>
+                    <th class="head1"><?php echo Lang::get('general.product.price'); ?></th>
+                    <th class="head0"><?php echo Lang::get('general.quantity'); ?></th>
+                    <th class="head1"><?php echo Lang::get('general.order.total_price'); ?></th>
+                </tr>
+            </thead>
+            <tbody id="tableproduct">
+                <?php $i = 1; ?>
+                <?php $tongcong = 0; ?>
+                <?php foreach($objOrder as $item): ?>
+
+                <tr>   
+                    <td><label value="cateNews"> <?php echo $i++; ?> </label></td> 
+                    <td><label value="cateNews"><?php echo str_limit( $item->productCode, 30, '...'); ?></label></td> 
+                    <td><label value="cateNews"><?php echo str_limit( $item->productName, 30, '...'); ?></label></td>
+                    <td><label value="cateNews"><?php echo number_format($item->productPrice,0,'.', ','); ?></label></td> 
+                    <td><label value="cateNews"><?php echo number_format($item->amount,0,'.', ','); ?> </label></td>
+                    <td><label value="cateNews"><?php echo number_format($item->total,0,'.', ','); ?> </label></td>
+                </tr> 
+                <?php $tongcong = $tongcong + $item->total ?>
+                <?php endforeach; ?>
+
+                <tr>
+                    <td colspan="5" style="text-align: right;"><strong><label><?php echo Lang::get('general.order.total_grand'); ?></label></strong></td>
+                    <td><label value="cateNews"><?php echo number_format($tongcong,0,'.', ','); ?> </label></td>
+                </tr>
+            </tbody>
+        </table>
+        <strong><label style="float: left;margin-left: 40px;margin-top: 20px;"> Người nhận </label></strong>
+        <strong><label style="float: right;margin-right: 40px;margin-top: 20px;"> Người giao hàng </label></strong>
+    </div>
+</div>
+<?php endif; ?>
+<script src="<?php echo Asset('backend'); ?>/printjscss/jquery.PrintArea.js" type="text/JavaScript" language="javascript"></script>
+<script>
+jQuery("#btPrint")
+        .button()
+        .click(function() {
+            jQuery("#dialog-form").dialog("open");
+        });
+jQuery("#dialog-form").dialog({
+    resizable: true,
+    autoOpen: false,
+    width: 992,
+    modal: true,
+    buttons: {
+        "In đơn hàng": function(e) {
+            jQuery('#dialog-form').printArea();
+        },
+        Hủy: function() {
+            jQuery(this).dialog("close");
+        }
+    },
+    Đóng: function() {
+        allFields.val("").removeClass("ui-state-error");
+    }
+});
+
+</script>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("backend.template", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
